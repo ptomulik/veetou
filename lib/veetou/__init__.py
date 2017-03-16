@@ -12,7 +12,7 @@ class KartaZaliczen(object):
         re.compile(r'^ *(?P<university>POLITECHN(:?\w+)(?: +\w+)+) *$'),
         re.compile(r'^ *(?P<tour>Studia(?: +\S+)+) *$'),
         re.compile(r'^ *(?P<title>Karta(?: +\S+)+) *$'),
-        re.compile(r'^ *(?P<student_id>\d+) *- *(?:(?P<first_name>\S+( +\S+)*) +)?(?P<last_name>\S+) *$'),
+        re.compile(r'^ *(?P<student_id>\d+) *- *(?:(?P<first_name>(?:[^\W\d_]|-)+( +(?:[^\W\d_]|-)+)*) +)?(?P<last_name>(?:[^\W\d_]|-)+) *$'),
         re.compile(r'^ *Semestr +akademicki: *(?P<semester>\S+(?: +\S+)*) *Kierunek: *(?P<course>\S+( +\S+)*) *$'),
         re.compile(r'^ *Semestr +studiów: *(?P<term>\S+(?: +\S+)*) *Specjalność: *(?P<speciality>\S+(?: +\S+)*) *$'),
         re.compile(r'^ *Wymiar +godzin +(?:Forma)? *$'),
@@ -25,10 +25,19 @@ class KartaZaliczen(object):
         re.compile(r'^ *(?P<page>\d+)/(?P<pages>\d+) *$'),
         re.compile(r'^ *(?P<footer>Wygenerowano( +\S+)+) *$')
     ]
-    _re_specextra = re.compile(r'^ {52,80}(?P<speciality>\S+(?: {1,3}\S+)*)? *$')
+    _re_specextra = re.compile(r'^ {52,80}(?P<speciality>\S+(?: {1,2}\S+)*)? *$')
 
-    _re_subject = re.compile(r'^ *(?P<code>ML\.\S+)(?: {1,38}(?P<name>\S+(?: {1,4}\S+)*))? +(?P<w>\d+) +(?P<c>\d+) +(?P<l>\d+) +(?P<p>\d+) +(?P<s>\d+) +(?P<credit_type>Egz\.?|Zal\.?) +(?P<ects>\d+)(?: {1,20}(?P<tutor>\S+(?: {1,3}\S+)*))?( +(?P<grade>\S{3,5}))?( +(?P<date>\d\d\.\d\d\.\d\d\d\d))? *$')
-    _re_subjextra = re.compile(r'^ {8,48}(?P<name>\S+(?: {1,3}\S+)*)?(?: {36,100}(?P<tutor>\S+(?: {1,3}\S+)*))? *$')
+    _re_subject = re.compile(
+        r'^ *(?P<code>ML\.\w+)' +                                                   # code
+        r'(?: {1,38}(?P<name>\S+(?: {1,2}\S+)*))?' +                                # name
+        r' +(?P<w>\d+) +(?P<c>\d+) +(?P<l>\d+) +(?P<p>\d+) +(?P<s>\d+)' +           # hours
+        r' +(?P<credit_type>Egz\.?|Zal\.?)' +                                       # credit type
+        r' +(?P<ects>\d+)' +                                                        # ECTS
+        r'(?: {1,20}(?P<tutor>(?:[^\W\d_]|-)+\.?(?: {1,2}(?:[^\W\d_]|-)+\.?)*))?' + # tutor
+        r'( +(?P<grade>\S{3,5}))?' +                                                # grade
+        r'( +(?P<date>\d\d\.\d\d\.\d\d\d\d))? *$'                                   # date
+    )
+    _re_subjextra = re.compile(r'^ {8,48}(?P<name>\S+(?: {1,2}\S+)*)?(?: {36,100}(?P<tutor>\S+(?: {1,2}\S+)*))? *$')
 
     _re_firstname = re.compile(r'\b(?:' + r'|'.join(veetou.firstnames.name_list) + r')\b')
     _re_tutprefix = re.compile(r'\b(?:prof|nzw|dr|phd|hab|doc|mgr|inż|lic)\b')
