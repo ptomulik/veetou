@@ -111,6 +111,7 @@ class KartaZaliczen(object):
         'file'              : 'Plik',
         'page'              : 'Nr strony',
         'pages'             : 'Liczba stron',
+        'footer'            : 'Stopka',
         # subject
         'subj_code'         : 'Nr katalogowy (VERBIS)',
         'subj_name'         : 'Nazwa',
@@ -123,7 +124,7 @@ class KartaZaliczen(object):
         'subj_ects'         : 'ECTS',
         'subj_tutor'        : 'Prowadzący',
         'subj_grade'        : 'Ocena',
-        'subj_grade_date'   : 'Data',
+        'subj_grade_date'   : 'Data oceny',
 
     }
 
@@ -325,9 +326,12 @@ class KartaZaliczen(object):
 
     def generate_subjects_header(self, **kw):
         fields = kw.get('fields', self.subjects_table_fields)
-        columns = self.subjects_table_columns.copy()
-        columns.update(kw.get('columns', {}))
-        return [ str(columns.get(k,k)) for k in fields ]
+        if kw.get('raw'):
+            return fields
+        else:
+            columns = self.subjects_table_columns.copy()
+            columns.update(kw.get('columns', {}))
+            return [ str(columns.get(k,k)) for k in fields ]
 
     def generate_subjects_table(self, **kw):
         fields = kw.get('fields', self.subjects_table_fields)
