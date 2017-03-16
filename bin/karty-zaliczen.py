@@ -10,9 +10,11 @@ import sys
 
 argpar = argparse.ArgumentParser()
 argpar.add_argument('inputfile', type=str, metavar='FILE', nargs='+', help='input file (pdf) to be processed')
-argpar.add_argument('-F', '--output-format', type=str, dest='output_format', choices = ['csv'], default='csv', help='output format (default: csv)')
+argpar.add_argument('-F', '--output-format', type=str, dest='output_format', choices = ['csv', 'txt'], default='csv', help='output format (default: csv)')
 argpar.add_argument('-s', '--separator', type=str, dest='separator', metavar='SEP', default=';', help='field separator (for csv)')
 argpar.add_argument('-o', '--output', type=str, dest='output', metavar='FILE', help='output file name')
+argpar.add_argument('--first', type=int, dest='first_page', help='first page number')
+argpar.add_argument('--last', type=int, dest='last_page', help='last page number')
 args = argpar.parse_args()
 
 def backtick(cmd):
@@ -27,34 +29,60 @@ def pdfinfo(filename):
     cmd = ['pdfinfo', filename]
     return backtick(cmd)
 
+_re_pageno_footline = re.compile(r'^( +)\d+( *)/( *)\d+( *)$', re.M)
 def pdftotext(filename, first, last=None):
+    global _re_pageno_footline
     if last is None:
         last = first
     cmd = [ 'pdftotext', '-f', str(first), '-l', str(last), '-fixed', '4', filename, '-']
-    return backtick(cmd)
+    out = backtick(cmd)
+    return _re_pageno_footline.sub("\\g<1>%d\\g<2>/\\g<3>%d\\g<4>" % (page, npages), out, 1)
+
+def pdfpages(filename):
+    out = pdfinfo(filename)
+    m = re.search(r'^Pages: +(?P<pages>\d+)$', out, re.M|re.U)
+    if not m:
+        raise RuntimeError('Could not determine number of pages in PDF')
+    return int(m.group('pages'))
+
+def pagerange(npages):
+    if args.first_page is not None:
+        first_page = args.first_page
+    else:
+        first_page = 1
+    if args.last_page is not None:
+        last_page = min(args.last_page, npages)
+    else:
+        last_page = npages
+    return (first_page, last_page)
 
 if args.output:
     outfile = open(args.output, 'wt')
 else:
     outfile = sys.stdout
 
-karta = veetou.KartaZaliczen()
-header = karta.generate_subjects_header()
-outfile.write(args.separator.join(header) + '\n')
-for filename in args.inputfile:
-    out = pdfinfo(filename)
-    m = re.search(r'^Pages: +(?P<pages>\d+)$', out, re.M|re.U)
-    if not m:
-        raise RuntimeError('Could not determine number of pages in PDF')
-    npages = int(m.group('pages'))
-    for page in range(1,npages+1):
-        lines = pdftotext(filename, page).splitlines()
-        karta.reset(file = filename, page = page, pages = npages)
-        karta.parse(lines)
-        table = karta.generate_subjects_table()
-        if len(table) > 0:
-            s = u'\n'.join([ args.separator.join(row) for row in table ]) + u'\n'
-            outfile.write(s)
+if args.output_format == 'txt':
+    for filename in args.inputfile:
+        npages = pdfpages(filename)
+        first_page, last_page = pagerange(npages)
+        for page in range(first_page, last_page + 1):
+            txt = pdftotext(filename, page)
+            outfile.write(txt)
+else:
+    karta = veetou.KartaZaliczen()
+    header = karta.generate_subjects_header()
+    outfile.write(args.separator.join(header) + '\n')
+    for filename in args.inputfile:
+        npages = pdfpages(filename)
+        first_page, last_page = pagerange(npages)
+        for page in range(first_page, last_page + 1):
+            lines = pdftotext(filename, page).splitlines()
+            karta.reset(file = filename, page = page, pages = npages)
+            karta.parse(lines)
+            table = karta.generate_subjects_table()
+            if len(table) > 0:
+                s = u'\n'.join([ args.separator.join(row) for row in table ]) + u'\n'
+                outfile.write(s)
 
 # Local Variables:
 # # tab-width:4
