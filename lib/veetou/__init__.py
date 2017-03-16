@@ -25,9 +25,10 @@ class KartaZaliczen(object):
         re.compile(r'^ *(?P<page>\d+)/(?P<pages>\d+) *$'),
         re.compile(r'^ *(?P<footer>Wygenerowano( +\S+)+) *$')
     ]
+    _re_specextra = re.compile(r'^ {52,80}(?P<speciality>\S+(?: {1,3}\S+)*)? *$')
 
     _re_subject = re.compile(r'^ *(?P<code>ML\.\S+)(?: {1,38}(?P<name>\S+(?: {1,4}\S+)*))? +(?P<w>\d+) +(?P<c>\d+) +(?P<l>\d+) +(?P<p>\d+) +(?P<s>\d+) +(?P<credit_type>Egz\.?|Zal\.?) +(?P<ects>\d+)(?: {1,20}(?P<tutor>\S+(?: {1,3}\S+)*))?( +(?P<grade>\S{3,5}))?( +(?P<date>\d\d\.\d\d\.\d\d\d\d))? *$')
-    _re_nearby = re.compile(r'^ {8,48}(?P<name>\S+(?: {1,3}\S+)*)?(?: {36,100}(?P<tutor>\S+(?: {1,3}\S+)*))? *$')
+    _re_subjextra = re.compile(r'^ {8,48}(?P<name>\S+(?: {1,3}\S+)*)?(?: {36,100}(?P<tutor>\S+(?: {1,3}\S+)*))? *$')
 
     _re_firstname = re.compile(r'\b(?:' + r'|'.join(veetou.firstnames.name_list) + r')\b')
     _re_tutprefix = re.compile(r'\b(?:prof|nzw|dr|phd|hab|doc|mgr|inż|lic)\b')
@@ -121,16 +122,32 @@ class KartaZaliczen(object):
 
     def _extract_summary(self):
         re_summary = KartaZaliczen._re_summary[:]
+        re_specextra = KartaZaliczen._re_specextra
+        stack = []
         # extract summary
         for line in self.remaining_lines:
-           m = None
-           for r in re_summary:
-               m = r.match(line)
-               if m:
-                   self.summary.update(m.groupdict())
-                   re_summary.remove(r)
-                   self.parsed_lines.append(line)
-                   break
+            m = None
+            for r in re_summary:
+                m = r.match(line)
+                if m:
+                    gd = m.groupdict()
+                    self.summary.update(gd)
+                    re_summary.remove(r)
+                    self.parsed_lines.append(line)
+                    stack.append(gd)
+                    break
+            if m is None:
+                if (len(stack) > 0) and stack[-1].get('speciality'):
+                    # we're one line after the "term ... speciality" line
+                    m = re_specextra.match(line)
+                    if m:
+                        if m.group('speciality'):
+                            self.summary['speciality'] = ' '.join([self.summary['speciality'], m.group('speciality')])
+                        self.parsed_lines.append(line)
+                        stack.append(dict()) # finish the "term ... specialty" lookahead
+            if m is None:
+                stack.append(dict())
+
         if self.file:
             self.summary['file'] = str(self.file)
         if self.page:
@@ -141,7 +158,7 @@ class KartaZaliczen(object):
 
     def _extract_subjects(self):
         r = KartaZaliczen._re_subject
-        n = KartaZaliczen._re_nearby
+        n = KartaZaliczen._re_subjextra
         for line in self.remaining_lines:
             mn = n.match(line)
             mr = r.match(line)
@@ -219,6 +236,13 @@ class KartaZaliczen(object):
             sys.stderr.write("%s: page %s: warning: could not match tutors (found %d) to subjects (found %d)\n" % (self.summary.get('file', self.file), self.summary.get('page','(unknown)'), len(tutors), len(self.subjects)))
             sys.stderr.write("%r\n" % tutors)
 
+    def _normalize_strings(self):
+        def normalize(s):
+            return re.sub('\s+', ' ', str(s or ''))
+        self.summary = { k: normalize(v) for k,v in self.summary.items() }
+        for i in range(0,len(self.subjects)):
+            self.subjects[i] = { k: normalize(v) for k,v in self.subjects[i].items() }
+
     def parse(self, lines):
         self.remaining_lines = lines[:]
         self._remove_empty_lines()
@@ -227,6 +251,7 @@ class KartaZaliczen(object):
         if len(self.subjects) > 0:
             self._subject_names_heuristics()
             self._subject_tutors_heuristics()
+        self._normalize_strings()
 
     def generate_subjects_header(self, **kw):
         fields = kw.get('fields', self.subject_fields)
