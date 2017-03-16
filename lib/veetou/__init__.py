@@ -26,11 +26,11 @@ class KartaZaliczen(object):
         re.compile(r'^ *(?P<footer>Wygenerowano( +\S+)+) *$')
     ]
 
-    _re_subject = re.compile(r'^ *(?P<code>ML\.\S+)(?: {1,38}(?P<name>\S+(?: {1,4}\S+)*))? +(?P<w>\d+) +(?P<c>\d+) +(?P<l>\d+) +(?P<p>\d+) +(?P<s>\d+) +(?P<credit_type>Egz\.?|Zal\.?) +(?P<ects>\d+)(?: {1,20}(?P<tutor>\S+(?: {1,3}\S+)*))? +(?P<grade>\S{3,5})? +(?P<date>\d\d\.\d\d\.\d\d\d\d)? *$')
+    _re_subject = re.compile(r'^ *(?P<code>ML\.\S+)(?: {1,38}(?P<name>\S+(?: {1,4}\S+)*))? +(?P<w>\d+) +(?P<c>\d+) +(?P<l>\d+) +(?P<p>\d+) +(?P<s>\d+) +(?P<credit_type>Egz\.?|Zal\.?) +(?P<ects>\d+)(?: {1,20}(?P<tutor>\S+(?: {1,3}\S+)*))?( +(?P<grade>\S{3,5}))?( +(?P<date>\d\d\.\d\d\.\d\d\d\d))? *$')
     _re_nearby = re.compile(r'^ {8,48}(?P<name>\S+(?: {1,3}\S+)*)?(?: {36,100}(?P<tutor>\S+(?: {1,3}\S+)*))? *$')
 
     _re_firstname = re.compile(r'\b(?:' + r'|'.join(veetou.firstnames.name_list) + r')\b')
-    _re_tutprefix = re.compile(r'\b(?:prof|nzw|dr|hab|mgr|inż|doc|phd)\b')
+    _re_tutprefix = re.compile(r'\b(?:prof|nzw|dr|phd|hab|doc|mgr|inż|lic)\b')
 
     _subject_couples = [
         r'\w+ I',
@@ -240,7 +240,7 @@ class KartaZaliczen(object):
         for subject in self.subjects:
             fullrow = subject.copy()
             fullrow.update(self.summary)
-            table.append([ str(fullrow[k]) for k in fields ])
+            table.append([ str(fullrow[k] or '') for k in fields ])
         return table
 
 
