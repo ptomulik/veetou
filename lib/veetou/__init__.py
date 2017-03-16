@@ -1,5 +1,6 @@
 # -*- coding: utf8 -*-
 
+from veetou.util import pdfinfo, pdftotext, pdfpages
 from veetou.kartazaliczen import KartaZaliczen
 
 

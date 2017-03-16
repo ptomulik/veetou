@@ -20,34 +20,6 @@ argpar.add_argument('--raw-header', dest='raw_header', action='store_true', help
 argpar.add_argument('--field-info', dest='field_info', action='store_true', help='dump list of predefined fields and exit')
 args = argpar.parse_args()
 
-def backtick(cmd):
-    process = subprocess.Popen(cmd, stdout = subprocess.PIPE)
-    out, err = process.communicate()
-    status = process.wait()
-    if status != 0 and status != 2:
-        raise RuntimeError('command %s returned non-zero exit code %d' %(cmd[0], status))
-    return out.decode('utf-8')
-
-def pdfinfo(filename):
-    cmd = ['pdfinfo', filename]
-    return backtick(cmd)
-
-_re_pageno_footline = re.compile(r'^( +)\d+( *)/( *)\d+( *)$', re.M)
-def pdftotext(filename, first, last=None):
-    global _re_pageno_footline
-    if last is None:
-        last = first
-    cmd = [ 'pdftotext', '-f', str(first), '-l', str(last), '-fixed', '4', filename, '-']
-    out = backtick(cmd)
-    return _re_pageno_footline.sub("\\g<1>%d\\g<2>/\\g<3>%d\\g<4>" % (page, npages), out, 1)
-
-def pdfpages(filename):
-    out = pdfinfo(filename)
-    m = re.search(r'^Pages: +(?P<pages>\d+)$', out, re.M|re.U)
-    if not m:
-        raise RuntimeError('Could not determine number of pages in PDF')
-    return int(m.group('pages'))
-
 def pagerange(npages):
     if args.first_page is not None:
         first_page = args.first_page
@@ -73,10 +45,10 @@ else:
 
 if args.output_type == 'txt':
     for filename in args.inputfile:
-        npages = pdfpages(filename)
+        npages = veetou.pdfpages(filename)
         first_page, last_page = pagerange(npages)
         for page in range(first_page, last_page + 1):
-            txt = pdftotext(filename, page)
+            txt = veetou.pdftotext(filename, page, pages = npages)
             outfile.write(txt)
 else:
     kw = dict()
@@ -86,16 +58,16 @@ else:
     header = karta.generate_subjects_header(raw = args.raw_header, **kw)
     outfile.write(args.separator.join(header) + '\n')
     for filename in args.inputfile:
-        npages = pdfpages(filename)
+        npages = veetou.pdfpages(filename)
         first_page, last_page = pagerange(npages)
         for page in range(first_page, last_page + 1):
-            lines = pdftotext(filename, page).splitlines()
+            lines = veetou.pdftotext(filename, page, pages = npages).splitlines()
             karta.reset(file = filename, page = page, pages = npages)
             karta.parse(lines)
             table = karta.generate_subjects_table(**kw)
             if len(table) > 0:
-                s = u'\n'.join([ args.separator.join(row) for row in table ]) + u'\n'
-                outfile.write(s)
+                s = u'\n'.join([ args.separator.join(row) for row in table ])
+                outfile.write(u"%s\n" % s)
 
 # Local Variables:
 # # tab-width:4
