@@ -12,9 +12,19 @@ class KartaZaliczen(object):
         re.compile(r'^ *(?P<university>POLITECHN(:?\w+)(?: +\w+)+) *$'),
         re.compile(r'^ *(?P<tour>Studia(?: +\S+)+) *$'),
         re.compile(r'^ *(?P<title>Karta(?: +\S+)+) *$'),
-        re.compile(r'^ *(?P<student_id>\d+) *- *(?:(?P<first_name>(?:[^\W\d_]|-)+( +(?:[^\W\d_]|-)+)*) +)?(?P<last_name>(?:[^\W\d_]|-)+) *$'),
-        re.compile(r'^ *Semestr +akademicki: *(?P<semester>\S+(?: +\S+)*) *Kierunek: *(?P<course>\S+( +\S+)*) *$'),
-        re.compile(r'^ *Semestr +studiów: *(?P<term>\S+(?: +\S+)*) *Specjalność: *(?P<speciality>\S+(?: +\S+)*) *$'),
+        re.compile(
+            r'^ *(?P<student_id>\d+)' + r' *- *' +
+            r'(?:(?P<first_name>(?:[^\W\d_]|-)+( +(?:[^\W\d_]|-)+)*) +)?' +
+            r'(?P<last_name>(?:[^\W\d_]|-)+) *$'
+        ),
+        re.compile(
+            r'^ *Semestr +akademicki: *(?P<semester>\S+(?: +\S+)*) *' +
+            r'Kierunek: *(?P<course>\S+( +\S+)*) *$'
+        ),
+        re.compile(
+            r'^ *Semestr +studiów: *(?P<term>\S+(?: +\S+)*) *' +
+            r'Specjalność: *(?P<speciality>\S+(?: +\S+)*) *$'
+        ),
         re.compile(r'^ *Wymiar +godzin +(?:Forma)? *$'),
         re.compile(r'^ *Nr katalogowy +Nazwa przedmiotu +ECTS +Prowadzący +Ocena +Data *$'),
         re.compile(r'^ *W +C +L +P +S +zalicz: *$'),
@@ -28,19 +38,94 @@ class KartaZaliczen(object):
     _re_specextra = re.compile(r'^ {52,80}(?P<speciality>\S+(?: {1,2}\S+)*)? *$')
 
     _re_subject = re.compile(
-        r'^ *(?P<code>ML\.\w+)' +                                                   # code
-        r'(?: {1,38}(?P<name>\S+(?: {1,2}\S+)*))?' +                                # name
-        r' +(?P<w>\d+) +(?P<c>\d+) +(?P<l>\d+) +(?P<p>\d+) +(?P<s>\d+)' +           # hours
-        r' +(?P<credit_type>Egz\.?|Zal\.?)' +                                       # credit type
-        r' +(?P<ects>\d+)' +                                                        # ECTS
-        r'(?: {1,20}(?P<tutor>(?:[^\W\d_]|-)+\.?(?: {1,2}(?:[^\W\d_]|-)+\.?)*))?' + # tutor
-        r'( +(?P<grade>\S{3,5}))?' +                                                # grade
-        r'( +(?P<date>\d\d\.\d\d\.\d\d\d\d))? *$'                                   # date
+        r'^ *(?P<subj_code>ML\.\w+)' +                                              # code
+        r'(?: {1,38}(?P<subj_name>\S+(?: {1,2}\S+)*))?' +                           # name
+        r' +(?P<subj_w>\d+) +(?P<subj_c>\d+) +(?P<subj_l>\d+) +(?P<subj_p>\d+) +(?P<subj_s>\d+)' +           # hours
+        r' +(?P<subj_credit_kind>Egz\.?|Zal\.?)' +                                       # credit type
+        r' +(?P<subj_ects>\d+)' +                                                   # ECTS
+        r'(?: {1,20}(?P<subj_tutor>(?:[^\W\d_]|-)+\.?(?: {1,2}(?:[^\W\d_]|-)+\.?)*))?' + # tutor
+        r'( +(?P<subj_grade>\S{3,5}))?' +                                                # grade
+        r'( +(?P<subj_grade_date>\d\d\.\d\d\.\d\d\d\d))? *$'                                   # date
     )
-    _re_subjextra = re.compile(r'^ {8,48}(?P<name>\S+(?: {1,2}\S+)*)?(?: {36,100}(?P<tutor>\S+(?: {1,2}\S+)*))? *$')
+    _re_subjextra = re.compile(r'^ {8,48}(?P<subj_name>\S+(?: {1,2}\S+)*)?(?: {36,100}(?P<subj_tutor>\S+(?: {1,2}\S+)*))? *$')
 
     _re_firstname = re.compile(r'\b(?:' + r'|'.join(veetou.firstnames.name_list) + r')\b')
     _re_tutprefix = re.compile(r'\b(?:prof|nzw|dr|phd|hab|doc|mgr|inż|lic)\b')
+
+    _all_summary_fields = [
+        'faculty',
+        'university',
+        'tour',
+        'title',
+        'student_id',
+        'first_name',
+        'last_name',
+        'semester',
+        'course',
+        'term',
+        'speciality',
+        'ects_mandatory',
+        'ects_other',
+        'ects_total',
+        'ects_attained',
+        'file',
+        'page',
+        'pages',
+        'footer',
+    ]
+
+    _all_subject_fields = [
+        'subj_code',
+        'subj_name',
+        'subj_w',
+        'subj_c',
+        'subj_l',
+        'subj_p',
+        'subj_s',
+        'subj_credit_kind',
+        'subj_ects',
+        'subj_tutor',
+        'subj_grade',
+        'subj_grade_date',
+    ]
+
+    _all_fields = _all_summary_fields + _all_subject_fields
+
+    _all_field_names = {
+        # summary
+        'faculty'           : 'Wydział',
+        'university'        : 'Uczelnia',
+        'tour'              : 'Tura studiów',
+        'title'             : 'Tytuł karty',
+        'student_id'        : 'Nr albumu',
+        'first_name'        : 'Imię',
+        'last_name'         : 'Nazwisko',
+        'semester'          : 'Semestr akademicki',
+        'course'            : 'Kierunek',
+        'term'              : 'Semestr studiów',
+        'speciality'        : 'Specjalność',
+        'ects_mandatory'    : 'Punkty ECTS obowiązkowe',
+        'ects_other'        : 'Punkty ECTS pozostałe',
+        'ects_total'        : 'Razem punkty ECTS',
+        'ects_attained'     : 'Uzyskane punkty ECTS',
+        'file'              : 'Plik',
+        'page'              : 'Nr strony',
+        'pages'             : 'Liczba stron',
+        # subject
+        'subj_code'         : 'Nr katalogowy (VERBIS)',
+        'subj_name'         : 'Nazwa',
+        'subj_w'            : 'W',
+        'subj_c'            : 'C',
+        'subj_l'            : 'L',
+        'subj_p'            : 'P',
+        'subj_s'            : 'S',
+        'subj_credit_kind'  : 'Forma zaliczenia',
+        'subj_ects'         : 'ECTS',
+        'subj_tutor'        : 'Prowadzący',
+        'subj_grade'        : 'Ocena',
+        'subj_grade_date'   : 'Data',
+
+    }
 
     _subject_couples = [
         r'\w+ I',
@@ -62,7 +147,7 @@ class KartaZaliczen(object):
 
     _re_subject_couple = re.compile(r'\b(?:' + r'|'.join(_subject_couples) + r')\b')
 
-    _default_subject_fields = [
+    _default_subjects_table_fields = [
         'student_id',
         'first_name',
         'last_name',
@@ -70,52 +155,28 @@ class KartaZaliczen(object):
         'course',
         'term',
         'speciality',
-        'code',
-        'name',
-        'w',
-        'c',
-        'l',
-        'p',
-        's',
-        'credit_type',
-        'ects',
-        'tutor',
-        'grade',
-        'date',
+        'subj_code',
+        'subj_name',
+        'subj_w',
+        'subj_c',
+        'subj_l',
+        'subj_p',
+        'subj_s',
+        'subj_credit_kind',
+        'subj_ects',
+        'subj_tutor',
+        'subj_grade',
+        'subj_grade_date',
         'file',
         'page'
     ]
-
-    _default_subject_columns = {
-        'student_id'    : 'Nr albumu',
-        'first_name'    : 'Imię',
-        'last_name'     : 'Nazwisko',
-        'semester'      : 'Semestr akademicki',
-        'course'        : 'Kierunek',
-        'term'          : 'Semestr studiów',
-        'speciality'    : 'Specjalność',
-        'code'          : 'Nr katalogowy (VERBIS)',
-        'name'          : 'Nazwa',
-        'w'             : 'W',
-        'c'             : 'C',
-        'l'             : 'L',
-        'p'             : 'P',
-        's'             : 'S',
-        'credit_type'   : 'Forma zalicz',
-        'ects'          : 'ECTS',
-        'tutor'         : 'Prowadzący',
-        'grade'         : 'Ocena',
-        'date'          : 'Data',
-        'file'          : 'Plik',
-        'page'          : 'Strona'
-    }
 
     def __init__(self, **kw):
         self.reset(**kw)
 
     def reset(self, **kw):
-        self.subject_fields = kw.get('subject_fields', KartaZaliczen._default_subject_fields)
-        self.subject_columns = kw.get('subject_columns', KartaZaliczen._default_subject_columns)
+        self.subjects_table_fields = kw.get('subjects_table_fields', self._default_subjects_table_fields)
+        self.subjects_table_columns = kw.get('subjects_table_columns', self._all_field_names)
         self.summary = kw.get('summary', dict())
         self.subjects = kw.get('subjects', [])
         self._subject_names = []
@@ -173,19 +234,19 @@ class KartaZaliczen(object):
             mr = r.match(line)
             if mr:
                 gd = mr.groupdict()
-                if gd['name']:
-                    self._subject_names.append(gd['name'])
-                if gd['tutor']:
-                    self._subject_tutors.append(gd['tutor'])
+                if gd['subj_name']:
+                    self._subject_names.append(gd['subj_name'])
+                if gd['subj_tutor']:
+                    self._subject_tutors.append(gd['subj_tutor'])
                 self.subjects.append(gd)
                 self.parsed_lines.append(line)
                 cross = True
             elif mn:
                 gd = mn.groupdict()
-                if gd['name']:
-                    self._subject_names.append(gd['name'])
-                if gd['tutor']:
-                    self._subject_tutors.append(gd['tutor'])
+                if gd['subj_name']:
+                    self._subject_names.append(gd['subj_name'])
+                if gd['subj_tutor']:
+                    self._subject_tutors.append(gd['subj_tutor'])
                 self.parsed_lines.append(line)
         self.remaining_lines[:] = [ x for x in self.remaining_lines if not x in self.parsed_lines ]
 
@@ -209,7 +270,7 @@ class KartaZaliczen(object):
             names.append(current)
         if len(self.subjects) == len(names):
             for i in range(0,len(names)):
-                self.subjects[i]['name'] = names[i]
+                self.subjects[i]['subj_name'] = names[i]
             self._subject_names = names[:]
         else:
             sys.stderr.write("%s: page %s: warning: could not match subject names (found %d) to subjects (found %d)\n" % (self.summary.get('file', self.file), self.summary.get('page','(unknown)'), len(names), len(self.subjects)))
@@ -239,7 +300,7 @@ class KartaZaliczen(object):
             tutors.append(current)
         if len(self.subjects) == len(tutors):
             for i in range(0,len(tutors)):
-                self.subjects[i]['tutor'] = tutors[i]
+                self.subjects[i]['subj_tutor'] = tutors[i]
             self._subject_tutors = tutors[:]
         else:
             sys.stderr.write("%s: page %s: warning: could not match tutors (found %d) to subjects (found %d)\n" % (self.summary.get('file', self.file), self.summary.get('page','(unknown)'), len(tutors), len(self.subjects)))
@@ -263,13 +324,13 @@ class KartaZaliczen(object):
         self._normalize_strings()
 
     def generate_subjects_header(self, **kw):
-        fields = kw.get('fields', self.subject_fields)
-        columns = self.subject_columns.copy()
+        fields = kw.get('fields', self.subjects_table_fields)
+        columns = self.subjects_table_columns.copy()
         columns.update(kw.get('columns', {}))
         return [ str(columns.get(k,k)) for k in fields ]
 
     def generate_subjects_table(self, **kw):
-        fields = kw.get('fields', self.subject_fields)
+        fields = kw.get('fields', self.subjects_table_fields)
         table = []
         for subject in self.subjects:
             fullrow = subject.copy()
