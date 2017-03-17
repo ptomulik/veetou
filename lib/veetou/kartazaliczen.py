@@ -10,7 +10,7 @@ class KartaZaliczen(object):
     _re_card = [
         re.compile(r'^ *(?P<faculty>WYDZIAŁ(?: +\S+)+) *$'),
         re.compile(r'^ *(?P<university>POLITECHN(:?\w+)(?: +\w+)+) *$'),
-        re.compile(r'^ *(?P<tour>Studia(?: +\S+)+) *$'),
+        re.compile(r'^ *(?P<course>Studia(?: +\S+)+) *$'),
         re.compile(r'^ *(?P<title>Karta(?: +\S+)+) *$'),
         re.compile(
             r'^ *(?P<student_id>\d+)' + r' *- *' +
@@ -19,7 +19,7 @@ class KartaZaliczen(object):
         ),
         re.compile(
             r'^ *Semestr +akademicki: *(?P<semester>\S+(?: +\S+)*) *' +
-            r'Kierunek: *(?P<course>\S+( +\S+)*) *$'
+            r'Kierunek: *(?P<study_field>\S+( +\S+)*) *$'
         ),
         re.compile(
             r'^ *Semestr +studiów: *(?P<term>\S+(?: +\S+)*) *' +
@@ -55,13 +55,13 @@ class KartaZaliczen(object):
     _all_card_fields = [
         'faculty',
         'university',
-        'tour',
+        'course',
         'title',
         'student_id',
         'first_name',
         'last_name',
         'semester',
-        'course',
+        'study_field',
         'term',
         'speciality',
         'ects_mandatory',
@@ -95,13 +95,13 @@ class KartaZaliczen(object):
         # card
         'faculty'           : 'Wydział',
         'university'        : 'Uczelnia',
-        'tour'              : 'Tura studiów',
+        'course'            : 'Rodzaj studiów',
         'title'             : 'Tytuł karty',
         'student_id'        : 'Nr albumu',
         'first_name'        : 'Imię',
         'last_name'         : 'Nazwisko',
         'semester'          : 'Semestr akademicki',
-        'course'            : 'Kierunek',
+        'study_field'       : 'Kierunek',
         'term'              : 'Semestr studiów',
         'speciality'        : 'Specjalność',
         'ects_mandatory'    : 'Punkty ECTS obowiązkowe',
@@ -153,7 +153,7 @@ class KartaZaliczen(object):
         'first_name',
         'last_name',
         'semester',
-        'course',
+        'study_field',
         'term',
         'speciality',
         'subj_code',
@@ -171,6 +171,18 @@ class KartaZaliczen(object):
         'file',
         'page'
     ]
+
+    @staticmethod
+    def default_subject_table_fields():
+        return KartaZaliczen._default_subjects_table_fields[:]
+
+    @staticmethod
+    def all_fields():
+        return KartaZaliczen._all_fields[:]
+
+    @staticmethod
+    def all_field_names():
+        return KartaZaliczen._all_field_names.copy()
 
     def __init__(self, **kw):
         self.reset(**kw)
