@@ -2,6 +2,7 @@
 
 from veetou.util import pdfinfo, pdftotext, pdfpages
 from veetou.kartazaliczen import KartaZaliczen
+from veetou.maps import Maps, Map
 
 
 # Local Variables:

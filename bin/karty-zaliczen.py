@@ -28,6 +28,7 @@ argpar.add_argument('--fields-include', action=SpliAppendTokens, dest='include_f
 argpar.add_argument('--fields-exclude', action=SpliAppendTokens, dest='exclude_fields', help='exclude these fields from output')
 argpar.add_argument('--raw-header', dest='raw_header', action='store_true', help='use raw field names instead of column names')
 argpar.add_argument('--field-info', dest='field_info', action='store_true', help='dump list of predefined fields and exit')
+argpar.add_argument('-m', '--map', action='append',  dest='maps', metavar='FILE', help='insert extra values from map file(s)')
 args = argpar.parse_args()
 
 def pagerange(npages):
@@ -64,13 +65,17 @@ else:
     kw = dict()
     if args.fields:
         kw['fields'] = args.fields
-    else:
-        kw['fields'] = veetou.KartaZaliczen.default_subject_table_fields()
-
     if args.include_fields:
-        kw['fields'] = kw['fields'] + [ f for f in args.include_fields if not f in set(kw['fields']) ]
+        kw['include_fields'] = args.include_fields
     if args.exclude_fields:
-        kw['fields'][:] = [ f for f in kw['fields'] if not f in args.exclude_fields ]
+        kw['exclude_fields'] = args.exclude_fields
+
+    maps = veetou.Maps()
+    if args.maps:
+        for m in args.maps:
+            with open(m, 'rt') as f:
+                maps.parse(f.read().splitlines())
+    kw['maps'] = maps
 
     karta = veetou.KartaZaliczen()
     header = karta.generate_subjects_header(raw = args.raw_header, **kw)
@@ -82,7 +87,7 @@ else:
             lines = veetou.pdftotext(filename, page, pages = npages).splitlines()
             karta.reset(file = filename, page = page, pages = npages)
             karta.parse(lines)
-            table = karta.generate_subjects_table(**kw)
+            table = karta.generate_subjects_rows(**kw)
             if len(table) > 0:
                 s = u'\n'.join([ args.separator.join(row) for row in table ])
                 outfile.write(u"%s\n" % s)

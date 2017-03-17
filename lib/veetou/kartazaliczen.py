@@ -91,7 +91,7 @@ class KartaZaliczen(object):
 
     _all_fields = _all_card_fields + _all_subject_fields
 
-    _all_field_names = {
+    _all_field_titles = {
         # card
         'faculty'           : 'Wydział',
         'university'        : 'Uczelnia',
@@ -173,7 +173,7 @@ class KartaZaliczen(object):
     ]
 
     @staticmethod
-    def default_subject_table_fields():
+    def default_subjects_table_fields():
         return KartaZaliczen._default_subjects_table_fields[:]
 
     @staticmethod
@@ -181,17 +181,18 @@ class KartaZaliczen(object):
         return KartaZaliczen._all_fields[:]
 
     @staticmethod
-    def all_field_names():
-        return KartaZaliczen._all_field_names.copy()
+    def all_field_titles():
+        return KartaZaliczen._all_field_titles.copy()
 
     def __init__(self, **kw):
         self.reset(**kw)
 
     def reset(self, **kw):
-        self.subjects_table_fields = kw.get('subjects_table_fields', self._default_subjects_table_fields)
-        self.subjects_table_columns = kw.get('subjects_table_columns', self._all_field_names)
+        self.subjects_table_fields = kw.get('subjects_table_fields')
+        self.subjects_table_columns = kw.get('subjects_table_columns', self._all_field_titles)
         self.card = kw.get('card', dict())
         self.subjects = kw.get('subjects', [])
+        self.maps = kw.get('maps', veetou.maps.Maps())
         self._subject_names = []
         self._subject_tutors = []
         self.parsed_lines = []
@@ -336,23 +337,59 @@ class KartaZaliczen(object):
             self._subject_tutors_heuristics()
         self._normalize_strings()
 
-    def generate_subjects_header(self, **kw):
+    def _subjects_table_fields(self, **kw):
+        maps = kw.get('maps', self.maps)
         fields = kw.get('fields', self.subjects_table_fields)
+        exclude = kw.get('exclude_fields', [])
+        include = kw.get('include_fields', [])
+        if fields is None:
+            fields = []
+            for f in self._default_subjects_table_fields:
+                fields.append(f)
+                if f in maps:
+                    fields.extend(maps[f].valuenames)
+        fields[:] = [ f for f in fields if f not in exclude or f in include ]
+        fields.extend([f for f in include if not f in fields])
+        return fields
+
+    def _subjects_table_columns(self, fields, **kw):
+        maps = kw.get('maps', self.maps)
+        columns = self.subjects_table_columns.copy()
+        columns.update(maps.colnames)
+        columns.update(kw.get('columns', dict()))
+        return [ str(columns.get(k,k)) for k in fields ]
+
+    def _generate_values(self, fields, maps, row):
+        values = []
+        for f in fields:
+            values.append(str(row[f] or ''))
+            if f in maps:
+                for val in maps[f].get(row[f], maps[f].default()):
+                    values.append(str(val or ''))
+        return values
+
+
+    def generate_subjects_header(self, **kw):
+        fields = self._subjects_table_fields(**kw)
         if kw.get('raw'):
             return fields
-        else:
-            columns = self.subjects_table_columns.copy()
-            columns.update(kw.get('columns', {}))
-            return [ str(columns.get(k,k)) for k in fields ]
+        try: del kw['fields']
+        except KeyError: pass
+        return self._subjects_table_columns(fields, **kw)
 
-    def generate_subjects_table(self, **kw):
-        fields = kw.get('fields', self.subjects_table_fields)
-        table = []
+    def generate_subjects_rows(self, **kw):
+        fields = self._subjects_table_fields(**kw)
+        maps = kw.get('maps', self.maps)
+        rows = []
         for subject in self.subjects:
             fullrow = subject.copy()
             fullrow.update(self.card)
-            table.append([ str(fullrow[k] or '') for k in fields ])
-        return table
+            mapped = dict()
+            for f,v in fullrow.items():
+                mapped.update(maps.get(f,dict()).get(v,dict()))
+            fullrow.update(mapped)
+            rows.append([str(fullrow.get(k) or '') for k in fields])
+        return rows
 
 
 
