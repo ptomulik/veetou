@@ -128,7 +128,7 @@ class KartaZaliczen(object):
 
     }
 
-    _subject_couples = [
+    _subject_word_sequences = [
         r'\w+ I',
         r'\w+ II',
         r'\w+ III',
@@ -146,7 +146,7 @@ class KartaZaliczen(object):
         r'CAD/CAM/CAE Systems',
     ]
 
-    _re_subject_couple = re.compile(r'\b(?:' + r'|'.join(_subject_couples) + r')\b')
+    _re_subject_word_sequence = re.compile(r'\b(?:' + r'|'.join(_subject_word_sequences) + r')\b')
 
     _default_subjects_table_fields = [
         'student_id',
@@ -266,15 +266,15 @@ class KartaZaliczen(object):
     def _subject_names_heuristics(self):
         names = []
         current = ''
-        re_couple = KartaZaliczen._re_subject_couple
+        re_word_sequence = KartaZaliczen._re_subject_word_sequence
         for part in self._subject_names:
             if not current:
                 current = part
             elif len(part) > 0:
                 new = ' '.join([current, part])
-                if not part[0].isupper() or re_couple.search(new) and \
-                   not re_couple.search(current) and \
-                   not re_couple.search(part):
+                if not part[0].isupper() or re_word_sequence.search(new) and \
+                   not re_word_sequence.search(current) and \
+                   not re_word_sequence.search(part):
                     current = new
                 else:
                     names.append(current)
