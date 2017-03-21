@@ -43,7 +43,7 @@ class KartaZaliczen(object):
         r' +(?P<subj_w>\d+) +(?P<subj_c>\d+) +(?P<subj_l>\d+) +(?P<subj_p>\d+) +(?P<subj_s>\d+)' +           # hours
         r' +(?P<subj_credit_kind>Egz\.?|Zal\.?)' +                                       # credit type
         r' +(?P<subj_ects>\d+)' +                                                   # ECTS
-        r'(?: {1,20}(?P<subj_tutor>(?:[^\W\d_]|-)+\.?(?: {1,2}(?:[^\W\d_]|-)+\.?)*))?' + # tutor
+        r'(?: {1,20}(?P<subj_tutor>(?:[^\W\d_],?|-)+\.?(?: {1,2}(?:[^\W\d_],?|-)+\.?)*))?' + # tutor
         r'( +(?P<subj_grade>\S{3,5}))?' +                                                # grade
         r'( +(?P<subj_grade_date>\d\d\.\d\d\.\d\d\d\d))? *$'                                   # date
     )
@@ -288,7 +288,8 @@ class KartaZaliczen(object):
             self._subject_names = names[:]
         else:
             sys.stderr.write("%s: page %s: warning: could not match subject names (found %d) to subjects (found %d)\n" % (self.card.get('file', self.file), self.card.get('page','(unknown)'), len(names), len(self.subjects)))
-            sys.stderr.write("%r\n" % names)
+            sys.stderr.write("tutors:   %r\n" % names)
+            sys.stderr.write("subjects: %r\n" % [s['subj_code'] for s in self.subjects])
 
     def _subject_tutors_heuristics(self):
         tutors = []
@@ -300,7 +301,8 @@ class KartaZaliczen(object):
             if not current:
                 current = part
             elif len(part) > 0:
-                if re_firstname.search(current) and (re_tutprefix.match(part) \
+                if re_firstname.search(current) and not current.endswith(',') and \
+                  (re_tutprefix.match(part) \
                    or (not re_firstname.match(current.split(' ')[-1]) \
                        and re_firstname.match(part))):
                     tutors.append(current)
@@ -318,7 +320,8 @@ class KartaZaliczen(object):
             self._subject_tutors = tutors[:]
         else:
             sys.stderr.write("%s: page %s: warning: could not match tutors (found %d) to subjects (found %d)\n" % (self.card.get('file', self.file), self.card.get('page','(unknown)'), len(tutors), len(self.subjects)))
-            sys.stderr.write("%r\n" % tutors)
+            sys.stderr.write("tutors:   %r\n" % tutors)
+            sys.stderr.write("subjects: %r\n" % [s['subj_code'] for s in self.subjects])
 
     def _normalize_strings(self):
         def normalize(s):
