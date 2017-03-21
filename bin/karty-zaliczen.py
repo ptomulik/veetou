@@ -26,7 +26,7 @@ argpar.add_argument('-l', '--last', type=int, dest='last_page', help='last page 
 argpar.add_argument('--fields', action=SpliAppendTokens, dest='fields', help='fields that should appear in output (in order)')
 argpar.add_argument('--fields-include', action=SpliAppendTokens, dest='include_fields', help='include these (extra) fields in output')
 argpar.add_argument('--fields-exclude', action=SpliAppendTokens, dest='exclude_fields', help='exclude these fields from output')
-argpar.add_argument('--raw-header', dest='raw_header', action='store_true', help='use raw field names instead of column names')
+argpar.add_argument('-r', '--raw-header', dest='raw_header', action='store_true', help='use raw field names instead of column names')
 argpar.add_argument('--field-info', dest='field_info', action='store_true', help='dump list of predefined fields and exit')
 argpar.add_argument('-m', '--map', action='append',  dest='maps', metavar='FILE', help='insert extra values from map file(s)')
 args = argpar.parse_args()
