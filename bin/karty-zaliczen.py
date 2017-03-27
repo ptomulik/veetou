@@ -44,8 +44,8 @@ def pagerange(npages):
 
 if args.field_info:
     fields  = veetou.KartaZaliczen.all_fields()
-    names   = veetou.KartaZaliczen.all_field_names()
-    print(u'\n'.join([u'%s:%s' % (k,names[k]) for k in fields]))
+    titles   = veetou.KartaZaliczen.all_field_titles()
+    print(u'\n'.join([u'%s:%s' % (k,titles[k]) for k in fields]))
     exit(0)
 
 
