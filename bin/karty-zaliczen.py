@@ -18,8 +18,11 @@ class SpliAppendTokens(argparse._AppendAction):
 
 argpar = argparse.ArgumentParser()
 argpar.add_argument('inputfile', type=str, metavar='FILE', nargs='*', help='input file (pdf) to be processed')
+argpar.add_argument('-I', '--input-type', type=str, dest='input_type', choices = ['pdf', 'csv'], default='pdf', help='input format (default: pdf)')
+argpar.add_argument('-S', '--input-separator', type=str, dest='input_separator', metavar='SEP', default=';', help='cell separator (in input csv file, default: ";")')
+argpar.add_argument('-c', '--input-encoding', type=str, dest='input_encoding', metavar='CODE', default='utf8', help='character set used to encode input text (default: utf8)')
 argpar.add_argument('-O', '--output-type', type=str, dest='output_type', choices = ['csv', 'txt'], default='csv', help='output format (default: csv)')
-argpar.add_argument('-s', '--separator', type=str, dest='separator', metavar='SEP', default=';', help='field separator (for csv)')
+argpar.add_argument('-s', '--output-separator', type=str, dest='output_separator', metavar='SEP', default=';', help='field separator (for output csv, default: ";")')
 argpar.add_argument('-o', '--output', type=str, dest='output', metavar='FILE', help='output file name')
 argpar.add_argument('-f', '--first', type=int, dest='first_page', help='first page number')
 argpar.add_argument('-l', '--last', type=int, dest='last_page', help='last page number')
@@ -79,19 +82,28 @@ else:
 
     karta = veetou.KartaZaliczen()
     header = karta.generate_subjects_header(raw = args.raw_header, **kw)
-    outfile.write(args.separator.join(header) + '\n')
-    for filename in args.inputfile:
-        npages = veetou.pdfpages(filename)
-        first_page, last_page = pagerange(npages)
-        for page in range(first_page, last_page + 1):
-            lines = veetou.pdftotext(filename, page, pages = npages).splitlines()
-            karta.reset(file = filename, page = page, pages = npages)
-            karta.parse(lines)
-            table = karta.generate_subjects_rows(**kw)
-            if len(table) > 0:
-                s = u'\n'.join([ args.separator.join(row) for row in table ])
-                outfile.write(u"%s\n" % s)
-
+    outfile.write(args.output_separator.join(header) + '\n')
+    if args.input_type == 'pdf':
+        for filename in args.inputfile:
+            npages = veetou.pdfpages(filename)
+            first_page, last_page = pagerange(npages)
+            for page in range(first_page, last_page + 1):
+                lines = veetou.pdftotext(filename, page, pages = npages).splitlines()
+                karta.reset(file = filename, page = page, pages = npages)
+                karta.parse_txt(lines)
+                table = karta.generate_subjects_rows(**kw)
+                if len(table) > 0:
+                    s = u'\n'.join([ args.output_separator.join(row) for row in table ])
+                    outfile.write(u"%s\n" % s)
+    else:
+        kw = { 'delimiter' : args.input_separator,
+               'encoding' : args.input_encoding }
+        for filename in args.inputfile:
+            npages = veetou.csvpages(filename, **kw)
+##            first_page, last_page = pagerange(npages)
+##            for page in range(first_page, last_page+1):
+##                pass
+##        raise NotImplementedError("parsing %s is not implemented yet" % args.input_type)
 # Local Variables:
 # # tab-width:4
 # # indent-tabs-mode:nil

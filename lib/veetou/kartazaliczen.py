@@ -330,7 +330,7 @@ class KartaZaliczen(object):
         for i in range(0,len(self.subjects)):
             self.subjects[i] = { k: normalize(v) for k,v in self.subjects[i].items() }
 
-    def parse(self, lines):
+    def parse_txt(self, lines):
         self.remaining_lines = lines[:]
         self._remove_empty_lines()
         self._extract_card()
@@ -339,6 +339,9 @@ class KartaZaliczen(object):
             self._subject_names_heuristics()
             self._subject_tutors_heuristics()
         self._normalize_strings()
+
+    def parse_csv(self, lines):
+        pass
 
     def _subjects_table_fields(self, **kw):
         maps = kw.get('maps', self.maps)
