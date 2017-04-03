@@ -14,8 +14,6 @@ class Map(collections.MutableMapping):
     def extend(self, valuenames):
         self._leftmargin = len(self.valuenames)
         self.valuenames.extend(valuenames)
-        for k in self._values.keys():
-            self._values[k].extend(len(valuenames) * [None])
 
     def setrow(self, key, values):
         if not key in self._values:
