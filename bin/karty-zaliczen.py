@@ -96,14 +96,14 @@ else:
                     s = u'\n'.join([ args.output_separator.join(row) for row in table ])
                     outfile.write(u"%s\n" % s)
     else:
-        kw = { 'delimiter' : args.input_separator,
-               'encoding' : args.input_encoding }
-        for filename in args.inputfile:
-            npages = veetou.csvpages(filename, **kw)
+##        kw = { 'delimiter' : args.input_separator,
+##               'encoding' : args.input_encoding }
+##        for filename in args.inputfile:
+##            npages = veetou.csvpages(filename, **kw)
 ##            first_page, last_page = pagerange(npages)
 ##            for page in range(first_page, last_page+1):
 ##                pass
-##        raise NotImplementedError("parsing %s is not implemented yet" % args.input_type)
+        raise NotImplementedError("parsing %s is not implemented yet" % args.input_type)
 # Local Variables:
 # # tab-width:4
 # # indent-tabs-mode:nil
