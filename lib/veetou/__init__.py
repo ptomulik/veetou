@@ -2,6 +2,7 @@
 
 from veetou.util import pdfinfo, pdftotext, pdfpages, csvpages
 from veetou.kartaosiagniec import KartaOsiagniec
+from veetou.protokolzaliczen import ProtokolZaliczen
 from veetou.maps import Maps, Map
 
 
