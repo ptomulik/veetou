@@ -23,13 +23,13 @@ class Map(collections.MutableMapping):
         self._values[key].update({ self.valuenames[i]:values[i-beg] for i in range(beg,end) })
 
     def __getitem__(self, key):
-        return self._values[self.__keytransform__(key)]
+        return self._values[self.__keywrap__(key)]
 
     def __setitem__(self, key, value):
-        self._values[self.__keytransform__(key)] = value
+        self._values[self.__keywrap__(key)] = value
 
     def __delitem__(self, key):
-        del self._values[self.__keytransform__(key)]
+        del self._values[self.__keywrap__(key)]
 
     def __iter__(self):
         return iter(self._values)
@@ -37,7 +37,7 @@ class Map(collections.MutableMapping):
     def __len__(self):
         return len(self._values)
 
-    def __keytransform__(self, key):
+    def __keywrap__(self, key):
         return key
 
     def __repr__(self):
@@ -66,13 +66,13 @@ class Maps(collections.MutableMapping):
         self.reset(**kw)
 
     def __getitem__(self, key):
-        return self._maps[self.__keytransform__(key)]
+        return self._maps[self.__keywrap__(key)]
 
     def __setitem__(self, key, value):
-        self._maps[self.__keytransform__(key)] = value
+        self._maps[self.__keywrap__(key)] = value
 
     def __delitem__(self, key):
-        del self._maps[self.__keytransform__(key)]
+        del self._maps[self.__keywrap__(key)]
 
     def __iter__(self):
         return iter(self._maps)
@@ -80,7 +80,7 @@ class Maps(collections.MutableMapping):
     def __len__(self):
         return len(self._maps)
 
-    def __keytransform__(self, key):
+    def __keywrap__(self, key):
         return key
 
     def __repr__(self):

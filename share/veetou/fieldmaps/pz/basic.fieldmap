@@ -1,0 +1,71 @@
+# Basic fieldmap for PZ ("Protokół Zaliczeń")
+## trs.tr_ord_no
+trs.student_name          : student_name
+trs.student_index         : student_index
+trs.subj_grade            : subj_grade
+trs.subj_grade_final      : subj_grade_final
+trs.subj_grade_project    : subj_grade_project
+trs.subj_grade_lecture    : subj_grade_lecture
+trs.subj_grade_class      : subj_grade_class
+trs.subj_grade_p          : subj_grade_p
+trs.subj_grade_n          : subj_grade_n
+## trs.tr_remarks
+pages.page_number         : page_number
+## pages.parser_page_number
+## sheets.pages_parsed
+## sheets.first_page
+reports.source            : report_source
+reports.datetime          : report_opened_datetime
+reports.first_page        : report_first_page
+reports.sheets_parsed     : report_sheets_parsed
+reports.pages_parsed      : report_pages_parsed
+## preambles.town
+preambles.date            : date
+preambles.time            : time
+preambles.title           : title
+preambles.exam            : exam
+preambles.sheet_id        : sheet_id
+preambles.semester_code   : semester_code
+preambles.sheet_serie     : sheet_serie
+preambles.sheet_number    : sheet_number
+##preambles.return_desc
+preambles.return_date     : return_date
+preambles.subj_name       : subj_name
+preambles.subj_code       : subj_code
+preambles.subj_department : subj_department
+preambles.subj_tutor      : subj_tutor
+## preambles.subj_grades
+preambles.subj_cond       : subj_cond
+## summaries.caption
+## summaries.th
+## summaries.content
+headers.university        : university
+headers.faculty           : faculty
+headers.entity            : entity
+## addresses.street_prefix
+## addresses.street_name
+## addresses.street_number
+## addresses.postoffice_zip
+## addresses.postoffice_town
+## addresses.edifice
+## addresses.room
+## addresses.website
+## contacts.phone_prefix
+## contacts.phone_numbers
+## contacts.faxtel_prefix
+## contacts.faxtel_numbers
+## contacts.email_prefix
+## contacts.email_address
+## footers.pagination
+footers.sheet_page_number : sheet_page_number
+footers.sheet_pages_total : sheet_pages_total
+## footers.title
+## footers.subj_name
+## footers.subj_code
+## footers.sheet_id
+## footers.semester_code
+## footers.sheet_serie
+## footers.sheet_number
+## footers.generator_name
+## footers.generator_home
+## footers.sig_prompt

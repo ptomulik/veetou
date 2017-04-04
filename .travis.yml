@@ -1,0 +1,22 @@
+sudo: false
+dist: trusty
+language: python
+addons:
+  apt:
+    packages:
+      - poppler-utils
+python:
+  - "3.4"
+  - "3.5"
+  - "3.6.0"
+  - "3.6.1"
+install:
+  - pip install -r requirements.txt
+  - pip install coveralls
+  - pip install coverage
+before_script:
+  - which python
+script:
+  - PYTHONPATH=lib coverage run --source=veetou -m unittest discover -p '*Tests.py'
+after_success:
+  - coveralls

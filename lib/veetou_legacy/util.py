@@ -1,4 +1,8 @@
 # -*- coding: utf8 -*-
+"""`veetou_legacy.util`
+
+Utility functions
+"""
 
 import re
 import io
@@ -10,9 +14,10 @@ _re_csv_newpage_cell = re.compile(  r'^ *(?P<student_id>\d+)' + r' *- *' +
                                     r'(?:(?P<first_name>(?:[^\W\d_]|-)+( +(?:[^\W\d_]|-)+)*) +)?' +
                                     r'(?P<last_name>(?:[^\W\d_]|-)+) *$' )
 
-def backtick(cmd):
-    process = subprocess.Popen(cmd, stdout = subprocess.PIPE)
-    out, err = process.communicate()
+def backtick(cmd, input=None, timeout=None):
+    stdin = subprocess.PIPE if input is not None else None
+    process = subprocess.Popen(cmd, stdout = subprocess.PIPE, stdin = stdin)
+    out, err = process.communicate(input,timeout)
     status = process.wait()
     if status != 0 and status != 2:
         raise RuntimeError('command %s returned non-zero exit code %d' %(cmd[0], status))
@@ -36,6 +41,12 @@ def pdftotext(filename, first, last=None, **kw):
         out = _re_txt_pageno_footline.sub("\\g<1>%d\\g<2>/\\g<3>%d\\g<4>" % (page, pages), out, 1)
     return out
 
+def pdftotextpage(filename, pageno, **kw):
+    """Executes 'pdftotext' and returns its output"""
+    cmd = [ 'pdftotext', '-f', str(pageno), '-l', str(pageno), '-fixed', '4', filename, '-']
+    out = backtick(cmd)
+    return out
+
 def pdfpages(filename):
     """Executes 'pdfinfo' and extracts number of PDF pages from its output"""
     global _re_txt_pageno_footline
@@ -44,6 +55,34 @@ def pdfpages(filename):
     if not m:
         raise RuntimeError('Could not determine number of pages in PDF')
     return int(m.group('pages'))
+
+def filecmd(filename, flags):
+    """Executes 'file <flags> filename' and returns its output"""
+    cmd = [ 'file' ] + list(flags)
+    if isinstance(filename, str):
+        if filename == '-':
+            raise NotImplementedError("stdin input is not implemented")
+        cmd.append(filename)
+        out = backtick(cmd).strip()
+    else:
+        fnames = list(filename)
+        if len(fnames) > 0:
+            if '-' in fnames:
+                raise NotImplementedError("stdin input is not implemented")
+            cmd.extend(fnames)
+            out = [ s.strip() for s in backtick(cmd).splitlines() ]
+        else:
+            out = []
+    return out
+
+def filetype(filename):
+    """Executes 'file -b filename' and returns its output"""
+    return filecmd(filename, ['-b'])
+
+def filemime(filename):
+    """Executes 'file -bi filename' and returns its output"""
+    return filecmd(filename, ['-b', '-i'])
+
 
 def csvpages(filename, **kw):
     """Scan  csv file (an export from girdac or so...) and try to extract

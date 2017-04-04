@@ -1,4 +1,15 @@
 # -*- coding: utf8 -*-
+"""`veetou.parser.thparser_`
+
+Provides the ThParser class
+"""
+
+from . import parser_
+
+__all__ = ('ThParser',)
+
+class ThParser(parser_.Parser):
+    pass
 
 # Local Variables:
 # # tab-width:4

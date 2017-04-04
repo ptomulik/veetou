@@ -2,7 +2,7 @@
 
 import re
 import sys
-import veetou.firstnames
+import veetou_legacy.firstnames
 
 class KartaOsiagniec(object):
 
@@ -23,7 +23,7 @@ class KartaOsiagniec(object):
         ),
         re.compile(
             r'^ *Semestr +studiów: *(?P<term>\S+(?: +\S+)*) *' +
-            r'Specjalność: *(?P<speciality>\S+(?: +\S+)*) *$'
+            r'Specjalność: *(?P<speciality>\S+(?: +\S+)*)? *$'
         ),
         re.compile(r'^ *Wymiar +godzin +(?:Forma)? *$'),
         re.compile(r'^ *Nr katalogowy +Nazwa przedmiotu +ECTS +Prowadzący +Ocena +Data *$'),
@@ -38,7 +38,7 @@ class KartaOsiagniec(object):
     _re_specextra = re.compile(r'^ {52,80}(?P<speciality>\S+(?: {1,2}\S+)*)? *$')
 
     _re_subject = re.compile(
-        r'^ *(?P<subj_code>ML\.\w+)' +                                              # code
+        r'^ *(?P<subj_code>(?:ML|GP|GK)\.\w+)' +                                    # code
         r'(?: {1,38}(?P<subj_name>\S+(?: {1,2}\S+)*))?' +                           # name
         r' +(?P<subj_w>\d+) +(?P<subj_c>\d+) +(?P<subj_l>\d+) +(?P<subj_p>\d+) +(?P<subj_s>\d+)' +           # hours
         r' +(?P<subj_credit_kind>Egz\.?|Zal\.?)' +                                       # credit type
@@ -49,7 +49,7 @@ class KartaOsiagniec(object):
     )
     _re_subjextra = re.compile(r'^ {8,48}(?P<subj_name>\S+(?: {1,2}\S+)*)?(?: {36,100}(?P<subj_tutor>\S+(?: {1,2}\S+)*))? *$')
 
-    _re_firstname = re.compile(r'\b(?:' + r'|'.join(veetou.firstnames.name_list) + r')\b')
+    _re_firstname = re.compile(r'\b(?:' + r'|'.join(veetou_legacy.firstnames.name_list) + r')\b')
     _re_tutprefix = re.compile(r'\b(?:prof|nzw|dr|phd|hab|doc|mgr|inż|lic)\b')
 
     _all_card_fields = [
@@ -192,7 +192,7 @@ class KartaOsiagniec(object):
         self.subjects_table_columns = kw.get('subjects_table_columns', self._all_field_titles)
         self.card = kw.get('card', dict())
         self.subjects = kw.get('subjects', [])
-        self.maps = kw.get('maps', veetou.maps.Maps())
+        self.maps = kw.get('maps', veetou_legacy.maps.Maps())
         self._subject_names = []
         self._subject_tutors = []
         self.parsed_lines = []

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf8 -*-
 
-import veetou
+import veetou_legacy
 import argparse
 import re
 import sys
@@ -45,8 +45,8 @@ def pagerange(npages):
     return (first_page, last_page)
 
 if args.field_info:
-    fields  = veetou.KartaOsiagniec.all_fields()
-    titles   = veetou.KartaOsiagniec.all_field_titles()
+    fields  = veetou_legacy.KartaOsiagniec.all_fields()
+    titles   = veetou_legacy.KartaOsiagniec.all_field_titles()
     print(u'\n'.join([u'%s:%s' % (k,titles[k]) for k in fields]))
     exit(0)
 
@@ -58,10 +58,10 @@ else:
 
 if args.output_type == 'txt':
     for filename in args.inputfile:
-        npages = veetou.pdfpages(filename)
+        npages = veetou_legacy.pdfpages(filename)
         first_page, last_page = pagerange(npages)
         for page in range(first_page, last_page + 1):
-            txt = veetou.pdftotext(filename, page, pages = npages)
+            txt = veetou_legacy.pdftotext(filename, page, pages = npages)
             outfile.write(txt)
 else:
     kw = dict()
@@ -72,22 +72,22 @@ else:
     if args.exclude_fields:
         kw['exclude_fields'] = args.exclude_fields
 
-    maps = veetou.Maps()
+    maps = veetou_legacy.Maps()
     if args.maps:
         for m in args.maps:
             with open(m, 'rt') as f:
                 maps.parse(f.read().splitlines())
     kw['maps'] = maps
 
-    karta = veetou.KartaOsiagniec()
+    karta = veetou_legacy.KartaOsiagniec()
     header = karta.generate_subjects_header(raw = args.raw_header, **kw)
     outfile.write(args.output_separator.join(header) + '\n')
     if args.input_type == 'pdf':
         for filename in args.inputfile:
-            npages = veetou.pdfpages(filename)
+            npages = veetou_legacy.pdfpages(filename)
             first_page, last_page = pagerange(npages)
             for page in range(first_page, last_page + 1):
-                lines = veetou.pdftotext(filename, page, pages = npages).splitlines()
+                lines = veetou_legacy.pdftotext(filename, page, pages = npages).splitlines()
                 karta.reset(file = filename, page = page, pages = npages)
                 karta.parse_txt(lines)
                 table = karta.generate_subjects_rows(**kw)
@@ -98,7 +98,7 @@ else:
 ##        kw = { 'delimiter' : args.input_separator,
 ##               'encoding' : args.input_encoding }
 ##        for filename in args.inputfile:
-##            npages = veetou.csvpages(filename, **kw)
+##            npages = veetou_legacy.csvpages(filename, **kw)
 ##            first_page, last_page = pagerange(npages)
 ##            for page in range(first_page, last_page+1):
 ##                pass
