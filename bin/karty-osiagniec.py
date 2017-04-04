@@ -46,8 +46,8 @@ def pagerange(npages):
     return (first_page, last_page)
 
 if args.field_info:
-    fields  = veetou.KartaZaliczen.all_fields()
-    titles   = veetou.KartaZaliczen.all_field_titles()
+    fields  = veetou.KartaOsiagniec.all_fields()
+    titles   = veetou.KartaOsiagniec.all_field_titles()
     print(u'\n'.join([u'%s:%s' % (k,titles[k]) for k in fields]))
     exit(0)
 
@@ -80,7 +80,7 @@ else:
                 maps.parse(f.read().splitlines())
     kw['maps'] = maps
 
-    karta = veetou.KartaZaliczen()
+    karta = veetou.KartaOsiagniec()
     header = karta.generate_subjects_header(raw = args.raw_header, **kw)
     outfile.write(args.output_separator.join(header) + '\n')
     if args.input_type == 'pdf':

@@ -4,7 +4,7 @@ import re
 import sys
 import veetou.firstnames
 
-class KartaZaliczen(object):
+class KartaOsiagniec(object):
 
     # Expressions that match at most one line from the page
     _re_card = [
@@ -174,15 +174,15 @@ class KartaZaliczen(object):
 
     @staticmethod
     def default_subjects_table_fields():
-        return KartaZaliczen._default_subjects_table_fields[:]
+        return KartaOsiagniec._default_subjects_table_fields[:]
 
     @staticmethod
     def all_fields():
-        return KartaZaliczen._all_fields[:]
+        return KartaOsiagniec._all_fields[:]
 
     @staticmethod
     def all_field_titles():
-        return KartaZaliczen._all_field_titles.copy()
+        return KartaOsiagniec._all_field_titles.copy()
 
     def __init__(self, **kw):
         self.reset(**kw)
@@ -205,8 +205,8 @@ class KartaZaliczen(object):
         self.remaining_lines[:] = [ x for x in self.remaining_lines if not re.match(r'^[ \t]*$', x)]
 
     def _extract_card(self):
-        re_card = KartaZaliczen._re_card[:]
-        re_specextra = KartaZaliczen._re_specextra
+        re_card = KartaOsiagniec._re_card[:]
+        re_specextra = KartaOsiagniec._re_specextra
         stack = []
         # extract card
         for line in self.remaining_lines:
@@ -241,8 +241,8 @@ class KartaZaliczen(object):
         self.remaining_lines[:] = [ x for x in self.remaining_lines if not x in self.parsed_lines ]
 
     def _extract_subjects(self):
-        r = KartaZaliczen._re_subject
-        n = KartaZaliczen._re_subjextra
+        r = KartaOsiagniec._re_subject
+        n = KartaOsiagniec._re_subjextra
         for line in self.remaining_lines:
             mn = n.match(line)
             mr = r.match(line)
@@ -267,7 +267,7 @@ class KartaZaliczen(object):
     def _subject_names_heuristics(self):
         names = []
         current = ''
-        re_word_sequence = KartaZaliczen._re_subject_word_sequence
+        re_word_sequence = KartaOsiagniec._re_subject_word_sequence
         for part in self._subject_names:
             if not current:
                 current = part
@@ -295,8 +295,8 @@ class KartaZaliczen(object):
         tutors = []
         current = u''
 
-        re_tutprefix = KartaZaliczen._re_tutprefix
-        re_firstname = KartaZaliczen._re_firstname
+        re_tutprefix = KartaOsiagniec._re_tutprefix
+        re_firstname = KartaOsiagniec._re_firstname
         for part in self._subject_tutors:
             if not current:
                 current = part

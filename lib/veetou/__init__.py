@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 
 from veetou.util import pdfinfo, pdftotext, pdfpages, csvpages
-from veetou.kartazaliczen import KartaZaliczen
+from veetou.kartaosiagniec import KartaOsiagniec
 from veetou.maps import Maps, Map
 
 
