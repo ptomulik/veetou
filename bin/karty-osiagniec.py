@@ -3,7 +3,6 @@
 
 import veetou
 import argparse
-import subprocess
 import re
 import sys
 
