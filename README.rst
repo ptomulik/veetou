@@ -14,4 +14,4 @@ Examples
 
 .. code:: bash
 
-    PYTHONPATH=lib bin/karty-zaliczen.py --help
+    PYTHONPATH=lib bin/karty-osiagniec.py --help
