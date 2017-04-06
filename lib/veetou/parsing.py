@@ -84,7 +84,7 @@ _re_contact_address_variants = [
 
 _re_contact_address = r'(?P<contact_address>' + r'|'.join(_re_contact_address_variants) + ')'
 
-_re_dict_contact_address = {
+_dict_re_contact_address = {
     r'contact_address_street_info'      : _re_contact_address_street_info,
     r'contact_address_postoffice_info'  : _re_contact_address_postoffice_info,
     r'contact_address_edifice_info'     : _re_contact_address_edifice_info,
@@ -105,7 +105,7 @@ _re_contact_phone = \
     r'(?P<contact_phone>' + _re_contact_phone_prefix_info + \
     r' *' + _re_contact_phone_numbers_info + r')'
 
-_re_dict_contact_phone = {
+_dict_re_contact_phone = {
     r'contact_phone_prefix'         : _re_contact_phone_prefix_info,
     r'contact_phone_numbers'        : _re_contact_phone_numbers_info,
     r'contact_phone'                : _re_contact_phone
@@ -123,37 +123,73 @@ _re_contact_faxtel = \
     r'(?P<contact_faxtel>' + _re_contact_faxtel_prefix_info + \
     r' *' + _re_contact_faxtel_numbers_info + r')'
 
-_re_dict_contact_faxtel = {
+_dict_re_contact_faxtel = {
     r'contact_faxtel_prefix'         : _re_contact_faxtel_prefix_info,
     r'contact_faxtel_numbers'        : _re_contact_faxtel_numbers_info,
     r'contact_faxtel'                : _re_contact_faxtel
 }
 
-_re_dict_university = {
+_re_contact_email_prefix_info = r'(?P<contact_email_prefix>(?:e-?mail:))'
+_re_contact_email_address_localpart_info = r'(?P<contact_email_address_localpart>[a-zA-Z0-9_.+-]+)'
+_re_contact_email_address_domain_info = r'(?P<contact_email_address_domain>[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)'
+_re_contact_email_address_info = \
+    r'(?P<contact_email_address>' + \
+    _re_contact_email_address_localpart_info + r'@' + \
+    _re_contact_email_address_domain_info + r')'
+
+_re_contact_email = \
+    r'(?P<contact_email>' + \
+    _re_contact_email_prefix_info + r' *' + \
+    _re_contact_email_address_info + \
+    r')'
+
+_dict_re_contact_email = {
+    'contact_email_prefix'              : _re_contact_email_prefix_info,
+    'contact_email_address_localpart'   : _re_contact_email_address_localpart_info,
+    'contact_email_address_domain'      : _re_contact_email_address_domain_info,
+    'contact_email_address'             : _re_contact_email_address_info,
+    'contact_email'                     : _re_contact_email
+}
+
+_re_electronic_contact = \
+    r'(?P<electronic_contact>' + \
+        _re_contact_phone + \
+        r'(?:, *' + _re_contact_faxtel + r')?' + \
+        r', *' + _re_contact_email + \
+    r')'
+
+_dict_re_electronic_contact = {
+    'electronic_contact'                : _re_electronic_contact
+}
+
+
+_dict_re_university = {
     r'POLITECHNIKA WARSZAWSKA' : \
         r'(?:(?:P *O *L *I *T *E *C *H *N *I *K *A +W *A *R *S *Z *A *W *S *K *A)|' + \
         r'(?:P *O *L *I *T *E *C *H *N *I *K *I +W *A *R *S *Z *A *W *S *K *I *E *J))'
 }
 
-_re_dict_faculty = {
+_dict_re_faculty = {
     r'WYDZIAŁ MECHANICZNY ENERGETYKI I LOTNICTWA' : \
         r'W *Y *D *Z *I *A *Ł +M *E *C *H *A *N *I *C *Z *N *Y +E *N *E *R *G *E *T *Y *K *I +I +L *O *T *N *I *C *T *W *A',
     r'WYDZIAŁ GEODEZJI I KARTOGRAFII' : \
         r'W *Y *D *Z *I *A *Ł +G *E *O *D *E *Z *J *I +I +K *A *R *T *O *G *R *A *F *I *I'
 }
 
-_re_dict_contact_name = {
+_dict_re_contact_name = {
     r'DZIEKANAT' : r'D *Z *I *E *K *A *N *A *T',
 }
 
 # Dictionary of regular expressions for certain purposes
-_re_dict = dict()
-_re_dict.update(_re_dict_university)
-_re_dict.update(_re_dict_faculty)
-_re_dict.update(_re_dict_contact_name)
-_re_dict.update(_re_dict_contact_address)
-_re_dict.update(_re_dict_contact_phone)
-_re_dict.update(_re_dict_contact_faxtel)
+_dict_re = dict()
+_dict_re.update(_dict_re_university)
+_dict_re.update(_dict_re_faculty)
+_dict_re.update(_dict_re_contact_name)
+_dict_re.update(_dict_re_contact_address)
+_dict_re.update(_dict_re_contact_phone)
+_dict_re.update(_dict_re_contact_faxtel)
+_dict_re.update(_dict_re_contact_email)
+_dict_re.update(_dict_re_electronic_contact)
 
 _predefined_phrases = {
     'university' : [
@@ -171,7 +207,7 @@ _predefined_phrases = {
 def try_predefined_phrase_line(name, line):
     result = dict()
     for phrase in _predefined_phrases[name]:
-        expr = r'^ *' + _re_dict[phrase] + ' *$'
+        expr = r'^ *' + _dict_re[phrase] + ' *$'
         if re.match(expr, line):
             result[name] = phrase
             break
@@ -188,7 +224,7 @@ def try_contact_name_line(line):
 
 def try_contact_address_line(line):
     result = dict()
-    m = re.match(r'^ *' + _re_dict['contact_address'] + ' *$', line)
+    m = re.match(r'^ *' + _dict_re['contact_address'] + ' *$', line)
     if m:
         result = { k : None for k in _contact_address_info_field_names }
         for k,v in m.groupdict().items():
@@ -197,6 +233,13 @@ def try_contact_address_line(line):
                 if m2:
                     result[m2.group('field_name')] = v
         result['contact_address'] = m.group('contact_address')
+    return result
+
+def try_electronic_contact_line(line):
+    result = dict()
+    m = re.match(r'^ *' + _dict_re['electronic_contact'] + ' *$', line)
+    if m:
+        result = m.groupdict().copy()
     return result
 
 # Local Variables:

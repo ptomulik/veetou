@@ -7,7 +7,7 @@ import re
 import veetou.parsing as tested
 
 
-class Test__re_dict(unittest.TestCase):
+class Test__dict_re(unittest.TestCase):
     def assertRegexMatch(self, s, r, msg=None):
         try: p = r.pattern
         except AttributeError: p = r
@@ -16,7 +16,7 @@ class Test__re_dict(unittest.TestCase):
         r = re.compile(r'^' + p + '$', f)
         self.assertRegex(s, r, msg)
     def test_POLITECHNIKA_WARSZAWSKA(self):
-        r = tested._re_dict[r'POLITECHNIKA WARSZAWSKA']
+        r = tested._dict_re[r'POLITECHNIKA WARSZAWSKA']
         self.assertRegexMatch('POLITECHNIKA WARSZAWSKA', r)
         self.assertRegexMatch('POLITECHNIKI WARSZAWSKIEJ', r)
         #self.assertRegexMatch('Politechnika Warszawska', r)
@@ -24,25 +24,25 @@ class Test__re_dict(unittest.TestCase):
         self.assertRegexMatch('P O L I T E C H N I K I    W  A  R  S  Z  A  W  S  K  I E J', r)
 
     def test_WYDZIAL_MECHANICZNY_ENERGETYKI_I_LOTNICTWA(self):
-        r = tested._re_dict[r'WYDZIAŁ MECHANICZNY ENERGETYKI I LOTNICTWA']
+        r = tested._dict_re[r'WYDZIAŁ MECHANICZNY ENERGETYKI I LOTNICTWA']
         self.assertRegexMatch('WYDZIAŁ MECHANICZNY ENERGETYKI I LOTNICTWA', r)
         #self.assertRegexMatch('Wydział Mechaniczny Energetyki i Lotnictwa', r)
         self.assertRegexMatch('W Y D Z I A Ł   M E C H A N I C Z N Y   E N E R G E T Y K I   I   L O T N I C T W A', r)
 
     def test_WYDZIAL_GEODEZJI_I_KARTOGRAFII(self):
-        r = tested._re_dict[r'WYDZIAŁ GEODEZJI I KARTOGRAFII']
+        r = tested._dict_re[r'WYDZIAŁ GEODEZJI I KARTOGRAFII']
         self.assertRegexMatch('WYDZIAŁ GEODEZJI I KARTOGRAFII', r)
         #self.assertRegexMatch('Wydział Geodezji i Kartografii', r)
         self.assertRegexMatch('W Y D Z I A Ł   G E O D E Z J I  I  K A R T O G R A F I I', r)
 
     def test_DZIEKANAT(self):
-        r = tested._re_dict[r'DZIEKANAT']
+        r = tested._dict_re[r'DZIEKANAT']
         self.assertRegexMatch('DZIEKANAT', r)
         #self.assertRegexMatch('Dziekanat', r)
         self.assertRegexMatch('D Z I E K A N A T', r)
 
     def test_contact_address_street_info__1(self):
-        r = tested._re_dict[r'contact_address_street_info']
+        r = tested._dict_re[r'contact_address_street_info']
         self.assertRegexMatch('ul. Nowowiejska 24', r)
         m = re.match(r,'ul. Nowowiejska 24')
         self.assertEqual(m.group('contact_address_street_prefix'), 'ul.')
@@ -51,7 +51,7 @@ class Test__re_dict(unittest.TestCase):
 
 
     def test_contact_address_street_info__2(self):
-        r = tested._re_dict[r'contact_address_street_info']
+        r = tested._dict_re[r'contact_address_street_info']
         self.assertRegexMatch('pl. Narutowicza 11/2', r)
         m = re.match(r,'pl. Narutowicza 11/2')
         self.assertEqual(m.group('contact_address_street_prefix'), 'pl.')
@@ -59,7 +59,7 @@ class Test__re_dict(unittest.TestCase):
         self.assertEqual(m.group('contact_address_street_number'), '11/2')
 
     def test_contact_address_street_info__3(self):
-        r = tested._re_dict[r'contact_address_street_info']
+        r = tested._dict_re[r'contact_address_street_info']
         self.assertRegexMatch('Sienkiewicza 11A', r)
         m = re.match(r,'Sienkiewicza 11A')
         self.assertIs(m.group('contact_address_street_prefix'), None)
@@ -67,7 +67,7 @@ class Test__re_dict(unittest.TestCase):
         self.assertEqual(m.group('contact_address_street_number'), '11A')
 
     def test_contact_address_street_info__4(self):
-        r = tested._re_dict[r'contact_address_street_info']
+        r = tested._dict_re[r'contact_address_street_info']
         self.assertRegexMatch('Pana Michała Wołodyjowskiego 123-125', r)
         m = re.match(r,'Pana Michała Wołodyjowskiego 123-125')
         self.assertIs(m.group('contact_address_street_prefix'), None)
@@ -75,7 +75,7 @@ class Test__re_dict(unittest.TestCase):
         self.assertEqual(m.group('contact_address_street_number'), '123-125')
 
     def test_contact_address_street_info__5(self):
-        r = tested._re_dict[r'contact_address_street_info']
+        r = tested._dict_re[r'contact_address_street_info']
         self.assertRegexMatch('ul.Świętego Maksymiliana   Kolbe 23 - 30', r)
         m = re.match(r,'ul.Świętego Maksymiliana   Kolbe 23 - 30')
         self.assertEqual(m.group('contact_address_street_prefix'), 'ul.')
@@ -83,76 +83,76 @@ class Test__re_dict(unittest.TestCase):
         self.assertEqual(m.group('contact_address_street_number'), '23 - 30')
 
     def test_contact_address_postoffice_info__1(self):
-        r = tested._re_dict[r'contact_address_postoffice_info']
+        r = tested._dict_re[r'contact_address_postoffice_info']
         self.assertRegexMatch('00-665 Warszawa', r)
         m = re.match(r,'00-665 Warszawa')
         self.assertEqual(m.group('contact_address_postoffice_zip'), '00-665')
         self.assertEqual(m.group('contact_address_postoffice_town'), 'Warszawa')
 
     def test_contact_address_postoffice_info__2(self):
-        r = tested._re_dict[r'contact_address_postoffice_info']
+        r = tested._dict_re[r'contact_address_postoffice_info']
         self.assertRegexMatch('21-500 Biała Podlaska', r)
         m = re.match(r,'21-500 Biała Podlaska')
         self.assertEqual(m.group('contact_address_postoffice_zip'), '21-500')
         self.assertEqual(m.group('contact_address_postoffice_town'), 'Biała Podlaska')
 
     def test_contact_address_postoffice_info__3(self):
-        r = tested._re_dict[r'contact_address_postoffice_info']
+        r = tested._dict_re[r'contact_address_postoffice_info']
         self.assertRegexMatch('43-300 Bielsko-Biała', r)
         m = re.match(r,'43-300 Bielsko-Biała')
         self.assertEqual(m.group('contact_address_postoffice_zip'), '43-300')
         self.assertEqual(m.group('contact_address_postoffice_town'), 'Bielsko-Biała')
 
     def test_contact_address_edifice_info__1(self):
-        r = tested._re_dict[r'contact_address_edifice_info']
+        r = tested._dict_re[r'contact_address_edifice_info']
         self.assertRegexMatch('Gmach Lotniczy', r)
         m = re.match(r,'Gmach Lotniczy')
         self.assertEqual(m.group('contact_address_edifice'), 'Gmach Lotniczy')
 
     def test_contact_address_edifice_info__2(self):
-        r = tested._re_dict[r'contact_address_edifice_info']
+        r = tested._dict_re[r'contact_address_edifice_info']
         self.assertRegexMatch('Budynek Żółtogęsią-Jaźniowy 12', r)
         m = re.match(r,'Budynek Żółtogęsią-Jaźniowy 12')
         self.assertEqual(m.group('contact_address_edifice'), 'Budynek Żółtogęsią-Jaźniowy 12')
 
     def test_contact_address_room_info__1(self):
-        r = tested._re_dict[r'contact_address_room_info']
+        r = tested._dict_re[r'contact_address_room_info']
         self.assertRegexMatch('124', r)
         m = re.match(r,'124')
         self.assertEqual(m.group('contact_address_room'), '124')
 
     def test_contact_address_room_info__2(self):
-        r = tested._re_dict[r'contact_address_room_info']
+        r = tested._dict_re[r'contact_address_room_info']
         self.assertRegexMatch('p. 124', r)
         m = re.match(r,'p. 124')
         self.assertEqual(m.group('contact_address_room'), 'p. 124')
 
     def test_contact_address_room_info__3(self):
-        r = tested._re_dict[r'contact_address_room_info']
+        r = tested._dict_re[r'contact_address_room_info']
         self.assertRegexMatch('pok. 124', r)
         m = re.match(r,'pok. 124')
         self.assertEqual(m.group('contact_address_room'), 'pok. 124')
 
     def test_contact_address_website_info__1(self):
-        r = tested._re_dict[r'contact_address_website_info']
+        r = tested._dict_re[r'contact_address_website_info']
         self.assertRegexMatch('www.pl', r)
         m = re.match(r,'www.pl')
         self.assertEqual(m.group('contact_address_website'), 'www.pl')
 
     def test_contact_address_website_info__2(self):
-        r = tested._re_dict[r'contact_address_website_info']
+        r = tested._dict_re[r'contact_address_website_info']
         self.assertRegexMatch('meil.pw.edu.pl', r)
         m = re.match(r,'meil.pw.edu.pl')
         self.assertEqual(m.group('contact_address_website'), 'meil.pw.edu.pl')
 
     def test_contact_address_website_info__3(self):
-        r = tested._re_dict[r'contact_address_website_info']
+        r = tested._dict_re[r'contact_address_website_info']
         self.assertRegexMatch('http://pw.edu.pl', r)
         m = re.match(r,'http://pw.edu.pl')
         self.assertEqual(m.group('contact_address_website'), 'http://pw.edu.pl')
 
     def test_contact_address__1(self):
-        r = tested._re_dict[r'contact_address']
+        r = tested._dict_re[r'contact_address']
         self.assertRegexMatch('ul. Nowowiejska 24, 00-665 Warszawa, Gmach Lotniczy, pok. 125', r)
         m = re.match(r,'ul. Nowowiejska 24, 00-665 Warszawa, Gmach Lotniczy, pok. 125')
         self.assertEqual(m.group('contact_address'), 'ul. Nowowiejska 24, 00-665 Warszawa, Gmach Lotniczy, pok. 125')
@@ -165,7 +165,7 @@ class Test__re_dict(unittest.TestCase):
         self.assertEqual(m.group('contact_address_room_0'), 'pok. 125')
 
     def test_contact_address__2(self):
-        r = tested._re_dict[r'contact_address']
+        r = tested._dict_re[r'contact_address']
         self.assertRegexMatch('Plac Politechniki 1, p. 301, 00-661 Warszawa, www.gik.pw.edu.pl', r)
         m = re.match(r, 'Plac Politechniki 1, p. 301, 00-661 Warszawa, www.gik.pw.edu.pl')
         self.assertEqual(m.group('contact_address'), 'Plac Politechniki 1, p. 301, 00-661 Warszawa, www.gik.pw.edu.pl')
@@ -177,7 +177,7 @@ class Test__re_dict(unittest.TestCase):
         self.assertEqual(m.group('contact_address_room_1'), 'p. 301')
 
     def test_contact_phone__1(self):
-        r = tested._re_dict[r'contact_phone']
+        r = tested._dict_re[r'contact_phone']
         self.assertRegexMatch('tel. (+48) 22 234 72 23', r)
         m = re.match(r, 'tel. (+48) 22 234 72 23')
         self.assertEqual(m.group('contact_phone'), 'tel. (+48) 22 234 72 23')
@@ -185,7 +185,7 @@ class Test__re_dict(unittest.TestCase):
         self.assertEqual(m.group('contact_phone_numbers'), '(+48) 22 234 72 23')
 
     def test_contact_phone__2(self):
-        r = tested._re_dict[r'contact_phone']
+        r = tested._dict_re[r'contact_phone']
         self.assertRegexMatch('tel.: (022) 621 53 10, (022) 234 73 54', r)
         m = re.match(r, 'tel.: (022) 621 53 10, (022) 234 73 54')
         self.assertEqual(m.group('contact_phone'), 'tel.: (022) 621 53 10, (022) 234 73 54')
@@ -193,7 +193,7 @@ class Test__re_dict(unittest.TestCase):
         self.assertEqual(m.group('contact_phone_numbers'), '(022) 621 53 10, (022) 234 73 54')
 
     def test_contact_faxtel__1(self):
-        r = tested._re_dict[r'contact_faxtel']
+        r = tested._dict_re[r'contact_faxtel']
         self.assertRegexMatch('fax. (+48) 22 234 72 23', r)
         m = re.match(r, 'fax. (+48) 22 234 72 23')
         self.assertEqual(m.group('contact_faxtel'), 'fax. (+48) 22 234 72 23')
@@ -201,7 +201,7 @@ class Test__re_dict(unittest.TestCase):
         self.assertEqual(m.group('contact_faxtel_numbers'), '(+48) 22 234 72 23')
 
     def test_contact_faxtel__2(self):
-        r = tested._re_dict[r'contact_faxtel']
+        r = tested._dict_re[r'contact_faxtel']
         self.assertRegexMatch('fax/tel.: (022) 625 73 51', r)
         m = re.match(r, 'fax/tel.: (022) 621 73 51')
         self.assertEqual(m.group('contact_faxtel'), 'fax/tel.: (022) 621 73 51')
@@ -209,19 +209,65 @@ class Test__re_dict(unittest.TestCase):
         self.assertEqual(m.group('contact_faxtel_numbers'), '(022) 621 73 51')
 
     def test_contact_faxtel__3(self):
-        r = tested._re_dict[r'contact_faxtel']
+        r = tested._dict_re[r'contact_faxtel']
         self.assertRegexMatch('fax/tel.: (022) 621 53 10, (022) 234 73 54', r)
         m = re.match(r, 'fax/tel.: (022) 621 53 10, (022) 234 73 54')
         self.assertEqual(m.group('contact_faxtel'), 'fax/tel.: (022) 621 53 10, (022) 234 73 54')
         self.assertEqual(m.group('contact_faxtel_prefix'), 'fax/tel.:')
         self.assertEqual(m.group('contact_faxtel_numbers'), '(022) 621 53 10, (022) 234 73 54')
 
+    def test_contact_email__1(self):
+        r = tested._dict_re[r'contact_email']
+        self.assertRegexMatch('e-mail: p-1.tomulik@meil.pw.edu.pl', r)
+        m = re.match(r, 'e-mail: p-1.tomulik@meil.pw.edu.pl')
+        self.assertEqual(m.group('contact_email'), 'e-mail: p-1.tomulik@meil.pw.edu.pl')
+        self.assertEqual(m.group('contact_email_prefix'), 'e-mail:')
+        self.assertEqual(m.group('contact_email_address'), 'p-1.tomulik@meil.pw.edu.pl')
+        self.assertEqual(m.group('contact_email_address_localpart'), 'p-1.tomulik')
+        self.assertEqual(m.group('contact_email_address_domain'), 'meil.pw.edu.pl')
+
+    def test_electronic_contact__1(self):
+        r = tested._dict_re[r'electronic_contact']
+        s = 'tel.: (022) 621 53 10, (022) 234 73 54, fax/tel.: (022) 625 73 51, e-mail: dziekanat@meil.pw.edu.pl'
+        self.assertRegexMatch(s, r)
+        m = re.match(r, s)
+        self.assertEqual(m.group('electronic_contact'), s)
+        self.assertEqual(m.group('contact_phone'), 'tel.: (022) 621 53 10, (022) 234 73 54')
+        self.assertEqual(m.group('contact_phone_prefix'), 'tel.:')
+        self.assertEqual(m.group('contact_phone_numbers'), '(022) 621 53 10, (022) 234 73 54')
+        self.assertEqual(m.group('contact_faxtel'), 'fax/tel.: (022) 625 73 51')
+        self.assertEqual(m.group('contact_faxtel_prefix'), 'fax/tel.:')
+        self.assertEqual(m.group('contact_faxtel_numbers'), '(022) 625 73 51')
+        self.assertEqual(m.group('contact_email'), 'e-mail: dziekanat@meil.pw.edu.pl')
+        self.assertEqual(m.group('contact_email_prefix'), 'e-mail:')
+        self.assertEqual(m.group('contact_email_address'), 'dziekanat@meil.pw.edu.pl')
+        self.assertEqual(m.group('contact_email_address_localpart'), 'dziekanat')
+        self.assertEqual(m.group('contact_email_address_domain'), 'meil.pw.edu.pl')
+
+    def test_electronic_contact__2(self):
+        r = tested._dict_re[r'electronic_contact']
+        s = 'tel.: (+48) 22 234 72 23, e-mail: dziekan@gik.pw.edu.pl'
+        self.assertRegexMatch(s, r)
+        m = re.match(r, s)
+        self.assertEqual(m.group('electronic_contact'), s)
+        self.assertEqual(m.group('contact_phone'), 'tel.: (+48) 22 234 72 23')
+        self.assertEqual(m.group('contact_phone_prefix'), 'tel.:')
+        self.assertEqual(m.group('contact_phone_numbers'), '(+48) 22 234 72 23')
+        self.assertIs(m.group('contact_faxtel'), None)
+        self.assertIs(m.group('contact_faxtel_prefix'), None)
+        self.assertIs(m.group('contact_faxtel_numbers'), None)
+        self.assertEqual(m.group('contact_email'), 'e-mail: dziekan@gik.pw.edu.pl')
+        self.assertEqual(m.group('contact_email_prefix'), 'e-mail:')
+        self.assertEqual(m.group('contact_email_address'), 'dziekan@gik.pw.edu.pl')
+        self.assertEqual(m.group('contact_email_address_localpart'), 'dziekan')
+        self.assertEqual(m.group('contact_email_address_domain'), 'gik.pw.edu.pl')
+
 class Test__predefined_phrases(unittest.TestCase):
     def test_university(self):
         items = [ r'POLITECHNIKA WARSZAWSKA' ]
         self.assertEqual(tested._predefined_phrases['university'], items)
         for item in items:
-            self.assertIsInstance(tested._re_dict[item], str)
+            self.assertIsInstance(tested._dict_re[item], str)
 
     def test_faculty(self):
         items = [
@@ -230,13 +276,13 @@ class Test__predefined_phrases(unittest.TestCase):
         ]
         self.assertEqual(tested._predefined_phrases['faculty'], items)
         for item in items:
-            self.assertIsInstance(tested._re_dict[item], str)
+            self.assertIsInstance(tested._dict_re[item], str)
 
     def test_contact_name(self):
         items = [ r'DZIEKANAT' ]
         self.assertEqual(tested._predefined_phrases['contact_name'], items)
         for item in items:
-            self.assertIsInstance(tested._re_dict[item], str)
+            self.assertIsInstance(tested._dict_re[item], str)
 
 
 class Test__try_university_line(unittest.TestCase):
@@ -306,6 +352,43 @@ class Test__try_contact_address_line(unittest.TestCase):
             'contact_address'                   : 'Plac Politechniki 1, p. 301, 00-661 Warszawa, www.gik.pw.edu.pl'
         }
         self.assertEqual(expect, tested.try_contact_address_line(line))
+
+class Test__try_electronic_contact_line(unittest.TestCase):
+    def test__MEiL__1(self):
+        line = "        tel.: (022) 621 53 10, (022) 234 73 54, fax/tel.: (022) 625 73 51, e-mail:dziekanat@meil.pw.edu.pl  "
+        expect = {
+            'contact_phone_prefix'              : 'tel.:',
+            'contact_phone_numbers'             : '(022) 621 53 10, (022) 234 73 54',
+            'contact_phone'                     : 'tel.: (022) 621 53 10, (022) 234 73 54',
+            'contact_faxtel_prefix'             : 'fax/tel.:',
+            'contact_faxtel_numbers'            : '(022) 625 73 51',
+            'contact_faxtel'                    : 'fax/tel.: (022) 625 73 51',
+            'contact_email_prefix'              : 'e-mail:',
+            'contact_email_address_localpart'   : 'dziekanat',
+            'contact_email_address_domain'      : 'meil.pw.edu.pl',
+            'contact_email_address'             : 'dziekanat@meil.pw.edu.pl',
+            'contact_email'                     : 'e-mail:dziekanat@meil.pw.edu.pl',
+            'electronic_contact'                : 'tel.: (022) 621 53 10, (022) 234 73 54, fax/tel.: (022) 625 73 51, e-mail:dziekanat@meil.pw.edu.pl'
+        }
+        self.assertEqual(expect, tested.try_electronic_contact_line(line))
+
+    def test__GiK__1(self):
+        line = "        tel. (+48) 22 234 72 23, e-mail: dziekan@gik.pw.edu.pl  "
+        expect = {
+            'contact_phone_prefix'              : 'tel.',
+            'contact_phone_numbers'             : '(+48) 22 234 72 23',
+            'contact_phone'                     : 'tel. (+48) 22 234 72 23',
+            'contact_faxtel_prefix'             : None,
+            'contact_faxtel_numbers'            : None,
+            'contact_faxtel'                    : None,
+            'contact_email_prefix'              : 'e-mail:',
+            'contact_email_address_localpart'   : 'dziekan',
+            'contact_email_address_domain'      : 'gik.pw.edu.pl',
+            'contact_email_address'             : 'dziekan@gik.pw.edu.pl',
+            'contact_email'                     : 'e-mail: dziekan@gik.pw.edu.pl',
+            'electronic_contact'                : 'tel. (+48) 22 234 72 23, e-mail: dziekan@gik.pw.edu.pl'
+        }
+        self.assertEqual(expect, tested.try_electronic_contact_line(line))
 
 if __name__ == '__main__':
     unittest.main()
