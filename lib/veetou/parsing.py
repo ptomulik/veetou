@@ -84,15 +84,6 @@ _re_contact_address_variants = [
 
 _re_contact_address = r'(?P<contact_address>' + r'|'.join(_re_contact_address_variants) + ')'
 
-_dict_re_contact_address = {
-    r'contact_address_street_info'      : _re_contact_address_street_info,
-    r'contact_address_postoffice_info'  : _re_contact_address_postoffice_info,
-    r'contact_address_edifice_info'     : _re_contact_address_edifice_info,
-    r'contact_address_room_info'        : _re_contact_address_room_info,
-    r'contact_address_website_info'     : _re_contact_address_website_info,
-    r'contact_address'                  : _re_contact_address,
-}
-
 _re_contact_phone_prefix_info  = r'(?P<contact_phone_prefix>tel\.:?)'
 _re_contact_phone_number_info  = r'(?:\(\+?\d{2,3}\))?(?: {,1}\d{1,3})+'
 _re_contact_phone_numbers_info = r'(?P<contact_phone_numbers>(?:' + \
@@ -105,12 +96,6 @@ _re_contact_phone = \
     r'(?P<contact_phone>' + _re_contact_phone_prefix_info + \
     r' *' + _re_contact_phone_numbers_info + r')'
 
-_dict_re_contact_phone = {
-    r'contact_phone_prefix'         : _re_contact_phone_prefix_info,
-    r'contact_phone_numbers'        : _re_contact_phone_numbers_info,
-    r'contact_phone'                : _re_contact_phone
-}
-
 _re_contact_faxtel_prefix_info  = r'(?P<contact_faxtel_prefix>fax(?: {0,1}/ {0,1}tel)?\.:?)'
 _re_contact_faxtel_number_info  = r'(?:\(\+?\d{2,3}\))?(?: {,1}\d{1,3})+'
 _re_contact_faxtel_numbers_info = r'(?P<contact_faxtel_numbers>(?:' + \
@@ -122,12 +107,6 @@ _re_contact_faxtel_numbers_info = r'(?P<contact_faxtel_numbers>(?:' + \
 _re_contact_faxtel = \
     r'(?P<contact_faxtel>' + _re_contact_faxtel_prefix_info + \
     r' *' + _re_contact_faxtel_numbers_info + r')'
-
-_dict_re_contact_faxtel = {
-    r'contact_faxtel_prefix'         : _re_contact_faxtel_prefix_info,
-    r'contact_faxtel_numbers'        : _re_contact_faxtel_numbers_info,
-    r'contact_faxtel'                : _re_contact_faxtel
-}
 
 _re_contact_email_prefix_info = r'(?P<contact_email_prefix>(?:e-?mail:))'
 _re_contact_email_address_localpart_info = r'(?P<contact_email_address_localpart>[a-zA-Z0-9_.+-]+)'
@@ -143,6 +122,44 @@ _re_contact_email = \
     _re_contact_email_address_info + \
     r')'
 
+_re_electronic_contact = \
+    r'(?P<electronic_contact>' + \
+        _re_contact_phone + \
+        r'(?:, *' + _re_contact_faxtel + r')?' + \
+        r', *' + _re_contact_email + \
+    r')'
+
+_re_stamp_town = r'(?P<stamp_town>\w+(?:(?: +| *- *)\w+){,2})'
+_re_stamp_date = r'(?P<stamp_date>\d{1,2}\.\d{1,2}\.\d{4})'
+_re_stamp_time = r'(?P<stamp_time>\d{2}:\d{2}:\d{2})'
+_re_stamp_town_and_datetime = r'(?P<stamp_town_and_datetime>' +\
+r', *'.join([
+    _re_stamp_town,
+    _re_stamp_date,
+    _re_stamp_time
+]) + r')'
+
+_dict_re_contact_address = {
+    r'contact_address_street_info'      : _re_contact_address_street_info,
+    r'contact_address_postoffice_info'  : _re_contact_address_postoffice_info,
+    r'contact_address_edifice_info'     : _re_contact_address_edifice_info,
+    r'contact_address_room_info'        : _re_contact_address_room_info,
+    r'contact_address_website_info'     : _re_contact_address_website_info,
+    r'contact_address'                  : _re_contact_address,
+}
+
+_dict_re_contact_phone = {
+    r'contact_phone_prefix'         : _re_contact_phone_prefix_info,
+    r'contact_phone_numbers'        : _re_contact_phone_numbers_info,
+    r'contact_phone'                : _re_contact_phone
+}
+
+_dict_re_contact_faxtel = {
+    r'contact_faxtel_prefix'         : _re_contact_faxtel_prefix_info,
+    r'contact_faxtel_numbers'        : _re_contact_faxtel_numbers_info,
+    r'contact_faxtel'                : _re_contact_faxtel
+}
+
 _dict_re_contact_email = {
     'contact_email_prefix'              : _re_contact_email_prefix_info,
     'contact_email_address_localpart'   : _re_contact_email_address_localpart_info,
@@ -150,13 +167,6 @@ _dict_re_contact_email = {
     'contact_email_address'             : _re_contact_email_address_info,
     'contact_email'                     : _re_contact_email
 }
-
-_re_electronic_contact = \
-    r'(?P<electronic_contact>' + \
-        _re_contact_phone + \
-        r'(?:, *' + _re_contact_faxtel + r')?' + \
-        r', *' + _re_contact_email + \
-    r')'
 
 _dict_re_electronic_contact = {
     'electronic_contact'                : _re_electronic_contact
@@ -180,6 +190,13 @@ _dict_re_contact_name = {
     r'DZIEKANAT' : r'D *Z *I *E *K *A *N *A *T',
 }
 
+_dict_re_stamp_town_and_datetime = {
+    r'stamp_town'               : _re_stamp_town,
+    r'stamp_date'               : _re_stamp_date,
+    r'stamp_time'               : _re_stamp_time,
+    r'stamp_town_and_datetime'  : _re_stamp_town_and_datetime
+}
+
 # Dictionary of regular expressions for certain purposes
 _dict_re = dict()
 _dict_re.update(_dict_re_university)
@@ -190,6 +207,7 @@ _dict_re.update(_dict_re_contact_phone)
 _dict_re.update(_dict_re_contact_faxtel)
 _dict_re.update(_dict_re_contact_email)
 _dict_re.update(_dict_re_electronic_contact)
+_dict_re.update(_dict_re_stamp_town_and_datetime)
 
 _predefined_phrases = {
     'university' : [
@@ -206,6 +224,7 @@ _predefined_phrases = {
 
 class ParsingStatus(object):
     def __init__(self, **kw):
+        self.current_page = kw.get('current_page', 0)
         self.current_line = kw.get('current_line', 0)
         self.error = kw.get('error', False)
         self.error_msg = kw.get('error_msg', None)
@@ -217,6 +236,13 @@ def try_predefined_phrase_line(name, line):
         if re.match(expr, line):
             result[name] = phrase
             break
+    return result
+
+def try_predefined_regex_line(name, line):
+    result = dict()
+    m = re.match(r'^ *' + _dict_re[name] + ' *$', line)
+    if m:
+        result = m.groupdict().copy()
     return result
 
 def try_university_line(line):
@@ -242,11 +268,10 @@ def try_contact_address_line(line):
     return result
 
 def try_electronic_contact_line(line):
-    result = dict()
-    m = re.match(r'^ *' + _dict_re['electronic_contact'] + ' *$', line)
-    if m:
-        result = m.groupdict().copy()
-    return result
+    return try_predefined_regex_line('electronic_contact', line)
+
+def try_stamp_town_and_datetime_line(line):
+    return try_predefined_regex_line('stamp_town_and_datetime', line)
 
 def try_lines_in_sequence(status, lines, **kw):
     optional = kw.get('optional', [])

@@ -262,6 +262,16 @@ class Test__dict_re(unittest.TestCase):
         self.assertEqual(m.group('contact_email_address_localpart'), 'dziekan')
         self.assertEqual(m.group('contact_email_address_domain'), 'gik.pw.edu.pl')
 
+    def test_stamp_town_and_datetime__1(self):
+        r = tested._dict_re[r'stamp_town_and_datetime']
+        s = 'Warszawa, 08.02.2014, 13:09:53'
+        self.assertRegexMatch(s, r)
+        m = re.match(r, s)
+        self.assertEqual(m.group('stamp_town_and_datetime'), s)
+        self.assertEqual(m.group('stamp_town'), 'Warszawa')
+        self.assertEqual(m.group('stamp_date'), '08.02.2014')
+        self.assertEqual(m.group('stamp_time'), '13:09:53')
+
 class Test__predefined_phrases(unittest.TestCase):
     def test_university(self):
         items = [ r'POLITECHNIKA WARSZAWSKA' ]
@@ -389,6 +399,40 @@ class Test__try_electronic_contact_line(unittest.TestCase):
             'electronic_contact'                : 'tel. (+48) 22 234 72 23, e-mail: dziekan@gik.pw.edu.pl'
         }
         self.assertEqual(expect, tested.try_electronic_contact_line(line))
+
+class Test__try_stamp_town_and_datetime_line(unittest.TestCase):
+    def test__nonmatching(self):
+        self.assertEqual(tested.try_contact_address_line("I don't match anything"), dict())
+
+    def test__1(self):
+        line = "        Warszawa, 08.02.2014, 13:09:53  "
+        expect = {
+            'stamp_town'    : 'Warszawa',
+            'stamp_date'    : '08.02.2014',
+            'stamp_time'    : '13:09:53',
+            'stamp_town_and_datetime'   : 'Warszawa, 08.02.2014, 13:09:53'
+        }
+        self.assertEqual(expect, tested.try_stamp_town_and_datetime_line(line))
+
+    def test__2(self):
+        line = "        Szklarska Poręba, 08.02.2014, 13:09:53  "
+        expect = {
+            'stamp_town'    : 'Szklarska Poręba',
+            'stamp_date'    : '08.02.2014',
+            'stamp_time'    : '13:09:53',
+            'stamp_town_and_datetime'   : 'Szklarska Poręba, 08.02.2014, 13:09:53'
+        }
+        self.assertEqual(expect, tested.try_stamp_town_and_datetime_line(line))
+
+    def test__3(self):
+        line = "        Bielsko-Biała, 08.02.2014, 13:09:53  "
+        expect = {
+            'stamp_town'    : 'Bielsko-Biała',
+            'stamp_date'    : '08.02.2014',
+            'stamp_time'    : '13:09:53',
+            'stamp_town_and_datetime'   : 'Bielsko-Biała, 08.02.2014, 13:09:53'
+        }
+        self.assertEqual(expect, tested.try_stamp_town_and_datetime_line(line))
 
 class Test__try_protokolzaliczen_page_header(unittest.TestCase):
     def test__MEiL_1(self):
