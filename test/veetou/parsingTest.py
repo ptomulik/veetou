@@ -390,6 +390,97 @@ class Test__try_electronic_contact_line(unittest.TestCase):
         }
         self.assertEqual(expect, tested.try_electronic_contact_line(line))
 
+class Test__try_protokolzaliczen_page_header(unittest.TestCase):
+    def test__MEiL_1(self):
+        header = \
+"""
+                                                                                        POLITECHNIKA WARSZAWSKA
+                                       WYDZIAŁ MECHANICZNY ENERGETYKI I LOTNICTWA
+                                                                                                             DZIEKANAT
+                                                                      ul. Nowowiejska 24, 00-665 Warszawa, Gmach Lotniczy, pok. 125
+                                           tel.: (022) 621 53 10, (022) 234 73 54, fax/tel.: (022) 625 73 51, e-mail:dziekanat@meil.pw.edu.pl
+"""
+        lines = header.splitlines()
+        expect = {
+            'university'                        : 'POLITECHNIKA WARSZAWSKA',
+            'faculty'                           : 'WYDZIAŁ MECHANICZNY ENERGETYKI I LOTNICTWA',
+            'contact_name'                      : 'DZIEKANAT',
+            'contact_address_street_prefix'     : 'ul.',
+            'contact_address_street_name'       : 'Nowowiejska',
+            'contact_address_street_number'     : '24',
+            'contact_address_postoffice_zip'    : '00-665',
+            'contact_address_postoffice_town'   : 'Warszawa',
+            'contact_address_edifice'           : 'Gmach Lotniczy',
+            'contact_address_room'              : 'pok. 125',
+            'contact_address_website'           : None,
+            'contact_address'                   : 'ul. Nowowiejska 24, 00-665 Warszawa, Gmach Lotniczy, pok. 125',
+            'contact_phone_prefix'              : 'tel.:',
+            'contact_phone_numbers'             : '(022) 621 53 10, (022) 234 73 54',
+            'contact_phone'                     : 'tel.: (022) 621 53 10, (022) 234 73 54',
+            'contact_faxtel_prefix'             : 'fax/tel.:',
+            'contact_faxtel_numbers'            : '(022) 625 73 51',
+            'contact_faxtel'                    : 'fax/tel.: (022) 625 73 51',
+            'contact_email_prefix'              : 'e-mail:',
+            'contact_email_address_localpart'   : 'dziekanat',
+            'contact_email_address_domain'      : 'meil.pw.edu.pl',
+            'contact_email_address'             : 'dziekanat@meil.pw.edu.pl',
+            'contact_email'                     : 'e-mail:dziekanat@meil.pw.edu.pl',
+            'electronic_contact'                : 'tel.: (022) 621 53 10, (022) 234 73 54, fax/tel.: (022) 625 73 51, e-mail:dziekanat@meil.pw.edu.pl'
+        }
+        #
+        status = tested.ParsingStatus()
+        result = tested.try_protokolzaliczen_page_header(status, lines)
+        #
+        self.assertIs(status.error, False)
+        self.assertIs(status.error_msg, None)
+        self.assertIs(status.current_line, 6)
+        self.maxDiff = None
+        self.assertEqual(expect, result)
+
+    def test__GiK_1(self):
+        header = \
+"""
+                                     P  O   L  I  T  E  C   H  N   I K   A     W   A  R   S  Z  A   W   S  K   A
+                             WYDZIAŁ                  GEODEZJI                   I   KARTOGRAFII
+
+                                          Plac Politechniki 1, p. 301, 00-661 Warszawa, www.gik.pw.edu.pl
+                                               tel. (+48) 22 234 72 23, e-mail: dziekan@gik.pw.edu.pl
+"""
+        lines = header.splitlines()
+        expect = {
+            'university'                        : 'POLITECHNIKA WARSZAWSKA',
+            'faculty'                           : 'WYDZIAŁ GEODEZJI I KARTOGRAFII',
+            'contact_address_street_prefix'     : None,
+            'contact_address_street_name'       : 'Plac Politechniki',
+            'contact_address_street_number'     : '1',
+            'contact_address_postoffice_zip'    : '00-661',
+            'contact_address_postoffice_town'   : 'Warszawa',
+            'contact_address_edifice'           : None,
+            'contact_address_room'              : 'p. 301',
+            'contact_address_website'           : 'www.gik.pw.edu.pl',
+            'contact_address'                   : 'Plac Politechniki 1, p. 301, 00-661 Warszawa, www.gik.pw.edu.pl',
+            'contact_phone_prefix'              : 'tel.',
+            'contact_phone_numbers'             : '(+48) 22 234 72 23',
+            'contact_phone'                     : 'tel. (+48) 22 234 72 23',
+            'contact_faxtel_prefix'             : None,
+            'contact_faxtel_numbers'            : None,
+            'contact_faxtel'                    : None,
+            'contact_email_prefix'              : 'e-mail:',
+            'contact_email_address_localpart'   : 'dziekan',
+            'contact_email_address_domain'      : 'gik.pw.edu.pl',
+            'contact_email_address'             : 'dziekan@gik.pw.edu.pl',
+            'contact_email'                     : 'e-mail: dziekan@gik.pw.edu.pl',
+            'electronic_contact'                : 'tel. (+48) 22 234 72 23, e-mail: dziekan@gik.pw.edu.pl'
+        }
+        #
+        status = tested.ParsingStatus()
+        result = tested.try_protokolzaliczen_page_header(status, lines)
+        #
+        self.assertIs(status.error, False)
+        self.assertIs(status.error_msg, None)
+        self.assertIs(status.current_line, 6)
+        self.maxDiff = None
+        self.assertEqual(expect, result)
 if __name__ == '__main__':
     unittest.main()
 

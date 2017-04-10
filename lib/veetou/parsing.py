@@ -204,6 +204,12 @@ _predefined_phrases = {
     ]
 }
 
+class ParsingStatus(object):
+    def __init__(self, **kw):
+        self.current_line = kw.get('current_line', 0)
+        self.error = kw.get('error', False)
+        self.error_msg = kw.get('error_msg', None)
+
 def try_predefined_phrase_line(name, line):
     result = dict()
     for phrase in _predefined_phrases[name]:
@@ -241,6 +247,55 @@ def try_electronic_contact_line(line):
     if m:
         result = m.groupdict().copy()
     return result
+
+def try_lines_in_sequence(status, lines, **kw):
+    optional = kw.get('optional', [])
+    parser_functions = kw.get('parser_functions', [])
+    parser_messages = kw.get('parser_messages', [])
+    parser_index = 0
+    result = dict()
+    for line in lines:
+        done = False
+        while (not done) and (parser_index < len(parser_functions)):
+            # try consecutive parsers
+            if re.match(r'^\s*$', line):
+                status.current_line += 1
+                break
+            r = parser_functions[parser_index](line)
+            if not r:
+                if parser_index not in optional:
+                    status.error = True
+                    status.error_msg = 'expected: %s, got: %r' % (parser_messages[parser_index], line)
+                    return result
+                else:
+                    parser_index += 1
+            else:
+                status.current_line += 1
+                parser_index += 1
+                result.update(r)
+                done = True
+    return result
+
+
+def try_protokolzaliczen_page_header(status, lines, **kw):
+    kw['parser_functions'] = [
+            try_university_line,                # 0
+            try_faculty_line,                   # 1
+            try_contact_name_line,              # 2
+            try_contact_address_line,           # 3
+            try_electronic_contact_line         # 4
+    ]
+    kw['parser_messages'] = [
+            'university name',                  # 0
+            'faculty name',                     # 1
+            'contact name',                     # 2
+            'contact address',                  # 3
+            'electronic contact address',       # 4
+    ]
+    kw['optional'] = [ 2 ]
+    return try_lines_in_sequence(status, lines, **kw)
+
+
 
 # Local Variables:
 # # tab-width:4
