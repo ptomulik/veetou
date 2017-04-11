@@ -139,6 +139,19 @@ r', *'.join([
     _re_stamp_time
 ]) + r')'
 
+# 'pzal' is an abbreviation for protokolzaliczen
+_re_pzal_label_title = r'(?P<pzal_label_title>Protokół zaliczeń)'
+_re_pzal_label_exam = r'(?P<pzal_label_exam>(?:egzamin|bez egzaminu))'
+_re_pzal_label_semester = r'(?P<pzal_label_semester>\d{4} *[ZL])'
+_re_pzal_label_serie = r'(?P<pzal_label_serie>[A-Z]-\d{1,2})'
+_re_pzal_label_number = r'(?P<pzal_label_number>\d{1,4})'
+_re_pzal_label = r'(?P<pzal_label>' + \
+        _re_pzal_label_title + r' {,3}\(' + \
+        _re_pzal_label_exam + r'\) {,3}' + \
+        _re_pzal_label_semester + r' ?/ ?' + \
+        _re_pzal_label_serie + r' ?/ ?' + \
+        _re_pzal_label_number + r')'
+
 _dict_re_contact_address = {
     r'contact_address_street_info'      : _re_contact_address_street_info,
     r'contact_address_postoffice_info'  : _re_contact_address_postoffice_info,
@@ -197,6 +210,15 @@ _dict_re_stamp_town_and_datetime = {
     r'stamp_town_and_datetime'  : _re_stamp_town_and_datetime
 }
 
+_dict_re_pzal_label = {
+    r'pzal_label_title'     : _re_pzal_label_title,
+    r'pzal_label_exam'      : _re_pzal_label_exam,
+    r'pzal_label_semester'  : _re_pzal_label_semester,
+    r'pzal_label_serie'     : _re_pzal_label_serie,
+    r'pzal_label_number'    : _re_pzal_label_number,
+    r'pzal_label'           : _re_pzal_label
+}
+
 # Dictionary of regular expressions for certain purposes
 _dict_re = dict()
 _dict_re.update(_dict_re_university)
@@ -208,6 +230,7 @@ _dict_re.update(_dict_re_contact_faxtel)
 _dict_re.update(_dict_re_contact_email)
 _dict_re.update(_dict_re_electronic_contact)
 _dict_re.update(_dict_re_stamp_town_and_datetime)
+_dict_re.update(_dict_re_pzal_label)
 
 _predefined_phrases = {
     'university' : [
@@ -273,6 +296,9 @@ def try_electronic_contact_line(line):
 def try_stamp_town_and_datetime_line(line):
     return try_predefined_regex_line('stamp_town_and_datetime', line)
 
+def try_pzal_label_line(line):
+    return try_predefined_regex_line('pzal_label', line)
+
 def try_lines_in_sequence(status, lines, **kw):
     optional = kw.get('optional', [])
     parser_functions = kw.get('parser_functions', [])
@@ -302,7 +328,7 @@ def try_lines_in_sequence(status, lines, **kw):
     return result
 
 
-def try_protokolzaliczen_page_header(status, lines, **kw):
+def try_pzal_page_header(status, lines, **kw):
     kw['parser_functions'] = [
             try_university_line,                # 0
             try_faculty_line,                   # 1

@@ -272,6 +272,29 @@ class Test__dict_re(unittest.TestCase):
         self.assertEqual(m.group('stamp_date'), '08.02.2014')
         self.assertEqual(m.group('stamp_time'), '13:09:53')
 
+    def test_pzal_label__1(self):
+        r = tested._dict_re[r'pzal_label']
+        s = 'Protokół zaliczeń (egzamin) 2015 Z/B-1/197'
+        self.assertRegexMatch(s, r)
+        m = re.match(r, s)
+        self.assertEqual(m.group('pzal_label'), s)
+        self.assertEqual(m.group('pzal_label_title'), 'Protokół zaliczeń')
+        self.assertEqual(m.group('pzal_label_exam'), 'egzamin')
+        self.assertEqual(m.group('pzal_label_semester'), '2015 Z')
+        self.assertEqual(m.group('pzal_label_serie'), 'B-1')
+        self.assertEqual(m.group('pzal_label_number'), '197')
+
+    def test_pzal_label__2(self):
+        r = tested._dict_re[r'pzal_label']
+        s = 'Protokół zaliczeń (bez egzaminu) 2013Z/E-1/252'
+        self.assertRegexMatch(s, r)
+        m = re.match(r, s)
+        self.assertEqual(m.group('pzal_label'), s)
+        self.assertEqual(m.group('pzal_label_title'), 'Protokół zaliczeń')
+        self.assertEqual(m.group('pzal_label_exam'), 'bez egzaminu')
+        self.assertEqual(m.group('pzal_label_semester'), '2013Z')
+        self.assertEqual(m.group('pzal_label_serie'), 'E-1')
+        self.assertEqual(m.group('pzal_label_number'), '252')
 class Test__predefined_phrases(unittest.TestCase):
     def test_university(self):
         items = [ r'POLITECHNIKA WARSZAWSKA' ]
@@ -434,7 +457,7 @@ class Test__try_stamp_town_and_datetime_line(unittest.TestCase):
         }
         self.assertEqual(expect, tested.try_stamp_town_and_datetime_line(line))
 
-class Test__try_protokolzaliczen_page_header(unittest.TestCase):
+class Test__try_pzal_page_header(unittest.TestCase):
     def test__MEiL_1(self):
         header = \
 """
@@ -473,7 +496,7 @@ class Test__try_protokolzaliczen_page_header(unittest.TestCase):
         }
         #
         status = tested.ParsingStatus()
-        result = tested.try_protokolzaliczen_page_header(status, lines)
+        result = tested.try_pzal_page_header(status, lines)
         #
         self.assertIs(status.error, False)
         self.assertIs(status.error_msg, None)
@@ -518,7 +541,7 @@ class Test__try_protokolzaliczen_page_header(unittest.TestCase):
         }
         #
         status = tested.ParsingStatus()
-        result = tested.try_protokolzaliczen_page_header(status, lines)
+        result = tested.try_pzal_page_header(status, lines)
         #
         self.assertIs(status.error, False)
         self.assertIs(status.error_msg, None)
