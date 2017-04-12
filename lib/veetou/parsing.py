@@ -152,6 +152,44 @@ _re_pzal_label = r'(?P<pzal_label>' + \
         _re_pzal_label_serie + r' ?/ ?' + \
         _re_pzal_label_number + r')'
 
+_re_pzal_return_desc = r'(?P<pzal_return_desc>Termin zwrotu)'
+_re_pzal_return_date = r'(?P<pzal_return_date>\d{2}\.\d{2}\.(?:19\d{2}|20[0-1]\d))'
+_re_pzal_return =  r'(?P<pzal_return>' + \
+        _re_pzal_return_desc + r' {1,2}' + \
+        _re_pzal_return_date + r')'
+
+_re_pzal_subj_name  = r'(P<pzal_subj_name>\S+(?: {1,2}\S+)*)'
+_re_pzal_subj_code  = r'(P<pzal_subj_code>(?:ML|GK|GP)\.\w+)'
+_re_pzal_subj_tutor = r'(P<pzal_subj_tutor>(?:[^\W\d_],?|-)+\.?(?: {1,2}(?:[^\W\d_],?|-)+\.?)*)'
+_re_pzal_subj_grades = r'(P<pzal_subj_grades>\'?(?:\d(?:[,.]\d)?)\'?(?:, {1,2}\'?(?:\d(?:[,.]\d)?)\'?)*)'
+_re_pzal_subj_cond = r'(P<pzal_subj_cond>(?:' + r'|'.join([
+        r'(?:Wszyscy studenci na liście muszą mieć wystawioną ocenę)'
+    ]) + r'))'
+
+_re_pzal_preamble_subj_name = \
+        r'(P<pzal_preamble_subj_name>Nazwa przedmiotu: {1,2}' + \
+        _re_pzal_subj_name + r')'
+
+_re_pzal_preamble_subj_code = \
+        r'(P<pzal_preamble_subj_code>Nr katalogowy: {1,2}' + \
+        _re_pzal_subj_code
+        r')'
+_re_pzal_preamble_department = \
+        r'(P<pzal_preamble_department>(?:Zakład|Katedra) {1,2}\S+(?: {1,2}\S+)*)'
+
+_re_pzal_preamble_subj_tutor = \
+        r'(P<pzal_preamble_tutor>Kierownik przedmiotu: {1,2}' + \
+        _re_pzal_subj_tutor
+        r')'
+_re_pzal_preamble_subj_grades = \
+        r'(P<pzal_preamble_subj_grades>Dopuszczalne oceny: {1,2}:' + \
+        _re_pzal_subj_grades + r')'
+
+_re_pzal_preamble_subj_cond = \
+        r'(P<pzal_preamble_subj_cond>' \
+        + _re_pzal_subj_cond + r')'
+
+
 _dict_re_contact_address = {
     r'contact_address_street_info'      : _re_contact_address_street_info,
     r'contact_address_postoffice_info'  : _re_contact_address_postoffice_info,
@@ -219,6 +257,26 @@ _dict_re_pzal_label = {
     r'pzal_label'           : _re_pzal_label
 }
 
+_dict_re_pzal_return = {
+    r'pzal_return_desc'     : _re_pzal_return_desc,
+    r'pzal_return_date'     : _re_pzal_return_date,
+    r'pzal_return'          : _re_pzal_return
+}
+
+_dict_re_pzal_preamble = {
+    r'pzal_subj_name'               : _re_pzal_subj_name,
+    r'pzal_subj_code'               : _re_pzal_subj_code,
+    r'pzal_subj_tutor'              : _re_pzal_subj_tutor,
+    r'pzal_subj_grades'             : _re_pzal_subj_grades,
+    r'pzal_subj_cond'               : _re_pzal_subj_cond,
+    r'pzal_preamble_subj_name'      : _re_pzal_preamble_subj_name,
+    r'pzal_preamble_subj_code'      : _re_pzal_preamble_subj_code,
+    r'pzal_preamble_department'     : _re_pzal_preamble_department,
+    r'pzal_preamble_subj_tutor'     : _re_pzal_preamble_subj_tutor,
+    r'pzal_preamble_subj_grades'    : _re_pzal_preamble_subj_grades,
+    r'pzal_preamble_subj_cond'      : _re_pzal_preamble_subj_cond,
+}
+
 # Dictionary of regular expressions for certain purposes
 _dict_re = dict()
 _dict_re.update(_dict_re_university)
@@ -231,6 +289,8 @@ _dict_re.update(_dict_re_contact_email)
 _dict_re.update(_dict_re_electronic_contact)
 _dict_re.update(_dict_re_stamp_town_and_datetime)
 _dict_re.update(_dict_re_pzal_label)
+_dict_re.update(_dict_re_pzal_return)
+_dict_re.update(_dict_re_pzal_preamble)
 
 _predefined_phrases = {
     'university' : [
@@ -298,6 +358,9 @@ def try_stamp_town_and_datetime_line(line):
 
 def try_pzal_label_line(line):
     return try_predefined_regex_line('pzal_label', line)
+
+def try_pzal_return_line(line):
+    return try_predefined_regex_line('pzal_return', line)
 
 def try_lines_in_sequence(status, lines, **kw):
     optional = kw.get('optional', [])

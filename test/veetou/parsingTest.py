@@ -295,6 +295,16 @@ class Test__dict_re(unittest.TestCase):
         self.assertEqual(m.group('pzal_label_semester'), '2013Z')
         self.assertEqual(m.group('pzal_label_serie'), 'E-1')
         self.assertEqual(m.group('pzal_label_number'), '252')
+
+    def test_pzal_return__1(self):
+        r = tested._dict_re[r'pzal_return']
+        s = 'Termin zwrotu 02.02.2016'
+        self.assertRegexMatch(s, r)
+        m = re.match(r, s)
+        self.assertEqual(m.group('pzal_return'), s)
+        self.assertEqual(m.group('pzal_return_desc'), 'Termin zwrotu')
+        self.assertEqual(m.group('pzal_return_date'), '02.02.2016')
+
 class Test__predefined_phrases(unittest.TestCase):
     def test_university(self):
         items = [ r'POLITECHNIKA WARSZAWSKA' ]
@@ -456,6 +466,34 @@ class Test__try_stamp_town_and_datetime_line(unittest.TestCase):
             'stamp_town_and_datetime'   : 'Bielsko-Biała, 08.02.2014, 13:09:53'
         }
         self.assertEqual(expect, tested.try_stamp_town_and_datetime_line(line))
+
+class Test__try_pzal_label_line(unittest.TestCase):
+    def test__nonmatching(self):
+        self.assertEqual(tested.try_contact_address_line("I don't match anything"), dict())
+
+    def test__1(self):
+        line = "        Protokół zaliczeń (egzamin) 2013Z/E-1/118       "
+        expect = {
+            'pzal_label'            : 'Protokół zaliczeń (egzamin) 2013Z/E-1/118',
+            'pzal_label_title'      : 'Protokół zaliczeń',
+            'pzal_label_exam'       : 'egzamin',
+            'pzal_label_semester'   : '2013Z',
+            'pzal_label_serie'      : 'E-1',
+            'pzal_label_number'     : '118'
+        }
+        self.assertEqual(expect, tested.try_pzal_label_line(line))
+
+    def test__2(self):
+        line = "        Protokół zaliczeń (bez egzaminu) 2015 Z/B-1/197       "
+        expect = {
+            'pzal_label'            : 'Protokół zaliczeń (bez egzaminu) 2015 Z/B-1/197',
+            'pzal_label_title'      : 'Protokół zaliczeń',
+            'pzal_label_exam'       : 'bez egzaminu',
+            'pzal_label_semester'   : '2015 Z',
+            'pzal_label_serie'      : 'B-1',
+            'pzal_label_number'     : '197'
+        }
+        self.assertEqual(expect, tested.try_pzal_label_line(line))
 
 class Test__try_pzal_page_header(unittest.TestCase):
     def test__MEiL_1(self):
