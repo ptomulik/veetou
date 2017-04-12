@@ -139,55 +139,62 @@ r', *'.join([
     _re_stamp_time
 ]) + r')'
 
-# 'pzal' is an abbreviation for protokolzaliczen
-_re_pzal_label_title = r'(?P<pzal_label_title>Protokół zaliczeń)'
-_re_pzal_label_exam = r'(?P<pzal_label_exam>(?:egzamin|bez egzaminu))'
-_re_pzal_label_semester = r'(?P<pzal_label_semester>\d{4} *[ZL])'
-_re_pzal_label_serie = r'(?P<pzal_label_serie>[A-Z]-\d{1,2})'
-_re_pzal_label_number = r'(?P<pzal_label_number>\d{1,4})'
-_re_pzal_label = r'(?P<pzal_label>' + \
-        _re_pzal_label_title + r' {,3}\(' + \
-        _re_pzal_label_exam + r'\) {,3}' + \
-        _re_pzal_label_semester + r' ?/ ?' + \
-        _re_pzal_label_serie + r' ?/ ?' + \
-        _re_pzal_label_number + r')'
+# 'proza' is an abbreviation for protokolzaliczen
+_re_proza_label_title = r'(?P<proza_label_title>Protokół zaliczeń)'
+_re_proza_label_exam = r'(?P<proza_label_exam>(?:egzamin|bez egzaminu))'
+_re_proza_label_semester = r'(?P<proza_label_semester>\d{4} *[ZL])'
+_re_proza_label_serie = r'(?P<proza_label_serie>[A-Z]-\d{1,2})'
+_re_proza_label_number = r'(?P<proza_label_number>\d{1,4})'
+_re_proza_label = r'(?P<proza_label>' + \
+        _re_proza_label_title + r' {,3}\(' + \
+        _re_proza_label_exam + r'\) {,3}' + \
+        _re_proza_label_semester + r' ?/ ?' + \
+        _re_proza_label_serie + r' ?/ ?' + \
+        _re_proza_label_number + r')'
 
-_re_pzal_return_desc = r'(?P<pzal_return_desc>Termin zwrotu)'
-_re_pzal_return_date = r'(?P<pzal_return_date>\d{2}\.\d{2}\.(?:19\d{2}|20[0-1]\d))'
-_re_pzal_return =  r'(?P<pzal_return>' + \
-        _re_pzal_return_desc + r' {1,2}' + \
-        _re_pzal_return_date + r')'
+_re_proza_return_desc = r'(?P<proza_return_desc>Termin zwrotu)'
+_re_proza_return_date = r'(?P<proza_return_date>\d{2}\.\d{2}\.(?:19\d{2}|20[0-1]\d))'
+_re_proza_return =  r'(?P<proza_return>' + \
+        _re_proza_return_desc + r':? {1,2}' + \
+        _re_proza_return_date + r')'
 
-_re_pzal_subj_name  = r'(P<pzal_subj_name>\S+(?: {1,2}\S+)*)'
-_re_pzal_subj_code  = r'(P<pzal_subj_code>(?:ML|GK|GP)\.\w+)'
-_re_pzal_subj_tutor = r'(P<pzal_subj_tutor>(?:[^\W\d_],?|-)+\.?(?: {1,2}(?:[^\W\d_],?|-)+\.?)*)'
-_re_pzal_subj_grades = r'(P<pzal_subj_grades>\'?(?:\d(?:[,.]\d)?)\'?(?:, {1,2}\'?(?:\d(?:[,.]\d)?)\'?)*)'
-_re_pzal_subj_cond = r'(P<pzal_subj_cond>(?:' + r'|'.join([
+_re_proza_subj_name  = r'(?P<proza_subj_name>\S+(?: {1,2}\S+)*)'
+_re_proza_subj_code  = r'(?P<proza_subj_code>(?:ML|GK|GP)\.\w+)'
+_re_proza_subj_tutor = r'(?P<proza_subj_tutor>(?:[^\W\d_],?|-)+\.?(?: {1,2}(?:[^\W\d_],?|-)+\.?)*)'
+_re_proza_subj_grade = r'\'?(?:(?:\d(?:[,\.]\d)?)|Nzal|Zal|Zw)\'?'
+_re_proza_subj_grades = \
+        r'(?P<proza_subj_grades>' + \
+        _re_proza_subj_grade + r'(?:, {,2}' +  _re_proza_subj_grade + r')*' + \
+        r')'
+_re_proza_subj_cond = r'(?P<proza_subj_cond>(?:' + r'|'.join([
         r'(?:Wszyscy studenci na liście muszą mieć wystawioną ocenę)'
     ]) + r'))'
 
-_re_pzal_preamble_subj_name = \
-        r'(P<pzal_preamble_subj_name>Nazwa przedmiotu: {1,2}' + \
-        _re_pzal_subj_name + r')'
+_re_proza_preamble_subj_name = \
+        r'(?P<proza_preamble_subj_name>Nazwa przedmiotu: {,2}' + \
+        _re_proza_subj_name + r')'
 
-_re_pzal_preamble_subj_code = \
-        r'(P<pzal_preamble_subj_code>Nr katalogowy: {1,2}' + \
-        _re_pzal_subj_code
+_re_proza_preamble_subj_code = \
+        r'(?P<proza_preamble_subj_code>Nr katalogowy: {,2}' + \
+        _re_proza_subj_code + \
         r')'
-_re_pzal_preamble_department = \
-        r'(P<pzal_preamble_department>(?:Zakład|Katedra) {1,2}\S+(?: {1,2}\S+)*)'
+_re_proza_preamble_department = \
+        r'(?P<proza_preamble_department>(?:Wydział|Instytut|Zakład|Katedra) {1,2}\S+(?: {1,2}\S+)*)'
 
-_re_pzal_preamble_subj_tutor = \
-        r'(P<pzal_preamble_tutor>Kierownik przedmiotu: {1,2}' + \
-        _re_pzal_subj_tutor
+_re_proza_preamble_subj_tutor = \
+        r'(?P<proza_preamble_subj_tutor>Kierownik przedmiotu: {,2}' + \
+        _re_proza_subj_tutor + \
         r')'
-_re_pzal_preamble_subj_grades = \
-        r'(P<pzal_preamble_subj_grades>Dopuszczalne oceny: {1,2}:' + \
-        _re_pzal_subj_grades + r')'
+_re_proza_preamble_subj_grades = \
+        r'(?P<proza_preamble_subj_grades>Dopuszczalne oceny: {,2}' + \
+        _re_proza_subj_grades + r')\.?'
 
-_re_pzal_preamble_subj_cond = \
-        r'(P<pzal_preamble_subj_cond>' \
-        + _re_pzal_subj_cond + r')'
+_re_proza_preamble_subj_cond = \
+        r'(?P<proza_preamble_subj_cond>' \
+        + _re_proza_subj_cond + r')\.?'
+
+_re_proza_preamble_subj_grades_and_cond = \
+        _re_proza_preamble_subj_grades + r'(?: +' + _re_proza_preamble_subj_cond + r')?'
 
 
 _dict_re_contact_address = {
@@ -248,33 +255,34 @@ _dict_re_stamp_town_and_datetime = {
     r'stamp_town_and_datetime'  : _re_stamp_town_and_datetime
 }
 
-_dict_re_pzal_label = {
-    r'pzal_label_title'     : _re_pzal_label_title,
-    r'pzal_label_exam'      : _re_pzal_label_exam,
-    r'pzal_label_semester'  : _re_pzal_label_semester,
-    r'pzal_label_serie'     : _re_pzal_label_serie,
-    r'pzal_label_number'    : _re_pzal_label_number,
-    r'pzal_label'           : _re_pzal_label
+_dict_re_proza_label = {
+    r'proza_label_title'     : _re_proza_label_title,
+    r'proza_label_exam'      : _re_proza_label_exam,
+    r'proza_label_semester'  : _re_proza_label_semester,
+    r'proza_label_serie'     : _re_proza_label_serie,
+    r'proza_label_number'    : _re_proza_label_number,
+    r'proza_label'           : _re_proza_label
 }
 
-_dict_re_pzal_return = {
-    r'pzal_return_desc'     : _re_pzal_return_desc,
-    r'pzal_return_date'     : _re_pzal_return_date,
-    r'pzal_return'          : _re_pzal_return
+_dict_re_proza_return = {
+    r'proza_return_desc'     : _re_proza_return_desc,
+    r'proza_return_date'     : _re_proza_return_date,
+    r'proza_return'          : _re_proza_return
 }
 
-_dict_re_pzal_preamble = {
-    r'pzal_subj_name'               : _re_pzal_subj_name,
-    r'pzal_subj_code'               : _re_pzal_subj_code,
-    r'pzal_subj_tutor'              : _re_pzal_subj_tutor,
-    r'pzal_subj_grades'             : _re_pzal_subj_grades,
-    r'pzal_subj_cond'               : _re_pzal_subj_cond,
-    r'pzal_preamble_subj_name'      : _re_pzal_preamble_subj_name,
-    r'pzal_preamble_subj_code'      : _re_pzal_preamble_subj_code,
-    r'pzal_preamble_department'     : _re_pzal_preamble_department,
-    r'pzal_preamble_subj_tutor'     : _re_pzal_preamble_subj_tutor,
-    r'pzal_preamble_subj_grades'    : _re_pzal_preamble_subj_grades,
-    r'pzal_preamble_subj_cond'      : _re_pzal_preamble_subj_cond,
+_dict_re_proza_preamble = {
+    r'proza_subj_name'               : _re_proza_subj_name,
+    r'proza_subj_code'               : _re_proza_subj_code,
+    r'proza_subj_tutor'              : _re_proza_subj_tutor,
+    r'proza_subj_grades'             : _re_proza_subj_grades,
+    r'proza_subj_cond'               : _re_proza_subj_cond,
+    r'proza_preamble_subj_name'      : _re_proza_preamble_subj_name,
+    r'proza_preamble_subj_code'      : _re_proza_preamble_subj_code,
+    r'proza_preamble_department'     : _re_proza_preamble_department,
+    r'proza_preamble_subj_tutor'     : _re_proza_preamble_subj_tutor,
+    r'proza_preamble_subj_grades'    : _re_proza_preamble_subj_grades,
+    r'proza_preamble_subj_cond'      : _re_proza_preamble_subj_cond,
+    r'proza_preamble_subj_grades_and_cond' : _re_proza_preamble_subj_grades_and_cond
 }
 
 # Dictionary of regular expressions for certain purposes
@@ -288,9 +296,9 @@ _dict_re.update(_dict_re_contact_faxtel)
 _dict_re.update(_dict_re_contact_email)
 _dict_re.update(_dict_re_electronic_contact)
 _dict_re.update(_dict_re_stamp_town_and_datetime)
-_dict_re.update(_dict_re_pzal_label)
-_dict_re.update(_dict_re_pzal_return)
-_dict_re.update(_dict_re_pzal_preamble)
+_dict_re.update(_dict_re_proza_label)
+_dict_re.update(_dict_re_proza_return)
+_dict_re.update(_dict_re_proza_preamble)
 
 _predefined_phrases = {
     'university' : [
@@ -356,11 +364,32 @@ def try_electronic_contact_line(line):
 def try_stamp_town_and_datetime_line(line):
     return try_predefined_regex_line('stamp_town_and_datetime', line)
 
-def try_pzal_label_line(line):
-    return try_predefined_regex_line('pzal_label', line)
+def try_proza_label_line(line):
+    return try_predefined_regex_line('proza_label', line)
 
-def try_pzal_return_line(line):
-    return try_predefined_regex_line('pzal_return', line)
+def try_proza_return_line(line):
+    return try_predefined_regex_line('proza_return', line)
+
+def try_proza_preamble_subj_name_line(line):
+    return try_predefined_regex_line('proza_preamble_subj_name', line)
+
+def try_proza_preamble_subj_code_line(line):
+    return try_predefined_regex_line('proza_preamble_subj_code', line)
+
+def try_proza_preamble_department_line(line):
+    return try_predefined_regex_line('proza_preamble_department', line)
+
+def try_proza_preamble_subj_tutor_line(line):
+    return try_predefined_regex_line('proza_preamble_subj_tutor', line)
+
+def try_proza_preamble_subj_grades_line(line):
+    return try_predefined_regex_line('proza_preamble_subj_grades', line)
+
+def try_proza_preamble_subj_cond_line(line):
+    return try_predefined_regex_line('proza_preamble_subj_cond', line)
+
+def try_proza_preamble_subj_grades_and_cond_line(line):
+    return try_predefined_regex_line('proza_preamble_subj_grades_and_cond', line)
 
 def try_lines_in_sequence(status, lines, **kw):
     optional = kw.get('optional', [])
@@ -391,7 +420,7 @@ def try_lines_in_sequence(status, lines, **kw):
     return result
 
 
-def try_pzal_page_header(status, lines, **kw):
+def try_proza_page_header(status, lines, **kw):
     kw['parser_functions'] = [
             try_university_line,                # 0
             try_faculty_line,                   # 1
@@ -407,6 +436,26 @@ def try_pzal_page_header(status, lines, **kw):
             'electronic contact address',       # 4
     ]
     kw['optional'] = [ 2 ]
+    return try_lines_in_sequence(status, lines, **kw)
+
+def try_proza_preamble(status, lines, **kw):
+    kw['parser_functions'] = [
+            try_proza_preamble_subj_name_line,  # 0
+            try_proza_preamble_subj_code_line,  # 1
+            try_proza_preamble_department_line, # 2
+            try_proza_preamble_subj_tutor_line, # 3
+            try_proza_preamble_subj_grades_and_cond_line,# 4
+            try_proza_preamble_subj_cond_line   # 5
+    ]
+    kw['parser_messages'] = [
+            'subject name',                     # 0
+            'subject code',                     # 1
+            'department name',                  # 2
+            'subject tutor',                    # 3
+            'list of allowed grades',           # 4
+            'validity condition',               # 5
+    ]
+    kw['optional'] = [ 5 ]
     return try_lines_in_sequence(status, lines, **kw)
 
 

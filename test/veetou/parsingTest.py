@@ -272,38 +272,132 @@ class Test__dict_re(unittest.TestCase):
         self.assertEqual(m.group('stamp_date'), '08.02.2014')
         self.assertEqual(m.group('stamp_time'), '13:09:53')
 
-    def test_pzal_label__1(self):
-        r = tested._dict_re[r'pzal_label']
+    def test_proza_label__1(self):
+        r = tested._dict_re[r'proza_label']
         s = 'Protokół zaliczeń (egzamin) 2015 Z/B-1/197'
         self.assertRegexMatch(s, r)
         m = re.match(r, s)
-        self.assertEqual(m.group('pzal_label'), s)
-        self.assertEqual(m.group('pzal_label_title'), 'Protokół zaliczeń')
-        self.assertEqual(m.group('pzal_label_exam'), 'egzamin')
-        self.assertEqual(m.group('pzal_label_semester'), '2015 Z')
-        self.assertEqual(m.group('pzal_label_serie'), 'B-1')
-        self.assertEqual(m.group('pzal_label_number'), '197')
+        self.assertEqual(m.group('proza_label'), s)
+        self.assertEqual(m.group('proza_label_title'), 'Protokół zaliczeń')
+        self.assertEqual(m.group('proza_label_exam'), 'egzamin')
+        self.assertEqual(m.group('proza_label_semester'), '2015 Z')
+        self.assertEqual(m.group('proza_label_serie'), 'B-1')
+        self.assertEqual(m.group('proza_label_number'), '197')
 
-    def test_pzal_label__2(self):
-        r = tested._dict_re[r'pzal_label']
+    def test_proza_label__2(self):
+        r = tested._dict_re[r'proza_label']
         s = 'Protokół zaliczeń (bez egzaminu) 2013Z/E-1/252'
         self.assertRegexMatch(s, r)
         m = re.match(r, s)
-        self.assertEqual(m.group('pzal_label'), s)
-        self.assertEqual(m.group('pzal_label_title'), 'Protokół zaliczeń')
-        self.assertEqual(m.group('pzal_label_exam'), 'bez egzaminu')
-        self.assertEqual(m.group('pzal_label_semester'), '2013Z')
-        self.assertEqual(m.group('pzal_label_serie'), 'E-1')
-        self.assertEqual(m.group('pzal_label_number'), '252')
+        self.assertEqual(m.group('proza_label'), s)
+        self.assertEqual(m.group('proza_label_title'), 'Protokół zaliczeń')
+        self.assertEqual(m.group('proza_label_exam'), 'bez egzaminu')
+        self.assertEqual(m.group('proza_label_semester'), '2013Z')
+        self.assertEqual(m.group('proza_label_serie'), 'E-1')
+        self.assertEqual(m.group('proza_label_number'), '252')
 
-    def test_pzal_return__1(self):
-        r = tested._dict_re[r'pzal_return']
+    def test_proza_return__1(self):
+        r = tested._dict_re[r'proza_return']
         s = 'Termin zwrotu 02.02.2016'
         self.assertRegexMatch(s, r)
         m = re.match(r, s)
-        self.assertEqual(m.group('pzal_return'), s)
-        self.assertEqual(m.group('pzal_return_desc'), 'Termin zwrotu')
-        self.assertEqual(m.group('pzal_return_date'), '02.02.2016')
+        self.assertEqual(m.group('proza_return'), s)
+        self.assertEqual(m.group('proza_return_desc'), 'Termin zwrotu')
+        self.assertEqual(m.group('proza_return_date'), '02.02.2016')
+
+    def test_proza_preamble_subj_name__1(self):
+        r = tested._dict_re[r'proza_preamble_subj_name']
+        s = 'Nazwa przedmiotu: Advanced Aero Engines Laboratory'
+        self.assertRegexMatch(s, r)
+        m = re.match(r, s)
+        self.assertEqual(m.group('proza_preamble_subj_name'), s)
+        self.assertEqual(m.group('proza_subj_name'), 'Advanced Aero Engines Laboratory')
+
+    def test_proza_preamble_subj_code__1(self):
+        r = tested._dict_re[r'proza_preamble_subj_code']
+        s = 'Nr katalogowy: ML.ANS600'
+        self.assertRegexMatch(s, r)
+        m = re.match(r, s)
+        self.assertEqual(m.group('proza_preamble_subj_code'), s)
+        self.assertEqual(m.group('proza_subj_code'), 'ML.ANS600')
+
+    def test_proza_preamble_subj_code__2(self):
+        r = tested._dict_re[r'proza_preamble_subj_code']
+        s = 'Nr katalogowy: GK.NIK113'
+        self.assertRegexMatch(s, r)
+        m = re.match(r, s)
+        self.assertEqual(m.group('proza_preamble_subj_code'), s)
+        self.assertEqual(m.group('proza_subj_code'), 'GK.NIK113')
+
+    def test_proza_preamble_subj_code__3(self):
+        r = tested._dict_re[r'proza_preamble_subj_code']
+        s = 'Nr katalogowy: GP.SMS238'
+        self.assertRegexMatch(s, r)
+        m = re.match(r, s)
+        self.assertEqual(m.group('proza_preamble_subj_code'), s)
+        self.assertEqual(m.group('proza_subj_code'), 'GP.SMS238')
+
+    def test_proza_preamble_department__1(self):
+        r = tested._dict_re[r'proza_preamble_department']
+        s = 'Zakład Silników Lotniczych'
+        self.assertRegexMatch(s, r)
+        m = re.match(r, s)
+        self.assertEqual(m.group('proza_preamble_department'), s)
+
+    def test_proza_preamble_department__2(self):
+        r = tested._dict_re[r'proza_preamble_department']
+        s = 'Katedra Gospodarki Przestrzennej i Nauk o Środowisku Przyrodnicznym'
+        self.assertRegexMatch(s, r)
+        m = re.match(r, s)
+        self.assertEqual(m.group('proza_preamble_department'), s)
+
+    def test_proza_preamble_department__2(self):
+        r = tested._dict_re[r'proza_preamble_department']
+        s = 'Wydział Mechaniczny Energetyki i Lotnictwa'
+        self.assertRegexMatch(s, r)
+        m = re.match(r, s)
+        self.assertEqual(m.group('proza_preamble_department'), s)
+
+
+    def test_proza_preamble_subj_tutor__1(self):
+        r = tested._dict_re[r'proza_preamble_subj_tutor']
+        s = 'Kierownik przedmiotu: dr hab. inż. Kazimierz Kowalski'
+        self.assertRegexMatch(s, r)
+        m = re.match(r, s)
+        self.assertEqual(m.group('proza_preamble_subj_tutor'), s)
+        self.assertEqual(m.group('proza_subj_tutor'), 'dr hab. inż. Kazimierz Kowalski')
+
+    def test_proza_preamble_subj_tutor__2(self):
+        r = tested._dict_re[r'proza_preamble_subj_tutor']
+        s = 'Kierownik przedmiotu: dr hab. inż. Natenczas Woyski, prof. PW'
+        self.assertRegexMatch(s, r)
+        m = re.match(r, s)
+        self.assertEqual(m.group('proza_preamble_subj_tutor'), s)
+        self.assertEqual(m.group('proza_subj_tutor'), 'dr hab. inż. Natenczas Woyski, prof. PW')
+
+    def test_proza_preamble_subj_grades__1(self):
+        r = tested._dict_re[r'proza_preamble_subj_grades']
+        s = "Dopuszczalne oceny:'2.0', '3.0', '3.5', '4.0', '4.5', '5.0'"
+        self.assertRegexMatch(s, r)
+        m = re.match(r, s)
+        self.assertEqual(m.group('proza_preamble_subj_grades'), s)
+        self.assertEqual(m.group('proza_subj_grades'), "'2.0', '3.0', '3.5', '4.0', '4.5', '5.0'")
+
+    def test_proza_preamble_subj_grades__2(self):
+        r = tested._dict_re[r'proza_preamble_subj_grades']
+        s = "Dopuszczalne oceny:'2,0', '3,0', '3,5', '4,0', '4,5', '5,0'"
+        self.assertRegexMatch(s, r)
+        m = re.match(r, s)
+        self.assertEqual(m.group('proza_preamble_subj_grades'), s)
+        self.assertEqual(m.group('proza_subj_grades'), "'2,0', '3,0', '3,5', '4,0', '4,5', '5,0'")
+
+    def test_proza_preamble_subj_grades__3(self):
+        r = tested._dict_re[r'proza_preamble_subj_grades']
+        s = "Dopuszczalne oceny:'Zal', 'Nzal', 'Zw'"
+        self.assertRegexMatch(s, r)
+        m = re.match(r, s)
+        self.assertEqual(m.group('proza_preamble_subj_grades'), s)
+        self.assertEqual(m.group('proza_subj_grades'), "'Zal', 'Nzal', 'Zw'")
 
 class Test__predefined_phrases(unittest.TestCase):
     def test_university(self):
@@ -397,6 +491,9 @@ class Test__try_contact_address_line(unittest.TestCase):
         self.assertEqual(expect, tested.try_contact_address_line(line))
 
 class Test__try_electronic_contact_line(unittest.TestCase):
+    def test__nonmatching(self):
+        self.assertEqual(tested.try_electronic_contact_line("I don't match anything"), dict())
+
     def test__MEiL__1(self):
         line = "        tel.: (022) 621 53 10, (022) 234 73 54, fax/tel.: (022) 625 73 51, e-mail:dziekanat@meil.pw.edu.pl  "
         expect = {
@@ -435,7 +532,7 @@ class Test__try_electronic_contact_line(unittest.TestCase):
 
 class Test__try_stamp_town_and_datetime_line(unittest.TestCase):
     def test__nonmatching(self):
-        self.assertEqual(tested.try_contact_address_line("I don't match anything"), dict())
+        self.assertEqual(tested.try_stamp_town_and_datetime_line("I don't match anything"), dict())
 
     def test__1(self):
         line = "        Warszawa, 08.02.2014, 13:09:53  "
@@ -467,35 +564,106 @@ class Test__try_stamp_town_and_datetime_line(unittest.TestCase):
         }
         self.assertEqual(expect, tested.try_stamp_town_and_datetime_line(line))
 
-class Test__try_pzal_label_line(unittest.TestCase):
+class Test__try_proza_label_line(unittest.TestCase):
     def test__nonmatching(self):
-        self.assertEqual(tested.try_contact_address_line("I don't match anything"), dict())
+        self.assertEqual(tested.try_proza_label_line("I don't match anything"), dict())
 
     def test__1(self):
         line = "        Protokół zaliczeń (egzamin) 2013Z/E-1/118       "
         expect = {
-            'pzal_label'            : 'Protokół zaliczeń (egzamin) 2013Z/E-1/118',
-            'pzal_label_title'      : 'Protokół zaliczeń',
-            'pzal_label_exam'       : 'egzamin',
-            'pzal_label_semester'   : '2013Z',
-            'pzal_label_serie'      : 'E-1',
-            'pzal_label_number'     : '118'
+            'proza_label'            : 'Protokół zaliczeń (egzamin) 2013Z/E-1/118',
+            'proza_label_title'      : 'Protokół zaliczeń',
+            'proza_label_exam'       : 'egzamin',
+            'proza_label_semester'   : '2013Z',
+            'proza_label_serie'      : 'E-1',
+            'proza_label_number'     : '118'
         }
-        self.assertEqual(expect, tested.try_pzal_label_line(line))
+        self.assertEqual(expect, tested.try_proza_label_line(line))
 
     def test__2(self):
         line = "        Protokół zaliczeń (bez egzaminu) 2015 Z/B-1/197       "
         expect = {
-            'pzal_label'            : 'Protokół zaliczeń (bez egzaminu) 2015 Z/B-1/197',
-            'pzal_label_title'      : 'Protokół zaliczeń',
-            'pzal_label_exam'       : 'bez egzaminu',
-            'pzal_label_semester'   : '2015 Z',
-            'pzal_label_serie'      : 'B-1',
-            'pzal_label_number'     : '197'
+            'proza_label'            : 'Protokół zaliczeń (bez egzaminu) 2015 Z/B-1/197',
+            'proza_label_title'      : 'Protokół zaliczeń',
+            'proza_label_exam'       : 'bez egzaminu',
+            'proza_label_semester'   : '2015 Z',
+            'proza_label_serie'      : 'B-1',
+            'proza_label_number'     : '197'
         }
-        self.assertEqual(expect, tested.try_pzal_label_line(line))
+        self.assertEqual(expect, tested.try_proza_label_line(line))
 
-class Test__try_pzal_page_header(unittest.TestCase):
+class Test__try_proza_preamble_subj_name_line(unittest.TestCase):
+    def test__nonmatching(self):
+        self.assertEqual(tested.try_proza_preamble_subj_name_line("I don't match anything"), dict())
+
+    def test__1(self):
+        line = "        Nazwa przedmiotu: Health and Safety Training       "
+        expect = {
+            'proza_preamble_subj_name'  : 'Nazwa przedmiotu: Health and Safety Training',
+            'proza_subj_name'           : 'Health and Safety Training'
+        }
+        self.assertEqual(expect, tested.try_proza_preamble_subj_name_line(line))
+
+class Test__try_proza_preamble_subj_code_line(unittest.TestCase):
+    def test__nonmatching(self):
+        self.assertEqual(tested.try_proza_preamble_subj_code_line("I don't match anything"), dict())
+
+    def test__1(self):
+        line = "        Nr katalogowy: ML.ANW71       "
+        expect = {
+            'proza_preamble_subj_code'  : 'Nr katalogowy: ML.ANW71',
+            'proza_subj_code'           : 'ML.ANW71'
+        }
+        self.assertEqual(expect, tested.try_proza_preamble_subj_code_line(line))
+
+class Test__try_proza_preamble_department_line(unittest.TestCase):
+    def test__nonmatching(self):
+        self.assertEqual(tested.try_proza_preamble_department_line("I don't match anything"), dict())
+
+    def test__1(self):
+        line = "        Wydział Mechaniczny Energetyki i Lotnictwa       "
+        expect = {
+            'proza_preamble_department'  : 'Wydział Mechaniczny Energetyki i Lotnictwa'
+        }
+        self.assertEqual(expect, tested.try_proza_preamble_department_line(line))
+
+class Test__try_proza_preamble_subj_tutor_line(unittest.TestCase):
+    def test__nonmatching(self):
+        self.assertEqual(tested.try_proza_preamble_subj_tutor_line("I don't match anything"), dict())
+
+    def test__1(self):
+        line = "        Kierownik przedmiotu: prof. dr hab inż. Wacław Jaki, prof. PW   "
+        expect = {
+            'proza_preamble_subj_tutor'  : 'Kierownik przedmiotu: prof. dr hab inż. Wacław Jaki, prof. PW',
+            'proza_subj_tutor'           : 'prof. dr hab inż. Wacław Jaki, prof. PW'
+        }
+        self.assertEqual(expect, tested.try_proza_preamble_subj_tutor_line(line))
+
+class Test__try_proza_preamble_subj_grades_line(unittest.TestCase):
+    def test__nonmatching(self):
+        self.assertEqual(tested.try_proza_preamble_subj_grades_line("I don't match anything"), dict())
+
+    def test__1(self):
+        line = "        Dopuszczalne oceny: '2.0', '3.0', '3.5', '4.0', '4.5', '5.0'   "
+        expect = {
+            'proza_preamble_subj_grades'  : "Dopuszczalne oceny: '2.0', '3.0', '3.5', '4.0', '4.5', '5.0'",
+            'proza_subj_grades'           : "'2.0', '3.0', '3.5', '4.0', '4.5', '5.0'"
+        }
+        self.assertEqual(expect, tested.try_proza_preamble_subj_grades_line(line))
+
+class Test__try_proza_preamble_subj_cond_line(unittest.TestCase):
+    def test__nonmatching(self):
+        self.assertEqual(tested.try_proza_preamble_subj_cond_line("I don't match anything"), dict())
+
+    def test__1(self):
+        line = "        Wszyscy studenci na liście muszą mieć wystawioną ocenę.     "
+        expect = {
+            'proza_preamble_subj_cond'  : "Wszyscy studenci na liście muszą mieć wystawioną ocenę",
+            'proza_subj_cond'           : "Wszyscy studenci na liście muszą mieć wystawioną ocenę",
+        }
+        self.assertEqual(expect, tested.try_proza_preamble_subj_cond_line(line))
+
+class Test__try_proza_page_header(unittest.TestCase):
     def test__MEiL_1(self):
         header = \
 """
@@ -534,7 +702,7 @@ class Test__try_pzal_page_header(unittest.TestCase):
         }
         #
         status = tested.ParsingStatus()
-        result = tested.try_pzal_page_header(status, lines)
+        result = tested.try_proza_page_header(status, lines)
         #
         self.assertIs(status.error, False)
         self.assertIs(status.error_msg, None)
@@ -579,13 +747,83 @@ class Test__try_pzal_page_header(unittest.TestCase):
         }
         #
         status = tested.ParsingStatus()
-        result = tested.try_pzal_page_header(status, lines)
+        result = tested.try_proza_page_header(status, lines)
         #
         self.assertIs(status.error, False)
         self.assertIs(status.error_msg, None)
         self.assertIs(status.current_line, 6)
         self.maxDiff = None
         self.assertEqual(expect, result)
+
+class Test__try_proza_preamble(unittest.TestCase):
+    def test__MEIL__1(self):
+        header = \
+"""
+       Nazwa przedmiotu: Advanced Aero Engines Laboratory
+       Nr katalogowy: ML.ANS600
+       Zakład Silników Lotniczych
+       Kierownik przedmiotu: dr hab. inż. Natenczas Woyski
+       Dopuszczalne oceny: '2,0', '3,0', '3,5', '4,0', '4,5', '5,0'. Wszyscy studenci na liście muszą mieć wystawioną ocenę.
+"""
+        lines = header.splitlines()
+        expect = {
+            'proza_preamble_subj_name'   :  'Nazwa przedmiotu: Advanced Aero Engines Laboratory',
+            'proza_preamble_subj_code'   :  'Nr katalogowy: ML.ANS600',
+            'proza_preamble_department'  :  'Zakład Silników Lotniczych',
+            'proza_preamble_subj_tutor'  :  'Kierownik przedmiotu: dr hab. inż. Natenczas Woyski',
+            'proza_preamble_subj_grades' :  "Dopuszczalne oceny: '2,0', '3,0', '3,5', '4,0', '4,5', '5,0'",
+            'proza_preamble_subj_cond'   :  "Wszyscy studenci na liście muszą mieć wystawioną ocenę",
+            'proza_subj_name'            :  'Advanced Aero Engines Laboratory',
+            'proza_subj_code'            :  'ML.ANS600',
+            'proza_subj_tutor'           :  'dr hab. inż. Natenczas Woyski',
+            'proza_subj_grades'          :  "'2,0', '3,0', '3,5', '4,0', '4,5', '5,0'",
+            'proza_subj_cond'            :  "Wszyscy studenci na liście muszą mieć wystawioną ocenę"
+        }
+        #
+        status = tested.ParsingStatus()
+        result = tested.try_proza_preamble(status, lines)
+        #
+        #self.assertIs(status.error, False)
+        self.assertIs(status.error_msg, None)
+        self.assertIs(status.current_line, 6)
+        self.maxDiff = None
+        self.assertEqual(expect, result)
+
+    def test__GiK__1(self):
+        header = \
+"""
+       Nazwa przedmiotu: Gospodarowanie surowcami mineralnymi
+       Nr katalogowy: GP.SMS238
+       Katedra Gospodarki Przestrzennej i Nauk o Środowisku Przyrodnicznym
+       Kierownik przedmiotu: dr hab. inż. Natenczas Woyski
+       Dopuszczalne oceny: '2,0', '3,0', '3,5', '4,0', '4,5', '5,0'
+       Wszyscy studenci na liście muszą mieć wystawioną ocenę
+"""
+        lines = header.splitlines()
+        expect = {
+            'proza_preamble_subj_name'   :  'Nazwa przedmiotu: Gospodarowanie surowcami mineralnymi',
+            'proza_preamble_subj_code'   :  'Nr katalogowy: GP.SMS238',
+            'proza_preamble_department'  :  'Katedra Gospodarki Przestrzennej i Nauk o Środowisku Przyrodnicznym',
+            'proza_preamble_subj_tutor'  :  'Kierownik przedmiotu: dr hab. inż. Natenczas Woyski',
+            'proza_preamble_subj_grades' :  "Dopuszczalne oceny: '2,0', '3,0', '3,5', '4,0', '4,5', '5,0'",
+            'proza_preamble_subj_cond'   :  "Wszyscy studenci na liście muszą mieć wystawioną ocenę",
+            'proza_subj_name'            :  'Gospodarowanie surowcami mineralnymi',
+            'proza_subj_code'            :  'GP.SMS238',
+            'proza_subj_tutor'           :  'dr hab. inż. Natenczas Woyski',
+            'proza_subj_grades'          :  "'2,0', '3,0', '3,5', '4,0', '4,5', '5,0'",
+            'proza_subj_cond'            :  "Wszyscy studenci na liście muszą mieć wystawioną ocenę"
+        }
+        #
+        status = tested.ParsingStatus()
+        result = tested.try_proza_preamble(status, lines)
+        #
+        #self.assertIs(status.error, False)
+        self.assertIs(status.error_msg, None)
+        self.assertIs(status.current_line, 7)
+        self.maxDiff = None
+        self.assertEqual(expect, result)
+
+
 if __name__ == '__main__':
     unittest.main()
 
