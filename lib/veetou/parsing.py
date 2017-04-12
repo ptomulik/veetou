@@ -32,129 +32,129 @@ subject_name_word_sequences = {
 
 
 # Miscellaneous
-_re_contact_address_street_info = \
-        r'(?:(?P<contact_address_street_prefix>ul\.?|pl\.?) *)?' + \
-        r'(?P<contact_address_street_name>\w+(?: +\w+)*)' + \
-        r' +(?P<contact_address_street_number>\d+(?:(?: *[/-] *\d+)|(?:(?: */ *)?\w+))?)'
-_re_contact_address_postoffice_info = \
-        r'(?P<contact_address_postoffice_zip>\d\d *- *\d\d\d)' + \
-        r' +(?P<contact_address_postoffice_town>\w+(?:(?: +| *- *)\w+){,2})'
-_re_contact_address_edifice_info = \
-        r'(?P<contact_address_edifice>(?:[Gg]mach|[Bb]udynek)(?: +\w+)(?:(?:(?: +)|(?: ?- ?))\w+)*)'
-_re_contact_address_room_info = \
-        r'(?P<contact_address_room>(?:p\.?|pok\.?)? *\d+)'
-_re_contact_address_website_info = \
-        r'(?P<contact_address_website>(?:https?://)?(?:\w+(?:\.\w+)*)\.(?:com|org|pl|eu))'
+_re_proza_address_street = \
+        r'(?:(?P<proza_address_street_prefix>ul\.?|pl\.?) *)?' + \
+        r'(?P<proza_address_street_name>\w+(?: +\w+)*)' + \
+        r' +(?P<proza_address_street_number>\d+(?:(?: *[/-] *\d+)|(?:(?: */ *)?\w+))?)'
+_re_proza_address_postoffice = \
+        r'(?P<proza_address_postoffice_zip>\d\d *- *\d\d\d)' + \
+        r' +(?P<proza_address_postoffice_town>\w+(?:(?: +| *- *)\w+){,2})'
+_re_proza_address_edifice = \
+        r'(?P<proza_address_edifice>(?:[Gg]mach|[Bb]udynek)(?: +\w+)(?:(?:(?: +)|(?: ?- ?))\w+)*)'
+_re_proza_address_room = \
+        r'(?P<proza_address_room>(?:p\.?|pok\.?)? *\d+)'
+_re_proza_address_website = \
+        r'(?P<proza_address_website>(?:https?://)?(?:\w+(?:\.\w+)*)\.(?:com|org|pl|eu))'
 
-_contact_address_info_field_names = [
-    'contact_address_street_prefix',
-    'contact_address_street_name',
-    'contact_address_street_number',
-    'contact_address_postoffice_zip',
-    'contact_address_postoffice_town',
-    'contact_address_edifice',
-    'contact_address_room',
-    'contact_address_website'
+_proza_address_field_names = [
+    'proza_address_street_prefix',
+    'proza_address_street_name',
+    'proza_address_street_number',
+    'proza_address_postoffice_zip',
+    'proza_address_postoffice_town',
+    'proza_address_edifice',
+    'proza_address_room',
+    'proza_address_website'
 ]
 
-_re_contact_address_info_field_name = \
-    r'(?P<field_name>' + r'|'.join(_contact_address_info_field_names) + r')'
+_re_proza_address_field_name = \
+    r'(?P<field_name>' + r'|'.join(_proza_address_field_names) + r')'
 
 # Found on MEiL 'karta postepow' and 'protokol zaliczen'
-_re_contact_address_variant0 = r', *'.join([
-    _re_contact_address_street_info,
-    _re_contact_address_postoffice_info,
-    _re_contact_address_edifice_info,
-    _re_contact_address_room_info
+_re_proza_address_variant0 = r', *'.join([
+    _re_proza_address_street,
+    _re_proza_address_postoffice,
+    _re_proza_address_edifice,
+    _re_proza_address_room
 ])
 
 # Found on GiK 'protokol zaliczen'
-_re_contact_address_variant1 = r', *'.join([
-    _re_contact_address_street_info,
-    _re_contact_address_room_info,
-    _re_contact_address_postoffice_info,
-    _re_contact_address_website_info
+_re_proza_address_variant1 = r', *'.join([
+    _re_proza_address_street,
+    _re_proza_address_room,
+    _re_proza_address_postoffice,
+    _re_proza_address_website
 ])
 
 
-_re_contact_address_variants = [
-    r'(?:' + _rrg(_re_contact_address_variant0, suffix = '_0') + r')',
-    r'(?:' + _rrg(_re_contact_address_variant1, suffix = '_1') + r')'
+_re_proza_address_variants = [
+    r'(?:' + _rrg(_re_proza_address_variant0, suffix = '_0') + r')',
+    r'(?:' + _rrg(_re_proza_address_variant1, suffix = '_1') + r')'
 ]
 
-_re_contact_address = r'(?P<contact_address>' + r'|'.join(_re_contact_address_variants) + ')'
+_re_proza_header_address = r'(?P<proza_header_address>' + r'|'.join(_re_proza_address_variants) + ')'
 
-_re_contact_phone_prefix_info  = r'(?P<contact_phone_prefix>tel\.:?)'
-_re_contact_phone_number_info  = r'(?:\(\+?\d{2,3}\))?(?: {,1}\d{1,3})+'
-_re_contact_phone_numbers_info = r'(?P<contact_phone_numbers>(?:' + \
-                                _re_contact_phone_number_info + \
+_re_proza_phone_prefix  = r'(?P<proza_phone_prefix>tel\.:?)'
+_re_proza_phone_number  = r'(?:\(\+?\d{2,3}\))?(?: {,1}\d{1,3})+'
+_re_proza_phone_numbers = r'(?P<proza_phone_numbers>(?:' + \
+                                _re_proza_phone_number + \
                                 r')(?:, *' + \
-                                _re_contact_phone_number_info + \
+                                _re_proza_phone_number + \
                                  r')*)'
 
-_re_contact_phone = \
-    r'(?P<contact_phone>' + _re_contact_phone_prefix_info + \
-    r' *' + _re_contact_phone_numbers_info + r')'
+_re_proza_phone = \
+    r'(?P<proza_phone>' + _re_proza_phone_prefix + \
+    r' *' + _re_proza_phone_numbers + r')'
 
-_re_contact_faxtel_prefix_info  = r'(?P<contact_faxtel_prefix>fax(?: {0,1}/ {0,1}tel)?\.:?)'
-_re_contact_faxtel_number_info  = r'(?:\(\+?\d{2,3}\))?(?: {,1}\d{1,3})+'
-_re_contact_faxtel_numbers_info = r'(?P<contact_faxtel_numbers>(?:' + \
-                                _re_contact_faxtel_number_info + \
+_re_proza_faxtel_prefix  = r'(?P<proza_faxtel_prefix>fax(?: {0,1}/ {0,1}tel)?\.:?)'
+_re_proza_faxtel_number  = r'(?:\(\+?\d{2,3}\))?(?: {,1}\d{1,3})+'
+_re_proza_faxtel_numbers = r'(?P<proza_faxtel_numbers>(?:' + \
+                                _re_proza_faxtel_number + \
                                 r')(?:, *' + \
-                                _re_contact_faxtel_number_info + \
+                                _re_proza_faxtel_number + \
                                  r')*)'
 
-_re_contact_faxtel = \
-    r'(?P<contact_faxtel>' + _re_contact_faxtel_prefix_info + \
-    r' *' + _re_contact_faxtel_numbers_info + r')'
+_re_proza_faxtel = \
+    r'(?P<proza_faxtel>' + _re_proza_faxtel_prefix + \
+    r' *' + _re_proza_faxtel_numbers + r')'
 
-_re_contact_email_prefix_info = r'(?P<contact_email_prefix>(?:e-?mail:))'
-_re_contact_email_address_localpart_info = r'(?P<contact_email_address_localpart>[a-zA-Z0-9_.+-]+)'
-_re_contact_email_address_domain_info = r'(?P<contact_email_address_domain>[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)'
-_re_contact_email_address_info = \
-    r'(?P<contact_email_address>' + \
-    _re_contact_email_address_localpart_info + r'@' + \
-    _re_contact_email_address_domain_info + r')'
+_re_proza_email_prefix = r'(?P<proza_email_prefix>(?:e-?mail:))'
+_re_proza_email_address_localpart = r'(?P<proza_email_address_localpart>[a-zA-Z0-9_.+-]+)'
+_re_proza_email_address_domain = r'(?P<proza_email_address_domain>[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)'
+_re_proza_email_address = \
+    r'(?P<proza_email_address>' + \
+    _re_proza_email_address_localpart + r'@' + \
+    _re_proza_email_address_domain + r')'
 
-_re_contact_email = \
-    r'(?P<contact_email>' + \
-    _re_contact_email_prefix_info + r' *' + \
-    _re_contact_email_address_info + \
+_re_proza_email = \
+    r'(?P<proza_email>' + \
+    _re_proza_email_prefix + r' *' + \
+    _re_proza_email_address + \
     r')'
 
-_re_electronic_contact = \
-    r'(?P<electronic_contact>' + \
-        _re_contact_phone + \
-        r'(?:, *' + _re_contact_faxtel + r')?' + \
-        r', *' + _re_contact_email + \
+_re_proza_header_contact = \
+    r'(?P<proza_header_contact>' + \
+        _re_proza_phone + \
+        r'(?:, *' + _re_proza_faxtel + r')?' + \
+        r', *' + _re_proza_email + \
     r')'
-
-_re_stamp_town = r'(?P<stamp_town>\w+(?:(?: +| *- *)\w+){,2})'
-_re_stamp_date = r'(?P<stamp_date>\d{1,2}\.\d{1,2}\.\d{4})'
-_re_stamp_time = r'(?P<stamp_time>\d{2}:\d{2}:\d{2})'
-_re_stamp_town_and_datetime = r'(?P<stamp_town_and_datetime>' +\
-r', *'.join([
-    _re_stamp_town,
-    _re_stamp_date,
-    _re_stamp_time
-]) + r')'
 
 # 'proza' is an abbreviation for protokolzaliczen
-_re_proza_label_title = r'(?P<proza_label_title>Protokół zaliczeń)'
-_re_proza_label_exam = r'(?P<proza_label_exam>(?:egzamin|bez egzaminu))'
-_re_proza_label_semester = r'(?P<proza_label_semester>\d{4} *[ZL])'
-_re_proza_label_serie = r'(?P<proza_label_serie>[A-Z]-\d{1,2})'
-_re_proza_label_number = r'(?P<proza_label_number>\d{1,4})'
-_re_proza_label = r'(?P<proza_label>' + \
-        _re_proza_label_title + r' {,3}\(' + \
-        _re_proza_label_exam + r'\) {,3}' + \
-        _re_proza_label_semester + r' ?/ ?' + \
-        _re_proza_label_serie + r' ?/ ?' + \
-        _re_proza_label_number + r')'
+_re_proza_town = r'(?P<proza_town>\w+(?:(?: +| *- *)\w+){,2})'
+_re_proza_date = r'(?P<proza_date>\d{1,2}\.\d{1,2}\.\d{4})'
+_re_proza_time = r'(?P<proza_time>\d{2}:\d{2}:\d{2})'
+_re_proza_preamble_town_and_datetime = r'(?P<proza_preamble_town_and_datetime>' + \
+r', *'.join([
+    _re_proza_town,
+    _re_proza_date,
+    _re_proza_time
+]) + r')'
+
+_re_proza_title = r'(?P<proza_title>Protokół zaliczeń)'
+_re_proza_exam = r'(?P<proza_exam>(?:egzamin|bez egzaminu))'
+_re_proza_semester = r'(?P<proza_semester>\d{4} *[ZL])'
+_re_proza_serie = r'(?P<proza_serie>[A-Z]-\d{1,2})'
+_re_proza_number = r'(?P<proza_number>\d{1,4})'
+_re_proza_preamble_title = r'(?P<proza_preamble_title>' + \
+        _re_proza_title + r' {,3}\(' + \
+        _re_proza_exam + r'\) {,3}' + \
+        _re_proza_semester + r' ?/ ?' + \
+        _re_proza_serie + r' ?/ ?' + \
+        _re_proza_number + r')'
 
 _re_proza_return_desc = r'(?P<proza_return_desc>Termin zwrotu)'
 _re_proza_return_date = r'(?P<proza_return_date>\d{2}\.\d{2}\.(?:19\d{2}|20[0-1]\d))'
-_re_proza_return =  r'(?P<proza_return>' + \
+_re_proza_preamble_return =  r'(?P<proza_preamble_return>' + \
         _re_proza_return_desc + r':? {1,2}' + \
         _re_proza_return_date + r')'
 
@@ -196,38 +196,65 @@ _re_proza_preamble_subj_cond = \
 _re_proza_preamble_subj_grades_and_cond = \
         _re_proza_preamble_subj_grades + r'(?: +' + _re_proza_preamble_subj_cond + r')?'
 
+_re_proza_footer_sig_dots = '(?P<proza_footer_sig_dots>\.{6,})'
 
-_dict_re_contact_address = {
-    r'contact_address_street_info'      : _re_contact_address_street_info,
-    r'contact_address_postoffice_info'  : _re_contact_address_postoffice_info,
-    r'contact_address_edifice_info'     : _re_contact_address_edifice_info,
-    r'contact_address_room_info'        : _re_contact_address_room_info,
-    r'contact_address_website_info'     : _re_contact_address_website_info,
-    r'contact_address'                  : _re_contact_address,
-}
+_re_proza_footer_sig_prompt = '(?P<proza_footer_sig_prompt>[pP]odpis(?: {1,2}\w+)*)'
 
-_dict_re_contact_phone = {
-    r'contact_phone_prefix'         : _re_contact_phone_prefix_info,
-    r'contact_phone_numbers'        : _re_contact_phone_numbers_info,
-    r'contact_phone'                : _re_contact_phone
-}
+_re_proza_footer_pagination = \
+        r'(?P<proza_footer_pagination>Strona {1,2}' + \
+        r'(?P<proza_page_number>\d+)' + \
+        r' {1,2}z {1,2}' + \
+        r'(?P<proza_pages_total>\d+))'
 
-_dict_re_contact_faxtel = {
-    r'contact_faxtel_prefix'         : _re_contact_faxtel_prefix_info,
-    r'contact_faxtel_numbers'        : _re_contact_faxtel_numbers_info,
-    r'contact_faxtel'                : _re_contact_faxtel
-}
+_re_proza_footer_title = \
+        r'(?P<proza_footer_title>' + \
+            _re_proza_subj_name + r' {1,2}\(' + \
+            _re_proza_subj_code + \
+        r'\)\.? {1,2}Protokół: {,2}' +  \
+            _re_proza_semester + r' ?/ ?' + \
+            _re_proza_serie + r' ?/ ?' + \
+            _re_proza_number + r')'
 
-_dict_re_contact_email = {
-    'contact_email_prefix'              : _re_contact_email_prefix_info,
-    'contact_email_address_localpart'   : _re_contact_email_address_localpart_info,
-    'contact_email_address_domain'      : _re_contact_email_address_domain_info,
-    'contact_email_address'             : _re_contact_email_address_info,
-    'contact_email'                     : _re_contact_email
-}
+_re_proza_footer_pagination_and_title = \
+        r'(?P<proza_footer_pagination_and_title>' + \
+            _re_proza_footer_pagination + \
+        r' {2,}' + \
+            _re_proza_footer_title + \
+        r')'
 
-_dict_re_electronic_contact = {
-    'electronic_contact'                : _re_electronic_contact
+_re_proza_generator_name = r"(?P<proza_generator_name>[\w']+(?: {1,2}[\w']+)*)"
+_re_proza_generator_home = r'(?P<proza_generator_home>(?:https?://)?(?:\w+(?:\.\w+)*)\.(?:com|org|pl|eu))'
+_re_proza_generator = \
+        r'(?P<proza_generator>' + \
+            _re_proza_generator_name + r', {,2}' + \
+            _re_proza_generator_home + \
+        r')'
+_re_proza_footer_generator = \
+        r'(?P<proza_footer_generator>' + \
+            r'Wygenerowano z użyciem ' + \
+            _re_proza_generator + \
+        r')'
+
+
+_dict_re_proza_header = {
+    r'proza_address_street'             : _re_proza_address_street,
+    r'proza_address_postoffice'         : _re_proza_address_postoffice,
+    r'proza_address_edifice'            : _re_proza_address_edifice,
+    r'proza_address_room'               : _re_proza_address_room,
+    r'proza_address_website'            : _re_proza_address_website,
+    r'proza_phone_prefix'               : _re_proza_phone_prefix,
+    r'proza_phone_numbers'              : _re_proza_phone_numbers,
+    r'proza_phone'                      : _re_proza_phone,
+    r'proza_faxtel_prefix'              : _re_proza_faxtel_prefix,
+    r'proza_faxtel_numbers'             : _re_proza_faxtel_numbers,
+    r'proza_faxtel'                     : _re_proza_faxtel,
+    r'proza_email_prefix'               : _re_proza_email_prefix,
+    r'proza_email_address_localpart'    : _re_proza_email_address_localpart,
+    r'proza_email_address_domain'       : _re_proza_email_address_domain,
+    r'proza_email_address'              : _re_proza_email_address,
+    r'proza_email'                      : _re_proza_email,
+    r'proza_header_address'             : _re_proza_header_address,
+    r'proza_header_contact'             : _re_proza_header_contact
 }
 
 
@@ -248,41 +275,44 @@ _dict_re_contact_name = {
     r'DZIEKANAT' : r'D *Z *I *E *K *A *N *A *T',
 }
 
-_dict_re_stamp_town_and_datetime = {
-    r'stamp_town'               : _re_stamp_town,
-    r'stamp_date'               : _re_stamp_date,
-    r'stamp_time'               : _re_stamp_time,
-    r'stamp_town_and_datetime'  : _re_stamp_town_and_datetime
-}
-
-_dict_re_proza_label = {
-    r'proza_label_title'     : _re_proza_label_title,
-    r'proza_label_exam'      : _re_proza_label_exam,
-    r'proza_label_semester'  : _re_proza_label_semester,
-    r'proza_label_serie'     : _re_proza_label_serie,
-    r'proza_label_number'    : _re_proza_label_number,
-    r'proza_label'           : _re_proza_label
-}
-
-_dict_re_proza_return = {
-    r'proza_return_desc'     : _re_proza_return_desc,
-    r'proza_return_date'     : _re_proza_return_date,
-    r'proza_return'          : _re_proza_return
-}
-
 _dict_re_proza_preamble = {
-    r'proza_subj_name'               : _re_proza_subj_name,
-    r'proza_subj_code'               : _re_proza_subj_code,
-    r'proza_subj_tutor'              : _re_proza_subj_tutor,
-    r'proza_subj_grades'             : _re_proza_subj_grades,
-    r'proza_subj_cond'               : _re_proza_subj_cond,
-    r'proza_preamble_subj_name'      : _re_proza_preamble_subj_name,
-    r'proza_preamble_subj_code'      : _re_proza_preamble_subj_code,
-    r'proza_preamble_department'     : _re_proza_preamble_department,
-    r'proza_preamble_subj_tutor'     : _re_proza_preamble_subj_tutor,
-    r'proza_preamble_subj_grades'    : _re_proza_preamble_subj_grades,
-    r'proza_preamble_subj_cond'      : _re_proza_preamble_subj_cond,
-    r'proza_preamble_subj_grades_and_cond' : _re_proza_preamble_subj_grades_and_cond
+    r'proza_town'                           : _re_proza_town,
+    r'proza_date'                           : _re_proza_date,
+    r'proza_time'                           : _re_proza_time,
+    r'proza_title'                          : _re_proza_title,
+    r'proza_exam'                           : _re_proza_exam,
+    r'proza_semester'                       : _re_proza_semester,
+    r'proza_serie'                          : _re_proza_serie,
+    r'proza_number'                         : _re_proza_number,
+    r'proza_return_desc'                    : _re_proza_return_desc,
+    r'proza_return_date'                    : _re_proza_return_date,
+    r'proza_subj_name'                      : _re_proza_subj_name,
+    r'proza_subj_code'                      : _re_proza_subj_code,
+    r'proza_subj_tutor'                     : _re_proza_subj_tutor,
+    r'proza_subj_grades'                    : _re_proza_subj_grades,
+    r'proza_subj_cond'                      : _re_proza_subj_cond,
+    r'proza_preamble_town_and_datetime'     : _re_proza_preamble_town_and_datetime,
+    r'proza_preamble_title'                 : _re_proza_preamble_title,
+    r'proza_preamble_return'                : _re_proza_preamble_return,
+    r'proza_preamble_subj_name'             : _re_proza_preamble_subj_name,
+    r'proza_preamble_subj_code'             : _re_proza_preamble_subj_code,
+    r'proza_preamble_department'            : _re_proza_preamble_department,
+    r'proza_preamble_subj_tutor'            : _re_proza_preamble_subj_tutor,
+    r'proza_preamble_subj_grades'           : _re_proza_preamble_subj_grades,
+    r'proza_preamble_subj_cond'             : _re_proza_preamble_subj_cond,
+    r'proza_preamble_subj_grades_and_cond'  : _re_proza_preamble_subj_grades_and_cond
+}
+
+_dict_re_proza_footer = {
+    r'proza_footer_sig_dots'                : _re_proza_footer_sig_dots,
+    r'proza_footer_sig_prompt'              : _re_proza_footer_sig_prompt,
+    r'proza_footer_pagination'              : _re_proza_footer_pagination,
+    r'proza_footer_title'                   : _re_proza_footer_title,
+    r'proza_footer_pagination_and_title'    : _re_proza_footer_pagination_and_title,
+    r'proza_generator_name'                 : _re_proza_generator_name,
+    r'proza_generator_home'                 : _re_proza_generator_home,
+    r'proza_generator'                      : _re_proza_generator,
+    r'proza_footer_generator'               : _re_proza_footer_generator
 }
 
 # Dictionary of regular expressions for certain purposes
@@ -290,15 +320,9 @@ _dict_re = dict()
 _dict_re.update(_dict_re_university)
 _dict_re.update(_dict_re_faculty)
 _dict_re.update(_dict_re_contact_name)
-_dict_re.update(_dict_re_contact_address)
-_dict_re.update(_dict_re_contact_phone)
-_dict_re.update(_dict_re_contact_faxtel)
-_dict_re.update(_dict_re_contact_email)
-_dict_re.update(_dict_re_electronic_contact)
-_dict_re.update(_dict_re_stamp_town_and_datetime)
-_dict_re.update(_dict_re_proza_label)
-_dict_re.update(_dict_re_proza_return)
+_dict_re.update(_dict_re_proza_header)
 _dict_re.update(_dict_re_proza_preamble)
+_dict_re.update(_dict_re_proza_footer)
 
 _predefined_phrases = {
     'university' : [
@@ -345,30 +369,30 @@ def try_faculty_line(line):
 def try_contact_name_line(line):
     return try_predefined_phrase_line('contact_name', line)
 
-def try_contact_address_line(line):
+def try_proza_header_address_line(line):
     result = dict()
-    m = re.match(r'^ *' + _dict_re['contact_address'] + ' *$', line)
+    m = re.match(r'^ *' + _dict_re['proza_header_address'] + ' *$', line)
     if m:
-        result = { k : None for k in _contact_address_info_field_names }
+        result = { k : None for k in _proza_address_field_names }
         for k,v in m.groupdict().items():
             if v is not None:
-                m2 = re.match(r'^' + _re_contact_address_info_field_name + '(?:_[0-9]+)?$', k)
+                m2 = re.match(r'^' + _re_proza_address_field_name + '(?:_[0-9]+)?$', k)
                 if m2:
                     result[m2.group('field_name')] = v
-        result['contact_address'] = m.group('contact_address')
+        result['proza_header_address'] = m.group('proza_header_address')
     return result
 
-def try_electronic_contact_line(line):
-    return try_predefined_regex_line('electronic_contact', line)
+def try_proza_header_contact_line(line):
+    return try_predefined_regex_line('proza_header_contact', line)
 
-def try_stamp_town_and_datetime_line(line):
-    return try_predefined_regex_line('stamp_town_and_datetime', line)
+def try_proza_preamble_town_and_datetime_line(line):
+    return try_predefined_regex_line('proza_preamble_town_and_datetime', line)
 
-def try_proza_label_line(line):
-    return try_predefined_regex_line('proza_label', line)
+def try_proza_preamble_title_line(line):
+    return try_predefined_regex_line('proza_preamble_title', line)
 
-def try_proza_return_line(line):
-    return try_predefined_regex_line('proza_return', line)
+def try_proza_preamble_return_line(line):
+    return try_predefined_regex_line('proza_preamble_return', line)
 
 def try_proza_preamble_subj_name_line(line):
     return try_predefined_regex_line('proza_preamble_subj_name', line)
@@ -390,6 +414,18 @@ def try_proza_preamble_subj_cond_line(line):
 
 def try_proza_preamble_subj_grades_and_cond_line(line):
     return try_predefined_regex_line('proza_preamble_subj_grades_and_cond', line)
+
+def try_proza_footer_sig_dots_line(line):
+    return try_predefined_regex_line('proza_footer_sig_dots', line)
+
+def try_proza_footer_sig_prompt_line(line):
+    return try_predefined_regex_line('proza_footer_sig_prompt', line)
+
+def try_proza_footer_pagination_and_title_line(line):
+    return try_predefined_regex_line('proza_footer_pagination_and_title', line)
+
+def try_proza_footer_generator_line(line):
+    return try_predefined_regex_line('proza_footer_generator', line)
 
 def try_lines_in_sequence(status, lines, **kw):
     optional = kw.get('optional', [])
@@ -425,8 +461,8 @@ def try_proza_page_header(status, lines, **kw):
             try_university_line,                # 0
             try_faculty_line,                   # 1
             try_contact_name_line,              # 2
-            try_contact_address_line,           # 3
-            try_electronic_contact_line         # 4
+            try_proza_header_address_line,      # 3
+            try_proza_header_contact_line       # 4
     ]
     kw['parser_messages'] = [
             'university name',                  # 0
@@ -440,22 +476,44 @@ def try_proza_page_header(status, lines, **kw):
 
 def try_proza_preamble(status, lines, **kw):
     kw['parser_functions'] = [
-            try_proza_preamble_subj_name_line,  # 0
-            try_proza_preamble_subj_code_line,  # 1
-            try_proza_preamble_department_line, # 2
-            try_proza_preamble_subj_tutor_line, # 3
-            try_proza_preamble_subj_grades_and_cond_line,# 4
-            try_proza_preamble_subj_cond_line   # 5
+            try_proza_preamble_town_and_datetime_line,
+            try_proza_preamble_title_line,
+            try_proza_preamble_return_line,
+            try_proza_preamble_subj_name_line,
+            try_proza_preamble_subj_code_line,
+            try_proza_preamble_department_line,
+            try_proza_preamble_subj_tutor_line,
+            try_proza_preamble_subj_grades_and_cond_line,
+            try_proza_preamble_subj_cond_line
     ]
     kw['parser_messages'] = [
-            'subject name',                     # 0
-            'subject code',                     # 1
-            'department name',                  # 2
-            'subject tutor',                    # 3
-            'list of allowed grades',           # 4
-            'validity condition',               # 5
+            'town, date and time',
+            'title and labels',
+            'return date',
+            'subject name',
+            'subject code',
+            'department name',
+            'subject tutor',
+            'list of allowed grades',
+            'validity condition',
     ]
-    kw['optional'] = [ 5 ]
+    kw['optional'] = [ 8 ]
+    return try_lines_in_sequence(status, lines, **kw)
+
+def try_proza_page_footer(status, lines, **kw):
+    kw['parser_functions'] = [
+            try_proza_footer_sig_dots_line,                 # 0
+            try_proza_footer_sig_prompt_line,               # 1
+            try_proza_footer_pagination_and_title_line,     # 2
+            try_proza_footer_generator_line                 # 3
+    ]
+    kw['parser_messages'] = [
+            'dotted field for signature',                   # 0
+            'signer label',                                 # 1
+            'pagination and title info',                    # 2
+            'generator info'                                # 3
+    ]
+    kw['optional'] = [ ]
     return try_lines_in_sequence(status, lines, **kw)
 
 

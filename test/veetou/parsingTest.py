@@ -41,267 +41,267 @@ class Test__dict_re(unittest.TestCase):
         #self.assertRegexMatch('Dziekanat', r)
         self.assertRegexMatch('D Z I E K A N A T', r)
 
-    def test_contact_address_street_info__1(self):
-        r = tested._dict_re[r'contact_address_street_info']
+    def test_proza_address_street__1(self):
+        r = tested._dict_re[r'proza_address_street']
         self.assertRegexMatch('ul. Nowowiejska 24', r)
         m = re.match(r,'ul. Nowowiejska 24')
-        self.assertEqual(m.group('contact_address_street_prefix'), 'ul.')
-        self.assertEqual(m.group('contact_address_street_name'), 'Nowowiejska')
-        self.assertEqual(m.group('contact_address_street_number'), '24')
+        self.assertEqual(m.group('proza_address_street_prefix'), 'ul.')
+        self.assertEqual(m.group('proza_address_street_name'), 'Nowowiejska')
+        self.assertEqual(m.group('proza_address_street_number'), '24')
 
 
-    def test_contact_address_street_info__2(self):
-        r = tested._dict_re[r'contact_address_street_info']
+    def test_proza_address_street__2(self):
+        r = tested._dict_re[r'proza_address_street']
         self.assertRegexMatch('pl. Narutowicza 11/2', r)
         m = re.match(r,'pl. Narutowicza 11/2')
-        self.assertEqual(m.group('contact_address_street_prefix'), 'pl.')
-        self.assertEqual(m.group('contact_address_street_name'), 'Narutowicza')
-        self.assertEqual(m.group('contact_address_street_number'), '11/2')
+        self.assertEqual(m.group('proza_address_street_prefix'), 'pl.')
+        self.assertEqual(m.group('proza_address_street_name'), 'Narutowicza')
+        self.assertEqual(m.group('proza_address_street_number'), '11/2')
 
-    def test_contact_address_street_info__3(self):
-        r = tested._dict_re[r'contact_address_street_info']
+    def test_proza_address_street__3(self):
+        r = tested._dict_re[r'proza_address_street']
         self.assertRegexMatch('Sienkiewicza 11A', r)
         m = re.match(r,'Sienkiewicza 11A')
-        self.assertIs(m.group('contact_address_street_prefix'), None)
-        self.assertEqual(m.group('contact_address_street_name'), 'Sienkiewicza')
-        self.assertEqual(m.group('contact_address_street_number'), '11A')
+        self.assertIs(m.group('proza_address_street_prefix'), None)
+        self.assertEqual(m.group('proza_address_street_name'), 'Sienkiewicza')
+        self.assertEqual(m.group('proza_address_street_number'), '11A')
 
-    def test_contact_address_street_info__4(self):
-        r = tested._dict_re[r'contact_address_street_info']
+    def test_proza_address_street__4(self):
+        r = tested._dict_re[r'proza_address_street']
         self.assertRegexMatch('Pana Michała Wołodyjowskiego 123-125', r)
         m = re.match(r,'Pana Michała Wołodyjowskiego 123-125')
-        self.assertIs(m.group('contact_address_street_prefix'), None)
-        self.assertEqual(m.group('contact_address_street_name'), 'Pana Michała Wołodyjowskiego')
-        self.assertEqual(m.group('contact_address_street_number'), '123-125')
+        self.assertIs(m.group('proza_address_street_prefix'), None)
+        self.assertEqual(m.group('proza_address_street_name'), 'Pana Michała Wołodyjowskiego')
+        self.assertEqual(m.group('proza_address_street_number'), '123-125')
 
-    def test_contact_address_street_info__5(self):
-        r = tested._dict_re[r'contact_address_street_info']
+    def test_proza_address_street__5(self):
+        r = tested._dict_re[r'proza_address_street']
         self.assertRegexMatch('ul.Świętego Maksymiliana   Kolbe 23 - 30', r)
         m = re.match(r,'ul.Świętego Maksymiliana   Kolbe 23 - 30')
-        self.assertEqual(m.group('contact_address_street_prefix'), 'ul.')
-        self.assertEqual(m.group('contact_address_street_name'), 'Świętego Maksymiliana   Kolbe')
-        self.assertEqual(m.group('contact_address_street_number'), '23 - 30')
+        self.assertEqual(m.group('proza_address_street_prefix'), 'ul.')
+        self.assertEqual(m.group('proza_address_street_name'), 'Świętego Maksymiliana   Kolbe')
+        self.assertEqual(m.group('proza_address_street_number'), '23 - 30')
 
-    def test_contact_address_postoffice_info__1(self):
-        r = tested._dict_re[r'contact_address_postoffice_info']
+    def test_proza_address_postoffice__1(self):
+        r = tested._dict_re[r'proza_address_postoffice']
         self.assertRegexMatch('00-665 Warszawa', r)
         m = re.match(r,'00-665 Warszawa')
-        self.assertEqual(m.group('contact_address_postoffice_zip'), '00-665')
-        self.assertEqual(m.group('contact_address_postoffice_town'), 'Warszawa')
+        self.assertEqual(m.group('proza_address_postoffice_zip'), '00-665')
+        self.assertEqual(m.group('proza_address_postoffice_town'), 'Warszawa')
 
-    def test_contact_address_postoffice_info__2(self):
-        r = tested._dict_re[r'contact_address_postoffice_info']
+    def test_proza_address_postoffice__2(self):
+        r = tested._dict_re[r'proza_address_postoffice']
         self.assertRegexMatch('21-500 Biała Podlaska', r)
         m = re.match(r,'21-500 Biała Podlaska')
-        self.assertEqual(m.group('contact_address_postoffice_zip'), '21-500')
-        self.assertEqual(m.group('contact_address_postoffice_town'), 'Biała Podlaska')
+        self.assertEqual(m.group('proza_address_postoffice_zip'), '21-500')
+        self.assertEqual(m.group('proza_address_postoffice_town'), 'Biała Podlaska')
 
-    def test_contact_address_postoffice_info__3(self):
-        r = tested._dict_re[r'contact_address_postoffice_info']
+    def test_proza_address_postoffice__3(self):
+        r = tested._dict_re[r'proza_address_postoffice']
         self.assertRegexMatch('43-300 Bielsko-Biała', r)
         m = re.match(r,'43-300 Bielsko-Biała')
-        self.assertEqual(m.group('contact_address_postoffice_zip'), '43-300')
-        self.assertEqual(m.group('contact_address_postoffice_town'), 'Bielsko-Biała')
+        self.assertEqual(m.group('proza_address_postoffice_zip'), '43-300')
+        self.assertEqual(m.group('proza_address_postoffice_town'), 'Bielsko-Biała')
 
-    def test_contact_address_edifice_info__1(self):
-        r = tested._dict_re[r'contact_address_edifice_info']
+    def test_proza_address_edifice__1(self):
+        r = tested._dict_re[r'proza_address_edifice']
         self.assertRegexMatch('Gmach Lotniczy', r)
         m = re.match(r,'Gmach Lotniczy')
-        self.assertEqual(m.group('contact_address_edifice'), 'Gmach Lotniczy')
+        self.assertEqual(m.group('proza_address_edifice'), 'Gmach Lotniczy')
 
-    def test_contact_address_edifice_info__2(self):
-        r = tested._dict_re[r'contact_address_edifice_info']
+    def test_proza_address_edifice__2(self):
+        r = tested._dict_re[r'proza_address_edifice']
         self.assertRegexMatch('Budynek Żółtogęsią-Jaźniowy 12', r)
         m = re.match(r,'Budynek Żółtogęsią-Jaźniowy 12')
-        self.assertEqual(m.group('contact_address_edifice'), 'Budynek Żółtogęsią-Jaźniowy 12')
+        self.assertEqual(m.group('proza_address_edifice'), 'Budynek Żółtogęsią-Jaźniowy 12')
 
-    def test_contact_address_room_info__1(self):
-        r = tested._dict_re[r'contact_address_room_info']
+    def test_proza_address_room__1(self):
+        r = tested._dict_re[r'proza_address_room']
         self.assertRegexMatch('124', r)
         m = re.match(r,'124')
-        self.assertEqual(m.group('contact_address_room'), '124')
+        self.assertEqual(m.group('proza_address_room'), '124')
 
-    def test_contact_address_room_info__2(self):
-        r = tested._dict_re[r'contact_address_room_info']
+    def test_proza_address_room__2(self):
+        r = tested._dict_re[r'proza_address_room']
         self.assertRegexMatch('p. 124', r)
         m = re.match(r,'p. 124')
-        self.assertEqual(m.group('contact_address_room'), 'p. 124')
+        self.assertEqual(m.group('proza_address_room'), 'p. 124')
 
-    def test_contact_address_room_info__3(self):
-        r = tested._dict_re[r'contact_address_room_info']
+    def test_proza_address_room__3(self):
+        r = tested._dict_re[r'proza_address_room']
         self.assertRegexMatch('pok. 124', r)
         m = re.match(r,'pok. 124')
-        self.assertEqual(m.group('contact_address_room'), 'pok. 124')
+        self.assertEqual(m.group('proza_address_room'), 'pok. 124')
 
-    def test_contact_address_website_info__1(self):
-        r = tested._dict_re[r'contact_address_website_info']
+    def test_proza_address_website__1(self):
+        r = tested._dict_re[r'proza_address_website']
         self.assertRegexMatch('www.pl', r)
         m = re.match(r,'www.pl')
-        self.assertEqual(m.group('contact_address_website'), 'www.pl')
+        self.assertEqual(m.group('proza_address_website'), 'www.pl')
 
-    def test_contact_address_website_info__2(self):
-        r = tested._dict_re[r'contact_address_website_info']
+    def test_proza_address_website__2(self):
+        r = tested._dict_re[r'proza_address_website']
         self.assertRegexMatch('meil.pw.edu.pl', r)
         m = re.match(r,'meil.pw.edu.pl')
-        self.assertEqual(m.group('contact_address_website'), 'meil.pw.edu.pl')
+        self.assertEqual(m.group('proza_address_website'), 'meil.pw.edu.pl')
 
-    def test_contact_address_website_info__3(self):
-        r = tested._dict_re[r'contact_address_website_info']
+    def test_proza_address_website__3(self):
+        r = tested._dict_re[r'proza_address_website']
         self.assertRegexMatch('http://pw.edu.pl', r)
         m = re.match(r,'http://pw.edu.pl')
-        self.assertEqual(m.group('contact_address_website'), 'http://pw.edu.pl')
+        self.assertEqual(m.group('proza_address_website'), 'http://pw.edu.pl')
 
-    def test_contact_address__1(self):
-        r = tested._dict_re[r'contact_address']
+    def test_proza_header_address__1(self):
+        r = tested._dict_re[r'proza_header_address']
         self.assertRegexMatch('ul. Nowowiejska 24, 00-665 Warszawa, Gmach Lotniczy, pok. 125', r)
         m = re.match(r,'ul. Nowowiejska 24, 00-665 Warszawa, Gmach Lotniczy, pok. 125')
-        self.assertEqual(m.group('contact_address'), 'ul. Nowowiejska 24, 00-665 Warszawa, Gmach Lotniczy, pok. 125')
-        self.assertEqual(m.group('contact_address_street_prefix_0'), 'ul.')
-        self.assertEqual(m.group('contact_address_street_name_0'), 'Nowowiejska')
-        self.assertEqual(m.group('contact_address_street_number_0'), '24')
-        self.assertEqual(m.group('contact_address_postoffice_zip_0'), '00-665')
-        self.assertEqual(m.group('contact_address_postoffice_town_0'), 'Warszawa')
-        self.assertEqual(m.group('contact_address_edifice_0'), 'Gmach Lotniczy')
-        self.assertEqual(m.group('contact_address_room_0'), 'pok. 125')
+        self.assertEqual(m.group('proza_header_address'), 'ul. Nowowiejska 24, 00-665 Warszawa, Gmach Lotniczy, pok. 125')
+        self.assertEqual(m.group('proza_address_street_prefix_0'), 'ul.')
+        self.assertEqual(m.group('proza_address_street_name_0'), 'Nowowiejska')
+        self.assertEqual(m.group('proza_address_street_number_0'), '24')
+        self.assertEqual(m.group('proza_address_postoffice_zip_0'), '00-665')
+        self.assertEqual(m.group('proza_address_postoffice_town_0'), 'Warszawa')
+        self.assertEqual(m.group('proza_address_edifice_0'), 'Gmach Lotniczy')
+        self.assertEqual(m.group('proza_address_room_0'), 'pok. 125')
 
-    def test_contact_address__2(self):
-        r = tested._dict_re[r'contact_address']
+    def test_proza_header_address__2(self):
+        r = tested._dict_re[r'proza_header_address']
         self.assertRegexMatch('Plac Politechniki 1, p. 301, 00-661 Warszawa, www.gik.pw.edu.pl', r)
         m = re.match(r, 'Plac Politechniki 1, p. 301, 00-661 Warszawa, www.gik.pw.edu.pl')
-        self.assertEqual(m.group('contact_address'), 'Plac Politechniki 1, p. 301, 00-661 Warszawa, www.gik.pw.edu.pl')
-        self.assertIs(m.group('contact_address_street_prefix_1'), None)
-        self.assertEqual(m.group('contact_address_street_name_1'), 'Plac Politechniki')
-        self.assertEqual(m.group('contact_address_street_number_1'), '1')
-        self.assertEqual(m.group('contact_address_postoffice_zip_1'), '00-661')
-        self.assertEqual(m.group('contact_address_postoffice_town_1'), 'Warszawa')
-        self.assertEqual(m.group('contact_address_room_1'), 'p. 301')
+        self.assertEqual(m.group('proza_header_address'), 'Plac Politechniki 1, p. 301, 00-661 Warszawa, www.gik.pw.edu.pl')
+        self.assertIs(m.group('proza_address_street_prefix_1'), None)
+        self.assertEqual(m.group('proza_address_street_name_1'), 'Plac Politechniki')
+        self.assertEqual(m.group('proza_address_street_number_1'), '1')
+        self.assertEqual(m.group('proza_address_postoffice_zip_1'), '00-661')
+        self.assertEqual(m.group('proza_address_postoffice_town_1'), 'Warszawa')
+        self.assertEqual(m.group('proza_address_room_1'), 'p. 301')
 
-    def test_contact_phone__1(self):
-        r = tested._dict_re[r'contact_phone']
+    def test_proza_phone__1(self):
+        r = tested._dict_re[r'proza_phone']
         self.assertRegexMatch('tel. (+48) 22 234 72 23', r)
         m = re.match(r, 'tel. (+48) 22 234 72 23')
-        self.assertEqual(m.group('contact_phone'), 'tel. (+48) 22 234 72 23')
-        self.assertEqual(m.group('contact_phone_prefix'), 'tel.')
-        self.assertEqual(m.group('contact_phone_numbers'), '(+48) 22 234 72 23')
+        self.assertEqual(m.group('proza_phone'), 'tel. (+48) 22 234 72 23')
+        self.assertEqual(m.group('proza_phone_prefix'), 'tel.')
+        self.assertEqual(m.group('proza_phone_numbers'), '(+48) 22 234 72 23')
 
-    def test_contact_phone__2(self):
-        r = tested._dict_re[r'contact_phone']
+    def test_proza_phone__2(self):
+        r = tested._dict_re[r'proza_phone']
         self.assertRegexMatch('tel.: (022) 621 53 10, (022) 234 73 54', r)
         m = re.match(r, 'tel.: (022) 621 53 10, (022) 234 73 54')
-        self.assertEqual(m.group('contact_phone'), 'tel.: (022) 621 53 10, (022) 234 73 54')
-        self.assertEqual(m.group('contact_phone_prefix'), 'tel.:')
-        self.assertEqual(m.group('contact_phone_numbers'), '(022) 621 53 10, (022) 234 73 54')
+        self.assertEqual(m.group('proza_phone'), 'tel.: (022) 621 53 10, (022) 234 73 54')
+        self.assertEqual(m.group('proza_phone_prefix'), 'tel.:')
+        self.assertEqual(m.group('proza_phone_numbers'), '(022) 621 53 10, (022) 234 73 54')
 
-    def test_contact_faxtel__1(self):
-        r = tested._dict_re[r'contact_faxtel']
+    def test_proza_faxtel__1(self):
+        r = tested._dict_re[r'proza_faxtel']
         self.assertRegexMatch('fax. (+48) 22 234 72 23', r)
         m = re.match(r, 'fax. (+48) 22 234 72 23')
-        self.assertEqual(m.group('contact_faxtel'), 'fax. (+48) 22 234 72 23')
-        self.assertEqual(m.group('contact_faxtel_prefix'), 'fax.')
-        self.assertEqual(m.group('contact_faxtel_numbers'), '(+48) 22 234 72 23')
+        self.assertEqual(m.group('proza_faxtel'), 'fax. (+48) 22 234 72 23')
+        self.assertEqual(m.group('proza_faxtel_prefix'), 'fax.')
+        self.assertEqual(m.group('proza_faxtel_numbers'), '(+48) 22 234 72 23')
 
-    def test_contact_faxtel__2(self):
-        r = tested._dict_re[r'contact_faxtel']
+    def test_proza_faxtel__2(self):
+        r = tested._dict_re[r'proza_faxtel']
         self.assertRegexMatch('fax/tel.: (022) 625 73 51', r)
         m = re.match(r, 'fax/tel.: (022) 621 73 51')
-        self.assertEqual(m.group('contact_faxtel'), 'fax/tel.: (022) 621 73 51')
-        self.assertEqual(m.group('contact_faxtel_prefix'), 'fax/tel.:')
-        self.assertEqual(m.group('contact_faxtel_numbers'), '(022) 621 73 51')
+        self.assertEqual(m.group('proza_faxtel'), 'fax/tel.: (022) 621 73 51')
+        self.assertEqual(m.group('proza_faxtel_prefix'), 'fax/tel.:')
+        self.assertEqual(m.group('proza_faxtel_numbers'), '(022) 621 73 51')
 
-    def test_contact_faxtel__3(self):
-        r = tested._dict_re[r'contact_faxtel']
+    def test_proza_faxtel__3(self):
+        r = tested._dict_re[r'proza_faxtel']
         self.assertRegexMatch('fax/tel.: (022) 621 53 10, (022) 234 73 54', r)
         m = re.match(r, 'fax/tel.: (022) 621 53 10, (022) 234 73 54')
-        self.assertEqual(m.group('contact_faxtel'), 'fax/tel.: (022) 621 53 10, (022) 234 73 54')
-        self.assertEqual(m.group('contact_faxtel_prefix'), 'fax/tel.:')
-        self.assertEqual(m.group('contact_faxtel_numbers'), '(022) 621 53 10, (022) 234 73 54')
+        self.assertEqual(m.group('proza_faxtel'), 'fax/tel.: (022) 621 53 10, (022) 234 73 54')
+        self.assertEqual(m.group('proza_faxtel_prefix'), 'fax/tel.:')
+        self.assertEqual(m.group('proza_faxtel_numbers'), '(022) 621 53 10, (022) 234 73 54')
 
-    def test_contact_email__1(self):
-        r = tested._dict_re[r'contact_email']
+    def test_proza_email__1(self):
+        r = tested._dict_re[r'proza_email']
         self.assertRegexMatch('e-mail: p-1.tomulik@meil.pw.edu.pl', r)
         m = re.match(r, 'e-mail: p-1.tomulik@meil.pw.edu.pl')
-        self.assertEqual(m.group('contact_email'), 'e-mail: p-1.tomulik@meil.pw.edu.pl')
-        self.assertEqual(m.group('contact_email_prefix'), 'e-mail:')
-        self.assertEqual(m.group('contact_email_address'), 'p-1.tomulik@meil.pw.edu.pl')
-        self.assertEqual(m.group('contact_email_address_localpart'), 'p-1.tomulik')
-        self.assertEqual(m.group('contact_email_address_domain'), 'meil.pw.edu.pl')
+        self.assertEqual(m.group('proza_email'), 'e-mail: p-1.tomulik@meil.pw.edu.pl')
+        self.assertEqual(m.group('proza_email_prefix'), 'e-mail:')
+        self.assertEqual(m.group('proza_email_address'), 'p-1.tomulik@meil.pw.edu.pl')
+        self.assertEqual(m.group('proza_email_address_localpart'), 'p-1.tomulik')
+        self.assertEqual(m.group('proza_email_address_domain'), 'meil.pw.edu.pl')
 
-    def test_electronic_contact__1(self):
-        r = tested._dict_re[r'electronic_contact']
+    def test_proza_header_contact__1(self):
+        r = tested._dict_re[r'proza_header_contact']
         s = 'tel.: (022) 621 53 10, (022) 234 73 54, fax/tel.: (022) 625 73 51, e-mail: dziekanat@meil.pw.edu.pl'
         self.assertRegexMatch(s, r)
         m = re.match(r, s)
-        self.assertEqual(m.group('electronic_contact'), s)
-        self.assertEqual(m.group('contact_phone'), 'tel.: (022) 621 53 10, (022) 234 73 54')
-        self.assertEqual(m.group('contact_phone_prefix'), 'tel.:')
-        self.assertEqual(m.group('contact_phone_numbers'), '(022) 621 53 10, (022) 234 73 54')
-        self.assertEqual(m.group('contact_faxtel'), 'fax/tel.: (022) 625 73 51')
-        self.assertEqual(m.group('contact_faxtel_prefix'), 'fax/tel.:')
-        self.assertEqual(m.group('contact_faxtel_numbers'), '(022) 625 73 51')
-        self.assertEqual(m.group('contact_email'), 'e-mail: dziekanat@meil.pw.edu.pl')
-        self.assertEqual(m.group('contact_email_prefix'), 'e-mail:')
-        self.assertEqual(m.group('contact_email_address'), 'dziekanat@meil.pw.edu.pl')
-        self.assertEqual(m.group('contact_email_address_localpart'), 'dziekanat')
-        self.assertEqual(m.group('contact_email_address_domain'), 'meil.pw.edu.pl')
+        self.assertEqual(m.group('proza_header_contact'), s)
+        self.assertEqual(m.group('proza_phone'), 'tel.: (022) 621 53 10, (022) 234 73 54')
+        self.assertEqual(m.group('proza_phone_prefix'), 'tel.:')
+        self.assertEqual(m.group('proza_phone_numbers'), '(022) 621 53 10, (022) 234 73 54')
+        self.assertEqual(m.group('proza_faxtel'), 'fax/tel.: (022) 625 73 51')
+        self.assertEqual(m.group('proza_faxtel_prefix'), 'fax/tel.:')
+        self.assertEqual(m.group('proza_faxtel_numbers'), '(022) 625 73 51')
+        self.assertEqual(m.group('proza_email'), 'e-mail: dziekanat@meil.pw.edu.pl')
+        self.assertEqual(m.group('proza_email_prefix'), 'e-mail:')
+        self.assertEqual(m.group('proza_email_address'), 'dziekanat@meil.pw.edu.pl')
+        self.assertEqual(m.group('proza_email_address_localpart'), 'dziekanat')
+        self.assertEqual(m.group('proza_email_address_domain'), 'meil.pw.edu.pl')
 
-    def test_electronic_contact__2(self):
-        r = tested._dict_re[r'electronic_contact']
+    def test_proza_header_contact__2(self):
+        r = tested._dict_re[r'proza_header_contact']
         s = 'tel.: (+48) 22 234 72 23, e-mail: dziekan@gik.pw.edu.pl'
         self.assertRegexMatch(s, r)
         m = re.match(r, s)
-        self.assertEqual(m.group('electronic_contact'), s)
-        self.assertEqual(m.group('contact_phone'), 'tel.: (+48) 22 234 72 23')
-        self.assertEqual(m.group('contact_phone_prefix'), 'tel.:')
-        self.assertEqual(m.group('contact_phone_numbers'), '(+48) 22 234 72 23')
-        self.assertIs(m.group('contact_faxtel'), None)
-        self.assertIs(m.group('contact_faxtel_prefix'), None)
-        self.assertIs(m.group('contact_faxtel_numbers'), None)
-        self.assertEqual(m.group('contact_email'), 'e-mail: dziekan@gik.pw.edu.pl')
-        self.assertEqual(m.group('contact_email_prefix'), 'e-mail:')
-        self.assertEqual(m.group('contact_email_address'), 'dziekan@gik.pw.edu.pl')
-        self.assertEqual(m.group('contact_email_address_localpart'), 'dziekan')
-        self.assertEqual(m.group('contact_email_address_domain'), 'gik.pw.edu.pl')
+        self.assertEqual(m.group('proza_header_contact'), s)
+        self.assertEqual(m.group('proza_phone'), 'tel.: (+48) 22 234 72 23')
+        self.assertEqual(m.group('proza_phone_prefix'), 'tel.:')
+        self.assertEqual(m.group('proza_phone_numbers'), '(+48) 22 234 72 23')
+        self.assertIs(m.group('proza_faxtel'), None)
+        self.assertIs(m.group('proza_faxtel_prefix'), None)
+        self.assertIs(m.group('proza_faxtel_numbers'), None)
+        self.assertEqual(m.group('proza_email'), 'e-mail: dziekan@gik.pw.edu.pl')
+        self.assertEqual(m.group('proza_email_prefix'), 'e-mail:')
+        self.assertEqual(m.group('proza_email_address'), 'dziekan@gik.pw.edu.pl')
+        self.assertEqual(m.group('proza_email_address_localpart'), 'dziekan')
+        self.assertEqual(m.group('proza_email_address_domain'), 'gik.pw.edu.pl')
 
-    def test_stamp_town_and_datetime__1(self):
-        r = tested._dict_re[r'stamp_town_and_datetime']
+    def test_proza_preamble_town_and_datetime__1(self):
+        r = tested._dict_re[r'proza_preamble_town_and_datetime']
         s = 'Warszawa, 08.02.2014, 13:09:53'
         self.assertRegexMatch(s, r)
         m = re.match(r, s)
-        self.assertEqual(m.group('stamp_town_and_datetime'), s)
-        self.assertEqual(m.group('stamp_town'), 'Warszawa')
-        self.assertEqual(m.group('stamp_date'), '08.02.2014')
-        self.assertEqual(m.group('stamp_time'), '13:09:53')
+        self.assertEqual(m.group('proza_preamble_town_and_datetime'), s)
+        self.assertEqual(m.group('proza_town'), 'Warszawa')
+        self.assertEqual(m.group('proza_date'), '08.02.2014')
+        self.assertEqual(m.group('proza_time'), '13:09:53')
 
-    def test_proza_label__1(self):
-        r = tested._dict_re[r'proza_label']
+    def test_proza_preamble_title__1(self):
+        r = tested._dict_re[r'proza_preamble_title']
         s = 'Protokół zaliczeń (egzamin) 2015 Z/B-1/197'
         self.assertRegexMatch(s, r)
         m = re.match(r, s)
-        self.assertEqual(m.group('proza_label'), s)
-        self.assertEqual(m.group('proza_label_title'), 'Protokół zaliczeń')
-        self.assertEqual(m.group('proza_label_exam'), 'egzamin')
-        self.assertEqual(m.group('proza_label_semester'), '2015 Z')
-        self.assertEqual(m.group('proza_label_serie'), 'B-1')
-        self.assertEqual(m.group('proza_label_number'), '197')
+        self.assertEqual(m.group('proza_preamble_title'), s)
+        self.assertEqual(m.group('proza_title'), 'Protokół zaliczeń')
+        self.assertEqual(m.group('proza_exam'), 'egzamin')
+        self.assertEqual(m.group('proza_semester'), '2015 Z')
+        self.assertEqual(m.group('proza_serie'), 'B-1')
+        self.assertEqual(m.group('proza_number'), '197')
 
-    def test_proza_label__2(self):
-        r = tested._dict_re[r'proza_label']
+    def test_proza_preamble_title__2(self):
+        r = tested._dict_re[r'proza_preamble_title']
         s = 'Protokół zaliczeń (bez egzaminu) 2013Z/E-1/252'
         self.assertRegexMatch(s, r)
         m = re.match(r, s)
-        self.assertEqual(m.group('proza_label'), s)
-        self.assertEqual(m.group('proza_label_title'), 'Protokół zaliczeń')
-        self.assertEqual(m.group('proza_label_exam'), 'bez egzaminu')
-        self.assertEqual(m.group('proza_label_semester'), '2013Z')
-        self.assertEqual(m.group('proza_label_serie'), 'E-1')
-        self.assertEqual(m.group('proza_label_number'), '252')
+        self.assertEqual(m.group('proza_preamble_title'), s)
+        self.assertEqual(m.group('proza_title'), 'Protokół zaliczeń')
+        self.assertEqual(m.group('proza_exam'), 'bez egzaminu')
+        self.assertEqual(m.group('proza_semester'), '2013Z')
+        self.assertEqual(m.group('proza_serie'), 'E-1')
+        self.assertEqual(m.group('proza_number'), '252')
 
-    def test_proza_return__1(self):
-        r = tested._dict_re[r'proza_return']
+    def test_proza_preamble_return__1(self):
+        r = tested._dict_re[r'proza_preamble_return']
         s = 'Termin zwrotu 02.02.2016'
         self.assertRegexMatch(s, r)
         m = re.match(r, s)
-        self.assertEqual(m.group('proza_return'), s)
+        self.assertEqual(m.group('proza_preamble_return'), s)
         self.assertEqual(m.group('proza_return_desc'), 'Termin zwrotu')
         self.assertEqual(m.group('proza_return_date'), '02.02.2016')
 
@@ -456,141 +456,141 @@ class Test__try_contact_name_line(unittest.TestCase):
         self.assertEqual(tested.try_contact_name_line("     DZIEKANAT       "), expect)
         self.assertEqual(tested.try_contact_name_line("     D Z I E K A N A T     "), expect)
 
-class Test__try_contact_address_line(unittest.TestCase):
+class Test__try_proza_header_address_line(unittest.TestCase):
     def test__nonmatching(self):
-        self.assertEqual(tested.try_contact_address_line("I don't match anything"), dict())
+        self.assertEqual(tested.try_proza_header_address_line("I don't match anything"), dict())
 
     def test_MEiL_DZIEKANAT(self):
         line = "     ul. Nowowiejska 24, 00-665 Warszawa, Gmach Lotniczy, pok. 125   "
         expect = {
-            'contact_address_street_prefix'     : 'ul.',
-            'contact_address_street_name'       : 'Nowowiejska',
-            'contact_address_street_number'     : '24',
-            'contact_address_postoffice_zip'    : '00-665',
-            'contact_address_postoffice_town'   : 'Warszawa',
-            'contact_address_edifice'           : 'Gmach Lotniczy',
-            'contact_address_room'              : 'pok. 125',
-            'contact_address_website'           : None,
-            'contact_address'                   : 'ul. Nowowiejska 24, 00-665 Warszawa, Gmach Lotniczy, pok. 125'
+            'proza_address_street_prefix'     : 'ul.',
+            'proza_address_street_name'       : 'Nowowiejska',
+            'proza_address_street_number'     : '24',
+            'proza_address_postoffice_zip'    : '00-665',
+            'proza_address_postoffice_town'   : 'Warszawa',
+            'proza_address_edifice'           : 'Gmach Lotniczy',
+            'proza_address_room'              : 'pok. 125',
+            'proza_address_website'           : None,
+            'proza_header_address'                   : 'ul. Nowowiejska 24, 00-665 Warszawa, Gmach Lotniczy, pok. 125'
         }
-        self.assertEqual(expect, tested.try_contact_address_line(line))
+        self.assertEqual(expect, tested.try_proza_header_address_line(line))
 
     def test_GIK_301(self):
         line = "     Plac Politechniki 1, p. 301, 00-661 Warszawa, www.gik.pw.edu.pl   "
         expect = {
-            'contact_address_street_prefix'     : None,
-            'contact_address_street_name'       : 'Plac Politechniki',
-            'contact_address_street_number'     : '1',
-            'contact_address_postoffice_zip'    : '00-661',
-            'contact_address_postoffice_town'   : 'Warszawa',
-            'contact_address_edifice'           : None,
-            'contact_address_room'              : 'p. 301',
-            'contact_address_website'           : 'www.gik.pw.edu.pl',
-            'contact_address'                   : 'Plac Politechniki 1, p. 301, 00-661 Warszawa, www.gik.pw.edu.pl'
+            'proza_address_street_prefix'     : None,
+            'proza_address_street_name'       : 'Plac Politechniki',
+            'proza_address_street_number'     : '1',
+            'proza_address_postoffice_zip'    : '00-661',
+            'proza_address_postoffice_town'   : 'Warszawa',
+            'proza_address_edifice'           : None,
+            'proza_address_room'              : 'p. 301',
+            'proza_address_website'           : 'www.gik.pw.edu.pl',
+            'proza_header_address'                   : 'Plac Politechniki 1, p. 301, 00-661 Warszawa, www.gik.pw.edu.pl'
         }
-        self.assertEqual(expect, tested.try_contact_address_line(line))
+        self.assertEqual(expect, tested.try_proza_header_address_line(line))
 
-class Test__try_electronic_contact_line(unittest.TestCase):
+class Test__try_proza_header_contact_line(unittest.TestCase):
     def test__nonmatching(self):
-        self.assertEqual(tested.try_electronic_contact_line("I don't match anything"), dict())
+        self.assertEqual(tested.try_proza_header_contact_line("I don't match anything"), dict())
 
     def test__MEiL__1(self):
         line = "        tel.: (022) 621 53 10, (022) 234 73 54, fax/tel.: (022) 625 73 51, e-mail:dziekanat@meil.pw.edu.pl  "
         expect = {
-            'contact_phone_prefix'              : 'tel.:',
-            'contact_phone_numbers'             : '(022) 621 53 10, (022) 234 73 54',
-            'contact_phone'                     : 'tel.: (022) 621 53 10, (022) 234 73 54',
-            'contact_faxtel_prefix'             : 'fax/tel.:',
-            'contact_faxtel_numbers'            : '(022) 625 73 51',
-            'contact_faxtel'                    : 'fax/tel.: (022) 625 73 51',
-            'contact_email_prefix'              : 'e-mail:',
-            'contact_email_address_localpart'   : 'dziekanat',
-            'contact_email_address_domain'      : 'meil.pw.edu.pl',
-            'contact_email_address'             : 'dziekanat@meil.pw.edu.pl',
-            'contact_email'                     : 'e-mail:dziekanat@meil.pw.edu.pl',
-            'electronic_contact'                : 'tel.: (022) 621 53 10, (022) 234 73 54, fax/tel.: (022) 625 73 51, e-mail:dziekanat@meil.pw.edu.pl'
+            'proza_phone_prefix'              : 'tel.:',
+            'proza_phone_numbers'             : '(022) 621 53 10, (022) 234 73 54',
+            'proza_phone'                     : 'tel.: (022) 621 53 10, (022) 234 73 54',
+            'proza_faxtel_prefix'             : 'fax/tel.:',
+            'proza_faxtel_numbers'            : '(022) 625 73 51',
+            'proza_faxtel'                    : 'fax/tel.: (022) 625 73 51',
+            'proza_email_prefix'              : 'e-mail:',
+            'proza_email_address_localpart'   : 'dziekanat',
+            'proza_email_address_domain'      : 'meil.pw.edu.pl',
+            'proza_email_address'             : 'dziekanat@meil.pw.edu.pl',
+            'proza_email'                     : 'e-mail:dziekanat@meil.pw.edu.pl',
+            'proza_header_contact'                : 'tel.: (022) 621 53 10, (022) 234 73 54, fax/tel.: (022) 625 73 51, e-mail:dziekanat@meil.pw.edu.pl'
         }
-        self.assertEqual(expect, tested.try_electronic_contact_line(line))
+        self.assertEqual(expect, tested.try_proza_header_contact_line(line))
 
     def test__GiK__1(self):
         line = "        tel. (+48) 22 234 72 23, e-mail: dziekan@gik.pw.edu.pl  "
         expect = {
-            'contact_phone_prefix'              : 'tel.',
-            'contact_phone_numbers'             : '(+48) 22 234 72 23',
-            'contact_phone'                     : 'tel. (+48) 22 234 72 23',
-            'contact_faxtel_prefix'             : None,
-            'contact_faxtel_numbers'            : None,
-            'contact_faxtel'                    : None,
-            'contact_email_prefix'              : 'e-mail:',
-            'contact_email_address_localpart'   : 'dziekan',
-            'contact_email_address_domain'      : 'gik.pw.edu.pl',
-            'contact_email_address'             : 'dziekan@gik.pw.edu.pl',
-            'contact_email'                     : 'e-mail: dziekan@gik.pw.edu.pl',
-            'electronic_contact'                : 'tel. (+48) 22 234 72 23, e-mail: dziekan@gik.pw.edu.pl'
+            'proza_phone_prefix'              : 'tel.',
+            'proza_phone_numbers'             : '(+48) 22 234 72 23',
+            'proza_phone'                     : 'tel. (+48) 22 234 72 23',
+            'proza_faxtel_prefix'             : None,
+            'proza_faxtel_numbers'            : None,
+            'proza_faxtel'                    : None,
+            'proza_email_prefix'              : 'e-mail:',
+            'proza_email_address_localpart'   : 'dziekan',
+            'proza_email_address_domain'      : 'gik.pw.edu.pl',
+            'proza_email_address'             : 'dziekan@gik.pw.edu.pl',
+            'proza_email'                     : 'e-mail: dziekan@gik.pw.edu.pl',
+            'proza_header_contact'                : 'tel. (+48) 22 234 72 23, e-mail: dziekan@gik.pw.edu.pl'
         }
-        self.assertEqual(expect, tested.try_electronic_contact_line(line))
+        self.assertEqual(expect, tested.try_proza_header_contact_line(line))
 
-class Test__try_stamp_town_and_datetime_line(unittest.TestCase):
+class Test__try_proza_preamble_town_and_datetime_line(unittest.TestCase):
     def test__nonmatching(self):
-        self.assertEqual(tested.try_stamp_town_and_datetime_line("I don't match anything"), dict())
+        self.assertEqual(tested.try_proza_preamble_town_and_datetime_line("I don't match anything"), dict())
 
     def test__1(self):
         line = "        Warszawa, 08.02.2014, 13:09:53  "
         expect = {
-            'stamp_town'    : 'Warszawa',
-            'stamp_date'    : '08.02.2014',
-            'stamp_time'    : '13:09:53',
-            'stamp_town_and_datetime'   : 'Warszawa, 08.02.2014, 13:09:53'
+            'proza_town'    : 'Warszawa',
+            'proza_date'    : '08.02.2014',
+            'proza_time'    : '13:09:53',
+            'proza_preamble_town_and_datetime'   : 'Warszawa, 08.02.2014, 13:09:53'
         }
-        self.assertEqual(expect, tested.try_stamp_town_and_datetime_line(line))
+        self.assertEqual(expect, tested.try_proza_preamble_town_and_datetime_line(line))
 
     def test__2(self):
         line = "        Szklarska Poręba, 08.02.2014, 13:09:53  "
         expect = {
-            'stamp_town'    : 'Szklarska Poręba',
-            'stamp_date'    : '08.02.2014',
-            'stamp_time'    : '13:09:53',
-            'stamp_town_and_datetime'   : 'Szklarska Poręba, 08.02.2014, 13:09:53'
+            'proza_town'    : 'Szklarska Poręba',
+            'proza_date'    : '08.02.2014',
+            'proza_time'    : '13:09:53',
+            'proza_preamble_town_and_datetime'   : 'Szklarska Poręba, 08.02.2014, 13:09:53'
         }
-        self.assertEqual(expect, tested.try_stamp_town_and_datetime_line(line))
+        self.assertEqual(expect, tested.try_proza_preamble_town_and_datetime_line(line))
 
     def test__3(self):
         line = "        Bielsko-Biała, 08.02.2014, 13:09:53  "
         expect = {
-            'stamp_town'    : 'Bielsko-Biała',
-            'stamp_date'    : '08.02.2014',
-            'stamp_time'    : '13:09:53',
-            'stamp_town_and_datetime'   : 'Bielsko-Biała, 08.02.2014, 13:09:53'
+            'proza_town'    : 'Bielsko-Biała',
+            'proza_date'    : '08.02.2014',
+            'proza_time'    : '13:09:53',
+            'proza_preamble_town_and_datetime'   : 'Bielsko-Biała, 08.02.2014, 13:09:53'
         }
-        self.assertEqual(expect, tested.try_stamp_town_and_datetime_line(line))
+        self.assertEqual(expect, tested.try_proza_preamble_town_and_datetime_line(line))
 
-class Test__try_proza_label_line(unittest.TestCase):
+class Test__try_proza_preamble_title_line(unittest.TestCase):
     def test__nonmatching(self):
-        self.assertEqual(tested.try_proza_label_line("I don't match anything"), dict())
+        self.assertEqual(tested.try_proza_preamble_title_line("I don't match anything"), dict())
 
     def test__1(self):
         line = "        Protokół zaliczeń (egzamin) 2013Z/E-1/118       "
         expect = {
-            'proza_label'            : 'Protokół zaliczeń (egzamin) 2013Z/E-1/118',
-            'proza_label_title'      : 'Protokół zaliczeń',
-            'proza_label_exam'       : 'egzamin',
-            'proza_label_semester'   : '2013Z',
-            'proza_label_serie'      : 'E-1',
-            'proza_label_number'     : '118'
+            'proza_preamble_title'            : 'Protokół zaliczeń (egzamin) 2013Z/E-1/118',
+            'proza_title'      : 'Protokół zaliczeń',
+            'proza_exam'       : 'egzamin',
+            'proza_semester'   : '2013Z',
+            'proza_serie'      : 'E-1',
+            'proza_number'     : '118'
         }
-        self.assertEqual(expect, tested.try_proza_label_line(line))
+        self.assertEqual(expect, tested.try_proza_preamble_title_line(line))
 
     def test__2(self):
         line = "        Protokół zaliczeń (bez egzaminu) 2015 Z/B-1/197       "
         expect = {
-            'proza_label'            : 'Protokół zaliczeń (bez egzaminu) 2015 Z/B-1/197',
-            'proza_label_title'      : 'Protokół zaliczeń',
-            'proza_label_exam'       : 'bez egzaminu',
-            'proza_label_semester'   : '2015 Z',
-            'proza_label_serie'      : 'B-1',
-            'proza_label_number'     : '197'
+            'proza_preamble_title'      : 'Protokół zaliczeń (bez egzaminu) 2015 Z/B-1/197',
+            'proza_title'      : 'Protokół zaliczeń',
+            'proza_exam'       : 'bez egzaminu',
+            'proza_semester'   : '2015 Z',
+            'proza_serie'      : 'B-1',
+            'proza_number'     : '197'
         }
-        self.assertEqual(expect, tested.try_proza_label_line(line))
+        self.assertEqual(expect, tested.try_proza_preamble_title_line(line))
 
 class Test__try_proza_preamble_subj_name_line(unittest.TestCase):
     def test__nonmatching(self):
@@ -663,6 +663,50 @@ class Test__try_proza_preamble_subj_cond_line(unittest.TestCase):
         }
         self.assertEqual(expect, tested.try_proza_preamble_subj_cond_line(line))
 
+class Test__try_proza_footer_sig_dots_line(unittest.TestCase):
+    def test__nonmatching(self):
+        self.assertEqual(tested.try_proza_footer_sig_dots_line("I don't match anything"), dict())
+
+    def test__1(self):
+        line = "                                                      ........................"
+        expect = {
+            'proza_footer_sig_dots' : "........................",
+        }
+        self.assertEqual(expect, tested.try_proza_footer_sig_dots_line(line))
+
+class Test__try_proza_footer_sig_prompt_line(unittest.TestCase):
+    def test__nonmatching(self):
+        self.assertEqual(tested.try_proza_footer_sig_prompt_line("I don't match anything"), dict())
+
+    def test__1(self):
+        line = "                                                     podpis kierownika"
+        expect = {
+            'proza_footer_sig_prompt' : "podpis kierownika"
+        }
+        self.assertEqual(expect, tested.try_proza_footer_sig_prompt_line(line))
+
+class Test__try_proza_footer_pagination_and_title_line(unittest.TestCase):
+    def test__nonmatching(self):
+        self.assertEqual(tested.try_proza_footer_pagination_and_title_line("I don't match anything"), dict())
+
+    def test__1(self):
+        self.maxDiff = None
+        line = "       Strona 1 z 3                                                   Gospodarowanie surowcami mineralnymi (GP.SMS238). Protokół: 2013Z/E-1/118     "
+
+        expect = {
+                'proza_footer_pagination_and_title' : "Strona 1 z 3                                                   Gospodarowanie surowcami mineralnymi (GP.SMS238). Protokół: 2013Z/E-1/118",
+                'proza_footer_pagination'           : "Strona 1 z 3",
+                'proza_footer_title'                : 'Gospodarowanie surowcami mineralnymi (GP.SMS238). Protokół: 2013Z/E-1/118',
+                'proza_page_number'                 : '1',
+                'proza_pages_total'                 : '3',
+                'proza_subj_name'                   : 'Gospodarowanie surowcami mineralnymi',
+                'proza_subj_code'                   : 'GP.SMS238',
+                'proza_semester'                    : '2013Z',
+                'proza_serie'                       : 'E-1',
+                'proza_number'                      : '118'
+        }
+        self.assertEqual(expect, tested.try_proza_footer_pagination_and_title_line(line))
+
 class Test__try_proza_page_header(unittest.TestCase):
     def test__MEiL_1(self):
         header = \
@@ -678,27 +722,27 @@ class Test__try_proza_page_header(unittest.TestCase):
             'university'                        : 'POLITECHNIKA WARSZAWSKA',
             'faculty'                           : 'WYDZIAŁ MECHANICZNY ENERGETYKI I LOTNICTWA',
             'contact_name'                      : 'DZIEKANAT',
-            'contact_address_street_prefix'     : 'ul.',
-            'contact_address_street_name'       : 'Nowowiejska',
-            'contact_address_street_number'     : '24',
-            'contact_address_postoffice_zip'    : '00-665',
-            'contact_address_postoffice_town'   : 'Warszawa',
-            'contact_address_edifice'           : 'Gmach Lotniczy',
-            'contact_address_room'              : 'pok. 125',
-            'contact_address_website'           : None,
-            'contact_address'                   : 'ul. Nowowiejska 24, 00-665 Warszawa, Gmach Lotniczy, pok. 125',
-            'contact_phone_prefix'              : 'tel.:',
-            'contact_phone_numbers'             : '(022) 621 53 10, (022) 234 73 54',
-            'contact_phone'                     : 'tel.: (022) 621 53 10, (022) 234 73 54',
-            'contact_faxtel_prefix'             : 'fax/tel.:',
-            'contact_faxtel_numbers'            : '(022) 625 73 51',
-            'contact_faxtel'                    : 'fax/tel.: (022) 625 73 51',
-            'contact_email_prefix'              : 'e-mail:',
-            'contact_email_address_localpart'   : 'dziekanat',
-            'contact_email_address_domain'      : 'meil.pw.edu.pl',
-            'contact_email_address'             : 'dziekanat@meil.pw.edu.pl',
-            'contact_email'                     : 'e-mail:dziekanat@meil.pw.edu.pl',
-            'electronic_contact'                : 'tel.: (022) 621 53 10, (022) 234 73 54, fax/tel.: (022) 625 73 51, e-mail:dziekanat@meil.pw.edu.pl'
+            'proza_address_street_prefix'     : 'ul.',
+            'proza_address_street_name'       : 'Nowowiejska',
+            'proza_address_street_number'     : '24',
+            'proza_address_postoffice_zip'    : '00-665',
+            'proza_address_postoffice_town'   : 'Warszawa',
+            'proza_address_edifice'           : 'Gmach Lotniczy',
+            'proza_address_room'              : 'pok. 125',
+            'proza_address_website'           : None,
+            'proza_header_address'                   : 'ul. Nowowiejska 24, 00-665 Warszawa, Gmach Lotniczy, pok. 125',
+            'proza_phone_prefix'              : 'tel.:',
+            'proza_phone_numbers'             : '(022) 621 53 10, (022) 234 73 54',
+            'proza_phone'                     : 'tel.: (022) 621 53 10, (022) 234 73 54',
+            'proza_faxtel_prefix'             : 'fax/tel.:',
+            'proza_faxtel_numbers'            : '(022) 625 73 51',
+            'proza_faxtel'                    : 'fax/tel.: (022) 625 73 51',
+            'proza_email_prefix'              : 'e-mail:',
+            'proza_email_address_localpart'   : 'dziekanat',
+            'proza_email_address_domain'      : 'meil.pw.edu.pl',
+            'proza_email_address'             : 'dziekanat@meil.pw.edu.pl',
+            'proza_email'                     : 'e-mail:dziekanat@meil.pw.edu.pl',
+            'proza_header_contact'                : 'tel.: (022) 621 53 10, (022) 234 73 54, fax/tel.: (022) 625 73 51, e-mail:dziekanat@meil.pw.edu.pl'
         }
         #
         status = tested.ParsingStatus()
@@ -723,27 +767,27 @@ class Test__try_proza_page_header(unittest.TestCase):
         expect = {
             'university'                        : 'POLITECHNIKA WARSZAWSKA',
             'faculty'                           : 'WYDZIAŁ GEODEZJI I KARTOGRAFII',
-            'contact_address_street_prefix'     : None,
-            'contact_address_street_name'       : 'Plac Politechniki',
-            'contact_address_street_number'     : '1',
-            'contact_address_postoffice_zip'    : '00-661',
-            'contact_address_postoffice_town'   : 'Warszawa',
-            'contact_address_edifice'           : None,
-            'contact_address_room'              : 'p. 301',
-            'contact_address_website'           : 'www.gik.pw.edu.pl',
-            'contact_address'                   : 'Plac Politechniki 1, p. 301, 00-661 Warszawa, www.gik.pw.edu.pl',
-            'contact_phone_prefix'              : 'tel.',
-            'contact_phone_numbers'             : '(+48) 22 234 72 23',
-            'contact_phone'                     : 'tel. (+48) 22 234 72 23',
-            'contact_faxtel_prefix'             : None,
-            'contact_faxtel_numbers'            : None,
-            'contact_faxtel'                    : None,
-            'contact_email_prefix'              : 'e-mail:',
-            'contact_email_address_localpart'   : 'dziekan',
-            'contact_email_address_domain'      : 'gik.pw.edu.pl',
-            'contact_email_address'             : 'dziekan@gik.pw.edu.pl',
-            'contact_email'                     : 'e-mail: dziekan@gik.pw.edu.pl',
-            'electronic_contact'                : 'tel. (+48) 22 234 72 23, e-mail: dziekan@gik.pw.edu.pl'
+            'proza_address_street_prefix'       : None,
+            'proza_address_street_name'         : 'Plac Politechniki',
+            'proza_address_street_number'       : '1',
+            'proza_address_postoffice_zip'      : '00-661',
+            'proza_address_postoffice_town'     : 'Warszawa',
+            'proza_address_edifice'             : None,
+            'proza_address_room'                : 'p. 301',
+            'proza_address_website'             : 'www.gik.pw.edu.pl',
+            'proza_header_address'              : 'Plac Politechniki 1, p. 301, 00-661 Warszawa, www.gik.pw.edu.pl',
+            'proza_phone_prefix'              : 'tel.',
+            'proza_phone_numbers'             : '(+48) 22 234 72 23',
+            'proza_phone'                     : 'tel. (+48) 22 234 72 23',
+            'proza_faxtel_prefix'             : None,
+            'proza_faxtel_numbers'            : None,
+            'proza_faxtel'                    : None,
+            'proza_email_prefix'              : 'e-mail:',
+            'proza_email_address_localpart'   : 'dziekan',
+            'proza_email_address_domain'      : 'gik.pw.edu.pl',
+            'proza_email_address'             : 'dziekan@gik.pw.edu.pl',
+            'proza_email'                     : 'e-mail: dziekan@gik.pw.edu.pl',
+            'proza_header_contact'                : 'tel. (+48) 22 234 72 23, e-mail: dziekan@gik.pw.edu.pl'
         }
         #
         status = tested.ParsingStatus()
@@ -759,6 +803,9 @@ class Test__try_proza_preamble(unittest.TestCase):
     def test__MEIL__1(self):
         header = \
 """
+                                                                                                         Warszawa, 02.02.2016, 14:08:26
+                                          Protokół zaliczeń (bez egzaminu) 2015 Z/B-1/197
+                                                          Termin zwrotu 02.02.2016
        Nazwa przedmiotu: Advanced Aero Engines Laboratory
        Nr katalogowy: ML.ANS600
        Zakład Silników Lotniczych
@@ -767,12 +814,25 @@ class Test__try_proza_preamble(unittest.TestCase):
 """
         lines = header.splitlines()
         expect = {
+            'proza_preamble_town_and_datetime' : 'Warszawa, 02.02.2016, 14:08:26',
+            'proza_preamble_title'       :  'Protokół zaliczeń (bez egzaminu) 2015 Z/B-1/197',
+            'proza_preamble_return'      :  'Termin zwrotu 02.02.2016',
             'proza_preamble_subj_name'   :  'Nazwa przedmiotu: Advanced Aero Engines Laboratory',
             'proza_preamble_subj_code'   :  'Nr katalogowy: ML.ANS600',
             'proza_preamble_department'  :  'Zakład Silników Lotniczych',
             'proza_preamble_subj_tutor'  :  'Kierownik przedmiotu: dr hab. inż. Natenczas Woyski',
             'proza_preamble_subj_grades' :  "Dopuszczalne oceny: '2,0', '3,0', '3,5', '4,0', '4,5', '5,0'",
             'proza_preamble_subj_cond'   :  "Wszyscy studenci na liście muszą mieć wystawioną ocenę",
+            'proza_town'                 :  'Warszawa',
+            'proza_date'                 :  '02.02.2016',
+            'proza_time'                 :  '14:08:26',
+            'proza_title'                :  'Protokół zaliczeń',
+            'proza_exam'                 :  'bez egzaminu',
+            'proza_semester'             :  '2015 Z',
+            'proza_serie'                :  'B-1',
+            'proza_number'               :  '197',
+            'proza_return_desc'          :  'Termin zwrotu',
+            'proza_return_date'          :  '02.02.2016',
             'proza_subj_name'            :  'Advanced Aero Engines Laboratory',
             'proza_subj_code'            :  'ML.ANS600',
             'proza_subj_tutor'           :  'dr hab. inż. Natenczas Woyski',
@@ -785,13 +845,16 @@ class Test__try_proza_preamble(unittest.TestCase):
         #
         #self.assertIs(status.error, False)
         self.assertIs(status.error_msg, None)
-        self.assertIs(status.current_line, 6)
+        self.assertIs(status.current_line, 9)
         self.maxDiff = None
         self.assertEqual(expect, result)
 
     def test__GiK__1(self):
         header = \
 """
+                                                                                                         Warszawa, 08.02.2014, 13:34:30
+                                              Protokół zaliczeń (egzamin) 2013Z/E-1/118
+                                                         Termin zwrotu 17.02.2014
        Nazwa przedmiotu: Gospodarowanie surowcami mineralnymi
        Nr katalogowy: GP.SMS238
        Katedra Gospodarki Przestrzennej i Nauk o Środowisku Przyrodnicznym
@@ -801,12 +864,25 @@ class Test__try_proza_preamble(unittest.TestCase):
 """
         lines = header.splitlines()
         expect = {
+            'proza_preamble_town_and_datetime' : 'Warszawa, 08.02.2014, 13:34:30',
+            'proza_preamble_title'       :  'Protokół zaliczeń (egzamin) 2013Z/E-1/118',
+            'proza_preamble_return'      :  'Termin zwrotu 17.02.2014',
             'proza_preamble_subj_name'   :  'Nazwa przedmiotu: Gospodarowanie surowcami mineralnymi',
             'proza_preamble_subj_code'   :  'Nr katalogowy: GP.SMS238',
             'proza_preamble_department'  :  'Katedra Gospodarki Przestrzennej i Nauk o Środowisku Przyrodnicznym',
             'proza_preamble_subj_tutor'  :  'Kierownik przedmiotu: dr hab. inż. Natenczas Woyski',
             'proza_preamble_subj_grades' :  "Dopuszczalne oceny: '2,0', '3,0', '3,5', '4,0', '4,5', '5,0'",
             'proza_preamble_subj_cond'   :  "Wszyscy studenci na liście muszą mieć wystawioną ocenę",
+            'proza_town'                 :  'Warszawa',
+            'proza_date'                 :  '08.02.2014',
+            'proza_time'                 :  '13:34:30',
+            'proza_title'                :  'Protokół zaliczeń',
+            'proza_exam'                 :  'egzamin',
+            'proza_semester'             :  '2013Z',
+            'proza_serie'                :  'E-1',
+            'proza_number'               :  '118',
+            'proza_return_desc'          :  'Termin zwrotu',
+            'proza_return_date'          :  '17.02.2014',
             'proza_subj_name'            :  'Gospodarowanie surowcami mineralnymi',
             'proza_subj_code'            :  'GP.SMS238',
             'proza_subj_tutor'           :  'dr hab. inż. Natenczas Woyski',
@@ -819,7 +895,45 @@ class Test__try_proza_preamble(unittest.TestCase):
         #
         #self.assertIs(status.error, False)
         self.assertIs(status.error_msg, None)
-        self.assertIs(status.current_line, 7)
+        self.assertIs(status.current_line, 10)
+        self.maxDiff = None
+        self.assertEqual(expect, result)
+
+class Test__try_proza_page_footer(unittest.TestCase):
+    def test__MEIL__1(self):
+        header = \
+"""
+                                                                                                                   ........................
+                                                                                                                      podpis kierownika
+       Strona 1 z 3                                                   Gospodarowanie surowcami mineralnymi (GP.SMS238). Protokół: 2013Z/E-1/118
+       Wygenerowano z użyciem Verbis Dean's Office, www.verbis.pl
+"""
+        lines = header.splitlines()
+        expect = {
+            'proza_footer_sig_dots'             : '........................',
+            'proza_footer_sig_prompt'           : 'podpis kierownika',
+            'proza_footer_pagination_and_title' : 'Strona 1 z 3                                                   Gospodarowanie surowcami mineralnymi (GP.SMS238). Protokół: 2013Z/E-1/118',
+            'proza_footer_pagination'           : 'Strona 1 z 3',
+            'proza_footer_title'                : 'Gospodarowanie surowcami mineralnymi (GP.SMS238). Protokół: 2013Z/E-1/118',
+            'proza_page_number'                 : '1',
+            'proza_pages_total'                 : '3',
+            'proza_subj_name'                   : 'Gospodarowanie surowcami mineralnymi',
+            'proza_subj_code'                   : 'GP.SMS238',
+            'proza_semester'                    : '2013Z',
+            'proza_serie'                       : 'E-1',
+            'proza_number'                      : '118',
+            'proza_footer_generator'            : "Wygenerowano z użyciem Verbis Dean's Office, www.verbis.pl",
+            'proza_generator'                   : "Verbis Dean's Office, www.verbis.pl",
+            'proza_generator_name'              : "Verbis Dean's Office",
+            'proza_generator_home'              : "www.verbis.pl"
+        }
+        #
+        status = tested.ParsingStatus()
+        result = tested.try_proza_page_footer(status, lines)
+        #
+        #self.assertIs(status.error, False)
+        self.assertIs(status.error_msg, None)
+        self.assertIs(status.current_line, 5)
         self.maxDiff = None
         self.assertEqual(expect, result)
 
