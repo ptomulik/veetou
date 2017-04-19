@@ -801,7 +801,7 @@ class Test__try_proza_page_header(unittest.TestCase):
 
 class Test__try_proza_preamble(unittest.TestCase):
     def test__MEIL__1(self):
-        header = \
+        preamble = \
 """
                                                                                                          Warszawa, 02.02.2016, 14:08:26
                                           Protokół zaliczeń (bez egzaminu) 2015 Z/B-1/197
@@ -812,7 +812,7 @@ class Test__try_proza_preamble(unittest.TestCase):
        Kierownik przedmiotu: dr hab. inż. Natenczas Woyski
        Dopuszczalne oceny: '2,0', '3,0', '3,5', '4,0', '4,5', '5,0'. Wszyscy studenci na liście muszą mieć wystawioną ocenę.
 """
-        lines = header.splitlines()
+        lines = preamble.splitlines()
         expect = {
             'proza_preamble_town_and_datetime' : 'Warszawa, 02.02.2016, 14:08:26',
             'proza_preamble_title'       :  'Protokół zaliczeń (bez egzaminu) 2015 Z/B-1/197',
@@ -843,14 +843,14 @@ class Test__try_proza_preamble(unittest.TestCase):
         status = tested.ParsingStatus()
         result = tested.try_proza_preamble(status, lines)
         #
-        #self.assertIs(status.error, False)
+        self.assertIs(status.error, False)
         self.assertIs(status.error_msg, None)
         self.assertIs(status.current_line, 9)
         self.maxDiff = None
         self.assertEqual(expect, result)
 
     def test__GiK__1(self):
-        header = \
+        preamble = \
 """
                                                                                                          Warszawa, 08.02.2014, 13:34:30
                                               Protokół zaliczeń (egzamin) 2013Z/E-1/118
@@ -862,7 +862,7 @@ class Test__try_proza_preamble(unittest.TestCase):
        Dopuszczalne oceny: '2,0', '3,0', '3,5', '4,0', '4,5', '5,0'
        Wszyscy studenci na liście muszą mieć wystawioną ocenę
 """
-        lines = header.splitlines()
+        lines = preamble.splitlines()
         expect = {
             'proza_preamble_town_and_datetime' : 'Warszawa, 08.02.2014, 13:34:30',
             'proza_preamble_title'       :  'Protokół zaliczeń (egzamin) 2013Z/E-1/118',
@@ -893,7 +893,7 @@ class Test__try_proza_preamble(unittest.TestCase):
         status = tested.ParsingStatus()
         result = tested.try_proza_preamble(status, lines)
         #
-        #self.assertIs(status.error, False)
+        self.assertIs(status.error, False)
         self.assertIs(status.error_msg, None)
         self.assertIs(status.current_line, 10)
         self.maxDiff = None
@@ -901,14 +901,14 @@ class Test__try_proza_preamble(unittest.TestCase):
 
 class Test__try_proza_page_footer(unittest.TestCase):
     def test__MEIL__1(self):
-        header = \
+        footer = \
 """
                                                                                                                    ........................
                                                                                                                       podpis kierownika
        Strona 1 z 3                                                   Gospodarowanie surowcami mineralnymi (GP.SMS238). Protokół: 2013Z/E-1/118
        Wygenerowano z użyciem Verbis Dean's Office, www.verbis.pl
 """
-        lines = header.splitlines()
+        lines = footer.splitlines()
         expect = {
             'proza_footer_sig_dots'             : '........................',
             'proza_footer_sig_prompt'           : 'podpis kierownika',
@@ -931,12 +931,136 @@ class Test__try_proza_page_footer(unittest.TestCase):
         status = tested.ParsingStatus()
         result = tested.try_proza_page_footer(status, lines)
         #
-        #self.assertIs(status.error, False)
+        self.assertIs(status.error, False)
         self.assertIs(status.error_msg, None)
         self.assertIs(status.current_line, 5)
         self.maxDiff = None
         self.assertEqual(expect, result)
 
+class Test__try_proza_table_header(unittest.TestCase):
+    def test__MEiL_1(self):
+        header = \
+"""\
+                                                               Ocena
+        Lp.               Student                 Nr albumu      z            Uwagi
+                                                             przedmiotu
+"""
+        lines = header.splitlines()
+        expect = {
+            r'proza_table_header_0' : 'Ocena',
+            r'proza_table_header_2' : 'Lp.               Student                 Nr albumu      z            Uwagi',
+            r'proza_table_header_3' : 'przedmiotu',
+            r'proza_table_header_subj_grade_fields' : ['proza_subj_grade']
+        }
+        #
+        status = tested.ParsingStatus()
+        result = tested.try_proza_table_header(status, lines)
+        #
+        self.assertIs(status.error, False)
+        self.assertIs(status.error_msg, None)
+        self.assertIs(status.current_line, 3)
+        self.maxDiff = None
+        self.assertEqual(expect, result)
+
+    def test__MEiL_2(self):
+        header = \
+"""\
+                                                            Ocena
+                                                               z
+        Lp.               Student               Nr albumu                    Uwagi
+                                                          przedmiotu
+                                                            P    N
+"""
+        lines = header.splitlines()
+        expect = {
+            r'proza_table_header_0' : 'Ocena',
+            r'proza_table_header_1' : 'z',
+            r'proza_table_header_2' : 'Lp.               Student               Nr albumu                    Uwagi',
+            r'proza_table_header_3' : 'przedmiotu',
+            r'proza_table_header_4' : 'P    N',
+            r'proza_table_header_subj_grade_fields' : ['proza_subj_grade_p', 'proza_subj_grade_n']
+        }
+        #
+        status = tested.ParsingStatus()
+        result = tested.try_proza_table_header(status, lines)
+        #
+        self.assertIs(status.error, False)
+        self.assertIs(status.error_msg, None)
+        self.assertIs(status.current_line, 5)
+        self.maxDiff = None
+        self.assertEqual(expect, result)
+
+    def test__GiK_1(self):
+        header = \
+"""\
+                                                                  Ocena
+        Lp.               Student               Nr albumu                              Uwagi
+                                                           z wykładu  końcowa
+"""
+        lines = header.splitlines()
+        expect = {
+            r'proza_table_header_0' : 'Ocena',
+            r'proza_table_header_2' : 'Lp.               Student               Nr albumu                              Uwagi',
+            r'proza_table_header_3' : 'z wykładu  końcowa',
+            r'proza_table_header_subj_grade_fields' : ['proza_subj_grade_lecture', 'proza_subj_grade_final']
+        }
+        #
+        status = tested.ParsingStatus()
+        result = tested.try_proza_table_header(status, lines)
+        #
+        self.assertIs(status.error, False)
+        self.assertIs(status.error_msg, None)
+        self.assertIs(status.current_line, 3)
+        self.maxDiff = None
+        self.assertEqual(expect, result)
+
+    def test__GiK_2(self):
+        header = \
+"""\
+                                                                       Ocena
+        Lp.               Student               Nr albumu                                         Uwagi
+                                                           z wykładu  z projektu końcowa
+"""
+        lines = header.splitlines()
+        expect = {
+            r'proza_table_header_0' : 'Ocena',
+            r'proza_table_header_2' : 'Lp.               Student               Nr albumu                                         Uwagi',
+            r'proza_table_header_3' : 'z wykładu  z projektu końcowa',
+            r'proza_table_header_subj_grade_fields' : ['proza_subj_grade_lecture', 'proza_subj_grade_project', 'proza_subj_grade_final']
+        }
+        #
+        status = tested.ParsingStatus()
+        result = tested.try_proza_table_header(status, lines)
+        #
+        self.assertIs(status.error, False)
+        self.assertIs(status.error_msg, None)
+        self.assertIs(status.current_line, 3)
+        self.maxDiff = None
+        self.assertEqual(expect, result)
+
+    def test__GiK_3(self):
+        header = \
+"""\
+                                                                  Ocena
+        Lp.               Student               Nr albumu                              Uwagi
+                                                           z projektu końcowa
+"""
+        lines = header.splitlines()
+        expect = {
+            r'proza_table_header_0' : 'Ocena',
+            r'proza_table_header_2' : 'Lp.               Student               Nr albumu                              Uwagi',
+            r'proza_table_header_3' : 'z projektu końcowa',
+            r'proza_table_header_subj_grade_fields' : ['proza_subj_grade_project', 'proza_subj_grade_final']
+        }
+        #
+        status = tested.ParsingStatus()
+        result = tested.try_proza_table_header(status, lines)
+        #
+        self.assertIs(status.error, False)
+        self.assertIs(status.error_msg, None)
+        self.assertIs(status.current_line, 3)
+        self.maxDiff = None
+        self.assertEqual(expect, result)
 
 if __name__ == '__main__':
     unittest.main()

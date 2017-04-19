@@ -1,6 +1,7 @@
 # -*- coding: utf8 -*-
 
 import re
+import itertools
 
 # Rename group names in a regular expressions
 def _rrg(s, **kw):
@@ -235,6 +236,20 @@ _re_proza_footer_generator = \
             _re_proza_generator + \
         r')'
 
+_list_re_proza_table_header = [
+    r'(?P<proza_table_header_0>Ocena)',
+    r'(?P<proza_table_header_1>z)',
+    r'(?P<proza_table_header_2>Lp. {3,}Student {3,}Nr {1,2}albumu(?: {3,}z)? {3,}Uwagi)',
+    r'(?P<proza_table_header_3>' + r'|'.join([
+        r'(?:[Kk]ońcowa)',
+        r'(?:[zZ] [Ww]ykładu(?: +[Kk]ońcowa)?)',
+        r'(?:[zZ] [Pp]rojektu(?: +[Kk]ońcowa)?)',
+        r'(?:[zZ] [Ww]ykładu +[Zz] [Pp]rojektu(?: +[Kk]ońcowa)?)',
+        r'(?:[zZ] [Pp]rojektu +[Zz] [Ww]ykładu(?: +[Kk]ońcowa)?)',
+        r'(?:(?:[zZ] )?[Pp]rzedmiotu)'
+    ]) + r')',
+    r'(?P<proza_table_header_4>P {3,}N)'
+]
 
 _dict_re_proza_header = {
     r'proza_address_street'             : _re_proza_address_street,
@@ -344,6 +359,13 @@ class ParsingStatus(object):
         self.error = kw.get('error', False)
         self.error_msg = kw.get('error_msg', None)
 
+def try_regex_line(regex, line):
+    result = dict()
+    m = re.match(r'^ *' + regex + r' *$', line)
+    if m:
+        result = m.groupdict().copy()
+    return result
+
 def try_predefined_phrase_line(name, line):
     result = dict()
     for phrase in _predefined_phrases[name]:
@@ -354,11 +376,7 @@ def try_predefined_phrase_line(name, line):
     return result
 
 def try_predefined_regex_line(name, line):
-    result = dict()
-    m = re.match(r'^ *' + _dict_re[name] + ' *$', line)
-    if m:
-        result = m.groupdict().copy()
-    return result
+    return try_regex_line(_dict_re[name], line)
 
 def try_university_line(line):
     return try_predefined_phrase_line('university', line)
@@ -431,13 +449,14 @@ def try_lines_in_sequence(status, lines, **kw):
     optional = kw.get('optional', [])
     parser_functions = kw.get('parser_functions', [])
     parser_messages = kw.get('parser_messages', [])
+    skip_empty_lines = kw.get('skip_empty_lines', True)
     parser_index = 0
     result = dict()
     for line in lines:
         done = False
         while (not done) and (parser_index < len(parser_functions)):
             # try consecutive parsers
-            if re.match(r'^\s*$', line):
+            if skip_empty_lines and re.match(r'^\s*$', line):
                 status.current_line += 1
                 break
             r = parser_functions[parser_index](line)
@@ -516,6 +535,48 @@ def try_proza_page_footer(status, lines, **kw):
     kw['optional'] = [ ]
     return try_lines_in_sequence(status, lines, **kw)
 
+def try_proza_table_header(status, lines, **kw):
+    kw['parser_functions'] = [
+        lambda line : try_regex_line(_list_re_proza_table_header[0],line), # 0
+        lambda line : try_regex_line(_list_re_proza_table_header[1],line), # 1
+        lambda line : try_regex_line(_list_re_proza_table_header[2],line), # 2
+        lambda line : try_regex_line(_list_re_proza_table_header[3],line), # 3
+        lambda line : try_regex_line(_list_re_proza_table_header[4],line)  # 4
+    ]
+    kw['parser_messages'] = [
+        'table header first line',  # 0
+        'table header second line', # 1
+        'table header third line',  # 2
+        'table header fourth line'  # 3
+        'table header fifth line'   # 4
+    ]
+    kw['optional'] = [ 1, 4 ]
+    kw['skip_empty_lines'] = False
+    result = try_lines_in_sequence(status, lines, **kw)
+    if result:
+        extra = dict()
+        fieldmix = [
+            (r'[Zz] [Pp]rojektu',           'proza_subj_grade_project'),
+            (r'[Zz] [Ww]ykładu',            'proza_subj_grade_lecture'),
+            (r'[Kk]ońcowa',                 'proza_subj_grade_final'),
+            (r'(?:[Zz] )?[Pp]rzedmiotu',    'proza_subj_grade'),
+            (r'P',                          'proza_subj_grade_p'),
+            (r'N',                          'proza_subj_grade_n')
+        ]
+        # try to elaborate what kind of partial grades are in the table
+        for i in (4,3):
+            hdr = result.get('proza_table_header_%d' % i)
+            if hdr:
+                fields = {}
+                for pair in fieldmix:
+                    m = re.search(r'\b' + pair[0] + r'\b', hdr)
+                    if m:
+                        fields[m.start()] = pair[1]
+                if fields:
+                    extra['proza_table_header_subj_grade_fields'] = [fields[k] for k in sorted(fields)]
+                    break
+        result.update(extra)
+    return result
 
 
 # Local Variables:
