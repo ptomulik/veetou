@@ -1062,6 +1062,30 @@ class Test__try_proza_table_header(unittest.TestCase):
         self.maxDiff = None
         self.assertEqual(expect, result)
 
+    def test__GiK_4(self):
+        header = \
+"""\
+                                                                       Ocena
+        Lp.               Student               Nr albumu                                         Uwagi
+                                                           z wykładu  z ćwiczeń  końcowa
+"""
+        lines = header.splitlines()
+        expect = {
+            r'proza_table_header_0' : 'Ocena',
+            r'proza_table_header_2' : 'Lp.               Student               Nr albumu                                         Uwagi',
+            r'proza_table_header_3' : 'z wykładu  z ćwiczeń  końcowa',
+            r'proza_table_header_subj_grade_fields' : ['proza_subj_grade_lecture', 'proza_subj_grade_class', 'proza_subj_grade_final']
+        }
+        #
+        status = tested.ParsingStatus()
+        result = tested.try_proza_table_header(status, lines)
+        #
+        self.assertIs(status.error, False)
+        self.assertIs(status.error_msg, None)
+        self.assertIs(status.current_line, 3)
+        self.maxDiff = None
+        self.assertEqual(expect, result)
+
 if __name__ == '__main__':
     unittest.main()
 

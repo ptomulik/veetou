@@ -236,19 +236,40 @@ _re_proza_footer_generator = \
             _re_proza_generator + \
         r')'
 
+_list_re_proza_table_header_3_pieces = [
+    r'[Zz] [Pp]rojektu',
+    r'[Zz] [Ww]ykładu',
+    r'[Zz] [Ćć]wiczeń',
+    r'[Kk]ońcowa',
+    r'(?:[Zz] )?[Pp]rzedmiotu'
+]
+
+_list_re_proza_table_header_4_pieces = [
+    r'P',
+    r'N'
+]
+
+def _make_re_from_permuted_pieces(pieces, **kw):
+    alternatives = []
+    nmin = kw.get('nmin', 1)
+    nmax = kw.get('nmax', len(pieces))
+    space = kw.get('space', r' +')
+    op = kw.get('op', r'|')
+    for n in range(nmin,nmax+1):
+        for perm in itertools.permutations(pieces, n):
+            alternatives.append(r'(?:' + space.join(perm) + ')')
+    return op.join(alternatives)
+
+_re_proza_table_header_3 = _make_re_from_permuted_pieces(_list_re_proza_table_header_3_pieces)
+_re_proza_table_header_4 = _make_re_from_permuted_pieces(_list_re_proza_table_header_4_pieces, nmin = 2, space = r' {3,}')
+
+
 _list_re_proza_table_header = [
     r'(?P<proza_table_header_0>Ocena)',
     r'(?P<proza_table_header_1>z)',
     r'(?P<proza_table_header_2>Lp. {3,}Student {3,}Nr {1,2}albumu(?: {3,}z)? {3,}Uwagi)',
-    r'(?P<proza_table_header_3>' + r'|'.join([
-        r'(?:[Kk]ońcowa)',
-        r'(?:[zZ] [Ww]ykładu(?: +[Kk]ońcowa)?)',
-        r'(?:[zZ] [Pp]rojektu(?: +[Kk]ońcowa)?)',
-        r'(?:[zZ] [Ww]ykładu +[Zz] [Pp]rojektu(?: +[Kk]ońcowa)?)',
-        r'(?:[zZ] [Pp]rojektu +[Zz] [Ww]ykładu(?: +[Kk]ońcowa)?)',
-        r'(?:(?:[zZ] )?[Pp]rzedmiotu)'
-    ]) + r')',
-    r'(?P<proza_table_header_4>P {3,}N)'
+    r'(?P<proza_table_header_3>' + _re_proza_table_header_3 + r')',
+    r'(?P<proza_table_header_4>' + _re_proza_table_header_4 + r')'
 ]
 
 _dict_re_proza_header = {
@@ -558,6 +579,7 @@ def try_proza_table_header(status, lines, **kw):
         fieldmix = [
             (r'[Zz] [Pp]rojektu',           'proza_subj_grade_project'),
             (r'[Zz] [Ww]ykładu',            'proza_subj_grade_lecture'),
+            (r'[Zz] [Ćć]wiczeń',            'proza_subj_grade_class'),
             (r'[Kk]ońcowa',                 'proza_subj_grade_final'),
             (r'(?:[Zz] )?[Pp]rzedmiotu',    'proza_subj_grade'),
             (r'P',                          'proza_subj_grade_p'),
