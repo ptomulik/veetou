@@ -2,6 +2,7 @@
 
 import re
 import itertools
+import sys
 
 # Rename group names in a regular expressions
 def _rrg(s, **kw):
@@ -271,6 +272,24 @@ _list_re_proza_table_header = [
     r'(?P<proza_table_header_3>' + _re_proza_table_header_3 + r')',
     r'(?P<proza_table_header_4>' + _re_proza_table_header_4 + r')'
 ]
+
+_re_proza_first_name = \
+        r'(?P<proza_first_name>(?:[^\W\d_]|-)+(?: {1,2}(?:[^\W\d_]|-)+)*)'
+
+_re_proza_last_name = \
+        r'(?P<proza_last_name>(?:[^\W\d_]|-)+)'
+
+_re_proza_student_name = \
+        r'(?P<proza_student_name>' + _re_proza_last_name + r' {1,2}' + \
+        _re_proza_first_name + r')'
+
+_re_proza_student_id = r'(?P<proza_student_id>(?:[A-Z]-)?\d+)'
+
+
+_re_proza_table_row_order = r'(?P<proza_table_row_order>(?P<proza_order_number>\d+)\.)'
+_re_proza_table_row_student_name = r'(?P<proza_table_row_student_name>' + _re_proza_student_name + r')'
+_re_proza_table_row_student_id = r'(?P<proza_table_row_student_id>' + _re_proza_student_id + r')'
+_re_proza_table_row_remarks = r'(?P<proza_table_row_remarks>(?:\S+)(?: {1,2}\S+)*)'
 
 _dict_re_proza_header = {
     r'proza_address_street'             : _re_proza_address_street,
@@ -599,6 +618,129 @@ def try_proza_table_header(status, lines, **kw):
                     break
         result.update(extra)
     return result
+
+def proza_find_table_geometry(lines, **kw):
+    grade_cols_count = kw.get('grade_cols_count', 1)
+    _re_grade = r'(?P<proza_subj_grade>' + _re_proza_subj_grade + r')'
+    ncols = 4 + grade_cols_count
+    geom = ncols * [ [sys.maxsize, -(sys.maxsize-1)] ]
+    geom = [ x.copy() for x in geom ]
+    regexs = [
+        _re_proza_table_row_order,
+        _re_proza_table_row_student_name,
+        _re_proza_table_row_student_id
+    ] + (grade_cols_count * [ _re_grade ]) + [
+        _re_proza_table_row_remarks
+    ]
+    groups = [
+        'proza_table_row_order',
+        'proza_table_row_student_name',
+        'proza_table_row_student_id',
+    ] + (grade_cols_count * [ 'proza_subj_grade' ]) + [
+        'proza_table_row_remarks'
+    ]
+    lenmax = max([len(x) for x in lines])
+    for line in lines:
+        lm = 0
+        if re.match(r'^ *$', line):
+            break
+        for i in range(0,len(regexs)):
+            m = re.match(r'^ *' + regexs[i], line[lm:])
+            if m:
+                s = lm + m.start(groups[i])
+                e = lm + m.end(groups[i])
+                if not ((geom[i][0]< geom[i][1]) and (s > geom[i][1])):
+                    if s < geom[i][0]: geom[i][0] = s
+                    if e > geom[i][1]: geom[i][1] = e
+            lm = max(geom[i][1], lm)
+
+    for i in range(0, ncols):
+        if geom[i][0] > geom[i][1]:
+            geom[i][0] = lenmax
+            geom[i][1] = lenmax
+        if geom[i][0] >= lenmax: geom[i][0] = lenmax
+        if geom[i][1] >= lenmax: geom[i][1] = lenmax
+    return geom
+
+def proza_split_table_columns(lines, geom):
+    result = []
+    for line in lines:
+        columns = []
+        for g in geom:
+            columns.append(line[g[0]:g[1]].strip())
+        result.append(columns)
+    return result
+
+def parse_proza_table_rows(status, lines, grade_fields, **kw):
+    grade_cols_count = len(grade_fields)
+    kw['grade_cols_count'] = grade_cols_count
+
+    ncols = 4 + grade_cols_count
+
+    records = []
+    regexs = [
+        _re_proza_table_row_order,
+        _re_proza_table_row_student_name,
+        _re_proza_table_row_student_id
+    ] + [ r'(?P<' +  f + r'>' + _re_proza_subj_grade + r')' for f in grade_fields ]  + [
+        _re_proza_table_row_remarks
+    ]
+
+    required = [
+        True,
+        True,
+        True,
+    ] +  grade_cols_count * [ False ]  + [
+        False
+    ]
+
+    geom = proza_find_table_geometry(lines, **kw)
+    rows = proza_split_table_columns(lines, geom)
+    row = None
+    for r in rows:
+        if r[0]:
+            if row:
+                rec = dict()
+                for i in range(0, ncols):
+                    if required[i]:
+                        regex = regexs[i]
+                    else:
+                        regex = r'(?:' + regexs[i] + r')?'
+                    m = re.match(regex, row[i])
+                    if not m:
+                        status.error = True
+                        status.error_msg = 'expected: table column %d, got: %r' % (i+1, r[i])
+                        return records
+                    rec.update(m.groupdict())
+                records.append(rec)
+            row = r[:]
+        else:
+            if not row:
+                status.error = True
+                status.error_msg = 'expected: table row starting with #., got %r' % r
+                return records
+            for i in range(1, ncols):
+                if r[i]:
+                    if row[i]:
+                        row[i] = r' '.join([row[i], r[i]])
+                    else:
+                        row[i] = r[i]
+        status.current_line += 1
+    if row:
+        rec = dict()
+        for i in range(0, ncols):
+            if required[i]:
+                regex = regexs[i]
+            else:
+                regex = r'(?:' + regexs[i] + r')?'
+            m = re.match(regex, row[i])
+            if not m:
+                status.error = True
+                status.error_msg = 'expected: table column %d, got: %r' % (i+1, r[i])
+                return records
+            rec.update(m.groupdict())
+        records.append(rec)
+    return records
 
 
 # Local Variables:

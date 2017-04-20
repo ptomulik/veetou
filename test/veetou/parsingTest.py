@@ -1086,6 +1086,786 @@ class Test__try_proza_table_header(unittest.TestCase):
         self.maxDiff = None
         self.assertEqual(expect, result)
 
+class Test__proza_find_table_geometry(unittest.TestCase):
+    def test__GiK_1(self):
+        self.maxDiff = None
+        lines = [
+#000000000011111111112222222222333333333344444444445555555555666666666677777777778888888888
+#012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+"          1. Keczetna Szamot Nafets              256701       3,5        5,0       4,0",
+"          2. Myżob Anilorak                      254104       3,0        5,0       3,5",
+"          3. Akslowogułd Atarzogałm              256127       4,5        3,5       4,5",
+"          4. Tifołog Awe                          256110      3,0        4,5       3,5",
+"          5. Aksńeimak Ailatan Atarzogłam         256421      3,5        4,5       4,0",
+"         12. Kaiwodw Anilewe Aneladgam           222250       3,0        4,5       3,5",
+"         13. Kurotkiw Annaoj Aniluap              259288      3,5        5,0       4,0"
+        ]
+        geom = tested.proza_find_table_geometry(lines, grade_cols_count = 3)
+        expect = [[9, 12], [13, 41], [49, 56], [62, 65], [73, 76], [83, 86], [86, 86]]
+        self.assertEqual(geom, expect)
+        split = tested.proza_split_table_columns(lines, geom)
+        split_expect = [
+            ['1.',  'Keczetna Szamot Nafets',       '256701',  '3,5', '5,0', '4,0', ''],
+            ['2.',  'Myżob Anilorak',               '254104',  '3,0', '5,0', '3,5', ''],
+            ['3.',  'Akslowogułd Atarzogałm',       '256127',  '4,5', '3,5', '4,5', ''],
+            ['4.',  'Tifołog Awe',                  '256110', '3,0', '4,5', '3,5', ''],
+            ['5.',  'Aksńeimak Ailatan Atarzogłam', '256421', '3,5', '4,5', '4,0', ''],
+            ['12.', 'Kaiwodw Anilewe Aneladgam',    '222250',  '3,0', '4,5', '3,5', ''],
+            ['13.', 'Kurotkiw Annaoj Aniluap',      '259288', '3,5', '5,0', '4,0', '']
+        ]
+        self.assertEqual(split, split_expect)
+
+    def test__GiK_2(self):
+        lines = [
+#000000000011111111112222222222333333333344444444445555555555666666666677777777778888888888
+#012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+"          1. Kasab Aglo                          264236       2,0        2,0",
+"          2. Keb Szotrab                         264437       4,0        4,0",
+"         24. Akszurg Aneladgam                   264876       3,0        3,0",
+"         25. Lezg Atram                          264478       2,0        2,0",
+"         26. Aksńawi Anilorak                    264281       2,0        2,0"
+        ]
+        geom = tested.proza_find_table_geometry(lines, grade_cols_count = 2)
+        expect = [[9, 12], [13, 30], [49, 55], [62, 65], [73, 76], [76, 76]]
+        self.assertEqual(geom, expect)
+        split = tested.proza_split_table_columns(lines, geom)
+        split_expect = [
+            ['1.',  'Kasab Aglo',        '264236', '2,0', '2,0', ''],
+            ['2.',  'Keb Szotrab',       '264437', '4,0', '4,0', ''],
+            ['24.', 'Akszurg Aneladgam', '264876', '3,0', '3,0', ''],
+            ['25.', 'Lezg Atram',        '264478', '2,0', '2,0', ''],
+            ['26.', 'Aksńawi Anilorak',  '264281', '2,0', '2,0', '']
+        ]
+        self.assertEqual(split, split_expect)
+
+    def test__MEiL_1(self):
+        lines = [
+#000000000011111111112222222222333333333344444444445555555555666666666677777777778888888888
+#012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+"          1. Kishuka Bharadwaj                    281566   2.0",
+"          2. Sulegna Ikswonazyrzk Nathalie       287489    3.0",
+"         15. Nav-Ekebneroh Echevarria Franz      284331    5.0",
+"             Alexander",
+"         16. Velisav Aili                        252325    4.0",
+"         17. S V RDATKDTRSCGRDFA                 275238    3.0",
+"             Shaguwnxfdj",
+"         18. Namaz Raamma                        285132    3.0"
+        ]
+        geom = tested.proza_find_table_geometry(lines, grade_cols_count = 2)
+        expect = [[9, 12], [13, 43], [49, 56], [59, 62], [62, 62], [62, 62]]
+        self.assertEqual(geom, expect)
+        split = tested.proza_split_table_columns(lines, geom)
+        split_expect = [
+            ['1.',  'Kishuka Bharadwaj',                   '281566',    '2.0', '', ''],
+            ['2.',  'Sulegna Ikswonazyrzk Nathalie',       '287489',    '3.0', '', ''],
+            ['15.', 'Nav-Ekebneroh Echevarria Franz',      '284331',    '5.0', '', ''],
+            ['',    'Alexander',                           '',          '',    '', ''],
+            ['16.', 'Velisav Aili',                        '252325',    '4.0', '', ''],
+            ['17.', 'S V RDATKDTRSCGRDFA',                 '275238',    '3.0', '', ''],
+            ['',    'Shaguwnxfdj',                         '',          '',    '', ''],
+            ['18.', 'Namaz Raamma',                        '285132',    '3.0', '', '']
+        ]
+        self.assertEqual(split, split_expect)
+
+    def test__MEiL_2(self):
+        self.maxDiff = None
+        lines = [
+#0000000000111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999
+#0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+"          1. Kishuka Bharadwaj                    281566   2.0",
+"          2. Sulegna Ikswonazyrzk Nathalie       287489    3.0",
+"         15. Nav-Ekebneroh Echevarria Franz      284331    5.0          I do have some remarks",
+"             Alexander",
+"         16. Velisav Aili                        252325          4.0",
+"         17. S V RDATKDTRSCGRDFA                 275238    3.0",
+"             Shaguwnxfdj                                               Other remarks",
+"         18. Namaz Raamma                        285132    3.0   3.5"
+        ]
+        geom = tested.proza_find_table_geometry(lines, grade_cols_count = 2)
+        expect = [[9, 12], [13, 43], [49, 56], [59, 62], [65, 68], [71, 94]]
+        self.assertEqual(geom, expect)
+        split = tested.proza_split_table_columns(lines, geom)
+        split_expect = [
+            ['1.',  'Kishuka Bharadwaj',                   '281566',   '2.0',  '',    ''],
+            ['2.' , 'Sulegna Ikswonazyrzk Nathalie',       '287489',    '3.0', '',    ''],
+            ['15.', 'Nav-Ekebneroh Echevarria Franz',      '284331',    '5.0', '',    'I do have some remarks'],
+            ['',    'Alexander'                     ,      '',          '',    '',    ''],
+            ['16.', 'Velisav Aili',                        '252325',    '',    '4.0', ''],
+            ['17.', 'S V RDATKDTRSCGRDFA',                 '275238',    '3.0', '',    ''],
+            ['',    'Shaguwnxfdj',                         '',          '',    '',    'Other remarks'],
+            ['18.', 'Namaz Raamma',                        '285132',    '3.0', '3.5', '']
+        ]
+        self.assertEqual(split, split_expect)
+
+    def test__MEiL_3(self):
+        self.maxDiff = None
+        lines = [
+#0000000000111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999
+#0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+"          1. LAWARGA Mahbush                       252345",
+"         11. ISEDIPOG Alab Iluram Anhsirn          248092",
+"             Vaday",
+"         12. Hagwsedfx Iilotana                    K-3589",
+"         23. MANRXAQA REVSAGWZCDF Aynag             5227",
+"             Dasarp",
+"         31. Cziworteip Fotszyrzk Trebor           244151",
+"         32. Sazalp Lanreb Rasec Otsugua           283329",
+        ]
+        geom = tested.proza_find_table_geometry(lines, grade_cols_count = 1)
+        expect = [[9, 12], [13, 41], [51, 57], [57, 57], [57, 57]]
+        self.assertEqual(geom, expect)
+        split = tested.proza_split_table_columns(lines, geom)
+        split_expect = [
+            [ '1.',  'LAWARGA Mahbush',              '252345', '', '' ],
+            [ '11.', 'ISEDIPOG Alab Iluram Anhsirn', '248092', '', '' ],
+            [ '',    'Vaday',                        '',       '', '' ],
+            [ '12.', 'Hagwsedfx Iilotana',           'K-3589', '', '' ],
+            [ '23.', 'MANRXAQA REVSAGWZCDF Aynag',   '5227',   '', '' ],
+            [ '',    'Dasarp',                       '',       '', '' ],
+            [ '31.', 'Cziworteip Fotszyrzk Trebor',  '244151', '', '' ],
+            [ '32.', 'Sazalp Lanreb Rasec Otsugua',  '283329', '', '' ]
+        ]
+        self.assertEqual(split, split_expect)
+
+    def test__MEiL_4(self):
+        self.maxDiff = None
+        lines = [
+#0000000000111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999
+#0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+"          1. LAWARGA Mahbush                       252345",
+"         11. ISEDIPOG Alab Iluram Anhsirn          248092",
+"             Vaday",
+"         12. Hagwsedfx Iilotana                    K-3589",
+"         23. MANRXAQA REVSAGWZCDF Aynag             5227",
+"             Dasarp",
+"         31. Cziworteip Fotszyrzk Trebor           244151",
+"         32. Sazalp Lanreb Rasec Otsugua           283329",
+        ]
+        geom = tested.proza_find_table_geometry(lines, grade_cols_count = 2)
+        expect = [[9, 12], [13, 41], [51, 57], [57, 57], [57, 57], [57, 57]]
+        self.assertEqual(geom, expect)
+        split = tested.proza_split_table_columns(lines, geom)
+        split_expect = [
+            [ '1.',  'LAWARGA Mahbush',              '252345', '', '', '' ],
+            [ '11.', 'ISEDIPOG Alab Iluram Anhsirn', '248092', '', '', '' ],
+            [ '',    'Vaday',                        '',       '', '', '' ],
+            [ '12.', 'Hagwsedfx Iilotana',           'K-3589', '', '', '' ],
+            [ '23.', 'MANRXAQA REVSAGWZCDF Aynag',   '5227',   '', '', '' ],
+            [ '',    'Dasarp',                       '',       '', '', '' ],
+            [ '31.', 'Cziworteip Fotszyrzk Trebor',  '244151', '', '', '' ],
+            [ '32.', 'Sazalp Lanreb Rasec Otsugua',  '283329', '', '', '' ]
+        ]
+        self.assertEqual(split, split_expect)
+
+class Test__parse_proza_table_rows(unittest.TestCase):
+    def test__GiK_1(self):
+        self.maxDiff = None
+        lines = [
+#000000000011111111112222222222333333333344444444445555555555666666666677777777778888888888
+#012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+"          1. Keczetna Szamot Nafets              256701       3,5        5,0       4,0",
+"          2. Myżob Anilorak                      254104       3,0        5,0       3,5",
+"          3. Akslowogułd Atarzogałm              256127       4,5        3,5       4,5",
+"          4. Tifołog Awe                          256110      3,0        4,5       3,5",
+"          5. Aksńeimak Ailatan Atarzogłam         256421      3,5        4,5       4,0",
+"         12. Kaiwodw Anilewe Aneladgam           222250       3,0        4,5       3,5",
+"         13. Kurotkiw Annaoj Aniluap              259288      3,5        5,0       4,0"
+        ]
+        grades  = ['proza_subj_grade_lecture', 'proza_subj_grade_project', 'proza_subj_grade_final']
+        expect = [
+            {
+              'proza_table_row_order'           : '1.',
+              'proza_order_number'              : '1',
+              'proza_table_row_student_name'    : 'Keczetna Szamot Nafets',
+              'proza_student_name'              : 'Keczetna Szamot Nafets',
+              'proza_last_name'                 : 'Keczetna',
+              'proza_first_name'                : 'Szamot Nafets',
+              'proza_table_row_student_id'      : '256701',
+              'proza_student_id'                : '256701',
+              'proza_subj_grade_lecture'        : '3,5',
+              'proza_subj_grade_project'        : '5,0',
+              'proza_subj_grade_final'          : '4,0',
+              'proza_table_row_remarks'         : None
+            },
+            {
+              'proza_table_row_order'           : '2.',
+              'proza_order_number'              : '2',
+              'proza_table_row_student_name'    : 'Myżob Anilorak',
+              'proza_student_name'              : 'Myżob Anilorak',
+              'proza_last_name'                 : 'Myżob',
+              'proza_first_name'                : 'Anilorak',
+              'proza_table_row_student_id'      : '254104',
+              'proza_student_id'                : '254104',
+              'proza_subj_grade_lecture'        : '3,0',
+              'proza_subj_grade_project'        : '5,0',
+              'proza_subj_grade_final'          : '3,5',
+              'proza_table_row_remarks'         : None
+            },
+            {
+              'proza_table_row_order'           : '3.',
+              'proza_order_number'              : '3',
+              'proza_table_row_student_name'    : 'Akslowogułd Atarzogałm',
+              'proza_student_name'              : 'Akslowogułd Atarzogałm',
+              'proza_last_name'                 : 'Akslowogułd',
+              'proza_first_name'                : 'Atarzogałm',
+              'proza_table_row_student_id'      : '256127',
+              'proza_student_id'                : '256127',
+              'proza_subj_grade_lecture'        : '4,5',
+              'proza_subj_grade_project'        : '3,5',
+              'proza_subj_grade_final'          : '4,5',
+              'proza_table_row_remarks'         : None
+            },
+            {
+              'proza_table_row_order'           : '4.',
+              'proza_order_number'              : '4',
+              'proza_table_row_student_name'    : 'Tifołog Awe',
+              'proza_student_name'              : 'Tifołog Awe',
+              'proza_last_name'                 : 'Tifołog',
+              'proza_first_name'                : 'Awe',
+              'proza_table_row_student_id'      : '256110',
+              'proza_student_id'                : '256110',
+              'proza_subj_grade_lecture'        : '3,0',
+              'proza_subj_grade_project'        : '4,5',
+              'proza_subj_grade_final'          : '3,5',
+              'proza_table_row_remarks'         : None
+            },
+            {
+              'proza_table_row_order'           : '5.',
+              'proza_order_number'              : '5',
+              'proza_table_row_student_name'    : 'Aksńeimak Ailatan Atarzogłam',
+              'proza_student_name'              : 'Aksńeimak Ailatan Atarzogłam',
+              'proza_last_name'                 : 'Aksńeimak',
+              'proza_first_name'                : 'Ailatan Atarzogłam',
+              'proza_table_row_student_id'      : '256421',
+              'proza_student_id'                : '256421',
+              'proza_subj_grade_lecture'        : '3,5',
+              'proza_subj_grade_project'        : '4,5',
+              'proza_subj_grade_final'          : '4,0',
+              'proza_table_row_remarks'         : None
+            },
+            {
+              'proza_table_row_order'           : '12.',
+              'proza_order_number'              : '12',
+              'proza_table_row_student_name'    : 'Kaiwodw Anilewe Aneladgam',
+              'proza_student_name'              : 'Kaiwodw Anilewe Aneladgam',
+              'proza_last_name'                 : 'Kaiwodw',
+              'proza_first_name'                : 'Anilewe Aneladgam',
+              'proza_table_row_student_id'      : '222250',
+              'proza_student_id'                : '222250',
+              'proza_subj_grade_lecture'        : '3,0',
+              'proza_subj_grade_project'        : '4,5',
+              'proza_subj_grade_final'          : '3,5',
+              'proza_table_row_remarks'         : None
+            },
+            {
+              'proza_table_row_order'           : '13.',
+              'proza_order_number'              : '13',
+              'proza_table_row_student_name'    : 'Kurotkiw Annaoj Aniluap',
+              'proza_student_name'              : 'Kurotkiw Annaoj Aniluap',
+              'proza_last_name'                 : 'Kurotkiw',
+              'proza_first_name'                : 'Annaoj Aniluap',
+              'proza_table_row_student_id'      : '259288',
+              'proza_student_id'                : '259288',
+              'proza_subj_grade_lecture'        : '3,5',
+              'proza_subj_grade_project'        : '5,0',
+              'proza_subj_grade_final'          : '4,0',
+              'proza_table_row_remarks'         : None
+            }
+        ]
+        status = tested.ParsingStatus()
+        records = tested.parse_proza_table_rows(status, lines, grades)
+        self.assertEqual(records, expect)
+        self.assertIs(status.error, False)
+        self.assertIs(status.error_msg, None)
+        self.assertEqual(status.current_line, 7)
+
+    def test__GiK_2(self):
+        lines = [
+#000000000011111111112222222222333333333344444444445555555555666666666677777777778888888888
+#012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+"          1. Kasab Aglo                          264236       2,0        2,0",
+"          2. Keb Szotrab                         264437       4,0        4,0",
+"         24. Akszurg Aneladgam                   264876       3,0        3,0",
+"         25. Lezg Atram                          264478       2,0        2,0",
+"         26. Aksńawi Anilorak                    264281       2,0        2,0"
+        ]
+        grades  = ['proza_subj_grade_lecture', 'proza_subj_grade_final']
+        expect = [
+            {
+              'proza_table_row_order'           : '1.',
+              'proza_order_number'              : '1',
+              'proza_table_row_student_name'    : 'Kasab Aglo',
+              'proza_student_name'              : 'Kasab Aglo',
+              'proza_last_name'                 : 'Kasab',
+              'proza_first_name'                : 'Aglo',
+              'proza_table_row_student_id'      : '264236',
+              'proza_student_id'                : '264236',
+              'proza_subj_grade_lecture'        : '2,0',
+              'proza_subj_grade_final'          : '2,0',
+              'proza_table_row_remarks'         : None
+            },
+            {
+              'proza_table_row_order'           : '2.',
+              'proza_order_number'              : '2',
+              'proza_table_row_student_name'    : 'Keb Szotrab',
+              'proza_student_name'              : 'Keb Szotrab',
+              'proza_last_name'                 : 'Keb',
+              'proza_first_name'                : 'Szotrab',
+              'proza_table_row_student_id'      : '264437',
+              'proza_student_id'                : '264437',
+              'proza_subj_grade_lecture'        : '4,0',
+              'proza_subj_grade_final'          : '4,0',
+              'proza_table_row_remarks'         : None
+            },
+            {
+              'proza_table_row_order'           : '24.',
+              'proza_order_number'              : '24',
+              'proza_table_row_student_name'    : 'Akszurg Aneladgam',
+              'proza_student_name'              : 'Akszurg Aneladgam',
+              'proza_last_name'                 : 'Akszurg',
+              'proza_first_name'                : 'Aneladgam',
+              'proza_table_row_student_id'      : '264876',
+              'proza_student_id'                : '264876',
+              'proza_subj_grade_lecture'        : '3,0',
+              'proza_subj_grade_final'          : '3,0',
+              'proza_table_row_remarks'         : None
+            },
+            {
+              'proza_table_row_order'           : '25.',
+              'proza_order_number'              : '25',
+              'proza_table_row_student_name'    : 'Lezg Atram',
+              'proza_student_name'              : 'Lezg Atram',
+              'proza_last_name'                 : 'Lezg',
+              'proza_first_name'                : 'Atram',
+              'proza_table_row_student_id'      : '264478',
+              'proza_student_id'                : '264478',
+              'proza_subj_grade_lecture'        : '2,0',
+              'proza_subj_grade_final'          : '2,0',
+              'proza_table_row_remarks'         : None
+            },
+            {
+              'proza_table_row_order'           : '26.',
+              'proza_order_number'              : '26',
+              'proza_table_row_student_name'    : 'Aksńawi Anilorak',
+              'proza_student_name'              : 'Aksńawi Anilorak',
+              'proza_last_name'                 : 'Aksńawi',
+              'proza_first_name'                : 'Anilorak',
+              'proza_table_row_student_id'      : '264281',
+              'proza_student_id'                : '264281',
+              'proza_subj_grade_lecture'        : '2,0',
+              'proza_subj_grade_final'          : '2,0',
+              'proza_table_row_remarks'         : None
+            },
+        ]
+        status = tested.ParsingStatus()
+        records = tested.parse_proza_table_rows(status, lines, grades)
+        self.assertEqual(records, expect)
+        self.assertIs(status.error, False)
+        self.assertIs(status.error_msg, None)
+        self.assertEqual(status.current_line, 5)
+
+    def test__MEiL_1(self):
+        self.maxDiff = None
+        lines = [
+#000000000011111111112222222222333333333344444444445555555555666666666677777777778888888888
+#012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+"          1. Kishuka Bharadwaj                    281566   2.0",
+"          2. Sulegna Ikswonazyrzk Nathalie       287489    3.0",
+"         15. Nav-Ekebneroh Echevarria Franz      284331    5.0",
+"             Alexander",
+"         16. Velisav Aili                        252325    4.0",
+"         17. S V RDATKDTRSCGRDFA                 275238    3.0",
+"             Shaguwnxfdj",
+"         18. Namaz Raamma                        285132    3.0"
+        ]
+        grades  = ['proza_subj_grade_p', 'proza_subj_grade_n']
+        expect = [
+            {
+              'proza_table_row_order'           : '1.',
+              'proza_order_number'              : '1',
+              'proza_table_row_student_name'    : 'Kishuka Bharadwaj',
+              'proza_student_name'              : 'Kishuka Bharadwaj',
+              'proza_last_name'                 : 'Kishuka',
+              'proza_first_name'                : 'Bharadwaj',
+              'proza_table_row_student_id'      : '281566',
+              'proza_student_id'                : '281566',
+              'proza_subj_grade_p'              : '2.0',
+              'proza_subj_grade_n'              : None,
+              'proza_table_row_remarks'         : None
+            },
+            {
+              'proza_table_row_order'           : '2.',
+              'proza_order_number'              : '2',
+              'proza_table_row_student_name'    : 'Sulegna Ikswonazyrzk Nathalie',
+              'proza_student_name'              : 'Sulegna Ikswonazyrzk Nathalie',
+              'proza_last_name'                 : 'Sulegna',
+              'proza_first_name'                : 'Ikswonazyrzk Nathalie',
+              'proza_table_row_student_id'      : '287489',
+              'proza_student_id'                : '287489',
+              'proza_subj_grade_p'              : '3.0',
+              'proza_subj_grade_n'              : None,
+              'proza_table_row_remarks'         : None
+            },
+            {
+              'proza_table_row_order'           : '15.',
+              'proza_order_number'              : '15',
+              'proza_table_row_student_name'    : 'Nav-Ekebneroh Echevarria Franz Alexander',
+              'proza_student_name'              : 'Nav-Ekebneroh Echevarria Franz Alexander',
+              'proza_last_name'                 : 'Nav-Ekebneroh',
+              'proza_first_name'                : 'Echevarria Franz Alexander',
+              'proza_table_row_student_id'      : '284331',
+              'proza_student_id'                : '284331',
+              'proza_subj_grade_p'              : '5.0',
+              'proza_subj_grade_n'              : None,
+              'proza_table_row_remarks'         : None
+            },
+            {
+              'proza_table_row_order'           : '16.',
+              'proza_order_number'              : '16',
+              'proza_table_row_student_name'    : 'Velisav Aili',
+              'proza_student_name'              : 'Velisav Aili',
+              'proza_last_name'                 : 'Velisav',
+              'proza_first_name'                : 'Aili',
+              'proza_table_row_student_id'      : '252325',
+              'proza_student_id'                : '252325',
+              'proza_subj_grade_p'              : '4.0',
+              'proza_subj_grade_n'              : None,
+              'proza_table_row_remarks'         : None
+            },
+            {
+              'proza_table_row_order'           : '17.',
+              'proza_order_number'              : '17',
+              'proza_table_row_student_name'    : 'S V RDATKDTRSCGRDFA Shaguwnxfdj',
+              'proza_student_name'              : 'S V RDATKDTRSCGRDFA Shaguwnxfdj',
+              'proza_last_name'                 : 'S',
+              'proza_first_name'                : 'V RDATKDTRSCGRDFA Shaguwnxfdj',
+              'proza_table_row_student_id'      : '275238',
+              'proza_student_id'                : '275238',
+              'proza_subj_grade_p'              : '3.0',
+              'proza_subj_grade_n'              : None,
+              'proza_table_row_remarks'         : None
+            },
+            {
+              'proza_table_row_order'           : '18.',
+              'proza_order_number'              : '18',
+              'proza_table_row_student_name'    : 'Namaz Raamma',
+              'proza_student_name'              : 'Namaz Raamma',
+              'proza_last_name'                 : 'Namaz',
+              'proza_first_name'                : 'Raamma',
+              'proza_table_row_student_id'      : '285132',
+              'proza_student_id'                : '285132',
+              'proza_subj_grade_p'              : '3.0',
+              'proza_subj_grade_n'              : None,
+              'proza_table_row_remarks'         : None
+            },
+        ]
+        status = tested.ParsingStatus()
+        records = tested.parse_proza_table_rows(status, lines, grades)
+        self.assertEqual(records, expect)
+        self.assertIs(status.error, False)
+        self.assertIs(status.error_msg, None)
+        self.assertEqual(status.current_line, 8)
+
+    def test__MEiL_2(self):
+        self.maxDiff = None
+        lines = [
+#0000000000111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999
+#0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+"          1. Kishuka Bharadwaj                    281566   2.0",
+"          2. Sulegna Ikswonazyrzk Nathalie       287489    3.0",
+"         15. Nav-Ekebneroh Echevarria Franz      284331    5.0          I do have some remarks",
+"             Alexander",
+"         16. Velisav Aili                        252325          4.0",
+"         17. S V RDATKDTRSCGRDFA                 275238    3.0",
+"             Shaguwnxfdj                                               Other remarks",
+"         18. Namaz Raamma                        285132    3.0   3.5"
+        ]
+        grades  = ['proza_subj_grade_p', 'proza_subj_grade_n']
+        expect = [
+            {
+              'proza_table_row_order'           : '1.',
+              'proza_order_number'              : '1',
+              'proza_table_row_student_name'    : 'Kishuka Bharadwaj',
+              'proza_student_name'              : 'Kishuka Bharadwaj',
+              'proza_last_name'                 : 'Kishuka',
+              'proza_first_name'                : 'Bharadwaj',
+              'proza_table_row_student_id'      : '281566',
+              'proza_student_id'                : '281566',
+              'proza_subj_grade_p'              : '2.0',
+              'proza_subj_grade_n'              : None,
+              'proza_table_row_remarks'         : None
+            },
+            {
+              'proza_table_row_order'           : '2.',
+              'proza_order_number'              : '2',
+              'proza_table_row_student_name'    : 'Sulegna Ikswonazyrzk Nathalie',
+              'proza_student_name'              : 'Sulegna Ikswonazyrzk Nathalie',
+              'proza_last_name'                 : 'Sulegna',
+              'proza_first_name'                : 'Ikswonazyrzk Nathalie',
+              'proza_table_row_student_id'      : '287489',
+              'proza_student_id'                : '287489',
+              'proza_subj_grade_p'              : '3.0',
+              'proza_subj_grade_n'              : None,
+              'proza_table_row_remarks'         : None
+            },
+            {
+              'proza_table_row_order'           : '15.',
+              'proza_order_number'              : '15',
+              'proza_table_row_student_name'    : 'Nav-Ekebneroh Echevarria Franz Alexander',
+              'proza_student_name'              : 'Nav-Ekebneroh Echevarria Franz Alexander',
+              'proza_last_name'                 : 'Nav-Ekebneroh',
+              'proza_first_name'                : 'Echevarria Franz Alexander',
+              'proza_table_row_student_id'      : '284331',
+              'proza_student_id'                : '284331',
+              'proza_subj_grade_p'              : '5.0',
+              'proza_subj_grade_n'              : None,
+              'proza_table_row_remarks'         : 'I do have some remarks'
+            },
+            {
+              'proza_table_row_order'           : '16.',
+              'proza_order_number'              : '16',
+              'proza_table_row_student_name'    : 'Velisav Aili',
+              'proza_student_name'              : 'Velisav Aili',
+              'proza_last_name'                 : 'Velisav',
+              'proza_first_name'                : 'Aili',
+              'proza_table_row_student_id'      : '252325',
+              'proza_student_id'                : '252325',
+              'proza_subj_grade_p'              : None,
+              'proza_subj_grade_n'              : '4.0',
+              'proza_table_row_remarks'         : None
+            },
+            {
+              'proza_table_row_order'           : '17.',
+              'proza_order_number'              : '17',
+              'proza_table_row_student_name'    : 'S V RDATKDTRSCGRDFA Shaguwnxfdj',
+              'proza_student_name'              : 'S V RDATKDTRSCGRDFA Shaguwnxfdj',
+              'proza_last_name'                 : 'S',
+              'proza_first_name'                : 'V RDATKDTRSCGRDFA Shaguwnxfdj',
+              'proza_table_row_student_id'      : '275238',
+              'proza_student_id'                : '275238',
+              'proza_subj_grade_p'              : '3.0',
+              'proza_subj_grade_n'              : None,
+              'proza_table_row_remarks'         : 'Other remarks'
+            },
+            {
+              'proza_table_row_order'           : '18.',
+              'proza_order_number'              : '18',
+              'proza_table_row_student_name'    : 'Namaz Raamma',
+              'proza_student_name'              : 'Namaz Raamma',
+              'proza_last_name'                 : 'Namaz',
+              'proza_first_name'                : 'Raamma',
+              'proza_table_row_student_id'      : '285132',
+              'proza_student_id'                : '285132',
+              'proza_subj_grade_p'              : '3.0',
+              'proza_subj_grade_n'              : '3.5',
+              'proza_table_row_remarks'         : None
+            },
+        ]
+        status = tested.ParsingStatus()
+        records = tested.parse_proza_table_rows(status, lines, grades)
+        self.assertEqual(records, expect)
+        self.assertIs(status.error, False)
+        self.assertIs(status.error_msg, None)
+        self.assertEqual(status.current_line, 8)
+
+    def test__MEiL_3(self):
+        self.maxDiff = None
+        lines = [
+#0000000000111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999
+#0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+"          1. LAWARGA Mahbush                       252345",
+"         11. ISEDIPOG Alab Iluram Anhsirn          248092",
+"             Vaday",
+"         12. Hagwsedfx Iilotana                    K-3589",
+"         23. MANRXAQA REVSAGWZCDF Aynag             5227",
+"             Dasarp",
+"         31. Cziworteip Fotszyrzk Trebor           244151",
+"         32. Sazalp Lanreb Rasec Otsugua           283329",
+        ]
+        grades  = ['proza_subj_grade']
+        expect = [
+            {
+              'proza_table_row_order'           : '1.',
+              'proza_order_number'              : '1',
+              'proza_table_row_student_name'    : 'LAWARGA Mahbush',
+              'proza_student_name'              : 'LAWARGA Mahbush',
+              'proza_last_name'                 : 'LAWARGA',
+              'proza_first_name'                : 'Mahbush',
+              'proza_table_row_student_id'      : '252345',
+              'proza_student_id'                : '252345',
+              'proza_subj_grade'                : None,
+              'proza_table_row_remarks'         : None
+            },
+            {
+              'proza_table_row_order'           : '11.',
+              'proza_order_number'              : '11',
+              'proza_table_row_student_name'    : 'ISEDIPOG Alab Iluram Anhsirn Vaday',
+              'proza_student_name'              : 'ISEDIPOG Alab Iluram Anhsirn Vaday',
+              'proza_last_name'                 : 'ISEDIPOG',
+              'proza_first_name'                : 'Alab Iluram Anhsirn Vaday',
+              'proza_table_row_student_id'      : '248092',
+              'proza_student_id'                : '248092',
+              'proza_subj_grade'                : None,
+              'proza_table_row_remarks'         : None
+            },
+            {
+              'proza_table_row_order'           : '12.',
+              'proza_order_number'              : '12',
+              'proza_table_row_student_name'    : 'Hagwsedfx Iilotana',
+              'proza_student_name'              : 'Hagwsedfx Iilotana',
+              'proza_last_name'                 : 'Hagwsedfx',
+              'proza_first_name'                : 'Iilotana',
+              'proza_table_row_student_id'      : 'K-3589',
+              'proza_student_id'                : 'K-3589',
+              'proza_subj_grade'                : None,
+              'proza_table_row_remarks'         : None
+            },
+            {
+              'proza_table_row_order'           : '23.',
+              'proza_order_number'              : '23',
+              'proza_table_row_student_name'    : 'MANRXAQA REVSAGWZCDF Aynag Dasarp',
+              'proza_student_name'              : 'MANRXAQA REVSAGWZCDF Aynag Dasarp',
+              'proza_last_name'                 : 'MANRXAQA',
+              'proza_first_name'                : 'REVSAGWZCDF Aynag Dasarp',
+              'proza_table_row_student_id'      : '5227',
+              'proza_student_id'                : '5227',
+              'proza_subj_grade'                : None,
+              'proza_table_row_remarks'         : None
+            },
+            {
+              'proza_table_row_order'           : '31.',
+              'proza_order_number'              : '31',
+              'proza_table_row_student_name'    : 'Cziworteip Fotszyrzk Trebor',
+              'proza_student_name'              : 'Cziworteip Fotszyrzk Trebor',
+              'proza_last_name'                 : 'Cziworteip',
+              'proza_first_name'                : 'Fotszyrzk Trebor',
+              'proza_table_row_student_id'      : '244151',
+              'proza_student_id'                : '244151',
+              'proza_subj_grade'                : None,
+              'proza_table_row_remarks'         : None
+            },
+            {
+              'proza_table_row_order'           : '32.',
+              'proza_order_number'              : '32',
+              'proza_table_row_student_name'    : 'Sazalp Lanreb Rasec Otsugua',
+              'proza_student_name'              : 'Sazalp Lanreb Rasec Otsugua',
+              'proza_last_name'                 : 'Sazalp',
+              'proza_first_name'                : 'Lanreb Rasec Otsugua',
+              'proza_table_row_student_id'      : '283329',
+              'proza_student_id'                : '283329',
+              'proza_subj_grade'                : None,
+              'proza_table_row_remarks'         : None
+            },
+        ]
+        status = tested.ParsingStatus()
+        records = tested.parse_proza_table_rows(status, lines, grades)
+        self.assertEqual(records, expect)
+        self.assertIs(status.error, False)
+        self.assertIs(status.error_msg, None)
+        self.assertEqual(status.current_line, 8)
+
+    def test__MEiL_4(self):
+        self.maxDiff = None
+        lines = [
+#0000000000111111111122222222223333333333444444444455555555556666666666777777777788888888889999999999
+#0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+"          1. LAWARGA Mahbush                       252345",
+"         11. ISEDIPOG Alab Iluram Anhsirn          248092",
+"             Vaday",
+"         12. Hagwsedfx Iilotana                    K-3589",
+"         23. MANRXAQA REVSAGWZCDF Aynag             5227",
+"             Dasarp",
+"         31. Cziworteip Fotszyrzk Trebor           244151",
+"         32. Sazalp Lanreb Rasec Otsugua           283329",
+        ]
+        grades  = ['proza_subj_grade_p', 'proza_subj_grade_n']
+        expect = [
+            {
+              'proza_table_row_order'           : '1.',
+              'proza_order_number'              : '1',
+              'proza_table_row_student_name'    : 'LAWARGA Mahbush',
+              'proza_student_name'              : 'LAWARGA Mahbush',
+              'proza_last_name'                 : 'LAWARGA',
+              'proza_first_name'                : 'Mahbush',
+              'proza_table_row_student_id'      : '252345',
+              'proza_student_id'                : '252345',
+              'proza_subj_grade_p'              : None,
+              'proza_subj_grade_n'              : None,
+              'proza_table_row_remarks'         : None
+            },
+            {
+              'proza_table_row_order'           : '11.',
+              'proza_order_number'              : '11',
+              'proza_table_row_student_name'    : 'ISEDIPOG Alab Iluram Anhsirn Vaday',
+              'proza_student_name'              : 'ISEDIPOG Alab Iluram Anhsirn Vaday',
+              'proza_last_name'                 : 'ISEDIPOG',
+              'proza_first_name'                : 'Alab Iluram Anhsirn Vaday',
+              'proza_table_row_student_id'      : '248092',
+              'proza_student_id'                : '248092',
+              'proza_subj_grade_p'              : None,
+              'proza_subj_grade_n'              : None,
+              'proza_table_row_remarks'         : None
+            },
+            {
+              'proza_table_row_order'           : '12.',
+              'proza_order_number'              : '12',
+              'proza_table_row_student_name'    : 'Hagwsedfx Iilotana',
+              'proza_student_name'              : 'Hagwsedfx Iilotana',
+              'proza_last_name'                 : 'Hagwsedfx',
+              'proza_first_name'                : 'Iilotana',
+              'proza_table_row_student_id'      : 'K-3589',
+              'proza_student_id'                : 'K-3589',
+              'proza_subj_grade_p'              : None,
+              'proza_subj_grade_n'              : None,
+              'proza_table_row_remarks'         : None
+            },
+            {
+              'proza_table_row_order'           : '23.',
+              'proza_order_number'              : '23',
+              'proza_table_row_student_name'    : 'MANRXAQA REVSAGWZCDF Aynag Dasarp',
+              'proza_student_name'              : 'MANRXAQA REVSAGWZCDF Aynag Dasarp',
+              'proza_last_name'                 : 'MANRXAQA',
+              'proza_first_name'                : 'REVSAGWZCDF Aynag Dasarp',
+              'proza_table_row_student_id'      : '5227',
+              'proza_student_id'                : '5227',
+              'proza_subj_grade_p'              : None,
+              'proza_subj_grade_n'              : None,
+              'proza_table_row_remarks'         : None
+            },
+            {
+              'proza_table_row_order'           : '31.',
+              'proza_order_number'              : '31',
+              'proza_table_row_student_name'    : 'Cziworteip Fotszyrzk Trebor',
+              'proza_student_name'              : 'Cziworteip Fotszyrzk Trebor',
+              'proza_last_name'                 : 'Cziworteip',
+              'proza_first_name'                : 'Fotszyrzk Trebor',
+              'proza_table_row_student_id'      : '244151',
+              'proza_student_id'                : '244151',
+              'proza_subj_grade_p'              : None,
+              'proza_subj_grade_n'              : None,
+              'proza_table_row_remarks'         : None
+            },
+            {
+              'proza_table_row_order'           : '32.',
+              'proza_order_number'              : '32',
+              'proza_table_row_student_name'    : 'Sazalp Lanreb Rasec Otsugua',
+              'proza_student_name'              : 'Sazalp Lanreb Rasec Otsugua',
+              'proza_last_name'                 : 'Sazalp',
+              'proza_first_name'                : 'Lanreb Rasec Otsugua',
+              'proza_table_row_student_id'      : '283329',
+              'proza_student_id'                : '283329',
+              'proza_subj_grade_p'              : None,
+              'proza_subj_grade_n'              : None,
+              'proza_table_row_remarks'         : None
+            },
+        ]
+        status = tested.ParsingStatus()
+        records = tested.parse_proza_table_rows(status, lines, grades)
+        self.assertEqual(records, expect)
+        self.assertIs(status.error, False)
+        self.assertIs(status.error_msg, None)
+        self.assertEqual(status.current_line, 8)
+
 if __name__ == '__main__':
     unittest.main()
 
