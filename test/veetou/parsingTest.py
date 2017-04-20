@@ -1866,6 +1866,138 @@ class Test__parse_proza_table_rows(unittest.TestCase):
         self.assertIs(status.error_msg, None)
         self.assertEqual(status.current_line, 8)
 
+class Test__parse_proza_table(unittest.TestCase):
+    def test__GiK_1(self):
+        header = \
+        self.maxDiff = None
+        lines = [
+"                                                                       Ocena",
+"        Lp.               Student               Nr albumu                                         Uwagi",
+"                                                           z wykładu  z projektu końcowa",
+"          1. Keczetna Szamot Nafets              256701       3,5        5,0       4,0",
+"          2. Myżob Anilorak                      254104       3,0        5,0       3,5",
+"          3. Akslowogułd Atarzogałm              256127       4,5        3,5       4,5",
+"          4. Tifołog Awe                          256110      3,0        4,5       3,5",
+"          5. Aksńeimak Ailatan Atarzogłam         256421      3,5        4,5       4,0",
+"         12. Kaiwodw Anilewe Aneladgam           222250       3,0        4,5       3,5",
+"         13. Kurotkiw Annaoj Aniluap              259288      3,5        5,0       4,0"
+        ]
+        grades  = ['proza_subj_grade_lecture', 'proza_subj_grade_project', 'proza_subj_grade_final']
+        expect = {
+            'proza_table_header'  : {
+                'proza_table_header_0'  : 'Ocena',
+                'proza_table_header_2'  : 'Lp.               Student               Nr albumu                                         Uwagi',
+                'proza_table_header_3'  : 'z wykładu  z projektu końcowa',
+                'proza_table_header_subj_grade_fields' : ['proza_subj_grade_lecture', 'proza_subj_grade_project', 'proza_subj_grade_final']
+            },
+            'proza_table_content' : [
+                {
+                  'proza_table_row_order'           : '1.',
+                  'proza_order_number'              : '1',
+                  'proza_table_row_student_name'    : 'Keczetna Szamot Nafets',
+                  'proza_student_name'              : 'Keczetna Szamot Nafets',
+                  'proza_last_name'                 : 'Keczetna',
+                  'proza_first_name'                : 'Szamot Nafets',
+                  'proza_table_row_student_id'      : '256701',
+                  'proza_student_id'                : '256701',
+                  'proza_subj_grade_lecture'        : '3,5',
+                  'proza_subj_grade_project'        : '5,0',
+                  'proza_subj_grade_final'          : '4,0',
+                  'proza_table_row_remarks'         : None
+                },
+                {
+                  'proza_table_row_order'           : '2.',
+                  'proza_order_number'              : '2',
+                  'proza_table_row_student_name'    : 'Myżob Anilorak',
+                  'proza_student_name'              : 'Myżob Anilorak',
+                  'proza_last_name'                 : 'Myżob',
+                  'proza_first_name'                : 'Anilorak',
+                  'proza_table_row_student_id'      : '254104',
+                  'proza_student_id'                : '254104',
+                  'proza_subj_grade_lecture'        : '3,0',
+                  'proza_subj_grade_project'        : '5,0',
+                  'proza_subj_grade_final'          : '3,5',
+                  'proza_table_row_remarks'         : None
+                },
+                {
+                  'proza_table_row_order'           : '3.',
+                  'proza_order_number'              : '3',
+                  'proza_table_row_student_name'    : 'Akslowogułd Atarzogałm',
+                  'proza_student_name'              : 'Akslowogułd Atarzogałm',
+                  'proza_last_name'                 : 'Akslowogułd',
+                  'proza_first_name'                : 'Atarzogałm',
+                  'proza_table_row_student_id'      : '256127',
+                  'proza_student_id'                : '256127',
+                  'proza_subj_grade_lecture'        : '4,5',
+                  'proza_subj_grade_project'        : '3,5',
+                  'proza_subj_grade_final'          : '4,5',
+                  'proza_table_row_remarks'         : None
+                },
+                {
+                  'proza_table_row_order'           : '4.',
+                  'proza_order_number'              : '4',
+                  'proza_table_row_student_name'    : 'Tifołog Awe',
+                  'proza_student_name'              : 'Tifołog Awe',
+                  'proza_last_name'                 : 'Tifołog',
+                  'proza_first_name'                : 'Awe',
+                  'proza_table_row_student_id'      : '256110',
+                  'proza_student_id'                : '256110',
+                  'proza_subj_grade_lecture'        : '3,0',
+                  'proza_subj_grade_project'        : '4,5',
+                  'proza_subj_grade_final'          : '3,5',
+                  'proza_table_row_remarks'         : None
+                },
+                {
+                  'proza_table_row_order'           : '5.',
+                  'proza_order_number'              : '5',
+                  'proza_table_row_student_name'    : 'Aksńeimak Ailatan Atarzogłam',
+                  'proza_student_name'              : 'Aksńeimak Ailatan Atarzogłam',
+                  'proza_last_name'                 : 'Aksńeimak',
+                  'proza_first_name'                : 'Ailatan Atarzogłam',
+                  'proza_table_row_student_id'      : '256421',
+                  'proza_student_id'                : '256421',
+                  'proza_subj_grade_lecture'        : '3,5',
+                  'proza_subj_grade_project'        : '4,5',
+                  'proza_subj_grade_final'          : '4,0',
+                  'proza_table_row_remarks'         : None
+                },
+                {
+                  'proza_table_row_order'           : '12.',
+                  'proza_order_number'              : '12',
+                  'proza_table_row_student_name'    : 'Kaiwodw Anilewe Aneladgam',
+                  'proza_student_name'              : 'Kaiwodw Anilewe Aneladgam',
+                  'proza_last_name'                 : 'Kaiwodw',
+                  'proza_first_name'                : 'Anilewe Aneladgam',
+                  'proza_table_row_student_id'      : '222250',
+                  'proza_student_id'                : '222250',
+                  'proza_subj_grade_lecture'        : '3,0',
+                  'proza_subj_grade_project'        : '4,5',
+                  'proza_subj_grade_final'          : '3,5',
+                  'proza_table_row_remarks'         : None
+                },
+                {
+                  'proza_table_row_order'           : '13.',
+                  'proza_order_number'              : '13',
+                  'proza_table_row_student_name'    : 'Kurotkiw Annaoj Aniluap',
+                  'proza_student_name'              : 'Kurotkiw Annaoj Aniluap',
+                  'proza_last_name'                 : 'Kurotkiw',
+                  'proza_first_name'                : 'Annaoj Aniluap',
+                  'proza_table_row_student_id'      : '259288',
+                  'proza_student_id'                : '259288',
+                  'proza_subj_grade_lecture'        : '3,5',
+                  'proza_subj_grade_project'        : '5,0',
+                  'proza_subj_grade_final'          : '4,0',
+                  'proza_table_row_remarks'         : None
+                }
+            ]
+        }
+        status = tested.ParsingStatus()
+        result = tested.parse_proza_table(status, lines)
+        self.assertEqual(result, expect)
+        self.assertIs(status.error, False)
+        self.assertIs(status.error_msg, None)
+        self.assertEqual(status.current_line, 10)
+
 if __name__ == '__main__':
     unittest.main()
 

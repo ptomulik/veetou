@@ -743,6 +743,19 @@ def parse_proza_table_rows(status, lines, grade_fields, **kw):
     return records
 
 
+def parse_proza_table(status, lines, **kw):
+    result = dict()
+    current_line = status.current_line
+    header = try_proza_table_header(status, lines, **kw)
+    if header and not status.error:
+        line_offset = status.current_line - current_line
+        grade_fields = header.get('proza_table_header_subj_grade_fields', ['proza_subj_grade'])
+        content = parse_proza_table_rows(status, lines[line_offset:], grade_fields, **kw)
+        result['proza_table_content'] = content
+    result['proza_table_header'] = header
+    return result
+
+
 # Local Variables:
 # # tab-width:4
 # # indent-tabs-mode:nil
