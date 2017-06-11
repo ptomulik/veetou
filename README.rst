@@ -13,7 +13,7 @@ Dependencies
 
 .. code:: bash
 
-    sudo apt-get install python3 poppler-utils
+    sudo apt-get install python3 python3-lxml poppler-utils
 
 Requires Python >= 3.4
 
