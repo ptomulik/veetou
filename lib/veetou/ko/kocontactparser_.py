@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 """`veetou.ko.kocontactparser_`
 
-Provides the KoContactParser classs
+Provides the KoContactParser class
 """
 
 from ..parser import ContactParser

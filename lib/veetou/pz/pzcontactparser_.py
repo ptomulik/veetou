@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 """`veetou.pz.pzcontactparser_`
 
-Provides the PzContactParser classs
+Provides the PzContactParser class
 """
 
 from ..parser import ContactParser
