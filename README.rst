@@ -72,7 +72,7 @@ database file:
                     --table usossp=path/to/usos/sp.csv \
                     --table ko2prog=path/to/ko/ko2prog.csv \
                     -o path/to/output.db \
-                    path/to/ko-report.pdf \
+                    path/to/ko-report.pdf
 
 Running unit tests
 ``````````````````
