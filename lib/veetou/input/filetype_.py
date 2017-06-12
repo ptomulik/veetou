@@ -16,6 +16,7 @@ class FileType(enum.Enum):
     PDF = 0
     TXT = 1
     CSV = 2
+    HTML = 3
 
     @classmethod
     def from_filemime(cls, string):
@@ -33,6 +34,8 @@ class FileType(enum.Enum):
             return cls.PDF
         elif re.match(r'(ASCII|UTF-8(?: Unicode)?) text', string):
             return cls.TXT
+        elif re.match(r'HTML document', string):
+            return cls.HTML
         else:
             return cls.UNKNOWN
 
@@ -43,7 +46,8 @@ _re_mime = re.compile(
 _mime_type_map = {
     'application/pdf'   : FileType.PDF,
     'text/plain'        : FileType.TXT,
-    'text/csv'          : FileType.CSV
+    'text/csv'          : FileType.CSV,
+    'text/html'         : FileType.HTML
 }
 
 

@@ -6,6 +6,7 @@ Provides the Main class
 
 from . import pzcmd_
 from . import kocmd_
+from . import pzhcmd_
 
 import argparse
 import sys
@@ -23,7 +24,7 @@ class Main(object):
 Commands:
     ko          Convert 'Karta Osiągnięć' (PDF/TXT)
     pz          Convert 'Protokół Zaliczeń' (PDF/TXT)
-    pzhtml      Convert 'Protokół Zaliczeń' (HTML)
+    pzh         Convert 'Protokół Zaliczeń' (HTML)
 ''')
 
         self._argparser.add_argument('command', help='Subcommand to run')
@@ -49,8 +50,8 @@ Commands:
     def pz(self):
         return pzcmd_.PzCmd().run()
 
-    def pzhtml(self):
-        sys.stderr.write("error: command 'pzhtml' is not implemented yet\n")
+    def pzh(self):
+        return pzhcmd_.PzHCmd().run()
         return 1
 
 # Local Variables:
