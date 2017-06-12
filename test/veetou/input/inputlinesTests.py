@@ -5,7 +5,7 @@
 import unittest
 import veetou.input.inputlines_ as inputlines_
 import veetou.input.inputline_ as inputline_
-import veetou.input.inputcontext_ as inputcontext_
+import veetou.input.inputloc_ as inputloc_
 import veetou.input.inputiterator_ as inputiterator_
 
 import collections.abc
@@ -38,15 +38,15 @@ class Test__InputLines(unittest.TestCase):
 
         line = next(lines)
         self.assertEqual(line, 'first line')
-        self.assertEqual(line.context(), inputcontext_.InputContext(repr(input), 1))
+        self.assertEqual(line.loc(), inputloc_.InputLoc(repr(input), 1))
 
         line = next(lines)
         self.assertEqual(line, 'second line')
-        self.assertEqual(line.context(), inputcontext_.InputContext(repr(input), 2))
+        self.assertEqual(line.loc(), inputloc_.InputLoc(repr(input), 2))
 
         line = next(lines)
         self.assertEqual(line, 'third line')
-        self.assertEqual(line.context(), inputcontext_.InputContext(repr(input), 3))
+        self.assertEqual(line.loc(), inputloc_.InputLoc(repr(input), 3))
 
         with self.assertRaises(StopIteration):
             next(lines)
@@ -66,10 +66,10 @@ class Test__InputLines(unittest.TestCase):
         lines = inputlines_.InputLines(input)
         self.assertEqual(lines.line, 1)
 
-    def test__context__1(self):
+    def test__loc__1(self):
         input = io.StringIO('first line\nsecond line\nthird line')
         lines = inputlines_.InputLines(input)
-        self.assertEqual(lines.context(), inputcontext_.InputContext(repr(input), 1))
+        self.assertEqual(lines.loc(), inputloc_.InputLoc(repr(input), 1))
 
     def test__with__1(self):
         strings = ['first line', 'second line', 'third line']
@@ -77,7 +77,7 @@ class Test__InputLines(unittest.TestCase):
             i = 0
             for line in lines:
                 self.assertEqual(line, strings[i])
-                self.assertEqual(line.context().line, i+1)
+                self.assertEqual(line.loc().line, i+1)
                 i += 1
 
 

@@ -7,7 +7,7 @@ Provides the ParserError and ParserWarning classes
 from ..input import inputline_
 from ..input import inputiterator_
 from ..input import bufferediterator_
-from ..input import inputcontext_
+from ..input import inputloc_
 from ..model.functions_ import checkinstance
 
 import abc
@@ -16,14 +16,14 @@ __all__ = ('ParserError', 'ParserWarning')
 
 class ParserError(object, metaclass=abc.ABCMeta):
 
-    __slots__ = ('_context', '_description', '_lines')
+    __slots__ = ('_loc', '_description', '_lines')
 
     def __init__(self, at, description, lines = None):
         if isinstance(at, (inputiterator_.InputIterator, inputline_.InputLine)):
-            context = at.context()
+            loc = at.loc()
         else:
-            context = at
-        self._context = checkinstance(context, inputcontext_.InputContext)
+            loc = at
+        self._loc = checkinstance(loc, inputloc_.InputLoc)
 
         self._description = description
 
@@ -55,11 +55,11 @@ class ParserError(object, metaclass=abc.ABCMeta):
     def description(self):
         return self._description
 
-    def context(self):
-        return self._context
+    def loc(self):
+        return self._loc
 
     def message(self):
-        return "%s: %s: %s" % (self.context().__log__(), self.category(), self.description)
+        return "%s: %s: %s" % (self.loc().__log__(), self.category(), self.description)
 
     def __log__(self):
         return self.message()

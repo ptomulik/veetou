@@ -52,11 +52,11 @@ class BufferedIterator(inputiterator_.InputIterator):
     def __exit__(self, exc_type, exc_val, exc_tb):
         return self._input.__exit__(exc_type, exc_val, exc_tb)
 
-    def context(self):
+    def loc(self):
         if self._index in range(0,len(self._buffer)):
-            ctx = self._buffer[self._index].context()
+            ctx = self._buffer[self._index].loc()
         else:
-            ctx = self._input.context()
+            ctx = self._input.loc()
         return ctx
 
     def rewind(self):

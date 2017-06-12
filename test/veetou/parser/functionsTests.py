@@ -7,7 +7,7 @@ import veetou.parser.functions_ as functions_
 import veetou.input.bufferediterator_ as bufferediterator_
 import veetou.input.inputline_ as inputline_
 import veetou.input.inputiterator_ as inputiterator_
-import veetou.input.inputcontext_ as inputcontext_
+import veetou.input.inputloc_ as inputloc_
 import re
 
 class ThreeStrings(inputiterator_.InputIterator):
@@ -17,9 +17,9 @@ class ThreeStrings(inputiterator_.InputIterator):
     def __next__(self):
        line = next(self._iterator)
        self._lineno += 1
-       return inputline_.InputLine(line,self.context())
-    def context(self):
-       return inputcontext_.InputContext('three_strings', self._lineno)
+       return inputline_.InputLine(line,self.loc())
+    def loc(self):
+       return inputloc_.InputLoc('three_strings', self._lineno)
 
 class Test__fullmatch(unittest.TestCase):
     def test__fullmatch_01(self):

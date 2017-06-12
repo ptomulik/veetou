@@ -1,14 +1,14 @@
 # -*- coding: utf8 -*-
-"""`veetou.input.paginatedcontext_`
+"""`veetou.input.paginatedloc_`
 
-Provides the PaginatedContext class
+Provides the PaginatedLoc class
 """
 
-from . import inputcontext_
+from . import inputloc_
 
-__all__ = ('PaginatedContext', )
+__all__ = ('PaginatedLoc', )
 
-class PaginatedContext(inputcontext_.InputContext):
+class PaginatedLoc(inputloc_.InputLoc):
 
     __slots__ = ('page','pageline')
 

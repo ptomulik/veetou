@@ -116,7 +116,7 @@ class ReportParser(parser_.RootParser):
         if kw is not None and 'first_page' in kw:
             first_page = kw['first_page']
         elif iterator is not None:
-            ctx = iterator.context()
+            ctx = iterator.loc()
             try:
                 first_page = ctx.page
             except AttributeError:

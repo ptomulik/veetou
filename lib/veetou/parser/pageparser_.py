@@ -140,7 +140,7 @@ class PageParser(parser_.Parser):
         if self.parent.sheet_complete:
             raise RuntimeError("can't parse more pages, sheet parser need to be reset")
 
-        ctx = iterator.context()
+        ctx = iterator.loc()
         try:
             kw['page_number'] = ctx.page
         except AttributeError:

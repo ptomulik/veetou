@@ -6,7 +6,7 @@ Provides the InputLines class
 
 from . import inputiterator_
 from . import inputline_
-from . import inputcontext_
+from . import inputloc_
 from ..model import checkinstance
 
 import io
@@ -35,7 +35,7 @@ class InputLines(inputiterator_.InputIterator):
         return self._input.__exit__(exc_type, exc_val, exc_tb)
 
     def __wrap__(self, string):
-        return inputline_.InputLine(string.rstrip('\n'), self.context())
+        return inputline_.InputLine(string.rstrip('\n'), self.loc())
 
     @property
     def name(self):
@@ -49,8 +49,8 @@ class InputLines(inputiterator_.InputIterator):
     def line(self):
         return self._counter + 1
 
-    def context(self):
-        return inputcontext_.InputContext(self.name, self.line)
+    def loc(self):
+        return inputloc_.InputLoc(self.name, self.line)
 
 # Local Variables:
 # # tab-width:4

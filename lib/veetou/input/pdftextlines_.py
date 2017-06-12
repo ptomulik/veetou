@@ -5,8 +5,8 @@ Provides the PdfTextLines class
 """
 
 from . import popenlines_
-from . import inputcontext_
-from . import paginatedcontext_
+from . import inputloc_
+from . import paginatedloc_
 
 import io
 import subprocess
@@ -76,8 +76,8 @@ class PdfTextLines(popenlines_.PopenLines):
     def pageline(self):
         return self._pageline
 
-    def context(self):
-        return paginatedcontext_.PaginatedContext(self.name, self.line, self.page, self.pageline)
+    def loc(self):
+        return paginatedloc_.PaginatedLoc(self.name, self.line, self.page, self.pageline)
 
 # Local Variables:
 # # tab-width:4

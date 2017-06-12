@@ -7,7 +7,7 @@ import veetou.input.bufferediterator_ as bufferediterator_
 import veetou.input.inputiterator_ as inputiterator_
 import veetou.input.inputbuffer_ as inputbuffer_
 import veetou.input.inputline_ as inputline_
-import veetou.input.inputcontext_ as inputcontext_
+import veetou.input.inputloc_ as inputloc_
 
 class ThreeLines(inputiterator_.InputIterator):
     def __init__(self):
@@ -25,12 +25,12 @@ class ThreeLines(inputiterator_.InputIterator):
         return False
 
     def __next__(self):
-        line = inputline_.InputLine(next(self._iterator), self.context())
+        line = inputline_.InputLine(next(self._iterator), self.loc())
         self._lineno += 1
         return line
 
-    def context(self):
-        return inputcontext_.InputContext('three_lines', self._lineno)
+    def loc(self):
+        return inputloc_.InputLoc('three_lines', self._lineno)
 
 
 class Test__BufferedIterator(unittest.TestCase):
@@ -55,21 +55,21 @@ class Test__BufferedIterator(unittest.TestCase):
         ln = next(bi)
         self.assertIsInstance(ln, inputline_.InputLine)
         self.assertEqual(ln, 'first line')
-        self.assertEqual(ln.context(), inputcontext_.InputContext('three_lines', 1))
+        self.assertEqual(ln.loc(), inputloc_.InputLoc('three_lines', 1))
         self.assertEqual(bi._index, 1)
         self.assertEqual(len(bi._buffer), 1)
 
         ln = next(bi)
         self.assertIsInstance(ln, inputline_.InputLine)
         self.assertEqual(ln, 'second line')
-        self.assertEqual(ln.context(), inputcontext_.InputContext('three_lines', 2))
+        self.assertEqual(ln.loc(), inputloc_.InputLoc('three_lines', 2))
         self.assertEqual(bi._index, 2)
         self.assertEqual(len(bi._buffer), 2)
 
         ln = next(bi)
         self.assertIsInstance(ln, inputline_.InputLine)
         self.assertEqual(ln, 'third line')
-        self.assertEqual(ln.context(), inputcontext_.InputContext('three_lines', 3))
+        self.assertEqual(ln.loc(), inputloc_.InputLoc('three_lines', 3))
         self.assertEqual(bi._index, 3)
         self.assertEqual(len(bi._buffer), 3)
 
@@ -83,21 +83,21 @@ class Test__BufferedIterator(unittest.TestCase):
         ln = next(bi)
         self.assertIsInstance(ln, inputline_.InputLine)
         self.assertEqual(ln, 'first line')
-        self.assertEqual(ln.context(), inputcontext_.InputContext('three_lines', 1))
+        self.assertEqual(ln.loc(), inputloc_.InputLoc('three_lines', 1))
         self.assertEqual(bi._index, 1)
         self.assertEqual(len(bi._buffer), 3)
 
         ln = next(bi)
         self.assertIsInstance(ln, inputline_.InputLine)
         self.assertEqual(ln, 'second line')
-        self.assertEqual(ln.context(), inputcontext_.InputContext('three_lines', 2))
+        self.assertEqual(ln.loc(), inputloc_.InputLoc('three_lines', 2))
         self.assertEqual(bi._index, 2)
         self.assertEqual(len(bi._buffer), 3)
 
         ln = next(bi)
         self.assertIsInstance(ln, inputline_.InputLine)
         self.assertEqual(ln, 'third line')
-        self.assertEqual(ln.context(), inputcontext_.InputContext('three_lines', 3))
+        self.assertEqual(ln.loc(), inputloc_.InputLoc('three_lines', 3))
         self.assertEqual(bi._index, 3)
         self.assertEqual(len(bi._buffer), 3)
 
@@ -111,7 +111,7 @@ class Test__BufferedIterator(unittest.TestCase):
         ln = next(bi)
         self.assertIsInstance(ln, inputline_.InputLine)
         self.assertEqual(ln, 'first line')
-        self.assertEqual(ln.context(), inputcontext_.InputContext('three_lines', 1))
+        self.assertEqual(ln.loc(), inputloc_.InputLoc('three_lines', 1))
         self.assertEqual(bi._index, 1)
         self.assertEqual(len(bi._buffer), 3)
 
@@ -122,14 +122,14 @@ class Test__BufferedIterator(unittest.TestCase):
         ln = next(bi)
         self.assertIsInstance(ln, inputline_.InputLine)
         self.assertEqual(ln, 'second line')
-        self.assertEqual(ln.context(), inputcontext_.InputContext('three_lines', 2))
+        self.assertEqual(ln.loc(), inputloc_.InputLoc('three_lines', 2))
         self.assertEqual(bi._index, 1)
         self.assertEqual(len(bi._buffer), 2)
 
         ln = next(bi)
         self.assertIsInstance(ln, inputline_.InputLine)
         self.assertEqual(ln, 'third line')
-        self.assertEqual(ln.context(), inputcontext_.InputContext('three_lines', 3))
+        self.assertEqual(ln.loc(), inputloc_.InputLoc('three_lines', 3))
         self.assertEqual(bi._index, 2)
         self.assertEqual(len(bi._buffer), 2)
 
@@ -142,30 +142,30 @@ class Test__BufferedIterator(unittest.TestCase):
             i = 0
             for line in lines:
                 self.assertEqual(line, input.lines[i])
-                self.assertEqual(line.context().line, i+1)
+                self.assertEqual(line.loc().line, i+1)
                 i += 1
 
-    def test__context__1(self):
+    def test__loc__1(self):
         it = ThreeLines()
         bi = bufferediterator_.BufferedIterator(it)
-        self.assertEqual(it.context(), inputcontext_.InputContext('three_lines', 1))
-        self.assertEqual(bi.context(), it.context())
+        self.assertEqual(it.loc(), inputloc_.InputLoc('three_lines', 1))
+        self.assertEqual(bi.loc(), it.loc())
         line = next(bi)
-        self.assertEqual(line.context(), inputcontext_.InputContext('three_lines', 1))
-        self.assertEqual(it.context(), inputcontext_.InputContext('three_lines', 2))
-        self.assertEqual(bi.context(), it.context())
+        self.assertEqual(line.loc(), inputloc_.InputLoc('three_lines', 1))
+        self.assertEqual(it.loc(), inputloc_.InputLoc('three_lines', 2))
+        self.assertEqual(bi.loc(), it.loc())
         line = next(bi)
-        self.assertEqual(line.context(), inputcontext_.InputContext('three_lines', 2))
-        self.assertEqual(it.context(), inputcontext_.InputContext('three_lines', 3))
-        self.assertEqual(bi.context(), it.context())
+        self.assertEqual(line.loc(), inputloc_.InputLoc('three_lines', 2))
+        self.assertEqual(it.loc(), inputloc_.InputLoc('three_lines', 3))
+        self.assertEqual(bi.loc(), it.loc())
         line = next(bi)
-        self.assertEqual(line.context(), inputcontext_.InputContext('three_lines', 3))
-        self.assertEqual(it.context(), inputcontext_.InputContext('three_lines', 4))
-        self.assertEqual(bi.context(), it.context())
+        self.assertEqual(line.loc(), inputloc_.InputLoc('three_lines', 3))
+        self.assertEqual(it.loc(), inputloc_.InputLoc('three_lines', 4))
+        self.assertEqual(bi.loc(), it.loc())
         # this is quite illegal...
         bi._index = 1
-        self.assertEqual(bi.context(), inputcontext_.InputContext('three_lines', 2))
-        self.assertEqual(it.context(), inputcontext_.InputContext('three_lines', 4))
+        self.assertEqual(bi.loc(), inputloc_.InputLoc('three_lines', 2))
+        self.assertEqual(it.loc(), inputloc_.InputLoc('three_lines', 4))
 
     def test__rewind__1(self):
         bi = bufferediterator_.BufferedIterator(ThreeLines())

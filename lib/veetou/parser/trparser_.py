@@ -45,7 +45,7 @@ class TrParser(parser_.Parser):
             yield line
 
     def colsplit(self, line):
-        return tuple( InputLine(line[beg:end].strip(), line.context()) \
+        return tuple( InputLine(line[beg:end].strip(), line.loc()) \
                       for beg, end in self.colspans )
 
     def parse_tr_tds(self, line, tr, kw, lines=None):

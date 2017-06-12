@@ -4,26 +4,26 @@
 Provides the InputLine class
 """
 
-from . import inputcontext_
+from . import inputloc_
 from ..model import checkinstance
 
 __all__ = ('InputLine',)
 
 class InputLine(str):
 
-    __slots__ = ('_context',)
+    __slots__ = ('_loc',)
 
-    def __new__(cls, string = '', context = None):
+    def __new__(cls, string = '', loc = None):
         return super().__new__(cls, string)
 
-    def __init__(self, string = '', context = None):
-        if context is not None:
-            self._context = checkinstance(context, inputcontext_.InputContext)
+    def __init__(self, string = '', loc = None):
+        if loc is not None:
+            self._loc = checkinstance(loc, inputloc_.InputLoc)
         else:
-            self._context = None
+            self._loc = None
 
-    def context(self):
-        return self._context
+    def loc(self):
+        return self._loc
 
 # Local Variables:
 # # tab-width:4

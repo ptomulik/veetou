@@ -3,12 +3,12 @@
 
 
 import unittest
-import veetou.input.paginatedcontext_ as paginatedcontext_
-import veetou.input.inputcontext_ as inputcontext_
+import veetou.input.paginatedloc_ as paginatedloc_
+import veetou.input.inputloc_ as inputloc_
 
-class Test__PaginatedContext(unittest.TestCase):
+class Test__PaginatedLoc(unittest.TestCase):
     def test__subclass__1(self):
-        self.assertTrue(issubclass(paginatedcontext_.PaginatedContext, inputcontext_.InputContext))
+        self.assertTrue(issubclass(paginatedloc_.PaginatedLoc, inputloc_.InputLoc))
 
     # TODO: write tests
 

@@ -3,19 +3,19 @@
 
 
 import unittest
-import veetou.input.inputcontext_ as inputcontext_
+import veetou.input.inputloc_ as inputloc_
 
-class Test__InputContext(unittest.TestCase):
+class Test__InputLoc(unittest.TestCase):
     def test__subclass__1(self):
-        self.assertTrue(issubclass(inputcontext_.InputContext, object))
+        self.assertTrue(issubclass(inputloc_.InputLoc, object))
 
     def test__init__1(self):
-        ctx = inputcontext_.InputContext('foo.pdf', 20)
+        ctx = inputloc_.InputLoc('foo.pdf', 20)
         self.assertEqual(ctx.name, 'foo.pdf')
         self.assertEqual(ctx.line, 20)
 
     def test__log__1(self):
-        ctx = inputcontext_.InputContext('foo.pdf', 20)
+        ctx = inputloc_.InputLoc('foo.pdf', 20)
         self.assertEqual(ctx.__log__(), 'foo.pdf:20')
 
 if __name__ == '__main__':

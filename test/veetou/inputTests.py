@@ -13,16 +13,16 @@ class Test__Input(unittest.TestCase):
         self.assertIs(input.filetype_.FileType, input.FileType)
     def test__inputbuffer__symbols__1(self):
         self.assertIs(input.inputbuffer_.InputBuffer, input.InputBuffer)
-    def test__inputcontext__symbols__1(self):
-        self.assertIs(input.inputcontext_.InputContext, input.InputContext)
+    def test__inputloc__symbols__1(self):
+        self.assertIs(input.inputloc_.InputLoc, input.InputLoc)
     def test__inputiterator__symbols__1(self):
         self.assertIs(input.inputiterator_.InputIterator, input.InputIterator)
     def test__inputline__symbols__1(self):
         self.assertIs(input.inputline_.InputLine, input.InputLine)
     def test__inputlines__symbols__1(self):
         self.assertIs(input.inputlines_.InputLines, input.InputLines)
-    def test__paginatedcontext__symbols__1(self):
-        self.assertIs(input.paginatedcontext_.PaginatedContext, input.PaginatedContext)
+    def test__paginatedloc__symbols__1(self):
+        self.assertIs(input.paginatedloc_.PaginatedLoc, input.PaginatedLoc)
     def test__pdftextlines__symbols__1(self):
         self.assertIs(input.pdftextlines_.PdfTextLines, input.PdfTextLines)
     def test__popenlines__symbols__1(self):

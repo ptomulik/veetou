@@ -4,7 +4,7 @@
 
 import unittest
 import veetou.input.inputline_ as inputline_
-import veetou.input.inputcontext_ as inputcontext_
+import veetou.input.inputloc_ as inputloc_
 
 class Test__InputLine(unittest.TestCase):
     def test__subclass__1(self):
@@ -13,20 +13,20 @@ class Test__InputLine(unittest.TestCase):
     def test__init__1(self):
         s = inputline_.InputLine()
         self.assertEqual(s, '')
-        self.assertIsNone(s.context())
+        self.assertIsNone(s.loc())
 
     def test__init__2(self):
         s = inputline_.InputLine('lorem ipsum')
         self.assertEqual(s, 'lorem ipsum')
-        self.assertIsNone(s.context())
+        self.assertIsNone(s.loc())
 
     def test__init__3(self):
-        context = inputcontext_.InputContext('foo.pdf', 12)
-        line = inputline_.InputLine('lorem ipsum', context)
-        self.assertIs(line.context(), context)
+        loc = inputloc_.InputLoc('foo.pdf', 12)
+        line = inputline_.InputLine('lorem ipsum', loc)
+        self.assertIs(line.loc(), loc)
 
     def test__init__4(self):
-        msg = '%s is not an instance of %s' % (repr('foo'), repr(inputcontext_.InputContext))
+        msg = '%s is not an instance of %s' % (repr('foo'), repr(inputloc_.InputLoc))
         with self.assertRaisesRegex(TypeError, msg):
             inputline_.InputLine('lorem ipsum', 'foo')
 

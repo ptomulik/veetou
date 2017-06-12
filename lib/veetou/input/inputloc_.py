@@ -1,12 +1,12 @@
 # -*- coding: utf8 -*-
-"""`veetou.input.inputcontext_`
+"""`veetou.input.inputloc_`
 
-Provides the InputContext class
+Provides the InputLoc class
 """
 
-__all__ = ('InputContext', )
+__all__ = ('InputLoc', )
 
-class InputContext(object):
+class InputLoc(object):
     """Encapsulates information about current position within an input file"""
 
     __slots__ = ('name', 'line')
