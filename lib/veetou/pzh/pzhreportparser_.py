@@ -10,15 +10,9 @@ from ..parser import RootParser
 from ..parser import fullmatch
 
 from ..parser.patterns_ import _rg_sheet_id
-##from ..parser.patterns_ import _rg_subj_name
-##from ..parser.patterns_ import _rg_subj_code
-##from ..parser.patterns_ import _re_subj_grade
-##
-##from ..parser.patterns_ import _re_subj_grade
 from ..parser.patterns_ import _rg_tr_ord
 from ..parser.patterns_ import _rg_student_name
 from ..parser.patterns_ import _rg_student_index
-##from ..parser.patterns_ import _rg_tr_remarks
 from ..parser.patterns_ import _re_subj_grade
 from ..parser.patterns_ import _re_first_name
 from ..parser.patterns_ import _re_name_piece
@@ -28,9 +22,6 @@ import re
 import lxml.etree
 
 __all__ = ( 'PzHReportParser', )
-
-##_rg_faculty_short = r'(?P<faculty>(?:Gik|MEiL))'
-##_re_html_title = r'%s: Protokoły Zaliczeń'
 
 _rg_title = r'(?P<title>Protokół zaliczeń)'
 _rg_title_line = r'(?P<title_line>%s {,3}\(%s\))' % (_rg_title, _rg_sheet_id)
@@ -249,15 +240,11 @@ class PzHTableParser(Parser):
         return self._td_patterns
 
     def parse_before_children(self, table, kw):
-        ##xpath = self.root.table_xpath
-        ##table = get_unique_element(tree, xpath)
         if table is None:
             return False
         return self.parse_thead(table, kw)
 
     def parse_with_children(self, table, kw):
-        ##xpath = self.root.table_xpath
-        ##table = get_unique_element(tree, xpath)
         return self.parse_tbody(table, kw)
 
     def parse_thead(self, table, kw):
