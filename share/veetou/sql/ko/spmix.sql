@@ -1,3 +1,89 @@
+-- All studens found in ko reports
+CREATE VIEW ko_students AS
+SELECT
+  student_index,
+  student_name,
+  first_name,
+  last_name
+FROM preambles
+GROUP BY student_index
+ORDER BY student_index;
+
+-- Number of distinct study programs for each student
+CREATE VIEW ko_programs_per_student AS
+SELECT
+  joined.preamble_student_index AS student_index,
+  joined.preamble_student_name AS student_name,
+  GROUP_CONCAT(DISTINCT ko2prog.studies_program_code) AS studies_program_codes,
+  COUNT(DISTINCT ko2prog.studies_program_code) AS studies_programs_count
+FROM joined
+LEFT JOIN ko2prog ON (
+  joined.header_faculty = ko2prog.faculty AND
+  joined.preamble_studies_modetier = ko2prog.studies_modetier AND
+  joined.preamble_studies_field = ko2prog.studies_field AND
+  joined.preamble_studies_specialty = ko2prog.studies_specialty
+)
+GROUP BY student_index
+ORDER BY student_index;
+
+-- Distinct semesters for each student on a given program
+CREATE VIEW ko_semesters_per_student_program AS
+SELECT
+  joined.preamble_student_index AS student_index,
+  joined.preamble_student_name AS student_name,
+  ko2prog.studies_program_code AS studies_program_code,
+  GROUP_CONCAT(DISTINCT joined.preamble_semester_code) AS semester_codes,
+  COUNT(DISTINCT joined.preamble_semester_code) AS semesters_count
+FROM joined
+LEFT JOIN ko2prog ON (
+  joined.header_faculty = ko2prog.faculty AND
+  joined.preamble_studies_modetier = ko2prog.studies_modetier AND
+  joined.preamble_studies_field = ko2prog.studies_field AND
+  joined.preamble_studies_specialty = ko2prog.studies_specialty
+)
+GROUP BY student_index, studies_program_code
+ORDER BY student_index, studies_program_code;
+
+-- Distinct programs for every student on a given semester
+CREATE VIEW ko_programs_per_student_semester AS
+SELECT
+  joined.preamble_student_index AS student_index,
+  joined.preamble_student_name AS student_name,
+  joined.preamble_semester_code AS semester_code,
+  GROUP_CONCAT(DISTINCT ko2prog.studies_program_code) AS studies_program_codes,
+  COUNT(DISTINCT ko2prog.studies_program_code) AS studies_programs_count
+FROM joined
+LEFT JOIN ko2prog ON (
+  joined.header_faculty = ko2prog.faculty AND
+  joined.preamble_studies_modetier = ko2prog.studies_modetier AND
+  joined.preamble_studies_field = ko2prog.studies_field AND
+  joined.preamble_studies_specialty = ko2prog.studies_specialty
+)
+GROUP BY student_index, semester_code
+ORDER BY student_index, semester_code;
+
+-- Students on programs (according to ko)
+CREATE VIEW ko_students_programs AS
+SELECT DISTINCT
+  joined.preamble_student_index AS student_index,
+  joined.preamble_student_name AS student_name,
+  joined.header_faculty AS faculty,
+  joined.preamble_studies_modetier AS studies_modetier,
+  joined.preamble_studies_field AS studies_field,
+  joined.preamble_studies_specialty AS studies_specialty,
+  ko2prog.studies_program_code AS studies_program_code,
+  ko_programs_per_student.studies_programs_count AS distinct_studies_programs_count
+FROM joined
+LEFT JOIN ko2prog ON (
+  joined.header_faculty = ko2prog.faculty AND
+  joined.preamble_studies_modetier = ko2prog.studies_modetier AND
+  joined.preamble_studies_field = ko2prog.studies_field AND
+  joined.preamble_studies_specialty = ko2prog.studies_specialty
+) LEFT JOIN ko_programs_per_student ON (
+  joined.preamble_student_index = ko_programs_per_student.student_index
+)
+ORDER BY student_index, studies_program_code;
+
 -- Students on programs (according to ko)
 CREATE VIEW kosp AS
 SELECT DISTINCT
