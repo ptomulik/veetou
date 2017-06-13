@@ -8,7 +8,7 @@ from . import koaddressparser_
 from . import kocontactparser_
 
 from ..parser import HeaderParser
-from ..parser import skipemptyiter
+from ..parser import skipemptylines
 from ..parser import fullmatchdict
 from ..parser import scatter
 from ..parser import reentrant

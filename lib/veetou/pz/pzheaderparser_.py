@@ -8,7 +8,7 @@ from . import pzaddressparser_
 from . import pzcontactparser_
 
 from ..parser import HeaderParser
-from ..parser import skipemptyiter
+from ..parser import skipemptylines
 from ..parser import fullmatchdict
 from ..parser import scatter
 from ..parser.patterns_ import _rd_university
@@ -67,7 +67,7 @@ class PzHeaderParser(HeaderParser):
         return self.contact_parser.parse(iterator)
 
     def parse_with_children(self, iterator, kw):
-        skipemptyiter(iterator)
+        skipemptylines(iterator)
         if not self.parse_address(iterator, kw):
             return False
         if not self.parse_contact(iterator, kw):

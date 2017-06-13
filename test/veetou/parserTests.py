@@ -21,7 +21,7 @@ class Test__Parser(unittest.TestCase):
         self.assertIs(parser.scatter          , parser.functions_.scatter)
         self.assertIs(parser.search           , parser.functions_.search)
         self.assertIs(parser.searchpd         , parser.functions_.searchpd)
-        self.assertIs(parser.skipemptyiter    , parser.functions_.skipemptyiter)
+        self.assertIs(parser.skipemptylines    , parser.functions_.skipemptylines)
 
     def test__parsererror_symbols__1(self):
         self.assertIs(parser.ParserError, parser.parsererror_.ParserError)

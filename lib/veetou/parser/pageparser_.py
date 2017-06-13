@@ -171,25 +171,25 @@ class PageParser(parser_.Parser):
                 return False
 
         if self.expecting_preamble():
-            functions_.skipemptyiter(iterator)
+            functions_.skipemptylines(iterator)
             args = (self.parse_preamble, self.preamble_optional(), 'page preamble')
             if not self.parse_section(iterator, kw, *args):
                 return False
 
         if self.expecting_table():
-            functions_.skipemptyiter(iterator)
+            functions_.skipemptylines(iterator)
             args = (self.parse_table, self.table_optional(), 'table')
             if not self.parse_section(iterator, kw, *args):
                 return False
 
         if self.expecting_summary():
-            functions_.skipemptyiter(iterator)
+            functions_.skipemptylines(iterator)
             args = (self.parse_summary, self.summary_optional(), 'summary')
             if not self.parse_section(iterator, kw, *args):
                 return False
 
         if self.expecting_footer():
-            functions_.skipemptyiter(iterator)
+            functions_.skipemptylines(iterator)
             args = (self.parse_footer, self.footer_optional(), 'page footer')
             if not self.parse_section(iterator, kw, *args):
                 return False

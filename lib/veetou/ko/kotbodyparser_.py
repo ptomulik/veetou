@@ -13,7 +13,7 @@ from ..parser import Colspan
 from ..parser import reentrant
 from ..parser import ifullmatch
 from ..parser import fullmatch
-from ..parser import skipemptyiter
+from ..parser import skipemptylines
 
 from ..parser.patterns_ import _rg_subj_code
 from ..parser.patterns_ import _rg_subj_name
@@ -132,11 +132,11 @@ class KoTbodyParser(TbodyParser):
 
     def match_ects_lines(self, iterator, **kw):
         tmp = iterator.state()
-        line = skipemptyiter(iterator,1)
+        line = skipemptylines(iterator,1)
         if line:
             next(iterator)
             if fullmatch(_rg_ects_line, line, strip=True, **kw):
-                skipemptyiter(iterator,1)
+                skipemptylines(iterator,1)
                 return True
         iterator.restore(tmp)
         return False

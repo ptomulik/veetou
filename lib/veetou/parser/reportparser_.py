@@ -74,7 +74,7 @@ class ReportParser(parser_.RootParser):
 
         self.reset(iterator, kw)
 
-        if functions_.skipemptyiter(iterator):
+        if functions_.skipemptylines(iterator):
             if not self.parse_before_sheets(iterator, kw):
                 return False
         return True
@@ -101,7 +101,7 @@ class ReportParser(parser_.RootParser):
         return True
 
     def parse_sheets(self, iterator, kw):
-        while functions_.skipemptyiter(iterator):
+        while functions_.skipemptylines(iterator):
             if not self.sheet_parser.parse(iterator):
                 return False
             self.next_sheet_parsed()

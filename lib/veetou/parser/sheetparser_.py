@@ -80,7 +80,7 @@ class SheetParser(parser_.Parser):
         return self.page_parser.parse(iterator)
 
     def parse_pages(self, iterator, kw):
-        while not self.sheet_complete and functions_.skipemptyiter(iterator):
+        while not self.sheet_complete and functions_.skipemptylines(iterator):
             if not self.parse_page(iterator, kw):
                 return False
             self.next_page_parsed()

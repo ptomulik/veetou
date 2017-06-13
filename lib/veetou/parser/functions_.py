@@ -24,7 +24,7 @@ __all__ = (
     'scatter',
     'search',
     'searchpd',
-    'skipemptyiter'
+    'skipemptylines'
 )
 
 _re_empty = re.compile(r'\s*')
@@ -133,7 +133,7 @@ def ilookahead(iterator, criterion, maxcount=sys.maxsize):
         yield line
         count += 1
 
-def skipemptyiter(iterator, maxcount=sys.maxsize):
+def skipemptylines(iterator, maxcount=sys.maxsize):
     if maxcount <= 0:
         return None
     tmp = iterator.state()

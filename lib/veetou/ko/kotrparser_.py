@@ -6,7 +6,7 @@ Provides the KoTrParser class
 
 from ..parser import TrParser
 from ..parser import fullmatch
-from ..parser import skipemptyiter
+from ..parser import skipemptylines
 
 from .kopatterns_ import _rg_pagination
 

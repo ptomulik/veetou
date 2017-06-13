@@ -9,7 +9,7 @@ from ..parser import SummaryParser
 from ..parser import ParserError
 from ..parser import reentrant
 from ..parser import ifullmatch
-from ..parser import skipemptyiter
+from ..parser import skipemptylines
 from ..parser import permutexpr
 
 from ..parser.patterns_ import _re_subj_grade
@@ -100,7 +100,7 @@ class PzSummaryParser(SummaryParser):
             return False
 
         while True:
-            skipemptyiter(iterator, 1)
+            skipemptylines(iterator, 1)
             if not self.match_tr(iterator, pattern, grade_fields, **kw):
                 break
 

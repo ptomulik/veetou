@@ -8,7 +8,7 @@ from . import kothparser_
 from . import kotbodyparser_
 
 from ..parser import TableParser
-from ..parser import skipemptyiter
+from ..parser import skipemptylines
 
 __all__ = ( 'KoTableParser', )
 
@@ -26,7 +26,7 @@ class KoTableParser(TableParser):
         return kotbodyparser_.KoTbodyParser(**kw)
 
     def parse_tbody(self, iterator, kw):
-        skipemptyiter(iterator, 1)
+        skipemptylines(iterator, 1)
         return super().parse_tbody(iterator, kw)
 
     def parse(self, iterator, **kw):
