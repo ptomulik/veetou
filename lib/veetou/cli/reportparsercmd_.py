@@ -5,8 +5,6 @@ Implements the ReportParserCmd class
 """
 
 from . import rootcmd_
-from . import inputcmd_
-from . import txtoutcmd_
 from . import csvoutcmd_
 from . import dboutcmd_
 from . import tablecmd_
@@ -24,14 +22,12 @@ __all__ = ('ReportParserCmd', )
 
 class ReportParserCmd(rootcmd_.RootCmd):
 
-    __slots__ = ('_inputcmd', '_txtoutcmd', '_csvoutcmd', '_tablecmd', '_linkcmd')
+    __slots__ = ('_csvoutcmd', '_tablecmd', '_linkcmd')
 
     def __init__(self):
         super().__init__()
-        self._inputcmd = inputcmd_.InputCmd(self)
         self._tablecmd = tablecmd_.TableCmd(self)
         self._linkcmd = linkcmd_.LinkCmd(self)
-        self._txtoutcmd = txtoutcmd_.TxtOutCmd(self, self._inputcmd)
         self._csvoutcmd = csvoutcmd_.CsvOutCmd(self)
         self._dboutcmd = dboutcmd_.DbOutCmd(self)
 
@@ -44,6 +40,37 @@ class ReportParserCmd(rootcmd_.RootCmd):
     def create_parser(self, **kw):
         pass
 
+    @abc.abstractmethod
+    def open_input_file(filetype, filename, *args, **kw):
+        pass
+
+    @property
+    def outfile(self):
+        if not self.arguments.output or self.arguments.output == '-':
+            return sys.stdout
+        else:
+            return open(self.arguments.output, 'w')
+
+    def print_input_files(self):
+        endl = lambda s : s if s.endswith('\n') else s + '\n'
+        printed = 0
+        if not self.arguments.inputs:
+            filenames = ['-']
+        else:
+            filenames = self.arguments.inputs
+        with self.outfile as outfile:
+            for filename in filenames:
+                try:
+                    with self.open_input_file(filename) as lines:
+                        outfile.writelines(map(endl, lines))
+                except NotImplementedError as err:
+                    sys.stderr.write("error: %s\n" % err)
+                    break
+                except subprocess.CalledProcessError as err:
+                    sys.stderr.write("error: %s\n" % err.stdout.strip())
+                    break
+        return printed == len(filenames)
+
     def parse_input_files(self, parser):
         parsed = 0
         if not self.arguments.inputs:
@@ -52,7 +79,7 @@ class ReportParserCmd(rootcmd_.RootCmd):
             filenames = self.arguments.inputs
         for filename in filenames:
             try:
-                with self._inputcmd.open(filename) as lines:
+                with self.open_input_file(filename) as lines:
                     dt = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                     if parser.parse(lines, source=filename, datetime=dt):
                         parsed += 1
@@ -76,6 +103,10 @@ class ReportParserCmd(rootcmd_.RootCmd):
 
     def add_arguments(self):
         argparser = self.argparser
+        argparser.add_argument( "inputs",
+                                metavar='FILE',
+                                nargs='*',
+                                help="inputs file to be parsed" )
         argparser.add_argument( "--output","-o",
                                 metavar='FILE',
                                 help="write result to FILE" )
@@ -98,7 +129,8 @@ class ReportParserCmd(rootcmd_.RootCmd):
         of = self.arguments.output_format
 
         if of == 'txt':
-            return self._txtoutcmd.run()
+            if not self.print_input_files():
+                return 1
         elif of in ('csv', 'db'):
             parser = self.create_parser(disable_datamodel = self.arguments.parse_only)
             jointypes = JoinTypeDict()
@@ -116,6 +148,7 @@ class ReportParserCmd(rootcmd_.RootCmd):
         else:
             sys.stderr.write("error: unsupported output format %s\n" % repr(of))
             return 1
+        return 0
 
 # Local Variables:
 # # tab-width:4

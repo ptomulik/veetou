@@ -4,7 +4,7 @@
 Implements the 'pzh' subcommand
 """
 
-from . import reportparsercmd_
+from . import htmlreportparsercmd_
 import datetime
 
 from veetou.pzh import PzHReportParser
@@ -12,7 +12,7 @@ from veetou.pzh import PzHReportParser
 __all__ = ('PzHCmd', )
 
 
-class PzHCmd(reportparsercmd_.ReportParserCmd):
+class PzHCmd(htmlreportparsercmd_.HtmlReportParserCmd):
 
     def create_parser(self, **kw):
         return PzHReportParser(**kw)

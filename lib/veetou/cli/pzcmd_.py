@@ -4,14 +4,17 @@
 Implements the 'pz' subcommand
 """
 
-from . import reportparsercmd_
+from . import pdfreportparsercmd_
 
 from veetou.pz import PzReportParser
+from veetou.input import InputLines
+from veetou.input import BufferedIterator
+from veetou.input import FileType
 
 __all__ = ('PzCmd', )
 
 
-class PzCmd(reportparsercmd_.ReportParserCmd):
+class PzCmd(pdfreportparsercmd_.PdfReportParserCmd):
 
     def create_parser(self, **kw):
         parser = PzReportParser(**kw)

@@ -4,14 +4,14 @@
 Implements the 'ko' subcommand
 """
 
-from . import reportparsercmd_
+from . import pdfreportparsercmd_
 
 from veetou.ko import KoReportParser
 
 __all__ = ('KoCmd', )
 
 
-class KoCmd(reportparsercmd_.ReportParserCmd):
+class KoCmd(pdfreportparsercmd_.PdfReportParserCmd):
 
     def create_parser(self, **kw):
         parser = KoReportParser(**kw)
