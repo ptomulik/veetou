@@ -5,6 +5,7 @@ Provides the LinkResolver class
 """
 
 from . import functions_
+from ..common import checkinstance
 import abc
 
 __all__ = ( 'LinkResolver',
@@ -34,7 +35,7 @@ class SourceTableBasedLinkResolver(LinkResolver):
 
     def __init__(self, source_table):
         from . import table_ # placed here due to circular dependency
-        self._source_table = functions_.checkinstance(source_table, table_.Table)
+        self._source_table = checkinstance(source_table, table_.Table)
 
     def __call__(self, key):
         return self.foreign_keys((key, self._source_table[key]))
@@ -51,7 +52,7 @@ class ConditionBasedLinkResolver(LinkResolver):
 
     def __init__(self, tables, cond):
         from . import table_ # placed here due to circular dependency
-        self._tables = tuple(functions_.checkinstance(t, table_.Table) for t in tables)
+        self._tables = tuple(checkinstance(t, table_.Table) for t in tables)
         self._cond = cond
 
     @property

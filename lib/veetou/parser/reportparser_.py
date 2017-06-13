@@ -8,7 +8,7 @@ from . import parser_
 from . import functions_
 
 from ..input import BufferedIterator
-from ..model import checkinstance
+from ..common import checkinstance
 
 import abc
 

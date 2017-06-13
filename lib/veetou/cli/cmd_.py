@@ -2,7 +2,7 @@
 """`veetou.cli.cmd_`
 """
 
-from ..model import checkinstance
+from ..common import checkinstance
 
 __all__ = ('Cmd',)
 

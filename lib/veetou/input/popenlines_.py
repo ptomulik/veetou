@@ -5,7 +5,7 @@ Provides the PopenLines class
 """
 
 from . import inputlines_
-from ..model import checkinstance
+from ..common import checkinstance
 
 import subprocess
 import shlex

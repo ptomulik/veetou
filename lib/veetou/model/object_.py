@@ -5,6 +5,7 @@ Provides the Object class
 """
 
 from . import functions_
+from ..common import snakecase
 
 __all__ = ('Object',)
 
@@ -23,7 +24,7 @@ class Object(object):
     def __schemaname__(cls):
         """Returns the entity name used for modelling data (entity name in the
         entity - relationship model)"""
-        return functions_.snakecase(functions_.modelname(cls))
+        return snakecase(functions_.modelname(cls))
 
 # Local Variables:
 # # tab-width:4

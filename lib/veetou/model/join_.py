@@ -11,6 +11,7 @@ from . import dict_
 from . import ref_
 from . import endpoint_
 from . import relation_
+from ..common import checkinstance
 
 import collections.abc
 
@@ -40,7 +41,7 @@ class JoinTypeDict(dict_.Dict):
         if isinstance(key, ref_.Ref):
             return key
         else:
-            return ref_.Ref(functions_.checkinstance(key, relation_.Relation))
+            return ref_.Ref(checkinstance(key, relation_.Relation))
 
     def __keyunwrap__(self, key):
         return key.obj
@@ -60,7 +61,7 @@ class Join(collections.abc.Iterator):
 
     @root.setter
     def root(self, r):
-        self._root = functions_.checkinstance(r, table_.Table)
+        self._root = checkinstance(r, table_.Table)
         self._determine_path(r)
 
     @property

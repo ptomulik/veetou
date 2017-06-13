@@ -6,69 +6,7 @@ import unittest
 import veetou.model.functions_ as functions_
 import veetou.model.object_ as object_
 
-class Test__Object(unittest.TestCase):
-
-    def test__checksubclass_1(self):
-        class A(object): pass
-        class B(A): pass
-
-        self.assertIs(functions_.checksubclass(B,A), B)
-
-        with self.assertRaisesRegex(TypeError, '%s is not a subclass of %s' % (repr(A),repr(B))):
-            functions_.checksubclass(A,B)
-
-        with self.assertRaisesRegex(TypeError, '%s is not a subclass of %s' % (repr('hello'),repr(B))):
-            functions_.checksubclass('hello',B)
-
-    def test__checkinstance_1(self):
-        class A(object): pass
-        class B(A): pass
-
-        b = B()
-        self.assertIs(functions_.checkinstance(b,A), b)
-
-        a = A()
-        with self.assertRaisesRegex(TypeError, '%s is not an instance of %s' % (a,repr(B))):
-            functions_.checkinstance(a,B)
-
-        with self.assertRaisesRegex(TypeError, '%s is not an instance of %s' % (repr('hello'),repr(B))):
-            functions_.checkinstance('hello',B)
-
-    def test__declare_1(self):
-        class A(object):
-            @classmethod
-            def __declare__(cls,name,*args,**kw):
-                cls._name = name
-                cls._args = tuple(args)
-                cls._kw = dict(kw)
-                return 'result'
-
-        self.assertEqual(functions_.declare(A, 'name', 'C', 'D', foo = 'FOO', bar = 'BAR'), 'result')
-        self.assertEqual(A._name, 'name')
-        self.assertEqual(A._args, ('C','D'))
-        self.assertEqual(A._kw, {'foo' : 'FOO', 'bar' : 'BAR'})
-
-    def test__safedelattr_1(self):
-        class A(object): foo = 10
-        self.assertTrue(hasattr(A,'foo'))
-        functions_.safedelattr(A, 'foo')
-        self.assertFalse(hasattr(A,'foo'))
-        functions_.safedelattr(A, 'foo') # does not raise
-        self.assertFalse(hasattr(A,'foo'))
-
-    def test__setdelattr_1(self):
-        class A(object): pass
-        self.assertFalse(hasattr(A,'foo'))
-        functions_.setdelattr(A, 'foo') # does not raise
-        self.assertFalse(hasattr(A,'foo'))
-        functions_.setdelattr(A, 'foo', 10)
-        self.assertEqual(A.foo, 10)
-        functions_.setdelattr(A, 'bar', 'value', lambda x : x.capitalize())
-        self.assertEqual(A.bar, 'Value')
-        functions_.setdelattr(A, 'foo')
-        self.assertFalse(hasattr(A,'foo'))
-        functions_.setdelattr(A, 'bar')
-        self.assertFalse(hasattr(A,'bar'))
+class Test__Functions(unittest.TestCase):
 
     def test__modelname_and_schemaname_2(self):
         self.assertEqual(functions_.modelname(object_.Object),    'Object')

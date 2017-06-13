@@ -12,6 +12,8 @@ from . import namedarray_
 from . import record_
 from . import table_
 from . import functions_
+from ..common import checksubclass
+from ..common import setdelattr
 
 class DataType(object):
 
@@ -44,28 +46,28 @@ class DataType(object):
 
     @entityclass.setter
     def entityclass(self,  klass):
-        checker = lambda x : functions_.checksubclass(x, entity_.Entity)
-        functions_.setdelattr(self, '_entityclass', klass, checker)
+        checker = lambda x : checksubclass(x, entity_.Entity)
+        setdelattr(self, '_entityclass', klass, checker)
 
     @tableclass.setter
     def tableclass(self,  klass):
-        checker = lambda x : functions_.checksubclass(x, table_.Table)
-        functions_.setdelattr(self, '_tableclass', klass, checker)
+        checker = lambda x : checksubclass(x, table_.Table)
+        setdelattr(self, '_tableclass', klass, checker)
 
     @recordclass.setter
     def recordclass(self,  klass):
-        checker = lambda x : functions_.checksubclass(x, record_.Record)
-        functions_.setdelattr(self, '_recordclass', klass, checker)
+        checker = lambda x : checksubclass(x, record_.Record)
+        setdelattr(self, '_recordclass', klass, checker)
 
     @arrayclass.setter
     def arrayclass(self,  klass):
-        checker = lambda x : functions_.checksubclass(x, namedarray_.NamedArray)
-        functions_.setdelattr(self, '_arrayclass', klass, checker)
+        checker = lambda x : checksubclass(x, namedarray_.NamedArray)
+        setdelattr(self, '_arrayclass', klass, checker)
 
     @tupleclass.setter
     def tupleclass(self,  klass):
-        checker = lambda x : functions_.checksubclass(x, namedtuple_.NamedTuple)
-        functions_.setdelattr(self, '_tupleclass', klass, checker)
+        checker = lambda x : checksubclass(x, namedtuple_.NamedTuple)
+        setdelattr(self, '_tupleclass', klass, checker)
 
     def __entityclass__(self):
         return self.entityclass

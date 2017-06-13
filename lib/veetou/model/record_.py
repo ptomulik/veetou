@@ -8,6 +8,9 @@ from . import namedarray_
 from . import object_
 from . import functions_
 from . import list_
+from ..common import checksubclass
+from ..common import checkinstance
+from ..common import setdelattr
 import collections.abc
 import abc
 
@@ -35,14 +38,14 @@ class RecordMeta(namedarray_.NamedArrayMeta):
     @entityclass.setter
     def entityclass(self, klass):
         from . import entity_
-        checker = lambda x : functions_.checksubclass(x, entity_.Entity)
-        functions_.setdelattr(self, '_entityclass', klass, checker)
+        checker = lambda x : checksubclass(x, entity_.Entity)
+        setdelattr(self, '_entityclass', klass, checker)
 
     @tableclass.setter
     def tableclass(self, klass):
         from . import table_
-        checker = lambda x : functions_.checksubclass(x, table_.Table)
-        functions_.setdelattr(self, '_tableclass', klass, checker)
+        checker = lambda x : checksubclass(x, table_.Table)
+        setdelattr(self, '_tableclass', klass, checker)
 
 
 class Record(object_.Object, namedarray_.NamedArray, metaclass = RecordMeta):
@@ -77,8 +80,8 @@ class Record(object_.Object, namedarray_.NamedArray, metaclass = RecordMeta):
 
     @table.setter
     def table(self, table):
-        checker = lambda x : functions_.checkinstance(x, type(self).tableclass)
-        functions_.setdelattr(self, '_table', table, checker)
+        checker = lambda x : checkinstance(x, type(self).tableclass)
+        setdelattr(self, '_table', table, checker)
 
     @classmethod
     def __declare__(cls, name = "", attributes = (), **kw):
@@ -123,7 +126,7 @@ class RecordFieldProxy(object):
 
     def __init__(self, record, index):
         super().__init__()
-        self._record = functions_.checkinstance(record, Record)
+        self._record = checkinstance(record, Record)
         if index < -len(record) or index >= len(record):
             raise IndexError("record field index out of range")
         self._index = index
@@ -192,7 +195,7 @@ class RecordFieldIterator(collections.abc.Iterator):
 
     def __init__(self, record):
         super().__init__()
-        self._record = functions_.checkinstance(record, Record)
+        self._record = checkinstance(record, Record)
         self._index = 0
 
     def __next__(self):
@@ -211,7 +214,7 @@ class RecordFieldIterator(collections.abc.Iterator):
 class RecordSequence(list_.List):
 
     def __wrap__(cls, value):
-        return functions_.checkinstance(value, Record)
+        return checkinstance(value, Record)
 
     def __fielditer__(self):
         return RecordSequenceFieldIterator(self)

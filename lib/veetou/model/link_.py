@@ -5,8 +5,8 @@ Provides the Link class
 """
 
 from . import relation_
-from . import functions_
 from . import linkresolver_
+from ..common import checkinstance
 
 __all__ = ('SOURCE', 'TARGET', 'Link')
 
@@ -23,7 +23,7 @@ class Link(relation_.Relation):
     def __init__(self, tables, endnames, register = True, resolver=None, column=None):
         super().__init__(tables, endnames, register)
         if resolver is not None:
-            self._resolver = functions_.checkinstance(resolver, linkresolver_.LinkResolver)
+            self._resolver = checkinstance(resolver, linkresolver_.LinkResolver)
         elif column is not None:
             self._resolver = linkresolver_.SourceColumnBasedLinkResolver(self.source_table, column)
         else:

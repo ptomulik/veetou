@@ -11,6 +11,9 @@ from . import list_
 from . import dict_
 from . import reflist_
 from . import namedtuple_
+from ..common import checksubclass
+from ..common import checkinstance
+from ..common import setdelattr
 import collections
 import collections.abc
 import abc
@@ -46,20 +49,20 @@ class TableMeta(abc.ABCMeta):
     @entityclass.setter
     def entityclass(self, klass):
         from . import entity_ # must be here due to circular dependency
-        checker = lambda x : functions_.checksubclass(x, entity_.Entity)
-        functions_.setdelattr(self, '_entityclass', klass, checker)
+        checker = lambda x : checksubclass(x, entity_.Entity)
+        setdelattr(self, '_entityclass', klass, checker)
 
     @recordclass.setter
     def recordclass(self, klass):
         from . import record_ # must be here due to circular dependency
-        checker = lambda x : functions_.checksubclass(x, record_.Record)
-        functions_.setdelattr(self, '_recordclass', klass, checker)
+        checker = lambda x : checksubclass(x, record_.Record)
+        setdelattr(self, '_recordclass', klass, checker)
 
     @datatype.setter
     def datatype(self, dt):
         from . import datatype_ # must be here due to circular dependency
-        checker = lambda x : functions_.checkinstance(x, datatype_.DataType)
-        functions_.setdelattr(self, '_datatype', dt, checker)
+        checker = lambda x : checkinstance(x, datatype_.DataType)
+        setdelattr(self, '_datatype', dt, checker)
 
 class Table(object_.Object, mapset_.Mapset, metaclass=TableMeta):
 
@@ -140,7 +143,7 @@ class Table(object_.Object, mapset_.Mapset, metaclass=TableMeta):
         return TableColumnIterator(self)
 
     def __wrap__(self, value):
-        return functions_.checkinstance(value, type(self).entityclass)
+        return checkinstance(value, type(self).entityclass)
 
     def append(self, value):
         try:
@@ -175,7 +178,7 @@ class TableColumnDescriptor(object):
 
     def __init__(self, table, index):
         super().__init__()
-        self._table = functions_.checkinstance(table, Table)
+        self._table = checkinstance(table, Table)
         entity = self.entityclass
         if index < -len(entity) or index >= len(entity):
             raise IndexError("table column index out of range")
@@ -232,7 +235,7 @@ class TableColumnIterator(collections.abc.Iterator):
 
     def __init__(self, table):
         super().__init__()
-        self._table = functions_.checkinstance(table, Table)
+        self._table = checkinstance(table, Table)
         self._index = 0
 
     def __next__(self):
@@ -250,7 +253,7 @@ class TableColumnIterator(collections.abc.Iterator):
 class TableList(reflist_.RefList):
 
     def __wrap__(self, value):
-        return super().__wrap__(functions_.checkinstance(value, Table))
+        return super().__wrap__(checkinstance(value, Table))
 
     def __columniter__(self):
         return TableSequenceColumnIterator(self)
@@ -261,7 +264,7 @@ class TableList(reflist_.RefList):
 
 class TableDict(dict_.Dict):
     def __wrap__(self,  value):
-        return super().__wrap__(functions_.checkinstance(value, Table))
+        return super().__wrap__(checkinstance(value, Table))
 
 class TableSequenceColumnIterator(collections.abc.Iterator):
 

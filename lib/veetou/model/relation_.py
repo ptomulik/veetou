@@ -7,6 +7,7 @@ Provides the Relation class
 from . import object_
 from . import dict_
 from . import functions_
+from ..common import checkinstance
 import abc
 
 __all__ = ('LEFT', 'RIGHT', 'Relation', 'RelationDict')
@@ -32,12 +33,12 @@ class Relation(object_.Object, metaclass = abc.ABCMeta):
 
     def _set_tables(self, left, right):
         from . import table_ # imported here to avoid circular dependencies
-        self._tables = (functions_.checkinstance(left, table_.Table),
-                        functions_.checkinstance(right, table_.Table))
+        self._tables = (checkinstance(left, table_.Table),
+                        checkinstance(right, table_.Table))
 
     def _set_endnames(self, left, right):
-        left = functions_.checkinstance(left, str)
-        right = functions_.checkinstance(right, str)
+        left = checkinstance(left, str)
+        right = checkinstance(right, str)
         self._endnames = (left,right)
 
     @property
@@ -111,7 +112,7 @@ class Relation(object_.Object, metaclass = abc.ABCMeta):
 
 class RelationDict(dict_.Dict):
     def __wrap__(self,  value):
-        return super().__wrap__(functions_.checkinstance(value, Relation))
+        return super().__wrap__(checkinstance(value, Relation))
 
 # Local Variables:
 # # tab-width:4

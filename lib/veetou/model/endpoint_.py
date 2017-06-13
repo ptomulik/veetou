@@ -10,6 +10,7 @@ from . import dict_
 from . import list_
 from . import reflist_
 from . import pair_
+from ..common import checkinstance
 import collections
 
 __all__ = ('Endpoint', 'EndpointDict', 'EndpointList')
@@ -38,7 +39,7 @@ class Endpoint(object):
 
     @relation.setter
     def relation(self, rel):
-        self._relation = functions_.checkinstance(rel, relation_.Relation)
+        self._relation = checkinstance(rel, relation_.Relation)
 
     @property
     def opposite_side(self):
@@ -80,7 +81,7 @@ class EndpointDict(dict_.Dict):
         return collections.OrderedDict
 
     def __wrap__(self, value):
-        return functions_.checkinstance(value, Endpoint)
+        return checkinstance(value, Endpoint)
 
 class EndpointList(list_.List):
 
@@ -91,7 +92,7 @@ class EndpointList(list_.List):
         return reflist_.RefList
 
     def __wrap__(self, value):
-        return functions_.checkinstance(value, Endpoint)
+        return checkinstance(value, Endpoint)
 
 # Local Variables:
 # # tab-width:4

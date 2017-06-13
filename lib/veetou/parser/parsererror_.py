@@ -4,11 +4,11 @@
 Provides the ParserError and ParserWarning classes
 """
 
-from ..input import inputline_
-from ..input import inputiterator_
-from ..input import bufferediterator_
-from ..input import inputloc_
-from ..model.functions_ import checkinstance
+from ..input import InputLine
+from ..input import InputIterator
+from ..input import BufferedIterator
+from ..input import InputLoc
+from ..common import checkinstance
 
 import abc
 
@@ -19,18 +19,18 @@ class ParserError(object, metaclass=abc.ABCMeta):
     __slots__ = ('_loc', '_description', '_lines')
 
     def __init__(self, at, description, lines = None):
-        if isinstance(at, (inputiterator_.InputIterator, inputline_.InputLine)):
+        if isinstance(at, (InputIterator, InputLine)):
             loc = at.loc()
         else:
             loc = at
-        self._loc = checkinstance(loc, inputloc_.InputLoc)
+        self._loc = checkinstance(loc, InputLoc)
 
         self._description = description
 
         if lines is None:
             if isinstance(at, str):
                 lines = (at, )
-            elif isinstance(at, bufferediterator_.BufferedIterator):
+            elif isinstance(at, BufferedIterator):
                 tmp = at.state()
                 try:
                     s = next(at)

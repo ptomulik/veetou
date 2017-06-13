@@ -7,7 +7,7 @@ Provides the InputLines class
 from . import inputiterator_
 from . import inputline_
 from . import inputloc_
-from ..model import checkinstance
+from ..common import checkinstance
 
 import io
 

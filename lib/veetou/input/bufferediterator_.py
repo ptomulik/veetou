@@ -6,7 +6,7 @@ Provides the BufferedIterator class
 
 from . import inputbuffer_
 from . import inputiterator_
-from ..model import checkinstance
+from ..common import checkinstance
 
 __all__ = ('BufferedIterator', 'BufferedIteratorState')
 

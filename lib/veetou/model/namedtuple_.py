@@ -8,6 +8,10 @@ from . import type_
 from . import tuple_
 from . import functions_
 from . import keystuple_
+from ..common import checksubclass
+from ..common import checkinstance
+from ..common import setdelattr
+
 import collections.abc
 import abc
 
@@ -32,14 +36,14 @@ class NamedTupleMeta(abc.ABCMeta):
     @arrayclass.setter
     def arrayclass(self, klass):
         from . import namedarray_
-        checker = lambda x : functions_.checksubclass(x, namedarray_.NamedArray)
-        functions_.setdelattr(self, '_arrayclass', klass, checker)
+        checker = lambda x : checksubclass(x, namedarray_.NamedArray)
+        setdelattr(self, '_arrayclass', klass, checker)
 
     @datatype.setter
     def datatype(self, dt):
         from . import datatype_
-        checker = lambda x : functions_.checkinstance(x, datatype_.DataType)
-        functions_.setdelattr(self, '_datatype', dt, checker)
+        checker = lambda x : checkinstance(x, datatype_.DataType)
+        setdelattr(self, '_datatype', dt, checker)
 
 class NamedTuple(tuple_.Tuple, collections.abc.Mapping, metaclass=NamedTupleMeta):
     """Base class for particular named tuples.

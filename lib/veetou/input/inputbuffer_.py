@@ -5,7 +5,7 @@ Provides the InputBuffer class
 """
 
 from . import inputline_
-from ..model import checkinstance
+from ..common import checkinstance
 from ..model import List
 
 __all__ = ('InputBuffer',)

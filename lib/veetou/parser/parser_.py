@@ -4,7 +4,11 @@
 Provides the Parser class
 """
 
-from ..model import *
+from ..common import checkinstance
+from ..model import entityclass
+from ..model import tablename
+from ..model import DataModel
+from ..model import Endpoint
 
 import abc
 

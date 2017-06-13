@@ -6,7 +6,7 @@ Provides the Pair class
 
 from . import tuple_
 from . import list_
-from . import functions_
+from ..common import checkinstance
 
 __all__ = ('Pair','PairList')
 
@@ -34,7 +34,7 @@ class PairList(list_.List):
     __slots__ = ()
 
     def __wrap__(self, value):
-        return functions_.checkinstance(value, Pair)
+        return checkinstance(value, Pair)
 
 # Local Variables:
 # # tab-width:4

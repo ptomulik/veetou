@@ -5,7 +5,7 @@ Provides the InputLine class
 """
 
 from . import inputloc_
-from ..model import checkinstance
+from ..common import checkinstance
 
 __all__ = ('InputLine',)
 

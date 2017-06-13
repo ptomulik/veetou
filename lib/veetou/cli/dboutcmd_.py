@@ -4,7 +4,7 @@
 Implements the DbOutCmd class
 """
 
-from ..model import checkinstance
+from ..common import checkinstance
 from ..model import columniter
 from ..model import entityclass
 from ..model import schemaname
