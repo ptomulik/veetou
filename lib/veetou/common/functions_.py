@@ -6,6 +6,7 @@ Provides general-purpose functions
 
 __all__ = ( 'checkinstance',
             'checksubclass',
+            'logstr',
             'safedelattr',
             'setdelattr',
             'snakecase' )
@@ -21,6 +22,9 @@ def checksubclass(klass, base):
     if not isinstance(klass, type) or not issubclass(klass, base):
         raise TypeError('%s is not a subclass of %s' % (repr(klass), repr(base)))
     return klass
+
+def logstr(obj):
+    return obj.__logstr__()
 
 def safedelattr(obj, attr):
     try:

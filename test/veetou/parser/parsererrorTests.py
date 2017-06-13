@@ -36,7 +36,7 @@ class ParserErrorTestCase(object):
     def test__message__1(self):
         obj = self.createTestObj()
         ctx = obj.loc()
-        msg = '%s: %s: parsing error' % (ctx.__log__(), self.errorCategory())
+        msg = '%s: %s: parsing error' % (ctx.__logstr__(), self.errorCategory())
         self.assertEqual(self.createTestObj().message(), msg)
 
 class Test__ParserError(unittest.TestCase, ParserErrorTestCase):

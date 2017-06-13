@@ -15,7 +15,7 @@ class InputLoc(object):
         self.name = name
         self.line = line
 
-    def __log__(self):
+    def __logstr__(self):
         """Returns a string useful when logging errors/warnings"""
         return '%s:%s' % (self.name, repr(self.line))
 

@@ -17,7 +17,7 @@ class PaginatedLoc(inputloc_.InputLoc):
         self.page = page
         self.pageline = pageline
 
-    def __log__(self):
+    def __logstr__(self):
         """Returns a string useful when logging errors/warnings"""
         return '%s:%s:[page=%s,line=%s]' % \
             (self.name, repr(self.line), repr(self.page), repr(self.pageline))

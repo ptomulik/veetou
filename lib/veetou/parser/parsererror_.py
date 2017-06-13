@@ -9,6 +9,7 @@ from ..input import InputIterator
 from ..input import BufferedIterator
 from ..input import InputLoc
 from ..common import checkinstance
+from ..common import logstr
 
 import abc
 
@@ -59,10 +60,10 @@ class ParserError(object, metaclass=abc.ABCMeta):
         return self._loc
 
     def message(self):
-        return "%s: %s: %s" % (self.loc().__log__(), self.category(), self.description)
+        return "%s: %s: %s" % (logstr(self.loc()), self.category(), self.description)
 
-    def __log__(self):
-        return self.message()
+    def __logstr__(self):
+        return '\n'.join((self.message(),) + self.lines)
 
     def category(self):
         return "error"

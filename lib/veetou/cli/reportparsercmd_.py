@@ -11,6 +11,7 @@ from . import tablecmd_
 from . import linkcmd_
 
 from ..model import JoinTypeDict
+from ..common import logstr
 
 import abc
 import sys
@@ -93,8 +94,7 @@ class ReportParserCmd(rootcmd_.RootCmd):
                 break
 
         for err in parser.errors:
-            sys.stderr.write("%s\n" % err.message())
-            sys.stderr.write("%s\n" % '\n'.join(err.lines))
+            sys.stderr.write("%s\n" % logstr(err))
 
         if parsed < len(filenames):
             return False

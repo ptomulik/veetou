@@ -6,7 +6,6 @@ import unittest
 import veetou.common.functions_ as functions_
 
 class Test__Functions(unittest.TestCase):
-
     def test__checkinstance__1(self):
         class A(object): pass
         class B(A): pass
@@ -32,6 +31,17 @@ class Test__Functions(unittest.TestCase):
 
         with self.assertRaisesRegex(TypeError, '%s is not a subclass of %s' % (repr('hello'),repr(B))):
             functions_.checksubclass('hello',B)
+
+    def test__logstr__1(self):
+        msg = '%s object has no attribute %s' % (repr(str.__name__), repr('__logstr__'))
+        with self.assertRaisesRegex(AttributeError, msg):
+            functions_.logstr('asdf')
+
+    def test__logstr__2(self):
+        class X(object):
+            def __logstr__(self):
+                return 'jinga lala'
+        self.assertEqual(functions_.logstr(X()), 'jinga lala')
 
     def test__safedelattr__1(self):
         class A(object): foo = 10

@@ -14,9 +14,9 @@ class Test__InputLoc(unittest.TestCase):
         self.assertEqual(ctx.name, 'foo.pdf')
         self.assertEqual(ctx.line, 20)
 
-    def test__log__1(self):
+    def test__logstr__1(self):
         ctx = inputloc_.InputLoc('foo.pdf', 20)
-        self.assertEqual(ctx.__log__(), 'foo.pdf:20')
+        self.assertEqual(ctx.__logstr__(), 'foo.pdf:20')
 
 if __name__ == '__main__':
     unittest.main()
