@@ -12,12 +12,12 @@ from . import dboutcmd_
 from . import tablecmd_
 from . import linkcmd_
 
-from ..input import BufferedIterator
 from ..model import JoinTypeDict
 
 import abc
 import sys
 import datetime
+import subprocess
 
 
 __all__ = ('ReportParserCmd', )
@@ -52,7 +52,7 @@ class ReportParserCmd(rootcmd_.RootCmd):
             filenames = self.arguments.inputs
         for filename in filenames:
             try:
-                with BufferedIterator(self._inputcmd.open(filename)) as lines:
+                with self._inputcmd.open(filename) as lines:
                     dt = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                     if parser.parse(lines, source=filename, datetime=dt):
                         parsed += 1
@@ -60,6 +60,9 @@ class ReportParserCmd(rootcmd_.RootCmd):
                         break
             except NotImplementedError as err:
                 sys.stderr.write("error: %s\n" % err)
+                break
+            except subprocess.CalledProcessError as err:
+                sys.stderr.write("error: %s\n" % err.stdout.strip())
                 break
 
         for err in parser.errors:
