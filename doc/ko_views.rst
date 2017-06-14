@@ -310,4 +310,13 @@ ko_tr_usos_allstudents
 ``````````````````````
 
 This is the final outcome, where rows of **KO** reports are matched do records
-of the **usos_allstudents** table.
+of the **usos_allstudents** table. Repetitions are possible for **KO** rows
+that somehow match multiple records of **usos_allstudents**. We provide
+additional columns to deal with this problem:
+
+- **usos_progs_ids_count** - to catch up non-matching **KO** rows (``=0``) or
+  ambiguous matches (``>1``),
+- **ko_semester_code_le_max_cdyd** - to indicate condition that
+  ``ko_semester_code <= usos_max_cdyd`` (comparing semester code extracted from
+  **KO** to max possible semester for given program instance as defined by
+  **usos_allstudents**).
