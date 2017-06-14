@@ -30,11 +30,16 @@ class ReportParserCmd(rootcmd_.RootCmd):
         self._tablecmd = tablecmd_.TableCmd(self)
         self._linkcmd = linkcmd_.LinkCmd(self)
         self._csvoutcmd = csvoutcmd_.CsvOutCmd(self)
-        self._dboutcmd = dboutcmd_.DbOutCmd(self)
+        self._dboutcmd = dboutcmd_.DbOutCmd(self, self.full_view)
 
     @property
     @abc.abstractmethod
     def start_table(self):
+        pass
+
+    @property
+    @abc.abstractmethod
+    def full_view(self):
         pass
 
     @abc.abstractmethod
@@ -44,6 +49,7 @@ class ReportParserCmd(rootcmd_.RootCmd):
     @abc.abstractmethod
     def open_input_file(filetype, filename, *args, **kw):
         pass
+
 
     @property
     def outfile(self):

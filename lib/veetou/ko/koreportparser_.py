@@ -20,6 +20,14 @@ class KoReportParser(ReportParser):
     def create_sheet_parser(self, **kw):
         return kosheetparser_.KoSheetParser(**kw)
 
+    @property
+    def table(self):
+        return self.prefixed_table
+
+    @property
+    def endpoint(self):
+        return self.prefixed_endpoint
+
 # Local Variables:
 # # tab-width:4
 # # indent-tabs-mode:nil

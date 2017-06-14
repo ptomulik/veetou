@@ -13,12 +13,12 @@ class FooterParser(parser_.Parser):
     __slots__ = ()
 
     @property
-    def table(self):
-        return 'footers'
+    def prefixed_table(self):
+        return '%sfooters' % self.prefix
 
     @property
-    def endpoint(self):
-        return 'footer'
+    def prefixed_endpoint(self):
+        return '%sfooter' % self.prefix
 
 # Local Variables:
 # # tab-width:4

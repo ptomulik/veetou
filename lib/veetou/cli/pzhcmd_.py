@@ -25,6 +25,10 @@ class PzHCmd(htmlreportparsercmd_.HtmlReportParserCmd):
     def start_table(self):
         return 'trs'
 
+    @property
+    def full_view(self):
+        return 'pzh_full'
+
 
 # Local Variables:
 # # tab-width:4

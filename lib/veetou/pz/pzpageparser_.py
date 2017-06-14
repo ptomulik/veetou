@@ -18,6 +18,14 @@ class PzPageParser(PageParser):
 
     __slots__ = ()
 
+    @property
+    def table(self):
+        return self.prefixed_table
+
+    @property
+    def endpoint(self):
+        return self.prefixed_endpoint
+
     def create_header_parser(self, **kw):
         return pzheaderparser_.PzHeaderParser(**kw)
 

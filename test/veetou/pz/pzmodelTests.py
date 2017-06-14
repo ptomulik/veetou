@@ -14,11 +14,11 @@ class Test__PzReport(unittest.TestCase):
 
     def test__names__1(self):
         dt = pzmodel_.PzReport
-        self.assertEqual(dt.entityclass.__name__, 'Report')
-        self.assertEqual(dt.tableclass.__name__,  'Reports')
-        self.assertEqual(dt.recordclass.__name__, 'ReportRecord')
-        self.assertEqual(dt.tupleclass.__name__,  'ReportTuple')
-        self.assertEqual(dt.arrayclass.__name__,  'ReportArray')
+        self.assertEqual(dt.entityclass.__name__, 'PzReport')
+        self.assertEqual(dt.tableclass.__name__,  'PzReports')
+        self.assertEqual(dt.recordclass.__name__, 'PzReportRecord')
+        self.assertEqual(dt.tupleclass.__name__,  'PzReportTuple')
+        self.assertEqual(dt.arrayclass.__name__,  'PzReportArray')
 
     def test__keys__1(self):
         dt = pzmodel_.PzReport
@@ -36,11 +36,11 @@ class Test__PzSheet(unittest.TestCase):
 
     def test__names__1(self):
         dt = pzmodel_.PzSheet
-        self.assertEqual(dt.entityclass.__name__, 'Sheet')
-        self.assertEqual(dt.tableclass.__name__,  'Sheets')
-        self.assertEqual(dt.recordclass.__name__, 'SheetRecord')
-        self.assertEqual(dt.tupleclass.__name__,  'SheetTuple')
-        self.assertEqual(dt.arrayclass.__name__,  'SheetArray')
+        self.assertEqual(dt.entityclass.__name__, 'PzSheet')
+        self.assertEqual(dt.tableclass.__name__,  'PzSheets')
+        self.assertEqual(dt.recordclass.__name__, 'PzSheetRecord')
+        self.assertEqual(dt.tupleclass.__name__,  'PzSheetTuple')
+        self.assertEqual(dt.arrayclass.__name__,  'PzSheetArray')
 
     def test__keys__1(self):
         dt = pzmodel_.PzSheet
@@ -58,11 +58,11 @@ class Test__PzPage(unittest.TestCase):
 
     def test__names__1(self):
         dt = pzmodel_.PzPage
-        self.assertEqual(dt.entityclass.__name__, 'Page')
-        self.assertEqual(dt.tableclass.__name__,  'Pages')
-        self.assertEqual(dt.recordclass.__name__, 'PageRecord')
-        self.assertEqual(dt.tupleclass.__name__,  'PageTuple')
-        self.assertEqual(dt.arrayclass.__name__,  'PageArray')
+        self.assertEqual(dt.entityclass.__name__, 'PzPage')
+        self.assertEqual(dt.tableclass.__name__,  'PzPages')
+        self.assertEqual(dt.recordclass.__name__, 'PzPageRecord')
+        self.assertEqual(dt.tupleclass.__name__,  'PzPageTuple')
+        self.assertEqual(dt.arrayclass.__name__,  'PzPageArray')
 
     def test__keys__1(self):
         dt = pzmodel_.PzPage
@@ -80,11 +80,11 @@ class Test__PzPreamble(unittest.TestCase):
 
     def test__names__1(self):
         dt = pzmodel_.PzPreamble
-        self.assertEqual(dt.entityclass.__name__, 'Preamble')
-        self.assertEqual(dt.tableclass.__name__,  'Preambles')
-        self.assertEqual(dt.recordclass.__name__, 'PreambleRecord')
-        self.assertEqual(dt.tupleclass.__name__,  'PreambleTuple')
-        self.assertEqual(dt.arrayclass.__name__,  'PreambleArray')
+        self.assertEqual(dt.entityclass.__name__, 'PzPreamble')
+        self.assertEqual(dt.tableclass.__name__,  'PzPreambles')
+        self.assertEqual(dt.recordclass.__name__, 'PzPreambleRecord')
+        self.assertEqual(dt.tupleclass.__name__,  'PzPreambleTuple')
+        self.assertEqual(dt.arrayclass.__name__,  'PzPreambleArray')
 
     def test__keys__1(self):
         dt = pzmodel_.PzPreamble
@@ -105,11 +105,11 @@ class Test__PzHeader(unittest.TestCase):
 
     def test__names__1(self):
         dt = pzmodel_.PzHeader
-        self.assertEqual(dt.entityclass.__name__, 'Header')
-        self.assertEqual(dt.tableclass.__name__,  'Headers')
-        self.assertEqual(dt.recordclass.__name__, 'HeaderRecord')
-        self.assertEqual(dt.tupleclass.__name__,  'HeaderTuple')
-        self.assertEqual(dt.arrayclass.__name__,  'HeaderArray')
+        self.assertEqual(dt.entityclass.__name__, 'PzHeader')
+        self.assertEqual(dt.tableclass.__name__,  'PzHeaders')
+        self.assertEqual(dt.recordclass.__name__, 'PzHeaderRecord')
+        self.assertEqual(dt.tupleclass.__name__,  'PzHeaderTuple')
+        self.assertEqual(dt.arrayclass.__name__,  'PzHeaderArray')
 
     def test__keys__1(self):
         dt = pzmodel_.PzHeader
@@ -127,11 +127,11 @@ class Test__PzFooter(unittest.TestCase):
 
     def test__names__1(self):
         dt = pzmodel_.PzFooter
-        self.assertEqual(dt.entityclass.__name__, 'Footer')
-        self.assertEqual(dt.tableclass.__name__,  'Footers')
-        self.assertEqual(dt.recordclass.__name__, 'FooterRecord')
-        self.assertEqual(dt.tupleclass.__name__,  'FooterTuple')
-        self.assertEqual(dt.arrayclass.__name__,  'FooterArray')
+        self.assertEqual(dt.entityclass.__name__, 'PzFooter')
+        self.assertEqual(dt.tableclass.__name__,  'PzFooters')
+        self.assertEqual(dt.recordclass.__name__, 'PzFooterRecord')
+        self.assertEqual(dt.tupleclass.__name__,  'PzFooterTuple')
+        self.assertEqual(dt.arrayclass.__name__,  'PzFooterArray')
 
     def test__keys__1(self):
         dt = pzmodel_.PzFooter
@@ -152,11 +152,11 @@ class Test__PzAddress(unittest.TestCase):
 
     def test__names__1(self):
         dt = pzmodel_.PzAddress
-        self.assertEqual(dt.entityclass.__name__, 'Address')
-        self.assertEqual(dt.tableclass.__name__,  'Addresses')
-        self.assertEqual(dt.recordclass.__name__, 'AddressRecord')
-        self.assertEqual(dt.tupleclass.__name__,  'AddressTuple')
-        self.assertEqual(dt.arrayclass.__name__,  'AddressArray')
+        self.assertEqual(dt.entityclass.__name__, 'PzAddress')
+        self.assertEqual(dt.tableclass.__name__,  'PzAddresses')
+        self.assertEqual(dt.recordclass.__name__, 'PzAddressRecord')
+        self.assertEqual(dt.tupleclass.__name__,  'PzAddressTuple')
+        self.assertEqual(dt.arrayclass.__name__,  'PzAddressArray')
 
     def test__keys__1(self):
         dt = pzmodel_.PzAddress
@@ -176,11 +176,11 @@ class Test__PzContact(unittest.TestCase):
 
     def test__names__1(self):
         dt = pzmodel_.PzContact
-        self.assertEqual(dt.entityclass.__name__, 'Contact')
-        self.assertEqual(dt.tableclass.__name__,  'Contacts')
-        self.assertEqual(dt.recordclass.__name__, 'ContactRecord')
-        self.assertEqual(dt.tupleclass.__name__,  'ContactTuple')
-        self.assertEqual(dt.arrayclass.__name__,  'ContactArray')
+        self.assertEqual(dt.entityclass.__name__, 'PzContact')
+        self.assertEqual(dt.tableclass.__name__,  'PzContacts')
+        self.assertEqual(dt.recordclass.__name__, 'PzContactRecord')
+        self.assertEqual(dt.tupleclass.__name__,  'PzContactTuple')
+        self.assertEqual(dt.arrayclass.__name__,  'PzContactArray')
 
     def test__keys__1(self):
         dt = pzmodel_.PzContact
@@ -200,11 +200,11 @@ class Test__PzTr(unittest.TestCase):
 
     def test__names__1(self):
         dt = pzmodel_.PzTr
-        self.assertEqual(dt.entityclass.__name__, 'Tr')
-        self.assertEqual(dt.tableclass.__name__,  'Trs')
-        self.assertEqual(dt.recordclass.__name__, 'TrRecord')
-        self.assertEqual(dt.tupleclass.__name__,  'TrTuple')
-        self.assertEqual(dt.arrayclass.__name__,  'TrArray')
+        self.assertEqual(dt.entityclass.__name__, 'PzTr')
+        self.assertEqual(dt.tableclass.__name__,  'PzTrs')
+        self.assertEqual(dt.recordclass.__name__, 'PzTrRecord')
+        self.assertEqual(dt.tupleclass.__name__,  'PzTrTuple')
+        self.assertEqual(dt.arrayclass.__name__,  'PzTrArray')
 
     def test__keys__1(self):
         dt = pzmodel_.PzTr
@@ -225,11 +225,11 @@ class Test__PzSummary(unittest.TestCase):
 
     def test__names__1(self):
         dt = pzmodel_.PzSummary
-        self.assertEqual(dt.entityclass.__name__, 'Summary')
-        self.assertEqual(dt.tableclass.__name__,  'Summaries')
-        self.assertEqual(dt.recordclass.__name__, 'SummaryRecord')
-        self.assertEqual(dt.tupleclass.__name__,  'SummaryTuple')
-        self.assertEqual(dt.arrayclass.__name__,  'SummaryArray')
+        self.assertEqual(dt.entityclass.__name__, 'PzSummary')
+        self.assertEqual(dt.tableclass.__name__,  'PzSummaries')
+        self.assertEqual(dt.recordclass.__name__, 'PzSummaryRecord')
+        self.assertEqual(dt.tupleclass.__name__,  'PzSummaryTuple')
+        self.assertEqual(dt.arrayclass.__name__,  'PzSummaryArray')
 
     def test__keys__1(self):
         dt = pzmodel_.PzSummary
@@ -250,60 +250,60 @@ class Test__PzDataModel(unittest.TestCase):
         dm = pzmodel_.PzDataModel()
         tc = veetou.model.tableclass
         # Tables
-        self.assertIsInstance(dm.tables['reports'], tc(pzmodel_.PzReport))
-        self.assertIsInstance(dm.tables['sheets'], tc(pzmodel_.PzSheet))
-        self.assertIsInstance(dm.tables['pages'], tc(pzmodel_.PzPage))
-        self.assertIsInstance(dm.tables['preambles'], tc(pzmodel_.PzPreamble))
-        self.assertIsInstance(dm.tables['headers'], tc(pzmodel_.PzHeader))
-        self.assertIsInstance(dm.tables['footers'], tc(pzmodel_.PzFooter))
-        self.assertIsInstance(dm.tables['addresses'], tc(pzmodel_.PzAddress))
-        self.assertIsInstance(dm.tables['contacts'], tc(pzmodel_.PzContact))
-        self.assertIsInstance(dm.tables['trs'], tc(pzmodel_.PzTr))
-        self.assertIsInstance(dm.tables['summaries'], tc(pzmodel_.PzSummary))
+        self.assertIsInstance(dm.tables['pz_reports'], tc(pzmodel_.PzReport))
+        self.assertIsInstance(dm.tables['pz_sheets'], tc(pzmodel_.PzSheet))
+        self.assertIsInstance(dm.tables['pz_pages'], tc(pzmodel_.PzPage))
+        self.assertIsInstance(dm.tables['pz_preambles'], tc(pzmodel_.PzPreamble))
+        self.assertIsInstance(dm.tables['pz_headers'], tc(pzmodel_.PzHeader))
+        self.assertIsInstance(dm.tables['pz_footers'], tc(pzmodel_.PzFooter))
+        self.assertIsInstance(dm.tables['pz_addresses'], tc(pzmodel_.PzAddress))
+        self.assertIsInstance(dm.tables['pz_contacts'], tc(pzmodel_.PzContact))
+        self.assertIsInstance(dm.tables['pz_trs'], tc(pzmodel_.PzTr))
+        self.assertIsInstance(dm.tables['pz_summaries'], tc(pzmodel_.PzSummary))
 
     def test__relations__1(self):
         dm = pzmodel_.PzDataModel()
         # Junctions (relations)
-        self.assertIsInstance(dm.relations['report_sheets'], veetou.model.Junction)
-        self.assertIsInstance(dm.relations['sheet_pages'], veetou.model.Junction)
-        self.assertIsInstance(dm.relations['sheet_preamble'], veetou.model.Junction)
-        self.assertIsInstance(dm.relations['page_header'], veetou.model.Junction)
-        self.assertIsInstance(dm.relations['page_footer'], veetou.model.Junction)
-        self.assertIsInstance(dm.relations['header_address'], veetou.model.Junction)
-        self.assertIsInstance(dm.relations['header_contact'], veetou.model.Junction)
-        self.assertIsInstance(dm.relations['page_trs'], veetou.model.Junction)
+        self.assertIsInstance(dm.relations['pz_report_sheets'], veetou.model.Junction)
+        self.assertIsInstance(dm.relations['pz_sheet_pages'], veetou.model.Junction)
+        self.assertIsInstance(dm.relations['pz_sheet_preamble'], veetou.model.Junction)
+        self.assertIsInstance(dm.relations['pz_page_header'], veetou.model.Junction)
+        self.assertIsInstance(dm.relations['pz_page_footer'], veetou.model.Junction)
+        self.assertIsInstance(dm.relations['pz_header_address'], veetou.model.Junction)
+        self.assertIsInstance(dm.relations['pz_header_contact'], veetou.model.Junction)
+        self.assertIsInstance(dm.relations['pz_page_trs'], veetou.model.Junction)
 
-        self.assertIs(dm.relations['report_sheets'].tables[veetou.model.LEFT], dm.tables['reports'])
-        self.assertIs(dm.relations['report_sheets'].tables[veetou.model.RIGHT], dm.tables['sheets'])
-        self.assertEqual(dm.relations['report_sheets'].endnames, ('sheets', 'report'))
+        self.assertIs(dm.relations['pz_report_sheets'].tables[veetou.model.LEFT], dm.tables['pz_reports'])
+        self.assertIs(dm.relations['pz_report_sheets'].tables[veetou.model.RIGHT], dm.tables['pz_sheets'])
+        self.assertEqual(dm.relations['pz_report_sheets'].endnames, ('pz_sheets', 'pz_report'))
 
-        self.assertIs(dm.relations['sheet_pages'].tables[veetou.model.LEFT], dm.tables['sheets'])
-        self.assertIs(dm.relations['sheet_pages'].tables[veetou.model.RIGHT], dm.tables['pages'])
-        self.assertEqual(dm.relations['sheet_pages'].endnames, ('pages', 'sheet'))
+        self.assertIs(dm.relations['pz_sheet_pages'].tables[veetou.model.LEFT], dm.tables['pz_sheets'])
+        self.assertIs(dm.relations['pz_sheet_pages'].tables[veetou.model.RIGHT], dm.tables['pz_pages'])
+        self.assertEqual(dm.relations['pz_sheet_pages'].endnames, ('pz_pages', 'pz_sheet'))
 
-        self.assertIs(dm.relations['sheet_preamble'].tables[veetou.model.LEFT], dm.tables['sheets'])
-        self.assertIs(dm.relations['sheet_preamble'].tables[veetou.model.RIGHT], dm.tables['preambles'])
-        self.assertEqual(dm.relations['sheet_preamble'].endnames, ('preamble', 'sheet'))
+        self.assertIs(dm.relations['pz_sheet_preamble'].tables[veetou.model.LEFT], dm.tables['pz_sheets'])
+        self.assertIs(dm.relations['pz_sheet_preamble'].tables[veetou.model.RIGHT], dm.tables['pz_preambles'])
+        self.assertEqual(dm.relations['pz_sheet_preamble'].endnames, ('pz_preamble', 'pz_sheet'))
 
-        self.assertIs(dm.relations['page_header'].tables[veetou.model.LEFT], dm.tables['pages'])
-        self.assertIs(dm.relations['page_header'].tables[veetou.model.RIGHT], dm.tables['headers'])
-        self.assertEqual(dm.relations['page_header'].endnames, ('header', 'page'))
+        self.assertIs(dm.relations['pz_page_header'].tables[veetou.model.LEFT], dm.tables['pz_pages'])
+        self.assertIs(dm.relations['pz_page_header'].tables[veetou.model.RIGHT], dm.tables['pz_headers'])
+        self.assertEqual(dm.relations['pz_page_header'].endnames, ('pz_header', 'pz_page'))
 
-        self.assertIs(dm.relations['page_footer'].tables[veetou.model.LEFT], dm.tables['pages'])
-        self.assertIs(dm.relations['page_footer'].tables[veetou.model.RIGHT], dm.tables['footers'])
-        self.assertEqual(dm.relations['page_footer'].endnames, ('footer', 'page'))
+        self.assertIs(dm.relations['pz_page_footer'].tables[veetou.model.LEFT], dm.tables['pz_pages'])
+        self.assertIs(dm.relations['pz_page_footer'].tables[veetou.model.RIGHT], dm.tables['pz_footers'])
+        self.assertEqual(dm.relations['pz_page_footer'].endnames, ('pz_footer', 'pz_page'))
 
-        self.assertIs(dm.relations['header_address'].tables[veetou.model.LEFT], dm.tables['headers'])
-        self.assertIs(dm.relations['header_address'].tables[veetou.model.RIGHT], dm.tables['addresses'])
-        self.assertEqual(dm.relations['header_address'].endnames, ('address', 'header'))
+        self.assertIs(dm.relations['pz_header_address'].tables[veetou.model.LEFT], dm.tables['pz_headers'])
+        self.assertIs(dm.relations['pz_header_address'].tables[veetou.model.RIGHT], dm.tables['pz_addresses'])
+        self.assertEqual(dm.relations['pz_header_address'].endnames, ('pz_address', 'pz_header'))
 
-        self.assertIs(dm.relations['header_contact'].tables[veetou.model.LEFT], dm.tables['headers'])
-        self.assertIs(dm.relations['header_contact'].tables[veetou.model.RIGHT], dm.tables['contacts'])
-        self.assertEqual(dm.relations['header_contact'].endnames, ('contact', 'header'))
+        self.assertIs(dm.relations['pz_header_contact'].tables[veetou.model.LEFT], dm.tables['pz_headers'])
+        self.assertIs(dm.relations['pz_header_contact'].tables[veetou.model.RIGHT], dm.tables['pz_contacts'])
+        self.assertEqual(dm.relations['pz_header_contact'].endnames, ('pz_contact', 'pz_header'))
 
-        self.assertIs(dm.relations['page_trs'].tables[veetou.model.LEFT], dm.tables['pages'])
-        self.assertIs(dm.relations['page_trs'].tables[veetou.model.RIGHT], dm.tables['trs'])
-        self.assertEqual(dm.relations['page_trs'].endnames, ('trs', 'page'))
+        self.assertIs(dm.relations['pz_page_trs'].tables[veetou.model.LEFT], dm.tables['pz_pages'])
+        self.assertIs(dm.relations['pz_page_trs'].tables[veetou.model.RIGHT], dm.tables['pz_trs'])
+        self.assertEqual(dm.relations['pz_page_trs'].endnames, ('pz_trs', 'pz_page'))
 
 if __name__ == '__main__':
     unittest.main()

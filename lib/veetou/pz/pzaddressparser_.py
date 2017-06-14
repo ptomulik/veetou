@@ -38,11 +38,11 @@ class PzAddressParser(AddressParser):
 
     @property
     def table(self):
-        return 'addresses'
+        return self.prefixed_table
 
     @property
     def endpoint(self):
-        return 'address'
+        return self.prefixed_endpoint
 
     def match_before_children(self, iterator, **kw):
         for pattern in self._alternatives:

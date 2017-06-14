@@ -38,6 +38,14 @@ class KoHeaderParser(HeaderParser):
                 kw['groupdict'][key] = m.key
         return True
 
+    @property
+    def table(self):
+        return self.prefixed_table
+
+    @property
+    def endpoint(self):
+        return self.prefixed_endpoint
+
     def parse_before_children(self, iterator, kw):
         return self.match_before_children(iterator, groupdict = kw)
 

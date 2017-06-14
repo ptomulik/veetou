@@ -13,12 +13,12 @@ class HeaderParser(parser_.Parser):
     __slots__ = ()
 
     @property
-    def table(self):
-        return 'headers'
+    def prefixed_table(self):
+        return '%sheaders' % self.prefix
 
     @property
-    def endpoint(self):
-        return 'header'
+    def prefixed_endpoint(self):
+        return '%sheader' % self.prefix
 
 # Local Variables:
 # # tab-width:4

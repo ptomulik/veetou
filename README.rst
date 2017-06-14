@@ -69,8 +69,10 @@ database file:
   sed -f share/veetou/fieldmaps/usos/sp.sed -i path/to/usos/sp.csv
   # Parse report and read extra tables from csv files...
   PYTHONPATH=lib bin/veetou ko --squash -O db \
-                    --table usossp=path/to/usos/sp.csv \
-                    --table ko2prog=path/to/ko/ko2prog.csv \
+                    --table usos_allstudents=path/to/usos/usos_allstudents.csv \
+                    --table usos_dict_studies_fields=path/to/usos_dict_studies_fields.csv \
+                    --table usos_dict_studies_specialties=path/to/usos_dict_studies_specialties.csv \
+                    --table ko_studies_program_codes=path/to/ko/ko_studies_program_codes.csv \
                     -o path/to/output.db \
                     path/to/ko-report.pdf
 

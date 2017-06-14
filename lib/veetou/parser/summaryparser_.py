@@ -9,7 +9,14 @@ from . import parser_
 __all__ = ('SummaryParser',)
 
 class SummaryParser(parser_.Parser):
-    pass
+
+    @property
+    def prefixed_table(self):
+        return '%ssummaries' % self.prefix
+
+    @property
+    def prefixed_endpoint(self):
+        return '%ssummary' % self.prefix
 
 # Local Variables:
 # # tab-width:4

@@ -31,6 +31,14 @@ class PzHeaderParser(HeaderParser):
         self._contact_parser = contact_parser
 
     @property
+    def table(self):
+        return self.prefixed_table
+
+    @property
+    def endpoint(self):
+        return self.prefixed_endpoint
+
+    @property
     def address_parser(self):
         return self._address_parser
 

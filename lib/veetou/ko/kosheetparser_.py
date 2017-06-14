@@ -24,6 +24,14 @@ class KoSheetParser(SheetParser):
         kw.update(self.tbody_parser.sheet_ects_data)
         return super().parse_after_children(iterator, kw)
 
+    @property
+    def table(self):
+        return self.prefixed_table
+
+    @property
+    def endpoint(self):
+        return self.prefixed_endpoint
+
 
 # Local Variables:
 # # tab-width:4

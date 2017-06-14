@@ -9,7 +9,14 @@ from . import parser_
 __all__ = ('ContactParser',)
 
 class ContactParser(parser_.Parser):
-    pass
+
+    @property
+    def prefixed_table(self):
+        return '%scontacts' % self.prefix
+
+    @property
+    def prefixed_endpoint(self):
+        return '%scontact' % self.prefix
 
 # Local Variables:
 # # tab-width:4

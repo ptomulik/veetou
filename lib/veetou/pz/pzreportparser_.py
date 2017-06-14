@@ -14,6 +14,14 @@ class PzReportParser(ReportParser):
 
     __slots__ = ()
 
+    @property
+    def table(self):
+        return self.prefixed_table
+
+    @property
+    def endpoint(self):
+        return self.prefixed_endpoint
+
     def create_datamodel(self, **kw):
         return pzmodel_.PzDataModel(**kw)
 

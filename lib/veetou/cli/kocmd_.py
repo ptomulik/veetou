@@ -26,7 +26,11 @@ class KoCmd(pdfreportparsercmd_.PdfReportParserCmd):
 
     @property
     def start_table(self):
-        return 'trs'
+        return 'ko_trs'
+
+    @property
+    def full_view(self):
+        return 'ko_full'
 
 
 # Local Variables:

@@ -56,17 +56,18 @@ class PzPreambleParser(PreambleParser):
                 re.compile(_rg_subj_department),
                 re.compile(_rg_subj_tutor_line) )
 
+
     @property
     def table(self):
-        return 'preambles'
+        return self.prefixed_table
 
     @property
     def endpoint(self):
-        return 'preamble'
+        return self.prefixed_endpoint
 
     @property
     def junctions(self):
-        return ('sheet',)
+        return (self.root.sheet_parser.endpoint,)
 
     def match_before_children(self, iterator, **kw):
         for pattern in self._seq1:

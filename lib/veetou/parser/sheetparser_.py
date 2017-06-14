@@ -43,12 +43,12 @@ class SheetParser(parser_.Parser):
         return self._sheet_complete
 
     @property
-    def table(self):
-        return 'sheets'
+    def prefixed_table(self):
+        return '%ssheets' % self.prefix
 
     @property
-    def endpoint(self):
-        return 'sheet'
+    def prefixed_endpoint(self):
+        return '%ssheet' % self.prefix
 
     def next_page_parsed(self):
         """This method is invoked by parse() everytime a new page is completed"""

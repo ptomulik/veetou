@@ -35,6 +35,10 @@ class DataModel(object):
     def relations(self):
         return self._relations
 
+    @property
+    def prefix(self):
+        return ''
+
 # Local Variables:
 # # tab-width:4
 # # indent-tabs-mode:nil

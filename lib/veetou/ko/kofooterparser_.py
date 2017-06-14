@@ -31,6 +31,14 @@ class KoFooterParser(FooterParser):
     def data(self):
         return self._data
 
+    @property
+    def table(self):
+        return self.prefixed_table
+
+    @property
+    def endpoint(self):
+        return self.prefixed_endpoint
+
     def match_before_children(self, iterator, **kw):
         for pattern in self._seq1:
             if not reentrant(ifullmatch, iterator, pattern, strip=True, **kw):

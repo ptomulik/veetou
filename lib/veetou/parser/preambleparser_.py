@@ -9,7 +9,14 @@ from . import parser_
 __all__ = ('PreambleParser',)
 
 class PreambleParser(parser_.Parser):
-    pass
+
+    @property
+    def prefixed_table(self):
+        return '%spreambles' % self.prefix
+
+    @property
+    def prefixed_endpoint(self):
+        return '%spreamble' % self.prefix
 
 # Local Variables:
 # # tab-width:4

@@ -61,11 +61,11 @@ class KoContactParser(ContactParser):
 
     @property
     def table(self):
-        return 'contacts'
+        return self.prefixed_table
 
     @property
     def endpoint(self):
-        return 'contact'
+        return self.prefixed_endpoint
 
     def match_before_children(self, iterator, **kw):
         if reentrant(ifullmatch, iterator, self._re_contact, strip=True, **kw):

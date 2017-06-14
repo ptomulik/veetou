@@ -43,6 +43,14 @@ class _ReportParser(reportparser_.ReportParser):
         self.before = 0
         self.after = 0
 
+    @property
+    def table(self):
+        return self.prefixed_table
+
+    @property
+    def endpoint(self):
+        return self.prefixed_endpoint
+
     def create_datamodel(self, **kw):
         return _DataModel(**kw)
 

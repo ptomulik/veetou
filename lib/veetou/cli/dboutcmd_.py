@@ -69,7 +69,11 @@ class RelationNameDict(Dict):
 
 class DbOutCmd(cmd_.Cmd):
 
-    __slots__ = ()
+    __slots__ = ('_full_view',)
+
+    def __init__(self, parent, full_view):
+        super().__init__(parent)
+        self._full_view = full_view
 
     @property
     def dbfile(self):
@@ -84,6 +88,10 @@ class DbOutCmd(cmd_.Cmd):
             return sys.stdout
         else:
             return open(self.arguments.output, 'w')
+
+    @property
+    def full_view(self):
+        return self._full_view
 
     def sql_create_junction(self, dbc, name, junction):
         ltab = tablename(junction.tables[LEFT])
@@ -180,7 +188,7 @@ class DbOutCmd(cmd_.Cmd):
                 if isinstance(relation, Junction):
                     self.sql_create_junction(dbc, name, relation)
                     self.sql_fill_junction(dbc, name, relation)
-            self.sql_create_join_view(dbc, 'joined', join, relnames)
+            self.sql_create_join_view(dbc, self.full_view, join, relnames)
             if self.dbfile == ':memory:':
                 with self.outfile as outfile:
                     for line in dbc.iterdump():

@@ -9,7 +9,14 @@ from . import parser_
 __all__ = ('AddressParser',)
 
 class AddressParser(parser_.Parser):
-    pass
+
+    @property
+    def prefixed_table(self):
+        return '%saddresses' % self.prefix
+
+    @property
+    def prefixed_endpoint(self):
+        return '%saddress' % self.prefix
 
 # Local Variables:
 # # tab-width:4

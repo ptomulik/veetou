@@ -24,6 +24,14 @@ class KoTrParser(TrParser):
     def td_patterns(self):
         return self.parent.td_patterns
 
+    @property
+    def table(self):
+        return self.prefixed_table
+
+    @property
+    def endpoint(self):
+        return self.prefixed_endpoint
+
     def lookahead_match(self, line):
         return line.strip() and not fullmatch(_rg_pagination, line, strip=True)
 

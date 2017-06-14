@@ -27,6 +27,10 @@ class Parser(object, metaclass=abc.ABCMeta):
             child.parent = self
 
     @property
+    def prefix(self):
+        return self.parent.prefix
+
+    @property
     def parent(self):
         return self._parent
 
@@ -164,6 +168,10 @@ class RootParser(Parser):
             self._datamodel = DataModel()
         else:
             self._datamodel = checkinstance(datamodel, DataModel)
+
+    @property
+    def prefix(self):
+        return self.datamodel.prefix
 
     @property
     def parent(self):

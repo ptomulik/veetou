@@ -44,11 +44,11 @@ class KoPreambleParser(PreambleParser):
 
     @property
     def table(self):
-        return 'preambles'
+        return self.prefixed_table
 
     @property
     def endpoint(self):
-        return 'preamble'
+        return self.prefixed_endpoint
 
     def match_preamble(self, iterator, **kw):
         for pattern in self._seq1:

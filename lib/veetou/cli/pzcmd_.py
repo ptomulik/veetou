@@ -30,7 +30,11 @@ class PzCmd(pdfreportparsercmd_.PdfReportParserCmd):
 
     @property
     def start_table(self):
-        return 'trs'
+        return 'pz_trs'
+
+    @property
+    def full_view(self):
+        return 'pz_full'
 
 
 # Local Variables:

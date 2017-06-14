@@ -17,12 +17,12 @@ class TrParser(parser_.Parser):
     __slots__ = ()
 
     @property
-    def table(self):
-        return 'trs'
+    def prefixed_table(self):
+        return '%strs' % self.prefix
 
     @property
-    def endpoint(self):
-        return 'tr'
+    def prefixed_endpoint(self):
+        return '%str' % self.prefix
 
     @property
     def td_patterns(self):

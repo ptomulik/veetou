@@ -38,6 +38,12 @@ class _DataModel(model.DataModel):
         )
 
 class _ReportParser(reportparser_.ReportParser):
+    @property
+    def table(self):
+        return self.prefixed_table
+    @property
+    def endpoint(self):
+        return self.prefixed_endpoint
     def create_datamodel(self, **kw):
         return _DataModel(**kw)
     def create_sheet_parser(self, **kw):
@@ -51,6 +57,14 @@ class _SheetParser(sheetparser_.SheetParser):
         super().__init__(*args, **kw)
         self.before = 0
         self.after = 0
+
+    @property
+    def table(self):
+        return self.prefixed_table
+
+    @property
+    def endpoint(self):
+        return self.prefixed_endpoint
 
     def create_page_parser(self, **kw):
         return _PageParser(**kw)

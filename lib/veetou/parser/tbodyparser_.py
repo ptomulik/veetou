@@ -36,6 +36,14 @@ class TbodyParser(parser_.Parser):
     def create_tr_parser(self, **kw):
         pass
 
+    @property
+    def prefixed_table(self):
+        return '%stbodies' % self.prefix
+
+    @property
+    def prefixed_endpoint(self):
+        return '%stbody' % self.prefix
+
     def match_tbody_line(self, string):
         return bool(string.strip())
 

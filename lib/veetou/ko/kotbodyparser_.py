@@ -70,15 +70,15 @@ class KoTbodyParser(TbodyParser):
 
     @property
     def table(self):
-        return 'tbodies'
+        return self.prefixed_table
 
     @property
     def endpoint(self):
-        return 'tbody'
+        return self.prefixed_endpoint
 
     @property
     def junctions(self):
-        return ('page',)
+        return (self.root.page_parser.endpoint,)
 
     def create_tr_parser(self, **kw):
         return kotrparser_.KoTrParser(**kw)

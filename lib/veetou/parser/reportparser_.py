@@ -52,12 +52,12 @@ class ReportParser(parser_.RootParser):
         return self._first_page
 
     @property
-    def table(self):
-        return 'reports'
+    def prefixed_table(self):
+        return '%sreports' % self.prefix
 
     @property
-    def endpoint(self):
-        return 'report'
+    def prefixed_endpoint(self):
+        return '%sreport' % self.prefix
 
     def next_sheet_parsed(self):
         """Use this method from a child parser to notify root that next report

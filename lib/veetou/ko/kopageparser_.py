@@ -33,6 +33,14 @@ class KoPageParser(PageParser):
     def create_summary_parser(self, **kw):
         return kosummaryparser_.KoSummaryParser(**kw)
 
+    @property
+    def table(self):
+        return self.prefixed_table
+
+    @property
+    def endpoint(self):
+        return self.prefixed_endpoint
+
     def parse_footer(self, iterator, kw):
         if not super().parse_footer(iterator, kw):
             return False

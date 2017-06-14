@@ -32,6 +32,14 @@ class TableParser(parser_.Parser):
         pass
 
     @property
+    def prefixed_table(self):
+        return '%stables' % self.prefix
+
+    @property
+    def prefixed_endpoint(self):
+        return '%stable' % self.prefix
+
+    @property
     def th_parser(self):
         return self._th_parser
 

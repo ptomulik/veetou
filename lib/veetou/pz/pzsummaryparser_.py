@@ -53,15 +53,15 @@ class PzSummaryParser(SummaryParser):
 
     @property
     def table(self):
-        return 'summaries'
+        return self.prefixed_table
 
     @property
     def endpoint(self):
-        'summary'
+        return self.prefixed_endpoint
 
     @property
     def junctions(self):
-        return ('sheet',)
+        return (self.root.sheet_parser.endpoint,)
 
     def match_caption(self, iterator, **kw):
         return reentrant(ifullmatch, iterator, _rg_caption_line, strip=True, **kw)

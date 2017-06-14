@@ -9,7 +9,14 @@ from . import parser_
 __all__ = ('ThParser',)
 
 class ThParser(parser_.Parser):
-    pass
+
+    @property
+    def prefixed_table(self):
+        return '%sths' % self.prefix
+
+    @property
+    def prefixed_endpoint(self):
+        return '%sth' % self.prefix
 
 # Local Variables:
 # # tab-width:4

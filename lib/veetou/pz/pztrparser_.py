@@ -13,6 +13,14 @@ __all__ = ( 'PzTrParser', )
 class PzTrParser(TrParser):
 
     @property
+    def table(self):
+        return self.prefixed_table
+
+    @property
+    def endpoint(self):
+        return self.prefixed_endpoint
+
+    @property
     def colspans(self):
         return self.parent.colspans
 

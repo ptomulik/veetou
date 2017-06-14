@@ -37,6 +37,14 @@ class PzFooterParser(FooterParser):
               (re.compile(_re_title), re.compile(_rg_pagination_and_title)),
               (re.compile(_rg_generator_line),) )
 
+    @property
+    def table(self):
+        return self.prefixed_table
+
+    @property
+    def endpoint(self):
+        return self.prefixed_endpoint
+
     def match_before_children(self, iterator, **kw):
         for patterns in self._seq1:
             success = False

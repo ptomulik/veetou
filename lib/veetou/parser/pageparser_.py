@@ -76,12 +76,12 @@ class PageParser(parser_.Parser):
         return self._summary_parser
 
     @property
-    def table(self):
-        return 'pages'
+    def prefixed_table(self):
+        return '%spages' % self.prefix
 
     @property
-    def endpoint(self):
-        return 'page'
+    def prefixed_endpoint(self):
+        return '%spage' % self.prefix
 
     def parse_before_sections(self, iterator, kw):
         """This method may be overriden in a subclass"""
