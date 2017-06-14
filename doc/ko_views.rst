@@ -309,7 +309,7 @@ interesujące kolumny to **usos_progs_ids** oraz **usos_progs_ids_count**.
 ko_tr_usos_allstudents
 ``````````````````````
 
-This is the final outcome, where rows of **KO** reports are matched do records
+This is the final outcome, where rows of **KO** reports are matched to records
 of the **usos_allstudents** table. Repetitions are possible for **KO** rows
 that somehow match multiple records of **usos_allstudents**. We provide
 additional columns to deal with this problem:
