@@ -283,8 +283,8 @@ LEFT JOIN usos_allstudents ON (
   ko_refined.student_index = usos_allstudents.student_index AND
   ko_studies_program_codes.studies_program_code = usos_allstudents.studies_program_code
 )
-GROUP BY ko_tr_id, usos_allstudents.progs_id
-ORDER BY ko_tr_id, usos_allstudents.progs_id;
+GROUP BY ko_tr_id
+ORDER BY ko_tr_id;
 
 CREATE VIEW ko_tr_usos_allstudents AS
 SELECT
