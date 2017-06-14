@@ -1,4 +1,4 @@
-CREATE VIEW ko_normal AS
+CREATE VIEW ko_refined AS
 SELECT
   ko_full.ko_tr_subj_code AS subj_code,
   ko_full.ko_tr_subj_name AS subj_name,
@@ -45,7 +45,7 @@ SELECT
   first_name,
   last_name,
   COUNT(*) AS records_count
-FROM ko_normal
+FROM ko_refined
 GROUP BY student_index
 ORDER BY student_index;
 
@@ -57,13 +57,13 @@ ORDER BY student_index;
 --    - studies_specialty
 CREATE VIEW ko_specialties_per_student AS
 SELECT
-  ko_normal.student_index AS student_index,
-  ko_normal.student_name AS student_name,
+  ko_refined.student_index AS student_index,
+  ko_refined.student_name AS student_name,
   COUNT(DISTINCT
-    ko_normal.faculty || ';' ||
-    ko_normal.studies_modetier || ';' ||
-    ko_normal.studies_field || ';' ||
-    ko_normal.studies_specialty
+    ko_refined.faculty || ';' ||
+    ko_refined.studies_modetier || ';' ||
+    ko_refined.studies_field || ';' ||
+    ko_refined.studies_specialty
   ) AS studies_specialties_count,
   GROUP_CONCAT(DISTINCT
     ko_studies_program_codes.studies_modetier_code ||'-'||
@@ -73,16 +73,16 @@ SELECT
     ko_studies_program_codes.studies_modetier_code ||'-'||
     usos_dict_studies_specialties.studies_specialty_code
   ) AS studies_specialtiy_codes_count
-FROM ko_normal
+FROM ko_refined
 LEFT JOIN ko_studies_program_codes ON (
-  ko_normal.faculty = ko_studies_program_codes.faculty AND
-  ko_normal.studies_modetier = ko_studies_program_codes.studies_modetier AND
-  ko_normal.studies_field = ko_studies_program_codes.studies_field AND
-  ko_normal.studies_specialty = ko_studies_program_codes.studies_specialty
+  ko_refined.faculty = ko_studies_program_codes.faculty AND
+  ko_refined.studies_modetier = ko_studies_program_codes.studies_modetier AND
+  ko_refined.studies_field = ko_studies_program_codes.studies_field AND
+  ko_refined.studies_specialty = ko_studies_program_codes.studies_specialty
 )
 LEFT JOIN usos_dict_studies_specialties ON (
-  (ko_normal.studies_specialty = usos_dict_studies_specialties.description_pl COLLATE NOCASE OR
-   ko_normal.studies_specialty = usos_dict_studies_specialties.description_en COLLATE NOCASE) AND
+  (ko_refined.studies_specialty = usos_dict_studies_specialties.description_pl COLLATE NOCASE OR
+   ko_refined.studies_specialty = usos_dict_studies_specialties.description_en COLLATE NOCASE) AND
   ko_studies_program_codes.studies_field_code = usos_dict_studies_specialties.studies_field_code
 )
 GROUP BY student_index
@@ -95,12 +95,12 @@ ORDER BY student_index;
 --    - studies_field,
 CREATE VIEW ko_programs_per_student AS
 SELECT
-  ko_normal.student_index AS student_index,
-  ko_normal.student_name AS student_name,
+  ko_refined.student_index AS student_index,
+  ko_refined.student_name AS student_name,
   COUNT(DISTINCT
-    ko_normal.faculty || ';' ||
-    ko_normal.studies_modetier || ';' ||
-    ko_normal.studies_field
+    ko_refined.faculty || ';' ||
+    ko_refined.studies_modetier || ';' ||
+    ko_refined.studies_field
   ) AS studies_programs_count,
   GROUP_CONCAT(DISTINCT
     ko_studies_program_codes.studies_program_code
@@ -108,121 +108,121 @@ SELECT
   COUNT(DISTINCT
     ko_studies_program_codes.studies_program_code
   ) AS studies_program_codes_count
-FROM ko_normal
+FROM ko_refined
 LEFT JOIN ko_studies_program_codes ON (
-  ko_normal.faculty = ko_studies_program_codes.faculty AND
-  ko_normal.studies_modetier = ko_studies_program_codes.studies_modetier AND
-  ko_normal.studies_field = ko_studies_program_codes.studies_field AND
-  ko_normal.studies_specialty = ko_studies_program_codes.studies_specialty
+  ko_refined.faculty = ko_studies_program_codes.faculty AND
+  ko_refined.studies_modetier = ko_studies_program_codes.studies_modetier AND
+  ko_refined.studies_field = ko_studies_program_codes.studies_field AND
+  ko_refined.studies_specialty = ko_studies_program_codes.studies_specialty
 )
 GROUP BY student_index
 ORDER BY student_index;
 
 CREATE VIEW ko_program_codes_per_student_specialty AS
 SELECT
-  ko_normal.student_index AS student_index,
-  ko_normal.student_name AS student_name,
-  ko_normal.faculty AS faculty,
-  ko_normal.studies_modetier AS studies_modetier,
-  ko_normal.studies_field AS studies_field,
-  ko_normal.studies_specialty AS studies_specialty,
+  ko_refined.student_index AS student_index,
+  ko_refined.student_name AS student_name,
+  ko_refined.faculty AS faculty,
+  ko_refined.studies_modetier AS studies_modetier,
+  ko_refined.studies_field AS studies_field,
+  ko_refined.studies_specialty AS studies_specialty,
   GROUP_CONCAT(DISTINCT
     ko_studies_program_codes.studies_program_code
   ) AS studies_program_codes,
   COUNT(DISTINCT
     ko_studies_program_codes.studies_program_code
   ) AS studies_program_codes_count
-FROM ko_normal
+FROM ko_refined
 LEFT JOIN ko_studies_program_codes ON (
-  ko_normal.faculty = ko_studies_program_codes.faculty AND
-  ko_normal.studies_modetier = ko_studies_program_codes.studies_modetier AND
-  ko_normal.studies_field = ko_studies_program_codes.studies_field AND
-  ko_normal.studies_specialty = ko_studies_program_codes.studies_specialty
+  ko_refined.faculty = ko_studies_program_codes.faculty AND
+  ko_refined.studies_modetier = ko_studies_program_codes.studies_modetier AND
+  ko_refined.studies_field = ko_studies_program_codes.studies_field AND
+  ko_refined.studies_specialty = ko_studies_program_codes.studies_specialty
 )
 GROUP BY
   student_index,
-  ko_normal.faculty,
-  ko_normal.studies_modetier,
-  ko_normal.studies_field,
-  ko_normal.studies_specialty
+  ko_refined.faculty,
+  ko_refined.studies_modetier,
+  ko_refined.studies_field,
+  ko_refined.studies_specialty
 ORDER BY
   student_index,
-  ko_normal.faculty,
-  ko_normal.studies_modetier,
-  ko_normal.studies_field,
-  ko_normal.studies_specialty;
+  ko_refined.faculty,
+  ko_refined.studies_modetier,
+  ko_refined.studies_field,
+  ko_refined.studies_specialty;
 
 CREATE VIEW ko_semesters_per_student_specialty AS
 SELECT
-  ko_normal.student_index AS student_index,
-  ko_normal.student_name AS student_name,
-  ko_normal.faculty AS faculty,
-  ko_normal.studies_modetier AS studies_modetier,
-  ko_normal.studies_field AS studies_field,
-  ko_normal.studies_specialty AS studies_specialty,
+  ko_refined.student_index AS student_index,
+  ko_refined.student_name AS student_name,
+  ko_refined.faculty AS faculty,
+  ko_refined.studies_modetier AS studies_modetier,
+  ko_refined.studies_field AS studies_field,
+  ko_refined.studies_specialty AS studies_specialty,
   ko_specialties_per_student.studies_specialties_count AS studies_specialties_count,
   GROUP_CONCAT(DISTINCT
-    ko_normal.semester_code
+    ko_refined.semester_code
   ) AS semester_codes,
   GROUP_CONCAT(DISTINCT
-    ko_normal.semester_number
+    ko_refined.semester_number
   ) AS semester_numbers,
   COUNT(DISTINCT
-    ko_normal.semester_code
+    ko_refined.semester_code
   ) AS semester_codes_count
-FROM ( SELECT * FROM ko_normal ORDER BY ko_normal.semester_code ) ko_normal
+FROM ( SELECT * FROM ko_refined ORDER BY ko_refined.semester_code ) ko_refined
 LEFT JOIN ko_studies_program_codes ON (
-  ko_normal.faculty = ko_studies_program_codes.faculty AND
-  ko_normal.studies_modetier = ko_studies_program_codes.studies_modetier AND
-  ko_normal.studies_field = ko_studies_program_codes.studies_field AND
-  ko_normal.studies_specialty = ko_studies_program_codes.studies_specialty
+  ko_refined.faculty = ko_studies_program_codes.faculty AND
+  ko_refined.studies_modetier = ko_studies_program_codes.studies_modetier AND
+  ko_refined.studies_field = ko_studies_program_codes.studies_field AND
+  ko_refined.studies_specialty = ko_studies_program_codes.studies_specialty
 )
 LEFT JOIN ko_specialties_per_student ON (
-  ko_normal.student_index = ko_specialties_per_student.student_index
+  ko_refined.student_index = ko_specialties_per_student.student_index
 )
 GROUP BY
-  ko_normal.student_index,
-  ko_normal.faculty,
-  ko_normal.studies_modetier,
-  ko_normal.studies_field,
-  ko_normal.studies_specialty
+  ko_refined.student_index,
+  ko_refined.faculty,
+  ko_refined.studies_modetier,
+  ko_refined.studies_field,
+  ko_refined.studies_specialty
 ORDER BY
-  ko_normal.student_index,
-  ko_normal.faculty,
-  ko_normal.studies_modetier,
-  ko_normal.studies_field,
-  ko_normal.studies_specialty;
+  ko_refined.student_index,
+  ko_refined.faculty,
+  ko_refined.studies_modetier,
+  ko_refined.studies_field,
+  ko_refined.studies_specialty;
 
 -- Students with related specialties
 CREATE VIEW ko_student_specialties AS
 SELECT
-  ko_normal.student_index AS student_index,
-  ko_normal.student_name AS student_name,
-  ko_normal.faculty AS faculty,
-  ko_normal.studies_modetier AS studies_modetier,
-  ko_normal.studies_field AS studies_field,
-  ko_normal.studies_specialty AS studies_specialty,
+  ko_refined.student_index AS student_index,
+  ko_refined.student_name AS student_name,
+  ko_refined.faculty AS faculty,
+  ko_refined.studies_modetier AS studies_modetier,
+  ko_refined.studies_field AS studies_field,
+  ko_refined.studies_specialty AS studies_specialty,
   ko_specialties_per_student.studies_specialties_count AS studies_specialties_count
-FROM ko_normal
+FROM ko_refined
 LEFT JOIN ko_specialties_per_student ON
-  ko_normal.student_index = ko_specialties_per_student.student_index
-GROUP BY ko_normal.student_index, studies_modetier, studies_field, studies_specialty
-ORDER BY ko_normal.student_index, studies_modetier, studies_field, studies_specialty;
+  ko_refined.student_index = ko_specialties_per_student.student_index
+GROUP BY ko_refined.student_index, studies_modetier, studies_field, studies_specialty
+ORDER BY ko_refined.student_index, studies_modetier, studies_field, studies_specialty;
 
 -- Students with related programs
 CREATE VIEW ko_student_programs AS
 SELECT
-  ko_normal.student_index AS student_index,
-  ko_normal.student_name AS student_name,
-  ko_normal.faculty AS faculty,
-  ko_normal.studies_modetier AS studies_modetier,
-  ko_normal.studies_field AS studies_field,
+  ko_refined.student_index AS student_index,
+  ko_refined.student_name AS student_name,
+  ko_refined.faculty AS faculty,
+  ko_refined.studies_modetier AS studies_modetier,
+  ko_refined.studies_field AS studies_field,
   ko_programs_per_student.studies_programs_count AS studies_programs_count
-FROM ko_normal
+FROM ko_refined
 LEFT JOIN ko_programs_per_student ON
-  ko_normal.student_index = ko_programs_per_student.student_index
-GROUP BY ko_normal.student_index, studies_modetier, studies_field
-ORDER BY ko_normal.student_index, studies_modetier, studies_field;
+  ko_refined.student_index = ko_programs_per_student.student_index
+GROUP BY ko_refined.student_index, studies_modetier, studies_field
+ORDER BY ko_refined.student_index, studies_modetier, studies_field;
 
 
 
