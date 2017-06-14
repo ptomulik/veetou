@@ -1,5 +1,6 @@
 CREATE VIEW ko_refined AS
 SELECT
+  ko_full.ko_tr_id AS tr_id,
   ko_full.ko_tr_subj_code AS subj_code,
   ko_full.ko_tr_subj_name AS subj_name,
   ko_full.ko_preamble_student_index AS student_index,
@@ -224,83 +225,142 @@ LEFT JOIN ko_programs_per_student ON
 GROUP BY ko_refined.student_index, studies_modetier, studies_field
 ORDER BY ko_refined.student_index, studies_modetier, studies_field;
 
+CREATE VIEW ko_programs_per_tr AS
+SELECT
+  ko_refined.tr_id AS tr_id,
+  ko_refined.student_index AS student_index,
+  ko_refined.student_name AS student_name,
+  ko_refined.subj_code AS subj_code,
+  ko_refined.subj_name AS subj_name,
+  ko_refined.subj_grade AS subj_grade,
+  ko_refined.subj_grade_date AS subj_grade_date,
+  COUNT(DISTINCT
+    ko_refined.faculty || ';' ||
+    ko_refined.studies_modetier || ';' ||
+    ko_refined.studies_field
+  ) AS studies_programs_count,
+  GROUP_CONCAT(DISTINCT
+    ko_studies_program_codes.studies_program_code
+  ) AS studies_program_codes,
+  COUNT(DISTINCT
+    ko_studies_program_codes.studies_program_code
+  ) AS studies_program_codes_count
+FROM ko_refined
+LEFT JOIN ko_studies_program_codes ON (
+  ko_refined.faculty = ko_studies_program_codes.faculty AND
+  ko_refined.studies_modetier = ko_studies_program_codes.studies_modetier AND
+  ko_refined.studies_field = ko_studies_program_codes.studies_field AND
+  ko_refined.studies_specialty = ko_studies_program_codes.studies_specialty
+)
+GROUP BY tr_id
+ORDER BY student_index, subj_code;
 
+CREATE VIEW usos_progs_ids_per_ko_tr AS
+SELECT
+  ko_refined.tr_id AS ko_tr_id,
+  ko_refined.student_index AS student_index,
+  ko_refined.student_name AS ko_student_name,
+  ko_refined.subj_code AS ko_subj_code,
+  ko_refined.subj_name AS ko_subj_name,
+  ko_refined.subj_grade AS ko_subj_grade,
+  ko_refined.subj_grade_date AS ko_subj_grade_date,
+  ko_refined.semester_code AS ko_semester_code,
+  ko_refined.faculty AS ko_faculty,
+  ko_refined.studies_modetier AS ko_studies_modetier,
+  ko_refined.studies_field AS ko_studies_field,
+  ko_refined.studies_specialty AS ko_studies_specialty,
+  ko_studies_program_codes.studies_program_code AS studies_program_code,
+  GROUP_CONCAT(DISTINCT usos_allstudents.progs_id) AS usos_progs_ids,
+  COUNT(DISTINCT usos_allstudents.progs_id) AS usos_progs_ids_count
+FROM ko_refined
+LEFT JOIN ko_studies_program_codes ON (
+  ko_refined.faculty = ko_studies_program_codes.faculty AND
+  ko_refined.studies_modetier = ko_studies_program_codes.studies_modetier AND
+  ko_refined.studies_field = ko_studies_program_codes.studies_field AND
+  ko_refined.studies_specialty = ko_studies_program_codes.studies_specialty
+)
+LEFT JOIN usos_allstudents ON (
+  ko_refined.student_index = usos_allstudents.student_index AND
+  ko_studies_program_codes.studies_program_code = usos_allstudents.studies_program_code
+)
+GROUP BY ko_tr_id, usos_allstudents.progs_id
+ORDER BY ko_tr_id, usos_allstudents.progs_id;
 
------- Number of distinct study programs for each student
-----CREATE VIEW ko_programs_per_student AS
-----SELECT
-----  joined.preamble_student_index AS student_index,
-----  joined.preamble_student_name AS student_name,
-----  GROUP_CONCAT(DISTINCT ko_studies_program_codes.studies_program_code) AS studies_program_codes,
-----  COUNT(DISTINCT ko_studies_program_codes.studies_program_code) AS studies_programs_count,
-----FROM joined
-----LEFT JOIN ko_studies_program_codes ON (
-----  joined.header_faculty = ko_studies_program_codes.faculty AND
-----  joined.preamble_studies_modetier = ko_studies_program_codes.studies_modetier AND
-----  joined.preamble_studies_field = ko_studies_program_codes.studies_field AND
-----  joined.preamble_studies_specialty = ko_studies_program_codes.studies_specialty
-----)
-----GROUP BY student_index
-----ORDER BY student_index;
-----
------- Distinct semesters for each student on a given program
-----CREATE VIEW ko_semesters_per_student_program AS
-----SELECT
-----  joined.preamble_student_index AS student_index,
-----  joined.preamble_student_name AS student_name,
-----  ko_studies_program_codes.studies_program_code AS studies_program_code,
-----  GROUP_CONCAT(DISTINCT joined.preamble_semester_code) AS semester_codes,
-----  COUNT(DISTINCT joined.preamble_semester_code) AS semesters_count
-----FROM joined
-----LEFT JOIN ko_studies_program_codes ON (
-----  joined.header_faculty = ko_studies_program_codes.faculty AND
-----  joined.preamble_studies_modetier = ko_studies_program_codes.studies_modetier AND
-----  joined.preamble_studies_field = ko_studies_program_codes.studies_field AND
-----  joined.preamble_studies_specialty = ko_studies_program_codes.studies_specialty
-----)
-----GROUP BY student_index, studies_program_code
-----ORDER BY student_index, studies_program_code;
-----
------- Distinct programs for every student on a given semester
-----CREATE VIEW ko_programs_per_student_semester AS
-----SELECT
-----  joined.preamble_student_index AS student_index,
-----  joined.preamble_student_name AS student_name,
-----  joined.preamble_semester_code AS semester_code,
-----  GROUP_CONCAT(DISTINCT ko_studies_program_codes.studies_program_code) AS studies_program_codes,
-----  COUNT(DISTINCT ko_studies_program_codes.studies_program_code) AS studies_programs_count
-----FROM joined
-----LEFT JOIN ko_studies_program_codes ON (
-----  joined.header_faculty = ko_studies_program_codes.faculty AND
-----  joined.preamble_studies_modetier = ko_studies_program_codes.studies_modetier AND
-----  joined.preamble_studies_field = ko_studies_program_codes.studies_field AND
-----  joined.preamble_studies_specialty = ko_studies_program_codes.studies_specialty
-----)
-----GROUP BY student_index, semester_code
-----ORDER BY student_index, semester_code;
-----
------- Students on programs (according to ko)
-----CREATE VIEW ko_students_programs AS
-----SELECT DISTINCT
-----  joined.preamble_student_index AS student_index,
-----  joined.preamble_student_name AS student_name,
-----  joined.header_faculty AS faculty,
-----  joined.preamble_studies_modetier AS studies_modetier,
-----  joined.preamble_studies_field AS studies_field,
-----  joined.preamble_studies_specialty AS studies_specialty,
-----  ko_studies_program_codes.studies_program_code AS studies_program_code,
-----  ko_programs_per_student.studies_programs_count AS distinct_studies_programs_count
-----FROM joined
-----LEFT JOIN ko_studies_program_codes ON (
-----  joined.header_faculty = ko_studies_program_codes.faculty AND
-----  joined.preamble_studies_modetier = ko_studies_program_codes.studies_modetier AND
-----  joined.preamble_studies_field = ko_studies_program_codes.studies_field AND
-----  joined.preamble_studies_specialty = ko_studies_program_codes.studies_specialty
-----) LEFT JOIN ko_programs_per_student ON (
-----  joined.preamble_student_index = ko_programs_per_student.student_index
-----)
-----ORDER BY student_index, studies_program_code;
---
+CREATE VIEW ko_tr_usos_allstudents AS
+SELECT
+  ko_refined.tr_id AS ko_tr_id,
+  ko_refined.subj_code AS ko_subj_code,
+  faculty_usos_subj_codes.usos_subj_code AS usos_subj_code,
+  ko_refined.subj_name AS ko_subj_name,
+  ko_refined.student_index AS ko_student_index,
+--  ko_refined.first_name AS ko_first_name,
+--  ko_refined.last_name AS ko_last_name,
+  ko_refined.student_name AS ko_student_name,
+  ko_refined.subj_grade AS ko_subj_grade,
+  ko_refined.subj_grade_date AS ko_subj_grade_date,
+  ko_refined.university AS ko_university,
+  ko_refined.faculty AS ko_faculty,
+  ko_refined.studies_modetier AS ko_studies_modetier,
+  ko_refined.studies_field AS ko_studies_field,
+  ko_refined.studies_specialty AS ko_studies_specialty,
+  ko_refined.semester_code AS ko_semester_code,
+  ko_refined.semester_number AS ko_semester_number,
+  ko_refined.subj_tutor AS ko_subj_tutor,
+  ko_refined.subj_hours_w AS ko_subj_hours_w,
+  ko_refined.subj_hours_c AS ko_subj_hours_c,
+  ko_refined.subj_hours_l AS ko_subj_hours_l,
+  ko_refined.subj_hours_p AS ko_subj_hours_p,
+  ko_refined.subj_hours_s AS ko_subj_hours_s,
+  ko_refined.subj_credit_kind AS ko_subj_credit_kind,
+  ko_refined.subj_ects AS ko_subj_ects,
+  ko_refined.ects_mandatory AS ko_ects_mandatory,
+  ko_refined.ects_other AS ko_ects_other,
+  ko_refined.ects_total AS ko_ects_total,
+  ko_refined.ects_attained AS ko_ects_attained,
+  ko_refined.title AS ko_title,
+  ko_refined.report_source AS ko_report_source,
+  ko_refined.report_open_datetime AS ko_report_open_datetime,
+  ko_refined.report_sheets_parsed AS ko_report_sheets_parsed,
+  ko_refined.report_pages_parsed AS ko_report_pages_parsed,
+  ko_refined.page_number AS ko_page_number,
+  ko_refined.sheet_first_page AS ko_sheet_first_page,
+  ko_refined.sheet_pages_parsed AS ko_sheet_pages_parsed,
+  usos_allstudents.person_id AS usos_person_id,
+  usos_allstudents.last_name AS usos_last_name,
+  usos_allstudents.first_name AS usos_first_name,
+  usos_allstudents.second_name AS usos_second_name,
+  usos_allstudents.student_index AS usos_student_index,
+  usos_allstudents.studies_program_code AS usos_studies_program_code,
+  usos_allstudents.progs_id AS usos_progs_id,
+  usos_allstudents.admission_date AS usos_admission_date,
+  usos_allstudents.max_cdyd AS usos_max_cdyd,
+  usos_allstudents.max_stage AS usos_max_stage,
+  usos_allstudents.discontinuation_date AS usos_discontinuation_date,
+  usos_allstudents.dissertation_date AS usos_dissertation_date,
+  usos_allstudents.studies_tier AS usos_studies_tier,
+  usos_allstudents.studies_mode AS usos_studies_mode,
+  usos_allstudents.studies_program_description AS usos_studies_program_description,
+  usos_progs_ids_per_ko_tr.usos_progs_ids_count,
+  (ko_refined.semester_code <= usos_allstudents.max_cdyd) AS ko_semester_code_le_max_cdyd
+FROM ko_refined
+LEFT JOIN ko_studies_program_codes ON (
+  ko_refined.faculty = ko_studies_program_codes.faculty AND
+  ko_refined.studies_modetier = ko_studies_program_codes.studies_modetier AND
+  ko_refined.studies_field = ko_studies_program_codes.studies_field AND
+  ko_refined.studies_specialty = ko_studies_program_codes.studies_specialty
+)
+LEFT JOIN faculty_usos_subj_codes ON (
+  ko_refined.subj_code = faculty_usos_subj_codes.subj_code
+)
+LEFT JOIN usos_allstudents ON (
+  ko_refined.student_index = usos_allstudents.student_index AND
+  ko_studies_program_codes.studies_program_code = usos_studies_program_code
+)
+LEFT JOIN usos_progs_ids_per_ko_tr ON
+  ko_refined.tr_id = usos_progs_ids_per_ko_tr.ko_tr_id
+ORDER BY ko_tr_id, usos_progs_id
+;
+
 ---- Students on programs (according to ko)
 --CREATE VIEW kosp AS
 --SELECT DISTINCT

@@ -140,7 +140,9 @@ class DbOutCmd(cmd_.Cmd):
 
         result_column = lambda c : "%s AS %s_%s" % (schemaname(c), schemaname(entityclass(c)), c.key)
 
-        result_columns = list(map(result_column, columniter(join.tables[0])))
+        table = join.tables[0]
+        id_column = "%s.id AS %s_id" % (tablename(table), schemaname(entityclass(table)))
+        result_columns = [id_column] + list(map(result_column, columniter(table)))
         join_clause = ""
         for i in range(0,len(join.sources)):
             srcindex = join.sources[i]
@@ -157,6 +159,8 @@ class DbOutCmd(cmd_.Cmd):
             if isinstance(relation, Junction):
                 s = """ %s JOIN %s ON %s.%s_id = %s.id %s JOIN %s ON %s.%s_id = %s.id""" % \
                     (jt, rn, rn, se, st, jt, tt, rn, te, tt)
+                id_column = "%s.id AS %s_id" % (tablename(tgttable), schemaname(entityclass(tgttable)))
+                result_columns.append(id_column)
                 result_columns.extend(map(result_column,  columniter(tgttable)))
             elif isinstance(relation, Link):
                 # FIXME: needs to be implemented somehow?
