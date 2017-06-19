@@ -13,3 +13,4 @@
 1 s/\<Rodzaj studiów\>/studies_tier/g
 1 s/\<Tryb studiów\>/studies_mode/g
 1 s/\<Opis programu\>/studies_program_description/g
+s/\<\([0-9]\{2\}\)\.\([0-9]\{2\}\)\.\([0-9]\{4\}\)\>/\3-\2-\1/g

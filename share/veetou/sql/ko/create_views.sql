@@ -15,6 +15,8 @@ SELECT
   ko_full.ko_preamble_studies_field AS studies_field,
   ko_full.ko_preamble_studies_specialty AS studies_specialty,
   ko_full.ko_preamble_semester_code AS semester_code,
+  usos_cycles.cycle_start_date AS semester_start_date,
+  usos_cycles.cycle_end_date AS semester_end_date,
   ko_full.ko_preamble_semester_number AS semester_number,
   ko_full.ko_tr_subj_tutor AS subj_tutor,
   ko_full.ko_tr_subj_hours_w AS subj_hours_w,
@@ -36,7 +38,8 @@ SELECT
   ko_full.ko_page_page_number AS page_number,
   ko_full.ko_sheet_first_page AS sheet_first_page,
   ko_full.ko_sheet_pages_parsed AS sheet_pages_parsed
-FROM ko_full;
+FROM ko_full
+LEFT JOIN usos_cycles ON ko_full.ko_preamble_semester_code = usos_cycles.cycle_code;
 
 -- All studens found in ko reports
 CREATE VIEW ko_students AS
@@ -304,6 +307,8 @@ SELECT
   ko_refined.studies_field AS ko_studies_field,
   ko_refined.studies_specialty AS ko_studies_specialty,
   ko_refined.semester_code AS ko_semester_code,
+  ko_refined.semester_start_date AS ko_semester_start_date,
+  ko_refined.semester_end_date AS ko_semester_end_date,
   ko_refined.semester_number AS ko_semester_number,
   ko_refined.subj_tutor AS ko_subj_tutor,
   ko_refined.subj_hours_w AS ko_subj_hours_w,
@@ -341,7 +346,9 @@ SELECT
   usos_allstudents.studies_mode AS usos_studies_mode,
   usos_allstudents.studies_program_description AS usos_studies_program_description,
   usos_progs_ids_per_ko_tr.usos_progs_ids_count,
-  (ko_refined.semester_code <= usos_allstudents.max_cdyd) AS ko_semester_code_le_max_cdyd
+  (ko_refined.semester_code <= usos_allstudents.max_cdyd) AS ko_semester_code_le_max_cdyd,
+  (ko_refined.semester_start_date >= usos_allstudents.admission_date) AS ko_semester_start_date_ge_admission_date,
+  (ko_refined.semester_end_date <= coalesce(usos_allstudents.discontinuation_date, usos_allstudents.dissertation_date)) AS ko_semester_end_date_le_discontinuation_or_dissertation_date
 FROM ko_refined
 LEFT JOIN ko_studies_program_codes ON (
   ko_refined.faculty = ko_studies_program_codes.faculty AND
