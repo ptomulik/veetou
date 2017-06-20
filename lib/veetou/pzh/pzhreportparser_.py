@@ -164,7 +164,11 @@ class PzHPreambleParser(Parser):
         def refine(key, fcn):
             if isinstance(data.get(key), str):
                 data[key] = fcn(data[key])
+        isodate = lambda s : re.sub(r'\b(\d{2})\.(\d{2})\.(\d{4})\b', r'\3-\2-\1', s)
         refine('semester_code', lambda s : s.replace(' ', ''))
+        refine('return_date', isodate)
+        refine('modified_datetime', isodate)
+        refine('return_deadline', isodate)
 
     def parse_title(self, content, kw):
         title = get_unique_element(content, "div[contains(@class,'title')]")
@@ -288,6 +292,13 @@ class PzHTrParser(Parser):
     def parse_before_children(self, tr, kw):
         return True
 
+    def refine_tr(self, data):
+        def refine(key, fcn):
+            if isinstance(data.get(key), str):
+                data[key] = fcn(data[key])
+        isodate = lambda s : re.sub(r'\b(\d{2})\.(\d{2})\.(\d{4})\b', r'\3-\2-\1', s)
+        refine('edited_datetime', isodate)
+
     def parse_with_children(self, tr, kw):
         i = 0
         for td in tr.xpath('td'):
@@ -303,6 +314,7 @@ class PzHTrParser(Parser):
                 sys.stderr.write("error: %s\n" % dsc)
                 return False
             i += 1
+        self.refine_tr(kw)
         return True
 
 class PzHSummaryParser(Parser):
