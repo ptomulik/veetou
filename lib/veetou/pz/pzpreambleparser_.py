@@ -82,7 +82,11 @@ class PzPreambleParser(PreambleParser):
         def refine(key, fcn):
             if isinstance(data.get(key), str):
                 data[key] = fcn(data[key])
+        isodate = lambda s : re.sub(r'\b(\d{2})\.(\d{2})\.(\d{4})\b', r'\3-\2-\1', s)
         refine('semester_code', lambda s : s.replace(' ', ''))
+        refine('date', isodate)
+        refine('return_date', isodate)
+        refine('town_and_datetime', isodate)
 
     def parse_before_children(self, iterator, kw):
         if not self.match_before_children(iterator, groupdict = kw):

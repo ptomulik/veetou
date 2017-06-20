@@ -39,8 +39,10 @@ class KoTrParser(TrParser):
         def refine(key, fcn):
             if isinstance(data.get(key), str):
                 data[key] = fcn(data[key])
-        dot2comma = lambda s : re.sub(r'\b(\d)\.(\d)\b', r'\1,\2', s)
-        refine('subj_grade', dot2comma)
+        commagrade = lambda s : re.sub(r'\b(\d)\.(\d)\b', r'\1,\2', s)
+        isodate = lambda s : re.sub(r'\b(\d{2})\.(\d{2})\.(\d{4})\b', r'\3-\2-\1', s)
+        refine('subj_grade', commagrade)
+        refine('subj_grade_date', isodate)
 
     def parse_tr(self, iterator, kw):
         if not self.parse_tr_mid_aligned(iterator, kw):
