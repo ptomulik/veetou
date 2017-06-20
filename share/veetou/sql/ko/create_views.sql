@@ -146,7 +146,8 @@ LEFT JOIN ko_studies_program_codes ON (
   ko_refined.faculty = ko_studies_program_codes.faculty AND
   ko_refined.studies_modetier = ko_studies_program_codes.studies_modetier AND
   ko_refined.studies_field = ko_studies_program_codes.studies_field AND
-  ko_refined.studies_specialty = ko_studies_program_codes.studies_specialty
+  (ko_refined.studies_specialty = ko_studies_program_codes.studies_specialty OR
+   ko_refined.studies_specialty IS NULL AND ko_studies_program_codes.studies_specialty IS NULL)
 )
 LEFT JOIN usos_dict_studies_specialties ON (
   (ko_refined.studies_specialty = usos_dict_studies_specialties.description_pl COLLATE NOCASE OR
@@ -182,7 +183,8 @@ LEFT JOIN ko_studies_program_codes ON (
   ko_refined.faculty = ko_studies_program_codes.faculty AND
   ko_refined.studies_modetier = ko_studies_program_codes.studies_modetier AND
   ko_refined.studies_field = ko_studies_program_codes.studies_field AND
-  ko_refined.studies_specialty = ko_studies_program_codes.studies_specialty
+  (ko_refined.studies_specialty = ko_studies_program_codes.studies_specialty OR
+   ko_refined.studies_specialty IS NULL AND ko_studies_program_codes.studies_specialty IS NULL)
 )
 GROUP BY student_index
 ORDER BY student_index;
@@ -207,7 +209,8 @@ LEFT JOIN ko_studies_program_codes ON (
   ko_refined.faculty = ko_studies_program_codes.faculty AND
   ko_refined.studies_modetier = ko_studies_program_codes.studies_modetier AND
   ko_refined.studies_field = ko_studies_program_codes.studies_field AND
-  ko_refined.studies_specialty = ko_studies_program_codes.studies_specialty
+  (ko_refined.studies_specialty = ko_studies_program_codes.studies_specialty OR
+   ko_refined.studies_specialty IS NULL AND ko_studies_program_codes.studies_specialty IS NULL)
 )
 GROUP BY
   student_index,
@@ -246,7 +249,8 @@ LEFT JOIN ko_studies_program_codes ON (
   ko_refined.faculty = ko_studies_program_codes.faculty AND
   ko_refined.studies_modetier = ko_studies_program_codes.studies_modetier AND
   ko_refined.studies_field = ko_studies_program_codes.studies_field AND
-  ko_refined.studies_specialty = ko_studies_program_codes.studies_specialty
+  (ko_refined.studies_specialty = ko_studies_program_codes.studies_specialty OR
+   ko_refined.studies_specialty IS NULL AND ko_studies_program_codes.studies_specialty IS NULL)
 )
 LEFT JOIN ko_specialties_per_student ON (
   ko_refined.student_index = ko_specialties_per_student.student_index
@@ -323,7 +327,8 @@ LEFT JOIN ko_studies_program_codes ON (
   ko_refined.faculty = ko_studies_program_codes.faculty AND
   ko_refined.studies_modetier = ko_studies_program_codes.studies_modetier AND
   ko_refined.studies_field = ko_studies_program_codes.studies_field AND
-  ko_refined.studies_specialty = ko_studies_program_codes.studies_specialty
+  (ko_refined.studies_specialty = ko_studies_program_codes.studies_specialty OR
+   ko_refined.studies_specialty IS NULL AND ko_studies_program_codes.studies_specialty IS NULL)
 )
 GROUP BY tr_id
 ORDER BY student_index, subj_code;
@@ -373,7 +378,8 @@ LEFT JOIN ko_studies_program_codes ON (
   ko_refined.faculty = ko_studies_program_codes.faculty AND
   ko_refined.studies_modetier = ko_studies_program_codes.studies_modetier AND
   ko_refined.studies_field = ko_studies_program_codes.studies_field AND
-  ko_refined.studies_specialty = ko_studies_program_codes.studies_specialty
+  (ko_refined.studies_specialty = ko_studies_program_codes.studies_specialty OR
+   ko_refined.studies_specialty IS NULL AND ko_studies_program_codes.studies_specialty IS NULL)
 )
 --LEFT JOIN faculty_usos_subj_codes ON (
 --  ko_refined.subj_code = faculty_usos_subj_codes.subj_code
@@ -413,7 +419,8 @@ LEFT JOIN ko_studies_program_codes ON (
   ko_refined.faculty = ko_studies_program_codes.faculty AND
   ko_refined.studies_modetier = ko_studies_program_codes.studies_modetier AND
   ko_refined.studies_field = ko_studies_program_codes.studies_field AND
-  ko_refined.studies_specialty = ko_studies_program_codes.studies_specialty
+  (ko_refined.studies_specialty = ko_studies_program_codes.studies_specialty OR
+   ko_refined.studies_specialty IS NULL AND ko_studies_program_codes.studies_specialty IS NULL)
 )
 LEFT JOIN usos_allstudents ON (
   ko_refined.student_index = usos_allstudents.student_index AND
@@ -489,7 +496,8 @@ LEFT JOIN ko_studies_program_codes ON (
   ko_refined.faculty = ko_studies_program_codes.faculty AND
   ko_refined.studies_modetier = ko_studies_program_codes.studies_modetier AND
   ko_refined.studies_field = ko_studies_program_codes.studies_field AND
-  ko_refined.studies_specialty = ko_studies_program_codes.studies_specialty
+  (ko_refined.studies_specialty = ko_studies_program_codes.studies_specialty OR
+   ko_refined.studies_specialty IS NULL AND ko_studies_program_codes.studies_specialty IS NULL)
 )
 LEFT JOIN faculty_usos_subj_codes ON (
   ko_refined.subj_code = faculty_usos_subj_codes.subj_code
