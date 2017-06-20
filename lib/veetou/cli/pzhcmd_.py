@@ -23,7 +23,7 @@ class PzHCmd(htmlreportparsercmd_.HtmlReportParserCmd):
 
     @property
     def start_table(self):
-        return 'trs'
+        return 'pzh_trs'
 
     @property
     def full_view(self):

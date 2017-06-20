@@ -108,11 +108,19 @@ class PzHReportParser(RootParser):
 
     @property
     def table(self):
-        return 'reports'
+        return self.prefixed_table
 
     @property
     def endpoint(self):
-        return 'report'
+        return self.prefixed_endpoint
+
+    @property
+    def prefixed_table(self):
+        return '%sreports' % self.prefix
+
+    @property
+    def prefixed_endpoint(self):
+        return '%sreport' % self.prefix
 
     @property
     def content_xpath(self):
@@ -154,11 +162,19 @@ class PzHPreambleParser(Parser):
 
     @property
     def table(self):
-        return 'preambles'
+        return self.prefixed_table
 
     @property
     def endpoint(self):
-        return 'preamble'
+        return self.prefixed_endpoint
+
+    @property
+    def prefixed_table(self):
+        return '%spreambles' % self.prefix
+
+    @property
+    def prefixed_endpoint(self):
+        return '%spreamble' % self.prefix
 
     def refine_preamble(self, data):
         def refine(key, fcn):
@@ -287,11 +303,19 @@ class PzHTrParser(Parser):
 
     @property
     def table(self):
-        return 'trs'
+        return self.prefixed_table
 
     @property
     def endpoint(self):
-        return 'tr'
+        return self.prefixed_endpoint
+
+    @property
+    def prefixed_table(self):
+        return '%strs' % self.prefix
+
+    @property
+    def prefixed_endpoint(self):
+        return '%str' % self.prefix
 
     def parse_before_children(self, tr, kw):
         return True
@@ -331,11 +355,19 @@ class PzHSummaryParser(Parser):
 
     @property
     def table(self):
-        return 'summaries'
+        return self.prefixed_table
 
     @property
     def endpoint(self):
-        return 'summary'
+        return self.prefixed_endpoint
+
+    @property
+    def prefixed_table(self):
+        return '%ssummaries' % self.prefix
+
+    @property
+    def prefixed_endpoint(self):
+        return '%ssummary' % self.prefix
 
 # Local Variables:
 # # tab-width:4

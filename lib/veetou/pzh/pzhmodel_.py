@@ -18,15 +18,15 @@ __all__ = ( 'PzHReport',
 ##    else:
 ##        return str(s)
 
-PzHReport = declare( DataType, 'Report',
+PzHReport = declare( DataType, 'PzhReport',
 
         ('source', 'datetime'),
 #        5 * (strn,),
-        plural = 'Reports'
+        plural = 'PzhReports'
 
 )
 
-PzHPreamble = declare( DataType, 'Preamble',
+PzHPreamble = declare( DataType, 'PzhPreamble',
 
         (   'title', 'sheet_id', 'semester_code', 'sheet_serie',
             'sheet_number', 'sheet_type', 'sheet_state', 'subj_name',
@@ -34,27 +34,27 @@ PzHPreamble = declare( DataType, 'Preamble',
             'return_date', 'approved_by', 'modified_datetime', 'modified_date',
             'modified_time', 'return_deadline'),
 ##        17 * (strn,),
-        plural = 'Preambles'
+        plural = 'PzhPreambles'
 
 )
 
 
-PzHTr = declare( DataType, 'Tr',
+PzHTr = declare( DataType, 'PzhTr',
 
         (  'tr_ord_no', 'student_name', 'student_index', 'subj_grade',
            'subj_grade_final', 'subj_grade_project', 'subj_grade_lecture',
            'subj_grade_class', 'subj_grade_p', 'subj_grade_n',
            'edited_by', 'edited_datetime', 'edited_date', 'edited_time' ),
 ##        11 * (strn,),
-        plural = 'Trs'
+        plural = 'PzhTrs'
 
 )
 
-PzHSummary = declare( DataType, 'Summary',
+PzHSummary = declare( DataType, 'PzhSummary',
 
         ( 'caption', 'th', 'content' ),
 ##        3 * (strn,),
-        plural = 'Summaries'
+        plural = 'PzhSummaries'
 
 )
 
@@ -71,8 +71,8 @@ class PzHDataModel(DataModel):
         self.tables.update(tables)
 
     def _mk_initial_relations(self):
-        strings =   ( ( 'report_preamble',  ('reports', 'preambles'),  ('preamble', 'report') ),
-                      ( 'report_trs',       ('reports', 'trs'),        ('trs', 'report') ) )#,
+        strings =   ( ( 'pzh_report_preamble',  ('pzh_reports', 'pzh_preambles'),  ('pzh_preamble', 'pzh_report') ),
+                      ( 'pzh_report_trs',       ('pzh_reports', 'pzh_trs'),        ('pzh_trs', 'pzh_report') ) )#,
                       #( 'report_summary',   ('reports', 'summaries'),  ('summary', 'report') ) )
         relations = map( lambda x : (x[0],Junction(map(self.tables.__getitem__,x[1]),x[2])), strings )
         self.relations.update(relations)
@@ -81,6 +81,10 @@ class PzHDataModel(DataModel):
         super().__init__()
         self._mk_initial_tables()
         self._mk_initial_relations()
+
+    @property
+    def prefix(self):
+        return 'pzh_'
 
 
 # Local Variables:
