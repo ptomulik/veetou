@@ -40,20 +40,45 @@ SELECT
 FROM ko_full
 ;
 
---CREATE INDEX ko_full_idx1
---  ON ko_full( ko_header_faculty,
---              ko_preamble_studies_modetier,
---              ko_preamble_studies_field,
---              ko_preamble_studies_specialty )
---;
---
---CREATE INDEX ko_full_idx2
---  ON ko_full(ko_preamble_studies_specialty)
---;
---
---CREATE INDEX ko_full_idx3
---  ON ko_full(ko_preamble_student_index)
---;
+DROP INDEX IF EXISTS ko_headers_idx1;
+CREATE INDEX ko_headers_idx1
+  ON ko_headers(faculty)
+;
+
+DROP INDEX IF EXISTS ko_preambles_idx1;
+CREATE INDEX ko_preambles_idx1
+  ON ko_preambles(student_index)
+;
+
+DROP INDEX IF EXISTS ko_preambles_idx2;
+CREATE INDEX ko_preambles_idx2
+  ON ko_preambles(studies_modetier)
+;
+
+DROP INDEX IF EXISTS ko_preambles_idx3;
+CREATE INDEX ko_preambles_idx3
+  ON ko_preambles(studies_field)
+;
+
+DROP INDEX IF EXISTS ko_preambles_idx4;
+CREATE INDEX ko_preambles_idx4
+  ON ko_preambles(studies_specialty)
+;
+
+DROP INDEX IF EXISTS ko_preambles_idx5;
+CREATE INDEX ko_preambles_idx5
+  ON ko_preambles(studies_modetier,studies_field,studies_specialty)
+;
+
+DROP INDEX IF EXISTS ko_trs_idx1;
+CREATE INDEX ko_trs_idx1
+  ON ko_trs(subj_code)
+;
+
+DROP INDEX IF EXISTS ko_trs_idx2;
+CREATE INDEX ko_trs_idx2
+  ON ko_trs(subj_grade_date)
+;
 
 DROP INDEX IF EXISTS ko_studies_program_codes_idx1;
 CREATE INDEX ko_studies_program_codes_idx1
