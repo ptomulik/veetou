@@ -93,6 +93,12 @@ class DbOutCmd(cmd_.Cmd):
     def full_view(self):
         return self._full_view
 
+    def sql_drop_table(self, dbc, name):
+        return dbc.execute("""DROP TABLE IF EXISTS %s""" % name)
+
+    def sql_drop_view(self, dbc, name):
+        return dbc.execute("""DROP VIEW IF EXISTS %s""" % name)
+
     def sql_create_junction(self, dbc, name, junction):
         ltab = tablename(junction.tables[LEFT])
         rtab = tablename(junction.tables[RIGHT])
@@ -177,21 +183,30 @@ class DbOutCmd(cmd_.Cmd):
 
     def add_arguments(self):
         argparser = self.argparser
-        argparser.add_argument("--db-sql",
-                               action='store_true',
-                               help="output database as sql script")
+        argparser.add_argument( "--db-sql",
+                                action='store_true',
+                                help="output database as sql script")
+        argparser.add_argument( "--db-drop",
+                                action='store_true',
+                                help="drop old tables, views, etc. if they exist in database")
 
     def run(self, datamodel, start_table, jointypes=()):
         join = Join(datamodel.tables[start_table], jointypes=jointypes)
         relnames = RelationNameDict(map(reversed, datamodel.relations.items()))
         with sqlite3.connect(self.dbfile) as dbc:
             for name, table in datamodel.tables.items():
+                if self.arguments.db_drop:
+                    self.sql_drop_table(dbc, name)
                 self.sql_create_table(dbc, name, table)
                 self.sql_fill_table(dbc, name, table)
             for name, relation in datamodel.relations.items():
                 if isinstance(relation, Junction):
+                    if self.arguments.db_drop:
+                        self.sql_drop_table(dbc, name)
                     self.sql_create_junction(dbc, name, relation)
                     self.sql_fill_junction(dbc, name, relation)
+            if self.arguments.db_drop:
+                self.sql_drop_view(dbc, self.full_view)
             self.sql_create_join_view(dbc, self.full_view, join, relnames)
             if self.dbfile == ':memory:':
                 with self.outfile as outfile:
