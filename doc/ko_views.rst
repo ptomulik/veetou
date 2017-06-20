@@ -320,3 +320,10 @@ additional columns to deal with this problem:
   ``ko_semester_code <= usos_max_cdyd`` (comparing semester code extracted from
   **KO** to max possible semester for given program instance as defined by
   **usos_allstudents**).
+- **ko_semester_start_date_ge_admission_date** - to indicate condition that
+  ``ko_semester_start_date >= usos_admission_date`` (comparing semester start
+  date to student's admission date),
+- **ko_semester_end_date_le_discontinuation_or_dissertation_date** - to
+  indicate condition that ``ko_semester_end_date <= usos_discontinuation_date`` or
+  ``ko_semester_end_date <= usos_dissertation_date`` (comparing semester end
+  date to the date where studies were finished),
