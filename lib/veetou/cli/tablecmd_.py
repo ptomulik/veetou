@@ -59,20 +59,21 @@ class TableCmd(cmd_.Cmd):
                     th = tuple(c.strip() for c in header.split(delimiter))
 
                 datatype = declare(DataType, tablename, th, plural=tablename)
+                refine = lambda s : s if s else None
                 entity = entityclass(datatype)
                 table = tableclass(datatype)()
 
                 reader = csv.reader(f, delimiter=delimiter)
                 if key is None:
                     for row in reader:
-                        ent = entity(row)
+                        ent = entity(map(refine,row))
                         table.append(ent)
                 else:
                     if key not in entity.keys():
                         sys.stderr.write("error: no column named %s in %s\n" % (repr(key), repr(filename)))
                         return False
                     for row in reader:
-                        ent = entity(row)
+                        ent = entity(map(refine,row))
                         table[ent[key]] = ent
                 datamodel.tables[tablename] = table
         return True
