@@ -356,7 +356,7 @@ LEFT JOIN ko_studies_program_codes ON (
    ko_refined.studies_specialty IS NULL AND ko_studies_program_codes.studies_specialty IS NULL)
 )
 GROUP BY tr_id
-ORDER BY student_index, subj_code;
+ORDER BY tr_id;
 
 DROP VIEW IF EXISTS ko_students_usos_allstudents;
 CREATE VIEW ko_students_usos_allstudents AS
@@ -512,7 +512,7 @@ SELECT
   usos_allstudents.studies_tier AS usos_studies_tier,
   usos_allstudents.studies_mode AS usos_studies_mode,
   usos_allstudents.studies_program_description AS usos_studies_program_description,
-  usos_progs_ids_per_ko_tr.usos_progs_ids_count,
+  usos_progs_ids_per_ko_tr.usos_progs_ids_count AS usos_progs_ids_per_ko_tr,
   (ko_refined.semester_code <= usos_allstudents.max_cdyd) AS ko_semester_code_le_max_cdyd,
   (usos_cycles.cycle_start_date >= usos_allstudents.admission_date) AS ko_semester_start_date_ge_admission_date,
   (usos_cycles.cycle_end_date <= coalesce(usos_allstudents.discontinuation_date, usos_allstudents.dissertation_date)) AS ko_semester_end_date_le_discontinuation_or_dissertation_date
@@ -529,7 +529,7 @@ LEFT JOIN faculty_usos_subj_codes ON (
 )
 LEFT JOIN usos_allstudents ON (
   ko_refined.student_index = usos_allstudents.student_index AND
-  ko_studies_program_codes.studies_program_code = usos_studies_program_code
+  ko_studies_program_codes.studies_program_code = usos_allstudents.studies_program_code
 )
 LEFT JOIN usos_progs_ids_per_ko_tr ON
   ko_refined.tr_id = usos_progs_ids_per_ko_tr.ko_tr_id
