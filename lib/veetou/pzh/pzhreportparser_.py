@@ -169,6 +169,10 @@ class PzHPreambleParser(Parser):
         refine('return_date', isodate)
         refine('modified_datetime', isodate)
         refine('return_deadline', isodate)
+        if data.get('modified_datetime'):
+            pattern = r'\b(\d{4}-\d{2}-\d{2})\b(?: *, *(\d{2}:\d{2}))?'
+            data['modified_date'] = re.sub(pattern, r'\1', data['modified_datetime'])
+            data['modified_time'] = re.sub(pattern, r'\2', data['modified_datetime'])
 
     def parse_title(self, content, kw):
         title = get_unique_element(content, "div[contains(@class,'title')]")
@@ -298,6 +302,10 @@ class PzHTrParser(Parser):
                 data[key] = fcn(data[key])
         isodate = lambda s : re.sub(r'\b(\d{2})\.(\d{2})\.(\d{4})\b', r'\3-\2-\1', s)
         refine('edited_datetime', isodate)
+        if data.get('edited_datetime'):
+            pattern = r'\b(\d{4}-\d{2}-\d{2})\b(?: *, *(\d{2}:\d{2}))?'
+            data['edited_date'] = re.sub(pattern, r'\1', data['edited_datetime'])
+            data['edited_time'] = re.sub(pattern, r'\2', data['edited_datetime'])
 
     def parse_with_children(self, tr, kw):
         i = 0

@@ -31,8 +31,8 @@ PzHPreamble = declare( DataType, 'Preamble',
         (   'title', 'sheet_id', 'semester_code', 'sheet_serie',
             'sheet_number', 'sheet_type', 'sheet_state', 'subj_name',
             'subj_department', 'subj_code', 'subj_grade_type', 'subj_tutor',
-            'return_date', 'approved_by', 'modified_datetime',
-            'return_deadline'),
+            'return_date', 'approved_by', 'modified_datetime', 'modified_date',
+            'modified_time', 'return_deadline'),
 ##        17 * (strn,),
         plural = 'Preambles'
 
@@ -44,7 +44,7 @@ PzHTr = declare( DataType, 'Tr',
         (  'tr_ord_no', 'student_name', 'student_index', 'subj_grade',
            'subj_grade_final', 'subj_grade_project', 'subj_grade_lecture',
            'subj_grade_class', 'subj_grade_p', 'subj_grade_n',
-           'edited_by', 'edited_datetime' ),
+           'edited_by', 'edited_datetime', 'edited_date', 'edited_time' ),
 ##        11 * (strn,),
         plural = 'Trs'
 
