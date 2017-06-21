@@ -71,7 +71,7 @@ SELECT
   ko_tr_usos_allstudents.usos_studies_tier AS usos_studies_tier,
   ko_tr_usos_allstudents.usos_studies_mode AS usos_studies_mode,
   ko_tr_usos_allstudents.usos_studies_program_description AS usos_studies_program_description,
-  ko_tr_usos_allstudents.usos_progs_ids_count AS usos_progs_ids_count,
+  ko_tr_usos_allstudents.usos_progs_ids_per_ko_tr AS usos_progs_ids_per_ko_tr,
   ko_tr_usos_allstudents.ko_semester_code_le_max_cdyd AS ko_semester_code_le_max_cdyd,
   ko_tr_usos_allstudents.ko_semester_start_date_ge_admission_date AS ko_semester_start_date_ge_admission_date,
   ko_tr_usos_allstudents.ko_semester_end_date_le_discontinuation_or_dissertation_date AS ko_semester_end_date_le_discontinuation_or_dissertation_date
