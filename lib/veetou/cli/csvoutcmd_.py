@@ -101,13 +101,13 @@ class CsvOutCmd(cmd_.Cmd):
         with self.outfile as outfile:
             writer = csv.writer(outfile, **kw)
             if not fieldmapper:
-                writer.writerow(map(schemaname, columniter(join.tables)))
+                writer.writerow(tuple(map(schemaname, columniter(join.tables))))
                 fieldvalue = lambda x : x.value
-                fieldvalues = lambda r : map(fieldvalue, fielditer(r))
+                fieldvalues = lambda r : tuple(map(fieldvalue, fielditer(r)))
             else:
-                writer.writerow(map(lambda x:x[0], fieldmapper(join.tables)))
+                writer.writerow(tuple(map(lambda x:x[0], fieldmapper(join.tables))))
                 fieldvalue = lambda x : x[1].value
-                fieldvalues = lambda r : map(fieldvalue, fieldmapper(r))
+                fieldvalues = lambda r : tuple(map(fieldvalue, fieldmapper(r)))
             writer.writerows(map(fieldvalues, join.rows()))
         return 0
 

@@ -137,7 +137,7 @@ class DbOutCmd(cmd_.Cmd):
         return dbc.executemany("INSERT INTO %s VALUES (%s)" % (name, qmarks), map(flatten, table.items()))
 
     def sql_fill_junction(self, dbc, name, junction):
-        return dbc.executemany("INSERT INTO %s VALUES (?,?)" % name, junction)
+        return dbc.executemany("INSERT INTO %s VALUES (?,?)" % name, iter(junction))
 
 
     def sql_create_join_view(self, dbc, name, join, relnames):
