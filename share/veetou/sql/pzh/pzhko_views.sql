@@ -58,6 +58,7 @@ SELECT
   ko_tr_usos_allstudents.ko_report_sheets_parsed AS ko_report_sheets_parsed,
   ko_tr_usos_allstudents.ko_page_number AS ko_page_number,
   ko_tr_usos_allstudents.ko_sheet_first_page AS ko_sheet_first_page,
+  ko_tr_usos_allstudents.usos_subj_code AS usos_subj_code,
   ko_tr_usos_allstudents.usos_person_id AS usos_person_id,
   ko_tr_usos_allstudents.usos_last_name AS usos_last_name,
   ko_tr_usos_allstudents.usos_first_name AS usos_first_name,
