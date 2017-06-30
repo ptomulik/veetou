@@ -67,6 +67,7 @@ SELECT
   ko_tr_usos_allstudents.usos_studies_program_code AS usos_studies_program_code,
   ko_tr_usos_allstudents.usos_progs_id AS usos_progs_id,
   ko_tr_usos_allstudents.usos_admission_date AS usos_admission_date,
+  ko_tr_usos_allstudents.usos_start_date AS usos_start_date,
   ko_tr_usos_allstudents.usos_discontinuation_date AS usos_discontinuation_date,
   ko_tr_usos_allstudents.usos_dissertation_date AS usos_dissertation_date,
   ko_tr_usos_allstudents.usos_studies_tier AS usos_studies_tier,
@@ -75,6 +76,7 @@ SELECT
   ko_tr_usos_allstudents.usos_progs_ids_per_ko_tr AS usos_progs_ids_per_ko_tr,
   ko_tr_usos_allstudents.ko_semester_code_le_max_cdyd AS ko_semester_code_le_max_cdyd,
   ko_tr_usos_allstudents.ko_semester_start_date_ge_admission_date AS ko_semester_start_date_ge_admission_date,
+  ko_tr_usos_allstudents.ko_semester_start_date_ge_start_date AS ko_semester_start_date_ge_start_date,
   ko_tr_usos_allstudents.ko_semester_end_date_le_discontinuation_or_dissertation_date AS ko_semester_end_date_le_discontinuation_or_dissertation_date
 FROM pzh_refined
 LEFT JOIN ko_tr_usos_allstudents ON (

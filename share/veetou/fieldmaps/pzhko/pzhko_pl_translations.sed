@@ -64,6 +64,7 @@
 1 s/\<\(usos_studies_program_code\)\>/"USOS: Program"/g
 1 s/\<\(usos_progs_id\)\>/"USOS: PROGS_ID"/g
 1 s/\<\(usos_admission_date\)\>/"USOS: Data przyjęcia lub wznowienia"/g
+1 s/\<\(usos_start_date\)\>/"USOS: Data rozpoczęcia studiów"/g
 1 s/\<\(usos_discontinuation_date\)\>/"USOS: Data skreślenia"/g
 1 s/\<\(usos_dissertation_date\)\>/"USOS: Data obrony"/g
 1 s/\<\(usos_studies_tier\)\>/"USOS: Rodzaj studiów"/g

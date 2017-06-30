@@ -6,6 +6,7 @@
 1 s/\<Program\>/studies_program_code/g
 1 s/\<PRGOS_ID\>/progs_id/g
 1 s/\<Data przyjęcia\>/admission_date/g
+1 s/\<Data rozpoczęcia\>/start_date/g
 1 s/\<Maks cdyd\>/max_cdyd/g
 1 s/\<Maks etap\>/max_stage/g
 1 s/\<Data skreślenia\>/discontinuation_date/g
