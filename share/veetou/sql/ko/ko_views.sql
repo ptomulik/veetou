@@ -594,3 +594,33 @@ SELECT * FROM ko_tr_usos_allstudents
 WHERE ko_tr_id NOT IN (
   SELECT ko_tr_id FROM ko_tr_usos_allstudents_matched
 );
+
+DROP VIEW IF EXISTS ko_tr_usos_allstudents_matched_oceny_suplement_import;
+CREATE VIEW ko_tr_usos_allstudents_matched_oceny_suplement_import AS
+SELECT
+  usos_student_index AS "Numer albumu",                     --  1;Numer albumu;VARCHAR2;30;T
+  usos_first_name AS "Imię",                                --  2;Imię;VARCHAR2;40;T
+  usos_last_name AS "Nazwisko",                             --  3;Nazwisko;VARCHAR2;40;T
+  usos_studies_program_code AS "Kod programu",              --  4;Kod programu;VARCHAR2;20;N
+  usos_start_date AS  "Data rozpoczęcia studiów",           --  5;Data rozpoczęcia studiów;DATE; ;N
+  usos_subj_code AS "Kod przedmiotu",                       --  6;Kod przedmiotu;VARCHAR2;20;N
+  ko_semester_code AS "Kod cyklu dydaktycznego",            --  7;Kod cyklu dydaktycznego;VARCHAR2;20;T
+  ko_subj_grade AS "Ocena",                                 --  8;Ocena;VARCHAR2;100;T
+  ko_subj_code AS "Kod przedmiotu obcego - wydział",        --  9;Kod przedmiotu obcego - wydział;VARCHAR2;20;N
+  ko_subj_name AS "Nazwa przedmiotu obcego PL",             -- 10;Nazwa przedmiotu obcego PL;VARCHAR2;200;N
+  '' AS "Nazwa przedmiotu obcego ANG",                      -- 11;Nazwa przedmiotu obcego ANG;VARCHAR2;200;N
+  '' AS "Język przedmiotu obcego",                          -- 12;Język przedmiotu obcego;VARCHAR2;3;N
+  ko_subj_ects AS "Punkty ECTS",                            -- 13;Punkty ECTS;NUMBER;13,2;T
+  ko_subj_hours_w AS "Liczba godzin wykład",                -- 14;Liczba godzin wykład;NUMBER;10;N
+  ko_subj_hours_c AS "Liczba godzin ćwiczenia",             -- 15;Liczba godzin ćwiczenia;NUMBER;10;N
+  ko_subj_hours_l AS "Liczba godzin laboratorium",          -- 16;Liczba godzin laboratorium;NUMBER;10;N
+  ko_subj_hours_p AS "Liczba godzin projekt",               -- 17;Liczba godzin projekt;NUMBER;10;N
+  ko_subj_hours_s AS "Liczba godzin seminarium dyplomowe",  -- 18;Liczba godzin seminarium dyplomowe;NUMBER;10;N
+  '' AS "Ocena wykład",                                     -- 19;Ocena wykład;VARCHAR2;100;N
+  '' AS "Ocena ćwiczenia",                                  -- 20;Ocena ćwiczenia;VARCHAR2;100;N
+  '' AS "Ocena laboratorium",                               -- 21;Ocena laboratorium;VARCHAR2;100;N
+  '' AS "Ocena projekt",                                    -- 22;Ocena projekt;VARCHAR2;100;N
+  '' AS "Ocena seminarium dyplomowe",                       -- 23;Ocena seminarium dyplomowe;VARCHAR2;100;N
+  '' AS "Kod etapu programu osoby",                         -- 24;Kod etapu programu osoby;VARCHAR2;20;N
+  '' AS "Cykl etapu programu osoby"                         -- 25;Cykl etapu programu osoby;VARCHAR2;20;N
+FROM ko_tr_usos_allstudents_matched;
