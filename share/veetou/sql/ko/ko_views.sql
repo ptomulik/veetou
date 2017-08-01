@@ -602,7 +602,7 @@ SELECT
   usos_first_name AS "Imię",                                --  2;Imię;VARCHAR2;40;T
   usos_last_name AS "Nazwisko",                             --  3;Nazwisko;VARCHAR2;40;T
   usos_studies_program_code AS "Kod programu",              --  4;Kod programu;VARCHAR2;20;N
-  usos_start_date AS  "Data rozpoczęcia studiów",           --  5;Data rozpoczęcia studiów;DATE; ;N
+  usos_admission_date AS  "Data przyjęcia lub wznowienia",  --  5;Data rozpoczęcia studiów;DATE; ;N
   usos_subj_code AS "Kod przedmiotu",                       --  6;Kod przedmiotu;VARCHAR2;20;N
   ko_semester_code AS "Kod cyklu dydaktycznego",            --  7;Kod cyklu dydaktycznego;VARCHAR2;20;T
   ko_subj_grade AS "Ocena",                                 --  8;Ocena;VARCHAR2;100;T
