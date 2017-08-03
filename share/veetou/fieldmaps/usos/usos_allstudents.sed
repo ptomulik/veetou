@@ -4,7 +4,7 @@
 1 s/\<Drugie imię\>/second_name/g
 1 s/\<Indeks\>/student_index/g
 1 s/\<Program\>/studies_program_code/g
-1 s/\<PRGOS_ID\>/progs_id/g
+1 s/\<PRGOS_ID\>/prgos_id/g
 1 s/\<Data przyjęcia\>/admission_date/g
 1 s/\<Data rozpoczęcia\>/start_date/g
 1 s/\<Maks cdyd\>/max_cdyd/g

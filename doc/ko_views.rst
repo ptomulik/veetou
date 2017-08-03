@@ -292,19 +292,19 @@ jednego z kilku kodów programów studiów z powodu niejednoznacznego odwzorowan
 nazw programów (występujących na raportach **KO**) na kody programów
 (zdefiniowane w modelu studiów - tabela **ko_studies_program_codes**).
 
-usos_progs_id_per_ko_tr
+usos_prgos_id_per_ko_tr
 ```````````````````````
 
 This table view indicates how many distinct records of the "all usos students
 on programs" (**usos_allstudents** table) match given table row from **KO**
-report. The most interesing columns are **usos_progs_ids** and
-**usos_progs_ids_count**.
+report. The most interesing columns are **usos_prgos_ids** and
+**usos_prgos_ids_count**.
 
 ----
 
 Ten widok pokazuje ile różnych rekordów z tabeli **usos_allstudents** pasuje do
 danego wiersza z raportu **KO** (z widoku **ko_refined**). Najbardziej
-interesujące kolumny to **usos_progs_ids** oraz **usos_progs_ids_count**.
+interesujące kolumny to **usos_prgos_ids** oraz **usos_prgos_ids_count**.
 
 ko_tr_usos_allstudents
 ``````````````````````
@@ -314,7 +314,7 @@ of the **usos_allstudents** table. Repetitions are possible for **KO** rows
 that somehow match multiple records of **usos_allstudents**. We provide
 additional columns to deal with this problem:
 
-- **usos_progs_ids_count** - to catch up non-matching **KO** rows (``=0``) or
+- **usos_prgos_ids_count** - to catch up non-matching **KO** rows (``=0``) or
   ambiguous matches (``>1``),
 - **ko_semester_code_le_max_cdyd** - to indicate condition that
   ``ko_semester_code <= usos_max_cdyd`` (comparing semester code extracted from

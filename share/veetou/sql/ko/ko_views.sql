@@ -110,7 +110,7 @@ CREATE INDEX usos_dict_studies_specialties_idx3
 
 DROP INDEX IF EXISTS usos_allstudents_idx1;
 CREATE INDEX usos_allstudents_idx1
-  ON usos_allstudents(progs_id)
+  ON usos_allstudents(prgos_id)
 ;
 
 DROP INDEX IF EXISTS usos_allstudents_idx2;
@@ -358,8 +358,8 @@ LEFT JOIN ko_studies_program_codes ON (
 GROUP BY tr_id
 ORDER BY tr_id;
 
-DROP VIEW IF EXISTS usos_progs_ids_per_ko_student_program;
-CREATE VIEW usos_progs_ids_per_ko_student_program AS
+DROP VIEW IF EXISTS usos_prgos_ids_per_ko_student_program;
+CREATE VIEW usos_prgos_ids_per_ko_student_program AS
 SELECT
   ko_refined.student_index AS ko_student_index,
   ko_refined.student_name AS ko_student_name,
@@ -369,8 +369,8 @@ SELECT
   ko_refined.studies_specialty AS ko_studies_specialty,
   GROUP_CONCAT(DISTINCT ko_studies_program_codes.studies_program_code) AS ko_program_codes,
   COUNT(DISTINCT ko_studies_program_codes.studies_program_code) AS ko_program_codes_count,
-  GROUP_CONCAT(DISTINCT usos_allstudents.progs_id) AS usos_progs_ids,
-  COUNT(DISTINCT usos_allstudents.progs_id) AS usos_progs_ids_count
+  GROUP_CONCAT(DISTINCT usos_allstudents.prgos_id) AS usos_prgos_ids,
+  COUNT(DISTINCT usos_allstudents.prgos_id) AS usos_prgos_ids_count
 FROM ko_refined
 LEFT JOIN ko_studies_program_codes ON (
   ko_refined.faculty = ko_studies_program_codes.faculty AND
@@ -408,7 +408,7 @@ SELECT
   usos_allstudents.second_name AS usos_second_name,
   usos_allstudents.student_index AS usos_student_index,
   usos_allstudents.studies_program_code AS usos_studies_program_code,
-  usos_allstudents.progs_id AS usos_progs_id,
+  usos_allstudents.prgos_id AS usos_prgos_id,
   usos_allstudents.admission_date AS usos_admission_date,
   usos_allstudents.start_date AS usos_start_date,
   usos_allstudents.max_cdyd AS usos_max_cdyd,
@@ -418,8 +418,8 @@ SELECT
   usos_allstudents.studies_tier AS usos_studies_tier,
   usos_allstudents.studies_mode AS usos_studies_mode,
   usos_allstudents.studies_program_description AS usos_studies_program_description,
-  usos_progs_ids_per_ko_student_program.ko_program_codes_count AS ko_program_codes_per_ko_student_program,
-  usos_progs_ids_per_ko_student_program.usos_progs_ids_count AS usos_progs_ids_per_ko_student_program,
+  usos_prgos_ids_per_ko_student_program.ko_program_codes_count AS ko_program_codes_per_ko_student_program,
+  usos_prgos_ids_per_ko_student_program.usos_prgos_ids_count AS usos_prgos_ids_per_ko_student_program,
   (ko_refined.semester_code <= usos_allstudents.max_cdyd)
       AS ko_semester_code_le_max_cdyd,
   (usos_cycles.cycle_start_date >= usos_allstudents.admission_date)
@@ -441,23 +441,23 @@ LEFT JOIN usos_allstudents ON (
   ko_refined.student_index = usos_allstudents.student_index AND
   ko_studies_program_codes.studies_program_code = usos_studies_program_code
 )
-LEFT JOIN usos_progs_ids_per_ko_student_program ON (
-  ko_refined.student_index = usos_progs_ids_per_ko_student_program.ko_student_index AND
-  ko_refined.faculty = usos_progs_ids_per_ko_student_program.ko_faculty AND
-  ko_refined.studies_modetier = usos_progs_ids_per_ko_student_program.ko_studies_modetier AND
-  ko_refined.studies_field = usos_progs_ids_per_ko_student_program.ko_studies_field AND
-  (ko_refined.studies_specialty = usos_progs_ids_per_ko_student_program.ko_studies_specialty OR
-   ko_refined.studies_specialty IS NULL AND usos_progs_ids_per_ko_student_program.ko_studies_specialty IS NULL)
+LEFT JOIN usos_prgos_ids_per_ko_student_program ON (
+  ko_refined.student_index = usos_prgos_ids_per_ko_student_program.ko_student_index AND
+  ko_refined.faculty = usos_prgos_ids_per_ko_student_program.ko_faculty AND
+  ko_refined.studies_modetier = usos_prgos_ids_per_ko_student_program.ko_studies_modetier AND
+  ko_refined.studies_field = usos_prgos_ids_per_ko_student_program.ko_studies_field AND
+  (ko_refined.studies_specialty = usos_prgos_ids_per_ko_student_program.ko_studies_specialty OR
+   ko_refined.studies_specialty IS NULL AND usos_prgos_ids_per_ko_student_program.ko_studies_specialty IS NULL)
 )
 LEFT JOIN usos_cycles ON
   ko_refined.semester_code = usos_cycles.cycle_code
-WHERE usos_progs_id IS NOT NULL OR usos_progs_ids_per_ko_student_program = 0
-GROUP BY ko_student_index, ko_faculty, ko_studies_modetier, ko_studies_field, ko_studies_specialty, ko_semester_code, usos_progs_id
-ORDER BY ko_student_index, ko_faculty, ko_studies_modetier, ko_studies_field, ko_studies_specialty, ko_semester_code, usos_progs_id
+WHERE usos_prgos_id IS NOT NULL OR usos_prgos_ids_per_ko_student_program = 0
+GROUP BY ko_student_index, ko_faculty, ko_studies_modetier, ko_studies_field, ko_studies_specialty, ko_semester_code, usos_prgos_id
+ORDER BY ko_student_index, ko_faculty, ko_studies_modetier, ko_studies_field, ko_studies_specialty, ko_semester_code, usos_prgos_id
 ;
 
-DROP VIEW IF EXISTS usos_progs_ids_per_ko_tr;
-CREATE VIEW usos_progs_ids_per_ko_tr AS
+DROP VIEW IF EXISTS usos_prgos_ids_per_ko_tr;
+CREATE VIEW usos_prgos_ids_per_ko_tr AS
 SELECT
   ko_refined.tr_id AS ko_tr_id,
   ko_refined.student_index AS student_index,
@@ -472,8 +472,8 @@ SELECT
   ko_refined.studies_field AS ko_studies_field,
   ko_refined.studies_specialty AS ko_studies_specialty,
   ko_studies_program_codes.studies_program_code AS studies_program_code,
-  GROUP_CONCAT(DISTINCT usos_allstudents.progs_id) AS usos_progs_ids,
-  COUNT(DISTINCT usos_allstudents.progs_id) AS usos_progs_ids_count
+  GROUP_CONCAT(DISTINCT usos_allstudents.prgos_id) AS usos_prgos_ids,
+  COUNT(DISTINCT usos_allstudents.prgos_id) AS usos_prgos_ids_count
 FROM ko_refined
 LEFT JOIN ko_studies_program_codes ON (
   ko_refined.faculty = ko_studies_program_codes.faculty AND
@@ -538,7 +538,7 @@ SELECT
   usos_allstudents.second_name AS usos_second_name,
   usos_allstudents.student_index AS usos_student_index,
   usos_allstudents.studies_program_code AS usos_studies_program_code,
-  usos_allstudents.progs_id AS usos_progs_id,
+  usos_allstudents.prgos_id AS usos_prgos_id,
   usos_allstudents.admission_date AS usos_admission_date,
   usos_allstudents.start_date AS usos_start_date,
   usos_allstudents.max_cdyd AS usos_max_cdyd,
@@ -548,7 +548,7 @@ SELECT
   usos_allstudents.studies_tier AS usos_studies_tier,
   usos_allstudents.studies_mode AS usos_studies_mode,
   usos_allstudents.studies_program_description AS usos_studies_program_description,
-  usos_progs_ids_per_ko_tr.usos_progs_ids_count AS usos_progs_ids_per_ko_tr,
+  usos_prgos_ids_per_ko_tr.usos_prgos_ids_count AS usos_prgos_ids_per_ko_tr,
   (ko_refined.semester_code <= usos_allstudents.max_cdyd) AS ko_semester_code_le_max_cdyd,
   (usos_cycles.cycle_start_date >= usos_allstudents.admission_date) AS ko_semester_start_date_ge_admission_date,
   (usos_cycles.cycle_start_date >= usos_allstudents.start_date) AS ko_semester_start_date_ge_start_date,
@@ -568,19 +568,19 @@ LEFT JOIN usos_allstudents ON (
   ko_refined.student_index = usos_allstudents.student_index AND
   ko_studies_program_codes.studies_program_code = usos_allstudents.studies_program_code
 )
-LEFT JOIN usos_progs_ids_per_ko_tr ON
-  ko_refined.tr_id = usos_progs_ids_per_ko_tr.ko_tr_id
+LEFT JOIN usos_prgos_ids_per_ko_tr ON
+  ko_refined.tr_id = usos_prgos_ids_per_ko_tr.ko_tr_id
 LEFT JOIN usos_cycles ON
   ko_refined.semester_code = usos_cycles.cycle_code
-WHERE usos_progs_id IS NOT NULL OR usos_progs_ids_per_ko_tr = 0
-ORDER BY ko_tr_id, usos_progs_id
+WHERE usos_prgos_id IS NOT NULL OR usos_prgos_ids_per_ko_tr = 0
+ORDER BY ko_tr_id, usos_prgos_id
 ;
 
 DROP VIEW IF EXISTS ko_tr_usos_allstudents_matched;
 CREATE VIEW ko_tr_usos_allstudents_matched AS
 SELECT * FROM ko_tr_usos_allstudents
-WHERE (usos_progs_ids_per_ko_tr == 1) OR (
-  usos_progs_ids_per_ko_tr > 1 AND
+WHERE (usos_prgos_ids_per_ko_tr == 1) OR (
+  usos_prgos_ids_per_ko_tr > 1 AND
   (ko_semester_start_date_ge_admission_date = 1 OR
    ko_semester_start_date_ge_start_date = 1) AND
   (ko_semester_end_date_le_discontinuation_or_dissertation_date = 1 OR

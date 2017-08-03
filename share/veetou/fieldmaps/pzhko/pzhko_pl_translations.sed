@@ -62,7 +62,7 @@
 1 s/\<\(usos_second_name\)\>/"USOS: Drugie imię"/g
 1 s/\<\(usos_student_index\)\>/"USOS: Indeks"/g
 1 s/\<\(usos_studies_program_code\)\>/"USOS: Program"/g
-1 s/\<\(usos_progs_id\)\>/"USOS: PROGS_ID"/g
+1 s/\<\(usos_prgos_id\)\>/"USOS: PRGOS_ID"/g
 1 s/\<\(usos_admission_date\)\>/"USOS: Data przyjęcia lub wznowienia"/g
 1 s/\<\(usos_start_date\)\>/"USOS: Data rozpoczęcia studiów"/g
 1 s/\<\(usos_discontinuation_date\)\>/"USOS: Data skreślenia"/g
@@ -70,7 +70,7 @@
 1 s/\<\(usos_studies_tier\)\>/"USOS: Rodzaj studiów"/g
 1 s/\<\(usos_studies_mode\)\>/"USOS: Tryb studiów"/g
 1 s/\<\(usos_studies_program_description\)\>/"USOS: Opis programu"/g
-1 s/\<\(usos_progs_ids_per_ko_tr\)\>/"Liczba znalezionych rekordów USOS"/g
+1 s/\<\(usos_prgos_ids_per_ko_tr\)\>/"Liczba znalezionych rekordów USOS"/g
 1 s/\<\(ko_semester_code_le_max_cdyd\)\>/"KO Semestr <= USOS Maks. Semestr"/g
 1 s/\<\(ko_semester_start_date_ge_admission_date\)\>/"KO Data otwarcia semestru >= USOS Data przyjęcia lub wznowienia studenta"/g
 1 s/\<\(ko_semester_end_date_le_discontinuation_or_dissertation_date\)\>/"KO Data zamknięcia semestru <= USOS Data skreślenia\/obrony"/g
