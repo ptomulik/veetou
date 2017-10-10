@@ -11,6 +11,8 @@ SELECT
   pzh_refined.subj_grade_final AS pzh_subj_grade_final,
   pzh_refined.subj_grade_project AS pzh_subj_grade_project,
   pzh_refined.subj_grade_class AS pzh_subj_grade_class,
+  pzh_refined.subj_grade_lab AS pzh_subj_grade_lab,
+  pzh_refined.subj_grade_seminar AS pzh_subj_grade_seminar,
   pzh_refined.subj_grade_p AS pzh_subj_grade_p,
   pzh_refined.subj_grade_n AS pzh_subj_grade_n,
   pzh_refined.tr_edited_by AS pzh_tr_edited_by,

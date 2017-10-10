@@ -36,6 +36,8 @@ class PzTrParser(TrParser):
         refine('subj_grade_project', dot2comma)
         refine('subj_grade_lecture', dot2comma)
         refine('subj_grade_class', dot2comma)
+        refine('subj_grade_lab', dot2comma)
+        refine('subj_grade_seminar', dot2comma)
         refine('subj_grade_final', dot2comma)
         refine('subj_grade', dot2comma)
         refine('subj_grade_p', dot2comma)

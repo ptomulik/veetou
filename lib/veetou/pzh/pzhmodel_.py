@@ -43,9 +43,10 @@ PzHTr = declare( DataType, 'PzhTr',
 
         (  'tr_ord_no', 'student_name', 'student_index', 'subj_grade',
            'subj_grade_final', 'subj_grade_project', 'subj_grade_lecture',
-           'subj_grade_class', 'subj_grade_p', 'subj_grade_n',
-           'edited_by', 'edited_datetime', 'edited_date', 'edited_time' ),
-##        11 * (strn,),
+           'subj_grade_class', 'subj_grade_lab', 'subj_grade_seminar',
+           'subj_grade_p', 'subj_grade_n', 'edited_by', 'edited_datetime',
+           'edited_date', 'edited_time' ),
+##        16 * (strn,),
         plural = 'PzhTrs'
 
 )

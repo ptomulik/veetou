@@ -52,6 +52,8 @@ _td_patterns = {
         'Ocena z projektu'              : r'(?P<subj_grade_project>%s)' % _re_subj_grade,
         'Ocena z wykładu'               : r'(?P<subj_grade_lecture>%s)' % _re_subj_grade,
         'Ocena z ćwiczeń'               : r'(?P<subj_grade_class>%s)' % _re_subj_grade,
+        'Ocena z laboratorium'          : r'(?P<subj_grade_lab>%s)' % _re_subj_grade,
+        'Ocena z seminarium'            : r'(?P<subj_grade_seminar>%s)' % _re_subj_grade,
         'Ocena końcowa'                 : r'(?P<subj_grade_final>%s)' % _re_subj_grade,
         'Ocena P'                       : r'(?P<subj_grade_p>%s)' % _re_subj_grade,
         'Ocena N'                       : r'(?P<subj_grade_n>%s)' % _re_subj_grade,

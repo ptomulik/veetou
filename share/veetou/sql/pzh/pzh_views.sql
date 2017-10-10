@@ -12,6 +12,8 @@ SELECT
   pzh_full.pzh_tr_subj_grade_project AS subj_grade_project,
   pzh_full.pzh_tr_subj_grade_lecture AS subj_grade_lecture,
   pzh_full.pzh_tr_subj_grade_class AS subj_grade_class,
+  pzh_full.pzh_tr_subj_grade_lab AS subj_grade_lab,
+  pzh_full.pzh_tr_subj_grade_seminar AS subj_grade_seminar,
   pzh_full.pzh_tr_subj_grade_p AS subj_grade_p,
   pzh_full.pzh_tr_subj_grade_n AS subj_grade_n,
   pzh_full.pzh_tr_edited_by AS tr_edited_by,
