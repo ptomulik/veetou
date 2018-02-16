@@ -15,7 +15,7 @@ def backtick(cmd, input=None, timeout=None):
     """
     PIPE = subprocess.PIPE
     stdin = PIPE if input is not None else None
-    return subprocess.check_output(cmd, stdin=stdin, stderr=PIPE, universal_newlines=True)
+    return subprocess.check_output(cmd, stdin=stdin, stderr=PIPE, universal_newlines=True, timeout=timeout)
 
 def filecmd(filename, flags):
     """Executes 'file <flags> filename' and returns its output"""
