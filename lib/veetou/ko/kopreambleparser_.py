@@ -12,6 +12,8 @@ from ..parser import fullmatch
 
 from ..parser.patterns_ import _re_word
 from ..parser.patterns_ import _re_worda
+from ..parser.patterns_ import _re_word_
+from ..parser.patterns_ import _re_worda_
 from ..parser.patterns_ import _rg_student_name_stretched
 from ..parser.patterns_ import _rg_student_index
 from ..parser.patterns_ import _rg_semester_code
@@ -22,7 +24,7 @@ __all__ = ( 'KoPreambleParser', )
 
 _rg_studies_field = r'(?P<studies_field>%s( +%s)*)' % (_re_word, _re_worda)
 _rg_semester_number = r'(?P<semester_number>%s(?: +%s)*)' % (_re_worda, _re_worda)
-_rg_studies_specialty = '(?P<studies_specialty>%s(?: +%s)*)' % (_re_word, _re_worda)
+_rg_studies_specialty = '(?P<studies_specialty>%s(?: +%s)*)' % (_re_word_, _re_worda_)
 
 _rg_studies_modetier = r'(?P<studies_modetier>Studia(?: +%s)+)' % _re_word
 _rg_title = r'(?P<title>Karta +okresowych +osiągnięć +studenta)'
