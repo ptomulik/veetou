@@ -123,6 +123,21 @@ CREATE INDEX usos_allstudents_idx3
   ON usos_allstudents(student_index,studies_program_code)
 ;
 
+DROP INDEX IF EXISTS usos_person_stages_idx1;
+CREATE INDEX usos_person_stages_idx1
+  ON usos_person_stages(prgos_id)
+;
+
+DROP INDEX IF EXISTS usos_person_stages_idx2;
+CREATE INDEX usos_person_stages_idx2
+  ON usos_person_stages(student_index)
+;
+
+DROP INDEX IF EXISTS usos_person_stages_idx3;
+CREATE INDEX usos_person_stages_idx3
+  ON usos_person_stages(student_index,studies_program_code,cdyd_code)
+;
+
 --CREATE INDEX faculty_usos_subj_codes_idx1
 --  ON faculty_usos_subj_codes(subj_code)
 --;
@@ -576,6 +591,7 @@ WHERE usos_prgos_id IS NOT NULL OR usos_prgos_ids_per_ko_tr = 0
 ORDER BY ko_tr_id, usos_prgos_id
 ;
 
+
 DROP VIEW IF EXISTS ko_tr_usos_allstudents_matched;
 CREATE VIEW ko_tr_usos_allstudents_matched AS
 SELECT * FROM ko_tr_usos_allstudents
@@ -594,6 +610,157 @@ SELECT * FROM ko_tr_usos_allstudents
 WHERE ko_tr_id NOT IN (
   SELECT ko_tr_id FROM ko_tr_usos_allstudents_matched
 );
+
+DROP VIEW IF EXISTS usos_person_stage_hits_per_ko_tr;
+CREATE VIEW usos_person_stage_hits_per_ko_tr AS
+SELECT
+  ko_refined.tr_id AS ko_tr_id,
+  ko_refined.student_index AS student_index,
+  ko_refined.student_name AS ko_student_name,
+  ko_refined.subj_code AS ko_subj_code,
+  ko_refined.subj_name AS ko_subj_name,
+  ko_refined.subj_grade AS ko_subj_grade,
+  ko_refined.subj_grade_date AS ko_subj_grade_date,
+  ko_refined.semester_code AS ko_semester_code,
+  ko_refined.faculty AS ko_faculty,
+  ko_refined.studies_modetier AS ko_studies_modetier,
+  ko_refined.studies_field AS ko_studies_field,
+  ko_refined.studies_specialty AS ko_studies_specialty,
+  ko_studies_program_codes.studies_program_code AS studies_program_code,
+  GROUP_CONCAT(DISTINCT usos_person_stages.id) AS usos_person_stage_ids,
+  COUNT(DISTINCT usos_person_stages.id) AS usos_person_stage_hits_count
+FROM ko_refined
+LEFT JOIN ko_studies_program_codes ON (
+  ko_refined.faculty = ko_studies_program_codes.faculty AND
+  ko_refined.studies_modetier = ko_studies_program_codes.studies_modetier AND
+  ko_refined.studies_field = ko_studies_program_codes.studies_field AND
+  (ko_refined.studies_specialty = ko_studies_program_codes.studies_specialty OR
+   ko_refined.studies_specialty IS NULL AND ko_studies_program_codes.studies_specialty IS NULL)
+)
+LEFT JOIN usos_person_stages ON (
+  ko_refined.student_index = usos_person_stages.student_index AND
+  ko_studies_program_codes.studies_program_code = usos_person_stages.studies_program_code AND
+  ko_refined.semester_code = usos_person_stages.cdyd_code
+)
+GROUP BY ko_tr_id
+ORDER BY ko_tr_id;
+
+DROP VIEW IF EXISTS ko_tr_usos_person_stages;
+CREATE VIEW ko_tr_usos_person_stages AS
+SELECT
+  ko_refined.tr_id AS ko_tr_id,
+  ko_refined.subj_code AS ko_subj_code,
+  faculty_usos_subj_codes.usos_subj_code AS usos_subj_code,
+  ko_refined.subj_name AS ko_subj_name,
+  ko_refined.student_index AS ko_student_index,
+--  ko_refined.first_name AS ko_first_name,
+--  ko_refined.last_name AS ko_last_name,
+  ko_refined.student_name AS ko_student_name,
+  ko_refined.subj_grade AS ko_subj_grade,
+  ko_refined.subj_grade_date AS ko_subj_grade_date,
+  ko_refined.university AS ko_university,
+  ko_refined.faculty AS ko_faculty,
+  ko_refined.studies_modetier AS ko_studies_modetier,
+  ko_refined.studies_field AS ko_studies_field,
+  ko_refined.studies_specialty AS ko_studies_specialty,
+  ko_studies_program_codes.studies_program_code AS ko_studies_program_code,
+  ko_refined.semester_code AS ko_semester_code,
+  usos_cycles.cycle_start_date AS ko_semester_start_date,
+  usos_cycles.cycle_end_date AS ko_semester_end_date,
+  ko_refined.semester_number AS ko_semester_number,
+  ko_refined.subj_tutor AS ko_subj_tutor,
+  ko_refined.subj_hours_w AS ko_subj_hours_w,
+  ko_refined.subj_hours_c AS ko_subj_hours_c,
+  ko_refined.subj_hours_l AS ko_subj_hours_l,
+  ko_refined.subj_hours_p AS ko_subj_hours_p,
+  ko_refined.subj_hours_s AS ko_subj_hours_s,
+  ko_refined.subj_credit_kind AS ko_subj_credit_kind,
+  ko_refined.subj_ects AS ko_subj_ects,
+  ko_refined.ects_mandatory AS ko_ects_mandatory,
+  ko_refined.ects_other AS ko_ects_other,
+  ko_refined.ects_total AS ko_ects_total,
+  ko_refined.ects_attained AS ko_ects_attained,
+  ko_refined.title AS ko_title,
+  ko_refined.report_source AS ko_report_source,
+  ko_refined.report_open_datetime AS ko_report_open_datetime,
+  ko_refined.report_sheets_parsed AS ko_report_sheets_parsed,
+  ko_refined.report_pages_parsed AS ko_report_pages_parsed,
+  ko_refined.page_number AS ko_page_number,
+  ko_refined.sheet_first_page AS ko_sheet_first_page,
+  ko_refined.sheet_pages_parsed AS ko_sheet_pages_parsed,
+  usos_person_stages.first_name AS usos_first_name,
+  usos_person_stages.last_name AS usos_last_name,
+  usos_person_stages.prgos_id AS usos_prgos_id,
+  usos_person_stages.student_index AS usos_student_index,
+  usos_person_stages.start_date AS usos_start_date,
+  usos_person_stages.studies_program_code AS usos_studies_program_code,
+  usos_person_stages.tryb_odbywania_st AS usos_tryb_odbywania_st,
+  usos_person_stages.cdyd_code AS usos_cdyd_code,
+  usos_person_stages.studies_program_stage_code AS usos_studies_program_stage_code,
+  usos_person_stages.krstd_kod_etp AS usos_krstd_kod_etp,
+  usos_person_stages.semester_number AS usos_semester_number,
+  usos_person_stages.czy_przedluzenie AS usos_czy_przedluzenie,
+  usos_person_stages.status_zaliczenia AS usos_status_zaliczenia,
+  usos_person_stages.status_zaliczenia_poprz AS usos_status_zaliczenia_poprz,
+  usos_person_stages.skr_kod AS usos_skr_kod,
+  usos_person_stages.data_skr AS usos_data_skr,
+  usos_person_stages.data_egz AS usos_data_egz,
+  usos_person_stages.krstd_kod_dyplom AS usos_krstd_kod_dyplom,
+  usos_person_stages.typ_cert_kod AS usos_typ_cert_kod,
+  usos_person_stages.urlop_kod AS usos_urlop_kod,
+  usos_person_stages.ects_uzyskane AS usos_ects_uzyskane,
+  usos_person_stages.ects_wyrej AS usos_ects_wyrej,
+  usos_person_stages.ects_efekty_uczenia AS usos_ects_efekty_uczenia,
+  usos_person_stages.ects_przepisane AS usos_ects_przepisane,
+  usos_person_stages.data_zakon AS usos_data_zakon,
+  usos_person_stage_hits_per_ko_tr.usos_person_stage_hits_count AS usos_person_stage_hits_per_ko_tr
+FROM ko_refined
+LEFT JOIN ko_studies_program_codes ON (
+  ko_refined.faculty = ko_studies_program_codes.faculty AND
+  ko_refined.studies_modetier = ko_studies_program_codes.studies_modetier AND
+  ko_refined.studies_field = ko_studies_program_codes.studies_field AND
+  (ko_refined.studies_specialty = ko_studies_program_codes.studies_specialty OR
+   ko_refined.studies_specialty IS NULL AND ko_studies_program_codes.studies_specialty IS NULL)
+)
+LEFT JOIN faculty_usos_subj_codes ON (
+  ko_refined.subj_code = faculty_usos_subj_codes.subj_code
+)
+LEFT JOIN usos_person_stages ON (
+  ko_refined.student_index = usos_person_stages.student_index AND
+  ko_studies_program_codes.studies_program_code = usos_person_stages.studies_program_code AND
+  ko_refined.semester_code = usos_person_stages.cdyd_code
+)
+LEFT JOIN usos_person_stage_hits_per_ko_tr ON
+  ko_refined.tr_id = usos_person_stage_hits_per_ko_tr.ko_tr_id
+LEFT JOIN usos_cycles ON
+  ko_refined.semester_code = usos_cycles.cycle_code
+WHERE usos_studies_program_stage_code IS NOT NULL OR usos_person_stage_hits_per_ko_tr = 0
+ORDER BY ko_tr_id, usos_prgos_id
+;
+
+
+DROP VIEW IF EXISTS ko_tr_usos_person_stages_matched;
+CREATE VIEW ko_tr_usos_person_stages_matched AS
+SELECT * FROM ko_tr_usos_person_stages
+WHERE (usos_person_stage_hits_per_ko_tr == 1)
+;
+
+
+DROP VIEW IF EXISTS ko_tr_usos_person_stages_unmatched;
+CREATE VIEW ko_tr_usos_person_stages_unmatched AS
+SELECT * FROM ko_tr_usos_person_stages
+WHERE ko_tr_id NOT IN (
+  SELECT ko_tr_id FROM ko_tr_usos_person_stages_matched
+);
+
+
+DROP VIEW IF EXISTS ko_tr_not_in_usos_person_stages;
+CREATE VIEW ko_tr_not_in_usos_person_stages AS
+SELECT * FROM ko_refined
+WHERE tr_id NOT IN (
+  SELECT ko_tr_id FROM ko_tr_usos_person_stages
+);
+
 
 DROP VIEW IF EXISTS ko_tr_usos_allstudents_matched_oceny_suplement_import;
 CREATE VIEW ko_tr_usos_allstudents_matched_oceny_suplement_import AS
@@ -624,3 +791,33 @@ SELECT
   '' AS "Kod etapu programu osoby",                         -- 24;Kod etapu programu osoby;VARCHAR2;20;N
   '' AS "Cykl etapu programu osoby"                         -- 25;Cykl etapu programu osoby;VARCHAR2;20;N
 FROM ko_tr_usos_allstudents_matched;
+
+DROP VIEW IF EXISTS ko_tr_usos_person_stages_matched_oceny_suplement_import;
+CREATE VIEW ko_tr_usos_person_stages_matched_oceny_suplement_import AS
+SELECT
+  usos_student_index AS "Numer albumu",                     --  1;Numer albumu;VARCHAR2;30;T
+  usos_first_name AS "Imię",                                --  2;Imię;VARCHAR2;40;T
+  usos_last_name AS "Nazwisko",                             --  3;Nazwisko;VARCHAR2;40;T
+  usos_studies_program_code AS "Kod programu",              --  4;Kod programu;VARCHAR2;20;N
+  usos_start_date AS  "Data przyjęcia lub wznowienia",      --  5;Data rozpoczęcia studiów;DATE; ;N
+  usos_subj_code AS "Kod przedmiotu",                       --  6;Kod przedmiotu;VARCHAR2;20;N
+  ko_semester_code AS "Kod cyklu dydaktycznego",            --  7;Kod cyklu dydaktycznego;VARCHAR2;20;T
+  ko_subj_grade AS "Ocena",                                 --  8;Ocena;VARCHAR2;100;T
+  ko_subj_code AS "Kod przedmiotu obcego - wydział",        --  9;Kod przedmiotu obcego - wydział;VARCHAR2;20;N
+  ko_subj_name AS "Nazwa przedmiotu obcego PL",             -- 10;Nazwa przedmiotu obcego PL;VARCHAR2;200;N
+  '' AS "Nazwa przedmiotu obcego ANG",                      -- 11;Nazwa przedmiotu obcego ANG;VARCHAR2;200;N
+  '' AS "Język przedmiotu obcego",                          -- 12;Język przedmiotu obcego;VARCHAR2;3;N
+  ko_subj_ects AS "Punkty ECTS",                            -- 13;Punkty ECTS;NUMBER;13,2;T
+  ko_subj_hours_w AS "Liczba godzin wykład",                -- 14;Liczba godzin wykład;NUMBER;10;N
+  ko_subj_hours_c AS "Liczba godzin ćwiczenia",             -- 15;Liczba godzin ćwiczenia;NUMBER;10;N
+  ko_subj_hours_l AS "Liczba godzin laboratorium",          -- 16;Liczba godzin laboratorium;NUMBER;10;N
+  ko_subj_hours_p AS "Liczba godzin projekt",               -- 17;Liczba godzin projekt;NUMBER;10;N
+  ko_subj_hours_s AS "Liczba godzin seminarium dyplomowe",  -- 18;Liczba godzin seminarium dyplomowe;NUMBER;10;N
+  '' AS "Ocena wykład",                                     -- 19;Ocena wykład;VARCHAR2;100;N
+  '' AS "Ocena ćwiczenia",                                  -- 20;Ocena ćwiczenia;VARCHAR2;100;N
+  '' AS "Ocena laboratorium",                               -- 21;Ocena laboratorium;VARCHAR2;100;N
+  '' AS "Ocena projekt",                                    -- 22;Ocena projekt;VARCHAR2;100;N
+  '' AS "Ocena seminarium dyplomowe",                       -- 23;Ocena seminarium dyplomowe;VARCHAR2;100;N
+  usos_studies_program_stage_code  AS "Kod etapu programu osoby", -- 24;Kod etapu programu osoby;VARCHAR2;20;N
+  usos_cdyd_code AS "Cykl etapu programu osoby"             -- 25;Cykl etapu programu osoby;VARCHAR2;20;N
+FROM ko_tr_usos_person_stages_matched;
