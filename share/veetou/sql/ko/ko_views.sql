@@ -229,6 +229,11 @@ LEFT JOIN ko_studies_program_codes ON (
 GROUP BY student_index
 ORDER BY student_index;
 
+-- How many different program codes are related to given (student,specialty) pair
+-- By "program" we mean here a combination of the following fields:
+--    - faculty,
+--    - studies_modetier (mode||tier),
+--    - studies_field,
 DROP VIEW IF EXISTS ko_program_codes_per_student_specialty;
 CREATE VIEW ko_program_codes_per_student_specialty AS
 SELECT
@@ -821,3 +826,81 @@ SELECT
   usos_studies_program_stage_code  AS "Kod etapu programu osoby", -- 24;Kod etapu programu osoby;VARCHAR2;20;N
   usos_cdyd_code AS "Cykl etapu programu osoby"             -- 25;Cykl etapu programu osoby;VARCHAR2;20;N
 FROM ko_tr_usos_person_stages_matched;
+
+DROP VIEW IF EXISTS ko_trs_per_student_subject;
+CREATE VIEW ko_trs_per_student_subject AS
+SELECT
+  ko_refined.student_index as student_index,
+  ko_refined.student_name AS student_name,
+  ko_refined.subj_code AS subj_code,
+  ko_refined.subj_name AS subj_name,
+  GROUP_CONCAT(DISTINCT
+      ko_refined.tr_id
+  ) AS tr_ids,
+  GROUP_CONCAT(REPLACE(DISTINCT -- workaround to introduce custom separator
+      ko_refined.subj_grade,
+      '', ''),
+      ' ' -- custom separator
+  ) AS subj_grades,
+  GROUP_CONCAT(DISTINCT
+      ko_refined.subj_grade_date
+  ) AS subj_grade_dates,
+  GROUP_CONCAT(DISTINCT
+      ko_refined.semester_code
+  ) AS semester_codes,
+  COUNT(DISTINCT
+    tr_id
+  ) AS tr_id_count
+FROM ko_refined
+GROUP BY
+  student_index,
+  subj_code
+ORDER BY
+  student_index,
+  subj_code
+;
+
+DROP VIEW IF EXISTS ko_trs_per_student_subject_specialty;
+CREATE VIEW ko_trs_per_student_subject_specialty AS
+SELECT
+  ko_refined.student_index as student_index,
+  ko_refined.student_name AS student_name,
+  ko_refined.subj_code AS subj_code,
+  ko_refined.subj_name AS subj_name,
+  ko_refined.faculty AS faculty,
+  ko_refined.studies_modetier AS studies_modetier,
+  ko_refined.studies_field AS studies_field,
+  ko_refined.studies_specialty AS studies_specialty,
+  GROUP_CONCAT(DISTINCT
+      ko_refined.tr_id
+  ) AS tr_ids,
+  GROUP_CONCAT(REPLACE(DISTINCT -- workaround to introduce custom separator
+      ko_refined.subj_grade,
+      '', ''),
+      ' ' -- custom separator
+  ) AS subj_grades,
+  GROUP_CONCAT(DISTINCT
+      ko_refined.subj_grade_date
+  ) AS subj_grade_dates,
+  GROUP_CONCAT(DISTINCT
+      ko_refined.semester_code
+  ) AS semester_codes,
+  COUNT(DISTINCT
+    tr_id
+  ) AS tr_id_count
+FROM ko_refined
+GROUP BY
+  student_index,
+  subj_code,
+  faculty,
+  studies_modetier,
+  studies_field,
+  studies_specialty
+ORDER BY
+  student_index,
+  subj_code,
+  faculty,
+  studies_modetier,
+  studies_field,
+  studies_specialty
+;
