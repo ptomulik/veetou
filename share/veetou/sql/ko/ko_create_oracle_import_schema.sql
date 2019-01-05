@@ -1,9 +1,9 @@
-CREATE TABLE veetou_exports(
+CREATE TABLE veetou_ko_exports(
     uuid RAW(32) NOT NULL
   , export_timpestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
   , export_user VARCHAR(32)
   , export_name VARCHAR(32)
-  , CONSTRAINT veetou_exports_pk PRIMARY KEY (uuid) ENABLE
+  , CONSTRAINT veetou_ko_exports_pk PRIMARY KEY (uuid) ENABLE
 );
 
 CREATE TABLE veetou_ko_footers (
@@ -15,7 +15,7 @@ CREATE TABLE veetou_ko_footers (
   , generator_name VARCHAR(256 CHAR)
   , generator_home VARCHAR(256 CHAR)
   , CONSTRAINT veetou_ko_footers_pk PRIMARY KEY (export_uuid, id)
-  , CONSTRAINT veetou_ko_footers_fk0 FOREIGN KEY (export_uuid) REFERENCES veetou_exports(uuid)
+  , CONSTRAINT veetou_ko_footers_fk0 FOREIGN KEY (export_uuid) REFERENCES veetou_ko_exports(uuid)
 );
 
 CREATE TABLE veetou_ko_headers (
@@ -24,7 +24,7 @@ CREATE TABLE veetou_ko_headers (
   , university VARCHAR(256 CHAR)
   , faculty VARCHAR(256 CHAR)
   , CONSTRAINT veetou_ko_header_pk PRIMARY KEY (export_uuid, id)
-  , CONSTRAINT veetou_ko_header_fk0 FOREIGN KEY (export_uuid) REFERENCES veetou_exports(uuid)
+  , CONSTRAINT veetou_ko_header_fk0 FOREIGN KEY (export_uuid) REFERENCES veetou_ko_exports(uuid)
 );
 
 CREATE TABLE veetou_ko_pages (
@@ -33,7 +33,7 @@ CREATE TABLE veetou_ko_pages (
   , page_number INTEGER
   , parser_page_number INTEGER
   , CONSTRAINT veetou_ko_pages_pk PRIMARY KEY (export_uuid, id)
-  , CONSTRAINT veetou_ko_pages_fk0 FOREIGN KEY (export_uuid) REFERENCES veetou_exports(uuid)
+  , CONSTRAINT veetou_ko_pages_fk0 FOREIGN KEY (export_uuid) REFERENCES veetou_ko_exports(uuid)
 );
 
 CREATE TABLE veetou_ko_preambles (
@@ -50,7 +50,7 @@ CREATE TABLE veetou_ko_preambles (
   , semester_number NUMBER(4)
   , studies_specialty VARCHAR(256 CHAR)
   , CONSTRAINT veetou_ko_preambles_pk PRIMARY KEY (export_uuid, id)
-  , CONSTRAINT veetou_ko_preambles_fk0 FOREIGN KEY (export_uuid) REFERENCES veetou_exports(uuid)
+  , CONSTRAINT veetou_ko_preambles_fk0 FOREIGN KEY (export_uuid) REFERENCES veetou_ko_exports(uuid)
 );
 
 CREATE TABLE veetou_ko_reports (
@@ -62,7 +62,7 @@ CREATE TABLE veetou_ko_reports (
   , sheets_parsed NUMBER(16)
   , pages_parsed NUMBER(16)
   , CONSTRAINT veetou_ko_reports_pk PRIMARY KEY (export_uuid, id)
-  , CONSTRAINT veetou_ko_reports_fk0 FOREIGN KEY (export_uuid) REFERENCES veetou_exports(uuid)
+  , CONSTRAINT veetou_ko_reports_fk0 FOREIGN KEY (export_uuid) REFERENCES veetou_ko_exports(uuid)
 );
 
 CREATE TABLE veetou_ko_sheets (
@@ -75,7 +75,7 @@ CREATE TABLE veetou_ko_sheets (
   , ects_total NUMBER(16)
   , ects_attained NUMBER(16)
   , CONSTRAINT veetou_ko_sheets_pk PRIMARY KEY (export_uuid, id)
-  , CONSTRAINT veetou_ko_sheets_fk0 FOREIGN KEY (export_uuid) REFERENCES veetou_exports(uuid)
+  , CONSTRAINT veetou_ko_sheets_fk0 FOREIGN KEY (export_uuid) REFERENCES veetou_ko_exports(uuid)
 );
 
 CREATE TABLE veetou_ko_tbodies (
@@ -83,7 +83,7 @@ CREATE TABLE veetou_ko_tbodies (
   , id INTEGER NOT NULL
   , remark VARCHAR(256)
   , CONSTRAINTS veetou_ko_tbodies_pk PRIMARY KEY (export_uuid, id)
-  , CONSTRAINTS veetou_ko_tbodies_fk0 FOREIGN KEY (export_uuid) REFERENCES veetou_exports(uuid)
+  , CONSTRAINTS veetou_ko_tbodies_fk0 FOREIGN KEY (export_uuid) REFERENCES veetou_ko_exports(uuid)
 );
 
 CREATE TABLE veetou_ko_trs (
@@ -102,7 +102,7 @@ CREATE TABLE veetou_ko_trs (
   , subj_grade VARCHAR(32)
   , subj_grade_date DATE
   , CONSTRAINT veetou_ko_trs_pk PRIMARY KEY (export_uuid, id)
-  , CONSTRAINT veetou_ko_trs_fk0 FOREIGN KEY (export_uuid) REFERENCES veetou_exports(uuid)
+  , CONSTRAINT veetou_ko_trs_fk0 FOREIGN KEY (export_uuid) REFERENCES veetou_ko_exports(uuid)
 );
 
 -- JUNCTION TABLES
@@ -112,7 +112,7 @@ CREATE TABLE veetou_ko_page_footer (
   , ko_page_id INTEGER
   , ko_footer_id INTEGER
   , CONSTRAINT veetou_ko_page_footer_pk PRIMARY KEY (export_uuid, ko_page_id, ko_footer_id)
-  , CONSTRAINT veetou_ko_page_footer_fk0 FOREIGN KEY (export_uuid) REFERENCES veetou_exports(uuid)
+  , CONSTRAINT veetou_ko_page_footer_fk0 FOREIGN KEY (export_uuid) REFERENCES veetou_ko_exports(uuid)
   , CONSTRAINT veetou_ko_page_footer_fk1 FOREIGN KEY (export_uuid, ko_page_id) REFERENCES veetou_ko_pages(export_uuid, id)
   , CONSTRAINT veetou_ko_page_footer_fk2 FOREIGN KEY (export_uuid, ko_footer_id) REFERENCES veetou_ko_footers(export_uuid, id)
 );
@@ -122,7 +122,7 @@ CREATE TABLE veetou_ko_page_header (
   , ko_page_id INTEGER
   , ko_header_id INTEGER
   , CONSTRAINT veetou_ko_page_header_pk PRIMARY KEY (export_uuid, ko_page_id, ko_header_id)
-  , CONSTRAINT veetou_ko_page_header_fk0 FOREIGN KEY (export_uuid) REFERENCES veetou_exports(uuid)
+  , CONSTRAINT veetou_ko_page_header_fk0 FOREIGN KEY (export_uuid) REFERENCES veetou_ko_exports(uuid)
   , CONSTRAINT veetou_ko_page_header_fk1 FOREIGN KEY (export_uuid, ko_page_id) REFERENCES veetou_ko_pages(export_uuid, id)
   , CONSTRAINT veetou_ko_page_header_fk2 FOREIGN KEY (export_uuid, ko_header_id) REFERENCES veetou_ko_headers(export_uuid, id)
 );
@@ -132,7 +132,7 @@ CREATE TABLE veetou_ko_page_preamble (
   , ko_page_id INTEGER
   , ko_preamble_id INTEGER
   , CONSTRAINT veetou_ko_page_preamble_pk PRIMARY KEY (export_uuid, ko_page_id, ko_preamble_id)
-  , CONSTRAINT veetou_ko_page_preamble_fk0 FOREIGN KEY (export_uuid) REFERENCES veetou_exports(uuid)
+  , CONSTRAINT veetou_ko_page_preamble_fk0 FOREIGN KEY (export_uuid) REFERENCES veetou_ko_exports(uuid)
   , CONSTRAINT veetou_ko_page_preamble_fk1 FOREIGN KEY (export_uuid, ko_page_id) REFERENCES veetou_ko_pages(export_uuid, id)
   , CONSTRAINT veetou_ko_page_preamble_fk2 FOREIGN KEY (export_uuid, ko_preamble_id) REFERENCES veetou_ko_preambles(export_uuid, id)
 );
@@ -142,7 +142,7 @@ CREATE TABLE veetou_ko_page_tbody (
   , ko_page_id INTEGER
   , ko_tbody_id INTEGER
   , CONSTRAINT veetou_ko_page_tbody_pk PRIMARY KEY (export_uuid, ko_page_id, ko_tbody_id)
-  , CONSTRAINT veetou_ko_page_tbody_fk0 FOREIGN KEY (export_uuid) REFERENCES veetou_exports(uuid)
+  , CONSTRAINT veetou_ko_page_tbody_fk0 FOREIGN KEY (export_uuid) REFERENCES veetou_ko_exports(uuid)
   , CONSTRAINT veetou_ko_page_tbody_fk1 FOREIGN KEY (export_uuid, ko_page_id) REFERENCES veetou_ko_pages(export_uuid, id)
   , CONSTRAINT veetou_ko_page_tbody_fk2 FOREIGN KEY (export_uuid, ko_tbody_id) REFERENCES veetou_ko_tbodies(export_uuid, id)
 );
@@ -152,7 +152,7 @@ CREATE TABLE veetou_ko_report_sheets (
   , ko_report_id INTEGER
   , ko_sheet_id INTEGER
   , CONSTRAINT veetou_ko_report_sheets_pk PRIMARY KEY (export_uuid, ko_report_id, ko_sheet_id)
-  , CONSTRAINT veetou_ko_report_sheets_fk0 FOREIGN KEY (export_uuid) REFERENCES veetou_exports(uuid)
+  , CONSTRAINT veetou_ko_report_sheets_fk0 FOREIGN KEY (export_uuid) REFERENCES veetou_ko_exports(uuid)
   , CONSTRAINT veetou_ko_report_sheets_fk1 FOREIGN KEY (export_uuid, ko_report_id) REFERENCES veetou_ko_reports(export_uuid, id)
   , CONSTRAINT veetou_ko_report_sheets_fk2 FOREIGN KEY (export_uuid, ko_sheet_id) REFERENCES veetou_ko_sheets(export_uuid, id)
 );
@@ -162,7 +162,7 @@ CREATE TABLE veetou_ko_sheet_pages (
   , ko_sheet_id INTEGER
   , ko_page_id INTEGER
   , CONSTRAINT veetou_ko_sheet_pages_pk PRIMARY KEY (export_uuid, ko_sheet_id, ko_page_id)
-  , CONSTRAINT veetou_ko_sheet_pages_fk0 FOREIGN KEY (export_uuid) REFERENCES veetou_exports(uuid)
+  , CONSTRAINT veetou_ko_sheet_pages_fk0 FOREIGN KEY (export_uuid) REFERENCES veetou_ko_exports(uuid)
   , CONSTRAINT veetou_ko_sheet_pages_fk1 FOREIGN KEY (export_uuid, ko_sheet_id) REFERENCES veetou_ko_sheets(export_uuid, id)
   , CONSTRAINT veetou_ko_sheet_pages_fk2 FOREIGN KEY (export_uuid, ko_page_id) REFERENCES veetou_ko_pages(export_uuid, id)
 );
@@ -172,7 +172,7 @@ CREATE TABLE veetou_ko_tbody_trs (
   , ko_tbody_id INTEGER
   , ko_tr_id INTEGER
   , CONSTRAINT veetou_ko_tbody_trs_pk PRIMARY KEY (export_uuid, ko_tbody_id, ko_tr_id)
-  , CONSTRAINT veetou_ko_tbody_trs_fk0 FOREIGN KEY (export_uuid) REFERENCES veetou_exports(uuid)
+  , CONSTRAINT veetou_ko_tbody_trs_fk0 FOREIGN KEY (export_uuid) REFERENCES veetou_ko_exports(uuid)
   , CONSTRAINT veetou_ko_tbody_trs_fk1 FOREIGN KEY (export_uuid, ko_tbody_id) REFERENCES veetou_ko_tbodies(export_uuid, id)
   , CONSTRAINT veetou_ko_tbody_trs_fk2 FOREIGN KEY (export_uuid, ko_tr_id) REFERENCES veetou_ko_trs(export_uuid, id)
 );
