@@ -1,8 +1,8 @@
 PRAGMA temp_store = 2;
 
 CREATE TEMP TABLE veetou_ko_exports(
-    id INTEGER PRIMARY KEY AUTOINCREMENT
-  , export_id UNSIGNED BIG INT DEFAULT (RANDOMBLOB(8))
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL
+  , export_id UNSIGNED BIG INT DEFAULT (RANDOMBLOB(8)) NOT NULL
   , export_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
   , export_user VARCHAR(32)
   , export_name VARCHAR(32)
@@ -13,7 +13,10 @@ INSERT INTO veetou_ko_exports (export_user, export_name) VALUES (NULL, NULL);
 -- ROOT TABLE
 .mode insert veetou_ko_exports
 SELECT
-    veetou_ko_exports.export_*
+    veetou_ko_exports.export_id
+  , veetou_ko_exports.export_timestamp
+  , veetou_ko_exports.export_user
+  , veetou_ko_exports.export_name
 FROM veetou_ko_exports
 WHERE veetou_ko_exports.id = 1;
 
