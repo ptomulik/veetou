@@ -1,0 +1,1745 @@
+/****************************************************************************
+ *                  This file is for SQL Developer users.
+ *            Just place a cursor on a command and press F9.
+ ****************************************************************************/
+
+-- Disaster prevention (we don't want to run all the commands below at once).
+EXIT;
+
+
+-- Preliminary steps, that may be necessary.
+@@tiers/create_tier1.sql;
+
+@@tiers/create_tier2.sql;
+
+@@tiers/create_tier3.sql;
+
+--
+-- ko_xxx
+--
+@@merges/ko/execute_tier2_merges1.sql;
+
+--
+-- ko_xxx_map_j
+--
+@@merges/ko/execute_tier2_merges2.sql;
+
+--
+-- ko_matched_xxx_j
+-- ko_missing_xxx_j
+-- etc...
+--
+@@merges/ko/execute_tier2_merges3.sql;
+
+
+--
+-- ko_specialty_map_j
+--
+DELETE FROM v2u_ko_specialty_map_j;
+COMMIT;
+@@merges/ko/ko_specialty_map_j.sql;
+
+--
+-- ko_subject_map_j
+--
+DELETE FROM v2u_ko_subject_map_j;
+COMMIT;
+@@merges/ko/ko_subject_map_j.sql;
+
+--
+-- ko_classes_map_j
+--
+DELETE FROM v2u_ko_classes_map_j;
+COMMIT;
+@@merges/ko/ko_classes_map_j.sql;
+
+
+--
+-- dz_osoby
+--
+DELETE FROM v2u_dz_osoby;
+COMMIT;
+@@merges/dz/dz_osoby.sql;
+
+
+--
+-- dz_studenci
+--
+DELETE FROM v2u_dz_studenci;
+COMMIT;
+@@merges/dz/dz_studenci.sql;
+
+
+--
+-- dz_pracownicy
+--
+DELETE FROM v2u_dz_pracownicy;
+COMMIT;
+@@merges/dz/dz_pracownicy.sql;
+
+
+--
+-- dz_prowadzacy_grup
+--
+DELETE FROM v2u_dz_prowadzacy_grup;
+COMMIT;
+@@merges/dz/dz_prowadzacy_grup.sql;
+
+--
+-- dz_prow_prz_cykli
+--
+DELETE FROM v2u_dz_prow_prz_cykli;
+COMMIT;
+@@merges/dz/dz_prow_prz_cykli.sql;
+
+--
+-- dz_wartosci_ocen
+--
+DELETE FROM v2u_dz_wartosci_ocen;
+COMMIT;
+@@merges/dz/dz_wartosci_ocen.sql;
+
+
+--
+-- dz_przedmioty
+--
+DELETE FROM v2u_dz_przedmioty;
+COMMIT;
+@@merges/dz/dz_przedmioty.sql;
+
+DELETE FROM v2u_ko_matched_przedm_j;
+COMMIT;
+@@merges/ko/ko_matched_przedm_j.sql;
+
+DELETE FROM v2u_ko_missing_przedm_j;
+COMMIT;
+@@merges/ko/ko_missing_przedm_j.sql;
+
+DELETE FROM v2u_uu_przedmioty;
+COMMIT;
+@@merges/uu/uu_przedmioty.sql;
+
+/*
+UPDATE
+v2u_dz_przedmioty tgt
+-- dz_przedmioty tgt
+SET (
+              nazwa
+            , jed_org_kod
+--            , utw_id
+--            , utw_data
+            , mod_id
+--            , mod_data
+            , tpro_kod
+            , czy_wielokrotne
+            , name
+            , skrocony_opis
+            , short_description
+            , jed_org_kod_biorca
+            , jzk_kod
+            , kod_sok
+            , opis
+            , description
+            , literatura
+            , bibliography
+            , efekty_uczenia
+            , efekty_uczenia_ang
+            , kryteria_oceniania
+            , kryteria_oceniania_ang
+            , praktyki_zawodowe
+            , praktyki_zawodowe_ang
+            , url
+            , kod_isced
+            , nazwa_pol
+            , guid
+            , pw_nazwa_supl
+            , pw_nazwa_supl_ang
+) = (
+*/
+        SELECT
+              nazwa
+            , jed_org_kod
+--            , utw_id
+--            , utw_data
+            , mod_id
+--            , mod_data
+            , tpro_kod
+            , czy_wielokrotne
+            , name
+            , skrocony_opis
+            , short_description
+            , jed_org_kod_biorca
+            , jzk_kod
+            , kod_sok
+            , opis
+            , description
+            , literatura
+            , bibliography
+            , efekty_uczenia
+            , efekty_uczenia_ang
+            , kryteria_oceniania
+            , kryteria_oceniania_ang
+            , praktyki_zawodowe
+            , praktyki_zawodowe_ang
+            , url
+            , kod_isced
+            , nazwa_pol
+            , guid
+            , pw_nazwa_supl
+            , pw_nazwa_supl_ang
+        FROM v2u_uu_przedmioty src
+        WHERE
+                src.change_type = 'U'
+            AND src.safe_to_change = 1
+/*
+            AND src.kod = tgt.kod
+)
+WHERE EXISTS (
+    SELECT 1 FROM v2u_uu_przedmioty src
+        WHERE
+                src.change_type = 'U'
+            AND src.safe_to_change = 1
+            AND src.kod = tgt.kod
+)
+*/
+;
+
+COMMIT;
+
+/*
+INSERT INTO
+    v2u_dz_przedmioty tgt
+-- dz_przedmioty tgt
+        ( kod
+        , nazwa
+        , jed_org_kod
+        , utw_id
+--        , utw_data
+--        , mod_id
+--        , mod_data
+        , tpro_kod
+        , czy_wielokrotne
+        , name
+        , skrocony_opis
+        , short_description
+        , jed_org_kod_biorca
+        , jzk_kod
+        , kod_sok
+        , opis
+        , description
+        , literatura
+        , bibliography
+        , efekty_uczenia
+        , efekty_uczenia_ang
+        , kryteria_oceniania
+        , kryteria_oceniania_ang
+        , praktyki_zawodowe
+        , praktyki_zawodowe_ang
+        , url
+        , kod_isced
+        , nazwa_pol
+        , guid
+        , pw_nazwa_supl
+        , pw_nazwa_supl_ang
+        )
+*/
+SELECT
+          src.kod
+        , src.nazwa
+        , src.jed_org_kod
+        , src.utw_id
+--        , src.utw_data
+--        , src.mod_id
+--        , src.mod_data
+        , src.tpro_kod
+        , src.czy_wielokrotne
+        , src.name
+        , src.skrocony_opis
+        , src.short_description
+        , src.jed_org_kod_biorca
+        , src.jzk_kod
+        , src.kod_sok
+        , src.opis
+        , src.description
+        , src.literatura
+        , src.bibliography
+        , src.efekty_uczenia
+        , src.efekty_uczenia_ang
+        , src.kryteria_oceniania
+        , src.kryteria_oceniania_ang
+        , src.praktyki_zawodowe
+        , src.praktyki_zawodowe_ang
+        , src.url
+        , src.kod_isced
+        , src.nazwa_pol
+        , src.guid
+        , src.pw_nazwa_supl
+        , src.pw_nazwa_supl_ang
+FROM v2u_uu_przedmioty src
+WHERE
+        src.change_type = 'I'
+    AND src.safe_to_change = 1
+;
+
+COMMIT;
+
+
+--
+-- dz_atrybuty_przedmiotow
+--
+DELETE FROM v2u_dz_atrybuty_przedmiotow;
+COMMIT;
+@@merges/dz/dz_atrybuty_przedmiotow.sql;
+
+DELETE FROM v2u_uu_atrybuty_przedmiotow;
+COMMIT;
+@@merges/uu/uu_atrybuty_przedmiotow.sql;
+
+/*
+UPDATE
+v2u_dz_atrybuty_przedmiotow tgt
+-- dz_atrybuty_przedmiotow tgt
+SET (
+              tatr_kod
+            , prz_kod
+            , wart_lst_id
+            , prz_kod_rel
+--            , utw_id
+--            , utw_data
+            , mod_id
+--            , mod_data
+            , wartosc
+            , wartosc_ang
+) = (
+*/
+        SELECT
+              tatr_kod
+            , prz_kod
+            , wart_lst_id
+            , prz_kod_rel
+--            , utw_id
+--            , utw_data
+            , mod_id
+--            , mod_data
+            , wartosc
+            , wartosc_ang
+        FROM v2u_uu_atrybuty_przedmiotow src
+        WHERE   src.change_type = 'U'
+            AND src.safe_to_change = 1
+/*
+            AND src.id = tgt.id
+)
+WHERE EXISTS (
+    SELECT 1
+    FROM v2u_uu_atrybuty_przedmiotow src
+    WHERE   src.change_type = 'U'
+        AND src.safe_to_change = 1
+        AND src.id = tgt.id
+)
+*/
+;
+
+COMMIT;
+
+/*
+INSERT INTO
+    v2u_dz_atrybuty_przedmiotow tgt
+-- dz_atrybuty_przedmiotow tgt
+        (
+          tatr_kod
+        , prz_kod
+        , wart_lst_id
+        , prz_kod_rel
+        , utw_id
+--        , utw_data
+--        , mod_id
+--        , mod_data
+        , wartosc
+        , wartosc_ang
+        , id
+        )
+*/
+SELECT
+          src.tatr_kod
+        , src.prz_kod
+        , src.wart_lst_id
+        , src.prz_kod_rel
+        , src.utw_id
+--        , src.utw_data
+--        , src.mod_id
+--        , src.mod_data
+        , src.wartosc
+        , src.wartosc_ang
+        , id
+FROM v2u_uu_atrybuty_przedmiotow src
+WHERE
+        src.change_type = 'I'
+    AND src.safe_to_change = 1
+;
+
+COMMIT;
+
+--
+-- dz_przedmioty_obce
+--
+DELETE FROM v2u_dz_przedmioty_obce;
+COMMIT;
+@@merges/dz/dz_przedmioty_obce.sql;
+
+--
+-- dz_przedmioty_cykli
+--
+DELETE FROM v2u_dz_przedmioty_cykli;
+COMMIT;
+@@merges/dz/dz_przedmioty_cykli.sql;
+
+DELETE FROM v2u_ko_matched_przcykl_j;
+COMMIT;
+@@merges/ko/ko_matched_przcykl_j.sql;
+
+DELETE FROM v2u_ko_missing_przcykl_j;
+COMMIT;
+@@merges/ko/ko_missing_przcykl_j.sql;
+
+DELETE FROM v2u_uu_przedmioty_cykli;
+COMMIT;
+@@merges/uu/uu_przedmioty_cykli.sql;
+
+/*
+UPDATE
+v2u_dz_przedmioty_cykli tgt
+--dz_przedmioty_cykli tgt
+SET (
+--        , utw_id
+--        , utw_data
+          mod_id
+--        , mod_data
+        , tpro_kod
+        , uczestnicy
+        , url
+        , uwagi
+        , notes
+        , literatura
+        , literatura_ang
+        , opis
+        , opis_ang
+        , skrocony_opis
+        , skrocony_opis_ang
+        , status_sylabusu
+        , guid
+) = (
+*/
+        SELECT
+--        , utw_id
+--        , utw_data
+          mod_id
+--        , mod_data
+        , tpro_kod
+        , uczestnicy
+        , url
+        , uwagi
+        , notes
+        , literatura
+        , literatura_ang
+        , opis
+        , opis_ang
+        , skrocony_opis
+        , skrocony_opis_ang
+        , status_sylabusu
+        , guid
+        FROM v2u_uu_przedmioty_cykli src
+        WHERE   src.change_type = 'U'
+            AND src.safe_to_change = 1
+/*
+            AND src.prz_kod = tgt.prz_kod
+            AND src.cdyd_kod = tgt.cdyd_kod
+)
+WHERE EXISTS (
+    SELECT 1
+    FROM v2u_uu_przedmioty_cykli src
+    WHERE   src.change_type = 'U'
+        AND src.safe_to_change = 1
+        AND src.prz_kod = tgt.prz_kod
+        AND src.cdyd_kod = tgt.cdyd_kod
+)
+*/
+;
+
+COMMIT;
+
+/*
+INSERT INTO
+    v2u_dz_przedmioty_cykli tgt
+--dz_przedmioty_cykli tgt
+        ( prz_kod
+        , cdyd_kod
+        , utw_id
+--        , utw_data
+--        , mod_id
+--        , mod_data
+        , tpro_kod
+        , uczestnicy
+        , url
+        , uwagi
+        , notes
+        , literatura
+        , literatura_ang
+        , opis
+        , opis_ang
+        , skrocony_opis
+        , skrocony_opis_ang
+        , status_sylabusu
+        , guid
+        )
+*/
+SELECT
+          prz_kod
+        , cdyd_kod
+        , utw_id
+--        , utw_data
+--        , mod_id
+--        , mod_data
+        , tpro_kod
+        , uczestnicy
+        , url
+        , uwagi
+        , notes
+        , literatura
+        , literatura_ang
+        , opis
+        , opis_ang
+        , skrocony_opis
+        , skrocony_opis_ang
+        , status_sylabusu
+        , guid
+FROM v2u_uu_przedmioty_cykli src
+WHERE
+        src.change_type = 'I'
+    AND src.safe_to_change = 1
+;
+
+COMMIT;
+
+--
+-- dz_punkty_przedmiotow
+--
+DELETE FROM v2u_dz_punkty_przedmiotow;
+COMMIT;
+@@merges/dz/dz_punkty_przedmiotow.sql;
+
+DELETE FROM v2u_ko_matched_pktprz_j;
+COMMIT;
+@@merges/ko/ko_matched_pktprz_j.sql;
+
+DELETE FROM v2u_ko_missing_pktprz_j;
+COMMIT;
+@@merges/ko/ko_missing_pktprz_j.sql;
+
+DELETE FROM v2u_uu_punkty_przedmiotow;
+COMMIT;
+@@merges/uu/uu_punkty_przedmiotow.sql;
+
+-- For the FIRST iteration:
+--
+-- This generates one entry per subject, where feasible. The entry covers all
+-- study programs for an unbounded range of semester from min. to infinity.
+
+DROP VIEW v2u_uu_punkty_przedmiotow1_v;
+
+CREATE OR REPLACE VIEW v2u_uu_punkty_przedmiotow1_v
+AS
+    WITH uu AS
+    (
+        SELECT
+              prz_kod
+            , SET(CAST(COLLECT(prg_kod ORDER BY prg_kod) AS V2u_Vchars1K_t)) prg_kody1k
+            , SET(CAST(COLLECT(tpkt_kod ORDER BY tpkt_kod) AS V2u_Vchars1K_t)) tpkt_kody1k
+            , MIN(ilosc) KEEP (DENSE_RANK FIRST ORDER BY ilosc) ilosc
+            , SET(CAST(COLLECT(utw_id ORDER BY utw_id) AS V2u_Vchars1K_t)) utw_ids1k
+            , SET(CAST(COLLECT(utw_data ORDER BY utw_data) AS V2u_Dates_t)) utw_daty
+            , SET(CAST(COLLECT(mod_id ORDER BY mod_id) AS V2u_Vchars1K_t)) mod_ids1k
+            , SET(CAST(COLLECT(mod_data ORDER BY mod_data) AS V2u_Dates_t)) mod_daty
+            , NULL id
+            , MIN(cdyd_pocz) KEEP (DENSE_RANK FIRST ORDER BY cdyd_pocz) cdyd_pocz
+            , MAX(cdyd_kon) KEEP (DENSE_RANK LAST ORDER BY cdyd_kon) cdyd_kon
+            , 'I' change_type
+            , 1 safe_to_change
+        FROM v2u_uu_punkty_przedmiotow
+        WHERE
+                change_type = 'I'
+            AND safe_to_change = 1
+        GROUP BY
+                prz_kod
+        HAVING
+                COUNT(DISTINCT ilosc) = 1
+    )
+    SELECT
+          uu.prz_kod
+        , NULL prg_kod
+        , (SELECT VALUE(t) FROM TABLE(uu.tpkt_kody1k) t WHERE ROWNUM <= 1) tpkt_kod
+        , uu.ilosc
+        , (SELECT VALUE(t) FROM TABLE(uu.utw_ids1k) t WHERE ROWNUM <= 1) utw_id
+        , (SELECT VALUE(t) FROM TABLE(uu.utw_daty) t WHERE ROWNUM <= 1) utw_data
+        , (SELECT VALUE(t) FROM TABLE(uu.mod_ids1k) t WHERE ROWNUM <= 1) mod_id
+        , (SELECT VALUE(t) FROM TABLE(uu.mod_daty) t WHERE ROWNUM <= 1) mod_data
+        , uu.id
+        , uu.cdyd_pocz
+        , NULL cdyd_kon
+        , uu.change_type
+        , uu.safe_to_change
+    FROM uu
+    WHERE NOT EXISTS (
+            SELECT NULL
+            FROM v2u_dz_punkty_przedmiotow dz
+            WHERE
+                    dz.prz_kod = uu.prz_kod
+                AND COALESCE(dz.cdyd_kon, '9999Z') >= uu.cdyd_pocz
+        )
+        AND (SELECT COUNT(1) FROM TABLE(uu.tpkt_kody1k)) = 1
+        AND (SELECT COUNT(1) FROM TABLE(uu.utw_ids1k)) = 1
+        AND EXISTS (
+            SELECT NULL
+            FROM v2u_dz_przedmioty p
+            WHERE   p.kod = uu.prz_kod
+        )
+WITH READ ONLY
+;
+/
+
+/*
+INSERT INTO
+   v2u_dz_punkty_przedmiotow tgt
+-- dz_punkty_przedmiotow tgt
+    ( prz_kod
+    , prg_kod
+    , tpkt_kod
+    , ilosc
+    , utw_id
+--    , utw_data
+--    , mod_id
+--    , mod_data
+--    , id
+    , cdyd_pocz
+    , cdyd_kon
+    )
+*/
+SELECT
+      src.prz_kod
+    , src.prg_kod
+    , src.tpkt_kod
+    , src.ilosc
+    , src.utw_id
+--    , src.utw_data
+--    , src.mod_id
+--    , src.mod_data
+--    , src.id
+    , src.cdyd_pocz
+    , src.cdyd_kon
+FROM v2u_uu_punkty_przedmiotow1_v src
+;
+
+COMMIT;
+
+-- For the SECOND iteration:
+--
+-- This generates single entry per subject where feasible. The entry will cover
+-- all programs for a range of semester from cdyd_min to cdyd_max, where only
+-- one value of "ilosc" exists (no collisions with other entries in this range
+-- will be generated).
+
+DROP VIEW v2u_uu_punkty_przedmiotow2_v;
+
+CREATE OR REPLACE VIEW v2u_uu_punkty_przedmiotow2_v
+AS
+    WITH uu AS
+    (
+        SELECT
+              prz_kod
+            , SET(CAST(COLLECT(prg_kod ORDER BY prg_kod) AS V2u_Vchars1K_t)) prg_kody1k
+            , SET(CAST(COLLECT(tpkt_kod ORDER BY tpkt_kod) AS V2u_Vchars1K_t)) tpkt_kody1k
+            , ilosc
+            , SET(CAST(COLLECT(utw_id ORDER BY utw_id) AS V2u_Vchars1K_t)) utw_ids1k
+            , SET(CAST(COLLECT(utw_data ORDER BY utw_data) AS V2u_Dates_t)) utw_daty
+            , SET(CAST(COLLECT(mod_id ORDER BY mod_id) AS V2u_Vchars1K_t)) mod_ids1k
+            , SET(CAST(COLLECT(mod_data ORDER BY mod_data) AS V2u_Dates_t)) mod_daty
+            , NULL id
+            , MIN(cdyd_pocz) KEEP (DENSE_RANK FIRST ORDER BY cdyd_pocz) cdyd_pocz
+            , MAX(cdyd_kon) KEEP (DENSE_RANK LAST ORDER BY cdyd_kon) cdyd_kon
+            , 'I' change_type
+            , 1 safe_to_change
+        FROM v2u_uu_punkty_przedmiotow pp1
+        WHERE
+                change_type = 'I'
+            AND safe_to_change = 1
+        GROUP BY
+                prz_kod
+              , ilosc
+    )
+    SELECT
+          uu.prz_kod
+        , NULL prg_kod
+        , (SELECT VALUE(t) FROM TABLE(uu.tpkt_kody1k) t WHERE ROWNUM <= 1) tpkt_kod
+        , uu.ilosc
+        , (SELECT VALUE(t) FROM TABLE(uu.utw_ids1k) t WHERE ROWNUM <= 1) utw_id
+        , (SELECT VALUE(t) FROM TABLE(uu.utw_daty) t WHERE ROWNUM <= 1) utw_data
+        , (SELECT VALUE(t) FROM TABLE(uu.mod_ids1k) t WHERE ROWNUM <= 1) mod_id
+        , (SELECT VALUE(t) FROM TABLE(uu.mod_daty) t WHERE ROWNUM <= 1) mod_data
+        , uu.id
+        , uu.cdyd_pocz
+        , uu.cdyd_kon
+        , uu.change_type
+        , uu.safe_to_change
+    FROM uu
+    WHERE NOT EXISTS (
+            -- exclude entries that would generate collisions
+            SELECT NULL
+            FROM v2u_dz_punkty_przedmiotow dz
+            WHERE
+                    uu.prz_kod = dz.prz_kod
+                AND NOT (
+                        COALESCE(uu.cdyd_kon, '9999Z') < dz.cdyd_pocz
+                    OR  uu.cdyd_pocz > COALESCE(dz.cdyd_kon, '9999Z')
+                )
+
+            UNION ALL
+
+            SELECT NULL
+            FROM v2u_uu_punkty_przedmiotow vv
+            WHERE
+                    vv.change_type = 'I'
+                AND vv.safe_to_change = 1
+                AND vv.prz_kod = uu.prz_kod
+                AND vv.ilosc <> uu.ilosc
+                AND NOT (
+                        COALESCE(uu.cdyd_kon, '9999Z') < vv.cdyd_pocz
+                    OR  uu.cdyd_pocz > COALESCE(vv.cdyd_kon, '9999Z')
+                )
+        )
+        AND (SELECT COUNT(1) FROM TABLE(uu.tpkt_kody1k)) = 1
+        AND (SELECT COUNT(1) FROM TABLE(uu.utw_ids1k)) = 1
+        AND EXISTS (
+            SELECT NULL
+            FROM v2u_dz_przedmioty p
+            WHERE   p.kod = uu.prz_kod
+        )
+WITH READ ONLY
+;
+/
+
+/*
+INSERT INTO
+    v2u_dz_punkty_przedmiotow tgt
+-- dz_punkty_przedmiotow tgt
+        ( prz_kod
+        , prg_kod
+        , tpkt_kod
+        , ilosc
+        , utw_id
+--        , utw_data
+--        , mod_id
+--        , mod_data
+--       , id
+        , cdyd_pocz
+        , cdyd_kon
+        )
+*/
+SELECT
+          src.prz_kod
+        , src.prg_kod
+        , src.tpkt_kod
+        , src.ilosc
+        , src.utw_id
+--        , src.utw_data
+--        , src.mod_id
+--        , src.mod_data
+--        , src.id
+        , src.cdyd_pocz
+        , src.cdyd_kon
+FROM v2u_uu_punkty_przedmiotow2_v src
+;
+
+COMMIT;
+
+-- For the THIRD iteration:
+--
+-- This generates all remaining entries (that were not covered by FIRST and
+-- SECOND iterations). A separate entry is generated for distinct prz_kod,
+-- prg_kod, and cdyd_pocz = cdyd_kon.
+
+/*
+UPDATE
+    v2u_dz_punkty_przedmiotow tgt
+-- dz_punkty_przedmiotow tgt
+SET (
+      prz_kod
+    , prg_kod
+    , tpkt_kod
+    , ilosc
+--    , utw_id
+--    , utw_data
+    , mod_id
+--    , mod_data
+--    , id
+    , cdyd_pocz
+    , cdyd_kon
+    ) = (
+*/
+SELECT
+      src.prz_kod
+    , src.prg_kod
+    , src.tpkt_kod
+    , src.ilosc
+--    , src.utw_id
+--    , src.utw_data
+    , src.mod_id
+--    , src.mod_data
+--    , src.id
+    , src.cdyd_pocz
+    , src.cdyd_kon
+    FROM v2u_uu_punkty_przedmiotow src
+    WHERE   src.change_type = 'U'
+        AND src.safe_to_change = 1
+/*
+        AND src.id = tgt.id
+)
+WHERE EXISTS (
+    SELECT 1
+    FROM v2u_uu_punkty_przedmiotow src
+    WHERE   src.change_type = 'U'
+        AND src.safe_to_change = 1
+        AND src.id = tgt.id
+)
+*/
+;
+
+COMMIT;
+
+/*
+INSERT INTO
+    v2u_dz_punkty_przedmiotow tgt
+-- dz_punkty_przedmiotow tgt
+    ( prz_kod
+    , prg_kod
+    , tpkt_kod
+    , ilosc
+    , utw_id
+--    , utw_data
+--    , mod_id
+--    , mod_data
+--    , id
+    , cdyd_pocz
+    , cdyd_kon
+    )
+*/
+SELECT
+      src.prz_kod
+    , src.prg_kod
+    , src.tpkt_kod
+    , src.ilosc
+    , src.utw_id
+--    , src.utw_data
+--    , src.mod_id
+--    , src.mod_data
+--    , src.id
+    , src.cdyd_pocz
+    , src.cdyd_kon
+FROM v2u_uu_punkty_przedmiotow src
+WHERE   src.change_type = 'I'
+    AND src.safe_to_change = 1
+    AND EXISTS (
+        SELECT NULL
+        FROM v2u_dz_przedmioty p
+        WHERE   p.kod = src.prz_kod
+    )
+;
+
+COMMIT;
+
+--
+-- dz_zajecia_cykli
+--
+DELETE FROM v2u_dz_zajecia_cykli;
+COMMIT;
+@@merges/dz/dz_zajecia_cykli.sql;
+
+DELETE FROM v2u_ko_matched_zajcykl_j;
+COMMIT;
+@@merges/ko/ko_matched_zajcykl_j.sql;
+
+DELETE FROM v2u_ko_missing_zajcykl_j;
+COMMIT;
+@@merges/ko/ko_missing_zajcykl_j.sql;
+
+DELETE FROM v2u_uu_zajecia_cykli;
+COMMIT;
+@@merges/uu/uu_zajecia_cykli.sql;
+
+
+/*
+UPDATE
+    v2u_dz_zajecia_cykli tgt
+-- dz_zajecia_cykli tgt
+SET (
+      prz_kod
+    , cdyd_kod
+    , tzaj_kod
+    , liczba_godz
+    , limit_miejsc
+--    , utw_id
+--    , utw_data
+    , mod_id
+--    , mod_data
+    , waga_pensum
+    , tpro_kod
+    , efekty_uczenia
+    , efekty_uczenia_ang
+    , kryteria_oceniania
+    , kryteria_oceniania_ang
+    , url
+    , zakres_tematow
+    , zakres_tematow_ang
+    , metody_dyd
+    , metody_dyd_ang
+    , literatura
+    , literatura_ang
+    , czy_pokazywac_termin
+--    , id
+    ) = (
+*/
+SELECT
+      src.prz_kod
+    , src.cdyd_kod
+    , src.tzaj_kod
+    , src.liczba_godz
+    , src.limit_miejsc
+--    , src.utw_id
+--    , src.utw_data
+    , src.mod_id
+--    , src.mod_data
+    , src.waga_pensum
+    , src.tpro_kod
+    , src.efekty_uczenia
+    , src.efekty_uczenia_ang
+    , src.kryteria_oceniania
+    , src.kryteria_oceniania_ang
+    , src.url
+    , src.zakres_tematow
+    , src.zakres_tematow_ang
+    , src.metody_dyd
+    , src.metody_dyd_ang
+    , src.literatura
+    , src.literatura_ang
+    , src.czy_pokazywac_termin
+--    , src.id
+FROM v2u_uu_zajecia_cykli src
+WHERE       src.change_type = 'U'
+        AND src.safe_to_change = 1
+/*
+        AND src.id = tgt.id
+)
+WHERE EXISTS (
+    SELECT 1
+    FROM v2u_uu_zajecia_cykli src
+    WHERE   src.change_type = 'U'
+        AND src.safe_to_change = 1
+        AND src.id = tgt.id
+)
+*/
+;
+
+COMMIT;
+
+/*
+INSERT INTO
+    v2u_dz_zajecia_cykli tgt
+-- dz_zajecia_cykli tgt
+    ( prz_kod
+    , cdyd_kod
+    , tzaj_kod
+    , liczba_godz
+    , limit_miejsc
+    , utw_id
+--    , utw_data
+--    , mod_id
+--    , mod_data
+    , waga_pensum
+    , tpro_kod
+    , efekty_uczenia
+    , efekty_uczenia_ang
+    , kryteria_oceniania
+    , kryteria_oceniania_ang
+    , url
+    , zakres_tematow
+    , zakres_tematow_ang
+    , metody_dyd
+    , metody_dyd_ang
+    , literatura
+    , literatura_ang
+    , czy_pokazywac_termin
+--    , id
+)
+*/
+SELECT
+          src.prz_kod
+        , src.cdyd_kod
+        , src.tzaj_kod
+        , src.liczba_godz
+        , src.limit_miejsc
+        , src.utw_id
+--        , src.utw_data
+--        , src.mod_id
+--        , src.mod_data
+        , src.waga_pensum
+        , src.tpro_kod
+        , src.efekty_uczenia
+        , src.efekty_uczenia_ang
+        , src.kryteria_oceniania
+        , src.kryteria_oceniania_ang
+        , src.url
+        , src.zakres_tematow
+        , src.zakres_tematow_ang
+        , src.metody_dyd
+        , src.metody_dyd_ang
+        , src.literatura
+        , src.literatura_ang
+        , src.czy_pokazywac_termin
+--        , src.id
+FROM v2u_uu_zajecia_cykli src
+WHERE   src.change_type = 'I'
+    AND src.safe_to_change = 1
+;
+
+COMMIT;
+
+--
+-- dz_grupy
+--
+DELETE FROM v2u_dz_grupy;
+COMMIT;
+@@merges/dz/dz_grupy.sql;
+
+DELETE FROM v2u_ko_matched_grupy_j;
+COMMIT;
+@@merges/ko/ko_matched_grupy_j.sql;
+
+DELETE FROM v2u_ko_missing_grupy_j;
+COMMIT;
+@@merges/ko/ko_missing_grupy_j.sql;
+
+DELETE FROM v2u_uu_grupy;
+COMMIT;
+@@merges/uu/uu_grupy.sql;
+
+
+--
+-- dz_osoby_grup
+--
+DELETE FROM v2u_dz_osoby_grup;
+COMMIT;
+@@merges/dz/dz_osoby_grup.sql;
+
+DELETE FROM v2u_ko_matched_osgrp_j;
+COMMIT;
+@@merges/ko/ko_matched_osgrp_j.sql;
+
+DELETE FROM v2u_ko_missing_osgrp_j;
+COMMIT;
+@@merges/ko/ko_missing_osgrp_j.sql;
+
+DELETE FROM v2u_uu_osoby_grup;
+COMMIT;
+@@merges/uu/uu_osoby_grup.sql;
+
+
+--
+-- dz_protokoly
+--
+DELETE FROM v2u_dz_protokoly;
+COMMIT;
+@@merges/dz/dz_protokoly.sql;
+
+DELETE FROM v2u_ko_matched_protos_j;
+COMMIT;
+@@merges/ko/ko_matched_protos_j.sql;
+
+DELETE FROM v2u_ko_missing_protos_j;
+COMMIT;
+@@merges/ko/ko_missing_protos_j.sql;
+
+DELETE FROM v2u_uu_protokoly;
+COMMIT;
+@@merges/uu/uu_protokoly.sql;
+
+/*
+UPDATE
+    v2u_dz_protokoly tgt
+-- dz_protokoly tgt
+SET ( zaj_cyk_id
+    , opis
+--    , utw_id
+--    , utw_data
+    , mod_id
+--    , mod_data
+    , tpro_kod
+--    , id
+    , prz_kod
+    , cdyd_kod
+    , czy_do_sredniej
+    , edycja
+    , opis_ang
+    ) = (
+*/
+SELECT
+      src.zaj_cyk_id
+    , src.opis
+--    , src.utw_id
+--    , src.utw_data
+    , src.mod_id
+--    , src.mod_data
+    , src.tpro_kod
+--    , src.id
+    , src.prz_kod
+    , src.cdyd_kod
+    , src.czy_do_sredniej
+    , src.edycja
+    , src.opis_ang
+FROM v2u_uu_protokoly src
+WHERE       src.change_type = 'U'
+        AND src.safe_to_change = 1
+/*
+        AND src.id = tgt.id
+)
+WHERE EXISTS (
+    SELECT 1
+    FROM v2u_uu_protokoly src
+    WHERE   src.change_type = 'U'
+        AND src.safe_to_change = 1
+        AND src.id = tgt.id
+)
+*/
+;
+
+COMMIT;
+
+/*
+INSERT INTO
+    v2u_dz_protokoly tgt
+-- dz_protokoly tgt
+    ( zaj_cyk_id
+    , opis
+    , utw_id
+--    , utw_data
+--    , mod_id
+--    , mod_data
+    , tpro_kod
+--    , id
+    , prz_kod
+    , cdyd_kod
+    , czy_do_sredniej
+    , edycja
+    , opis_ang
+    )
+*/
+SELECT
+      src.zaj_cyk_id
+    , src.opis
+    , src.utw_id
+--    , src.utw_data
+--    , src.mod_id
+--    , src.mod_data
+    , src.tpro_kod
+--    , src.id
+    , src.prz_kod
+    , src.cdyd_kod
+    , src.czy_do_sredniej
+    , src.edycja
+    , src.opis_ang
+--
+FROM v2u_uu_protokoly src
+WHERE   src.change_type = 'I'
+    AND src.safe_to_change = 1
+;
+
+COMMIT;
+
+
+--
+-- dz_oceny
+--
+DELETE FROM v2u_dz_oceny;
+COMMIT;
+@@merges/dz/dz_oceny.sql;
+
+DELETE FROM v2u_ko_matched_oceny_j;
+COMMIT;
+@@merges/ko/ko_matched_oceny_j/by_value.sql;
+
+
+--
+-- dz_terminy_protokolow
+--
+DELETE FROM v2u_dz_terminy_protokolow;
+COMMIT;
+@@merges/dz/dz_terminy_protokolow.sql;
+
+DELETE FROM v2u_ko_matched_trmpro_j;
+COMMIT;
+@@merges/ko/ko_matched_trmpro_j.sql;
+
+DELETE FROM v2u_ko_missing_trmpro_j;
+COMMIT;
+@@merges/ko/ko_missing_trmpro_j.sql;
+
+DELETE FROM v2u_uu_terminy_protokolow;
+COMMIT;
+@@merges/uu/uu_terminy_protokolow.sql;
+
+
+/*
+UPDATE
+    v2u_dz_terminy_protokolow tgt
+-- dz_terminy_protokolow tgt
+SET (
+--      prot_id
+--    , nr
+      status
+--    , utw_id
+--    , utw_data
+    , opis
+    , data_zwrotu
+    , mod_id
+--    , mod_data
+    , egzamin_komisyjny
+    ) = (
+*/
+SELECT
+--      prot_id
+--    , nr
+      status
+--    , utw_id
+---    , utw_data
+    , opis
+    , data_zwrotu
+    , mod_id
+--    , mod_data
+    , egzamin_komisyjny
+FROM v2u_uu_terminy_protokolow src
+WHERE       src.change_type = 'U'
+        AND src.safe_to_change = 1
+/*
+        AND src.prot_id = tgt.prot_id
+        AND src.nr = tgt.nr
+)
+WHERE EXISTS (
+    SELECT 1
+    FROM v2u_uu_terminy_protokolow src
+    WHERE   src.change_type = 'U'
+        AND src.safe_to_change = 1
+        AND src.prot_id = tgt.prot_id
+        AND src.nr = tgt.nr
+)
+*/
+;
+
+COMMIT;
+
+/*
+INSERT INTO
+    v2u_dz_terminy_protokolow tgt
+-- dz_terminy_protokolow tgt
+    ( prot_id
+    , nr
+    , status
+    , utw_id
+--    , utw_data
+    , opis
+    , data_zwrotu
+--    , mod_id
+--    , mod_data
+    , egzamin_komisyjny
+    )
+*/
+SELECT
+      src.prot_id
+    , src.nr
+    , src.status
+    , src.utw_id
+--    , src.utw_data
+    , src.opis
+    , src.data_zwrotu
+--    , src.mod_id
+--    , src.mod_data
+    , src.egzamin_komisyjny
+--
+FROM v2u_uu_terminy_protokolow src
+WHERE   src.change_type = 'I'
+    AND src.safe_to_change = 1
+;
+
+COMMIT;
+
+
+--
+-- dz_oceny again...
+--
+DELETE FROM v2u_ko_matched_oceny_j;
+COMMIT;
+@@merges/ko/ko_matched_oceny_j.sql;
+
+DELETE FROM v2u_ko_missing_oceny_j;
+COMMIT;
+@@merges/ko/ko_missing_oceny_j.sql;
+
+DELETE FROM v2u_uu_oceny;
+COMMIT;
+@@merges/uu/uu_oceny.sql;
+
+/*
+UPDATE
+    v2u_dz_oceny tgt
+-- dz_oceny tgt
+SET ( os_id
+    , komentarz_pub
+    , komentarz_pryw
+    , toc_kod
+    , wart_oc_kolejnosc
+--    , utw_id
+--    , utw_data
+    , mod_id
+--    , mod_data
+    , prot_id
+    , term_prot_nr
+    , zmiana_os_id
+    , zmiana_data
+    , pos_komi_id
+    ) = (
+*/
+SELECT
+      src.os_id
+    , src.komentarz_pub
+    , src.komentarz_pryw
+    , src.toc_kod
+    , src.wart_oc_kolejnosc
+--    , src.utw_id
+--    , src.utw_data
+    , src.mod_id
+--    , src.mod_data
+    , src.prot_id
+    , src.term_prot_nr
+    , src.zmiana_os_id
+    , src.zmiana_data
+    , src.pos_komi_id
+FROM v2u_uu_oceny src
+WHERE       src.change_type = 'U'
+        AND src.safe_to_change = 1
+/*
+        AND src.os_id = tgt.os_id
+        AND src.prot_id = tgt.prot_id
+        AND src.term_prot_nr = tgt.term_prot_nr
+)
+WHERE EXISTS (
+    SELECT 1
+    FROM v2u_uu_oceny src
+    WHERE   src.change_type = 'U'
+        AND src.safe_to_change = 1
+        AND src.prot_id = tgt.prot_id
+        AND src.nr = tgt.nr
+)
+*/
+;
+
+COMMIT;
+
+/*
+INSERT INTO
+    v2u_dz_oceny tgt
+-- dz_oceny tgt
+    ( os_id
+    , komentarz_pub
+    , komentarz_pryw
+    , toc_kod
+    , wart_oc_kolejnosc
+    , utw_id
+--    , utw_data
+--    , mod_id
+--    , mod_data
+    , prot_id
+    , term_prot_nr
+    , zmiana_os_id
+    , zmiana_data
+    , pos_komi_id
+    )
+*/
+SELECT
+      src.os_id
+    , src.komentarz_pub
+    , src.komentarz_pryw
+    , src.toc_kod
+    , src.wart_oc_kolejnosc
+    , src.utw_id
+--    , src.utw_data
+--    , src.mod_id
+--    , src.mod_data
+    , src.prot_id
+    , src.term_prot_nr
+    , src.zmiana_os_id
+    , src.zmiana_data
+    , src.pos_komi_id
+FROM v2u_uu_oceny src
+WHERE   src.change_type = 'I'
+    AND src.safe_to_change = 1
+;
+
+COMMIT;
+
+
+
+--
+-- dz_zajecia_prz_obcych
+--
+DELETE FROM v2u_dz_zajecia_prz_obcych;
+COMMIT;
+@@merges/dz/dz_zajecia_prz_obcych.sql;
+
+
+--
+-- dz_programy
+--
+DELETE FROM v2u_dz_programy;
+COMMIT;
+@@merges/dz/dz_programy.sql;
+
+
+--
+-- dz_programy_osob
+--
+DELETE FROM v2u_dz_programy_osob;
+COMMIT;
+@@merges/dz/dz_programy_osob.sql;
+
+DELETE FROM v2u_ko_matched_prgos_j;
+COMMIT;
+@@merges/ko/ko_matched_prgos_j.sql;
+
+DELETE FROM v2u_ko_missing_prgos_j;
+COMMIT;
+@@merges/ko/ko_missing_prgos_j.sql;
+
+DELETE FROM v2u_uu_programy_osob;
+COMMIT;
+@@merges/uu/uu_programy_osob.sql;
+
+--
+-- dz_decyzje
+--
+DELETE FROM v2u_dz_decyzje;
+COMMIT;
+@@merges/dz/dz_decyzje.sql;
+
+
+--
+-- dz_etapy
+--
+DELETE FROM v2u_dz_etapy;
+COMMIT;
+@@merges/dz/dz_etapy.sql;
+
+
+--
+-- dz_etapy_programow
+--
+DELETE FROM v2u_dz_etapy_programow;
+COMMIT;
+@@merges/dz/dz_etapy_programow.sql;
+
+
+--
+-- dz_etapy_kierunkow
+--
+DELETE FROM v2u_dz_etapy_kierunkow;
+COMMIT;
+@@merges/dz/dz_etapy_kierunkow.sql;
+
+
+--
+-- dz_etapy_osob
+--
+DELETE FROM v2u_dz_etapy_osob;
+COMMIT;
+@@merges/dz/dz_etapy_osob.sql;
+
+
+--
+-- dz_zaliczenia_przedmiotow
+--
+DELETE FROM v2u_dz_zaliczenia_przedmiotow;
+COMMIT;
+@@merges/dz/dz_zaliczenia_przedmiotow.sql;
+
+DELETE FROM v2u_ko_matched_zalprz_j;
+COMMIT;
+@@merges/ko/ko_matched_zalprz_j.sql;
+
+DELETE FROM v2u_ko_missing_zalprz_j;
+COMMIT;
+@@merges/ko/ko_missing_zalprz_j.sql;
+
+DELETE FROM v2u_uu_zaliczenia_przedmiotow;
+COMMIT;
+@@merges/uu/uu_zaliczenia_przedmiotow.sql;
+
+
+/*
+UPDATE
+    v2u_dz_zaliczenia_przedmiotow tgt
+-- dz_zaliczenia_przedmiotow tgt
+SET ( status_rej
+    , opis_statusu_rej
+    , status_zal
+    , opis_statusu_zal
+    , suma_ocen
+    , liczba_ocen
+--    , os_id
+--    , cdyd_kod
+--    , prz_kod
+--    , utw_data
+--    , utw_id
+    , mod_id
+--    , mod_data
+    , nr_wyb
+    ) = (
+*/
+SELECT
+      src.status_rej
+    , src.opis_statusu_rej
+    , src.status_zal
+    , src.opis_statusu_zal
+    , src.suma_ocen
+    , src.liczba_ocen
+--    , src.os_id
+--    , src.cdyd_kod
+--    , src.prz_kod
+--    , src.utw_data
+--    , src.utw_id
+    , src.mod_id
+--    , src.mod_data
+    , src.nr_wyb
+FROM v2u_uu_zaliczenia_przedmiotow src
+WHERE       src.change_type = 'U'
+        AND src.safe_to_change = 1
+/*
+        AND src.os_id = tgt.os_id
+        AND src.cdyd_kod = tgt.cdyd_kod
+        AND src.prz_kod = tgt.prz_kod
+)
+WHERE EXISTS (
+    SELECT 1
+    FROM v2u_uu_zaliczenia_przedmiotow src
+    WHERE   src.change_type = 'U'
+        AND src.safe_to_change = 1
+        AND src.os_id = tgt.os_id
+        AND src.cdyd_kod = tgt.cdyd_kod
+        AND src.prz_kod = tgt.prz_kod
+)
+*/
+;
+
+COMMIT;
+
+/*
+INSERT INTO
+    v2u_dz_zaliczenia_przedmiotow tgt
+-- dz_zaliczenia_przedmiotow tgt
+    (
+      status_rej
+    , opis_statusu_rej
+    , status_zal
+    , opis_statusu_zal
+    , suma_ocen
+    , liczba_ocen
+    , os_id
+    , cdyd_kod
+    , prz_kod
+--    , utw_data
+    , utw_id
+--    , mod_id
+--    , mod_data
+    , nr_wyb
+    )
+*/
+SELECT
+      src.status_rej
+    , src.opis_statusu_rej
+    , src.status_zal
+    , src.opis_statusu_zal
+    , src.suma_ocen
+    , src.liczba_ocen
+    , src.os_id
+    , src.cdyd_kod
+    , src.prz_kod
+--    , src.utw_data
+    , src.utw_id
+--    , src.mod_id
+--    , src.mod_data
+    , src.nr_wyb
+--
+FROM v2u_uu_zaliczenia_przedmiotow src
+WHERE   src.change_type = 'I'
+    AND src.safe_to_change = 1
+;
+
+COMMIT;
+
+
+--
+-- dz_zal_przedm_prgos
+--
+DELETE FROM v2u_dz_zal_przedm_prgos;
+COMMIT;
+@@merges/dz/dz_zal_przedm_prgos.sql;
+
+DELETE FROM v2u_ko_matched_zpprgos_j;
+COMMIT;
+@@merges/ko/ko_matched_zpprgos_j.sql;
+
+DELETE FROM v2u_ko_missing_zpprgos_j;
+COMMIT;
+@@merges/ko/ko_missing_zpprgos_j.sql;
+
+DELETE FROM v2u_uu_zal_przedm_prgos;
+COMMIT;
+@@merges/uu/uu_zal_przedm_prgos.sql;
+
+/*
+UPDATE
+    v2u_dz_zal_przedm_prgos tgt
+-- dz_zal_przedm_prgos tgt
+SET (
+--      os_id
+--    , prz_kod
+--    , cdyd_kod
+--    , prgos_id
+      stan
+--    , utw_id
+--    , utw_data
+    , etpos_id
+    , mod_id
+--    , mod_data
+    , do_sredniej
+    , do_sredniej_zmiana_os_id
+    , do_sredniej_zmiana_data
+    , podp_data
+    , podp_os_id
+    , czy_platny_ects_ustawa
+    , kto_placi
+    , podp_etpos_data
+    , podp_etpos_os_id
+    , katprz_id
+    , pw_ponadprogramowy
+    ) = (
+*/
+SELECT
+--      os_id
+--    , prz_kod
+--    , cdyd_kod
+--    , prgos_id
+      stan
+--    , utw_id
+--    , utw_data
+    , etpos_id
+    , mod_id
+--    , mod_data
+    , do_sredniej
+    , do_sredniej_zmiana_os_id
+    , do_sredniej_zmiana_data
+    , podp_data
+    , podp_os_id
+    , czy_platny_ects_ustawa
+    , kto_placi
+    , podp_etpos_data
+    , podp_etpos_os_id
+    , katprz_id
+    , pw_ponadprogramowy
+FROM v2u_uu_zal_przedm_prgos src
+WHERE       src.change_type = 'U'
+        AND src.safe_to_change = 1
+/*
+        AND src.os_id = tgt.os_id
+        AND src.cdyd_kod = tgt.cdyd_kod
+        AND src.prz_kod = tgt.prz_kod
+        AND src.prgos_id = tgt.prgos_id
+)
+WHERE EXISTS (
+    SELECT 1
+    FROM v2u_uu_zal_przedm_prgos src
+    WHERE   src.change_type = 'U'
+        AND src.safe_to_change = 1
+        AND src.os_id = tgt.os_id
+        AND src.cdyd_kod = tgt.cdyd_kod
+        AND src.prz_kod = tgt.prz_kod
+        AND src.prgos_id = tgt.prgos_id
+)
+*/
+;
+
+COMMIT;
+
+/*
+INSERT INTO
+    v2u_dz_zal_przedm_prgos tgt
+-- dz_zal_przedm_prgos tgt
+    ( os_id
+    , prz_kod
+    , cdyd_kod
+    , prgos_id
+    , stan
+    , utw_id
+--    , utw_data
+    , etpos_id
+--    , mod_id
+--    , mod_data
+    , do_sredniej
+    , do_sredniej_zmiana_os_id
+    , do_sredniej_zmiana_data
+    , podp_data
+    , podp_os_id
+    , czy_platny_ects_ustawa
+    , kto_placi
+    , podp_etpos_data
+    , podp_etpos_os_id
+    , katprz_id
+    , pw_ponadprogramowy
+    )
+*/
+SELECT
+      src.os_id
+    , src.prz_kod
+    , src.cdyd_kod
+    , src.prgos_id
+    , src.stan
+    , src.utw_id
+--    , src.utw_data
+    , src.etpos_id
+--    , src.mod_id
+--    , src.mod_data
+    , src.do_sredniej
+    , src.do_sredniej_zmiana_os_id
+    , src.do_sredniej_zmiana_data
+    , src.podp_data
+    , src.podp_os_id
+    , src.czy_platny_ects_ustawa
+    , src.kto_placi
+    , src.podp_etpos_data
+    , src.podp_etpos_os_id
+    , src.katprz_id
+    , src.pw_ponadprogramowy
+--
+FROM v2u_uu_zal_przedm_prgos src
+WHERE   src.change_type = 'I'
+    AND src.safe_to_change = 1
+;
+
+COMMIT;
+
+
+-- vim: set ft=sql ts=4 sw=4 et:

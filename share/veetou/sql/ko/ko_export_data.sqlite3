@@ -1,0 +1,100 @@
+PRAGMA temp_store = 2;
+
+CREATE TEMP VIEW job_uuid AS
+  SELECT value
+  FROM ko_variables
+  WHERE name = 'job_uuid'
+;
+
+-- ROOT TABLE
+.mode insert veetou_ko_jobs
+SELECT
+    (SELECT value FROM job_uuid)
+  , (SELECT value FROM ko_variables WHERE name = 'job_timestamp')
+  , (SELECT value FROM ko_variables WHERE name = 'job_host')
+  , (SELECT value FROM ko_variables WHERE name = 'job_user')
+  , (SELECT value FROM ko_variables WHERE name = 'job_name');
+
+-- DATA TABLES
+
+.mode insert veetou_ko_footers
+SELECT
+    (SELECT value FROM job_uuid), ko_footers.*
+FROM ko_footers;
+
+.mode insert veetou_ko_headers
+SELECT
+    (SELECT value FROM job_uuid), ko_headers.*
+FROM ko_headers;
+
+.mode insert veetou_ko_pages
+SELECT
+    (SELECT value FROM job_uuid), ko_pages.*
+FROM ko_pages;
+
+.mode insert veetou_ko_preambles
+SELECT
+    (SELECT value FROM job_uuid), ko_preambles.*
+FROM ko_preambles;
+
+.mode insert veetou_ko_reports
+SELECT
+    (SELECT value FROM job_uuid), ko_reports.*
+FROM ko_reports;
+
+.mode insert veetou_ko_sheets
+SELECT
+    (SELECT value FROM job_uuid), ko_sheets.*
+FROM ko_sheets;
+
+.mode insert veetou_ko_tbodies
+SELECT
+    (SELECT value FROM job_uuid), ko_tbodies.*
+FROM ko_tbodies;
+
+.mode insert veetou_ko_trs
+SELECT
+    (SELECT value FROM job_uuid), ko_trs.*
+FROM ko_trs;
+
+-- JUNCTION TABLES
+
+.mode insert veetou_ko_page_footer
+SELECT
+    (SELECT value FROM job_uuid), ko_page_footer.*
+FROM ko_page_footer;
+
+.mode insert veetou_ko_page_header
+SELECT
+    (SELECT value FROM job_uuid), ko_page_header.*
+FROM ko_page_header;
+
+.mode insert veetou_ko_page_preamble
+SELECT
+    (SELECT value FROM job_uuid), ko_page_preamble.*
+FROM ko_page_preamble;
+
+.mode insert veetou_ko_page_tbody
+SELECT
+    (SELECT value FROM job_uuid), ko_page_tbody.*
+FROM ko_page_tbody;
+
+.mode insert veetou_ko_report_sheets
+SELECT
+    (SELECT value FROM job_uuid), ko_report_sheets.*
+FROM ko_report_sheets;
+
+.mode insert veetou_ko_sheet_pages
+SELECT
+    (SELECT value FROM job_uuid), ko_sheet_pages.*
+FROM ko_sheet_pages;
+
+.mode insert veetou_ko_tbody_trs
+SELECT
+    (SELECT value FROM job_uuid), ko_tbody_trs.*
+FROM ko_tbody_trs;
+
+
+DROP VIEW job_uuid;
+
+-- vim: set ft=sql:

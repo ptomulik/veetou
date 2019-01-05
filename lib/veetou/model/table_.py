@@ -66,7 +66,11 @@ class TableMeta(abc.ABCMeta):
 
 class Table(object_.Object, mapset_.Mapset, metaclass=TableMeta):
 
-    __slots__ = ('_relations', '_start_append_id', '_last_append_id', '_high_append_id', '_name')
+    __slots__ = ('_relations',
+                 '_start_append_id',
+                 '_last_append_id',
+                 '_high_append_id',
+                 '_name')
 
     def __init__(self, items = (), **kw):
         from . import endpoint_ # imported here to avoid circular dependencies
@@ -148,7 +152,6 @@ class Table(object_.Object, mapset_.Mapset, metaclass=TableMeta):
     def append(self, value):
         try:
             i = self._high_append_id + 1
-            #i = self._last_append_id + 1
         except AttributeError:
             i = self.start_append_id
         while i in self: i = i+1
@@ -162,10 +165,10 @@ class Table(object_.Object, mapset_.Mapset, metaclass=TableMeta):
             for k, v in self.items():
                 if v == value:
                     self._last_append_id = k
-                    return k
+                    return (k, False)
             raise RuntimeError('could not find record in table')
         else:
-            return self.append(value)
+            return (self.append(value), True)
 
 
     def getrecord(self, key):

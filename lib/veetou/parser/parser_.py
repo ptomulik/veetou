@@ -9,6 +9,7 @@ from ..model import entityclass
 from ..model import tablename
 from ..model import DataModel
 from ..model import Endpoint
+from ..model import Array
 
 import abc
 
@@ -83,15 +84,16 @@ class Parser(object, metaclass=abc.ABCMeta):
 
     def append_record(self, data, table, junctions=()):
         if self.datamodel_disabled:
-            return
+            return (None, None)
         if isinstance(table, str):
             table = self.datamodel.tables[table]
         entity = entityclass(table)
-        arg = { k : data[k] for k in data if k in entity.keys() }
+        dict4us = { k : data[k] for k in data if k in entity.keys() }
         if self.squashing:
-            key = table.find_or_append(entity(**arg))
+            (key, appended) = table.find_or_append(entity(**dict4us))
         else:
-            key = table.append(entity(**arg))
+            key = table.append(entity(**dict4us))
+            appended = True
         for rel in junctions:
             if isinstance(rel, Endpoint):
                 endpoint = rel
@@ -102,23 +104,37 @@ class Parser(object, metaclass=abc.ABCMeta):
             pair = endpoint.pair(key, opposite_key)
             if not self.squashing or not pair in endpoint.relation:
                 endpoint.relation.append(pair)
+        return (key, appended)
 
-    def update_record(self, data, table, key = None):
+    def update_record(self, data, table, key, appended):
         if self.datamodel_disabled:
             return
         if isinstance(table, str):
             table = self.datamodel.tables[table]
-        if key is None:
-            key = table.last_append_id
+        entity = entityclass(table)
+
         record = table.getrecord(key)
-        oldrec = record.copy()
-        arg = { k : data[k] for k in data if k in record.keys() }
-        record.update(arg)
-        if record != oldrec:
-            if self.squashing and record != array_.Array(arg):
-                msg = "update_record(): can't modify record when squashing " + \
-                      "is enabled (table: %s)" % tablename(table)
+
+        # Extract from data fields that are of interest and try to update
+        # existing record in table
+        keys4us = tuple(k for k in record.keys() if k in data)
+        vals4us = tuple(data[k] for k in keys4us)
+        dict4us = dict(zip(keys4us, vals4us))
+
+        # Operate on entities, as they implement validation and data conversion
+        # on entry. So, the input data must pass through entity before it
+        # reaches record. This also guarantees that the comparison, we perform
+        # below, is done on the converted values (normalized, squashed
+        # whitespaces, etc.).
+        original = entity(record)
+        updated = entity(original, **dict4us)
+
+        if updated != original:
+            if self.squashing and not appended:
+                msg = "update_record(): can't modify existing record when " + \
+                      "squashing is enabled (table: %s)" % tablename(table)
                 raise RuntimeError(msg)
+            record.update({k: updated[k] for k in keys4us})
             record.save()
 
     def parse_before_children(self, iterator, kw):
@@ -137,13 +153,13 @@ class Parser(object, metaclass=abc.ABCMeta):
         if not self.parse_before_children(iterator, kw):
             return False
         if self.table is not None:
-            self.append_record(kw, self.table, self.junctions)
+            (key, appended) = self.append_record(kw, self.table, self.junctions)
         if not self.parse_with_children(iterator, kw):
             return False
         if not self.parse_after_children(iterator, kw):
             return False
         if self.table is not None:
-            self.update_record(kw, self.table)
+            self.update_record(kw, self.table, key, appended)
         return True
 
     def __getattr__(self, name):

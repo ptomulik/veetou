@@ -7,14 +7,15 @@ import veetou.ko as ko
 
 class Test__Ko(unittest.TestCase):
     def test__komodel__symbols_1(self):
-        self.assertIs(ko.komodel_.KoReport, ko.KoReport),
-        self.assertIs(ko.komodel_.KoSheet, ko.KoSheet),
-        self.assertIs(ko.komodel_.KoPage, ko.KoPage),
-        self.assertIs(ko.komodel_.KoPreamble, ko.KoPreamble),
-        self.assertIs(ko.komodel_.KoHeader, ko.KoHeader),
-        self.assertIs(ko.komodel_.KoFooter, ko.KoFooter),
-        self.assertIs(ko.komodel_.KoTbody, ko.KoTbody),
-        self.assertIs(ko.komodel_.KoTr, ko.KoTr),
+        self.assertIs(ko.komodel_.KoVariable, ko.KoVariable)
+        self.assertIs(ko.komodel_.KoReport, ko.KoReport)
+        self.assertIs(ko.komodel_.KoSheet, ko.KoSheet)
+        self.assertIs(ko.komodel_.KoPage, ko.KoPage)
+        self.assertIs(ko.komodel_.KoPreamble, ko.KoPreamble)
+        self.assertIs(ko.komodel_.KoHeader, ko.KoHeader)
+        self.assertIs(ko.komodel_.KoFooter, ko.KoFooter)
+        self.assertIs(ko.komodel_.KoTbody, ko.KoTbody)
+        self.assertIs(ko.komodel_.KoTr, ko.KoTr)
         self.assertIs(ko.komodel_.KoDataModel, ko.KoDataModel)
 
     def test__koreportparser_symbols__1(self):
