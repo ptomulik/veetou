@@ -11,7 +11,13 @@ CREATE TEMP TABLE veetou_ko_exports(
 INSERT INTO veetou_ko_exports (export_user, export_name) VALUES (NULL, NULL);
 
 .mode insert veetou_ko_imports
-SELECT veetou_ko_exports.uuid, veetou_ko_exports.sqltime, veetou_ko_exports.user, veetou_ko_exports.name FROM veetou_ko_exports WHERE veetou_ko_exports.id = 1;
+SELECT
+    veetou_ko_exports.uuid
+  , veetou_ko_exports.export_timestamp
+  , veetou_ko_exports.export_user
+  , veetou_ko_exports.export_name
+FROM veetou_ko_exports
+WHERE veetou_ko_exports.id = 1;
 
 .mode insert veetou_ko_footers
 SELECT veetou_ko_exports.uuid, ko_footers.* FROM ko_footers LEFT JOIN veetou_ko_exports WHERE veetou_ko_exports.id = 1;
