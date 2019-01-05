@@ -23,7 +23,7 @@ class KoCmd(pdfreportparsercmd_.PdfReportParserCmd):
     def _create_parse_variables(self, variables, **kw):
         var = entityclass(variables)
         p_uuid = uuid.uuid4().hex
-        p_timestamp = str(datetime.datetime.now())
+        p_timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         p_host = platform.node()
         p_user = getpass.getuser()
         variables.append(var(('parse_uuid', p_uuid)))
