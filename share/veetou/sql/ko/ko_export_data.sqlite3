@@ -1,135 +1,100 @@
 PRAGMA temp_store = 2;
 
-CREATE TEMP TABLE veetou_ko_exports(
-    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL
-  , export_id UNSIGNED BIG INT DEFAULT (RANDOMBLOB(8)) NOT NULL
-  , export_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
-  , export_user VARCHAR(32)
-  , export_name VARCHAR(32)
-);
-
-INSERT INTO veetou_ko_exports (export_user, export_name) VALUES (NULL, NULL);
+CREATE TEMP VIEW parse_uuid AS
+  SELECT value
+  FROM ko_variables
+  WHERE name = 'parse_uuid'
+;
 
 -- ROOT TABLE
 .mode insert veetou_ko_exports
 SELECT
-    veetou_ko_exports.export_id
-  , veetou_ko_exports.export_timestamp
-  , veetou_ko_exports.export_user
-  , veetou_ko_exports.export_name
-FROM veetou_ko_exports
-WHERE veetou_ko_exports.id = 1;
+    (SELECT value FROM parse_uuid)
+  , (SELECT value FROM ko_variables WHERE name = 'parse_timestamp')
+  , (SELECT value FROM ko_variables WHERE name = 'parse_host')
+  , (SELECT value FROM ko_variables WHERE name = 'parse_user')
+  , (SELECT value FROM ko_variables WHERE name = 'parse_name');
 
 -- DATA TABLES
 
 .mode insert veetou_ko_footers
 SELECT
-    veetou_ko_exports.export_id, ko_footers.*
-FROM ko_footers
-LEFT JOIN veetou_ko_exports
-WHERE veetou_ko_exports.id = 1;
+    (SELECT value FROM parse_uuid), ko_footers.*
+FROM ko_footers;
 
 .mode insert veetou_ko_headers
 SELECT
-    veetou_ko_exports.export_id, ko_headers.*
-FROM ko_headers
-LEFT JOIN veetou_ko_exports
-WHERE veetou_ko_exports.id = 1;
+    (SELECT value FROM parse_uuid), ko_headers.*
+FROM ko_headers;
 
 .mode insert veetou_ko_pages
 SELECT
-    veetou_ko_exports.export_id, ko_pages.*
-FROM ko_pages
-LEFT JOIN veetou_ko_exports
-WHERE veetou_ko_exports.id = 1;
+    (SELECT value FROM parse_uuid), ko_pages.*
+FROM ko_pages;
 
 .mode insert veetou_ko_preambles
 SELECT
-    veetou_ko_exports.export_id, ko_preambles.*
-FROM ko_preambles
-LEFT JOIN veetou_ko_exports
-WHERE veetou_ko_exports.id = 1;
+    (SELECT value FROM parse_uuid), ko_preambles.*
+FROM ko_preambles;
 
 .mode insert veetou_ko_reports
 SELECT
-    veetou_ko_exports.export_id, ko_reports.*
-FROM ko_reports
-LEFT JOIN veetou_ko_exports
-WHERE veetou_ko_exports.id = 1;
+    (SELECT value FROM parse_uuid), ko_reports.*
+FROM ko_reports;
 
 .mode insert veetou_ko_sheets
 SELECT
-    veetou_ko_exports.export_id, ko_sheets.*
-FROM ko_sheets
-LEFT JOIN veetou_ko_exports
-WHERE veetou_ko_exports.id = 1;
+    (SELECT value FROM parse_uuid), ko_sheets.*
+FROM ko_sheets;
 
 .mode insert veetou_ko_tbodies
 SELECT
-    veetou_ko_exports.export_id, ko_tbodies.*
-FROM ko_tbodies
-LEFT JOIN veetou_ko_exports
-WHERE veetou_ko_exports.id = 1;
+    (SELECT value FROM parse_uuid), ko_tbodies.*
+FROM ko_tbodies;
 
 .mode insert veetou_ko_trs
 SELECT
-    veetou_ko_exports.export_id, ko_trs.*
-FROM ko_trs
-LEFT JOIN veetou_ko_exports
-WHERE veetou_ko_exports.id = 1;
+    (SELECT value FROM parse_uuid), ko_trs.*
+FROM ko_trs;
 
 -- JUNCTION TABLES
 
 .mode insert veetou_ko_page_footer
 SELECT
-    veetou_ko_exports.export_id, ko_page_footer.*
-FROM ko_page_footer
-LEFT JOIN veetou_ko_exports
-WHERE veetou_ko_exports.id = 1;
+    (SELECT value FROM parse_uuid), ko_page_footer.*
+FROM ko_page_footer;
 
 .mode insert veetou_ko_page_header
 SELECT
-    veetou_ko_exports.export_id, ko_page_header.*
-FROM ko_page_header
-LEFT JOIN veetou_ko_exports
-WHERE veetou_ko_exports.id = 1;
+    (SELECT value FROM parse_uuid), ko_page_header.*
+FROM ko_page_header;
 
 .mode insert veetou_ko_page_preamble
 SELECT
-    veetou_ko_exports.export_id, ko_page_preamble.*
-FROM ko_page_preamble
-LEFT JOIN veetou_ko_exports
-WHERE veetou_ko_exports.id = 1;
+    (SELECT value FROM parse_uuid), ko_page_preamble.*
+FROM ko_page_preamble;
 
 .mode insert veetou_ko_page_tbody
 SELECT
-    veetou_ko_exports.export_id, ko_page_tbody.*
-FROM ko_page_tbody
-LEFT JOIN veetou_ko_exports
-WHERE veetou_ko_exports.id = 1;
+    (SELECT value FROM parse_uuid), ko_page_tbody.*
+FROM ko_page_tbody;
 
 .mode insert veetou_ko_report_sheets
 SELECT
-    veetou_ko_exports.export_id, ko_report_sheets.*
-FROM ko_report_sheets
-LEFT JOIN veetou_ko_exports
-WHERE veetou_ko_exports.id = 1;
+    (SELECT value FROM parse_uuid), ko_report_sheets.*
+FROM ko_report_sheets;
 
 .mode insert veetou_ko_sheet_pages
 SELECT
-    veetou_ko_exports.export_id, ko_sheet_pages.*
-FROM ko_sheet_pages
-LEFT JOIN veetou_ko_exports
-WHERE veetou_ko_exports.id = 1;
+    (SELECT value FROM parse_uuid), ko_sheet_pages.*
+FROM ko_sheet_pages;
 
 .mode insert veetou_ko_tbody_trs
 SELECT
-    veetou_ko_exports.export_id, ko_tbody_trs.*
-FROM ko_tbody_trs
-LEFT JOIN veetou_ko_exports
-WHERE veetou_ko_exports.id = 1;
+    (SELECT value FROM parse_uuid), ko_tbody_trs.*
+FROM ko_tbody_trs;
 
 
-DROP TABLE veetou_ko_exports;
+DROP VIEW parse_uuid;
 
 -- vim: set ft=sql:

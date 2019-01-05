@@ -6,7 +6,8 @@ Defines data model for ko (Karta Osiągnięć)
 
 from veetou.model import *
 
-__all__ = ( 'KoReport',
+__all__ = ( 'KoVariable',
+            'KoReport',
             'KoSheet',
             'KoPage',
             'KoPreamble',
@@ -28,6 +29,14 @@ def sqws(s=None):
         return None
     else:
         return ' '.join(s.split())
+
+KoVariable = declare( DataType, 'KoVariable',
+
+        ('name', 'value'),
+        (str, strn),
+        plural = 'KoVariables'
+
+)
 
 KoReport = declare( DataType, 'KoReport',
 
@@ -101,7 +110,8 @@ KoTr = declare( DataType, 'KoTr',
 
 class KoDataModel(DataModel):
 
-    _datatypes =  ( KoReport,
+    _datatypes =  ( KoVariable,
+                    KoReport,
                     KoSheet,
                     KoPage,
                     KoPreamble,
