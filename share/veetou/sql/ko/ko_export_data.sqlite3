@@ -38,7 +38,7 @@ SELECT veetou_ko_exports.uuid, ko_page_preamble.* FROM ko_page_preamble LEFT JOI
 SELECT veetou_ko_exports.uuid, ko_page_tbody.* FROM ko_page_tbody LEFT JOIN veetou_ko_exports WHERE veetou_ko_exports.id = 1;
 
 .mode insert veetou_ko_pages
-SELECT veetou_ko_exports.uuid, ko_page_pages.* FROM ko_page_pages LEFT JOIN veetou_ko_exports WHERE veetou_ko_exports.id = 1;
+SELECT veetou_ko_exports.uuid, ko_pages.* FROM ko_pages LEFT JOIN veetou_ko_exports WHERE veetou_ko_exports.id = 1;
 
 .mode insert veetou_ko_preambles
 SELECT veetou_ko_exports.uuid, ko_preambles.* FROM ko_preambles LEFT JOIN veetou_ko_exports WHERE veetou_ko_exports.id = 1;
