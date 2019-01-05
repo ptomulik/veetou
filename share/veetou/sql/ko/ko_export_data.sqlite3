@@ -1,0 +1,64 @@
+PRAGMA temp_store = 2;
+
+CREATE TEMP TABLE _exports(
+    id INTEGER PRIMARY KEY AUTOINCREMENT
+  , uuid TEXT DEFAULT (LOWER(HEX(RANDOMBLOB(16))))
+  , sqltime TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+  , user VARCHAR
+  , name VARCHAR
+);
+
+INSERT INTO _exports (user, name) VALUES (NULL, NULL);
+
+.mode insert veetou_ko_imports
+SELECT _exports.uuid, _exports.sqltime, _exports.user, _exports.name FROM _exports WHERE _exports.id = 1;
+
+.mode insert veetou_ko_footers
+SELECT _exports.uuid, ko_footers.* FROM ko_footers LEFT JOIN _exports WHERE _exports.id = 1;
+
+.mode insert veetou_ko_headers
+SELECT _exports.uuid, ko_headers.* FROM ko_headers LEFT JOIN _exports WHERE _exports.id = 1;
+
+.mode insert veetou_ko_page_footer
+SELECT _exports.uuid, ko_page_footer.* FROM ko_page_footer LEFT JOIN _exports WHERE _exports.id = 1;
+
+.mode insert veetou_ko_page_header
+SELECT _exports.uuid, ko_page_header.* FROM ko_page_header LEFT JOIN _exports WHERE _exports.id = 1;
+
+.mode insert veetou_ko_page_preamble
+SELECT _exports.uuid, ko_page_preamble.* FROM ko_page_preamble LEFT JOIN _exports WHERE _exports.id = 1;
+
+.mode insert veetou_ko_page_tbody
+SELECT _exports.uuid, ko_page_tbody.* FROM ko_page_tbody LEFT JOIN _exports WHERE _exports.id = 1;
+
+.mode insert veetou_ko_pages
+SELECT _exports.uuid, ko_page_pages.* FROM ko_page_pages LEFT JOIN _exports WHERE _exports.id = 1;
+
+.mode insert veetou_ko_preambles
+SELECT _exports.uuid, ko_preambles.* FROM ko_preambles LEFT JOIN _exports WHERE _exports.id = 1;
+
+.mode insert veetou_ko_report_sheets
+SELECT _exports.uuid, ko_report_sheets.* FROM ko_report_sheets LEFT JOIN _exports WHERE _exports.id = 1;
+
+.mode insert veetou_ko_reports
+SELECT _exports.uuid, ko_reports.* FROM ko_reports LEFT JOIN _exports WHERE _exports.id = 1;
+
+.mode insert veetou_ko_sheet_pages
+SELECT _exports.uuid, ko_sheet_pages.* FROM ko_sheet_pages LEFT JOIN _exports WHERE _exports.id = 1;
+
+.mode insert veetou_ko_sheets
+SELECT _exports.uuid, ko_sheets.* FROM ko_sheets LEFT JOIN _exports WHERE _exports.id = 1;
+
+.mode insert veetou_ko_tbodies
+SELECT _exports.uuid, ko_tbodies.* FROM ko_tbodies LEFT JOIN _exports WHERE _exports.id = 1;
+
+.mode insert veetou_ko_tbody_trs
+SELECT _exports.uuid, ko_tbody_trs.* FROM ko_tbody_trs LEFT JOIN _exports WHERE _exports.id = 1;
+
+.mode insert veetou_ko_trs
+SELECT _exports.uuid, ko_trs.* FROM ko_trs LEFT JOIN _exports WHERE _exports.id = 1;
+
+
+DROP TABLE _exports;
+
+-- vim: set ft=sql:
