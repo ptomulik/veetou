@@ -89,7 +89,7 @@ COMMENT ON COLUMN veetou_ko_preambles.student_name IS 'Imię i nazwisko studenta
 COMMENT ON COLUMN veetou_ko_preambles.semester_code IS 'Kod semestru akademickiego którego dotyczy arkusz raportu';
 COMMENT ON COLUMN veetou_ko_preambles.studies_field IS 'Kierunek studiów odczytany z preambuły';
 COMMENT ON COLUMN veetou_ko_preambles.semester_number IS 'Numer semestru studiów studenta odczytany z preambuły';
-COMMENT ON COLUMN veetou_ko_preambles.studies_spefialty IS 'Specjalność studiów odczytana z preambuły';
+COMMENT ON COLUMN veetou_ko_preambles.studies_specialty IS 'Specjalność studiów odczytana z preambuły';
 
 CREATE TABLE veetou_ko_reports (
     job_uuid RAW(16) NOT NULL
@@ -140,8 +140,8 @@ CREATE TABLE veetou_ko_tbodies (
   , CONSTRAINTS veetou_ko_tbodies_pk PRIMARY KEY (job_uuid, id)
   , CONSTRAINTS veetou_ko_tbodies_fk0 FOREIGN KEY (job_uuid) REFERENCES veetou_ko_jobs(job_uuid)
 );
-COMMENT ON TABLE veetou_ko_tboties IS 'Ciała tabel znajdujących sie Kartach Osiągnięć';
-COMMENT ON COLUMN veetou_ko_tboties.job_uuid IS 'Unikalny identyfikator uruchomienia VEETOU z którego pochodzi rekord';
+COMMENT ON TABLE veetou_ko_tbodies IS 'Ciała tabel znajdujących sie Kartach Osiągnięć';
+COMMENT ON COLUMN veetou_ko_tbodies.job_uuid IS 'Unikalny identyfikator uruchomienia VEETOU z którego pochodzi rekord';
 COMMENT ON COLUMN veetou_ko_tbodies.id IS 'Lokalny identyfikator ciała tabeli';
 COMMENT ON COLUMN veetou_ko_tbodies.remark IS 'Uwagi zapisane w obszarze ciała tabeli';
 
