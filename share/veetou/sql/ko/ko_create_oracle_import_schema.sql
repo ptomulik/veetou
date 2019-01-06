@@ -43,9 +43,9 @@ CREATE TABLE veetou_ko_headers (
 );
 COMMENT ON TABLE veetou_ko_headers IS 'Nagłówki na Kartach Osiągnięć';
 COMMENT ON COLUMN veetou_ko_headers.job_uuid IS 'Unikalny identyfikator uruchomienia VEETOU z którego pochodzi rekord';
-COMMENT ON COLUMN veetou_ko_headers.id 'Lokalny identyfikator nagłówka';
-COMMENT ON COLUMN veetou_ko_headers.university 'Nazwa uczelni zapisana w nagłówku';
-COMMENT ON COLUMN veetou_ko_headers.faculty 'Nazwa wydziału zapisana w nagłówku';
+COMMENT ON COLUMN veetou_ko_headers.id IS 'Lokalny identyfikator nagłówka';
+COMMENT ON COLUMN veetou_ko_headers.university IS 'Nazwa uczelni zapisana w nagłówku';
+COMMENT ON COLUMN veetou_ko_headers.faculty IS 'Nazwa wydziału zapisana w nagłówku';
 
 CREATE TABLE veetou_ko_pages (
     job_uuid RAW(16) NOT NULL
@@ -57,9 +57,9 @@ CREATE TABLE veetou_ko_pages (
 );
 COMMENT ON TABLE veetou_ko_pages IS 'Strony występujące na Kartach Osiągnięć';
 COMMENT ON COLUMN veetou_ko_pages.job_uuid IS 'Unikalny identyfikator uruchomienia VEETOU z którego pochodzi rekord';
-COMMENT ON COLUMN veetou_ko_pages.id 'Lokalny identyfikator strony';
-COMMENT ON COLUMN veetou_ko_pages.page_number 'Numer strony w przetworzonym dokumencie';
-COMMENT ON COLUMN veetou_ko_pages.parser_page_number 'Numer strony wyliczony przez parser';
+COMMENT ON COLUMN veetou_ko_pages.id IS 'Lokalny identyfikator strony';
+COMMENT ON COLUMN veetou_ko_pages.page_number IS 'Numer strony w przetworzonym dokumencie';
+COMMENT ON COLUMN veetou_ko_pages.parser_page_number IS 'Numer strony wyliczony przez parser';
 
 CREATE TABLE veetou_ko_preambles (
     job_uuid RAW(16) NOT NULL
@@ -79,17 +79,17 @@ CREATE TABLE veetou_ko_preambles (
 );
 COMMENT ON TABLE veetou_ko_preambles IS 'Preambuły występujące na Kartach Osiągnięć';
 COMMENT ON COLUMN veetou_ko_preambles.job_uuid IS 'Unikalny identyfikator uruchomienia VEETOU z którego pochodzi rekord';
-COMMENT ON COLUMN veetou_ko_preambles.id 'Lokalny identyfikator preambuły';
-COMMENT ON COLUMN veetou_ko_preambles.studies_modetier 'Tryb i poziom studiów odczytany z preambuły';
-COMMENT ON COLUMN veetou_ko_preambles.title 'Tytuł arkusza raportu odczytany z preambuły';
-COMMENT ON COLUMN veetou_ko_preambles.student_index 'Nr albumu studenta odczytany z preambuły';
-COMMENT ON COLUMN veetou_ko_preambles.first_name 'Imię studenta odczytane z preambuły';
-COMMENT ON COLUMN veetou_ko_preambles.last_name 'Nazwisko studenta odczytane z preambuły';
-COMMENT ON COLUMN veetou_ko_preambles.student_name 'Imię i nazwisko studenta odczytane z preambuły';
-COMMENT ON COLUMN veetou_ko_preambles.semester_code 'Kod semestru akademickiego którego dotyczy arkusz raportu';
-COMMENT ON COLUMN veetou_ko_preambles.studies_field 'Kierunek studiów odczytany z preambuły';
-COMMENT ON COLUMN veetou_ko_preambles.semester_number 'Numer semestru studiów studenta odczytany z preambuły';
-COMMENT ON COLUMN veetou_ko_preambles.studies_spefialty 'Specjalność studiów odczytana z preambuły';
+COMMENT ON COLUMN veetou_ko_preambles.id IS 'Lokalny identyfikator preambuły';
+COMMENT ON COLUMN veetou_ko_preambles.studies_modetier IS 'Tryb i poziom studiów odczytany z preambuły';
+COMMENT ON COLUMN veetou_ko_preambles.title IS 'Tytuł arkusza raportu odczytany z preambuły';
+COMMENT ON COLUMN veetou_ko_preambles.student_index IS 'Nr albumu studenta odczytany z preambuły';
+COMMENT ON COLUMN veetou_ko_preambles.first_name IS 'Imię studenta odczytane z preambuły';
+COMMENT ON COLUMN veetou_ko_preambles.last_name IS 'Nazwisko studenta odczytane z preambuły';
+COMMENT ON COLUMN veetou_ko_preambles.student_name IS 'Imię i nazwisko studenta odczytane z preambuły';
+COMMENT ON COLUMN veetou_ko_preambles.semester_code IS 'Kod semestru akademickiego którego dotyczy arkusz raportu';
+COMMENT ON COLUMN veetou_ko_preambles.studies_field IS 'Kierunek studiów odczytany z preambuły';
+COMMENT ON COLUMN veetou_ko_preambles.semester_number IS 'Numer semestru studiów studenta odczytany z preambuły';
+COMMENT ON COLUMN veetou_ko_preambles.studies_spefialty IS 'Specjalność studiów odczytana z preambuły';
 
 CREATE TABLE veetou_ko_reports (
     job_uuid RAW(16) NOT NULL
@@ -102,14 +102,14 @@ CREATE TABLE veetou_ko_reports (
   , CONSTRAINT veetou_ko_reports_pk PRIMARY KEY (job_uuid, id)
   , CONSTRAINT veetou_ko_reports_fk0 FOREIGN KEY (job_uuid) REFERENCES veetou_ko_jobs(job_uuid)
 );
-COMMENT ON TABLE veetou_ko_reports 'Dokumenty typu Karta Osiągnięć przetworzone w ramach uruchomienia VEETOU';
+COMMENT ON TABLE veetou_ko_reports IS 'Dokumenty typu Karta Osiągnięć przetworzone w ramach uruchomienia VEETOU';
 COMMENT ON COLUMN veetou_ko_reports.job_uuid IS 'Unikalny identyfikator uruchomienia VEETOU z którego pochodzi rekord';
-COMMENT ON COLUMN veetou_ko_reports.id 'Lokalny identyfikator dokumentu';
-COMMENT ON COLUMN veetou_ko_reports.source 'Nazwa pliku źródłowego dokumentu';
-COMMENT ON COLUMN veetou_ko_reports.datetime 'Data i czas otwarcia dokumentu do odczytu';
-COMMENT ON COLUMN veetou_ko_reports.first_page 'Nr pierwszej wczytanej strony dokumentu';
-COMMENT ON COLUMN veetou_ko_reports.sheets_parsed 'Liczba arkuszy Kart Osiągnięć wczytanych z dokumentu';
-COMMENT ON COLUMN veetou_ko_reports.pages_parsed 'Liczba przetworzonych stron dokumentu';
+COMMENT ON COLUMN veetou_ko_reports.id IS 'Lokalny identyfikator dokumentu';
+COMMENT ON COLUMN veetou_ko_reports.source IS 'Nazwa pliku źródłowego dokumentu';
+COMMENT ON COLUMN veetou_ko_reports.datetime IS 'Data i czas otwarcia dokumentu do odczytu';
+COMMENT ON COLUMN veetou_ko_reports.first_page IS 'Nr pierwszej wczytanej strony dokumentu';
+COMMENT ON COLUMN veetou_ko_reports.sheets_parsed IS 'Liczba arkuszy Kart Osiągnięć wczytanych z dokumentu';
+COMMENT ON COLUMN veetou_ko_reports.pages_parsed IS 'Liczba przetworzonych stron dokumentu';
 
 CREATE TABLE veetou_ko_sheets (
     job_uuid RAW(16) NOT NULL
@@ -123,15 +123,15 @@ CREATE TABLE veetou_ko_sheets (
   , CONSTRAINT veetou_ko_sheets_pk PRIMARY KEY (job_uuid, id)
   , CONSTRAINT veetou_ko_sheets_fk0 FOREIGN KEY (job_uuid) REFERENCES veetou_ko_jobs(job_uuid)
 );
-COMMENT ON TABLE veetou_ko_sheets 'Arkusze Kart Osiągnięć wczytane w ramach uruchomienia VEETOU';
+COMMENT ON TABLE veetou_ko_sheets IS 'Arkusze Kart Osiągnięć wczytane w ramach uruchomienia VEETOU';
 COMMENT ON COLUMN veetou_ko_sheets.job_uuid IS 'Unikalny identyfikator uruchomienia VEETOU z którego pochodzi rekord';
-COMMENT ON COLUMN veetou_ko_sheets.id 'Lokalny identyfikator arkusza';
-COMMENT ON COLUMN veetou_ko_sheets.pages_parsed 'Liczba przetworzonych stron arkusza';
-COMMENT ON COLUMN veetou_ko_sheets.first_page 'Number stony dokumentu na której rozpoczyna się arkusz';
-COMMENT ON COLUMN veetou_ko_sheets.ects_mandatory 'Liczba wymaganych punktów ECTS określona w arkuszu';
-COMMENT ON COLUMN veetou_ko_sheets.ects_other 'Liczba pozostałych punktów ECTS określona w arkuszu';
-COMMENT ON COLUMN veetou_ko_sheets.ects_total 'Całkowita liczba punktów ECTS określona w arkuszu';
-COMMENT ON COLUMN veetou_ko_sheets.ects_attained 'Liczba zdobytycg punktów ECTS określona w arkuszu';
+COMMENT ON COLUMN veetou_ko_sheets.id IS 'Lokalny identyfikator arkusza';
+COMMENT ON COLUMN veetou_ko_sheets.pages_parsed IS 'Liczba przetworzonych stron arkusza';
+COMMENT ON COLUMN veetou_ko_sheets.first_page IS 'Number stony dokumentu na której rozpoczyna się arkusz';
+COMMENT ON COLUMN veetou_ko_sheets.ects_mandatory IS 'Liczba wymaganych punktów ECTS określona w arkuszu';
+COMMENT ON COLUMN veetou_ko_sheets.ects_other IS 'Liczba pozostałych punktów ECTS określona w arkuszu';
+COMMENT ON COLUMN veetou_ko_sheets.ects_total IS 'Całkowita liczba punktów ECTS określona w arkuszu';
+COMMENT ON COLUMN veetou_ko_sheets.ects_attained IS 'Liczba zdobytycg punktów ECTS określona w arkuszu';
 
 CREATE TABLE veetou_ko_tbodies (
     job_uuid RAW(16) NOT NULL
@@ -140,10 +140,10 @@ CREATE TABLE veetou_ko_tbodies (
   , CONSTRAINTS veetou_ko_tbodies_pk PRIMARY KEY (job_uuid, id)
   , CONSTRAINTS veetou_ko_tbodies_fk0 FOREIGN KEY (job_uuid) REFERENCES veetou_ko_jobs(job_uuid)
 );
-COMMENT ON TABLE veetou_ko_tboties 'Ciała tabel znajdujących sie Kartach Osiągnięć';
+COMMENT ON TABLE veetou_ko_tboties IS 'Ciała tabel znajdujących sie Kartach Osiągnięć';
 COMMENT ON COLUMN veetou_ko_tboties.job_uuid IS 'Unikalny identyfikator uruchomienia VEETOU z którego pochodzi rekord';
-COMMENT ON COLUMN veetou_ko_tbodies.id 'Lokalny identyfikator ciała tabeli';
-COMMENT ON COLUMN veetou_ko_tbodies.remark 'Uwagi zapisane w obszarze ciała tabeli';
+COMMENT ON COLUMN veetou_ko_tbodies.id IS 'Lokalny identyfikator ciała tabeli';
+COMMENT ON COLUMN veetou_ko_tbodies.remark IS 'Uwagi zapisane w obszarze ciała tabeli';
 
 CREATE TABLE veetou_ko_trs (
     job_uuid RAW(16) NOT NULL
@@ -165,7 +165,7 @@ CREATE TABLE veetou_ko_trs (
 );
 COMMENT ON TABLE veetou_ko_trs IS 'Wiersze tabel znajdujących się na Kartach Osiągnięć';
 COMMENT ON COLUMN veetou_ko_trs.job_uuid IS 'Unikalny identyfikator uruchomienia VEETOU z którego pochodzi rekord';
-COMMENT ON COLUMN veetou_ko_trs.id 'Lokalny identyfikator wiersza tabeli';
+COMMENT ON COLUMN veetou_ko_trs.id IS 'Lokalny identyfikator wiersza tabeli';
 COMMENT ON COLUMN veetou_ko_trs.subj_code IS 'Kod przedmiotu odczytany z wiersza tabeli';
 COMMENT ON COLUMN veetou_ko_trs.subj_name IS 'Nazwa przedmiotu odczytana z wiersza tabeli';
 COMMENT ON COLUMN veetou_ko_trs.subj_hours_w IS 'Liczba godzin wykładu w semestrze odczytana z wiersza tabeli';
