@@ -1,9 +1,9 @@
 PRAGMA temp_store = 2;
 
-CREATE TEMP VIEW parse_uuid AS
+CREATE TEMP VIEW job_uuid AS
   SELECT value
   FROM ko_variables
-  WHERE name = 'parse_uuid'
+  WHERE name = 'job_uuid'
 ;
 
 CREATE TEMP TABLE table_decls (table_name, table_id, field_list);
@@ -12,11 +12,11 @@ INSERT INTO table_decls VALUES(
   'D01',
   '(
       tab_id FILLER CHAR
-    , parse_uuid CHAR
-    , parse_timestamp TIMESTAMP ''YYYY-MM-DD HH24-MI-SS''
-    , parse_host CHAR
-    , parse_user CHAR
-    , parse_name CHAR
+    , job_uuid CHAR
+    , job_timestamp TIMESTAMP ''YYYY-MM-DD HH24-MI-SS''
+    , job_host CHAR
+    , job_user CHAR
+    , job_name CHAR
     )'
 );
 
@@ -25,7 +25,7 @@ INSERT INTO table_decls VALUES(
     'D02',
     '(
       tab_id FILLER POSITION(1) CHAR
-    , parse_uuid CHAR
+    , job_uuid CHAR
     , id INTEGER EXTERNAL
     , pagination CHAR
     , sheet_page_number INTEGER EXTERNAL
@@ -40,7 +40,7 @@ INSERT INTO table_decls VALUES(
     'D03',
     '(
       tab_id FILLER POSITION(1) CHAR
-    , parse_uuid CHAR
+    , job_uuid CHAR
     , id INTEGER EXTERNAL
     , university CHAR
     , faculty CHAR
@@ -52,7 +52,7 @@ INSERT INTO table_decls VALUES(
     'D04',
     '(
       tab_id FILLER POSITION(1) CHAR
-    , parse_uuid CHAR
+    , job_uuid CHAR
     , id INTEGER EXTERNAL
     , page_number INTEGER EXTERNAL
     , parser_page_number INTEGER EXTERNAL
@@ -63,7 +63,7 @@ INSERT INTO table_decls VALUES(
     'D05',
     '(
       tab_id FILLER POSITION(1) CHAR
-    , parse_uuid CHAR
+    , job_uuid CHAR
     , id INTEGER EXTERNAL
     , studies_modetier CHAR
     , title CHAR
@@ -83,7 +83,7 @@ INSERT INTO table_decls VALUES(
     'D06',
     '(
       tab_id FILLER POSITION(1) CHAR
-    , parse_uuid CHAR
+    , job_uuid CHAR
     , id INTEGER EXTERNAL
     , source CHAR
     , datetime TIMESTAMP ''YYYY-MM-DD HH24-MI-SS''
@@ -98,7 +98,7 @@ INSERT INTO table_decls VALUES(
     'D07',
     '(
       tab_id FILLER POSITION(1) CHAR
-    , parse_uuid CHAR
+    , job_uuid CHAR
     , id INTEGER EXTERNAL
     , pages_parsed INTEGER EXTERNAL
     , first_page INTEGER EXTERNAL
@@ -114,7 +114,7 @@ INSERT INTO table_decls VALUES(
     'D08',
     '(
       tab_id FILLER POSITION(1) CHAR
-    , parse_uuid CHAR
+    , job_uuid CHAR
     , id INTEGER EXTERNAL
     , remark CHAR
     )'
@@ -125,7 +125,7 @@ INSERT INTO table_decls VALUES(
     'D09',
     '(
       tab_id FILLER POSITION(1) CHAR
-    , parse_uuid CHAR
+    , job_uuid CHAR
     , id INTEGER EXTERNAL
     , subj_code CHAR
     , subj_name CHAR
@@ -147,7 +147,7 @@ INSERT INTO table_decls VALUES(
     'J01',
     '(
         tab_id FILLER POSITION(1) CHAR
-      , parse_uuid CHAR
+      , job_uuid CHAR
       , ko_page_id INTEGER EXTERNAL
       , ko_footer_id INTEGER EXTERNAL
       )'
@@ -158,7 +158,7 @@ INSERT INTO table_decls VALUES(
     'J02',
     '(
       tab_id FILLER POSITION(1) CHAR
-    , parse_uuid CHAR
+    , job_uuid CHAR
     , ko_page_id INTEGER EXTERNAL
     , ko_header_id INTEGER EXTERNAL
     )'
@@ -169,7 +169,7 @@ INSERT INTO table_decls VALUES(
     'J03',
     '(
       tab_id FILLER POSITION(1) CHAR
-    , parse_uuid CHAR
+    , job_uuid CHAR
     , ko_page_id INTEGER EXTERNAL
     , ko_preamble_id INTEGER EXTERNAL
     )'
@@ -180,7 +180,7 @@ INSERT INTO table_decls VALUES(
     'J04',
     '(
       tab_id FILLER POSITION(1) CHAR
-    , parse_uuid CHAR
+    , job_uuid CHAR
     , ko_page_id INTEGER EXTERNAL
     , ko_tbody_id INTEGER EXTERNAL
     )'
@@ -191,7 +191,7 @@ INSERT INTO table_decls VALUES(
     'J05',
     '(
       tab_id FILLER POSITION(1) CHAR
-    , parse_uuid CHAR
+    , job_uuid CHAR
     , ko_report_id INTEGER EXTERNAL
     , ko_sheet_id INTEGER EXTERNAL
     )'
@@ -202,7 +202,7 @@ INSERT INTO table_decls VALUES(
     'J06',
     '(
       tab_id FILLER POSITION(1) CHAR
-    , parse_uuid CHAR
+    , job_uuid CHAR
     , ko_sheet_id INTEGER EXTERNAL
     , ko_page_id INTEGER EXTERNAL
     )'
@@ -213,7 +213,7 @@ INSERT INTO table_decls VALUES(
     'J07',
     '(
       tab_id FILLER POSITION(1) CHAR
-    , parse_uuid CHAR
+    , job_uuid CHAR
     , ko_tbody_id INTEGER EXTERNAL
     , ko_tr_id INTEGER EXTERNAL
     )'
@@ -276,66 +276,66 @@ SELECT 'BEGINDATA';
 ----------- ko_jobs
 SELECT
     (SELECT table_id FROM table_decls WHERE table_name = 'ko_jobs') AS table_id
-  , (SELECT value FROM parse_uuid) AS parse_uuid
-  , (SELECT value FROM ko_variables WHERE name = 'parse_timestamp') AS parse_timestamp
-  , (SELECT value FROM ko_variables WHERE name = 'parse_host') AS parse_host
-  , (SELECT value FROM ko_variables WHERE name = 'parse_user') AS parse_user
-  , (SELECT value FROM ko_variables WHERE name = 'parse_name') AS parse_name
+  , (SELECT value FROM job_uuid) AS job_uuid
+  , (SELECT value FROM ko_variables WHERE name = 'job_timestamp') AS job_timestamp
+  , (SELECT value FROM ko_variables WHERE name = 'job_host') AS job_host
+  , (SELECT value FROM ko_variables WHERE name = 'job_user') AS job_user
+  , (SELECT value FROM ko_variables WHERE name = 'job_name') AS job_name
 ;
 
 ----------- ko_footers
 SELECT
     (SELECT table_id FROM table_decls WHERE table_name = 'ko_footers') AS table_id
-  , (SELECT value FROM parse_uuid) AS parse_uuid
+  , (SELECT value FROM job_uuid) AS job_uuid
   , ko_footers.*
 FROM ko_footers;
 
 ----------- ko_headers
 SELECT
     (SELECT table_id FROM table_decls WHERE table_name = 'ko_headers') AS table_id
-  , (SELECT value FROM parse_uuid) AS parse_uuid
+  , (SELECT value FROM job_uuid) AS job_uuid
   , ko_headers.*
 FROM ko_headers;
 
 ----------- ko_pages
 SELECT
     (SELECT table_id FROM table_decls WHERE table_name = 'ko_pages') AS table_id
-  , (SELECT value FROM parse_uuid) AS parse_uuid
+  , (SELECT value FROM job_uuid) AS job_uuid
   , ko_pages.*
 FROM ko_pages;
 
 ----------- ko_preambles
 SELECT
     (SELECT table_id FROM table_decls WHERE table_name = 'ko_preambles') AS table_id
-  , (SELECT value FROM parse_uuid) AS parse_uuid
+  , (SELECT value FROM job_uuid) AS job_uuid
   , ko_preambles.*
 FROM ko_preambles;
 
 ----------- ko_reports
 SELECT
     (SELECT table_id FROM table_decls WHERE table_name = 'ko_reports') AS table_id
-  , (SELECT value FROM parse_uuid) AS parse_uuid
+  , (SELECT value FROM job_uuid) AS job_uuid
   , ko_reports.*
 FROM ko_reports;
 
 ----------- ko_sheets
 SELECT
     (SELECT table_id FROM table_decls WHERE table_name = 'ko_sheets') AS table_id
-  , (SELECT value FROM parse_uuid) AS parse_uuid
+  , (SELECT value FROM job_uuid) AS job_uuid
   , ko_sheets.*
 FROM ko_sheets;
 
 ----------- ko_tbodies
 SELECT
     (SELECT table_id FROM table_decls WHERE table_name = 'ko_tbodies') AS table_id
-  , (SELECT value FROM parse_uuid) AS parse_uuid
+  , (SELECT value FROM job_uuid) AS job_uuid
   , ko_tbodies.*
 FROM ko_tbodies;
 
 ----------- ko_trs
 SELECT
     (SELECT table_id FROM table_decls WHERE table_name = 'ko_trs') AS table_id
-  , (SELECT value FROM parse_uuid) AS parse_uuid
+  , (SELECT value FROM job_uuid) AS job_uuid
   , ko_trs.*
 FROM ko_trs;
 
@@ -348,54 +348,54 @@ FROM ko_trs;
 ----------- ko_page_footer
 SELECT
     (SELECT table_id FROM table_decls WHERE table_name = 'ko_page_footer') AS table_id
-  , (SELECT value FROM parse_uuid) AS parse_uuid
+  , (SELECT value FROM job_uuid) AS job_uuid
   , ko_page_footer.*
 FROM ko_page_footer;
 
 ----------- ko_page_header
 SELECT
     (SELECT table_id FROM table_decls WHERE table_name = 'ko_page_header') AS table_id
-  , (SELECT value FROM parse_uuid) AS parse_uuid
+  , (SELECT value FROM job_uuid) AS job_uuid
   , ko_page_header.*
 FROM ko_page_header;
 
 ----------- ko_page_preamble
 SELECT
     (SELECT table_id FROM table_decls WHERE table_name = 'ko_page_preamble') AS table_id
-  , (SELECT value FROM parse_uuid) AS parse_uuid
+  , (SELECT value FROM job_uuid) AS job_uuid
   , ko_page_preamble.*
 FROM ko_page_preamble;
 
 ----------- ko_page_tbody
 SELECT
     (SELECT table_id FROM table_decls WHERE table_name = 'ko_page_tbody') AS table_id
-  , (SELECT value FROM parse_uuid) AS parse_uuid
+  , (SELECT value FROM job_uuid) AS job_uuid
   , ko_page_tbody.*
 FROM ko_page_tbody;
 
 ----------- ko_report_sheets
 SELECT
     (SELECT table_id FROM table_decls WHERE table_name = 'ko_report_sheets') AS table_id
-  , (SELECT value FROM parse_uuid) AS parse_uuid
+  , (SELECT value FROM job_uuid) AS job_uuid
   , ko_report_sheets.*
 FROM ko_report_sheets;
 
 ----------- ko_sheet_pages
 SELECT
     (SELECT table_id FROM table_decls WHERE table_name = 'ko_sheet_pages') AS table_id
-  , (SELECT value FROM parse_uuid) AS parse_uuid
+  , (SELECT value FROM job_uuid) AS job_uuid
   , ko_sheet_pages.*
 FROM ko_sheet_pages;
 
 ----------- ko_tbody_trs
 SELECT
     (SELECT table_id FROM table_decls WHERE table_name = 'ko_tbody_trs') AS table_id
-  , (SELECT value FROM parse_uuid) AS parse_uuid
+  , (SELECT value FROM job_uuid) AS job_uuid
   , ko_tbody_trs.*
 FROM ko_tbody_trs;
 
 
-DROP VIEW parse_uuid;
+DROP VIEW job_uuid;
 DROP VIEW table_decl_strings;
 DROP TABLE table_decls;
 
