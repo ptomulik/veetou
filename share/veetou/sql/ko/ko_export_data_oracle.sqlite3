@@ -8,7 +8,7 @@ CREATE TEMP VIEW parse_uuid AS
 
 CREATE TEMP TABLE table_decls (table_name, table_id, field_list);
 INSERT INTO table_decls VALUES(
-  'ko_exports',
+  'ko_jobs',
   'D01',
   '(
       tab_id FILLER CHAR
@@ -244,7 +244,7 @@ SELECT 'LOAD DATA
     APPEND
 ';
 
-SELECT decl FROM table_decl_strings WHERE table_name='ko_exports';
+SELECT decl FROM table_decl_strings WHERE table_name='ko_jobs';
 SELECT decl FROM table_decl_strings WHERE table_name='ko_footers';
 SELECT decl FROM table_decl_strings WHERE table_name='ko_headers';
 SELECT decl FROM table_decl_strings WHERE table_name='ko_pages';
@@ -273,9 +273,9 @@ SELECT 'BEGINDATA';
 .header off
 .separator ";" "\n"
 
------------ ko_exports
+----------- ko_jobs
 SELECT
-    (SELECT table_id FROM table_decls WHERE table_name = 'ko_exports') AS table_id
+    (SELECT table_id FROM table_decls WHERE table_name = 'ko_jobs') AS table_id
   , (SELECT value FROM parse_uuid) AS parse_uuid
   , (SELECT value FROM ko_variables WHERE name = 'parse_timestamp') AS parse_timestamp
   , (SELECT value FROM ko_variables WHERE name = 'parse_host') AS parse_host
