@@ -27,11 +27,11 @@ CREATE TABLE veetou_ko_footers (
 COMMENT ON TABLE veetou_ko_footers IS 'Stopki na Kartach Osiągnięć';
 COMMENT ON COLUMN veetou_ko_footers.job_uuid IS 'Unikalny identyfikator uruchomienia VEETOU z którego pochodzi rekord';
 COMMENT ON COLUMN veetou_ko_footers.id IS 'Lokalny identyfikator stopki';
-COMMENT ON COLUMN veetou_ko_footer.pagination IS 'Paginacja zapisana w stopce';
-COMMENT ON COLUMN veetou_ko_footer.sheet_page_number IS 'Numer strony na arkuszu';
-COMMENT ON COLUMN veetou_ko_footer.sheet_pages_total IS 'Całkowita liczba stron arkusza';
-COMMENT ON COLUMN veetou_ko_footer.generator_name IS 'Nazwa programu, który wygenerował Kartę Osiągnięć';
-COMMENT ON COLUMN veetou_ko_footer.generator_home IS 'Adres URL programu, który wygenerował Kartę Osiągnięć';
+COMMENT ON COLUMN veetou_ko_footers.pagination IS 'Paginacja zapisana w stopce';
+COMMENT ON COLUMN veetou_ko_footers.sheet_page_number IS 'Numer strony na arkuszu';
+COMMENT ON COLUMN veetou_ko_footers.sheet_pages_total IS 'Całkowita liczba stron arkusza';
+COMMENT ON COLUMN veetou_ko_footers.generator_name IS 'Nazwa programu, który wygenerował Kartę Osiągnięć';
+COMMENT ON COLUMN veetou_ko_footers.generator_home IS 'Adres URL programu, który wygenerował Kartę Osiągnięć';
 
 CREATE TABLE veetou_ko_headers (
     job_uuid RAW(16) NOT NULL
