@@ -60,6 +60,6 @@ BEGIN
     DROP_TABLE_IF_EXISTS('veetou_ko_sheets');
     DROP_TABLE_IF_EXISTS('veetou_ko_tbodies');
     DROP_TABLE_IF_EXISTS('veetou_ko_trs');
-    DROP_TABLE_IF_EXISTS('veetou_ko_exports');
+    DROP_TABLE_IF_EXISTS('veetou_ko_jobs');
 END;
 

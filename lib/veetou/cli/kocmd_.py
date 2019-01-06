@@ -20,20 +20,20 @@ __all__ = ('KoCmd', )
 
 class KoCmd(pdfreportparsercmd_.PdfReportParserCmd):
 
-    def _create_parse_variables(self, variables, **kw):
+    def _create_job_variables(self, variables, **kw):
         var = entityclass(variables)
-        p_uuid = uuid.uuid4().hex
-        p_timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        p_host = platform.node()
-        p_user = getpass.getuser()
-        variables.append(var(('parse_uuid', p_uuid)))
-        variables.append(var(('parse_timestamp', p_timestamp)))
-        variables.append(var(('parse_host', p_host)))
-        variables.append(var(('parse_user', p_user)))
-        variables.append(var(('parse_name', '')))
+        job_uuid = uuid.uuid4().hex
+        job_timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        job_host = platform.node()
+        job_user = getpass.getuser()
+        variables.append(var(('job_uuid', job_uuid)))
+        variables.append(var(('job_timestamp', job_timestamp)))
+        variables.append(var(('job_host', job_host)))
+        variables.append(var(('job_user', job_user)))
+        variables.append(var(('job_name', '')))
 
     def _create_variables(self, variables, **kw):
-        self._create_parse_variables(variables, **kw)
+        self._create_job_variables(variables, **kw)
 
     def create_parser(self, **kw):
         parser = KoReportParser(**kw)
