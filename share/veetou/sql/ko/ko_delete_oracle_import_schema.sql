@@ -27,9 +27,27 @@ DECLARE
             END IF;
     END;
 
+    PROCEDURE DROP_VIEW_IF_EXISTS(view_name IN VARCHAR)
+    IS
+    BEGIN
+        EXECUTE IMMEDIATE 'DROP VIEW ' || view_name;
+        DBMS_Output.Put_Line(' view dropped');
+    EXCEPTION
+        WHEN OTHERS THEN
+            IF SQLCODE != -942 THEN
+                RAISE;
+            ELSE
+                DBMS_Output.Put_Line(' view not exists');
+            END IF;
+    END;
+
 BEGIN
+    -- DROP VIEWS
+    DROP_VIEW_IF_EXISTS('veetou_ko_refined');
+    DROP_VIEW_IF_EXISTS('veetou_ko_full');
 
     -- DROP INDEXES
+
     DROP_INDEX_IF_EXISTS('veetou_ko_headers_idx1');
     DROP_INDEX_IF_EXISTS('veetou_ko_preambles_idx1');
     DROP_INDEX_IF_EXISTS('veetou_ko_preambles_idx2');

@@ -275,3 +275,148 @@ CREATE INDEX veetou_ko_trs_idx1
 CREATE INDEX veetou_ko_trs_idx2
   ON veetou_ko_trs(job_uuid, subj_grade_date)
 ;
+
+--
+-- VIEWS
+--
+
+CREATE VIEW veetou_ko_full AS
+SELECT
+    veetou_ko_trs.job_uuid AS ko_job_uuid
+  , veetou_ko_trs.id AS ko_tr_id
+  , veetou_ko_trs.subj_code AS ko_tr_subj_code
+  , veetou_ko_trs.subj_name AS ko_tr_subj_name
+  , veetou_ko_trs.subj_hours_w AS ko_tr_subj_hours_w
+  , veetou_ko_trs.subj_hours_c AS ko_tr_subj_hours_c
+  , veetou_ko_trs.subj_hours_l AS ko_tr_subj_hours_l
+  , veetou_ko_trs.subj_hours_p AS ko_tr_subj_hours_p
+  , veetou_ko_trs.subj_hours_s AS ko_tr_subj_hours_s
+  , veetou_ko_trs.subj_credit_kind AS ko_tr_subj_credit_kind
+  , veetou_ko_trs.subj_ects AS ko_tr_subj_ects
+  , veetou_ko_trs.subj_tutor AS ko_tr_subj_tutor
+  , veetou_ko_trs.subj_grade AS ko_tr_subj_grade
+  , veetou_ko_trs.subj_grade_date AS ko_tr_subj_grade_date
+  , veetou_ko_tbodies.id AS ko_tbody_id
+  , veetou_ko_tbodies.remark AS ko_tbody_remark
+  , veetou_ko_pages.id AS ko_page_id
+  , veetou_ko_pages.page_number AS ko_page_page_number
+  , veetou_ko_pages.parser_page_number AS ko_page_parser_page_number
+  , veetou_ko_sheets.id AS ko_sheet_id
+  , veetou_ko_sheets.pages_parsed AS ko_sheet_pages_parsed
+  , veetou_ko_sheets.first_page AS ko_sheet_first_page
+  , veetou_ko_sheets.ects_mandatory AS ko_sheet_ects_mandatory
+  , veetou_ko_sheets.ects_other AS ko_sheet_ects_other
+  , veetou_ko_sheets.ects_total AS ko_sheet_ects_total
+  , veetou_ko_sheets.ects_attained AS ko_sheet_ects_attained
+  , veetou_ko_reports.id AS ko_report_id
+  , veetou_ko_reports.source AS ko_report_source
+  , veetou_ko_reports.datetime AS ko_report_datetime
+  , veetou_ko_reports.first_page AS ko_report_first_page
+  , veetou_ko_reports.sheets_parsed AS ko_report_sheets_parsed
+  , veetou_ko_reports.pages_parsed AS ko_report_pages_parsed
+  , veetou_ko_preambles.id AS ko_preamble_id
+  , veetou_ko_preambles.studies_modetier AS ko_preamble_studies_modetier
+  , veetou_ko_preambles.title AS ko_preamble_title
+  , veetou_ko_preambles.student_index AS ko_preamble_student_index
+  , veetou_ko_preambles.first_name AS ko_preamble_first_name
+  , veetou_ko_preambles.last_name AS ko_preamble_last_name
+  , veetou_ko_preambles.student_name AS ko_preamble_student_name
+  , veetou_ko_preambles.semester_code AS ko_preamble_semester_code
+  , veetou_ko_preambles.studies_field AS ko_preamble_studies_field
+  , veetou_ko_preambles.semester_number AS ko_preamble_semester_number
+  , veetou_ko_preambles.studies_specialty AS ko_preamble_studies_specialty
+  , veetou_ko_headers.id AS ko_header_id
+  , veetou_ko_headers.university AS ko_header_university
+  , veetou_ko_headers.faculty AS ko_header_faculty
+  , veetou_ko_footers.id AS ko_footer_id
+  , veetou_ko_footers.pagination AS ko_footer_pagination
+  , veetou_ko_footers.sheet_page_number AS ko_footer_sheet_page_number
+  , veetou_ko_footers.sheet_pages_total AS ko_footer_sheet_pages_total
+  , veetou_ko_footers.generator_name AS ko_footer_generator_name
+  , veetou_ko_footers.generator_home AS ko_footer_generator_home
+FROM ko_trs
+INNER JOIN veetou_ko_tbody_trs
+      ON (veetou_ko_tbody_trs.job_uuid = veetou_ko_trs.job_uuid AND
+          veetou_ko_tbody_trs.ko_tr_id = veetou_ko_trs.id)
+INNER JOIN veetou_ko_tbodies
+      ON (veetou_ko_tbody_trs.job_uuid = veetou_ko_tbodies.job_uuid AND
+          veetou_ko_tbody_trs.ko_tbody_id = veetou_ko_tbodies.id)
+INNER JOIN veetou_ko_page_tbody
+      ON (veetou_ko_page_tbody.job_uuid = veetou_ko_tbodies.job_uuid AND
+          veetou_ko_page_tbody.ko_tbody_id = veetou_ko_tbodies.id)
+INNER JOIN veetou_ko_pages
+      ON (veetou_ko_page_tbody.job_uuid = veetou_ko_pages.job_uuid AND
+          veetou_ko_page_tbody.ko_page_id = veetou_ko_pages.id)
+INNER JOIN veetou_ko_sheet_pages
+      ON (veetou_ko_sheet_pages.job_uuid = veetou_ko_pages.job_uuid AND
+          veetou_ko_sheet_pages.ko_page_id = veetou_ko_pages.id)
+INNER JOIN veetou_ko_sheets
+      ON (veetou_ko_sheet_pages.job_uuid = veetou_ko_sheets.job_uuid AND
+          veetou_ko_sheet_pages.ko_sheet_id = veetou_ko_sheets.id)
+INNER JOIN veetou_ko_report_sheets
+      ON (veetou_ko_report_sheets.job_uuid = veetou_ko_sheets.job_uuid AND
+          veetou_ko_report_sheets.ko_sheet_id = veetou_ko_sheets.id)
+INNER JOIN veetou_ko_reports
+      ON (veetou_ko_report_sheets.job_uuid = veetou_ko_reports.job_uuid AND
+          veetou_ko_report_sheets.ko_report_id = veetou_ko_reports.id)
+INNER JOIN veetou_ko_page_preamble
+      ON (veetou_ko_page_preamble.job_uuid = veetou_ko_pages.job_uuid AND
+          veetou_ko_page_preamble.ko_page_id = veetou_ko_pages.id)
+INNER JOIN veetou_ko_preambles
+      ON (veetou_ko_page_preamble.job_uuid = veetou_ko_preambles.job_uuid AND
+          veetou_ko_page_preamble.ko_preamble_id = veetou_ko_preambles.id)
+INNER JOIN veetou_ko_page_header
+      ON (veetou_ko_page_header.job_uuid = veetou_ko_pages.job_uuid AND
+          veetou_ko_page_header.ko_page_id = veetou_ko_pages.id)
+INNER JOIN veetou_ko_headers
+      ON (veetou_ko_page_header.job_uuid = veetou_ko_headers.job_uuid AND
+          veetou_ko_page_header.ko_header_id = veetou_ko_headers.id)
+INNER JOIN veetou_ko_page_footer
+      ON (veetou_ko_page_footer.job_uuid = veetou_ko_pages.job_uuid AND
+          veetou_ko_page_footer.ko_page_id = veetou_ko_pages.id)
+INNER JOIN veetou_ko_footers
+      ON (veetou_ko_page_footer.job_uuid = veetou_ko_footers.job_uuid AND
+          veetou_ko_page_footer.ko_footer_id = veetou_ko_footers.id)
+;
+
+CREATE VIEW veetou_ko_refined AS
+SELECT
+  veetou_ko_full.ko_job_uuid AS job_uuid
+  veetou_ko_full.ko_tr_id AS tr_id,
+  veetou_ko_full.ko_tr_subj_code AS subj_code,
+  veetou_ko_full.ko_tr_subj_name AS subj_name,
+  veetou_ko_full.ko_preamble_student_index AS student_index,
+  veetou_ko_full.ko_preamble_first_name AS first_name,
+  veetou_ko_full.ko_preamble_last_name AS last_name,
+  veetou_ko_full.ko_preamble_student_name AS student_name,
+  veetou_ko_full.ko_tr_subj_grade AS subj_grade,
+  veetou_ko_full.ko_tr_subj_grade_date AS subj_grade_date,
+  veetou_ko_full.ko_header_university AS university,
+  veetou_ko_full.ko_header_faculty AS faculty,
+  veetou_ko_full.ko_preamble_studies_modetier AS studies_modetier,
+  veetou_ko_full.ko_preamble_studies_field AS studies_field,
+  veetou_ko_full.ko_preamble_studies_specialty AS studies_specialty,
+  veetou_ko_full.ko_preamble_semester_code AS semester_code,
+  veetou_ko_full.ko_preamble_semester_number AS semester_number,
+  veetou_ko_full.ko_tr_subj_tutor AS subj_tutor,
+  veetou_ko_full.ko_tr_subj_hours_w AS subj_hours_w,
+  veetou_ko_full.ko_tr_subj_hours_c AS subj_hours_c,
+  veetou_ko_full.ko_tr_subj_hours_l AS subj_hours_l,
+  veetou_ko_full.ko_tr_subj_hours_p AS subj_hours_p,
+  veetou_ko_full.ko_tr_subj_hours_s AS subj_hours_s,
+  veetou_ko_full.ko_tr_subj_credit_kind AS subj_credit_kind,
+  veetou_ko_full.ko_tr_subj_ects AS subj_ects,
+  veetou_ko_full.ko_sheet_ects_mandatory AS ects_mandatory,
+  veetou_ko_full.ko_sheet_ects_other AS ects_other,
+  veetou_ko_full.ko_sheet_ects_total AS ects_total,
+  veetou_ko_full.ko_sheet_ects_attained AS ects_attained,
+  veetou_ko_full.ko_preamble_title AS title,
+  veetou_ko_full.ko_report_source AS report_source,
+  veetou_ko_full.ko_report_datetime AS report_open_datetime,
+  veetou_ko_full.ko_report_sheets_parsed AS report_sheets_parsed,
+  veetou_ko_full.ko_report_pages_parsed AS report_pages_parsed,
+  veetou_ko_full.ko_page_page_number AS page_number,
+  veetou_ko_full.ko_sheet_first_page AS sheet_first_page,
+  veetou_ko_full.ko_sheet_pages_parsed AS sheet_pages_parsed
+FROM ko_full
+;
