@@ -1,11 +1,13 @@
 version: '3.2'
 services:
   oracle-db:
-    image: oracle/database:12.2.0.1-ee
+    image: oracle/database:18.4.0-xe
+    env_file:
+      - "./docker-compose.env"
     ports:
       - "${VEETOU_ORA_SQL_PORT:-1521}:1521"
       - "${VEETOU_ORA_APEX_PORT:-8080}:8080"
       - "${VEETOU_ORA_EM_PORT:-5500}:5500"
-##    volumes:
-##      - ./var/oracle/scripts/setup:/opt/oracle/scripts/setup
-##      - ./var/oracle/scripts/startup:/opt/oracle/scripts/startup
+    volumes:
+      - ./share/oracle/scripts/setup:/opt/oracle/scripts/setup
+      - ./share/oracle/scripts/startup:/opt/oracle/scripts/startup
