@@ -1,7 +1,7 @@
 version: '3.2'
 services:
   oracle-db:
-    image: oracle/database:18.4.0-xe
+    image: oracle/database:12.2.0.1-ee
     env_file:
       - "./docker-compose.env"
     ports:
