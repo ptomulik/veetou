@@ -1,0 +1,2 @@
+--CREATE OR REPLACE PACKAGE BODY veetou_ko AS
+--END veetou_ko;
