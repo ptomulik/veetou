@@ -3,35 +3,34 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Util AS
         RETURN NUMBER
     IS
     BEGIN
---        IF UPPER(schema_type) = 'TABLE' OR UPPER(schema_type) = 'VIEW' THEN
---            RETURN(-942);
---        ELSIF UPPER(schema_type) = 'SEQUENCE'
---            RETURN(-2289);
---        ELSIF UPPER(schema_type) = 'TRIGGER'
---            RETURN(-4080);
---        ELSIF UPPER(schema_type) = 'INDEX'
---            RETURN(-1418);
---        ELSIF UPPER(schema_type) = 'COLUMN'
---            RETURN(-904);
---        ELSIF UPPER(schema_type) = 'DATABASE LINK'
---            RETURN(-2024);
---        ELSIF UPPER(schema_type) = 'MATERIALIZED VIEW'
---            RETURN(-12003);
---        ELSIF UPPER(schema_type) = 'CONSTRAINT'
---            RETURN(-2443);
---        ELSIF UPPER(schema_type) = 'USER'
---            RETURN(-1918);
---        ELSIF UPPER(schema_type) = 'TYPE' OR
---              UPPER(schema_type) = 'PACKAGE' OR
---              UPPER(schema_type) = 'PROCEDURE' OR
---              UPPER(schema_type) = 'FUNCTION'
---            RETURN(-4043);
---        ELSIF UPPER(schema_type) = 'TABLESPACE'
---            RETURN(-959);
---        ELSE
---            RAISE PROGRAM_ERROR;
---        END IF;
-        RETURN(10);
+        IF (UPPER(schema_type) = 'TABLE') OR (UPPER(schema_type) = 'VIEW') THEN
+            RETURN(-942);
+        ELSIF UPPER(schema_type) = 'SEQUENCE' THEN
+            RETURN(-2289);
+        ELSIF UPPER(schema_type) = 'TRIGGER' THEN
+            RETURN(-4080);
+        ELSIF UPPER(schema_type) = 'INDEX' THEN
+            RETURN(-1418);
+        ELSIF UPPER(schema_type) = 'COLUMN' THEN
+            RETURN(-904);
+        ELSIF UPPER(schema_type) = 'DATABASE LINK' THEN
+            RETURN(-2024);
+        ELSIF UPPER(schema_type) = 'MATERIALIZED VIEW' THEN
+            RETURN(-12003);
+        ELSIF UPPER(schema_type) = 'CONSTRAINT' THEN
+            RETURN(-2443);
+        ELSIF UPPER(schema_type) = 'USER' THEN
+            RETURN(-1918);
+        ELSIF (UPPER(schema_type) = 'TYPE') OR
+              (UPPER(schema_type) = 'PACKAGE') OR
+              (UPPER(schema_type) = 'PROCEDURE') OR
+              (UPPER(schema_type) = 'FUNCTION') THEN
+            RETURN(-4043);
+        ELSIF UPPER(schema_type) = 'TABLESPACE' THEN
+            RETURN(-959);
+        ELSE
+            RAISE PROGRAM_ERROR;
+        END IF;
     END;
 
 
