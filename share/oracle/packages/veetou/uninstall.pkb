@@ -74,6 +74,12 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Uninstall AS
         Drop_If_Exists('INDEX', 'veetou_subject_mappings_idx3');
         Drop_If_Exists('INDEX', 'veetou_subject_selectors_idx1');
 
+        -- DROP TRIGGERS
+        Drop_If_Exists('TRIGGER', 'veetou_subject_mappings_tr1');
+
+        -- DROP SEQUENCES
+        Drop_If_Exists('SEQUENCE', 'veetou_subject_mappings_sq1');
+
 
         IF purge THEN
             how := 'PURGE';
@@ -99,7 +105,7 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Uninstall AS
 
         -- DROP VIEWS
 
-        Drop_If_Exists('VIEW', 'veetou_ko_conducted_subjects');
+        Drop_If_Exists('VIEW', 'veetou_ko_subject_instances');
         Drop_If_Exists('VIEW', 'veetou_ko_refined');
         Drop_If_Exists('VIEW', 'veetou_ko_full');
 
@@ -149,7 +155,8 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Uninstall AS
         Drop_If_Exists('TYPE', 'T_Veetou_Subject_Mapping');
         Drop_If_Exists('TYPE', 'T_Veetou_Matchable_Subject');
         Drop_If_Exists('TYPE', 'T_Veetou_Matchable');
-        Drop_If_Exists('TYPE', 'T_Veetou_Subject_Conducted');
+        Drop_If_Exists('TYPE', 'T_Veetou_Subject_Instance');
+        Drop_If_Exists('TYPE', 'T_Veetou_Ko_Refined');
     END;
 
     PROCEDURE Drop_Other_Packages AS
