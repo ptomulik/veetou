@@ -144,11 +144,12 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Uninstall AS
         Drop_If_Exists('TABLE', 'veetou_ko_jobs', how);
     END;
 
-
-    PROCEDURE Drop_Schemas(purge IN BOOLEAN := FALSE) AS
+    PROCEDURE Drop_Types AS
     BEGIN
-        Drop_Ko_Schema(purge);
-        Drop_Common_Schema(purge);
+        Drop_If_Exists('TYPE', 'T_Veetou_Subject_Mapping');
+        Drop_If_Exists('TYPE', 'T_Veetou_Matchable_Subject');
+        Drop_If_Exists('TYPE', 'T_Veetou_Matchable');
+        Drop_If_Exists('TYPE', 'T_Veetou_Subject_Conducted');
     END;
 
     PROCEDURE Drop_Other_Packages AS
@@ -157,10 +158,17 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Uninstall AS
         Drop_If_Exists('PACKAGE', 'VEETOU_Common');
     END;
 
+    PROCEDURE Drop_Schemas(purge IN BOOLEAN := FALSE) AS
+    BEGIN
+        Drop_Ko_Schema(purge);
+        Drop_Common_Schema(purge);
+    END;
+
     PROCEDURE Uninstall(purge IN BOOLEAN := FALSE) AS
     BEGIN
         Drop_Schemas(purge);
         Drop_Other_Packages;
+        Drop_Types;
     END;
 
 END VEETOU_Uninstall;

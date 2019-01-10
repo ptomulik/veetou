@@ -1,12 +1,5 @@
-CREATE OR REPLACE PACKAGE VEETOU_Common AUTHID CURRENT_USER AS
-    --
---    SUBTYPE T_Subj_Code IS VARCHAR(32 CHAR);
---    TYPE T_Subj_Codes IS TABLE OF T_Subj_Code;
-
-    TYPE T_Subject_Mappings_Rows IS TABLE OF veetou_subject_mappings%ROWTYPE;
-
-    -- PL/SQL Record types
-    TYPE T_Subject_Conducted IS RECORD
+-- Object types
+CREATE OR REPLACE TYPE T_Veetou_Subject_Conducted FORCE AS OBJECT
     ( subj_code VARCHAR2(32 CHAR)
     , subj_name VARCHAR2(256 CHAR)
     , university VARCHAR2(256 CHAR)
@@ -24,39 +17,28 @@ CREATE OR REPLACE PACKAGE VEETOU_Common AUTHID CURRENT_USER AS
     , subj_credit_kind VARCHAR2(16 CHAR)
     , subj_ects NUMBER(16)
     );
-    TYPE T_Subjects_Conducted IS TABLE OF T_Subject_Conducted;
+/
 
-    -- Constructor fo T_Sobject_Conducted
-    FUNCTION Subject_Conducted( subj_code IN VARCHAR2 := NULL
-                              , subj_name IN VARCHAR2 := NULL
-                              , university IN VARCHAR2 := NULL
-                              , faculty IN VARCHAR2 := NULL
-                              , studies_modetier IN VARCHAR2 := NULL
-                              , studies_field IN VARCHAR2 := NULL
-                              , studies_specialty IN VARCHAR2 := NULL
-                              , semester_code IN VARCHAR2 := NULL
-                              , subj_tutor IN VARCHAR2 := NULL
-                              , subj_hours_w IN NUMBER := NULL
-                              , subj_hours_c IN NUMBER := NULL
-                              , subj_hours_l IN NUMBER := NULL
-                              , subj_hours_p IN NUMBER := NULL
-                              , subj_hours_s IN NUMBER := NULL
-                              , subj_credit_kind IN VARCHAR2 := NULL
-                              , subj_ects IN NUMBER := NULL)
-        RETURN T_Subject_Conducted;
+CREATE OR REPLACE TYPE T_Veetou_Matchable FORCE AS OBJECT
+    ( matcher_id VARCHAR(128 CHAR)
+    , matcher_arg VARCHAR(200 CHAR) )
+NOT FINAL;
+/
 
-    -- Converting an object to T_Subject_Conducted
-    FUNCTION To_Subject_Conducted(row IN veetou_ko_refined%ROWTYPE)
-        RETURN T_Subject_Conducted;
+CREATE OR REPLACE TYPE T_Veetou_Matchable_Subject FORCE UNDER T_Veetou_Matchable
+    ( subj_code VARCHAR2(32 CHAR) )
+NOT FINAL;
+/
 
+CREATE OR REPLACE TYPE T_Veetou_Subject_Mapping FORCE UNDER T_Veetou_Matchable_Subject
+    ( mapped_subj_code VARCHAR(20 CHAR) )
+FINAL;
+/
 
-    -- Find mapped subjects for given faculty subject record
-    FUNCTION Matching_Subject_Mappings(subject IN T_Subject_Conducted)
-        RETURN T_Subject_Mappings_Rows;
-
-
---    FUNCTION SubjectConducted_Cmp(lhs IN T_SubjectConducted,
---                                  rhs IN T_SubjectConducted) RETURN BOOLEAN;
+CREATE OR REPLACE PACKAGE VEETOU_Common AUTHID CURRENT_USER AS
+    FUNCTION Records_Match(lhs IN T_Veetou_Matchable_Subject,
+                           rhs IN T_Veetou_Subject_Conducted)
+        RETURN INTEGER;
 END VEETOU_Common;
 
 -- vim: set ft=sql ts=4 sw=4 et:

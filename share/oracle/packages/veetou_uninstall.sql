@@ -1,6 +1,4 @@
 --
--- Does the reverse of veetou_install.sql
---
 -- NOTE: This destroys all the veetou data and structure.
 --
 

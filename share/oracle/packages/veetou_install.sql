@@ -1,9 +1,4 @@
---
--- NOTE: This does not populate anything with data.
---
-
--- create schemas
 @@veetou.ddl;
-
--- compile stuff 
 @@veetou_compile.sql
+
+-- vim: set ft=sql ts=4 sw=4 et:
