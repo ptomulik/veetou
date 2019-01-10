@@ -1,11 +1,15 @@
 --
--- Drops VEETOU PL/SQL PACKAGES and PROCEDURES
+-- Does the reverse of veetou_install.sql
 --
--- NOTE: this does not drop TABLES, and other data structures.
+-- NOTE: This destroys all the veetou data and structure.
 --
 
+@@veetou/uninstall.pkg;
+
 BEGIN
-  Veetou_Uninstall;
+    VEETOU_Uninstall.Uninstall(TRUE);
 END;
 /
-DROP PROCEDURE Veetou_Uninstall;
+DROP PACKAGE VEETOU_Uninstall;
+
+-- vim: set ft=sql ts=4 sw=4 et:

@@ -1,12 +1,9 @@
 --
--- 1. Creates VEETOU PL/SQL packages, and
--- 2. Creates VEETOU TABLES (empty), VIEWS, INDEXES.
---
 -- NOTE: This does not populate anything with data.
 --
 
-@veetou.pkg;
+-- create schemas
+@@veetou.ddl;
 
-BEGIN
-  Veetou_Create;
-END;
+-- compile stuff 
+@@veetou_compile.sql
