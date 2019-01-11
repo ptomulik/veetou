@@ -195,7 +195,7 @@ class Test__Table(unittest.TestCase):
         self.assertEqual(table.last_append_id, 0)
         self.assertEqual(table.append(Dog(('Cody', 12))), 1)
         self.assertEqual(table.last_append_id, 1)
-        self.assertEqual(table.find_or_append(Dog(('Snoopy', 10))), 0)
+        self.assertEqual(table.find_or_append(Dog(('Snoopy', 10))), (0, False))
         self.assertEqual(table.last_append_id, 0)
 
     def test__last_append_id__2(self):
@@ -213,7 +213,7 @@ class Test__Table(unittest.TestCase):
         self.assertEqual(table.high_append_id, 0)
         self.assertEqual(table.append(Dog(('Cody', 12))), 1)
         self.assertEqual(table.high_append_id, 1)
-        self.assertEqual(table.find_or_append(Dog(('Snoopy', 10))), 0)
+        self.assertEqual(table.find_or_append(Dog(('Snoopy', 10))), (0, False))
         self.assertEqual(table.high_append_id, 1)
 
     def test__high_append_id__2(self):
@@ -235,11 +235,11 @@ class Test__Table(unittest.TestCase):
         table = Dogs(start_append_id = 10)
         table[11] = Dog(('Lessie', 2))
         table[12] = Dog(('Snoopy', 8))
-        self.assertEqual(table.find_or_append(Dog(('Cody',12))), 10)
+        self.assertEqual(table.find_or_append(Dog(('Cody',12))), (10, True))
         self.assertEqual(table.last_append_id, 10)
-        self.assertEqual(table.find_or_append(Dog(('Lilly',6))), 13)
+        self.assertEqual(table.find_or_append(Dog(('Lilly',6))), (13, True))
         self.assertEqual(table.last_append_id, 13)
-        self.assertEqual(table.find_or_append(Dog(('Snoopy',8))), 12)
+        self.assertEqual(table.find_or_append(Dog(('Snoopy',8))), (12, False))
         self.assertEqual(table.last_append_id, 12)
         self.assertEqual(table.high_append_id, 13)
 

@@ -226,7 +226,7 @@ class Test__Parser(unittest.TestCase):
         with patch.object(Dogs, 'getrecord') as tab_getrecord, \
              patch.object(model.Record, 'update') as rec_update, \
              patch.object(model.Record, 'save') as rec_save:
-            parser.update_record({'name' : 'Name', 'age' : 'Age'}, 'dogs')
+            parser.update_record({'name' : 'Name', 'age' : 'Age'}, 'dogs', 'unimportant1', 'unimportant2')
         tab_getrecord.assert_not_called()
         rec_update.assert_not_called()
         rec_save.assert_not_called()
@@ -236,11 +236,10 @@ class Test__Parser(unittest.TestCase):
         parser = parser_.Parser()
         root = parser_.RootParser((parser,), dm)
         record = model.recordclass(Dog)(('Goofy', '14'), dm.tables['dogs'])
-        with patch.object(Dogs, 'last_append_id', 12), \
-             patch.object(Dogs, 'getrecord', return_value=record) as tab_getrecord, \
+        with patch.object(Dogs, 'getrecord', return_value=record) as tab_getrecord, \
              patch.object(model.Record, 'update', side_effect=record.update) as rec_update, \
              patch.object(model.Record, 'save') as rec_save:
-            parser.update_record({'name' : 'Name', 'age' : 'Age', 'foo' : 'Foo'}, 'dogs')
+            parser.update_record({'name' : 'Name', 'age' : 'Age', 'foo' : 'Foo'}, 'dogs', 12, True)
         tab_getrecord.assert_called_once_with(12)
         rec_update.assert_called_once_with({'name':'Name', 'age':'Age'})
         rec_save.assert_called_once_with()
@@ -277,7 +276,7 @@ class Test__Parser(unittest.TestCase):
              patch.object(parser_.Parser, 'parse_after_children', return_value = True) as after, \
              patch.object(parser_.Parser, 'table', 'mytable'), \
              patch.object(parser_.Parser, 'junctions', 'myjunctions'), \
-             patch.object(parser_.Parser, 'append_record') as append, \
+             patch.object(parser_.Parser, 'append_record', return_value = ('key', 'appended')) as append, \
              patch.object(parser_.Parser, 'update_record') as update:
             parser_.Parser().parse('iter', a = 'A', b = 'B')
 
@@ -293,7 +292,7 @@ class Test__Parser(unittest.TestCase):
              patch.object(parser_.Parser, 'parse_after_children', return_value = False) as after, \
              patch.object(parser_.Parser, 'table', 'mytable'), \
              patch.object(parser_.Parser, 'junctions', 'myjunctions'), \
-             patch.object(parser_.Parser, 'append_record') as append, \
+             patch.object(parser_.Parser, 'append_record', return_value = ('key', 'appended')) as append, \
              patch.object(parser_.Parser, 'update_record') as update:
             parser_.Parser().parse('iter', a = 'A', b = 'B')
 
@@ -309,7 +308,7 @@ class Test__Parser(unittest.TestCase):
              patch.object(parser_.Parser, 'parse_after_children', return_value = True) as after, \
              patch.object(parser_.Parser, 'table', 'mytable'), \
              patch.object(parser_.Parser, 'junctions', 'myjunctions'), \
-             patch.object(parser_.Parser, 'append_record') as append, \
+             patch.object(parser_.Parser, 'append_record', return_value = ('key', 'appended')) as append, \
              patch.object(parser_.Parser, 'update_record') as update:
             parser_.Parser().parse('iter', a = 'A', b = 'B')
 
@@ -317,7 +316,7 @@ class Test__Parser(unittest.TestCase):
         middle.assert_called_once_with('iter', {'a' : 'A', 'b' : 'B'})
         after.assert_called_once_with('iter', {'a' : 'A', 'b' : 'B'})
         append.called_once_with({'a' : 'A', 'b' : 'B'}, 'mytable', 'myjunctions')
-        update.called_once_with({'a' : 'A', 'b' : 'B'}, 'mytable')
+        update.called_once_with({'a' : 'A', 'b' : 'B'}, 'mytable', 'key', 'appended')
 
     def test__parse__5(self):
         with patch.object(parser_.Parser, 'parse_before_children', return_value = True) as before, \

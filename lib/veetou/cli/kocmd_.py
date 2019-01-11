@@ -39,8 +39,12 @@ class KoCmd(pdfreportparsercmd_.PdfReportParserCmd):
         parser = KoReportParser(**kw)
         self._create_variables(parser.datamodel.tables['ko_variables'], **kw)
         if self.arguments.squash:
+            # NOTE: don't try squashing in parsers which have child parsers.
+            #       if you try, you'll get screwed up relations in the
+            #       generated database!
             parser.header_parser.squashing = True
             parser.footer_parser.squashing = True
+            parser.preamble_parser.squashing = True
         return parser
 
     @property
