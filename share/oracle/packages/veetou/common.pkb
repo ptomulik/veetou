@@ -1,30 +1,3 @@
-CREATE OR REPLACE TYPE BODY T_Veetou_Subject_Instance AS
-    CONSTRUCTOR FUNCTION T_Veetou_Subject_Instance(
-            ko_refined IN T_Veetou_Ko_Refined
-        ) RETURN SELF AS RESULT
-    IS
-    BEGIN
-        SELF.subj_code := ko_refined.subj_code;
-        SELF.subj_name := ko_refined.subj_name;
-        SELF.university := ko_refined.university;
-        SELF.faculty := ko_refined.faculty;
-        SELF.studies_modetier := ko_refined.studies_modetier;
-        SELF.studies_field := ko_refined.studies_field;
-        SELF.studies_specialty := ko_refined.studies_specialty;
-        SELF.semester_code := ko_refined.semester_code;
-        SELF.subj_tutor := ko_refined.subj_tutor;
-        SELF.subj_hours_w := ko_refined.subj_hours_w;
-        SELF.subj_hours_c := ko_refined.subj_hours_c;
-        SELF.subj_hours_l := ko_refined.subj_hours_l;
-        SELF.subj_hours_p := ko_refined.subj_hours_p;
-        SELF.subj_hours_s := ko_refined.subj_hours_s;
-        SELF.subj_credit_kind := ko_refined.subj_credit_kind;
-        SELF.subj_ects := ko_refined.subj_ects;
-        RETURN;
-    END;
-END;
-/
-
 CREATE OR REPLACE PACKAGE BODY VEETOU_Common AS
     FUNCTION To_Int(x IN BOOLEAN) RETURN INTEGER IS
         ans INTEGER;

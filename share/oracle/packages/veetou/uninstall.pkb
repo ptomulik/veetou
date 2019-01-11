@@ -152,16 +152,34 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Uninstall AS
 
     PROCEDURE Drop_Types AS
     BEGIN
-        Drop_If_Exists('TYPE', 'T_Veetou_Subject_Mapping');
-        Drop_If_Exists('TYPE', 'T_Veetou_Matchable_Subject');
-        Drop_If_Exists('TYPE', 'T_Veetou_Matchable');
-        Drop_If_Exists('TYPE', 'T_Veetou_Subject_Instance');
-        Drop_If_Exists('TYPE', 'T_Veetou_Ko_Refined');
+        --
+        -- Types for TABLES
+        --
+        Drop_If_Exists('TYPE', 'Veetou_Subject_Mapping_Typ');
+        Drop_If_Exists('TYPE', 'Veetou_Subject_Matcher_Typ');
+        Drop_If_Exists('TYPE', 'Veetou_Matchable_Subject_Typ');
+        Drop_If_Exists('TYPE', 'Veetou_Matchable_Typ');
+        Drop_If_Exists('TYPE', 'Veetou_Ko_Refined_Typ');
+        Drop_If_Exists('TYPE', 'Veetou_Ko_Footer_Typ');
+        Drop_If_Exists('TYPE', 'Veetou_Ko_Header_Typ');
+        Drop_If_Exists('TYPE', 'Veetou_Ko_Job_Typ');
+        Drop_If_Exists('TYPE', 'Veetou_Ko_Page_Typ');
+        Drop_If_Exists('TYPE', 'Veetou_Ko_Preamble_Typ');
+        Drop_If_Exists('TYPE', 'Veetou_Ko_Report_Typ');
+        Drop_If_Exists('TYPE', 'Veetou_Ko_Sheet_Typ');
+        Drop_If_Exists('TYPE', 'Veetou_Ko_Tbody_Typ');
+        Drop_If_Exists('TYPE', 'Veetou_Ko_Tr_Typ');
+
+        --
+        -- Types for VIEWS
+        --
+        Drop_If_Exists('TYPE', 'Veetou_Ko_Full_Typ');
+        Drop_If_Exists('TYPE', 'Veetou_Ko_Refined_Typ');
+        Drop_If_Exists('TYPE', 'Veetou_Ko_Subject_Instance_Typ');
     END;
 
     PROCEDURE Drop_Other_Packages AS
     BEGIN
-        Drop_If_Exists('PACKAGE', 'VEETOU_KO');
         Drop_If_Exists('PACKAGE', 'VEETOU_Common');
     END;
 
@@ -180,4 +198,4 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Uninstall AS
 
 END VEETOU_Uninstall;
 
--- vim: ft=sql ts=4 sw=4 et:
+-- vim: set ft=sql ts=4 sw=4 et:

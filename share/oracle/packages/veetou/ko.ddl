@@ -1,1 +1,0 @@
--- vim: ft=sql ts=4 sw=4 et:
