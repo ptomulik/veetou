@@ -1,23 +1,47 @@
 CREATE TABLE veetou_subject_mappings
-     ( id NUMBER NOT NULL
-     , subj_code VARCHAR(20 CHAR) NOT NULL
-     , mapped_subj_code VARCHAR(20 CHAR)
-     , matcher_id VARCHAR(128 CHAR)
-     , matcher_arg VARCHAR(200 CHAR)
-     , CONSTRAINT veetou_subject_mappings_pk PRIMARY KEY(id)
-     , CONSTRAINT veetou_subject_mappings_uniq1 UNIQUE
-           ( subj_code
-           , matcher_id
-           , matcher_arg)
-     , CONSTRAINT veetou_subject_mappings_fk1
-            FOREIGN KEY (matcher_id)
-            REFERENCES veetou_subject_matchers(id));
+    ( id NUMBER NOT NULL
+    , subj_code VARCHAR(20 CHAR) NOT NULL
+    , mapped_subj_code VARCHAR(20 CHAR)
+
+    -- additional selectors
+
+    , expr_subj_name VARCHAR(256 CHAR)
+    , expr_university VARCHAR(256 CHAR)
+    , expr_faculty VARCHAR(256 CHAR)
+    , expr_studies_modetier VARCHAR(256 CHAR)
+    , expr_studies_field VARCHAR(256 CHAR)
+    , expr_studies_specialty VARCHAR(256 CHAR)
+    , expr_semester_code VARCHAR(256 CHAR)
+    , expr_subj_hours_w VARCHAR(256 CHAR)
+    , expr_subj_hours_c VARCHAR(256 CHAR)
+    , expr_subj_hours_l VARCHAR(256 CHAR)
+    , expr_subj_hours_p VARCHAR(256 CHAR)
+    , expr_subj_hours_s VARCHAR(256 CHAR)
+    , expr_subj_credit_kind VARCHAR(256 CHAR)
+    , expr_subj_ects VARCHAR(256 CHAR)
+    , expr_subj_tutor VARCHAR(256 CHAR)
+
+    , CONSTRAINT veetou_subject_mappings_pk PRIMARY KEY(id)
+    );
 
 COMMENT ON TABLE veetou_subject_mappings IS 'Odwzorowanie kodów przedmiotów (VEE->USOS)';
 COMMENT ON COLUMN veetou_subject_mappings.subj_code IS 'Kod przedmiotu (VEE)';
 COMMENT ON COLUMN veetou_subject_mappings.mapped_subj_code IS 'Kod przedmiotu (USOS)';
-COMMENT ON COLUMN veetou_subject_mappings.matcher_id IS 'Funkcja wyróżniająca (dla niejednoznacznych odwzorowań)';
-COMMENT ON COLUMN veetou_subject_mappings.matcher_arg IS 'Wyróżnik (dla niejednoznacznych odwzorowań)';
+COMMENT ON COLUMN veetou_subject_mappings.expr_subj_name IS 'Wyrażenie zawężające dopuszczalne nazwy przedmiotu';
+COMMENT ON COLUMN veetou_subject_mappings.expr_university IS 'Wyrażenie zawężające dopuszczalne nazwy uczelni';
+COMMENT ON COLUMN veetou_subject_mappings.expr_faculty IS 'Wyrażenie zawężające dopuszczalne nazwy wydziałów';
+COMMENT ON COLUMN veetou_subject_mappings.expr_studies_modetier IS 'Wyrażenie zawężające dopuszczalne tryby/poziomy studiów';
+COMMENT ON COLUMN veetou_subject_mappings.expr_studies_field IS 'Wyrażenie zawężające dopuszczalne kierunki studiów';
+COMMENT ON COLUMN veetou_subject_mappings.expr_studies_specialty IS 'Wyrażenie zawężajace dopuszczalne specjalności';
+COMMENT ON COLUMN veetou_subject_mappings.expr_semester_code IS 'Wyrażenie zawężające dopusczalne semestry prowadzenia przedmiotów';
+COMMENT ON COLUMN veetou_subject_mappings.expr_subj_hours_w IS 'Wyrażenie zawężające dopuszczalny zakres godzin wykładu';
+COMMENT ON COLUMN veetou_subject_mappings.expr_subj_hours_c IS 'Wyrażenie zawężające dopuszczalny zakres godzin ćwiczeń';
+COMMENT ON COLUMN veetou_subject_mappings.expr_subj_hours_l IS 'Wyrażenie zawężające dopuszczalny zakres godzin laboratorium';
+COMMENT ON COLUMN veetou_subject_mappings.expr_subj_hours_p IS 'Wyrażenie zawężające dopuszczalny zakres godzin projektowych';
+COMMENT ON COLUMN veetou_subject_mappings.expr_subj_hours_s IS 'Wyrażenie zawężające dopuszczalny zakres godzin seminarium';
+COMMENT ON COLUMN veetou_subject_mappings.expr_subj_credit_kind IS 'Wyrażenie zawężające dopuszczalne rodzaje zaliczeń';
+COMMENT ON COLUMN veetou_subject_mappings.expr_subj_ects IS 'Wyrażenie zawężające dopuszczalny zakres ECTS z przedmiotu';
+COMMENT ON COLUMN veetou_subject_mappings.expr_subj_tutor IS 'Wyrażenie określające dopuszczalne imię i nazwisko kierownika przedmiotu';
 
 CREATE SEQUENCE veetou_subject_mappings_sq1 START WITH 1;
 /
@@ -41,9 +65,5 @@ CREATE INDEX veetou_subject_mappings_idx1
 
 CREATE INDEX veetou_subject_mappings_idx2
      ON veetou_subject_mappings(mapped_subj_code);
-
-CREATE INDEX veetou_subject_mappings_idx3
-     ON veetou_subject_mappings(subj_code, matcher_id);
-
 
 -- vim: set ft=sql ts=4 sw=4 et:

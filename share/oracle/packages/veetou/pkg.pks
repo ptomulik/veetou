@@ -1,0 +1,5 @@
+CREATE OR REPLACE PACKAGE VEETOU_Pkg AUTHID CURRENT_USER AS
+    PROCEDURE Uninstall(how IN VARCHAR := 'PURGE');
+END VEETOU_Pkg;
+
+-- vim: set ft=sql ts=4 sw=4 et:

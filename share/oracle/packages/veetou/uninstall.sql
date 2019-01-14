@@ -2,13 +2,12 @@
 -- NOTE: This destroys all the veetou data and structure.
 --
 
-@@uninstall.pkg;
+@@pkg.pkg;
 
 BEGIN
-    VEETOU_Uninstall.Uninstall(TRUE);
+    VEETOU_Pkg.Uninstall('PURGE');
 END;
 /
-DROP PACKAGE VEETOU_Uninstall;
+DROP PACKAGE VEETOU_Pkg;
 
--- vim: set ft=sql ts=4 sw=4 et:
 -- vim: set ft=sql ts=4 sw=4 et:
