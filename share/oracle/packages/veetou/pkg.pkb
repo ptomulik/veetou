@@ -162,6 +162,7 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
         Drop_Table('ko_jobs', 'Ko_Job_Typ', 'ko_jobs_ov', how);
 
         -- PACKAGES (all, except the VEETOU_Pkg package)
+        Drop_Package('Match');
     END;
 
 END VEETOU_Pkg;

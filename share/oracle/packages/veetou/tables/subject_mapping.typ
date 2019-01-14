@@ -42,9 +42,14 @@ CREATE OR REPLACE TYPE Veetou_Subject_Mapping_Typ FORCE AUTHID CURRENT_USER AS O
         RETURN SELF AS RESULT
 
 
-    , MEMBER FUNCTION match_expr(
+    , MEMBER FUNCTION match_subject(
               SELF IN OUT NOCOPY Veetou_Subject_Mapping_Typ
-            , subj IN Veetou_Ko_Subject_Instance_Typ
+            , subject IN Veetou_Ko_Subject_Instance_Typ
+      ) RETURN INTEGER
+
+    , MEMBER FUNCTION match_expr_fields(
+              SELF IN OUT NOCOPY Veetou_Subject_Mapping_Typ
+            , subject IN Veetou_Ko_Subject_Instance_Typ
       ) RETURN INTEGER
 
     , MEMBER FUNCTION match_subj_name(
@@ -169,84 +174,97 @@ CREATE OR REPLACE TYPE BODY Veetou_Subject_Mapping_Typ AS
         RETURN;
     END;
 
+    MEMBER FUNCTION match_subject(
+              SELF IN OUT NOCOPY Veetou_Subject_Mapping_Typ
+            , subject IN Veetou_Ko_Subject_Instance_Typ
+        ) RETURN INTEGER
+    IS
+    BEGIN
+        IF SELF.subj_code != subject.subj_code THEN
+            RETURN 0;
+        ELSE
+            RETURN SELF.match_expr_fields(subject);
+        END IF;
+    END;
 
-    MEMBER FUNCTION match_expr(SELF IN OUT NOCOPY Veetou_Subject_Mapping_Typ,
-                               subj IN Veetou_Ko_Subject_Instance_Typ)
-        RETURN INTEGER
+    MEMBER FUNCTION match_expr_fields(
+            SELF IN OUT NOCOPY Veetou_Subject_Mapping_Typ,
+            subject IN Veetou_Ko_Subject_Instance_Typ
+        ) RETURN INTEGER
     IS
     BEGIN
         IF SELF.expr_subj_name IS NOT NULL THEN
-            IF 0 = SELF.match_subj_name(subj.subj_name) THEN
+            IF 0 = SELF.match_subj_name(subject.subj_name) THEN
                 RETURN 0;
             END IF;
         END IF;
         IF SELF.expr_university IS NOT NULL THEN
-            IF 0 = SELF.match_university(subj.university) THEN
+            IF 0 = SELF.match_university(subject.university) THEN
                 RETURN 0;
             END IF;
         END IF;
         IF SELF.expr_faculty IS NOT NULL THEN
-            IF 0 = SELF.match_faculty(subj.faculty) THEN
+            IF 0 = SELF.match_faculty(subject.faculty) THEN
                 RETURN 0;
             END IF;
         END IF;
         IF SELF.expr_studies_modetier IS NOT NULL THEN
-            IF 0 = SELF.match_studies_modetier(subj.studies_modetier) THEN
+            IF 0 = SELF.match_studies_modetier(subject.studies_modetier) THEN
                 RETURN 0;
             END IF;
         END IF;
         IF SELF.expr_studies_field IS NOT NULL THEN
-            IF 0 = SELF.match_studies_field(subj.studies_field) THEN
+            IF 0 = SELF.match_studies_field(subject.studies_field) THEN
                 RETURN 0;
             END IF;
         END IF;
         IF SELF.expr_studies_specialty IS NOT NULL THEN
-            IF 0 = SELF.match_studies_specialty(subj.studies_specialty) THEN
+            IF 0 = SELF.match_studies_specialty(subject.studies_specialty) THEN
                 RETURN 0;
             END IF;
         END IF;
         IF SELF.expr_semester_code IS NOT NULL THEN
-            IF 0 = SELF.match_semester_code(subj.semester_code) THEN
+            IF 0 = SELF.match_semester_code(subject.semester_code) THEN
                 RETURN 0;
             END IF;
         END IF;
         IF SELF.expr_subj_hours_w IS NOT NULL THEN
-            IF 0 = SELF.match_subj_hours_w(subj.subj_hours_w) THEN
+            IF 0 = SELF.match_subj_hours_w(subject.subj_hours_w) THEN
                 RETURN 0;
             END IF;
         END IF;
         IF SELF.expr_subj_hours_c IS NOT NULL THEN
-            IF 0 = SELF.match_subj_hours_c(subj.subj_hours_c) THEN
+            IF 0 = SELF.match_subj_hours_c(subject.subj_hours_c) THEN
                 RETURN 0;
             END IF;
         END IF;
         IF SELF.expr_subj_hours_l IS NOT NULL THEN
-            IF 0 = SELF.match_subj_hours_l(subj.subj_hours_l) THEN
+            IF 0 = SELF.match_subj_hours_l(subject.subj_hours_l) THEN
                 RETURN 0;
             END IF;
         END IF;
         IF SELF.expr_subj_hours_p IS NOT NULL THEN
-            IF 0 = SELF.match_subj_hours_p(subj.subj_hours_p) THEN
+            IF 0 = SELF.match_subj_hours_p(subject.subj_hours_p) THEN
                 RETURN 0;
             END IF;
         END IF;
         IF SELF.expr_subj_hours_s IS NOT NULL THEN
-            IF 0 = SELF.match_subj_hours_s(subj.subj_hours_s) THEN
+            IF 0 = SELF.match_subj_hours_s(subject.subj_hours_s) THEN
                 RETURN 0;
             END IF;
         END IF;
         IF SELF.expr_subj_credit_kind IS NOT NULL THEN
-            IF 0 = SELF.match_subj_credit_kind(subj.subj_credit_kind) THEN
+            IF 0 = SELF.match_subj_credit_kind(subject.subj_credit_kind) THEN
                 RETURN 0;
             END IF;
         END IF;
         IF SELF.expr_subj_ects IS NOT NULL THEN
-            IF 0 = SELF.match_subj_ects(subj.subj_ects) THEN
+            IF 0 = SELF.match_subj_ects(subject.subj_ects) THEN
                 RETURN 0;
             END IF;
         END IF;
         IF SELF.expr_subj_tutor IS NOT NULL THEN
-            IF 0 = SELF.match_subj_tutor(subj.subj_tutor) THEN
+            IF 0 = SELF.match_subj_tutor(subject.subj_tutor) THEN
                 RETURN 0;
             END IF;
         END IF;
@@ -260,7 +278,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Subject_Mapping_Typ AS
       ) RETURN INTEGER
     IS
     BEGIN
-        RETURN 0;
+        RETURN VEETOU_Match.String_Like(SELF.expr_subj_name, subj_name);
     END;
 
 
@@ -270,7 +288,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Subject_Mapping_Typ AS
       ) RETURN INTEGER
     IS
     BEGIN
-        RETURN 0;
+        RETURN VEETOU_Match.String_Like(SELF.expr_university, university);
     END;
 
 
@@ -280,7 +298,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Subject_Mapping_Typ AS
       ) RETURN INTEGER
     IS
     BEGIN
-        RETURN 0;
+        RETURN VEETOU_Match.String_Like(SELF.expr_faculty, faculty);
     END;
 
 
@@ -290,7 +308,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Subject_Mapping_Typ AS
       ) RETURN INTEGER
     IS
     BEGIN
-        RETURN 0;
+        RETURN VEETOU_Match.String_Like(SELF.expr_studies_modetier, studies_modetier);
     END;
 
 
@@ -300,7 +318,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Subject_Mapping_Typ AS
       ) RETURN INTEGER
     IS
     BEGIN
-        RETURN 0;
+        RETURN VEETOU_Match.String_Like(SELF.expr_studies_field, studies_field);
     END;
 
 
@@ -310,7 +328,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Subject_Mapping_Typ AS
       ) RETURN INTEGER
     IS
     BEGIN
-        RETURN 0;
+        RETURN VEETOU_Match.String_Like(SELF.expr_studies_specialty, studies_specialty);
     END;
 
 
@@ -320,7 +338,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Subject_Mapping_Typ AS
       ) RETURN INTEGER
     IS
     BEGIN
-        RETURN 0;
+        RETURN VEETOU_Match.String_Range(SELF.expr_semester_code, semester_code);
     END;
 
 
@@ -330,7 +348,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Subject_Mapping_Typ AS
       ) RETURN INTEGER
     IS
     BEGIN
-        RETURN 0;
+        RETURN VEETOU_Match.Number_Range(SELF.expr_subj_hours_w, subj_hours_w);
     END;
 
 
@@ -340,7 +358,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Subject_Mapping_Typ AS
       ) RETURN INTEGER
     IS
     BEGIN
-        RETURN 0;
+        RETURN VEETOU_Match.Number_Range(SELF.expr_subj_hours_c, subj_hours_c);
     END;
 
 
@@ -350,7 +368,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Subject_Mapping_Typ AS
       ) RETURN INTEGER
     IS
     BEGIN
-        RETURN 0;
+        RETURN VEETOU_Match.Number_Range(SELF.expr_subj_hours_l, subj_hours_l);
     END;
 
 
@@ -360,7 +378,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Subject_Mapping_Typ AS
       ) RETURN INTEGER
     IS
     BEGIN
-        RETURN 0;
+        RETURN VEETOU_Match.Number_Range(SELF.expr_subj_hours_p, subj_hours_p);
     END;
 
 
@@ -370,7 +388,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Subject_Mapping_Typ AS
       ) RETURN INTEGER
     IS
     BEGIN
-        RETURN 0;
+        RETURN VEETOU_Match.Number_Range(SELF.expr_subj_hours_s, subj_hours_s);
     END;
 
 
@@ -380,7 +398,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Subject_Mapping_Typ AS
       ) RETURN INTEGER
     IS
     BEGIN
-        RETURN 0;
+        RETURN VEETOU_Match.String_Like(SELF.expr_subj_credit_kind, subj_credit_kind);
     END;
 
 
@@ -390,7 +408,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Subject_Mapping_Typ AS
       ) RETURN INTEGER
     IS
     BEGIN
-        RETURN 0;
+        RETURN VEETOU_Match.Number_Range(SELF.expr_subj_ects, subj_ects);
     END;
 
 
@@ -400,7 +418,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Subject_Mapping_Typ AS
       ) RETURN INTEGER
     IS
     BEGIN
-        RETURN 0;
+        RETURN VEETOU_Match.Person_Name(SELF.expr_subj_tutor, subj_tutor);
     END;
 
 

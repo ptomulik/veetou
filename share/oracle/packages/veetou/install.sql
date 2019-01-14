@@ -33,7 +33,13 @@
 @@views/ko_subject_instances.sql;
 --
 
+--
+-- PACKAGES
+--
+@@pkg/match.pkg
+
 -- depends on others...
 @@tables/subject_mappings.sql;
+
 
 -- vim: set ft=sql ts=4 sw=4 et:
