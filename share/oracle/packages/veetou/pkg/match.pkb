@@ -140,7 +140,7 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Match AS
     IS
         name VARCHAR(1024);
     BEGIN
-        name := Strip_Person_Degrees(expr);
+        name := Strip_Person_Degrees(value);
         RETURN String_Like(expr, name);
     END;
 END VEETOU_Match;

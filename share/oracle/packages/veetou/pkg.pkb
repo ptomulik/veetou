@@ -141,6 +141,10 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
         Drop_Index('ko_preambles_idx5');
         Drop_Index('ko_trs_idx1');
         Drop_Index('ko_trs_idx2');
+        Drop_Index('ko_sbj_map_ov_idx1');
+        Drop_Index('ko_sbj_map_ov_idx2');
+        Drop_Index('ko_sbj_map_idx1');
+        Drop_Index('ko_sbj_map_idx2');
 
 
         Drop_Table('ko_page_footer', how);

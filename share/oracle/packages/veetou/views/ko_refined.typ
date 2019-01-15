@@ -1,7 +1,5 @@
 CREATE OR REPLACE TYPE Veetou_Ko_Refined_Typ FORCE AUTHID CURRENT_USER AS OBJECT
-    ( job_uuid RAW(16)
-    , tr_id NUMBER(38)
-    , subj_code VARCHAR(32 CHAR)
+    ( subj_code VARCHAR(32 CHAR)
     , subj_name VARCHAR(256 CHAR)
     , student_index VARCHAR(32 CHAR)
     , first_name VARCHAR(48 CHAR)
@@ -39,8 +37,6 @@ CREATE OR REPLACE TYPE Veetou_Ko_Refined_Typ FORCE AUTHID CURRENT_USER AS OBJECT
 
     , CONSTRUCTOR FUNCTION Veetou_Ko_Refined_Typ(
               SELF IN OUT NOCOPY Veetou_Ko_Refined_Typ
-            , job_uuid IN RAW := NULL
-            , tr_id IN NUMBER := NULL
             , subj_code IN VARCHAR := NULL
             , subj_name IN VARCHAR := NULL
             , student_index IN VARCHAR := NULL
@@ -82,8 +78,6 @@ CREATE OR REPLACE TYPE Veetou_Ko_Refined_Typ FORCE AUTHID CURRENT_USER AS OBJECT
 CREATE OR REPLACE TYPE BODY Veetou_Ko_Refined_Typ AS
     CONSTRUCTOR FUNCTION Veetou_Ko_Refined_Typ(
           SELF IN OUT NOCOPY Veetou_Ko_Refined_Typ
-        , job_uuid IN RAW := NULL
-        , tr_id IN NUMBER := NULL
         , subj_code IN VARCHAR := NULL
         , subj_name IN VARCHAR := NULL
         , student_index IN VARCHAR := NULL
@@ -122,8 +116,6 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Refined_Typ AS
         ) RETURN SELF AS RESULT
     IS
     BEGIN
-        SELF.job_uuid := job_uuid;
-        SELF.tr_id := tr_id;
         SELF.subj_code := subj_code;
         SELF.subj_name := subj_name;
         SELF.student_index := student_index;

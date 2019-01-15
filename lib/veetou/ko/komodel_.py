@@ -30,6 +30,14 @@ def sqws(s=None):
     else:
         return ' '.join(s.split())
 
+# person name coalescing
+def pname(s=None):
+    if s is None:
+        return None;
+    else:
+##        return sqws(s).replace(' - ', '-')
+        return ' '.join(s.split()).replace(' -', '-').replace('- ', '-')
+
 KoVariable = declare( DataType, 'KoVariable',
 
         ('name', 'value'),
@@ -103,7 +111,8 @@ KoTr = declare( DataType, 'KoTr',
         (   'subj_code', 'subj_name', 'subj_hours_w', 'subj_hours_c',
             'subj_hours_l', 'subj_hours_p', 'subj_hours_s', 'subj_credit_kind',
             'subj_ects', 'subj_tutor', 'subj_grade', 'subj_grade_date'  ),
-        12 * (strn,),
+#        12 * (strn,),
+        9 * (strn,) + (pname,) + 2 * (strn,),
         plural = 'KoTrs'
 
 )

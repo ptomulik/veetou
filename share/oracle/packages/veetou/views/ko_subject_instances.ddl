@@ -1,6 +1,7 @@
 CREATE VIEW veetou_ko_subject_instances AS
 SELECT DISTINCT
-      subj_code
+      job_uuid
+    , subj_code
     , subj_name
     , university
     , faculty

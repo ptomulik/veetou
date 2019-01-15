@@ -1,8 +1,10 @@
 CREATE VIEW veetou_ko_mapped_subjects AS
     SELECT
-          v.subject_mapping_id subject_mapping_id
+          v.job_uuid job_uuid
+        , v.subject_mapping_id subject_mapping_id
         , v.subject_instance.subj_code subj_code
         , v.subject_mapping.mapped_subj_code mapped_subj_code
+        , v.matching_score matching_score
         -- instance
         , v.subject_instance.subj_name subj_name
         , v.subject_instance.university university

@@ -35,6 +35,12 @@ CREATE OR REPLACE TYPE Veetou_Ko_Subject_Instance_Typ FORCE AUTHID CURRENT_USER 
             , subj_credit_kind IN VARCHAR2 := NULL
             , subj_ects IN NUMBER := NULL
             ) RETURN SELF AS RESULT
+    )
+
+    , CONSTRUCTOR FUNCTION Veetou_Ko_Subject_Instance_Typ(
+              SELF IN OUT NOCOPY Veetou_Ko_Subject_Instance_Typ
+            , refined IN Veetou_Ko_Refined_Typ
+            ) RETURN SELF AS RESULT
     );
 /
 CREATE OR REPLACE TYPE BODY Veetou_Ko_Subject_Instance_Typ AS
@@ -75,6 +81,31 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Subject_Instance_Typ AS
         SELF.subj_hours_s := subj_hours_s;
         SELF.subj_credit_kind := subj_credit_kind;
         SELF.subj_ects := subj_ects;
+        RETURN;
+    END;
+
+    CONSTRUCTOR FUNCTION Veetou_Ko_Subject_Instance_Typ(
+              SELF IN OUT NOCOPY Veetou_Ko_Subject_Instance_Typ
+            , refined IN Veetou_Ko_Refined_Typ
+            ) RETURN SELF AS RESULT
+    IS
+    BEGIN
+        SELF.subj_code := refined.subj_code;
+        SELF.subj_name := refined.subj_name;
+        SELF.university := refined.university;
+        SELF.faculty := refined.faculty;
+        SELF.studies_modetier := refined.studies_modetier;
+        SELF.studies_field := refined.studies_field;
+        SELF.studies_specialty := refined.studies_specialty;
+        SELF.semester_code := refined.semester_code;
+        SELF.subj_tutor := refined.subj_tutor;
+        SELF.subj_hours_w := refined.subj_hours_w;
+        SELF.subj_hours_c := refined.subj_hours_c;
+        SELF.subj_hours_l := refined.subj_hours_l;
+        SELF.subj_hours_p := refined.subj_hours_p;
+        SELF.subj_hours_s := refined.subj_hours_s;
+        SELF.subj_credit_kind := refined.subj_credit_kind;
+        SELF.subj_ects := refined.subj_ects;
         RETURN;
     END;
 END;
