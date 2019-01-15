@@ -1,13 +1,13 @@
 CREATE TABLE veetou_ko_footers
-     ( job_uuid RAW(16) NOT NULL
-     , id NUMBER(38) NOT NULL
-     , pagination VARCHAR(32 CHAR)
-     , sheet_page_number NUMBER(16)
-     , sheet_pages_total NUMBER(16)
-     , generator_name VARCHAR(256 CHAR)
-     , generator_home VARCHAR(256 CHAR)
-     , CONSTRAINT veetou_ko_footers_pk PRIMARY KEY (job_uuid, id)
-     , CONSTRAINT veetou_ko_footers_fk0 FOREIGN KEY (job_uuid) REFERENCES veetou_ko_jobs(job_uuid));
+    ( job_uuid RAW(16) NOT NULL
+    , id NUMBER(38) NOT NULL
+    , pagination VARCHAR(32 CHAR)
+    , sheet_page_number NUMBER(16)
+    , sheet_pages_total NUMBER(16)
+    , generator_name VARCHAR(256 CHAR)
+    , generator_home VARCHAR(256 CHAR)
+    , CONSTRAINT veetou_ko_footers_pk PRIMARY KEY (job_uuid, id)
+    , CONSTRAINT veetou_ko_footers_fk0 FOREIGN KEY (job_uuid) REFERENCES veetou_ko_jobs(job_uuid));
 
 COMMENT ON TABLE veetou_ko_footers IS 'Stopki na Kartach Osiągnięć';
 COMMENT ON COLUMN veetou_ko_footers.job_uuid IS 'Unikalny identyfikator uruchomienia VEETOU z którego pochodzi rekord';

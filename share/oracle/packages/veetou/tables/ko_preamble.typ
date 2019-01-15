@@ -1,7 +1,5 @@
 CREATE OR REPLACE TYPE Veetou_Ko_Preamble_Typ FORCE AUTHID CURRENT_USER AS OBJECT
-    ( job_uuid RAW(16)
-    , id NUMBER(38)
-    , studies_modetier VARCHAR(256 CHAR)
+    ( studies_modetier VARCHAR(256 CHAR)
     , title VARCHAR(256 CHAR)
     , student_index VARCHAR(32 CHAR)
     , first_name VARCHAR(48 CHAR)
@@ -14,8 +12,6 @@ CREATE OR REPLACE TYPE Veetou_Ko_Preamble_Typ FORCE AUTHID CURRENT_USER AS OBJEC
 
     , CONSTRUCTOR FUNCTION Veetou_Ko_Preamble_Typ(
               SELF IN OUT NOCOPY Veetou_Ko_Preamble_Typ
-            , job_uuid IN RAW := NULL
-            , id IN NUMBER := NULL
             , studies_modetier VARCHAR := NULL
             , title VARCHAR := NULL
             , student_index VARCHAR := NULL
@@ -32,8 +28,6 @@ CREATE OR REPLACE TYPE Veetou_Ko_Preamble_Typ FORCE AUTHID CURRENT_USER AS OBJEC
 CREATE OR REPLACE TYPE BODY Veetou_Ko_Preamble_Typ AS
     CONSTRUCTOR FUNCTION Veetou_Ko_Preamble_Typ(
           SELF IN OUT NOCOPY Veetou_Ko_Preamble_Typ
-        , job_uuid IN RAW := NULL
-        , id IN NUMBER := NULL
         , studies_modetier VARCHAR := NULL
         , title VARCHAR := NULL
         , student_index VARCHAR := NULL
@@ -47,8 +41,6 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Preamble_Typ AS
         ) RETURN SELF AS RESULT
     IS
     BEGIN
-        SELF.job_uuid := job_uuid;
-        SELF.id := id;
         SELF.studies_modetier := studies_modetier;
         SELF.title := title;
         SELF.student_index := student_index;
