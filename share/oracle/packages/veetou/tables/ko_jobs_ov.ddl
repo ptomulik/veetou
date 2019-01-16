@@ -1,4 +1,4 @@
-CREATE VIEW veetou_ko_jobs_ov
+CREATE OR REPLACE VIEW veetou_ko_jobs_ov
         ( job_uuid
         , job
         , CONSTRAINT veetou_ko_jobs_ov_pk PRIMARY KEY (job_uuid)

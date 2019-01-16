@@ -60,10 +60,10 @@ END;
 -- INDEXES
 --
 
-CREATE INDEX veetou_sbj_map_idx1
+CREATE INDEX veetou_subject_mappings_idx1
      ON veetou_subject_mappings(subj_code);
 
-CREATE INDEX veetou_sbj_map_idx2
+CREATE INDEX veetou_subject_mappings_idx2
      ON veetou_subject_mappings(mapped_subj_code);
 
 -- vim: set ft=sql ts=4 sw=4 et:

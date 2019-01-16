@@ -1,2 +1,0 @@
-@@uninstall.sql;
-@@install.sql;

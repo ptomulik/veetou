@@ -1,4 +1,4 @@
-CREATE VIEW veetou_ko_refined_ov AS
+CREATE OR REPLACE VIEW veetou_ko_refined_ov AS
     SELECT
       v.job_uuid job_uuid
     , v.tr_id tr_id

@@ -1,4 +1,4 @@
-CREATE VIEW veetou_ko_preambles_ov
+CREATE OR REPLACE VIEW veetou_ko_preambles_ov
         ( job_uuid
         , id
         , preamble

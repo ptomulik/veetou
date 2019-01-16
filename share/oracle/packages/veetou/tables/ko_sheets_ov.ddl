@@ -1,4 +1,4 @@
-CREATE VIEW veetou_ko_sheets_ov
+CREATE OR REPLACE VIEW veetou_ko_sheets_ov
         ( job_uuid
         , id
         , sheet

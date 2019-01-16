@@ -1,4 +1,4 @@
-CREATE VIEW veetou_ko_headers_ov
+CREATE OR REPLACE VIEW veetou_ko_headers_ov
         ( job_uuid
         , id
         , header

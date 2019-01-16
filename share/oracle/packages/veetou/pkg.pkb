@@ -71,7 +71,9 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
         IF type_name IS NOT NULL THEN
             Drop_If_Exists('TYPE', 'Veetou_' || type_name);
         END IF;
-        Drop_If_Exists('TABLE', 'veetou_' || table_name, how);
+        IF how <> 'KEEP' THEN
+            Drop_If_Exists('TABLE', 'veetou_' || table_name, how);
+        END IF;
     END;
 
 
@@ -86,7 +88,9 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
         IF type_name IS NOT NULL THEN
             Drop_If_Exists('TYPE', 'Veetou_' || type_name);
         END IF;
-        Drop_If_Exists('VIEW', 'veetou_' || view_name);
+        IF view_name IS NOT NULL THEN
+            Drop_If_Exists('VIEW', 'veetou_' || view_name);
+        END IF;
     END;
 
 
@@ -117,8 +121,7 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
         Drop_If_Exists('PACKAGE', 'VEETOU_' || package_name);
     END;
 
-
-    PROCEDURE Uninstall(how IN VARCHAR := 'PURGE')
+    PROCEDURE Uninstall(how IN VARCHAR := 'KEEP')
     IS
     BEGIN
         Drop_Index('subject_mappings_idx1');
@@ -127,8 +130,13 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
         Drop_Sequence('subject_mappings_sq1');
         Drop_Table('subject_mappings', 'Subject_Mapping_Typ', 'subject_mappings_ov', how);
 
+        Drop_Index('program_mappings_idx1');
+        Drop_Index('program_mappings_idx2');
+        Drop_Table('program_mappings', 'Program_Mapping_Typ', 'program_mappings_ov', how);
+
         Drop_View('ko_mapped_subjects', 'Ko_Mapped_Subject_Typ', 'ko_mapped_subjects_ov');
         Drop_View('ko_subject_instances', 'Ko_Subject_Instance_Typ', 'ko_subject_instances_ov');
+        Drop_View('ko_students', 'Ko_Student_Typ', 'ko_students_ov');
         Drop_View('ko_refined', 'Ko_Refined_Typ', 'ko_refined_ov');
         Drop_View('ko_full', 'Ko_Full_Typ', 'ko_full_ov');
 
@@ -141,10 +149,6 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
         Drop_Index('ko_preambles_idx5');
         Drop_Index('ko_trs_idx1');
         Drop_Index('ko_trs_idx2');
-        Drop_Index('ko_sbj_map_ov_idx1');
-        Drop_Index('ko_sbj_map_ov_idx2');
-        Drop_Index('ko_sbj_map_idx1');
-        Drop_Index('ko_sbj_map_idx2');
 
 
         Drop_Table('ko_page_footer', how);

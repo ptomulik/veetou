@@ -64,6 +64,16 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Match AS
         RETURN s;
     END;
 
+    FUNCTION To_Number_Or_Null(value IN VARCHAR)
+        RETURN INTEGER
+    IS
+    BEGIN
+        RETURN TO_NUMBER(value);
+    EXCEPTION
+        WHEN VALUE_ERROR THEN
+            RETURN NULL;
+    END;
+
     FUNCTION String_Like(expr IN VARCHAR, value IN VARCHAR)
         RETURN INTEGER
     IS
@@ -107,13 +117,17 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Match AS
     IS
         smin VARCHAR(1024);
         smax VARCHAR(1024);
+        nmin NUMBER;
+        nmax NUMBER;
     BEGIN
         IF NOT Split_Range(expr, smin, smax) THEN
             RETURN -1;
         END IF;
-        IF smin IS NOT NULL AND TO_NUMBER(smin) > value THEN
+        nmin := To_Number_Or_Null(smin);
+        nmax := To_Number_Or_Null(smax);
+        IF nmin IS NOT NULL AND nmin > value THEN
             RETURN 0;
-        ELSIF smax IS NOT NULL AND value > TO_NUMBER(smax) THEN
+        ELSIF nmax IS NOT NULL AND value > nmax THEN
             RETURN 0;
         ELSE
             RETURN 1;
@@ -127,7 +141,7 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Match AS
         smax VARCHAR(1024);
         nval NUMBER;
     BEGIN
-        nval := TO_NUMBER(value DEFAULT NULL ON CONVERSION ERROR);
+        nval := To_Number_Or_Null(value);
         IF nval IS NULL THEN
             RETURN -1;
         ELSE

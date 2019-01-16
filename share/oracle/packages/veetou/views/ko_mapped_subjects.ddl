@@ -1,4 +1,4 @@
-CREATE VIEW veetou_ko_mapped_subjects AS
+CREATE OR REPLACE VIEW veetou_ko_mapped_subjects AS
     SELECT
           v.job_uuid job_uuid
         , v.subject_mapping_id subject_mapping_id

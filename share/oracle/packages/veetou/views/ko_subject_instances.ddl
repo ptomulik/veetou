@@ -1,4 +1,4 @@
-CREATE VIEW veetou_ko_subject_instances AS
+CREATE OR REPLACE VIEW veetou_ko_subject_instances AS
 SELECT DISTINCT
       job_uuid
     , subj_code

@@ -1,4 +1,4 @@
-CREATE VIEW veetou_ko_full AS
+CREATE OR REPLACE VIEW veetou_ko_full AS
 SELECT
       veetou_ko_trs.job_uuid AS job_uuid
     , veetou_ko_trs.id AS tr_id

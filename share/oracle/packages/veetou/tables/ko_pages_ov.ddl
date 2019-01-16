@@ -1,4 +1,4 @@
-CREATE VIEW veetou_ko_pages_ov
+CREATE OR REPLACE VIEW veetou_ko_pages_ov
         ( job_uuid
         , id
         , page

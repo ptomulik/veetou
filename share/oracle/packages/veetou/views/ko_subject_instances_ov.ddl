@@ -1,4 +1,4 @@
-CREATE VIEW veetou_ko_subject_instances_ov AS
+CREATE OR REPLACE VIEW veetou_ko_subject_instances_ov AS
     SELECT
       v.job_uuid job_uuid
     , Veetou_Ko_Subject_Instance_Typ

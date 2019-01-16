@@ -35,7 +35,6 @@ CREATE OR REPLACE TYPE Veetou_Ko_Subject_Instance_Typ FORCE AUTHID CURRENT_USER 
             , subj_credit_kind IN VARCHAR2 := NULL
             , subj_ects IN NUMBER := NULL
             ) RETURN SELF AS RESULT
-    )
 
     , CONSTRUCTOR FUNCTION Veetou_Ko_Subject_Instance_Typ(
               SELF IN OUT NOCOPY Veetou_Ko_Subject_Instance_Typ

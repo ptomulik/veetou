@@ -1,4 +1,4 @@
-CREATE VIEW veetou_ko_footers_ov
+CREATE OR REPLACE VIEW veetou_ko_footers_ov
         ( job_uuid
         , id
         , footer

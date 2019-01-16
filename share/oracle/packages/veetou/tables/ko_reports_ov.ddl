@@ -1,4 +1,4 @@
-CREATE VIEW veetou_ko_reports_ov
+CREATE OR REPLACE VIEW veetou_ko_reports_ov
         ( job_uuid
         , id
         , report

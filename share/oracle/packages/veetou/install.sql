@@ -11,6 +11,7 @@
 @@tables/ko_tbodies.sql;
 @@tables/ko_footers.sql;
 @@tables/ko_trs.sql;
+@@tables/program_mappings.sql
 
 --
 -- JUNCTION TABLES
@@ -31,6 +32,7 @@
 @@views/ko_full.sql;
 @@views/ko_refined.sql;
 @@views/ko_subject_instances.sql;
+@@views/ko_students.sql;
 --
 
 --
