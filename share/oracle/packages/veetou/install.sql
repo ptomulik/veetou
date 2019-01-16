@@ -1,4 +1,11 @@
 --
+-- PACKAGES
+--
+
+@@pkg/util.pkg
+@@pkg/match.pkg
+
+--
 -- DATA TABLES
 --
 
@@ -32,17 +39,14 @@
 @@views/ko_full.sql;
 @@views/ko_refined.sql;
 @@views/ko_subject_instances.sql;
+@@views/ko_program_instances.sql;
 @@views/ko_students.sql;
 --
-
---
--- PACKAGES
---
-@@pkg/match.pkg
 
 -- depends on others...
 @@tables/subject_mappings.sql;
 @@views/ko_mapped_subjects.sql;
+@@views/ko_mapped_programs.sql;
 
 
 -- vim: set ft=sql ts=4 sw=4 et:

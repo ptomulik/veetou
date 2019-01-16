@@ -5,7 +5,7 @@
 @@pkg.pkg;
 
 BEGIN
-    VEETOU_Pkg.Uninstall('PURGE');
+    VEETOU_Pkg.Uninstall('CASCADE CONSTRAINTS PURGE');
 END;
 /
 DROP PACKAGE VEETOU_Pkg;

@@ -1,35 +1,4 @@
 CREATE OR REPLACE PACKAGE BODY VEETOU_Match AS
-    FUNCTION Split_Range(str IN VARCHAR, l OUT VARCHAR, r OUT VARCHAR)
-        RETURN BOOLEAN
-    IS
-        sp NUMBER;  -- separator position
-    BEGIN
-        sp := INSTR(str, '..');
-        IF sp = 0 THEN
-            l := TRIM(str);
-            r := TRIM(str);
-            RETURN TRUE;
-        ELSE
-            l := TRIM(SUBSTR(str, 1, sp-1));
-            r := TRIM(SUBSTR(str, sp+2));
-            RETURN TRUE;
-        END IF;
-    END;
-
-    FUNCTION StrCmp(str1 IN VARCHAR, str2 IN VARCHAR)
-        RETURN NUMBER
-    IS
-    BEGIN
-        IF str1 = str2 THEN
-            RETURN 0;
-        ELSIF GREATEST(str1, str2) = str1 THEN
-            RETURN 1;
-        ELSIF GREATEST(str1, str2) = str2 THEN
-            RETURN -1;
-        ELSE
-            RETURN NULL;
-        END IF;
-    END;
 
     FUNCTION Strip_Person_Degrees(value IN VARCHAR)
         RETURN VARCHAR
@@ -64,16 +33,6 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Match AS
         RETURN s;
     END;
 
-    FUNCTION To_Number_Or_Null(value IN VARCHAR)
-        RETURN INTEGER
-    IS
-    BEGIN
-        RETURN TO_NUMBER(value);
-    EXCEPTION
-        WHEN VALUE_ERROR THEN
-            RETURN NULL;
-    END;
-
     FUNCTION String_Like(expr IN VARCHAR, value IN VARCHAR)
         RETURN INTEGER
     IS
@@ -87,15 +46,15 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Match AS
         smin VARCHAR(1024);
         smax VARCHAR(1024);
     BEGIN
-        IF NOT Split_Range(expr, smin, smax) THEN
+        IF NOT VEETOU_Util.Split_Range(expr, smin, smax) THEN
             RETURN -1;
         END IF;
 
         DBMS_Output.Put_Line('smin: ' || smin || ', smax: ' || smax);
 
-        IF smin IS NOT NULL AND StrCmp(smin, value) > 0 THEN
+        IF smin IS NOT NULL AND VEETOU_Util.StrCmp(smin, value) > 0 THEN
             RETURN 0;
-        ELSIF smax IS NOT NULL AND StrCmp(value, smax) > 0 THEN
+        ELSIF smax IS NOT NULL AND VEETOU_Util.StrCmp(value, smax) > 0 THEN
             RETURN 0;
         ELSE
             RETURN 1;
@@ -120,11 +79,11 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Match AS
         nmin NUMBER;
         nmax NUMBER;
     BEGIN
-        IF NOT Split_Range(expr, smin, smax) THEN
+        IF NOT VEETOU_Util.Split_Range(expr, smin, smax) THEN
             RETURN -1;
         END IF;
-        nmin := To_Number_Or_Null(smin);
-        nmax := To_Number_Or_Null(smax);
+        nmin := VEETOU_Util.To_Number_Or_Null(smin);
+        nmax := VEETOU_Util.To_Number_Or_Null(smax);
         IF nmin IS NOT NULL AND nmin > value THEN
             RETURN 0;
         ELSIF nmax IS NOT NULL AND value > nmax THEN
@@ -141,7 +100,7 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Match AS
         smax VARCHAR(1024);
         nval NUMBER;
     BEGIN
-        nval := To_Number_Or_Null(value);
+        nval := VEETOU_Util.To_Number_Or_Null(value);
         IF nval IS NULL THEN
             RETURN -1;
         ELSE

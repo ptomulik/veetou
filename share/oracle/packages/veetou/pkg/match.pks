@@ -5,8 +5,6 @@ CREATE OR REPLACE PACKAGE VEETOU_Match AUTHID CURRENT_USER AS
     FUNCTION Number_Range(expr IN VARCHAR, value IN VARCHAR) RETURN INTEGER;
     FUNCTION Number_Range(expr IN VARCHAR, value IN NUMBER) RETURN INTEGER;
     FUNCTION Person_Name(expr IN VARCHAR, value IN VARCHAR) RETURN INTEGER;
-    -- helpers
-    FUNCTION Strip_Person_Degrees(value IN VARCHAR) RETURN VARCHAR;
 END VEETOU_Match;
 
 -- vim: set ft=sql ts=4 sw=4 et:

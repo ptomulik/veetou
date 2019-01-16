@@ -1,9 +1,10 @@
 CREATE TABLE veetou_program_mappings
     ( id NUMBER NOT NULL
-    , faculty VARCHAR(256 CHAR)
-    , studies_modetier VARCHAR(256 CHAR)
-    , studies_field VARCHAR(256 CHAR)
-    , studies_specialty VARCHAR(256 CHAR)
+    , expr_university VARCHAR(256 CHAR)
+    , expr_faculty VARCHAR(256 CHAR)
+    , expr_studies_modetier VARCHAR(256 CHAR)
+    , expr_studies_field VARCHAR(256 CHAR)
+    , expr_studies_specialty VARCHAR(256 CHAR)
     , mapped_program_code VARCHAR(32 CHAR)
     , mapped_modetier_code VARCHAR(32 CHAR)
     , mapped_field_code VARCHAR(32 CHAR)
@@ -12,10 +13,11 @@ CREATE TABLE veetou_program_mappings
     );
 
 COMMENT ON TABLE veetou_program_mappings IS 'Odwzorowanie programów studiów (VEE->USOS)';
-COMMENT ON COLUMN veetou_program_mappings.faculty IS 'Nazwa wydziału (VEE)';
-COMMENT ON COLUMN veetou_program_mappings.studies_modetier IS 'Poziom i tryb studiów (VEE)';
-COMMENT ON COLUMN veetou_program_mappings.studies_field IS 'Kierunek studiów (VEE)';
-COMMENT ON COLUMN veetou_program_mappings.studies_specialty IS 'Specjalność (VEE)';
+COMMENT ON COLUMN veetou_program_mappings.expr_university IS 'Nazwa uczelni (VEE)';
+COMMENT ON COLUMN veetou_program_mappings.expr_faculty IS 'Nazwa wydziału (VEE)';
+COMMENT ON COLUMN veetou_program_mappings.expr_studies_modetier IS 'Poziom i tryb studiów (VEE)';
+COMMENT ON COLUMN veetou_program_mappings.expr_studies_field IS 'Kierunek studiów (VEE)';
+COMMENT ON COLUMN veetou_program_mappings.expr_studies_specialty IS 'Specjalność (VEE)';
 COMMENT ON COLUMN veetou_program_mappings.mapped_program_code IS 'Wynikowy kod programu studiów (USOS)';
 COMMENT ON COLUMN veetou_program_mappings.mapped_modetier_code IS 'Wynikowy kod poziomu i trybu studiów (USOS)';
 COMMENT ON COLUMN veetou_program_mappings.mapped_field_code IS 'Wynikowy kod kierunku studiów';
@@ -38,7 +40,7 @@ END;
 --
 
 CREATE INDEX veetou_program_mappings_idx1
-     ON veetou_program_mappings(faculty,studies_modetier,studies_field,studies_specialty);
+     ON veetou_program_mappings(expr_faculty,expr_studies_modetier,expr_studies_field,expr_studies_specialty);
 
 CREATE INDEX veetou_program_mappings_idx2
      ON veetou_program_mappings(mapped_program_code);

@@ -1,5 +1,5 @@
-CREATE OR REPLACE VIEW veetou_ko_refined AS
-SELECT
+CREATE OR REPLACE VIEW veetou_ko_refined
+AS SELECT
     veetou_ko_full.job_uuid AS job_uuid
   , veetou_ko_full.tr_id AS tr_id
   , veetou_ko_full.tr_subj_code AS subj_code

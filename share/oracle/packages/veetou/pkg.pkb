@@ -38,10 +38,10 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
                              name IN VARCHAR,
                              how IN VARCHAR := '')
     IS
+        cmd VARCHAR(1024);
     BEGIN
-        DBMS_Utility.Exec_DDL_Statement(
-            'DROP ' || UPPER(schema_type) || ' ' || name || ' ' || how
-        );
+        cmd := 'DROP ' || UPPER(schema_type) || ' ' || name || ' ' || how;
+        DBMS_Utility.Exec_DDL_Statement(cmd);
     END;
 
 
@@ -68,28 +68,28 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
         IF ov_name IS NOT NULL THEN
             Drop_If_Exists('VIEW', 'veetou_' || ov_name);
         END IF;
-        IF type_name IS NOT NULL THEN
-            Drop_If_Exists('TYPE', 'Veetou_' || type_name);
-        END IF;
         IF how <> 'KEEP' THEN
             Drop_If_Exists('TABLE', 'veetou_' || table_name, how);
+        END IF;
+        IF type_name IS NOT NULL THEN
+            Drop_If_Exists('TYPE', 'Veetou_' || type_name);
         END IF;
     END;
 
 
-    PROCEDURE Drop_View(view_name IN VARCHAR,
+    PROCEDURE Drop_View(primary_view IN VARCHAR,
                         type_name IN VARCHAR := NULL,
-                        ov_name IN VARCHAR := NULL)
+                        secondary_view IN VARCHAR := NULL)
     IS
     BEGIN
-        IF ov_name IS NOT NULL THEN
-            Drop_If_Exists('VIEW', 'veetou_' || ov_name);
+        IF secondary_view IS NOT NULL THEN
+            Drop_If_Exists('VIEW', 'veetou_' || secondary_view);
+        END IF;
+        IF primary_view IS NOT NULL THEN
+            Drop_If_Exists('VIEW', 'veetou_' || primary_view);
         END IF;
         IF type_name IS NOT NULL THEN
             Drop_If_Exists('TYPE', 'Veetou_' || type_name);
-        END IF;
-        IF view_name IS NOT NULL THEN
-            Drop_If_Exists('VIEW', 'veetou_' || view_name);
         END IF;
     END;
 
@@ -124,40 +124,50 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
     PROCEDURE Uninstall(how IN VARCHAR := 'KEEP')
     IS
     BEGIN
-        Drop_Index('subject_mappings_idx1');
-        Drop_Index('subject_mappings_idx2');
-        Drop_Trigger('subject_mappings_tr1');
-        Drop_Sequence('subject_mappings_sq1');
+        IF how <> 'KEEP' THEN
+            Drop_Index('subject_mappings_idx1');
+            Drop_Index('subject_mappings_idx2');
+            Drop_Trigger('subject_mappings_tr1');
+            Drop_Sequence('subject_mappings_sq1');
+        END IF;
         Drop_Table('subject_mappings', 'Subject_Mapping_Typ', 'subject_mappings_ov', how);
 
-        Drop_Index('program_mappings_idx1');
-        Drop_Index('program_mappings_idx2');
+        IF how <> 'KEEP' THEN
+            Drop_Index('program_mappings_idx1');
+            Drop_Index('program_mappings_idx2');
+            Drop_Trigger('program_mappings_tr1');
+            Drop_Sequence('program_mappings_sq1');
+        END IF;
         Drop_Table('program_mappings', 'Program_Mapping_Typ', 'program_mappings_ov', how);
 
+        Drop_View('ko_mapped_programs', 'Ko_Mapped_Program_Typ', 'ko_mapped_programs_ov');
+        Drop_View('ko_program_instances_ov', 'Ko_Program_Instance_Typ', 'ko_program_instances');
         Drop_View('ko_mapped_subjects', 'Ko_Mapped_Subject_Typ', 'ko_mapped_subjects_ov');
-        Drop_View('ko_subject_instances', 'Ko_Subject_Instance_Typ', 'ko_subject_instances_ov');
+        Drop_View('ko_subject_instances_ov', 'Ko_Subject_Instance_Typ', 'ko_subject_instances');
         Drop_View('ko_students', 'Ko_Student_Typ', 'ko_students_ov');
         Drop_View('ko_refined', 'Ko_Refined_Typ', 'ko_refined_ov');
         Drop_View('ko_full', 'Ko_Full_Typ', 'ko_full_ov');
 
 
-        Drop_Index('ko_headers_idx1');
-        Drop_Index('ko_preambles_idx1');
-        Drop_Index('ko_preambles_idx2');
-        Drop_Index('ko_preambles_idx3');
-        Drop_Index('ko_preambles_idx4');
-        Drop_Index('ko_preambles_idx5');
-        Drop_Index('ko_trs_idx1');
-        Drop_Index('ko_trs_idx2');
+        IF how <> 'KEEP' THEN
+            Drop_Index('ko_headers_idx1');
+            Drop_Index('ko_preambles_idx1');
+            Drop_Index('ko_preambles_idx2');
+            Drop_Index('ko_preambles_idx3');
+            Drop_Index('ko_preambles_idx4');
+            Drop_Index('ko_preambles_idx5');
+            Drop_Index('ko_trs_idx1');
+            Drop_Index('ko_trs_idx2');
+        END IF;
 
 
-        Drop_Table('ko_page_footer', how);
-        Drop_Table('ko_page_header', how);
-        Drop_Table('ko_page_preamble', how);
-        Drop_Table('ko_page_tbody', how);
-        Drop_Table('ko_report_sheets', how);
-        Drop_Table('ko_sheet_pages', how);
-        Drop_Table('ko_tbody_trs', how);
+        Drop_Table('ko_page_footer', how => how);
+        Drop_Table('ko_page_header', how => how);
+        Drop_Table('ko_page_preamble', how => how);
+        Drop_Table('ko_page_tbody', how => how);
+        Drop_Table('ko_report_sheets', how => how);
+        Drop_Table('ko_sheet_pages', how => how);
+        Drop_Table('ko_tbody_trs', how => how);
 
 
         Drop_Table('ko_footers', 'Ko_Footer_Typ', 'ko_footers_ov', how);
@@ -172,6 +182,7 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
 
         -- PACKAGES (all, except the VEETOU_Pkg package)
         Drop_Package('Match');
+        Drop_Package('Util');
     END;
 
 END VEETOU_Pkg;

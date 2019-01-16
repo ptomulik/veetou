@@ -1,5 +1,5 @@
-CREATE OR REPLACE VIEW veetou_ko_students AS
-SELECT
+CREATE OR REPLACE VIEW veetou_ko_students
+AS SELECT
       job_uuid
     , student_index
     , student_name

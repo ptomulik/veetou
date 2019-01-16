@@ -39,12 +39,6 @@ CREATE OR REPLACE TYPE Veetou_Subject_Mapping_Typ FORCE AUTHID CURRENT_USER AS O
             )
         RETURN SELF AS RESULT
 
-
-    , MEMBER FUNCTION match_subject(
-              SELF IN Veetou_Subject_Mapping_Typ
-            , subject IN Veetou_Ko_Subject_Instance_Typ
-      ) RETURN INTEGER
-
     , MEMBER FUNCTION match_expr_fields(
               SELF IN Veetou_Subject_Mapping_Typ
             , subject IN Veetou_Ko_Subject_Instance_Typ
@@ -173,19 +167,6 @@ CREATE OR REPLACE TYPE BODY Veetou_Subject_Mapping_Typ AS
         SELF.expr_subj_ects := expr_subj_ects;
         SELF.expr_subj_tutor := expr_subj_tutor;
         RETURN;
-    END;
-
-    MEMBER FUNCTION match_subject(
-              SELF IN Veetou_Subject_Mapping_Typ
-            , subject IN Veetou_Ko_Subject_Instance_Typ
-        ) RETURN INTEGER
-    IS
-    BEGIN
-        IF SELF.subj_code != subject.subj_code THEN
-            RETURN 0;
-        ELSE
-            RETURN SELF.match_expr_fields(subject);
-        END IF;
     END;
 
     MEMBER FUNCTION match_expr_fields(

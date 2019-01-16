@@ -1,5 +1,5 @@
-CREATE OR REPLACE VIEW veetou_ko_full_ov AS
-    SELECT Veetou_Ko_Full_Typ
+CREATE OR REPLACE VIEW veetou_ko_full_ov
+AS SELECT Veetou_Ko_Full_Typ
     ( job_uuid => v.job_uuid
     , tr_id => v.tr_id
     , tr_subj_code => v.tr_subj_code
@@ -52,8 +52,7 @@ CREATE OR REPLACE VIEW veetou_ko_full_ov AS
     , footer_sheet_pages_total => v.footer_sheet_pages_total
     , footer_generator_name => v.footer_generator_name
     , footer_generator_home => v.footer_generator_home
-    )
-    AS full
+    ) full
 FROM veetou_ko_full v;
 
 -- vim: set ft=sql ts=4 sw=4 et:
