@@ -103,4 +103,8 @@ CREATE OR REPLACE TYPE BODY Veetou_Program_Mapping_Typ AS
         RETURN VEETOU_Match.String_Range(SELF.expr_semester_code, semester_code);
     END;
 END;
+/
+CREATE OR REPLACE TYPE Veetou_Program_Mappings_Typ
+    AS TABLE OF Veetou_Program_Mapping_Typ;
+
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -87,6 +87,25 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Util AS
             RETURN NULL;
     END;
 
+    FUNCTION Sem_Code_Add(sem_code IN VARCHAR, offset IN NUMBER)
+        RETURN VARCHAR
+    IS
+        y NUMBER;
+        n NUMBER;
+        s CHARACTER(1);
+    BEGIN
+        IF REGEXP_INSTR(sem_code, '^[0-9]{4}[LZlz]') != 1 THEN
+            RETURN NULL;
+        END IF;
+        y := TO_NUMBER(SUBSTR(sem_code, 1, 4));
+        s := TO_NUMBER(SUBSTR(sem_code, 5, 1));
+        --
+        n := (2 * y + CASE UPPER(s) WHEN 'Z' THEN 1 ELSE 0 END) + offset;
+        --
+        y := TRUNC(n/2);
+        s := CASE MOD(n, 2) WHEN 1 THEN 'Z' ELSE 'L' END;
+        RETURN TO_CHAR(y) || s;
+    END;
 END VEETOU_Util;
 
 -- vim: set ft=sql ts=4 sw=4 et:

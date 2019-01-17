@@ -59,6 +59,13 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
     END;
 
 
+    PROCEDURE Drop_Type(type_name IN VARCHAR)
+    IS
+    BEGIN
+        Drop_If_Exists('TYPE', 'Veetou_' || type_name);
+    END;
+
+
     PROCEDURE Drop_Table(table_name IN VARCHAR,
                          type_name IN VARCHAR := NULL,
                          ov_name IN VARCHAR := NULL,
@@ -124,6 +131,9 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
     PROCEDURE Uninstall(how IN VARCHAR := 'KEEP')
     IS
     BEGIN
+        Drop_View('ko_unmapped_programs_ov', NULL, 'ko_unmapped_programs');
+        Drop_View('ko_ambiguous_programs_ov', NULL, 'ko_ambiguous_programs');
+
         Drop_View('ko_mapped_programs_ov', NULL, 'ko_mapped_programs');
         IF how <> 'KEEP' THEN
             Drop_Index('program_mappings_idx1');
@@ -131,8 +141,12 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
             Drop_Trigger('program_mappings_tr1');
             Drop_Sequence('program_mappings_sq1');
         END IF;
+        Drop_Type('Program_Mappings_Typ');
         Drop_Table('program_mappings', 'Program_Mapping_Typ', 'program_mappings_ov', how);
         Drop_View('ko_program_instances_ov', 'Ko_Program_Instance_Typ', 'ko_program_instances');
+
+        Drop_View('ko_unmapped_subjects_ov', NULL, 'ko_unmapped_subjects');
+        Drop_View('ko_ambiguous_subjects_ov', NULL, 'ko_ambiguous_subjects');
 
         Drop_View('ko_mapped_subjects_ov', NULL, 'ko_mapped_subjects');
         IF how <> 'KEEP' THEN
@@ -141,6 +155,7 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
             Drop_Trigger('subject_mappings_tr1');
             Drop_Sequence('subject_mappings_sq1');
         END IF;
+        Drop_Type('Subject_Mappings_Typ');
         Drop_Table('subject_mappings', 'Subject_Mapping_Typ', 'subject_mappings_ov', how);
         Drop_View('ko_subject_instances_ov', 'Ko_Subject_Instance_Typ', 'ko_subject_instances');
 

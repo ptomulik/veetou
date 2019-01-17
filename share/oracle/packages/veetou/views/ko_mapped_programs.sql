@@ -1,4 +1,3 @@
---@@ko_mapped_program.typ
 @@ko_mapped_programs_ov.ddl
 @@ko_mapped_programs.ddl
 

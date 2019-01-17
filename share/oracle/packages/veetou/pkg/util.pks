@@ -13,6 +13,8 @@ CREATE OR REPLACE PACKAGE VEETOU_Util AUTHID CURRENT_USER AS
         RETURN NUMBER;
     FUNCTION To_Number_Or_Null(value IN VARCHAR)
         RETURN INTEGER;
+    FUNCTION Sem_Code_Add(sem_code IN VARCHAR, offset IN NUMBER)
+        RETURN VARCHAR;
 END VEETOU_Util;
 
 -- vim: set ft=sql ts=4 sw=4 et:

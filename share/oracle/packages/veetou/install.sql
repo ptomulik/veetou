@@ -9,6 +9,7 @@
 -- DATA TABLES
 --
 
+-- KO
 @@tables/ko_jobs.sql;
 @@tables/ko_reports.sql;
 @@tables/ko_sheets.sql;
@@ -47,6 +48,11 @@
 @@tables/program_mappings.sql
 @@views/ko_mapped_subjects.sql;
 @@views/ko_mapped_programs.sql;
-
+--
+@@views/ko_ambiguous_subjects.sql;
+@@views/ko_ambiguous_programs.sql;
+--
+@@views/ko_unmapped_subjects.sql;
+@@views/ko_unmapped_programs.sql;
 
 -- vim: set ft=sql ts=4 sw=4 et:
