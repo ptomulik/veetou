@@ -124,14 +124,7 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
     PROCEDURE Uninstall(how IN VARCHAR := 'KEEP')
     IS
     BEGIN
-        IF how <> 'KEEP' THEN
-            Drop_Index('subject_mappings_idx1');
-            Drop_Index('subject_mappings_idx2');
-            Drop_Trigger('subject_mappings_tr1');
-            Drop_Sequence('subject_mappings_sq1');
-        END IF;
-        Drop_Table('subject_mappings', 'Subject_Mapping_Typ', 'subject_mappings_ov', how);
-
+        Drop_View('ko_mapped_programs_ov', NULL, 'ko_mapped_programs');
         IF how <> 'KEEP' THEN
             Drop_Index('program_mappings_idx1');
             Drop_Index('program_mappings_idx2');
@@ -139,15 +132,21 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
             Drop_Sequence('program_mappings_sq1');
         END IF;
         Drop_Table('program_mappings', 'Program_Mapping_Typ', 'program_mappings_ov', how);
-
-        Drop_View('ko_mapped_programs', 'Ko_Mapped_Program_Typ', 'ko_mapped_programs_ov');
         Drop_View('ko_program_instances_ov', 'Ko_Program_Instance_Typ', 'ko_program_instances');
-        Drop_View('ko_mapped_subjects', 'Ko_Mapped_Subject_Typ', 'ko_mapped_subjects_ov');
+
+        Drop_View('ko_mapped_subjects_ov', NULL, 'ko_mapped_subjects');
+        IF how <> 'KEEP' THEN
+            Drop_Index('subject_mappings_idx1');
+            Drop_Index('subject_mappings_idx2');
+            Drop_Trigger('subject_mappings_tr1');
+            Drop_Sequence('subject_mappings_sq1');
+        END IF;
+        Drop_Table('subject_mappings', 'Subject_Mapping_Typ', 'subject_mappings_ov', how);
         Drop_View('ko_subject_instances_ov', 'Ko_Subject_Instance_Typ', 'ko_subject_instances');
+
         Drop_View('ko_students', 'Ko_Student_Typ', 'ko_students_ov');
         Drop_View('ko_refined', 'Ko_Refined_Typ', 'ko_refined_ov');
         Drop_View('ko_full', 'Ko_Full_Typ', 'ko_full_ov');
-
 
         IF how <> 'KEEP' THEN
             Drop_Index('ko_headers_idx1');
@@ -160,7 +159,6 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
             Drop_Index('ko_trs_idx2');
         END IF;
 
-
         Drop_Table('ko_page_footer', how => how);
         Drop_Table('ko_page_header', how => how);
         Drop_Table('ko_page_preamble', how => how);
@@ -168,7 +166,6 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
         Drop_Table('ko_report_sheets', how => how);
         Drop_Table('ko_sheet_pages', how => how);
         Drop_Table('ko_tbody_trs', how => how);
-
 
         Drop_Table('ko_footers', 'Ko_Footer_Typ', 'ko_footers_ov', how);
         Drop_Table('ko_headers', 'Ko_Header_Typ', 'ko_headers_ov', how);

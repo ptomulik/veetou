@@ -4,6 +4,7 @@ CREATE OR REPLACE TYPE Veetou_Ko_Program_Instance_Typ FORCE AUTHID CURRENT_USER 
     , studies_modetier VARCHAR2(256 CHAR)
     , studies_field VARCHAR2(256 CHAR)
     , studies_specialty VARCHAR2(256 CHAR)
+    , semester_code VARCHAR2(32 CHAR)
 
     , CONSTRUCTOR FUNCTION Veetou_Ko_Program_Instance_Typ(
               SELF IN OUT NOCOPY Veetou_Ko_Program_Instance_Typ
@@ -12,6 +13,7 @@ CREATE OR REPLACE TYPE Veetou_Ko_Program_Instance_Typ FORCE AUTHID CURRENT_USER 
             , studies_modetier IN VARCHAR2 := NULL
             , studies_field IN VARCHAR2 := NULL
             , studies_specialty IN VARCHAR2 := NULL
+            , semester_code IN VARCHAR2 := NULL
             ) RETURN SELF AS RESULT
 
     , CONSTRUCTOR FUNCTION Veetou_Ko_Program_Instance_Typ(
@@ -37,6 +39,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Program_Instance_Typ AS
         , studies_modetier IN VARCHAR2 := NULL
         , studies_field IN VARCHAR2 := NULL
         , studies_specialty IN VARCHAR2 := NULL
+        , semester_code IN VARCHAR2 := NULL
         ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -45,6 +48,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Program_Instance_Typ AS
         SELF.studies_modetier := studies_modetier;
         SELF.studies_field := studies_field;
         SELF.studies_specialty := studies_specialty;
+        SELF.semester_code := semester_code;
         RETURN;
     END;
 
@@ -59,6 +63,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Program_Instance_Typ AS
         SELF.studies_modetier := subject.studies_modetier;
         SELF.studies_field := subject.studies_field;
         SELF.studies_specialty := subject.studies_specialty;
+        SELF.semester_code := subject.semester_code;
         RETURN;
     END;
 
@@ -73,6 +78,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Program_Instance_Typ AS
         SELF.studies_modetier := refined.studies_modetier;
         SELF.studies_field := refined.studies_field;
         SELF.studies_specialty := refined.studies_specialty;
+        SELF.semester_code := refined.semester_code;
         RETURN;
     END;
 
@@ -98,7 +104,11 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Program_Instance_Typ AS
         IF ord <> 0 THEN
             RETURN ord;
         END IF;
-        RETURN VEETOU_Util.StrNullIcmp(studies_specialty, other.studies_specialty);
+        ord := VEETOU_Util.StrNullIcmp(studies_specialty, other.studies_specialty);
+        IF ord <> 0 THEN
+            RETURN ord;
+        END IF;
+        RETURN VEETOU_Util.StrNullIcmp(semester_code, other.semester_code);
     END;
 END;
 -- vim: set ft=sql ts=4 sw=4 et:

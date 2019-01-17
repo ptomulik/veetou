@@ -43,9 +43,6 @@ DROP PACKAGE VEETOU_Pkg;
 @@tables/ko_tr.typ;
 @@tables/ko_trs_ov.ddl;
 --
-@@tables/program_mapping.typ;
-@@tables/program_mappings_ov.ddl;
---
 
 --
 -- JUNCTION TABLES
@@ -73,6 +70,9 @@ DROP PACKAGE VEETOU_Pkg;
 -- depends on others...
 @@tables/subject_mapping.typ;
 @@tables/subject_mappings_ov.ddl;
+--
+@@tables/program_mapping.typ;
+@@tables/program_mappings_ov.ddl;
 --
 @@views/ko_mapped_subjects.sql;
 @@views/ko_mapped_programs.sql;

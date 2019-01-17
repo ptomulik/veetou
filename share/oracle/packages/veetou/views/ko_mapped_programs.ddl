@@ -1,41 +1,23 @@
 CREATE OR REPLACE VIEW veetou_ko_mapped_programs
 AS SELECT
-      pi.job_uuid job_uuid
+      v.job_uuid job_uuid
+    , v.program_mapping_id program_mapping_id
+    , v.matching_score matching_score
     -- instance
-    , pi.university university
-    , pi.faculty faculty
-    , pi.studies_modetier studies_modetier
-    , pi.studies_field studies_field
-    , pi.studies_specialty studies_specialty
+    , v.program_instance.university university
+    , v.program_instance.faculty faculty
+    , v.program_instance.studies_modetier studies_modetier
+    , v.program_instance.studies_field studies_field
+    , v.program_instance.studies_specialty studies_specialty
+    , v.program_instance.semester_code semester_code
     -- mapping
-    , pm.id program_mapping_id
-    , pm.mapped_program_code mapped_program_code
-    , pm.mapped_modetier_code mapped_modetier_code
-    , pm.mapped_field_code mapped_field_code
-    , pm.expr_university expr_university
-    , pm.expr_faculty expr_faculty
-    , pm.expr_studies_modetier expr_studies_modetier
-    , pm.expr_studies_field expr_studies_field
-    , pm.expr_studies_specialty expr_studies_specialty
+    , v.program_mapping.mapped_program_code mapped_program_code
+    , v.program_mapping.mapped_modetier_code mapped_modetier_code
+    , v.program_mapping.mapped_field_code mapped_field_code
+    , v.program_mapping.studies_specialty matched_studies_specialty
+    , v.program_mapping.expr_semester_code expr_semester_code
     -- count
-    , pi.trs_count trs_count
-FROM veetou_ko_program_instances pi
-LEFT JOIN veetou_program_mappings pm ON (
-            pi.university = pm.expr_university AND
-            pi.faculty = pm.expr_faculty AND
-            pi.studies_modetier = pm.expr_studies_modetier AND
-            pi.studies_field = pm.expr_studies_field AND (
-                pm.expr_studies_specialty IS NULL OR
-                (pi.studies_specialty = pm.expr_studies_specialty)
-            )
-        )
-ORDER BY
-          pi.job_uuid
-        , pi.university
-        , pi.faculty
-        , pi.studies_modetier
-        , pi.studies_field
-        , pi.studies_specialty
-        ;
+    , v.trs_count trs_count
+FROM veetou_ko_mapped_programs_ov v;
 
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -6,6 +6,7 @@ AS SELECT
     , v.program_instance.studies_modetier studies_modetier
     , v.program_instance.studies_field studies_field
     , v.program_instance.studies_specialty studies_specialty
+    , v.program_instance.semester_code semester_code
     , v.trs_count trs_count
 FROM veetou_ko_program_instances_ov v;
 

@@ -7,14 +7,15 @@ CREATE OR REPLACE VIEW veetou_program_mappings_ov
 AS SELECT
       t.id id
     , Veetou_Program_Mapping_Typ
-        ( expr_university => t.expr_university
-        , expr_faculty => t.expr_faculty
-        , expr_studies_modetier => t.expr_studies_modetier
-        , expr_studies_field => t.expr_studies_field
-        , expr_studies_specialty => t.expr_studies_specialty
+        ( university => t.university
+        , faculty => t.faculty
+        , studies_modetier => t.studies_modetier
+        , studies_field => t.studies_field
+        , studies_specialty => t.studies_specialty
         , mapped_program_code => t.mapped_program_code
         , mapped_modetier_code => t.mapped_modetier_code
         , mapped_field_code => t.mapped_field_code
+        , expr_semester_code => t.expr_semester_code
         ) program_mapping
 FROM veetou_program_mappings t;
 

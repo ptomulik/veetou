@@ -18,7 +18,6 @@
 @@tables/ko_tbodies.sql;
 @@tables/ko_footers.sql;
 @@tables/ko_trs.sql;
-@@tables/program_mappings.sql
 
 --
 -- JUNCTION TABLES
@@ -45,6 +44,7 @@
 
 -- depends on others...
 @@tables/subject_mappings.sql;
+@@tables/program_mappings.sql
 @@views/ko_mapped_subjects.sql;
 @@views/ko_mapped_programs.sql;
 
