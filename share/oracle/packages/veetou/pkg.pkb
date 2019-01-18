@@ -159,7 +159,7 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
         Drop_Table('subject_mappings', 'Subject_Mapping_Typ', 'subject_mappings_ov', how);
         Drop_View('ko_subject_instances_ov', 'Ko_Subject_Instance_Typ', 'ko_subject_instances');
 
-        Drop_View('ko_students', 'Ko_Student_Typ', 'ko_students_ov');
+        Drop_View('ko_students_ov', 'Ko_Student_Typ', 'ko_students');
         Drop_View('ko_refined', 'Ko_Refined_Typ', 'ko_refined_ov');
         Drop_View('ko_full', 'Ko_Full_Typ', 'ko_full_ov');
 

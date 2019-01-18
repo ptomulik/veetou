@@ -16,6 +16,13 @@ CREATE OR REPLACE TYPE Veetou_Ko_Student_Typ FORCE AUTHID CURRENT_USER AS OBJECT
               SELF IN OUT NOCOPY Veetou_Ko_Student_Typ
             , refined IN Veetou_Ko_Refined_Typ
             ) RETURN SELF AS RESULT
+
+    , CONSTRUCTOR FUNCTION Veetou_Ko_Student_Typ(
+              SELF IN OUT NOCOPY Veetou_Ko_Student_Typ
+            , preamble IN Veetou_Ko_Preamble_Typ
+            ) RETURN SELF AS RESULT
+
+    , MAP MEMBER FUNCTION map_fcn RETURN VARCHAR
     );
 /
 CREATE OR REPLACE TYPE BODY Veetou_Ko_Student_Typ AS
@@ -46,6 +53,26 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Student_Typ AS
         SELF.first_name := refined.first_name;
         SELF.last_name := refined.last_name;
         RETURN;
+    END;
+
+    CONSTRUCTOR FUNCTION Veetou_Ko_Student_Typ(
+              SELF IN OUT NOCOPY Veetou_Ko_Student_Typ
+            , preamble IN Veetou_Ko_Preamble_Typ
+            ) RETURN SELF AS RESULT
+    IS
+    BEGIN
+        SELF.student_index := preamble.student_index;
+        SELF.student_name := preamble.student_name;
+        SELF.first_name := preamble.first_name;
+        SELF.last_name := preamble.last_name;
+        RETURN;
+    END;
+
+    MAP MEMBER FUNCTION map_fcn
+        RETURN VARCHAR
+    IS
+    BEGIN
+        RETURN student_index;
     END;
 END;
 -- vim: set ft=sql ts=4 sw=4 et:
