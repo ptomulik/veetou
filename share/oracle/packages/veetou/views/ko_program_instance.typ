@@ -26,6 +26,12 @@ CREATE OR REPLACE TYPE Veetou_Ko_Program_Instance_Typ FORCE AUTHID CURRENT_USER 
             , refined IN Veetou_Ko_Refined_Typ
             ) RETURN SELF AS RESULT
 
+    , CONSTRUCTOR FUNCTION Veetou_Ko_Program_Instance_Typ(
+              SELF IN OUT NOCOPY Veetou_Ko_Program_Instance_Typ
+            , header IN Veetou_Ko_Header_Typ
+            , preamble IN Veetou_Ko_Preamble_Typ
+            ) RETURN SELF AS RESULT
+
     , ORDER MEMBER FUNCTION ord_all_fields(
                 other IN Veetou_Ko_Program_Instance_Typ
             ) RETURN INTEGER
@@ -79,6 +85,22 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Program_Instance_Typ AS
         SELF.studies_field := refined.studies_field;
         SELF.studies_specialty := refined.studies_specialty;
         SELF.semester_code := refined.semester_code;
+        RETURN;
+    END;
+
+    CONSTRUCTOR FUNCTION Veetou_Ko_Program_Instance_Typ(
+              SELF IN OUT NOCOPY Veetou_Ko_Program_Instance_Typ
+            , header IN Veetou_Ko_Header_Typ
+            , preamble IN Veetou_Ko_Preamble_Typ
+            ) RETURN SELF AS RESULT
+    IS
+    BEGIN
+        SELF.university := header.university;
+        SELF.faculty := header.faculty;
+        SELF.studies_modetier := preamble.studies_modetier;
+        SELF.studies_field := preamble.studies_field;
+        SELF.studies_specialty := preamble.studies_specialty;
+        SELF.semester_code := preamble.semester_code;
         RETURN;
     END;
 

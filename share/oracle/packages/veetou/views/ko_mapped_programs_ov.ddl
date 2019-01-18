@@ -6,7 +6,7 @@ AS WITH joined AS (
         , pm.program_mapping.match_expr_fields(pi.program_instance) matching_score
         , pi.program_instance program_instance
         , pm.program_mapping program_mapping
-        , pi.trs_count trs_count
+        , pi.pages_count pages_count
     FROM veetou_ko_program_instances_ov pi
     LEFT JOIN veetou_program_mappings_ov pm ON
         (

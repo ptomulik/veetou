@@ -16,6 +16,9 @@ DROP PACKAGE VEETOU_Pkg;
 -- DATA TABLES
 --
 
+@@tables/semester.typ;
+@@tables/semesters_ov.ddl;
+-- KO
 @@tables/ko_job.typ;
 @@tables/ko_jobs_ov.ddl;
 --

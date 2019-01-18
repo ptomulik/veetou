@@ -87,24 +87,64 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Util AS
             RETURN NULL;
     END;
 
-    FUNCTION Sem_Code_Add(sem_code IN VARCHAR, offset IN NUMBER)
+    FUNCTION To_Semester_Code(semester_id IN NUMBER)
         RETURN VARCHAR
     IS
         y NUMBER;
-        n NUMBER;
         s CHARACTER(1);
     BEGIN
-        IF REGEXP_INSTR(sem_code, '^[0-9]{4}[LZlz]') != 1 THEN
+        y := TRUNC(semester_id/2);
+        IF semester_id IS NULL OR y < 1900 OR y > 2099 THEN
             RETURN NULL;
         END IF;
-        y := TO_NUMBER(SUBSTR(sem_code, 1, 4));
-        s := TO_NUMBER(SUBSTR(sem_code, 5, 1));
-        --
-        n := (2 * y + CASE UPPER(s) WHEN 'Z' THEN 1 ELSE 0 END) + offset;
-        --
-        y := TRUNC(n/2);
-        s := CASE MOD(n, 2) WHEN 1 THEN 'Z' ELSE 'L' END;
-        RETURN TO_CHAR(y) || s;
+        s := CASE MOD(semester_id, 2) WHEN 1 THEN 'Z' ELSE 'L' END;
+        RETURN TO_CHAR(y, '0999') || s;
+    END;
+
+    FUNCTION To_Semester_Id(semester_code IN VARCHAR)
+        RETURN NUMBER
+    IS
+        y NUMBER;
+        s CHARACTER(1);
+    BEGIN
+        IF REGEXP_INSTR(UPPER(semester_code), '^(19|20)[0-9]{2}[LZ]$') <> 1
+        THEN
+            RETURN NULL;
+        END IF;
+        y := TO_NUMBER(SUBSTR(semester_code, 1, 4));    -- year as number
+        s := SUBSTR(semester_code, 5, 1);               -- season (L/Z)
+        RETURN (2 * y + CASE UPPER(s) WHEN 'Z' THEN 1 ELSE 0 END);
+    END;
+
+    FUNCTION Semester_Add(semester_code IN VARCHAR, offset IN NUMBER)
+        RETURN VARCHAR
+    IS
+        n NUMBER;
+    BEGIN
+        RETURN To_Semester_Code(To_Semester_Id(semester_code) + offset);
+    END;
+
+    FUNCTION Semester_Sub(semester_code IN VARCHAR, offset IN NUMBER)
+        RETURN VARCHAR
+    IS
+        n NUMBER;
+    BEGIN
+        RETURN To_Semester_Code(To_Semester_Id(semester_code) - offset);
+    END;
+
+    FUNCTION Semester_Diff( lhs_semester_code IN VARCHAR
+                          , rhs_semester_code IN VARCHAR)
+        RETURN NUMBER
+    IS
+        lhs_id NUMBER;
+        rhs_id NUMBER;
+    BEGIN
+        lhs_id := To_Semester_Id(lhs_semester_code);
+        rhs_id := To_Semester_Id(rhs_semester_code);
+        IF lhs_id IS NULL or rhs_id IS NULL THEN
+            RETURN NULL;
+        END IF;
+        return lhs_id - rhs_id;
     END;
 END VEETOU_Util;
 

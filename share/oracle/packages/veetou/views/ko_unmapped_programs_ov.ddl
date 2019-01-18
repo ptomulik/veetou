@@ -5,7 +5,7 @@ AS SELECT
     , v.matching_score matching_score
     , v.program_instance program_instance
     , v.program_mapping program_mapping
-    , v.trs_count trs_count
+    , v.pages_count pages_count
 FROM veetou_ko_mapped_programs_ov v
 WHERE v.program_mapping_id IS NULL OR
       v.program_mapping.mapped_program_code IS NULL OR

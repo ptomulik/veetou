@@ -13,8 +13,17 @@ CREATE OR REPLACE PACKAGE VEETOU_Util AUTHID CURRENT_USER AS
         RETURN NUMBER;
     FUNCTION To_Number_Or_Null(value IN VARCHAR)
         RETURN INTEGER;
-    FUNCTION Sem_Code_Add(sem_code IN VARCHAR, offset IN NUMBER)
+    FUNCTION To_Semester_Code(semester_id IN NUMBER)
         RETURN VARCHAR;
+    FUNCTION To_Semester_Id(semester_code IN VARCHAR)
+        RETURN NUMBER;
+    FUNCTION Semester_Add(semester_code IN VARCHAR, offset IN NUMBER)
+        RETURN VARCHAR;
+    FUNCTION Semester_Sub(semester_code IN VARCHAR, offset IN NUMBER)
+        RETURN VARCHAR;
+    FUNCTION Semester_Diff( lhs_semester_code IN VARCHAR
+                          , rhs_semester_code IN VARCHAR)
+        RETURN NUMBER;
 END VEETOU_Util;
 
 -- vim: set ft=sql ts=4 sw=4 et:

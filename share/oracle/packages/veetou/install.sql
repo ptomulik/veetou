@@ -9,6 +9,7 @@
 -- DATA TABLES
 --
 
+@@tables/semesters.sql;
 -- KO
 @@tables/ko_jobs.sql;
 @@tables/ko_reports.sql;

@@ -192,6 +192,10 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
         Drop_Table('ko_trs', 'Ko_Tr_Typ', 'ko_trs_ov', how);
         Drop_Table('ko_jobs', 'Ko_Job_Typ', 'ko_jobs_ov', how);
 
+        Drop_Type('Semesters_Typ');
+        Drop_Type('Semester_Codes_Typ');
+        Drop_Table('semesters', 'Semester', 'semesters_ov', how);
+
         -- PACKAGES (all, except the VEETOU_Pkg package)
         Drop_Package('Match');
         Drop_Package('Util');

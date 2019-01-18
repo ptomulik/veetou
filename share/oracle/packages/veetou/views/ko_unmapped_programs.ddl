@@ -17,7 +17,7 @@ AS SELECT
     , v.program_mapping.studies_specialty matched_studies_specialty
     , v.program_mapping.expr_semester_code expr_semester_code
     -- count
-    , v.trs_count trs_count
+    , v.pages_count pages_count
 FROM veetou_ko_unmapped_programs_ov v;
 
 -- vim: set ft=sql ts=4 sw=4 et:

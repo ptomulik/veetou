@@ -11,7 +11,7 @@ AS WITH grouped_mappings AS (
         , COUNT(*) program_mappings_count
         , v.program_instance program_instance
         , CAST(COLLECT(v.program_mapping) AS Veetou_Program_Mappings_Typ) program_mappings
-        , LISTAGG(v.trs_count, ',') WITHIN GROUP (ORDER BY v.program_mapping_id) trs_counts
+        , LISTAGG(v.pages_count, ',') WITHIN GROUP (ORDER BY v.program_mapping_id) pages_counts
     FROM veetou_ko_mapped_programs_ov v
     GROUP BY v.job_uuid, v.program_instance
     ORDER BY v.job_uuid, v.program_instance

@@ -15,7 +15,7 @@ AS SELECT
     -- mapping
     , v.program_mappings program_mappings
     -- count
-    , v.trs_counts trs_counts
+    , v.pages_counts pages_counts
 FROM veetou_ko_ambiguous_programs_ov v;
 
 -- vim: set ft=sql ts=4 sw=4 et:

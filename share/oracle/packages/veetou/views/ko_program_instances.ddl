@@ -7,7 +7,7 @@ AS SELECT
     , v.program_instance.studies_field studies_field
     , v.program_instance.studies_specialty studies_specialty
     , v.program_instance.semester_code semester_code
-    , v.trs_count trs_count
+    , v.pages_count pages_count
 FROM veetou_ko_program_instances_ov v;
 
 -- vim: set ft=sql ts=4 sw=4 et:
