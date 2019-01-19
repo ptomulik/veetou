@@ -16,6 +16,23 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Util AS
         END IF;
     END;
 
+    FUNCTION NullCmp(lhs IN BOOLEAN, rhs IN BOOLEAN)
+        RETURN NUMBER
+    IS
+    BEGIN
+        IF lhs THEN
+            IF rhs THEN
+                RETURN 0;
+            END IF;
+            RETURN -1;
+        ELSIF rhs THEN
+            RETURN  1;
+        ELSE
+            -- further comparison required
+            RETURN NULL;
+        END IF;
+    END;
+
     FUNCTION StrCmp(str1 IN VARCHAR, str2 IN VARCHAR)
         RETURN NUMBER
     IS
@@ -25,6 +42,21 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Util AS
         ELSIF GREATEST(str1, str2) = str1 THEN
             RETURN 1;
         ELSIF GREATEST(str1, str2) = str2 THEN
+            RETURN -1;
+        ELSE
+            RETURN NULL;
+        END IF;
+    END;
+
+    FUNCTION TimestampCmp(ts1 IN TIMESTAMP, ts2 IN TIMESTAMP)
+        RETURN NUMBER
+    IS
+    BEGIN
+        IF ts1 = ts2 THEN
+            RETURN 0;
+        ELSIF GREATEST(ts1, ts2) = ts1 THEN
+            RETURN 1;
+        ELSIF GREATEST(ts1, ts2) = ts2 THEN
             RETURN -1;
         ELSE
             RETURN NULL;
@@ -41,17 +73,13 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Util AS
     FUNCTION StrNullCmp(str1 IN VARCHAR, str2 IN VARCHAR)
         RETURN NUMBER
     IS
+        ord NUMBER;
     BEGIN
-        IF str1 IS NULL THEN
-            IF str2 IS NULL THEN
-                RETURN 0;
-            END IF;
-            RETURN -1;
-        ELSIF str2 IS NULL THEN
-            RETURN  1;
-        ELSE
-            RETURN StrCmp(str1, str2);
+        ord := NullCmp(str1 IS NULL, str2 IS NULL);
+        IF ord IS NULL THEN
+            ord := StrCmp(str1, str2);
         END IF;
+        RETURN ord;
     END;
 
     FUNCTION StrNullIcmp(str1 IN VARCHAR, str2 IN VARCHAR)
@@ -64,17 +92,37 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Util AS
     FUNCTION NumNullCmp(num1 IN NUMBER, num2 IN NUMBER)
         RETURN NUMBER
     IS
+        ord NUMBER;
     BEGIN
-        IF num1 IS NULL THEN
-            IF num2 IS NULL THEN
-                RETURN 0;
-            END IF;
-            RETURN -1;
-        ELSIF num2 IS NULL THEN
-            RETURN  1;
-        ELSE
-            RETURN SIGN(num1 - num2);
+        ord := NullCmp(num1 IS NULL, num2 IS NULL);
+        IF ord IS NULL THEN
+            ord := SIGN(num1 - num2);
         END IF;
+        RETURN ord;
+    END;
+
+    FUNCTION DateNullCmp(date1 IN DATE, date2 IN DATE)
+        RETURN NUMBER
+    IS
+        ord NUMBER;
+    BEGIN
+        ord := NullCmp(date1 IS NULL, date2 IS NULL);
+        IF ord IS NULL THEN
+            ord := SIGN(date1 - date2);
+        END IF;
+        RETURN ord;
+    END;
+
+    FUNCTION TimestampNullCmp(ts1 IN TIMESTAMP, ts2 IN TIMESTAMP)
+        RETURN NUMBER
+    IS
+        ord NUMBER;
+    BEGIN
+        ord := NullCmp(ts1 IS NULL, ts2 IS NULL);
+        IF ord IS NULL THEN
+            ord := TimestampCmp(ts1, ts2);
+        END IF;
+        RETURN ord;
     END;
 
     FUNCTION To_Number_Or_Null(value IN VARCHAR)

@@ -9,7 +9,7 @@ CREATE TABLE veetou_ko_preambles
      , student_name VARCHAR(128 CHAR)
      , semester_code VARCHAR(32 CHAR)
      , studies_field VARCHAR(256 CHAR)
-     , semester_number NUMBER(4)
+     , semester_number NUMBER(2) CHECK(semester_number > 0)
      , studies_specialty VARCHAR(256 CHAR)
      , CONSTRAINT veetou_ko_preambles_pk PRIMARY KEY (job_uuid, id)
      , CONSTRAINT veetou_ko_preambles_fk0 FOREIGN KEY (job_uuid) REFERENCES veetou_ko_jobs(job_uuid));

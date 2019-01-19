@@ -1,9 +1,9 @@
-CREATE OR REPLACE VIEW veetou_ko_program_instances_ov
+CREATE OR REPLACE VIEW veetou_ko_specialty_instances_ov
 AS WITH joined AS
     (
     SELECT
           pages.job_uuid job_uuid
-        , Veetou_Ko_Program_Instance_Typ(headers.header, preambles.preamble) program_instance
+        , Veetou_Ko_Specialty_Instance_Typ(headers.header, preambles.preamble) specialty_instance
         , headers.id header_id
         , preambles.id preamble_id
         , sheets.id sheet_id
@@ -29,11 +29,11 @@ AS WITH joined AS
     )
 SELECT
       job_uuid
-    , program_instance
+    , specialty_instance
     , COUNT(*) pages_count
     , COUNT(DISTINCT sheet_id) sheets_count
 FROM joined
-GROUP BY job_uuid, program_instance
-ORDER BY job_uuid, program_instance;
+GROUP BY job_uuid, specialty_instance
+ORDER BY job_uuid, specialty_instance;
 
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -24,7 +24,7 @@ CREATE OR REPLACE TYPE Veetou_Program_Mapping_Typ FORCE AUTHID CURRENT_USER AS O
 
     , MEMBER FUNCTION match_expr_fields(
               SELF IN Veetou_Program_Mapping_Typ
-            , program IN Veetou_Ko_Program_Instance_Typ
+            , program IN Veetou_Ko_Specialty_Instance_Typ
             ) RETURN INTEGER
 
     , MEMBER FUNCTION match_expr_fields(
@@ -67,7 +67,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Program_Mapping_Typ AS
 
     MEMBER FUNCTION match_expr_fields(
           SELF IN Veetou_Program_Mapping_Typ
-        , program IN Veetou_Ko_Program_Instance_Typ
+        , program IN Veetou_Ko_Specialty_Instance_Typ
         ) RETURN INTEGER
     IS
         score NUMBER;
@@ -91,7 +91,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Program_Mapping_Typ AS
         ) RETURN INTEGER
     IS
     BEGIN
-        RETURN SELF.match_expr_fields(Veetou_Ko_Program_Instance_Typ(refined));
+        RETURN SELF.match_expr_fields(Veetou_Ko_Specialty_Instance_Typ(refined));
     END;
 
     MEMBER FUNCTION match_semester_code(

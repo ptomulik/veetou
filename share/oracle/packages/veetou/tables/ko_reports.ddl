@@ -3,9 +3,9 @@ CREATE TABLE veetou_ko_reports
      , id NUMBER(38) NOT NULL
      , source VARCHAR(512 CHAR)
      , datetime TIMESTAMP
-     , first_page NUMBER(16)
-     , sheets_parsed NUMBER(16)
-     , pages_parsed NUMBER(16)
+     , first_page NUMBER(10)
+     , sheets_parsed NUMBER(10)
+     , pages_parsed NUMBER(10)
      , CONSTRAINT veetou_ko_reports_pk PRIMARY KEY (job_uuid, id)
      , CONSTRAINT veetou_ko_reports_fk0 FOREIGN KEY (job_uuid) REFERENCES veetou_ko_jobs(job_uuid));
 

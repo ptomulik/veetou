@@ -1,4 +1,4 @@
-CREATE OR REPLACE TYPE Veetou_Ko_Program_Instance_Typ FORCE AUTHID CURRENT_USER AS OBJECT
+CREATE OR REPLACE TYPE Veetou_Ko_Specialty_Instance_Typ FORCE AUTHID CURRENT_USER AS OBJECT
     ( university VARCHAR2(256 CHAR)
     , faculty VARCHAR2(256 CHAR)
     , studies_modetier VARCHAR2(256 CHAR)
@@ -6,8 +6,8 @@ CREATE OR REPLACE TYPE Veetou_Ko_Program_Instance_Typ FORCE AUTHID CURRENT_USER 
     , studies_specialty VARCHAR2(256 CHAR)
     , semester_code VARCHAR2(32 CHAR)
 
-    , CONSTRUCTOR FUNCTION Veetou_Ko_Program_Instance_Typ(
-              SELF IN OUT NOCOPY Veetou_Ko_Program_Instance_Typ
+    , CONSTRUCTOR FUNCTION Veetou_Ko_Specialty_Instance_Typ(
+              SELF IN OUT NOCOPY Veetou_Ko_Specialty_Instance_Typ
             , university IN VARCHAR2 := NULL
             , faculty IN VARCHAR2 := NULL
             , studies_modetier IN VARCHAR2 := NULL
@@ -16,30 +16,30 @@ CREATE OR REPLACE TYPE Veetou_Ko_Program_Instance_Typ FORCE AUTHID CURRENT_USER 
             , semester_code IN VARCHAR2 := NULL
             ) RETURN SELF AS RESULT
 
-    , CONSTRUCTOR FUNCTION Veetou_Ko_Program_Instance_Typ(
-              SELF IN OUT NOCOPY Veetou_Ko_Program_Instance_Typ
+    , CONSTRUCTOR FUNCTION Veetou_Ko_Specialty_Instance_Typ(
+              SELF IN OUT NOCOPY Veetou_Ko_Specialty_Instance_Typ
             , subject IN Veetou_Ko_Subject_Instance_Typ
             ) RETURN SELF AS RESULT
 
-    , CONSTRUCTOR FUNCTION Veetou_Ko_Program_Instance_Typ(
-              SELF IN OUT NOCOPY Veetou_Ko_Program_Instance_Typ
+    , CONSTRUCTOR FUNCTION Veetou_Ko_Specialty_Instance_Typ(
+              SELF IN OUT NOCOPY Veetou_Ko_Specialty_Instance_Typ
             , refined IN Veetou_Ko_Refined_Typ
             ) RETURN SELF AS RESULT
 
-    , CONSTRUCTOR FUNCTION Veetou_Ko_Program_Instance_Typ(
-              SELF IN OUT NOCOPY Veetou_Ko_Program_Instance_Typ
+    , CONSTRUCTOR FUNCTION Veetou_Ko_Specialty_Instance_Typ(
+              SELF IN OUT NOCOPY Veetou_Ko_Specialty_Instance_Typ
             , header IN Veetou_Ko_Header_Typ
             , preamble IN Veetou_Ko_Preamble_Typ
             ) RETURN SELF AS RESULT
 
-    , ORDER MEMBER FUNCTION ord_all_fields(
-                other IN Veetou_Ko_Program_Instance_Typ
+    , ORDER MEMBER FUNCTION cmp_attribs(
+                other IN Veetou_Ko_Specialty_Instance_Typ
             ) RETURN INTEGER
     );
 /
-CREATE OR REPLACE TYPE BODY Veetou_Ko_Program_Instance_Typ AS
-    CONSTRUCTOR FUNCTION Veetou_Ko_Program_Instance_Typ(
-          SELF IN OUT NOCOPY Veetou_Ko_Program_Instance_Typ
+CREATE OR REPLACE TYPE BODY Veetou_Ko_Specialty_Instance_Typ AS
+    CONSTRUCTOR FUNCTION Veetou_Ko_Specialty_Instance_Typ(
+          SELF IN OUT NOCOPY Veetou_Ko_Specialty_Instance_Typ
         , university IN VARCHAR2 := NULL
         , faculty IN VARCHAR2 := NULL
         , studies_modetier IN VARCHAR2 := NULL
@@ -58,8 +58,8 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Program_Instance_Typ AS
         RETURN;
     END;
 
-    CONSTRUCTOR FUNCTION Veetou_Ko_Program_Instance_Typ(
-              SELF IN OUT NOCOPY Veetou_Ko_Program_Instance_Typ
+    CONSTRUCTOR FUNCTION Veetou_Ko_Specialty_Instance_Typ(
+              SELF IN OUT NOCOPY Veetou_Ko_Specialty_Instance_Typ
             , subject IN Veetou_Ko_Subject_Instance_Typ
             ) RETURN SELF AS RESULT
     IS
@@ -73,8 +73,8 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Program_Instance_Typ AS
         RETURN;
     END;
 
-    CONSTRUCTOR FUNCTION Veetou_Ko_Program_Instance_Typ(
-              SELF IN OUT NOCOPY Veetou_Ko_Program_Instance_Typ
+    CONSTRUCTOR FUNCTION Veetou_Ko_Specialty_Instance_Typ(
+              SELF IN OUT NOCOPY Veetou_Ko_Specialty_Instance_Typ
             , refined IN Veetou_Ko_Refined_Typ
             ) RETURN SELF AS RESULT
     IS
@@ -88,8 +88,8 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Program_Instance_Typ AS
         RETURN;
     END;
 
-    CONSTRUCTOR FUNCTION Veetou_Ko_Program_Instance_Typ(
-              SELF IN OUT NOCOPY Veetou_Ko_Program_Instance_Typ
+    CONSTRUCTOR FUNCTION Veetou_Ko_Specialty_Instance_Typ(
+              SELF IN OUT NOCOPY Veetou_Ko_Specialty_Instance_Typ
             , header IN Veetou_Ko_Header_Typ
             , preamble IN Veetou_Ko_Preamble_Typ
             ) RETURN SELF AS RESULT
@@ -104,8 +104,8 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Program_Instance_Typ AS
         RETURN;
     END;
 
-    ORDER MEMBER FUNCTION ord_all_fields(
-                other IN Veetou_Ko_Program_Instance_Typ
+    ORDER MEMBER FUNCTION cmp_attribs(
+                other IN Veetou_Ko_Specialty_Instance_Typ
             ) RETURN INTEGER
     IS
         ord INTEGER;

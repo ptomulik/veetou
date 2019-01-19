@@ -39,8 +39,10 @@
 
 @@views/ko_full.sql;
 @@views/ko_refined.sql;
+@@views/ko_xsheets.sql;
+@@views/ko_sheet_infos.sql;
 @@views/ko_subject_instances.sql;
-@@views/ko_program_instances.sql;
+@@views/ko_specialty_instances.sql;
 @@views/ko_students.sql;
 --
 

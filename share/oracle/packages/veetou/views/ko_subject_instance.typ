@@ -13,7 +13,7 @@ CREATE OR REPLACE TYPE Veetou_Ko_Subject_Instance_Typ FORCE AUTHID CURRENT_USER 
     , subj_hours_p NUMBER(8)
     , subj_hours_s NUMBER(8)
     , subj_credit_kind VARCHAR2(16 CHAR)
-    , subj_ects NUMBER(16)
+    , subj_ects NUMBER(4)
     , subj_tutor VARCHAR2(256 CHAR)
 
     , CONSTRUCTOR FUNCTION Veetou_Ko_Subject_Instance_Typ(

@@ -67,8 +67,9 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
 
 
     PROCEDURE Drop_Table(table_name IN VARCHAR,
-                         type_name IN VARCHAR := NULL,
                          ov_name IN VARCHAR := NULL,
+                         obj_type IN VARCHAR := NULL,
+                         tab_type IN VARCHAR := NULL,
                          how IN VARCHAR := '')
     IS
     BEGIN
@@ -78,15 +79,18 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
         IF how <> 'KEEP' THEN
             Drop_If_Exists('TABLE', 'veetou_' || table_name, how);
         END IF;
-        IF type_name IS NOT NULL THEN
-            Drop_If_Exists('TYPE', 'Veetou_' || type_name);
+        IF tab_type IS NOT NULL THEN
+            Drop_If_Exists('TYPE', 'Veetou_' || tab_type);
+        END IF;
+        IF obj_type IS NOT NULL THEN
+            Drop_If_Exists('TYPE', 'Veetou_' || obj_type);
         END IF;
     END;
 
 
     PROCEDURE Drop_View(primary_view IN VARCHAR,
-                        type_name IN VARCHAR := NULL,
-                        secondary_view IN VARCHAR := NULL)
+                        secondary_view IN VARCHAR := NULL,
+                        type_name IN VARCHAR := NULL)
     IS
     BEGIN
         IF secondary_view IS NOT NULL THEN
@@ -141,9 +145,8 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
             Drop_Trigger('program_mappings_tr1');
             Drop_Sequence('program_mappings_sq1');
         END IF;
-        Drop_Type('Program_Mappings_Typ');
-        Drop_Table('program_mappings', 'Program_Mapping_Typ', 'program_mappings_ov', how);
-        Drop_View('ko_program_instances_ov', 'Ko_Program_Instance_Typ', 'ko_program_instances');
+        Drop_Table('program_mappings', 'program_mappings_ov', 'Program_Mapping_Typ', 'Program_Mappings_Typ', how);
+        Drop_View('ko_specialty_instances_ov', 'ko_specialty_instances', 'Ko_Specialty_Instance_Typ');
 
         Drop_View('ko_unmapped_subjects_ov', NULL, 'ko_unmapped_subjects');
         Drop_View('ko_ambiguous_subjects_ov', NULL, 'ko_ambiguous_subjects');
@@ -155,13 +158,14 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
             Drop_Trigger('subject_mappings_tr1');
             Drop_Sequence('subject_mappings_sq1');
         END IF;
-        Drop_Type('Subject_Mappings_Typ');
-        Drop_Table('subject_mappings', 'Subject_Mapping_Typ', 'subject_mappings_ov', how);
-        Drop_View('ko_subject_instances_ov', 'Ko_Subject_Instance_Typ', 'ko_subject_instances');
+        Drop_Table('subject_mappings', 'subject_mappings_ov', 'Subject_Mapping_Typ', 'Subject_Mappings_Typ', how);
+        Drop_View('ko_subject_instances_ov', 'ko_subject_instances', 'Ko_Subject_Instance_Typ');
 
-        Drop_View('ko_students_ov', 'Ko_Student_Typ', 'ko_students');
-        Drop_View('ko_refined', 'Ko_Refined_Typ', 'ko_refined_ov');
-        Drop_View('ko_full', 'Ko_Full_Typ', 'ko_full_ov');
+        Drop_View('ko_sheet_infos_ov', 'ko_sheet_infos', 'Ko_Sheet_Info_Typ');
+        Drop_View('ko_xsheets_ov', 'ko_xsheets', 'Ko_Xsheet_Typ');
+        Drop_View('ko_students_ov', 'ko_students', 'Ko_Student_Typ');
+        Drop_View('ko_refined', 'ko_refined_ov', 'Ko_Refined_Typ');
+        Drop_View('ko_full', 'ko_full_ov', 'Ko_Full_Typ');
 
         IF how <> 'KEEP' THEN
             Drop_Index('ko_headers_idx1');
@@ -182,19 +186,18 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
         Drop_Table('ko_sheet_pages', how => how);
         Drop_Table('ko_tbody_trs', how => how);
 
-        Drop_Table('ko_footers', 'Ko_Footer_Typ', 'ko_footers_ov', how);
-        Drop_Table('ko_headers', 'Ko_Header_Typ', 'ko_headers_ov', how);
-        Drop_Table('ko_pages', 'Ko_Page_Typ', 'ko_pages_ov', how);
-        Drop_Table('ko_preambles', 'Ko_Preamble_Typ', 'ko_preambles_ov', how);
-        Drop_Table('ko_reports', 'Ko_Report_Typ', 'ko_reports_ov', how);
-        Drop_Table('ko_sheets', 'Ko_Sheet_Typ', 'ko_sheets_ov', how);
-        Drop_Table('ko_tbodies', 'Ko_Tbody_Typ', 'ko_tbodies_ov', how);
-        Drop_Table('ko_trs', 'Ko_Tr_Typ', 'ko_trs_ov', how);
-        Drop_Table('ko_jobs', 'Ko_Job_Typ', 'ko_jobs_ov', how);
+        Drop_Table('ko_footers', 'ko_footers_ov', 'Ko_Footer_Typ', 'Ko_Footers_Typ', how);
+        Drop_Table('ko_headers', 'ko_headers_ov', 'Ko_Header_Typ', 'Ko_Headers_Typ', how);
+        Drop_Table('ko_pages', 'ko_pages_ov', 'Ko_Page_Typ', 'Ko_Pages_Typ', how);
+        Drop_Table('ko_preambles', 'ko_preambles_ov', 'Ko_Preamble_Typ', 'Ko_Preambles_Typ', how);
+        Drop_Table('ko_reports', 'ko_reports_ov', 'Ko_Report_Typ', 'Ko_Reports_Typ', how);
+        Drop_Table('ko_sheets', 'ko_sheets_ov', 'Ko_Sheet_Typ', 'Ko_Sheets_Typ', how);
+        Drop_Table('ko_tbodies', 'ko_tbodies_ov', 'Ko_Tbody_Typ', 'Ko_Tbodies_Typ', how);
+        Drop_Table('ko_trs', 'ko_trs_ov', 'Ko_Tr_Typ', 'Ko_Trs_Typ', how);
+        Drop_Table('ko_jobs', 'ko_jobs_ov', 'Ko_Job_Typ', 'Ko_Jobs_Typ', how);
 
-        Drop_Type('Semesters_Typ');
         Drop_Type('Semester_Codes_Typ');
-        Drop_Table('semesters', 'Semester', 'semesters_ov', how);
+        Drop_Table('semesters', 'semesters_ov', 'Semester_Typ', 'Semesters_Typ', how);
 
         -- PACKAGES (all, except the VEETOU_Pkg package)
         Drop_Package('Match');

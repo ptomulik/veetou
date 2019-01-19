@@ -9,7 +9,7 @@ CREATE TABLE veetou_ko_trs
      , subj_hours_p NUMBER(8)
      , subj_hours_s NUMBER(8)
      , subj_credit_kind VARCHAR(16 CHAR)
-     , subj_ects NUMBER(16)
+     , subj_ects NUMBER(4)
      , subj_tutor VARCHAR(256 CHAR)
      , subj_grade VARCHAR(32 CHAR)
      , subj_grade_date DATE
