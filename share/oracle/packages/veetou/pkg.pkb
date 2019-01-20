@@ -210,6 +210,7 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
         Drop_Type('Ko_Job_Typ', 'Ko_Jobs_Typ');
         Drop_Type('Semester_Codes_Typ');
         Drop_Type('Semester_Typ', 'Semesters_Typ');
+        Drop_Type('Ko_Ids_Typ');
     END;
 
 END VEETOU_Pkg;

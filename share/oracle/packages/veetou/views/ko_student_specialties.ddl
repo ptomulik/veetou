@@ -10,6 +10,12 @@ AS SELECT
     , v.specialty.studies_modetier studies_modetier
     , v.specialty.studies_field studies_field
     , v.specialty.studies_specialty studies_specialty
+    , v.sheets_count sheets_count
+    , (
+        SELECT LISTAGG(VALUE(t), ',')
+        WITHIN GROUP (ORDER BY 1)
+        FROM TABLE(sheet_ids) t GROUP BY 1
+      ) sheet_ids
     , (
         SELECT LISTAGG(semester_code || ':' || semester_number, ',')
         WITHIN GROUP (ORDER BY 1)
