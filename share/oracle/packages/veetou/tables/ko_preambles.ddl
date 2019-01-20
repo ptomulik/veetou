@@ -7,7 +7,7 @@ CREATE TABLE veetou_ko_preambles
      , first_name VARCHAR(48 CHAR)
      , last_name VARCHAR(48 CHAR)
      , student_name VARCHAR(128 CHAR)
-     , semester_code VARCHAR(32 CHAR)
+     , semester_code VARCHAR(5 CHAR)
      , studies_field VARCHAR(256 CHAR)
      , semester_number NUMBER(2) CHECK(semester_number > 0)
      , studies_specialty VARCHAR(256 CHAR)

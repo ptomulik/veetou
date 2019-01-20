@@ -1,4 +1,3 @@
-@@ko_subject_instance.typ
 @@ko_subject_instances_ov.ddl
 @@ko_subject_instances.ddl
 

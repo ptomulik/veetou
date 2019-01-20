@@ -1,4 +1,3 @@
-@@ko_specialty_instance.typ
 @@ko_specialty_instances_ov.ddl
 @@ko_specialty_instances.ddl
 

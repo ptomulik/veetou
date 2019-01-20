@@ -1,4 +1,3 @@
---@@ko_xsheet.typ
 @@ko_xsheets_ov.ddl
 @@ko_xsheets.ddl
 

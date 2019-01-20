@@ -9,12 +9,13 @@ AS WITH grouped_mappings AS (
         , LISTAGG(v.matching_score, ',')
             WITHIN GROUP (ORDER BY v.program_mapping_id) matching_scores
         , COUNT(*) program_mappings_count
-        , v.specialty_instance specialty_instance
+        , v.specialty specialty
+        , v.semester_code semester_code
         , CAST(COLLECT(v.program_mapping) AS Veetou_Program_Mappings_Typ) program_mappings
         , LISTAGG(v.pages_count, ',') WITHIN GROUP (ORDER BY v.program_mapping_id) pages_counts
     FROM veetou_ko_mapped_programs_ov v
-    GROUP BY v.job_uuid, v.specialty_instance
-    ORDER BY v.job_uuid, v.specialty_instance
+    GROUP BY v.job_uuid, v.specialty, v.semester_code
+    ORDER BY v.job_uuid, v.specialty, v.semester_code
 )
 SELECT * FROM grouped_mappings
 WHERE program_mappings_count > 1;

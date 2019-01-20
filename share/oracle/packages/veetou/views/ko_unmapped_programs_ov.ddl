@@ -3,7 +3,8 @@ AS SELECT
       v.job_uuid job_uuid
     , v.program_mapping_id program_mapping_id
     , v.matching_score matching_score
-    , v.specialty_instance specialty_instance
+    , v.specialty specialty
+    , v.semester_code semester_code
     , v.program_mapping program_mapping
     , v.pages_count pages_count
 FROM veetou_ko_mapped_programs_ov v

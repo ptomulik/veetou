@@ -1,4 +1,3 @@
-@@ko_student.typ
 @@ko_students_ov.ddl
 @@ko_students.ddl
 

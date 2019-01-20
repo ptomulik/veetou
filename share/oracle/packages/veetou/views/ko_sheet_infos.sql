@@ -1,4 +1,3 @@
-@@ko_sheet_info.typ
 @@ko_sheet_infos_ov.ddl
 @@ko_sheet_infos.ddl
 
