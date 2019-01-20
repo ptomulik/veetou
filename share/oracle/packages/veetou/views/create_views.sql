@@ -7,6 +7,7 @@
 @@ko_students.sql;
 @@ko_student_specialties.sql;
 @@ko_student_threads.sql;
+@@ko_threads.sql;
 @@ko_mapped_subjects.sql;
 @@ko_mapped_programs.sql;
 @@ko_ambiguous_subjects.sql;

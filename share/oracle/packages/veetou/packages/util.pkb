@@ -258,6 +258,7 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Util AS
                         , ects_other => s.ects_other
                         , ects_total => s.ects_total
                         , ects_attained => s.ects_attained
+                        , sheet_id => s.sheet_id
                     );
                     n := n + 1;
                 END IF;

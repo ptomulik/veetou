@@ -7,6 +7,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Semester_Summary_Typ AS
             , ects_other IN NUMBER := NULL
             , ects_total IN NUMBER := NULL
             , ects_attained IN NUMBER := NULL
+            , sheet_id IN NUMBER := NULL
             )
         RETURN SELF AS RESULT
     IS
@@ -17,6 +18,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Semester_Summary_Typ AS
         SELF.ects_other := ects_other;
         SELF.ects_total := ects_total;
         SELF.ects_attained := ects_attained;
+        SELF.sheet_id := sheet_id;
         RETURN;
     END;
 
@@ -24,6 +26,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Semester_Summary_Typ AS
               SELF IN OUT NOCOPY Veetou_Ko_Semester_Summary_Typ
             , preamble IN Veetou_Ko_Preamble_Typ
             , sheet IN Veetou_Ko_Sheet_Typ
+            , sheet_id IN NUMBER := NULL
       ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -33,6 +36,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Semester_Summary_Typ AS
         SELF.ects_other := sheet.ects_other;
         SELF.ects_total := sheet.ects_total;
         SELF.ects_attained := sheet.ects_attained;
+        SELF.sheet_id := sheet_id;
         RETURN;
     END;
 
@@ -54,7 +58,9 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Semester_Summary_Typ AS
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := VEETOU_Util.NumNullCmp(ects_total, other.ects_total);
         IF ord <> 0 THEN RETURN ord; END IF;
-        RETURN VEETOU_Util.NumNullCmp(ects_attained, other.ects_attained);
+        ord := VEETOU_Util.NumNullCmp(ects_attained, other.ects_attained);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        RETURN VEETOU_Util.NumNullCmp(sheet_id, other.sheet_id);
     END;
 END;
 

@@ -14,6 +14,8 @@ SELECT
     , ROW_NUMBER() OVER (PARTITION BY job_uuid, student, specialty ORDER BY 1) thread_index
     , (SELECT MAX(ROWNUM) FROM TABLE(threads)) threads_count
     , VEETOU_Util.Max_Admission_Semester(VALUE(t)) max_admission_semester
+    , CAST(MULTISET(SELECT sheet_id FROM TABLE(VALUE(t)) s ORDER BY VALUE(s))
+           AS Veetou_Ko_Ids_Typ) sheet_ids
     , VALUE(t) thread_semesters
 FROM specialties
 CROSS JOIN TABLE(threads) t;

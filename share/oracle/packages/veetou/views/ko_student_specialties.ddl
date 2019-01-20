@@ -12,14 +12,14 @@ AS SELECT
     , v.specialty.studies_specialty studies_specialty
     , v.sheets_count sheets_count
     , (
-        SELECT LISTAGG(VALUE(t), ',')
-        WITHIN GROUP (ORDER BY 1)
-        FROM TABLE(sheet_ids) t GROUP BY 1
+        SELECT LISTAGG(sheet_id, ',')
+        WITHIN GROUP (ORDER BY VALUE(t))
+        FROM TABLE(semester_summaries) t GROUP BY 1
       ) sheet_ids
     , (
         SELECT LISTAGG(semester_code || ':' || semester_number, ',')
-        WITHIN GROUP (ORDER BY 1)
-        FROM TABLE(semester_summaries) GROUP BY 1
+        WITHIN GROUP (ORDER BY VALUE(t))
+        FROM TABLE(semester_summaries) t GROUP BY 1
       ) semesters
 FROM veetou_ko_student_specialties_ov v;
 

@@ -136,6 +136,7 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
             Drop_Trigger('program_mappings_tr1');
             Drop_Sequence('program_mappings_sq1');
         END IF;
+        Drop_View('ko_threads_ov', 'ko_threads');
         Drop_View('ko_student_threads_ov', 'ko_student_threads');
         Drop_View('ko_student_specialties_ov', 'ko_student_specialties');
         Drop_View('ko_specialty_instances_ov', 'ko_specialty_instances');
