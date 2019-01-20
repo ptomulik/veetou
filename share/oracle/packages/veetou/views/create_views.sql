@@ -1,8 +1,6 @@
-@@ko_full.sql;
-@@ko_refined.sql;
-@@ko_xsheets.sql;
+@@ko_x_trs.sql;
+@@ko_x_sheets.sql;
 @@ko_sheet_infos.sql;
---@@ko_student_programs.sql;
 @@ko_subject_instances.sql;
 @@ko_specialties.sql;
 @@ko_specialty_instances.sql;

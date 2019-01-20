@@ -15,18 +15,6 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Student_Typ AS
         RETURN;
     END;
 
-    CONSTRUCTOR FUNCTION Veetou_Ko_Student_Typ(
-              SELF IN OUT NOCOPY Veetou_Ko_Student_Typ
-            , refined IN Veetou_Ko_Refined_Typ
-            ) RETURN SELF AS RESULT
-    IS
-    BEGIN
-        SELF.student_index := refined.student_index;
-        SELF.student_name := refined.student_name;
-        SELF.first_name := refined.first_name;
-        SELF.last_name := refined.last_name;
-        RETURN;
-    END;
 
     CONSTRUCTOR FUNCTION Veetou_Ko_Student_Typ(
               SELF IN OUT NOCOPY Veetou_Ko_Student_Typ

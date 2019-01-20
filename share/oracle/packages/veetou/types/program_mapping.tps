@@ -27,9 +27,6 @@ CREATE OR REPLACE TYPE Veetou_Program_Mapping_Typ FORCE AUTHID CURRENT_USER AS O
             , semester_code IN VARCHAR
             ) RETURN INTEGER
 
-    , MEMBER FUNCTION match_expr_fields(refined IN Veetou_Ko_Refined_Typ)
-            RETURN INTEGER
-
     , MEMBER FUNCTION match_semester_code(semester_code IN VARCHAR)
             RETURN INTEGER
     );

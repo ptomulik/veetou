@@ -22,11 +22,6 @@ CREATE OR REPLACE TYPE Veetou_Ko_Specialty_Typ
 
     , CONSTRUCTOR FUNCTION Veetou_Ko_Specialty_Typ(
               SELF IN OUT NOCOPY Veetou_Ko_Specialty_Typ
-            , refined IN Veetou_Ko_Refined_Typ
-            ) RETURN SELF AS RESULT
-
-    , CONSTRUCTOR FUNCTION Veetou_Ko_Specialty_Typ(
-              SELF IN OUT NOCOPY Veetou_Ko_Specialty_Typ
             , header IN Veetou_Ko_Header_Typ
             , preamble IN Veetou_Ko_Preamble_Typ
             ) RETURN SELF AS RESULT

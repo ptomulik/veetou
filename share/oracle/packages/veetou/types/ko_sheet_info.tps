@@ -38,11 +38,6 @@ CREATE OR REPLACE TYPE Veetou_Ko_Sheet_Info_Typ FORCE AUTHID CURRENT_USER AS OBJ
 
     , CONSTRUCTOR FUNCTION Veetou_Ko_Sheet_Info_Typ(
               SELF IN OUT NOCOPY Veetou_Ko_Sheet_Info_Typ
-            , refined IN Veetou_Ko_Refined_Typ
-            ) RETURN SELF AS RESULT
-
-    , CONSTRUCTOR FUNCTION Veetou_Ko_Sheet_Info_Typ(
-              SELF IN OUT NOCOPY Veetou_Ko_Sheet_Info_Typ
             , header IN Veetou_Ko_Header_Typ
             , preamble IN Veetou_Ko_Preamble_Typ
             , sheet IN Veetou_Ko_Sheet_Typ

@@ -41,26 +41,30 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Subject_Instance_Typ AS
 
     CONSTRUCTOR FUNCTION Veetou_Ko_Subject_Instance_Typ(
               SELF IN OUT NOCOPY Veetou_Ko_Subject_Instance_Typ
-            , refined IN Veetou_Ko_Refined_Typ
+            , header IN Veetou_Ko_Header_Typ
+            , preamble IN Veetou_Ko_Preamble_Typ
+            , tr IN Veetou_Ko_Tr_Typ
             ) RETURN SELF AS RESULT
     IS
     BEGIN
-        SELF.subj_code := refined.subj_code;
-        SELF.subj_name := refined.subj_name;
-        SELF.university := refined.university;
-        SELF.faculty := refined.faculty;
-        SELF.studies_modetier := refined.studies_modetier;
-        SELF.studies_field := refined.studies_field;
-        SELF.studies_specialty := refined.studies_specialty;
-        SELF.semester_code := refined.semester_code;
-        SELF.subj_hours_w := refined.subj_hours_w;
-        SELF.subj_hours_c := refined.subj_hours_c;
-        SELF.subj_hours_l := refined.subj_hours_l;
-        SELF.subj_hours_p := refined.subj_hours_p;
-        SELF.subj_hours_s := refined.subj_hours_s;
-        SELF.subj_credit_kind := refined.subj_credit_kind;
-        SELF.subj_ects := refined.subj_ects;
-        SELF.subj_tutor := refined.subj_tutor;
+        SELF.university := header.university;
+        SELF.faculty := header.faculty;
+        --
+        SELF.studies_modetier := preamble.studies_modetier;
+        SELF.studies_field := preamble.studies_field;
+        SELF.studies_specialty := preamble.studies_specialty;
+        SELF.semester_code := preamble.semester_code;
+        --
+        SELF.subj_code := tr.subj_code;
+        SELF.subj_name := tr.subj_name;
+        SELF.subj_hours_w := tr.subj_hours_w;
+        SELF.subj_hours_c := tr.subj_hours_c;
+        SELF.subj_hours_l := tr.subj_hours_l;
+        SELF.subj_hours_p := tr.subj_hours_p;
+        SELF.subj_hours_s := tr.subj_hours_s;
+        SELF.subj_credit_kind := tr.subj_credit_kind;
+        SELF.subj_ects := tr.subj_ects;
+        SELF.subj_tutor := tr.subj_tutor;
         RETURN;
     END;
 

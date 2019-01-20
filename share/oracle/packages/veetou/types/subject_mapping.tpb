@@ -174,16 +174,6 @@ CREATE OR REPLACE TYPE BODY Veetou_Subject_Mapping_Typ AS
     END;
 
 
-    MEMBER FUNCTION match_expr_fields(
-            SELF IN Veetou_Subject_Mapping_Typ,
-            refined IN Veetou_Ko_Refined_Typ
-        ) RETURN INTEGER
-    IS
-    BEGIN
-        RETURN SELF.match_expr_fields(Veetou_Ko_Subject_Instance_Typ(refined));
-    END;
-
-
     MEMBER FUNCTION match_subj_name(
             SELF IN Veetou_Subject_Mapping_Typ
           , subj_name IN VARCHAR

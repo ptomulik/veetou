@@ -5,7 +5,7 @@ AS WITH ungrouped AS (
         , Veetou_Ko_Student_Typ(preamble) student
         , Veetou_Ko_Specialty_Typ(header, preamble) specialty
         , Veetou_Ko_Semester_Summary_Typ(preamble, sheet) semester_summary
-        FROM veetou_ko_xsheets_ov
+        FROM veetou_ko_x_sheets_ov
 )
 SELECT
       job_uuid

@@ -7,7 +7,7 @@ AS WITH ungrouped AS
             , v.preamble.semester_code semester_code
             , distinct_page_ids_count
             , sheet_id
-        FROM veetou_ko_xsheets_ov v
+        FROM veetou_ko_x_sheets_ov v
     )
 SELECT
       job_uuid

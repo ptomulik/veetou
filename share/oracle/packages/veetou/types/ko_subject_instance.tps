@@ -38,7 +38,9 @@ CREATE OR REPLACE TYPE Veetou_Ko_Subject_Instance_Typ FORCE AUTHID CURRENT_USER 
 
     , CONSTRUCTOR FUNCTION Veetou_Ko_Subject_Instance_Typ(
               SELF IN OUT NOCOPY Veetou_Ko_Subject_Instance_Typ
-            , refined IN Veetou_Ko_Refined_Typ
+            , header IN Veetou_Ko_Header_Typ
+            , preamble IN Veetou_Ko_Preamble_Typ
+            , tr IN Veetou_Ko_Tr_Typ
             ) RETURN SELF AS RESULT
 
     , ORDER MEMBER FUNCTION ord_all_attr (

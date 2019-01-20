@@ -7,14 +7,10 @@
 @@ko_sheet.tps;
 @@ko_tbody.tps;
 @@ko_tr.tps;
-@@ko_full.tps;
-@@ko_refined.tps;
 @@ko_semester_summary.tps;
-@@ko_semester_summlog.tps;
 @@ko_sheet_info.tps;
 @@ko_subject_instance.tps;
 @@ko_specialty.tps;
-@@ko_student_program.tps;
 @@ko_student.tps;
 @@program_mapping.tps;
 @@semester.tps;

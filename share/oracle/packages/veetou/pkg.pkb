@@ -150,12 +150,10 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
             Drop_Sequence('subject_mappings_sq1');
         END IF;
         Drop_View('ko_subject_instances_ov', 'ko_subject_instances');
-        Drop_View('ko_student_programs_ov', 'ko_student_programs');
         Drop_View('ko_sheet_infos_ov', 'ko_sheet_infos');
-        Drop_View('ko_xsheets_ov', 'ko_xsheets');
+        Drop_View('ko_x_sheets_ov', 'ko_x_sheets');
         Drop_View('ko_students_ov', 'ko_students');
-        Drop_View('ko_refined', 'ko_refined_ov');
-        Drop_View('ko_full', 'ko_full_ov');
+        Drop_View('ko_x_trs_ov', 'ko_x_trs');
 
         IF how <> 'KEEP' THEN
             Drop_Index('ko_headers_idx1');
@@ -196,15 +194,11 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
         Drop_Type('Ko_Specialty_Typ');
         Drop_Type('Subject_Mapping_Typ', 'Subject_Mappings_Typ');
         Drop_Type('Ko_Subject_Instance_Typ');
-        Drop_Type('Ko_Student_Program_Typ');
-        Drop_Type('Ko_Semester_Summlog_Typ');
         Drop_Type('Ko_Thread_Indices_Typ');
         Drop_Type('Ko_Semester_Threads_Typ');
         Drop_Type('Ko_Semester_Summary_Typ', 'Ko_Semester_Summaries_Typ');
         Drop_Type('Ko_Sheet_Info_Typ');
         Drop_Type('Ko_Student_Typ');
-        Drop_Type('Ko_Refined_Typ');
-        Drop_Type('Ko_Full_Typ');
         Drop_Type('Ko_Footer_Typ', 'Ko_Footers_Typ');
         Drop_Type('Ko_Header_Typ', 'Ko_Headers_Typ');
         Drop_Type('Ko_Page_Typ', 'Ko_Pages_Typ');

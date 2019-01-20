@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW veetou_ko_xsheets_ov
+CREATE OR REPLACE VIEW veetou_ko_x_sheets_ov
 AS SELECT
       sheets.job_uuid job_uuid
     , sheets.id sheet_id

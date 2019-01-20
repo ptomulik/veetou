@@ -45,14 +45,6 @@ CREATE OR REPLACE TYPE BODY Veetou_Program_Mapping_Typ AS
         RETURN score;
     END;
 
-    MEMBER FUNCTION match_expr_fields(refined IN Veetou_Ko_Refined_Typ)
-        RETURN INTEGER
-    IS
-        specialty Veetou_Ko_Specialty_Typ;
-    BEGIN
-        specialty := Veetou_Ko_Specialty_Typ(refined);
-        RETURN match_expr_fields(specialty, refined.semester_code);
-    END;
 
     MEMBER FUNCTION match_semester_code(semester_code IN VARCHAR)
         RETURN INTEGER

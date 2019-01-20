@@ -44,11 +44,6 @@ CREATE OR REPLACE TYPE Veetou_Subject_Mapping_Typ FORCE AUTHID CURRENT_USER AS O
             , subject IN Veetou_Ko_Subject_Instance_Typ
             ) RETURN INTEGER
 
-    , MEMBER FUNCTION match_expr_fields(
-              SELF IN Veetou_Subject_Mapping_Typ
-            , refined IN Veetou_Ko_Refined_Typ
-            ) RETURN INTEGER
-
     , MEMBER FUNCTION match_subj_name(
               SELF IN Veetou_Subject_Mapping_Typ
             , subj_name IN VARCHAR

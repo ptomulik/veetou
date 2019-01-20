@@ -31,19 +31,6 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Specialty_Typ AS
         RETURN;
     END;
 
-    CONSTRUCTOR FUNCTION Veetou_Ko_Specialty_Typ(
-              SELF IN OUT NOCOPY Veetou_Ko_Specialty_Typ
-            , refined IN Veetou_Ko_Refined_Typ
-            ) RETURN SELF AS RESULT
-    IS
-    BEGIN
-        SELF.university := refined.university;
-        SELF.faculty := refined.faculty;
-        SELF.studies_modetier := refined.studies_modetier;
-        SELF.studies_field := refined.studies_field;
-        SELF.studies_specialty := refined.studies_specialty;
-        RETURN;
-    END;
 
     CONSTRUCTOR FUNCTION Veetou_Ko_Specialty_Typ(
               SELF IN OUT NOCOPY Veetou_Ko_Specialty_Typ

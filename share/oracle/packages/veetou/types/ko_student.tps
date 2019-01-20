@@ -14,11 +14,6 @@ CREATE OR REPLACE TYPE Veetou_Ko_Student_Typ FORCE AUTHID CURRENT_USER AS OBJECT
 
     , CONSTRUCTOR FUNCTION Veetou_Ko_Student_Typ(
               SELF IN OUT NOCOPY Veetou_Ko_Student_Typ
-            , refined IN Veetou_Ko_Refined_Typ
-            ) RETURN SELF AS RESULT
-
-    , CONSTRUCTOR FUNCTION Veetou_Ko_Student_Typ(
-              SELF IN OUT NOCOPY Veetou_Ko_Student_Typ
             , preamble IN Veetou_Ko_Preamble_Typ
             ) RETURN SELF AS RESULT
 

@@ -39,30 +39,6 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Sheet_Info_Typ AS
 
     CONSTRUCTOR FUNCTION Veetou_Ko_Sheet_Info_Typ(
               SELF IN OUT NOCOPY Veetou_Ko_Sheet_Info_Typ
-            , refined IN Veetou_Ko_Refined_Typ
-            ) RETURN SELF AS RESULT
-    IS
-    BEGIN
-        SELF.university := refined.university;
-        SELF.faculty := refined.faculty;
-        SELF.studies_modetier := refined.studies_modetier;
-        SELF.student_index := refined.student_index;
-        SELF.first_name := refined.first_name;
-        SELF.last_name := refined.last_name;
-        SELF.student_name := refined.student_name;
-        SELF.semester_code := refined.semester_code;
-        SELF.studies_field := refined.studies_field;
-        SELF.semester_number := refined.semester_number;
-        SELF.studies_specialty := refined.studies_specialty;
-        SELF.ects_mandatory := refined.ects_mandatory;
-        SELF.ects_other := refined.ects_other;
-        SELF.ects_total := refined.ects_total;
-        SELF.ects_attained := refined.ects_attained;
-        RETURN;
-    END;
-
-    CONSTRUCTOR FUNCTION Veetou_Ko_Sheet_Info_Typ(
-              SELF IN OUT NOCOPY Veetou_Ko_Sheet_Info_Typ
             , header IN Veetou_Ko_Header_Typ
             , preamble IN Veetou_Ko_Preamble_Typ
             , sheet IN Veetou_Ko_Sheet_Typ

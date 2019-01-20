@@ -5,7 +5,7 @@ AS SELECT
     , preamble_id
     , sheet_id
     , Veetou_Ko_Sheet_Info_Typ(header, preamble, sheet) sheet_info
-FROM veetou_ko_xsheets_ov;
+FROM veetou_ko_x_sheets_ov;
 
 
 
