@@ -1,4 +1,25 @@
 CREATE OR REPLACE VIEW v2u_ko_x_sheets_ov
+    (
+      job_uuid
+    , sheet_id
+    , sheet
+    , page_id_list
+    , distinct_page_ids_count
+    , header_id_list
+    , distinct_header_ids_count
+    , preamble_id_list
+    , distinct_preamble_ids_count
+    , pages
+    , header_id
+    , header
+    , preamble_id
+    , preamble
+    , CONSTRAINT v2u_ko_x_sheets_ov_pk PRIMARY KEY (job_uuid, sheet_id)
+        RELY DISABLE NOVALIDATE
+    , CONSTRAINT v2u_ko_x_sheets_ov_fk0 FOREIGN KEY (job_uuid)
+        REFERENCES v2u_ko_jobs(job_uuid)
+        DISABLE NOVALIDATE
+    )
 AS SELECT
       sheets.job_uuid job_uuid
     , sheets.id sheet_id

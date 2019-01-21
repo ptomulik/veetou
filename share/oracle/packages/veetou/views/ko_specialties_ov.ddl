@@ -1,4 +1,13 @@
 CREATE OR REPLACE VIEW v2u_ko_specialties_ov
+    (
+      job_uuid
+    , specialty
+    , pages_count
+    , sheets_count
+    , CONSTRAINT v2u_ko_specialties_ov_fk0 FOREIGN KEY (job_uuid)
+        REFERENCES v2u_ko_jobs(job_uuid)
+        DISABLE NOVALIDATE
+    )
 AS WITH ungrouped AS
     (
         SELECT

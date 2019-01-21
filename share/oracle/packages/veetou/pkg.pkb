@@ -15,6 +15,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
             RETURN(-904);
         ELSIF UPPER(schema_type) = 'DATABASE LINK' THEN
             RETURN(-2024);
+        ELSIF UPPER(schema_type) = 'MATERIALIZED VIEW LOG ON' THEN
+            RETURN(-12002);
         ELSIF UPPER(schema_type) = 'MATERIALIZED VIEW' THEN
             RETURN(-12003);
         ELSIF UPPER(schema_type) = 'CONSTRAINT' THEN
@@ -78,6 +80,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         IF view_name IS NOT NULL THEN
             Drop_If_Exists('VIEW', 'v2u_' || view_name);
         END IF;
+        Drop_If_Exists('MATERIALIZED VIEW LOG ON', 'v2u_' || table_name);
         IF how <> 'KEEP' THEN
             Drop_If_Exists('TABLE', 'v2u_' || table_name, how);
         END IF;
@@ -93,6 +96,23 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         END IF;
         IF primary_view IS NOT NULL THEN
             Drop_If_Exists('VIEW', 'v2u_' || primary_view);
+        END IF;
+    END;
+
+    PROCEDURE Drop_Materialized_View(primary_view IN VARCHAR,
+                                     secondary_view IN VARCHAR := NULL,
+                                     secondary_type IN VARCHAR := NULL)
+    IS
+    BEGIN
+        IF secondary_view IS NOT NULL THEN
+            IF secondary_type is NULL THEN
+                Drop_If_Exists('VIEW', 'v2u_' || secondary_view);
+            ELSE
+                Drop_If_Exists(secondary_type, 'v2u_' || secondary_view);
+            END IF;
+        END IF;
+        IF primary_view IS NOT NULL THEN
+            Drop_If_Exists('MATERIALIZED VIEW', 'v2u_' || primary_view);
         END IF;
     END;
 
