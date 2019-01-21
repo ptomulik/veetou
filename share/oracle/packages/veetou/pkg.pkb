@@ -147,6 +147,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
     PROCEDURE Uninstall(how IN VARCHAR := 'KEEP')
     IS
     BEGIN
+        Drop_View('ko_subject_grades_ov', 'ko_subject_grades');
         Drop_View('ko_unmapped_programs_ov', 'ko_unmapped_programs');
         Drop_View('ko_ambiguous_programs_ov', 'ko_ambiguous_programs');
         Drop_View('ko_mapped_programs_ov', 'ko_mapped_programs');

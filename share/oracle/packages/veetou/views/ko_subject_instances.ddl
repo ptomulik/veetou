@@ -18,6 +18,11 @@ AS SELECT
     , v.subject_instance.subj_credit_kind subj_credit_kind
     , v.subject_instance.subj_ects subj_ects
     , v.trs_count trs_count
+    , (
+        SELECT LISTAGG(id, ',')
+        WITHIN GROUP (ORDER BY VALUE(t))
+        FROM TABLE(v.trs) t GROUP BY 1
+      ) tr_ids
 FROM v2u_ko_subject_instances_ov v;
 
 -- vim: set ft=sql ts=4 sw=4 et:

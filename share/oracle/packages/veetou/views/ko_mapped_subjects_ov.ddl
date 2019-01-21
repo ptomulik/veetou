@@ -7,6 +7,7 @@ AS WITH joined AS (
         , si.subject_instance subject_instance
         , sm.subject_mapping subject_mapping
         , si.trs_count trs_count
+        , si.trs trs
     FROM v2u_ko_subject_instances_ov si
     LEFT JOIN v2u_subject_mappings_ov sm
     ON sm.subject_mapping.subj_code = si.subject_instance.subj_code

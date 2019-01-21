@@ -39,6 +39,11 @@ AS SELECT
     , v.subject_mapping.expr_subj_tutor expr_subj_tutor
     -- count
     , v.trs_count trs_count
+    , (
+        SELECT LISTAGG(id, ',')
+        WITHIN GROUP (ORDER BY VALUE(t))
+        FROM TABLE(v.trs) t GROUP BY 1
+      ) tr_ids
 
 FROM v2u_ko_mapped_subjects_ov v;
 

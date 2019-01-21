@@ -3,6 +3,7 @@ AS WITH ungrouped AS
     (
         SELECT
               job_uuid
+            , tr
             , V2u_Ko_Subject_Instance_t(header, preamble, tr) subject_instance
         FROM v2u_ko_x_trs_ov
     )
@@ -10,6 +11,7 @@ SELECT
       job_uuid
     , subject_instance
     , COUNT(*) trs_count
+    , CAST(COLLECT(tr ORDER BY tr) AS V2u_Ko_Trs_t) trs
 FROM ungrouped
 GROUP BY job_uuid, subject_instance
 ORDER BY job_uuid, subject_instance;

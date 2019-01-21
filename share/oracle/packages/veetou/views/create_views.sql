@@ -27,5 +27,6 @@
 @@ko_ambiguous_programs.sql;
 @@ko_unmapped_subjects.sql;
 @@ko_unmapped_programs.sql;
+@@ko_subject_grades.sql;
 
 -- vim: set ft=sql ts=4 sw=4 et:
