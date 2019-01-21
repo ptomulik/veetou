@@ -11,11 +11,11 @@ AS SELECT
     , v.specialty.studies_field studies_field
     , v.specialty.studies_specialty studies_specialty
     , v.sheets_count sheets_count
-    , (
-        SELECT LISTAGG(sheet_id, ',')
-        WITHIN GROUP (ORDER BY VALUE(t))
-        FROM TABLE(semester_instances) t GROUP BY 1
-      ) sheet_ids
+--    , (
+--        SELECT LISTAGG(sheet_id, ',')
+--        WITHIN GROUP (ORDER BY VALUE(t))
+--        FROM TABLE(semester_instances) t GROUP BY 1
+--      ) sheet_ids
     , (
         SELECT LISTAGG(semester_code || ':' || semester_number, ',')
         WITHIN GROUP (ORDER BY VALUE(t))

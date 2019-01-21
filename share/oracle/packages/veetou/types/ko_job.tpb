@@ -1,10 +1,10 @@
 CREATE OR REPLACE TYPE BODY V2u_Ko_Job_t AS
     CONSTRUCTOR FUNCTION V2u_Ko_Job_t(
           SELF IN OUT NOCOPY V2u_Ko_Job_t
-        , job_timestamp TIMESTAMP := NULL
-        , job_host VARCHAR := NULL
-        , job_user VARCHAR := NULL
-        , job_name VARCHAR := NULL
+        , job_timestamp IN TIMESTAMP := NULL
+        , job_host IN VARCHAR := NULL
+        , job_user IN VARCHAR := NULL
+        , job_name IN VARCHAR := NULL
         ) RETURN SELF AS RESULT
     IS
     BEGIN

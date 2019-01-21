@@ -9,13 +9,13 @@ CREATE OR REPLACE TYPE V2u_Ko_Sheet_t FORCE AUTHID CURRENT_USER AS OBJECT
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Sheet_t(
               SELF IN OUT NOCOPY V2u_Ko_Sheet_t
-            , id NUMBER := NULL
-            , pages_parsed NUMBER := NULL
-            , first_page NUMBER := NULL
-            , ects_mandatory NUMBER := NULL
-            , ects_other NUMBER := NULL
-            , ects_total NUMBER := NULL
-            , ects_attained NUMBER := NULL
+            , id IN NUMBER
+            , pages_parsed IN NUMBER := NULL
+            , first_page IN NUMBER := NULL
+            , ects_mandatory IN NUMBER := NULL
+            , ects_other IN NUMBER := NULL
+            , ects_total IN NUMBER := NULL
+            , ects_attained IN NUMBER := NULL
             ) RETURN SELF AS RESULT
 
     , MAP MEMBER FUNCTION cat_attribs RETURN VARCHAR

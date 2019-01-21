@@ -4,8 +4,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Tbody_t FORCE AUTHID CURRENT_USER AS OBJECT
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Tbody_t(
               SELF IN OUT NOCOPY V2u_Ko_Tbody_t
-            , id NUMBER := NULL
-            , remark VARCHAR := NULL
+            , id IN NUMBER
+            , remark IN VARCHAR := NULL
             ) RETURN SELF AS RESULT
 
     , MAP MEMBER FUNCTION cat_attribs RETURN VARCHAR

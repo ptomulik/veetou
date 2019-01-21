@@ -15,7 +15,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Tr_t FORCE AUTHID CURRENT_USER AS OBJECT
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Tr_t(
               SELF IN OUT NOCOPY V2u_Ko_Tr_t
-            , id IN NUMBER := NULL
+            , id IN NUMBER
             , subj_code IN VARCHAR := NULL
             , subj_name IN VARCHAR := NULL
             , subj_hours_w IN NUMBER := NULL

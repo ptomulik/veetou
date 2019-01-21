@@ -1,9 +1,9 @@
 CREATE OR REPLACE TYPE BODY V2u_Ko_Page_t AS
     CONSTRUCTOR FUNCTION V2u_Ko_Page_t(
           SELF IN OUT NOCOPY V2u_Ko_Page_t
-        , id NUMBER := NULL
-        , page_number NUMBER := NULL
-        , parser_page_number NUMBER := NULL
+        , id IN NUMBER
+        , page_number IN NUMBER := NULL
+        , parser_page_number IN NUMBER := NULL
         ) RETURN SELF AS RESULT
     IS
     BEGIN

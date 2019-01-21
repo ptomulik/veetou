@@ -5,9 +5,9 @@ CREATE OR REPLACE TYPE V2u_Ko_Page_t FORCE AUTHID CURRENT_USER AS OBJECT
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Page_t(
               SELF IN OUT NOCOPY V2u_Ko_Page_t
-            , id NUMBER := NULL
-            , page_number NUMBER := NULL
-            , parser_page_number NUMBER := NULL
+            , id IN NUMBER
+            , page_number IN NUMBER := NULL
+            , parser_page_number IN NUMBER := NULL
             ) RETURN SELF AS RESULT
 
     , MAP MEMBER FUNCTION cat_attribs RETURN VARCHAR

@@ -13,17 +13,17 @@ CREATE OR REPLACE TYPE V2u_Ko_Preamble_t FORCE AUTHID CURRENT_USER AS OBJECT
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Preamble_t(
               SELF IN OUT NOCOPY V2u_Ko_Preamble_t
-            , id NUMBER := NULL
-            , studies_modetier VARCHAR := NULL
-            , title VARCHAR := NULL
-            , student_index VARCHAR := NULL
-            , first_name VARCHAR := NULL
-            , last_name VARCHAR := NULL
-            , student_name VARCHAR := NULL
-            , semester_code VARCHAR := NULL
-            , studies_field VARCHAR := NULL
-            , semester_number NUMBER := NULL
-            , studies_specialty VARCHAR := NULL
+            , id IN NUMBER
+            , studies_modetier IN VARCHAR := NULL
+            , title IN VARCHAR := NULL
+            , student_index IN VARCHAR := NULL
+            , first_name IN VARCHAR := NULL
+            , last_name IN VARCHAR := NULL
+            , student_name IN VARCHAR := NULL
+            , semester_code IN VARCHAR := NULL
+            , studies_field IN VARCHAR := NULL
+            , semester_number IN NUMBER := NULL
+            , studies_specialty IN VARCHAR := NULL
             ) RETURN SELF AS RESULT
 
     , ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Preamble_t)

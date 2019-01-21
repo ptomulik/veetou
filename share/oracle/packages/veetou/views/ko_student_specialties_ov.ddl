@@ -12,11 +12,11 @@ SELECT
     , student
     , specialty
     , COUNT(*) sheets_count
-    , CAST
-        (
-            COLLECT(u.semester_instance.sheet_id ORDER BY semester_instance)
-            AS V2u_Ko_Ids_t
-        ) sheet_ids
+--    , CAST
+--        (
+--            COLLECT(u.semester_instance.sheet_id ORDER BY u.semester_instance)
+--            AS V2u_Ko_Ids_t
+--        ) sheet_ids
     , CAST
         (
             COLLECT(semester_instance ORDER BY semester_instance)

@@ -1,8 +1,8 @@
 CREATE OR REPLACE TYPE BODY V2u_Ko_Tbody_t AS
     CONSTRUCTOR FUNCTION V2u_Ko_Tbody_t(
           SELF IN OUT NOCOPY V2u_Ko_Tbody_t
-        , id NUMBER := NULL
-        , remark VARCHAR := NULL
+        , id IN NUMBER
+        , remark IN VARCHAR := NULL
         ) RETURN SELF AS RESULT
     IS
     BEGIN

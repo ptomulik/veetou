@@ -8,7 +8,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Footer_t FORCE AUTHID CURRENT_USER AS OBJECT
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Footer_t(
               SELF IN OUT NOCOPY V2u_Ko_Footer_t
-            , id IN NUMBER := NULL
+            , id IN NUMBER
             , pagination IN VARCHAR := NULL
             , sheet_page_number IN NUMBER := NULL
             , sheet_pages_total IN NUMBER := NULL

@@ -1,7 +1,7 @@
 CREATE OR REPLACE TYPE BODY V2u_Ko_Header_t AS
     CONSTRUCTOR FUNCTION V2u_Ko_Header_t(
           SELF IN OUT NOCOPY V2u_Ko_Header_t
-        , id IN NUMBER := NULL
+        , id IN NUMBER
         , university IN VARCHAR := NULL
         , faculty IN VARCHAR := NULL
         )

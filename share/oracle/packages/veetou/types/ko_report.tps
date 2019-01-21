@@ -8,12 +8,12 @@ CREATE OR REPLACE TYPE V2u_Ko_Report_t FORCE AUTHID CURRENT_USER AS OBJECT
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Report_t(
               SELF IN OUT NOCOPY V2u_Ko_Report_t
-            , id NUMBER := NULL
-            , source VARCHAR := NULL
-            , datetime TIMESTAMP := NULL
-            , first_page NUMBER := NULL
-            , sheets_parsed NUMBER := NULL
-            , pages_parsed NUMBER := NULL
+            , id IN NUMBER
+            , source IN VARCHAR := NULL
+            , datetime IN TIMESTAMP := NULL
+            , first_page IN NUMBER := NULL
+            , sheets_parsed IN NUMBER := NULL
+            , pages_parsed IN NUMBER := NULL
             ) RETURN SELF AS RESULT
 
     , ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Report_t)

@@ -5,7 +5,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Header_t FORCE AUTHID CURRENT_USER AS OBJECT
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Header_t(
           SELF IN OUT NOCOPY V2u_Ko_Header_t
-        , id IN NUMBER := NULL
+        , id IN NUMBER
         , university IN VARCHAR := NULL
         , faculty IN VARCHAR := NULL
         )
