@@ -1,8 +1,8 @@
 CREATE TABLE veetou_ko_headers
     ( job_uuid RAW(16) NOT NULL
     , id NUMBER(38) NOT NULL
-    , university VARCHAR(256 CHAR)
-    , faculty VARCHAR(256 CHAR)
+    , university VARCHAR(100 CHAR) CHECK('|' NOT IN university)
+    , faculty VARCHAR(100 CHAR) CHECK('|' NOT IN faculty)
     , CONSTRAINT veetou_ko_header_pk PRIMARY KEY (job_uuid, id)
     , CONSTRAINT veetou_ko_header_fk0 FOREIGN KEY (job_uuid) REFERENCES veetou_ko_jobs(job_uuid));
 

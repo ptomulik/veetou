@@ -1,5 +1,6 @@
 CREATE OR REPLACE TYPE Veetou_Ko_Sheet_Typ FORCE AUTHID CURRENT_USER AS OBJECT
-    ( pages_parsed NUMBER(2)
+    ( id NUMBER(38)
+    , pages_parsed NUMBER(2)
     , first_page NUMBER(10)
     , ects_mandatory NUMBER(4)
     , ects_other NUMBER(4)
@@ -8,6 +9,7 @@ CREATE OR REPLACE TYPE Veetou_Ko_Sheet_Typ FORCE AUTHID CURRENT_USER AS OBJECT
 
     , CONSTRUCTOR FUNCTION Veetou_Ko_Sheet_Typ(
               SELF IN OUT NOCOPY Veetou_Ko_Sheet_Typ
+            , id NUMBER := NULL
             , pages_parsed NUMBER := NULL
             , first_page NUMBER := NULL
             , ects_mandatory NUMBER := NULL
@@ -16,7 +18,7 @@ CREATE OR REPLACE TYPE Veetou_Ko_Sheet_Typ FORCE AUTHID CURRENT_USER AS OBJECT
             , ects_attained NUMBER := NULL
             ) RETURN SELF AS RESULT
 
-    , MAP MEMBER FUNCTION hex_cat RETURN VARCHAR
+    , MAP MEMBER FUNCTION cat_attribs RETURN VARCHAR
     );
 /
 CREATE OR REPLACE TYPE Veetou_Ko_Sheets_Typ

@@ -1,6 +1,7 @@
 CREATE OR REPLACE TYPE BODY Veetou_Ko_Sheet_Typ AS
     CONSTRUCTOR FUNCTION Veetou_Ko_Sheet_Typ(
           SELF IN OUT NOCOPY Veetou_Ko_Sheet_Typ
+        , id NUMBER := NULL
         , pages_parsed NUMBER := NULL
         , first_page NUMBER := NULL
         , ects_mandatory NUMBER := NULL
@@ -10,6 +11,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Sheet_Typ AS
         ) RETURN SELF AS RESULT
     IS
     BEGIN
+        SELF.id := id;
         SELF.pages_parsed := pages_parsed;
         SELF.first_page := first_page;
         SELF.ects_mandatory := ects_mandatory;
@@ -19,16 +21,21 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Sheet_Typ AS
         RETURN;
     END;
 
-    MAP MEMBER FUNCTION hex_cat
+    MAP MEMBER FUNCTION cat_attribs
         RETURN VARCHAR
     IS
     BEGIN
-        RETURN TO_CHAR(pages_parsed, '0XX') || '|' ||
-               TO_CHAR(first_page, '0XXXXXXXX') || '|' ||
-               TO_CHAR(ects_mandatory, '0XXX') || '|' ||
-               TO_CHAR(ects_other, '0XXX') || '|' ||
-               TO_CHAR(ects_total, '0XXX') || '|' ||
-               TO_CHAR(ects_attained, '0XXX');
+        RETURN  VEETOU_Util.To_CharMap(first_page, 'S0XXXXXXXX', ifnull=>'          ')
+                || '|' ||
+                VEETOU_Util.To_CharMap(pages_parsed, 'S0XX', ifnull=>'    ')
+                || '|' ||
+                VEETOU_Util.To_CharMap(ects_mandatory, 'S0XXX', ifnull=>'     ')
+                || '|' ||
+                VEETOU_Util.To_CharMap(ects_other, 'S0XXX', ifnull=>'     ')
+                || '|' ||
+                VEETOU_Util.To_CharMap(ects_total, 'S0XXX', ifnull=>'     ')
+                || '|' ||
+                VEETOU_Util.To_CharMap(ects_attained, 'S0XXX', ifnull=>'     ');
     END;
 END;
 

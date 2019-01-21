@@ -5,14 +5,15 @@ CREATE OR REPLACE VIEW veetou_ko_preambles_ov
     , CONSTRAINT veetou_ko_preambles_ov_pk PRIMARY KEY (job_uuid, id)
         RELY DISABLE NOVALIDATE
     , CONSTRAINT veetou_ko_preambles_ov_fk0 FOREIGN KEY (job_uuid)
-        REFERENCES veetou_ko_jobs_ov(job_uuid)
-        RELY DISABLE NOVALIDATE
+        REFERENCES veetou_ko_jobs(job_uuid)
+        DISABLE NOVALIDATE
     )
 AS SELECT
       t.job_uuid job_uuid
     , t.id id
     , Veetou_Ko_Preamble_Typ
-        ( studies_modetier => t.studies_modetier
+        ( id => t.id
+        , studies_modetier => t.studies_modetier
         , title => t.title
         , student_index => t.student_index
         , first_name => t.first_name

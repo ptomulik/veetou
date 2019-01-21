@@ -1,6 +1,7 @@
 CREATE OR REPLACE TYPE BODY Veetou_Ko_Report_Typ AS
     CONSTRUCTOR FUNCTION Veetou_Ko_Report_Typ(
           SELF IN OUT NOCOPY Veetou_Ko_Report_Typ
+        , id NUMBER := NULL
         , source VARCHAR := NULL
         , datetime TIMESTAMP := NULL
         , first_page NUMBER := NULL
@@ -9,6 +10,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Report_Typ AS
         ) RETURN SELF AS RESULT
     IS
     BEGIN
+        SELF.id := id;
         SELF.source := source;
         SELF.datetime := datetime;
         SELF.first_page := first_page;

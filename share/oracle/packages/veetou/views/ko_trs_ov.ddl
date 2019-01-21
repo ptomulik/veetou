@@ -5,14 +5,15 @@ CREATE OR REPLACE VIEW veetou_ko_trs_ov
     , CONSTRAINT veetou_ko_trs_ov_pk PRIMARY KEY (job_uuid, id)
         RELY DISABLE NOVALIDATE
     , CONSTRAINT veetou_ko_trs_ov_fk0 FOREIGN KEY (job_uuid)
-        REFERENCES veetou_ko_jobs_ov(job_uuid)
-        RELY DISABLE NOVALIDATE
+        REFERENCES veetou_ko_jobs(job_uuid)
+        DISABLE NOVALIDATE
     )
 AS SELECT
       t.job_uuid job_uuid
     , t.id id
     , Veetou_Ko_Tr_Typ
-        ( subj_code => t.subj_code
+        ( id => t.id
+        , subj_code => t.subj_code
         , subj_name => t.subj_name
         , subj_hours_w => t.subj_hours_w
         , subj_hours_c => t.subj_hours_c

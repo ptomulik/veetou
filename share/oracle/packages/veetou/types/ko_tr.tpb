@@ -1,6 +1,7 @@
 CREATE OR REPLACE TYPE BODY Veetou_Ko_Tr_Typ AS
     CONSTRUCTOR FUNCTION Veetou_Ko_Tr_Typ(
           SELF IN OUT NOCOPY Veetou_Ko_Tr_Typ
+        , id IN NUMBER := NULL
         , subj_code IN VARCHAR := NULL
         , subj_name IN VARCHAR := NULL
         , subj_hours_w IN NUMBER := NULL
@@ -16,6 +17,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Tr_Typ AS
         ) RETURN SELF AS RESULT
     IS
     BEGIN
+        SELF.id := id;
         SELF.subj_code := subj_code;
         SELF.subj_name := subj_name;
         SELF.subj_hours_w := subj_hours_w;

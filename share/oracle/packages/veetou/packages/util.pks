@@ -36,6 +36,15 @@ CREATE OR REPLACE PACKAGE VEETOU_Util AUTHID CURRENT_USER AS
 
     FUNCTION Max_Admission_Semester(semesters IN Veetou_Ko_Semester_Summaries_Typ)
         RETURN VARCHAR;
+
+    FUNCTION To_CharMap( value IN NUMBER
+                     , fmt IN VARCHAR := NULL
+                     , nlsparam IN VARCHAR := NULL
+                     , ifnull IN VARCHAR := NULL)
+        RETURN VARCHAR;
+
+    FUNCTION To_CharMap(str IN VARCHAR, n IN NUMBER)
+        RETURN VARCHAR;
 END VEETOU_Util;
 
 -- vim: set ft=sql ts=4 sw=4 et:

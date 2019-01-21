@@ -1,5 +1,6 @@
 CREATE OR REPLACE TYPE Veetou_Ko_Tr_Typ FORCE AUTHID CURRENT_USER AS OBJECT
-    ( subj_code VARCHAR(32 CHAR)
+    ( id NUMBER(38)
+    , subj_code VARCHAR(32 CHAR)
     , subj_name VARCHAR(256 CHAR)
     , subj_hours_w NUMBER(8)
     , subj_hours_c NUMBER(8)
@@ -14,6 +15,7 @@ CREATE OR REPLACE TYPE Veetou_Ko_Tr_Typ FORCE AUTHID CURRENT_USER AS OBJECT
 
     , CONSTRUCTOR FUNCTION Veetou_Ko_Tr_Typ(
               SELF IN OUT NOCOPY Veetou_Ko_Tr_Typ
+            , id IN NUMBER := NULL
             , subj_code IN VARCHAR := NULL
             , subj_name IN VARCHAR := NULL
             , subj_hours_w IN NUMBER := NULL

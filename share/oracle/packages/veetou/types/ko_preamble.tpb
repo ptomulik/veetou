@@ -1,6 +1,7 @@
 CREATE OR REPLACE TYPE BODY Veetou_Ko_Preamble_Typ AS
     CONSTRUCTOR FUNCTION Veetou_Ko_Preamble_Typ(
           SELF IN OUT NOCOPY Veetou_Ko_Preamble_Typ
+        , id NUMBER := NULL
         , studies_modetier VARCHAR := NULL
         , title VARCHAR := NULL
         , student_index VARCHAR := NULL
@@ -14,6 +15,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Preamble_Typ AS
         ) RETURN SELF AS RESULT
     IS
     BEGIN
+        SELF.id := id;
         SELF.studies_modetier := studies_modetier;
         SELF.title := title;
         SELF.student_index := student_index;

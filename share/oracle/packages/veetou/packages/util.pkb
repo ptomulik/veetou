@@ -283,6 +283,38 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Util AS
             ORDER BY 1;
         RETURN Semester_Sub(lowest.semester_code, (lowest.semester_number-1));
     END;
+
+    FUNCTION To_CharMap( value IN NUMBER
+                     , fmt IN VARCHAR := NULL
+                     , nlsparam IN VARCHAR := NULL
+                     , ifnull IN VARCHAR := NULL)
+        RETURN VARCHAR
+    IS
+    BEGIN
+        -- unfortunatelly ASCII_CODE('-') > ASCII_CODE('+'), so we replace
+        -- '-' with '<' and '+' with '>' to get correct sorting, space
+        -- is also replaced with '>' as it's treated as '+'
+        IF value IS NULL THEN
+            RETURN ifnull;
+        ELSIF nlsparam IS NULL AND fmt IS NULL THEN
+            RETURN TRANSLATE(TO_CHAR(value), '-+ ', '<>>');
+        ELSIF nlsparam IS NULL THEN
+            RETURN TRANSLATE(TO_CHAR(value, fmt), '-+ ', '<>>');
+        ELSE
+            RETURN TRANSLATE(TO_CHAR(value, fmt, nlsparam), '-+ ', '<>>');
+        END IF;
+    END;
+
+    FUNCTION To_CharMap(str IN VARCHAR, n IN NUMBER)
+        RETURN VARCHAR
+    IS
+    BEGIN
+        IF str IS NULL THEN
+            RETURN RPAD(' ', n);
+        ELSE
+            RETURN RPAD(str, n);
+        END IF;
+    END;
 END VEETOU_Util;
 
 -- vim: set ft=sql ts=4 sw=4 et:

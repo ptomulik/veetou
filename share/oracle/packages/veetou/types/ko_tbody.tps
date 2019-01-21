@@ -1,12 +1,14 @@
 CREATE OR REPLACE TYPE Veetou_Ko_Tbody_Typ FORCE AUTHID CURRENT_USER AS OBJECT
-    ( remark VARCHAR(256)
+    ( id NUMBER(38)
+    , remark VARCHAR(256)
 
     , CONSTRUCTOR FUNCTION Veetou_Ko_Tbody_Typ(
               SELF IN OUT NOCOPY Veetou_Ko_Tbody_Typ
+            , id NUMBER := NULL
             , remark VARCHAR := NULL
             ) RETURN SELF AS RESULT
 
-    , MAP MEMBER FUNCTION map_fcn RETURN VARCHAR
+    , MAP MEMBER FUNCTION cat_attribs RETURN VARCHAR
     );
 /
 CREATE OR REPLACE TYPE Veetou_Ko_Tbodies_Typ
