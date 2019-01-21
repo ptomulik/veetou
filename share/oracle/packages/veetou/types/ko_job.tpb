@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY Veetou_Ko_Job_Typ AS
-    CONSTRUCTOR FUNCTION Veetou_Ko_Job_Typ(
-          SELF IN OUT NOCOPY Veetou_Ko_Job_Typ
+CREATE OR REPLACE TYPE BODY V2u_Ko_Job_t AS
+    CONSTRUCTOR FUNCTION V2u_Ko_Job_t(
+          SELF IN OUT NOCOPY V2u_Ko_Job_t
         , job_timestamp TIMESTAMP := NULL
         , job_host VARCHAR := NULL
         , job_user VARCHAR := NULL
@@ -14,18 +14,18 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Job_Typ AS
         SELF.job_name := job_name;
         RETURN;
     END;
-    ORDER MEMBER FUNCTION cmp_with(other IN Veetou_Ko_Job_Typ)
+    ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Job_t)
         RETURN NUMBER
     IS
         ord NUMBER;
     BEGIN
-        ord := VEETOU_Util.TimestampNullCmp(job_timestamp, other.job_timestamp);
+        ord := V2U_Util.TimestampNullCmp(job_timestamp, other.job_timestamp);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := VEETOU_Util.StrNullIcmp(job_host, other.job_host);
+        ord := V2U_Util.StrNullIcmp(job_host, other.job_host);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := VEETOU_Util.StrNullIcmp(job_user, other.job_user);
+        ord := V2U_Util.StrNullIcmp(job_user, other.job_user);
         IF ord <> 0 THEN RETURN ord; END IF;
-        RETURN VEETOU_Util.StrNullIcmp(job_name, other.job_name);
+        RETURN V2U_Util.StrNullIcmp(job_name, other.job_name);
     END;
 END;
 

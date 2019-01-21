@@ -1,4 +1,4 @@
-CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
+CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
     FUNCTION Not_Exists_Errcode(schema_type IN VARCHAR)
         RETURN NUMBER
     IS
@@ -64,9 +64,9 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
     IS
     BEGIN
         IF secondary_type IS NOT NULL THEN
-            Drop_If_Exists('TYPE', 'Veetou_' || secondary_type);
+            Drop_If_Exists('TYPE', 'V2u_' || secondary_type);
         END IF;
-        Drop_If_Exists('TYPE', 'Veetou_' || primary_type);
+        Drop_If_Exists('TYPE', 'V2u_' || primary_type);
     END;
 
 
@@ -76,10 +76,10 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
     IS
     BEGIN
         IF view_name IS NOT NULL THEN
-            Drop_If_Exists('VIEW', 'veetou_' || view_name);
+            Drop_If_Exists('VIEW', 'v2u_' || view_name);
         END IF;
         IF how <> 'KEEP' THEN
-            Drop_If_Exists('TABLE', 'veetou_' || table_name, how);
+            Drop_If_Exists('TABLE', 'v2u_' || table_name, how);
         END IF;
     END;
 
@@ -89,10 +89,10 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
     IS
     BEGIN
         IF secondary_view IS NOT NULL THEN
-            Drop_If_Exists('VIEW', 'veetou_' || secondary_view);
+            Drop_If_Exists('VIEW', 'v2u_' || secondary_view);
         END IF;
         IF primary_view IS NOT NULL THEN
-            Drop_If_Exists('VIEW', 'veetou_' || primary_view);
+            Drop_If_Exists('VIEW', 'v2u_' || primary_view);
         END IF;
     END;
 
@@ -100,28 +100,28 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
     PROCEDURE Drop_Index(index_name IN VARCHAR)
     IS
     BEGIN
-        Drop_If_Exists('INDEX', 'veetou_' || index_name);
+        Drop_If_Exists('INDEX', 'v2u_' || index_name);
     END;
 
 
     PROCEDURE Drop_Sequence(sequence_name IN VARCHAR)
     IS
     BEGIN
-        Drop_If_Exists('SEQUENCE', 'veetou_' || sequence_name);
+        Drop_If_Exists('SEQUENCE', 'v2u_' || sequence_name);
     END;
 
 
     PROCEDURE Drop_Trigger(sequence_name IN VARCHAR)
     IS
     BEGIN
-        Drop_If_Exists('TRIGGER', 'veetou_' || sequence_name);
+        Drop_If_Exists('TRIGGER', 'v2u_' || sequence_name);
     END;
 
 
     PROCEDURE Drop_Package(package_name IN VARCHAR)
     IS
     BEGIN
-        Drop_If_Exists('PACKAGE', 'VEETOU_' || package_name);
+        Drop_If_Exists('PACKAGE', 'V2U_' || package_name);
     END;
 
     PROCEDURE Uninstall(how IN VARCHAR := 'KEEP')
@@ -187,33 +187,33 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Pkg AS
         Drop_Table('ko_jobs', 'ko_jobs_ov', how);
         Drop_Table('semesters', 'semesters_ov', how);
 
-        -- PACKAGES: all, except the VEETOU_Pkg package
+        -- PACKAGES: all, except the V2U_Pkg package
         Drop_Package('Match');
         Drop_Package('Util');
 
-        Drop_Type('Program_Mapping_Typ', 'Program_Mappings_Typ');
-        Drop_Type('Ko_Specialty_Typ');
-        Drop_Type('Subject_Mapping_Typ', 'Subject_Mappings_Typ');
-        Drop_Type('Ko_Subject_Instance_Typ');
-        Drop_Type('Ko_Thread_Indices_Typ');
-        Drop_Type('Ko_Semester_Threads_Typ');
-        Drop_Type('Ko_Semester_Summary_Typ', 'Ko_Semester_Summaries_Typ');
-        Drop_Type('Ko_Sheet_Info_Typ');
-        Drop_Type('Ko_Student_Typ');
-        Drop_Type('Ko_Footer_Typ', 'Ko_Footers_Typ');
-        Drop_Type('Ko_Header_Typ', 'Ko_Headers_Typ');
-        Drop_Type('Ko_Page_Typ', 'Ko_Pages_Typ');
-        Drop_Type('Ko_Preamble_Typ', 'Ko_Preambles_Typ');
-        Drop_Type('Ko_Report_Typ', 'Ko_Reports_Typ');
-        Drop_Type('Ko_Sheet_Typ', 'Ko_Sheets_Typ');
-        Drop_Type('Ko_Tbody_Typ', 'Ko_Tbodies_Typ');
-        Drop_Type('Ko_Tr_Typ', 'Ko_Trs_Typ');
-        Drop_Type('Ko_Job_Typ', 'Ko_Jobs_Typ');
-        Drop_Type('Semester_Codes_Typ');
-        Drop_Type('Semester_Typ', 'Semesters_Typ');
-        Drop_Type('Ko_Ids_Typ');
+        Drop_Type('Program_Mapping_t', 'Program_Mappings_t');
+        Drop_Type('Ko_Specialty_t');
+        Drop_Type('Subject_Mapping_t', 'Subject_Mappings_t');
+        Drop_Type('Ko_Subject_Instance_t');
+        Drop_Type('Ko_Thread_Indices_t');
+        Drop_Type('Ko_Semester_Threads_t');
+        Drop_Type('Ko_Semester_Instance_t', 'Ko_Semester_Instances_t');
+        Drop_Type('Ko_Sheet_Info_t');
+        Drop_Type('Ko_Student_t');
+        Drop_Type('Ko_Footer_t', 'Ko_Footers_t');
+        Drop_Type('Ko_Header_t', 'Ko_Headers_t');
+        Drop_Type('Ko_Page_t', 'Ko_Pages_t');
+        Drop_Type('Ko_Preamble_t', 'Ko_Preambles_t');
+        Drop_Type('Ko_Report_t', 'Ko_Reports_t');
+        Drop_Type('Ko_Sheet_t', 'Ko_Sheets_t');
+        Drop_Type('Ko_Tbody_t', 'Ko_Tbodies_t');
+        Drop_Type('Ko_Tr_t', 'Ko_Trs_t');
+        Drop_Type('Ko_Job_t', 'Ko_Jobs_t');
+        Drop_Type('Semester_Codes_t');
+        Drop_Type('Semester_t', 'Semesters_t');
+        Drop_Type('Ko_Ids_t');
     END;
 
-END VEETOU_Pkg;
+END V2U_Pkg;
 
 -- vim: set ft=sql ts=4 sw=4 et:

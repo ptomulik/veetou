@@ -1,4 +1,4 @@
-CREATE OR REPLACE TYPE Veetou_Program_Mapping_Typ FORCE AUTHID CURRENT_USER AS OBJECT
+CREATE OR REPLACE TYPE V2u_Program_Mapping_t FORCE AUTHID CURRENT_USER AS OBJECT
     ( university VARCHAR(256 CHAR)
     , faculty VARCHAR(256 CHAR)
     , studies_modetier VARCHAR(256 CHAR)
@@ -9,8 +9,8 @@ CREATE OR REPLACE TYPE Veetou_Program_Mapping_Typ FORCE AUTHID CURRENT_USER AS O
     , mapped_field_code VARCHAR(32 CHAR)
     , expr_semester_code VARCHAR(256 CHAR)
 
-    , CONSTRUCTOR FUNCTION Veetou_Program_Mapping_Typ(
-              SELF IN OUT NOCOPY Veetou_Program_Mapping_Typ
+    , CONSTRUCTOR FUNCTION V2u_Program_Mapping_t(
+              SELF IN OUT NOCOPY V2u_Program_Mapping_t
             , university VARCHAR := NULL
             , faculty VARCHAR := NULL
             , studies_modetier VARCHAR := NULL
@@ -23,7 +23,7 @@ CREATE OR REPLACE TYPE Veetou_Program_Mapping_Typ FORCE AUTHID CURRENT_USER AS O
             ) RETURN SELF AS RESULT
 
     , MEMBER FUNCTION match_expr_fields(
-              specialty IN Veetou_Ko_Specialty_Typ
+              specialty IN V2u_Ko_Specialty_t
             , semester_code IN VARCHAR
             ) RETURN INTEGER
 
@@ -31,7 +31,7 @@ CREATE OR REPLACE TYPE Veetou_Program_Mapping_Typ FORCE AUTHID CURRENT_USER AS O
             RETURN INTEGER
     );
 /
-CREATE OR REPLACE TYPE Veetou_Program_Mappings_Typ
-    AS TABLE OF Veetou_Program_Mapping_Typ;
+CREATE OR REPLACE TYPE V2u_Program_Mappings_t
+    AS TABLE OF V2u_Program_Mapping_t;
 
 -- vim: set ft=sql ts=4 sw=4 et:

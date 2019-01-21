@@ -1,4 +1,4 @@
-CREATE OR REPLACE TYPE Veetou_Ko_Footer_Typ FORCE AUTHID CURRENT_USER AS OBJECT
+CREATE OR REPLACE TYPE V2u_Ko_Footer_t FORCE AUTHID CURRENT_USER AS OBJECT
     ( id NUMBER(38)
     , pagination VARCHAR(5 CHAR)
     , sheet_page_number NUMBER(2)
@@ -6,8 +6,8 @@ CREATE OR REPLACE TYPE Veetou_Ko_Footer_Typ FORCE AUTHID CURRENT_USER AS OBJECT
     , generator_name VARCHAR(100 CHAR)
     , generator_home VARCHAR(100 CHAR)
 
-    , CONSTRUCTOR FUNCTION Veetou_Ko_Footer_Typ(
-              SELF IN OUT NOCOPY Veetou_Ko_Footer_Typ
+    , CONSTRUCTOR FUNCTION V2u_Ko_Footer_t(
+              SELF IN OUT NOCOPY V2u_Ko_Footer_t
             , id IN NUMBER := NULL
             , pagination IN VARCHAR := NULL
             , sheet_page_number IN NUMBER := NULL
@@ -18,11 +18,11 @@ CREATE OR REPLACE TYPE Veetou_Ko_Footer_Typ FORCE AUTHID CURRENT_USER AS OBJECT
 
 --    , MAP MEMBER FUNCTION cat_attribs RETURN VARCHAR
 
-    , ORDER MEMBER FUNCTION cmp_with(other IN Veetou_Ko_Footer_Typ)
+    , ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Footer_t)
             RETURN NUMBER
     );
 /
-CREATE OR REPLACE TYPE Veetou_Ko_Footers_Typ
-    AS TABLE OF Veetou_Ko_Footer_Typ;
+CREATE OR REPLACE TYPE V2u_Ko_Footers_t
+    AS TABLE OF V2u_Ko_Footer_t;
 
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW veetou_ko_threads
+CREATE OR REPLACE VIEW v2u_ko_threads
 AS SELECT
       v.job_uuid job_uuid
     , v.sheet_id
@@ -24,6 +24,6 @@ AS SELECT
         WITHIN GROUP (ORDER BY VALUE(t))
         FROM TABLE(v.thread_semesters) t GROUP BY 1
       ) thread_semesters
-FROM veetou_ko_threads_ov v;
+FROM v2u_ko_threads_ov v;
 
 -- vim: set ft=sql ts=4 sw=4 et:

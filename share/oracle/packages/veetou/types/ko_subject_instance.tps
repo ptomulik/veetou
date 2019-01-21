@@ -1,4 +1,4 @@
-CREATE OR REPLACE TYPE Veetou_Ko_Subject_Instance_Typ FORCE AUTHID CURRENT_USER AS OBJECT
+CREATE OR REPLACE TYPE V2u_Ko_Subject_Instance_t FORCE AUTHID CURRENT_USER AS OBJECT
     ( subj_code VARCHAR2(32 CHAR)
     , subj_name VARCHAR2(256 CHAR)
     , university VARCHAR2(256 CHAR)
@@ -16,8 +16,8 @@ CREATE OR REPLACE TYPE Veetou_Ko_Subject_Instance_Typ FORCE AUTHID CURRENT_USER 
     , subj_ects NUMBER(4)
     , subj_tutor VARCHAR2(256 CHAR)
 
-    , CONSTRUCTOR FUNCTION Veetou_Ko_Subject_Instance_Typ(
-              SELF IN OUT NOCOPY Veetou_Ko_Subject_Instance_Typ
+    , CONSTRUCTOR FUNCTION V2u_Ko_Subject_Instance_t(
+              SELF IN OUT NOCOPY V2u_Ko_Subject_Instance_t
             , subj_code IN VARCHAR2 := NULL
             , subj_name IN VARCHAR2 := NULL
             , university IN VARCHAR2 := NULL
@@ -36,15 +36,15 @@ CREATE OR REPLACE TYPE Veetou_Ko_Subject_Instance_Typ FORCE AUTHID CURRENT_USER 
             , subj_tutor IN VARCHAR2 := NULL
             ) RETURN SELF AS RESULT
 
-    , CONSTRUCTOR FUNCTION Veetou_Ko_Subject_Instance_Typ(
-              SELF IN OUT NOCOPY Veetou_Ko_Subject_Instance_Typ
-            , header IN Veetou_Ko_Header_Typ
-            , preamble IN Veetou_Ko_Preamble_Typ
-            , tr IN Veetou_Ko_Tr_Typ
+    , CONSTRUCTOR FUNCTION V2u_Ko_Subject_Instance_t(
+              SELF IN OUT NOCOPY V2u_Ko_Subject_Instance_t
+            , header IN V2u_Ko_Header_t
+            , preamble IN V2u_Ko_Preamble_t
+            , tr IN V2u_Ko_Tr_t
             ) RETURN SELF AS RESULT
 
     , ORDER MEMBER FUNCTION ord_all_attr (
-              other Veetou_Ko_Subject_Instance_Typ
+              other V2u_Ko_Subject_Instance_t
             ) RETURN NUMBER
     );
 

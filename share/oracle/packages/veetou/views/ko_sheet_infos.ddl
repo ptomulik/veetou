@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW veetou_ko_sheet_infos
+CREATE OR REPLACE VIEW v2u_ko_sheet_infos
 AS SELECT
       v.job_uuid job_uuid
     , v.header_id header_id
@@ -19,6 +19,6 @@ AS SELECT
     , v.sheet_info.ects_other ects_other
     , v.sheet_info.ects_total ects_total
     , v.sheet_info.ects_attained ects_attained
-FROM veetou_ko_sheet_infos_ov v;
+FROM v2u_ko_sheet_infos_ov v;
 
 -- vim: set ft=sql ts=4 sw=4 et:

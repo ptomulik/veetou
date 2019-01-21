@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW veetou_ko_subject_instances
+CREATE OR REPLACE VIEW v2u_ko_subject_instances
 AS SELECT
       job_uuid
     , v.subject_instance.subj_code subj_code
@@ -18,6 +18,6 @@ AS SELECT
     , v.subject_instance.subj_credit_kind subj_credit_kind
     , v.subject_instance.subj_ects subj_ects
     , v.trs_count trs_count
-FROM veetou_ko_subject_instances_ov v;
+FROM v2u_ko_subject_instances_ov v;
 
 -- vim: set ft=sql ts=4 sw=4 et:

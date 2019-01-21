@@ -1,17 +1,17 @@
-CREATE OR REPLACE VIEW veetou_ko_preambles_ov
+CREATE OR REPLACE VIEW v2u_ko_preambles_ov
     ( job_uuid
     , id
     , preamble
-    , CONSTRAINT veetou_ko_preambles_ov_pk PRIMARY KEY (job_uuid, id)
+    , CONSTRAINT v2u_ko_preambles_ov_pk PRIMARY KEY (job_uuid, id)
         RELY DISABLE NOVALIDATE
-    , CONSTRAINT veetou_ko_preambles_ov_fk0 FOREIGN KEY (job_uuid)
-        REFERENCES veetou_ko_jobs(job_uuid)
+    , CONSTRAINT v2u_ko_preambles_ov_fk0 FOREIGN KEY (job_uuid)
+        REFERENCES v2u_ko_jobs(job_uuid)
         DISABLE NOVALIDATE
     )
 AS SELECT
       t.job_uuid job_uuid
     , t.id id
-    , Veetou_Ko_Preamble_Typ
+    , V2u_Ko_Preamble_t
         ( id => t.id
         , studies_modetier => t.studies_modetier
         , title => t.title
@@ -24,6 +24,6 @@ AS SELECT
         , semester_number => t.semester_number
         , studies_specialty => t.studies_specialty
         ) preamble
-FROM veetou_ko_preambles t;
+FROM v2u_ko_preambles t;
 
 -- vim: set ft=sql ts=4 sw=4 et:

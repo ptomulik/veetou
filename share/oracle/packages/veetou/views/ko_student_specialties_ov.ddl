@@ -1,11 +1,11 @@
-CREATE OR REPLACE VIEW veetou_ko_student_specialties_ov
+CREATE OR REPLACE VIEW v2u_ko_student_specialties_ov
 AS WITH ungrouped AS (
     SELECT
           job_uuid
-        , Veetou_Ko_Student_Typ(preamble) student
-        , Veetou_Ko_Specialty_Typ(header, preamble) specialty
-        , Veetou_Ko_Semester_Summary_Typ(preamble, sheet, sheet_id) semester_summary
-        FROM veetou_ko_x_sheets_ov
+        , V2u_Ko_Student_t(preamble) student
+        , V2u_Ko_Specialty_t(header, preamble) specialty
+        , V2u_Ko_Semester_Instance_t(preamble, sheet, sheet_id) semester_instance
+        FROM v2u_ko_x_sheets_ov
 )
 SELECT
       job_uuid
@@ -14,14 +14,14 @@ SELECT
     , COUNT(*) sheets_count
     , CAST
         (
-            COLLECT(u.semester_summary.sheet_id ORDER BY semester_summary)
-            AS Veetou_Ko_Ids_Typ
+            COLLECT(u.semester_instance.sheet_id ORDER BY semester_instance)
+            AS V2u_Ko_Ids_t
         ) sheet_ids
     , CAST
         (
-            COLLECT(semester_summary ORDER BY semester_summary)
-            AS Veetou_Ko_Semester_Summaries_Typ
-        ) semester_summaries
+            COLLECT(semester_instance ORDER BY semester_instance)
+            AS V2u_Ko_Semester_Instances_t
+        ) semester_instances
 FROM ungrouped u
 GROUP BY job_uuid, student, specialty
 ORDER BY job_uuid, student, specialty;

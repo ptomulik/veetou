@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY Veetou_Semester_Typ AS
-    CONSTRUCTOR FUNCTION Veetou_Semester_Typ(
-          SELF IN OUT NOCOPY Veetou_Semester_Typ
+CREATE OR REPLACE TYPE BODY V2u_Semester_t AS
+    CONSTRUCTOR FUNCTION V2u_Semester_t(
+          SELF IN OUT NOCOPY V2u_Semester_t
         , code IN VARCHAR
         , start_date IN DATE := NULL
         , end_date IN DATE := NULL
@@ -17,7 +17,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Semester_Typ AS
         RETURN NUMBER
     IS
     BEGIN
-        RETURN VEETOU_Util.To_Semester_Id(code);
+        RETURN V2U_Util.To_Semester_Id(code);
     END;
 END;
 

@@ -222,7 +222,7 @@ INSERT INTO table_decls VALUES(
 CREATE TEMP VIEW table_decl_strings AS
   SELECT
     table_name, ('
-    INTO TABLE veetou_' || table_name || '
+    INTO TABLE v2u_' || table_name || '
     WHEN tab_id = ''' || table_id || '''
     FIELDS TERMINATED BY ";" OPTIONALLY ENCLOSED BY ''"''
     TRAILING NULLCOLS ' ||

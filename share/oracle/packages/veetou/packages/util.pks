@@ -1,4 +1,4 @@
-CREATE OR REPLACE PACKAGE VEETOU_Util AUTHID CURRENT_USER AS
+CREATE OR REPLACE PACKAGE V2U_Util AUTHID CURRENT_USER AS
     FUNCTION Split_Range(str IN VARCHAR, left OUT VARCHAR, right OUT VARCHAR)
         RETURN BOOLEAN;
     FUNCTION StrCmp(str1 IN VARCHAR, str2 IN VARCHAR)
@@ -31,10 +31,10 @@ CREATE OR REPLACE PACKAGE VEETOU_Util AUTHID CURRENT_USER AS
                           , rhs_semester_code IN VARCHAR)
         RETURN NUMBER;
 
-    FUNCTION To_Threads(semesters IN Veetou_Ko_Semester_Summaries_Typ)
-        RETURN Veetou_Ko_Semester_Threads_Typ;
+    FUNCTION To_Threads(semesters IN V2u_Ko_Semester_Instances_t)
+        RETURN V2u_Ko_Semester_Threads_t;
 
-    FUNCTION Max_Admission_Semester(semesters IN Veetou_Ko_Semester_Summaries_Typ)
+    FUNCTION Max_Admission_Semester(semesters IN V2u_Ko_Semester_Instances_t)
         RETURN VARCHAR;
 
     FUNCTION To_CharMap( value IN NUMBER
@@ -45,6 +45,6 @@ CREATE OR REPLACE PACKAGE VEETOU_Util AUTHID CURRENT_USER AS
 
     FUNCTION To_CharMap(str IN VARCHAR, n IN NUMBER)
         RETURN VARCHAR;
-END VEETOU_Util;
+END V2U_Util;
 
 -- vim: set ft=sql ts=4 sw=4 et:

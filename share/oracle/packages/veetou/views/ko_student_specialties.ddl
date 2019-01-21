@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW veetou_ko_student_specialties
+CREATE OR REPLACE VIEW v2u_ko_student_specialties
 AS SELECT
       v.job_uuid job_uuid
     , v.student.student_index student_index
@@ -14,13 +14,13 @@ AS SELECT
     , (
         SELECT LISTAGG(sheet_id, ',')
         WITHIN GROUP (ORDER BY VALUE(t))
-        FROM TABLE(semester_summaries) t GROUP BY 1
+        FROM TABLE(semester_instances) t GROUP BY 1
       ) sheet_ids
     , (
         SELECT LISTAGG(semester_code || ':' || semester_number, ',')
         WITHIN GROUP (ORDER BY VALUE(t))
-        FROM TABLE(semester_summaries) t GROUP BY 1
+        FROM TABLE(semester_instances) t GROUP BY 1
       ) semesters
-FROM veetou_ko_student_specialties_ov v;
+FROM v2u_ko_student_specialties_ov v;
 
 -- vim: set ft=sql ts=4 sw=4 et:

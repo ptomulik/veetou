@@ -1,12 +1,12 @@
-CREATE OR REPLACE VIEW veetou_subject_mappings_ov
+CREATE OR REPLACE VIEW v2u_subject_mappings_ov
     ( id
     , subject_mapping
-    , CONSTRAINT veetou_subject_mappings_ov_pk PRIMARY KEY (id)
+    , CONSTRAINT v2u_subject_mappings_ov_pk PRIMARY KEY (id)
         RELY DISABLE NOVALIDATE
     )
 AS SELECT
       t.id id
-    , Veetou_Subject_Mapping_Typ
+    , V2u_Subject_Mapping_t
         ( subj_code => t.subj_code
         , mapped_subj_code => t.mapped_subj_code
         , expr_subj_name => t.expr_subj_name
@@ -25,6 +25,6 @@ AS SELECT
         , expr_subj_ects => t.expr_subj_ects
         , expr_subj_tutor => t.expr_subj_tutor
         ) subject_mapping
-FROM veetou_subject_mappings t;
+FROM v2u_subject_mappings t;
 
 -- vim: set ft=sql ts=4 sw=4 et:

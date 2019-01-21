@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW veetou_ko_x_trs
+CREATE OR REPLACE VIEW v2u_ko_x_trs
 AS SELECT
       v.job_uuid job_uuid
     , v.tr_id tr_id
@@ -52,6 +52,6 @@ AS SELECT
     , v.footer.sheet_pages_total footer_sheet_pages_total
     , v.footer.generator_name footer_generator_name
     , v.footer.generator_home footer_generator_home
-FROM veetou_ko_x_trs_ov v;
+FROM v2u_ko_x_trs_ov v;
 
 -- vim: set ft=sql ts=4 sw=4 et:

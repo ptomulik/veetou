@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY Veetou_Ko_Report_Typ AS
-    CONSTRUCTOR FUNCTION Veetou_Ko_Report_Typ(
-          SELF IN OUT NOCOPY Veetou_Ko_Report_Typ
+CREATE OR REPLACE TYPE BODY V2u_Ko_Report_t AS
+    CONSTRUCTOR FUNCTION V2u_Ko_Report_t(
+          SELF IN OUT NOCOPY V2u_Ko_Report_t
         , id NUMBER := NULL
         , source VARCHAR := NULL
         , datetime TIMESTAMP := NULL
@@ -19,18 +19,18 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Report_Typ AS
         RETURN;
     END;
 
-    ORDER MEMBER FUNCTION cmp_with(other IN Veetou_Ko_Report_Typ)
+    ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Report_t)
         RETURN NUMBER
     IS
         ord INTEGER;
     BEGIN
-        ord := VEETOU_Util.StrNullCmp(source, other.source);
+        ord := V2U_Util.StrNullCmp(source, other.source);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := VEETOU_Util.TimestampNullCmp(datetime, other.datetime);
+        ord := V2U_Util.TimestampNullCmp(datetime, other.datetime);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := VEETOU_Util.NumNullCmp(first_page, other.first_page);
+        ord := V2U_Util.NumNullCmp(first_page, other.first_page);
         IF ord <> 0 THEN RETURN ord; END IF;
-        RETURN VEETOU_Util.NumNullCmp(pages_parsed, other.pages_parsed);
+        RETURN V2U_Util.NumNullCmp(pages_parsed, other.pages_parsed);
     END;
 END;
 

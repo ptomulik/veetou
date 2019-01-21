@@ -1,4 +1,4 @@
-CREATE OR REPLACE TYPE Veetou_Subject_Mapping_Typ FORCE AUTHID CURRENT_USER AS OBJECT
+CREATE OR REPLACE TYPE V2u_Subject_Mapping_t FORCE AUTHID CURRENT_USER AS OBJECT
     ( subj_code VARCHAR(20 CHAR)
     , mapped_subj_code VARCHAR(20 CHAR)
     , expr_subj_name VARCHAR(256 CHAR)
@@ -17,8 +17,8 @@ CREATE OR REPLACE TYPE Veetou_Subject_Mapping_Typ FORCE AUTHID CURRENT_USER AS O
     , expr_subj_ects VARCHAR(256 CHAR)
     , expr_subj_tutor VARCHAR(256 CHAR)
 
-    , CONSTRUCTOR FUNCTION Veetou_Subject_Mapping_Typ(
-              SELF IN OUT NOCOPY Veetou_Subject_Mapping_Typ
+    , CONSTRUCTOR FUNCTION V2u_Subject_Mapping_t(
+              SELF IN OUT NOCOPY V2u_Subject_Mapping_t
             , subj_code IN VARCHAR := NULL
             , mapped_subj_code IN VARCHAR := NULL
             , expr_subj_name IN VARCHAR := NULL
@@ -40,88 +40,88 @@ CREATE OR REPLACE TYPE Veetou_Subject_Mapping_Typ FORCE AUTHID CURRENT_USER AS O
         RETURN SELF AS RESULT
 
     , MEMBER FUNCTION match_expr_fields(
-              SELF IN Veetou_Subject_Mapping_Typ
-            , subject IN Veetou_Ko_Subject_Instance_Typ
+              SELF IN V2u_Subject_Mapping_t
+            , subject IN V2u_Ko_Subject_Instance_t
             ) RETURN INTEGER
 
     , MEMBER FUNCTION match_subj_name(
-              SELF IN Veetou_Subject_Mapping_Typ
+              SELF IN V2u_Subject_Mapping_t
             , subj_name IN VARCHAR
             ) RETURN INTEGER
 
     , MEMBER FUNCTION match_university(
-              SELF IN Veetou_Subject_Mapping_Typ
+              SELF IN V2u_Subject_Mapping_t
             , university IN VARCHAR
             ) RETURN INTEGER
 
     , MEMBER FUNCTION match_faculty(
-              SELF IN Veetou_Subject_Mapping_Typ
+              SELF IN V2u_Subject_Mapping_t
             , faculty IN VARCHAR
             ) RETURN INTEGER
 
     , MEMBER FUNCTION match_studies_modetier(
-              SELF IN Veetou_Subject_Mapping_Typ
+              SELF IN V2u_Subject_Mapping_t
             , studies_modetier IN VARCHAR
             ) RETURN INTEGER
 
     , MEMBER FUNCTION match_studies_field(
-              SELF IN Veetou_Subject_Mapping_Typ
+              SELF IN V2u_Subject_Mapping_t
             , studies_field IN VARCHAR
             ) RETURN INTEGER
 
     , MEMBER FUNCTION match_studies_specialty(
-              SELF IN Veetou_Subject_Mapping_Typ
+              SELF IN V2u_Subject_Mapping_t
             , studies_specialty IN VARCHAR
             ) RETURN INTEGER
 
     , MEMBER FUNCTION match_semester_code(
-              SELF IN Veetou_Subject_Mapping_Typ
+              SELF IN V2u_Subject_Mapping_t
             , semester_code IN VARCHAR
             ) RETURN INTEGER
 
     , MEMBER FUNCTION match_subj_hours_w(
-              SELF IN Veetou_Subject_Mapping_Typ
+              SELF IN V2u_Subject_Mapping_t
             , subj_hours_w IN VARCHAR
             ) RETURN INTEGER
 
     , MEMBER FUNCTION match_subj_hours_c(
-              SELF IN Veetou_Subject_Mapping_Typ
+              SELF IN V2u_Subject_Mapping_t
             , subj_hours_c IN INTEGER
             ) RETURN INTEGER
 
     , MEMBER FUNCTION match_subj_hours_l(
-              SELF IN Veetou_Subject_Mapping_Typ
+              SELF IN V2u_Subject_Mapping_t
             , subj_hours_l IN INTEGER
             ) RETURN INTEGER
 
     , MEMBER FUNCTION match_subj_hours_p(
-              SELF IN Veetou_Subject_Mapping_Typ
+              SELF IN V2u_Subject_Mapping_t
             , subj_hours_p IN INTEGER
             ) RETURN INTEGER
 
     , MEMBER FUNCTION match_subj_hours_s(
-              SELF IN Veetou_Subject_Mapping_Typ
+              SELF IN V2u_Subject_Mapping_t
             , subj_hours_s IN INTEGER
             ) RETURN INTEGER
 
     , MEMBER FUNCTION match_subj_credit_kind(
-              SELF IN Veetou_Subject_Mapping_Typ
+              SELF IN V2u_Subject_Mapping_t
             , subj_credit_kind IN INTEGER
             ) RETURN INTEGER
 
     , MEMBER FUNCTION match_subj_ects(
-              SELF IN Veetou_Subject_Mapping_Typ
+              SELF IN V2u_Subject_Mapping_t
             , subj_ects IN INTEGER
             ) RETURN INTEGER
 
     , MEMBER FUNCTION match_subj_tutor(
-              SELF IN Veetou_Subject_Mapping_Typ
+              SELF IN V2u_Subject_Mapping_t
             , subj_tutor IN VARCHAR
             ) RETURN INTEGER
 
     );
 /
-CREATE OR REPLACE TYPE Veetou_Subject_Mappings_Typ
-    AS TABLE OF Veetou_Subject_Mapping_Typ;
+CREATE OR REPLACE TYPE V2u_Subject_Mappings_t
+    AS TABLE OF V2u_Subject_Mapping_t;
 
 -- vim: set ft=sql ts=4 sw=4 et:

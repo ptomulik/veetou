@@ -1,10 +1,10 @@
 @@pkg.pkg;
 
 BEGIN
-    VEETOU_Pkg.Uninstall('KEEP');
+    V2U_Pkg.Uninstall('KEEP');
 END;
 /
-DROP PACKAGE VEETOU_Pkg;
+DROP PACKAGE V2U_Pkg;
 
 @@types/create_specs.sql;
 @@packages/create_specs.sql;

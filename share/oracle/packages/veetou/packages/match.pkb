@@ -1,4 +1,4 @@
-CREATE OR REPLACE PACKAGE BODY VEETOU_Match AS
+CREATE OR REPLACE PACKAGE BODY V2U_Match AS
 
     FUNCTION Strip_Person_Degrees(value IN VARCHAR)
         RETURN VARCHAR
@@ -46,15 +46,15 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Match AS
         smin VARCHAR(1024);
         smax VARCHAR(1024);
     BEGIN
-        IF NOT VEETOU_Util.Split_Range(expr, smin, smax) THEN
+        IF NOT V2U_Util.Split_Range(expr, smin, smax) THEN
             RETURN -1;
         END IF;
 
         DBMS_Output.Put_Line('smin: ' || smin || ', smax: ' || smax);
 
-        IF smin IS NOT NULL AND VEETOU_Util.StrCmp(smin, value) > 0 THEN
+        IF smin IS NOT NULL AND V2U_Util.StrCmp(smin, value) > 0 THEN
             RETURN 0;
-        ELSIF smax IS NOT NULL AND VEETOU_Util.StrCmp(value, smax) > 0 THEN
+        ELSIF smax IS NOT NULL AND V2U_Util.StrCmp(value, smax) > 0 THEN
             RETURN 0;
         ELSE
             RETURN 1;
@@ -79,11 +79,11 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Match AS
         nmin NUMBER;
         nmax NUMBER;
     BEGIN
-        IF NOT VEETOU_Util.Split_Range(expr, smin, smax) THEN
+        IF NOT V2U_Util.Split_Range(expr, smin, smax) THEN
             RETURN -1;
         END IF;
-        nmin := VEETOU_Util.To_Number_Or_Null(smin);
-        nmax := VEETOU_Util.To_Number_Or_Null(smax);
+        nmin := V2U_Util.To_Number_Or_Null(smin);
+        nmax := V2U_Util.To_Number_Or_Null(smax);
         IF nmin IS NOT NULL AND nmin > value THEN
             RETURN 0;
         ELSIF nmax IS NOT NULL AND value > nmax THEN
@@ -100,7 +100,7 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Match AS
         smax VARCHAR(1024);
         nval NUMBER;
     BEGIN
-        nval := VEETOU_Util.To_Number_Or_Null(value);
+        nval := V2U_Util.To_Number_Or_Null(value);
         IF nval IS NULL THEN
             RETURN -1;
         ELSE
@@ -116,6 +116,6 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Match AS
         name := Strip_Person_Degrees(value);
         RETURN String_Like(expr, name);
     END;
-END VEETOU_Match;
+END V2U_Match;
 
 -- vim: set ft=sql ts=4 sw=4 et:

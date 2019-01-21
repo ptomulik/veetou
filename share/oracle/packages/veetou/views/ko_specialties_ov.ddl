@@ -1,12 +1,12 @@
-CREATE OR REPLACE VIEW veetou_ko_specialties_ov
+CREATE OR REPLACE VIEW v2u_ko_specialties_ov
 AS WITH ungrouped AS
     (
         SELECT
               job_uuid
-            , Veetou_Ko_Specialty_Typ(v.header, v.preamble) specialty
+            , V2u_Ko_Specialty_t(v.header, v.preamble) specialty
             , distinct_page_ids_count
             , sheet_id
-        FROM veetou_ko_x_sheets_ov v
+        FROM v2u_ko_x_sheets_ov v
     )
 SELECT
       job_uuid

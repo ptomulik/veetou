@@ -5,9 +5,9 @@
 @@pkg.pkg;
 
 BEGIN
-    VEETOU_Pkg.Uninstall('CASCADE CONSTRAINTS PURGE');
+    V2U_Pkg.Uninstall('CASCADE CONSTRAINTS PURGE');
 END;
 /
-DROP PACKAGE VEETOU_Pkg;
+DROP PACKAGE V2U_Pkg;
 
 -- vim: set ft=sql ts=4 sw=4 et:

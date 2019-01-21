@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW veetou_ko_mapped_programs
+CREATE OR REPLACE VIEW v2u_ko_mapped_programs
 AS SELECT
       v.job_uuid job_uuid
     , v.program_mapping_id program_mapping_id
@@ -18,6 +18,6 @@ AS SELECT
     , v.program_mapping.expr_semester_code expr_semester_code
     -- count
     , v.pages_count pages_count
-FROM veetou_ko_mapped_programs_ov v;
+FROM v2u_ko_mapped_programs_ov v;
 
 -- vim: set ft=sql ts=4 sw=4 et:

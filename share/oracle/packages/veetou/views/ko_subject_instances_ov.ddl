@@ -1,10 +1,10 @@
-CREATE OR REPLACE VIEW veetou_ko_subject_instances_ov
+CREATE OR REPLACE VIEW v2u_ko_subject_instances_ov
 AS WITH ungrouped AS
     (
         SELECT
               job_uuid
-            , Veetou_Ko_Subject_Instance_Typ(header, preamble, tr) subject_instance
-        FROM veetou_ko_x_trs_ov
+            , V2u_Ko_Subject_Instance_t(header, preamble, tr) subject_instance
+        FROM v2u_ko_x_trs_ov
     )
 SELECT
       job_uuid

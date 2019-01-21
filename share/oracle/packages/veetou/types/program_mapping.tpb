@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY Veetou_Program_Mapping_Typ AS
-    CONSTRUCTOR FUNCTION Veetou_Program_Mapping_Typ(
-          SELF IN OUT NOCOPY Veetou_Program_Mapping_Typ
+CREATE OR REPLACE TYPE BODY V2u_Program_Mapping_t AS
+    CONSTRUCTOR FUNCTION V2u_Program_Mapping_t(
+          SELF IN OUT NOCOPY V2u_Program_Mapping_t
         , university VARCHAR := NULL
         , faculty VARCHAR := NULL
         , studies_modetier VARCHAR := NULL
@@ -26,7 +26,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Program_Mapping_Typ AS
     END;
 
     MEMBER FUNCTION match_expr_fields(
-          specialty IN Veetou_Ko_Specialty_Typ
+          specialty IN V2u_Ko_Specialty_t
         , semester_code IN VARCHAR
         ) RETURN INTEGER
     IS
@@ -50,7 +50,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Program_Mapping_Typ AS
         RETURN INTEGER
     IS
     BEGIN
-        RETURN VEETOU_Match.String_Range(expr_semester_code, semester_code);
+        RETURN V2U_Match.String_Range(expr_semester_code, semester_code);
     END;
 END;
 

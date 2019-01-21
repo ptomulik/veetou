@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY Veetou_Ko_Page_Typ AS
-    CONSTRUCTOR FUNCTION Veetou_Ko_Page_Typ(
-          SELF IN OUT NOCOPY Veetou_Ko_Page_Typ
+CREATE OR REPLACE TYPE BODY V2u_Ko_Page_t AS
+    CONSTRUCTOR FUNCTION V2u_Ko_Page_t(
+          SELF IN OUT NOCOPY V2u_Ko_Page_t
         , id NUMBER := NULL
         , page_number NUMBER := NULL
         , parser_page_number NUMBER := NULL
@@ -17,10 +17,10 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Page_Typ AS
         RETURN VARCHAR
     IS
     BEGIN
-        RETURN VEETOU_Util.To_CharMap(page_number, 'S0XXXXXXXXX',
+        RETURN V2U_Util.To_CharMap(page_number, 'S0XXXXXXXXX',
                                          ifnull => '           ')
                || '|' ||
-               VEETOU_Util.To_CharMap(parser_page_number, 'S0XXXXXXXXX',
+               V2U_Util.To_CharMap(parser_page_number, 'S0XXXXXXXXX',
                                                 ifnull => '           ');
     END;
 END;

@@ -1,4 +1,4 @@
-CREATE OR REPLACE TYPE Veetou_Ko_Specialty_Typ
+CREATE OR REPLACE TYPE V2u_Ko_Specialty_t
     FORCE AUTHID CURRENT_USER AS OBJECT
     ( university VARCHAR2(256 CHAR)
     , faculty VARCHAR2(256 CHAR)
@@ -6,8 +6,8 @@ CREATE OR REPLACE TYPE Veetou_Ko_Specialty_Typ
     , studies_field VARCHAR2(256 CHAR)
     , studies_specialty VARCHAR2(256 CHAR)
 
-    , CONSTRUCTOR FUNCTION Veetou_Ko_Specialty_Typ(
-              SELF IN OUT NOCOPY Veetou_Ko_Specialty_Typ
+    , CONSTRUCTOR FUNCTION V2u_Ko_Specialty_t(
+              SELF IN OUT NOCOPY V2u_Ko_Specialty_t
             , university IN VARCHAR2 := NULL
             , faculty IN VARCHAR2 := NULL
             , studies_modetier IN VARCHAR2 := NULL
@@ -15,18 +15,18 @@ CREATE OR REPLACE TYPE Veetou_Ko_Specialty_Typ
             , studies_specialty IN VARCHAR2 := NULL
             ) RETURN SELF AS RESULT
 
-    , CONSTRUCTOR FUNCTION Veetou_Ko_Specialty_Typ(
-              SELF IN OUT NOCOPY Veetou_Ko_Specialty_Typ
-            , subject IN Veetou_Ko_Subject_Instance_Typ
+    , CONSTRUCTOR FUNCTION V2u_Ko_Specialty_t(
+              SELF IN OUT NOCOPY V2u_Ko_Specialty_t
+            , subject IN V2u_Ko_Subject_Instance_t
             ) RETURN SELF AS RESULT
 
-    , CONSTRUCTOR FUNCTION Veetou_Ko_Specialty_Typ(
-              SELF IN OUT NOCOPY Veetou_Ko_Specialty_Typ
-            , header IN Veetou_Ko_Header_Typ
-            , preamble IN Veetou_Ko_Preamble_Typ
+    , CONSTRUCTOR FUNCTION V2u_Ko_Specialty_t(
+              SELF IN OUT NOCOPY V2u_Ko_Specialty_t
+            , header IN V2u_Ko_Header_t
+            , preamble IN V2u_Ko_Preamble_t
             ) RETURN SELF AS RESULT
 
-    , ORDER MEMBER FUNCTION cmp_with(other IN Veetou_Ko_Specialty_Typ)
+    , ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Specialty_t)
             RETURN INTEGER
     )  NOT FINAL;
 

@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY Veetou_Ko_Tbody_Typ AS
-    CONSTRUCTOR FUNCTION Veetou_Ko_Tbody_Typ(
-          SELF IN OUT NOCOPY Veetou_Ko_Tbody_Typ
+CREATE OR REPLACE TYPE BODY V2u_Ko_Tbody_t AS
+    CONSTRUCTOR FUNCTION V2u_Ko_Tbody_t(
+          SELF IN OUT NOCOPY V2u_Ko_Tbody_t
         , id NUMBER := NULL
         , remark VARCHAR := NULL
         ) RETURN SELF AS RESULT

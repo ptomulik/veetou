@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY Veetou_Ko_Student_Typ AS
-    CONSTRUCTOR FUNCTION Veetou_Ko_Student_Typ(
-          SELF IN OUT NOCOPY Veetou_Ko_Student_Typ
+CREATE OR REPLACE TYPE BODY V2u_Ko_Student_t AS
+    CONSTRUCTOR FUNCTION V2u_Ko_Student_t(
+          SELF IN OUT NOCOPY V2u_Ko_Student_t
         , student_index IN VARCHAR
         , student_name IN VARCHAR := NULL
         , first_name IN VARCHAR := NULL
@@ -16,9 +16,9 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Student_Typ AS
     END;
 
 
-    CONSTRUCTOR FUNCTION Veetou_Ko_Student_Typ(
-              SELF IN OUT NOCOPY Veetou_Ko_Student_Typ
-            , preamble IN Veetou_Ko_Preamble_Typ
+    CONSTRUCTOR FUNCTION V2u_Ko_Student_t(
+              SELF IN OUT NOCOPY V2u_Ko_Student_t
+            , preamble IN V2u_Ko_Preamble_t
             ) RETURN SELF AS RESULT
     IS
     BEGIN

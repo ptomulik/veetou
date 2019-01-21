@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW veetou_ko_ambiguous_programs
+CREATE OR REPLACE VIEW v2u_ko_ambiguous_programs
 AS SELECT
       v.job_uuid job_uuid
     , v.program_mapping_ids program_mapping_ids
@@ -16,6 +16,6 @@ AS SELECT
     , v.program_mappings program_mappings
     -- count
     , v.pages_counts pages_counts
-FROM veetou_ko_ambiguous_programs_ov v;
+FROM v2u_ko_ambiguous_programs_ov v;
 
 -- vim: set ft=sql ts=4 sw=4 et:

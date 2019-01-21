@@ -1,4 +1,4 @@
-CREATE OR REPLACE PACKAGE BODY VEETOU_Util AS
+CREATE OR REPLACE PACKAGE BODY V2U_Util AS
     FUNCTION Split_Range(str IN VARCHAR, left OUT VARCHAR, right OUT VARCHAR)
         RETURN BOOLEAN
     IS
@@ -195,10 +195,10 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Util AS
         return lhs_id - rhs_id;
     END;
 
-    FUNCTION Find_Threads(semesters IN Veetou_Ko_Semester_Summaries_Typ)
-        RETURN Veetou_Ko_Thread_Indices_Typ
+    FUNCTION Find_Threads(semesters IN V2u_Ko_Semester_Instances_t)
+        RETURN V2u_Ko_Thread_Indices_t
     IS
-        t Veetou_Ko_Thread_Indices_Typ := Veetou_Ko_Thread_Indices_Typ();
+        t V2u_Ko_Thread_Indices_t := V2u_Ko_Thread_Indices_t();
         n NUMBER := 0;
         i NUMBER := 1;
         j NUMBER;
@@ -232,26 +232,26 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Util AS
         RETURN t;
     END;
 
-    FUNCTION To_Threads(semesters IN Veetou_Ko_Semester_Summaries_Typ)
-        RETURN Veetou_Ko_Semester_Threads_Typ
+    FUNCTION To_Threads(semesters IN V2u_Ko_Semester_Instances_t)
+        RETURN V2u_Ko_Semester_Threads_t
     IS
         n NUMBER := 0;
         i NUMBER := 1;
         j NUMBER;
-        tn Veetou_Ko_Thread_Indices_Typ;
-        tt Veetou_Ko_Semester_Threads_Typ := Veetou_Ko_Semester_Threads_Typ();
+        tn V2u_Ko_Thread_Indices_t;
+        tt V2u_Ko_Semester_Threads_t := V2u_Ko_Semester_Threads_t();
     BEGIN
         tn := Find_Threads(semesters);
         WHILE (n <> semesters.COUNT AND i < 10)
         LOOP
             tt.EXTEND(1);
-            tt(tt.COUNT) := Veetou_Ko_Semester_Summaries_Typ();
+            tt(tt.COUNT) := V2u_Ko_Semester_Instances_t();
             j := 1;
             FOR s IN (SELECT * FROM TABLE(semesters) ORDER BY 1)
             LOOP
                 IF tn(j) = i THEN
                     tt(i).EXTEND(1);
-                    tt(i)(tt(i).COUNT) := Veetou_Ko_Semester_Summary_Typ(
+                    tt(i)(tt(i).COUNT) := V2u_Ko_Semester_Instance_t(
                           semester_code => s.semester_code
                         , semester_number => s.semester_number
                         , ects_mandatory => s.ects_mandatory
@@ -272,10 +272,10 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Util AS
         RETURN tt;
     END;
 
-    FUNCTION Max_Admission_Semester(semesters IN Veetou_Ko_Semester_Summaries_Typ)
+    FUNCTION Max_Admission_Semester(semesters IN V2u_Ko_Semester_Instances_t)
         RETURN VARCHAR
     IS
-        lowest Veetou_Ko_Semester_Summary_Typ;
+        lowest V2u_Ko_Semester_Instance_t;
     BEGIN
         SELECT VALUE(s) INTO lowest
             FROM TABLE(semesters) s
@@ -315,6 +315,6 @@ CREATE OR REPLACE PACKAGE BODY VEETOU_Util AS
             RETURN RPAD(str, n);
         END IF;
     END;
-END VEETOU_Util;
+END V2U_Util;
 
 -- vim: set ft=sql ts=4 sw=4 et:

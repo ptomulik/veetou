@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW veetou_ko_ambiguous_subjects
+CREATE OR REPLACE VIEW v2u_ko_ambiguous_subjects
 AS SELECT
       v.job_uuid job_uuid
     , v.subject_mapping_ids subject_mapping_ids
@@ -27,6 +27,6 @@ AS SELECT
     -- ko table rows counts
     , v.trs_counts trs_counts
 
-FROM veetou_ko_ambiguous_subjects_ov v;
+FROM v2u_ko_ambiguous_subjects_ov v;
 
 -- vim: set ft=sql ts=4 sw=4 et:

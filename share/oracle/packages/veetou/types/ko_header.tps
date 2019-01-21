@@ -1,10 +1,10 @@
-CREATE OR REPLACE TYPE Veetou_Ko_Header_Typ FORCE AUTHID CURRENT_USER AS OBJECT
+CREATE OR REPLACE TYPE V2u_Ko_Header_t FORCE AUTHID CURRENT_USER AS OBJECT
     ( id NUMBER(38)
     , university VARCHAR(100 CHAR)
     , faculty VARCHAR(100 CHAR)
 
-    , CONSTRUCTOR FUNCTION Veetou_Ko_Header_Typ(
-          SELF IN OUT NOCOPY Veetou_Ko_Header_Typ
+    , CONSTRUCTOR FUNCTION V2u_Ko_Header_t(
+          SELF IN OUT NOCOPY V2u_Ko_Header_t
         , id IN NUMBER := NULL
         , university IN VARCHAR := NULL
         , faculty IN VARCHAR := NULL
@@ -13,11 +13,11 @@ CREATE OR REPLACE TYPE Veetou_Ko_Header_Typ FORCE AUTHID CURRENT_USER AS OBJECT
 
 --    , MAP MEMBER FUNCTION cat_attribs RETURN VARCHAR
 
-    , ORDER MEMBER FUNCTION cmp_with(other IN Veetou_Ko_Header_Typ)
+    , ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Header_t)
         RETURN NUMBER
     );
 /
-CREATE OR REPLACE TYPE Veetou_Ko_Headers_Typ
-    AS TABLE OF Veetou_Ko_Header_Typ;
+CREATE OR REPLACE TYPE V2u_Ko_Headers_t
+    AS TABLE OF V2u_Ko_Header_t;
 
 -- vim: set ft=sql ts=4 sw=4 et:

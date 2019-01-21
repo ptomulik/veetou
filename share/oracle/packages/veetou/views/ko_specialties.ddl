@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW veetou_ko_specialties
+CREATE OR REPLACE VIEW v2u_ko_specialties
 AS SELECT
       job_uuid
     , v.specialty.university university
@@ -8,6 +8,6 @@ AS SELECT
     , v.specialty.studies_specialty studies_specialty
     , v.pages_count pages_count
     , v.sheets_count sheets_count
-FROM veetou_ko_specialties_ov v;
+FROM v2u_ko_specialties_ov v;
 
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY Veetou_Ko_Subject_Instance_Typ AS
-    CONSTRUCTOR FUNCTION Veetou_Ko_Subject_Instance_Typ(
-          SELF IN OUT NOCOPY Veetou_Ko_Subject_Instance_Typ
+CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Instance_t AS
+    CONSTRUCTOR FUNCTION V2u_Ko_Subject_Instance_t(
+          SELF IN OUT NOCOPY V2u_Ko_Subject_Instance_t
         , subj_code IN VARCHAR2 := NULL
         , subj_name IN VARCHAR2 := NULL
         , university IN VARCHAR2 := NULL
@@ -39,11 +39,11 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Subject_Instance_Typ AS
         RETURN;
     END;
 
-    CONSTRUCTOR FUNCTION Veetou_Ko_Subject_Instance_Typ(
-              SELF IN OUT NOCOPY Veetou_Ko_Subject_Instance_Typ
-            , header IN Veetou_Ko_Header_Typ
-            , preamble IN Veetou_Ko_Preamble_Typ
-            , tr IN Veetou_Ko_Tr_Typ
+    CONSTRUCTOR FUNCTION V2u_Ko_Subject_Instance_t(
+              SELF IN OUT NOCOPY V2u_Ko_Subject_Instance_t
+            , header IN V2u_Ko_Header_t
+            , preamble IN V2u_Ko_Preamble_t
+            , tr IN V2u_Ko_Tr_t
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -69,72 +69,72 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Subject_Instance_Typ AS
     END;
 
     ORDER MEMBER FUNCTION ord_all_attr(
-              other Veetou_Ko_Subject_Instance_Typ
+              other V2u_Ko_Subject_Instance_t
             ) RETURN NUMBER
     IS
         ord NUMBER;
     BEGIN
-        ord := VEETOU_Util.StrNullIcmp(subj_code, other.subj_code);
+        ord := V2U_Util.StrNullIcmp(subj_code, other.subj_code);
         IF ord <> 0 THEN
             RETURN ord;
         END IF;
-        ord := VEETOU_Util.StrNullIcmp(subj_name, other.subj_name);
+        ord := V2U_Util.StrNullIcmp(subj_name, other.subj_name);
         IF ord <> 0 THEN
             RETURN ord;
         END IF;
-        ord := VEETOU_Util.StrNullIcmp(university, other.university);
+        ord := V2U_Util.StrNullIcmp(university, other.university);
         IF ord <> 0 THEN
             RETURN ord;
         END IF;
-        ord := VEETOU_Util.StrNullIcmp(faculty, other.faculty);
+        ord := V2U_Util.StrNullIcmp(faculty, other.faculty);
         IF ord <> 0 THEN
             RETURN ord;
         END IF;
-        ord := VEETOU_Util.StrNullIcmp(studies_modetier, other.studies_modetier);
+        ord := V2U_Util.StrNullIcmp(studies_modetier, other.studies_modetier);
         IF ord <> 0 THEN
             RETURN ord;
         END IF;
-        ord := VEETOU_Util.StrNullIcmp(studies_field, other.studies_field);
+        ord := V2U_Util.StrNullIcmp(studies_field, other.studies_field);
         IF ord <> 0 THEN
             RETURN ord;
         END IF;
-        ord := VEETOU_Util.StrNullIcmp(studies_specialty, other.studies_specialty);
+        ord := V2U_Util.StrNullIcmp(studies_specialty, other.studies_specialty);
         IF ord <> 0 THEN
             RETURN ord;
         END IF;
-        ord := VEETOU_Util.StrNullIcmp(semester_code, other.semester_code);
+        ord := V2U_Util.StrNullIcmp(semester_code, other.semester_code);
         IF ord <> 0 THEN
             RETURN ord;
         END IF;
-        ord := VEETOU_Util.NumNullCmp(subj_hours_w, other.subj_hours_w);
+        ord := V2U_Util.NumNullCmp(subj_hours_w, other.subj_hours_w);
         IF ord <> 0 THEN
             RETURN ord;
         END IF;
-        ord := VEETOU_Util.NumNullCmp(subj_hours_c, other.subj_hours_c);
+        ord := V2U_Util.NumNullCmp(subj_hours_c, other.subj_hours_c);
         IF ord <> 0 THEN
             RETURN ord;
         END IF;
-        ord := VEETOU_Util.NumNullCmp(subj_hours_l, other.subj_hours_l);
+        ord := V2U_Util.NumNullCmp(subj_hours_l, other.subj_hours_l);
         IF ord <> 0 THEN
             RETURN ord;
         END IF;
-        ord := VEETOU_Util.NumNullCmp(subj_hours_p, other.subj_hours_p);
+        ord := V2U_Util.NumNullCmp(subj_hours_p, other.subj_hours_p);
         IF ord <> 0 THEN
             RETURN ord;
         END IF;
-        ord := VEETOU_Util.NumNullCmp(subj_hours_s, other.subj_hours_s);
+        ord := V2U_Util.NumNullCmp(subj_hours_s, other.subj_hours_s);
         IF ord <> 0 THEN
             RETURN ord;
         END IF;
-        ord := VEETOU_Util.StrNullIcmp(subj_credit_kind, other.subj_credit_kind);
+        ord := V2U_Util.StrNullIcmp(subj_credit_kind, other.subj_credit_kind);
         IF ord <> 0 THEN
             RETURN ord;
         END IF;
-        ord := VEETOU_Util.NumNullCmp(subj_ects, other.subj_ects);
+        ord := V2U_Util.NumNullCmp(subj_ects, other.subj_ects);
         IF ord <> 0 THEN
             RETURN ord;
         END IF;
-        RETURN VEETOU_Util.StrNullIcmp(subj_tutor, other.subj_tutor);
+        RETURN V2U_Util.StrNullIcmp(subj_tutor, other.subj_tutor);
     END;
 END;
 

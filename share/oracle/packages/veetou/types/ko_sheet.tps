@@ -1,4 +1,4 @@
-CREATE OR REPLACE TYPE Veetou_Ko_Sheet_Typ FORCE AUTHID CURRENT_USER AS OBJECT
+CREATE OR REPLACE TYPE V2u_Ko_Sheet_t FORCE AUTHID CURRENT_USER AS OBJECT
     ( id NUMBER(38)
     , pages_parsed NUMBER(2)
     , first_page NUMBER(10)
@@ -7,8 +7,8 @@ CREATE OR REPLACE TYPE Veetou_Ko_Sheet_Typ FORCE AUTHID CURRENT_USER AS OBJECT
     , ects_total NUMBER(4)
     , ects_attained NUMBER(4)
 
-    , CONSTRUCTOR FUNCTION Veetou_Ko_Sheet_Typ(
-              SELF IN OUT NOCOPY Veetou_Ko_Sheet_Typ
+    , CONSTRUCTOR FUNCTION V2u_Ko_Sheet_t(
+              SELF IN OUT NOCOPY V2u_Ko_Sheet_t
             , id NUMBER := NULL
             , pages_parsed NUMBER := NULL
             , first_page NUMBER := NULL
@@ -21,7 +21,7 @@ CREATE OR REPLACE TYPE Veetou_Ko_Sheet_Typ FORCE AUTHID CURRENT_USER AS OBJECT
     , MAP MEMBER FUNCTION cat_attribs RETURN VARCHAR
     );
 /
-CREATE OR REPLACE TYPE Veetou_Ko_Sheets_Typ
-    AS TABLE OF Veetou_Ko_Sheet_Typ;
+CREATE OR REPLACE TYPE V2u_Ko_Sheets_t
+    AS TABLE OF V2u_Ko_Sheet_t;
 
 -- vim: set ft=sql ts=4 sw=4 et:

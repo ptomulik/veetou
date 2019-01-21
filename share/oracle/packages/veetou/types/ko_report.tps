@@ -1,4 +1,4 @@
-CREATE OR REPLACE TYPE Veetou_Ko_Report_Typ FORCE AUTHID CURRENT_USER AS OBJECT
+CREATE OR REPLACE TYPE V2u_Ko_Report_t FORCE AUTHID CURRENT_USER AS OBJECT
     ( id NUMBER(38)
     , source VARCHAR(512 CHAR)
     , datetime TIMESTAMP
@@ -6,8 +6,8 @@ CREATE OR REPLACE TYPE Veetou_Ko_Report_Typ FORCE AUTHID CURRENT_USER AS OBJECT
     , sheets_parsed NUMBER(10)
     , pages_parsed NUMBER(10)
 
-    , CONSTRUCTOR FUNCTION Veetou_Ko_Report_Typ(
-              SELF IN OUT NOCOPY Veetou_Ko_Report_Typ
+    , CONSTRUCTOR FUNCTION V2u_Ko_Report_t(
+              SELF IN OUT NOCOPY V2u_Ko_Report_t
             , id NUMBER := NULL
             , source VARCHAR := NULL
             , datetime TIMESTAMP := NULL
@@ -16,11 +16,11 @@ CREATE OR REPLACE TYPE Veetou_Ko_Report_Typ FORCE AUTHID CURRENT_USER AS OBJECT
             , pages_parsed NUMBER := NULL
             ) RETURN SELF AS RESULT
 
-    , ORDER MEMBER FUNCTION cmp_with(other IN Veetou_Ko_Report_Typ)
+    , ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Report_t)
         RETURN NUMBER
     );
 /
-CREATE OR REPLACE TYPE Veetou_Ko_Reports_Typ
-    AS TABLE OF Veetou_Ko_Report_Typ;
+CREATE OR REPLACE TYPE V2u_Ko_Reports_t
+    AS TABLE OF V2u_Ko_Report_t;
 
 -- vim: set ft=sql ts=4 sw=4 et:

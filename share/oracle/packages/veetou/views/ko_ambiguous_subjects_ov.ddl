@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW veetou_ko_ambiguous_subjects_ov
+CREATE OR REPLACE VIEW v2u_ko_ambiguous_subjects_ov
 AS WITH grouped_mappings AS (
     SELECT
           v.job_uuid job_uuid
@@ -10,9 +10,9 @@ AS WITH grouped_mappings AS (
             WITHIN GROUP (ORDER BY v.subject_mapping_id) matching_scores
         , COUNT(*) subject_mappings_count
         , v.subject_instance subject_instance
-        , CAST(COLLECT(v.subject_mapping) AS Veetou_Subject_Mappings_Typ) subject_mappings
+        , CAST(COLLECT(v.subject_mapping) AS V2u_Subject_Mappings_t) subject_mappings
         , LISTAGG(v.trs_count, ',') WITHIN GROUP (ORDER BY v.subject_mapping_id) trs_counts
-    FROM veetou_ko_mapped_subjects_ov v
+    FROM v2u_ko_mapped_subjects_ov v
     GROUP BY v.job_uuid, v.subject_instance
     ORDER BY v.job_uuid, v.subject_instance
 )

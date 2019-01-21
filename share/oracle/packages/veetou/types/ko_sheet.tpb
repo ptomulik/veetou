@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY Veetou_Ko_Sheet_Typ AS
-    CONSTRUCTOR FUNCTION Veetou_Ko_Sheet_Typ(
-          SELF IN OUT NOCOPY Veetou_Ko_Sheet_Typ
+CREATE OR REPLACE TYPE BODY V2u_Ko_Sheet_t AS
+    CONSTRUCTOR FUNCTION V2u_Ko_Sheet_t(
+          SELF IN OUT NOCOPY V2u_Ko_Sheet_t
         , id NUMBER := NULL
         , pages_parsed NUMBER := NULL
         , first_page NUMBER := NULL
@@ -25,17 +25,17 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Sheet_Typ AS
         RETURN VARCHAR
     IS
     BEGIN
-        RETURN  VEETOU_Util.To_CharMap(first_page, 'S0XXXXXXXX', ifnull=>'          ')
+        RETURN  V2U_Util.To_CharMap(first_page, 'S0XXXXXXXX', ifnull=>'          ')
                 || '|' ||
-                VEETOU_Util.To_CharMap(pages_parsed, 'S0XX', ifnull=>'    ')
+                V2U_Util.To_CharMap(pages_parsed, 'S0XX', ifnull=>'    ')
                 || '|' ||
-                VEETOU_Util.To_CharMap(ects_mandatory, 'S0XXX', ifnull=>'     ')
+                V2U_Util.To_CharMap(ects_mandatory, 'S0XXX', ifnull=>'     ')
                 || '|' ||
-                VEETOU_Util.To_CharMap(ects_other, 'S0XXX', ifnull=>'     ')
+                V2U_Util.To_CharMap(ects_other, 'S0XXX', ifnull=>'     ')
                 || '|' ||
-                VEETOU_Util.To_CharMap(ects_total, 'S0XXX', ifnull=>'     ')
+                V2U_Util.To_CharMap(ects_total, 'S0XXX', ifnull=>'     ')
                 || '|' ||
-                VEETOU_Util.To_CharMap(ects_attained, 'S0XXX', ifnull=>'     ');
+                V2U_Util.To_CharMap(ects_attained, 'S0XXX', ifnull=>'     ');
     END;
 END;
 

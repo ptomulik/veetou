@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY Veetou_Ko_Sheet_Info_Typ AS
-    CONSTRUCTOR FUNCTION Veetou_Ko_Sheet_Info_Typ(
-          SELF IN OUT NOCOPY Veetou_Ko_Sheet_Info_Typ
+CREATE OR REPLACE TYPE BODY V2u_Ko_Sheet_Info_t AS
+    CONSTRUCTOR FUNCTION V2u_Ko_Sheet_Info_t(
+          SELF IN OUT NOCOPY V2u_Ko_Sheet_Info_t
         , university IN VARCHAR := NULL
         , faculty IN VARCHAR := NULL
         , studies_modetier IN VARCHAR := NULL
@@ -37,11 +37,11 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Sheet_Info_Typ AS
         RETURN;
     END;
 
-    CONSTRUCTOR FUNCTION Veetou_Ko_Sheet_Info_Typ(
-              SELF IN OUT NOCOPY Veetou_Ko_Sheet_Info_Typ
-            , header IN Veetou_Ko_Header_Typ
-            , preamble IN Veetou_Ko_Preamble_Typ
-            , sheet IN Veetou_Ko_Sheet_Typ
+    CONSTRUCTOR FUNCTION V2u_Ko_Sheet_Info_t(
+              SELF IN OUT NOCOPY V2u_Ko_Sheet_Info_t
+            , header IN V2u_Ko_Header_t
+            , preamble IN V2u_Ko_Preamble_t
+            , sheet IN V2u_Ko_Sheet_t
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -64,40 +64,40 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Sheet_Info_Typ AS
     END;
 
     ORDER MEMBER FUNCTION cmp_with(
-                other IN Veetou_Ko_Sheet_Info_Typ
+                other IN V2u_Ko_Sheet_Info_t
             ) RETURN INTEGER
     IS
         ord INTEGER;
     BEGIN
-        ord := VEETOU_Util.StrNullIcmp(student_index, other.student_index);
+        ord := V2U_Util.StrNullIcmp(student_index, other.student_index);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := VEETOU_Util.StrNullIcmp(first_name, other.first_name);
+        ord := V2U_Util.StrNullIcmp(first_name, other.first_name);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := VEETOU_Util.StrNullIcmp(last_name, other.last_name);
+        ord := V2U_Util.StrNullIcmp(last_name, other.last_name);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := VEETOU_Util.StrNullIcmp(student_name, other.student_name);
+        ord := V2U_Util.StrNullIcmp(student_name, other.student_name);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := VEETOU_Util.StrNullIcmp(university, other.university);
+        ord := V2U_Util.StrNullIcmp(university, other.university);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := VEETOU_Util.StrNullIcmp(faculty, other.faculty);
+        ord := V2U_Util.StrNullIcmp(faculty, other.faculty);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := VEETOU_Util.StrNullIcmp(studies_modetier, other.studies_modetier);
+        ord := V2U_Util.StrNullIcmp(studies_modetier, other.studies_modetier);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := VEETOU_Util.StrNullIcmp(studies_field, other.studies_field);
+        ord := V2U_Util.StrNullIcmp(studies_field, other.studies_field);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := VEETOU_Util.StrNullIcmp(studies_specialty, other.studies_specialty);
+        ord := V2U_Util.StrNullIcmp(studies_specialty, other.studies_specialty);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := VEETOU_Util.NumNullcmp(semester_number, other.semester_number);
+        ord := V2U_Util.NumNullcmp(semester_number, other.semester_number);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := VEETOU_Util.StrNullIcmp(semester_code, other.semester_code);
+        ord := V2U_Util.StrNullIcmp(semester_code, other.semester_code);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := VEETOU_Util.NumNullCmp(ects_mandatory, other.ects_mandatory);
+        ord := V2U_Util.NumNullCmp(ects_mandatory, other.ects_mandatory);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := VEETOU_Util.NumNullCmp(ects_other, other.ects_other);
+        ord := V2U_Util.NumNullCmp(ects_other, other.ects_other);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := VEETOU_Util.NumNullCmp(ects_total, other.ects_total);
+        ord := V2U_Util.NumNullCmp(ects_total, other.ects_total);
         IF ord <> 0 THEN RETURN ord; END IF;
-        RETURN VEETOU_Util.NumNullCmp(ects_attained, other.ects_attained);
+        RETURN V2U_Util.NumNullCmp(ects_attained, other.ects_attained);
     END;
 END;
 

@@ -8,7 +8,7 @@
 @@ko_sheet.tps;
 @@ko_tbody.tps;
 @@ko_tr.tps;
-@@ko_semester_summary.tps;
+@@ko_semester_instance.tps;
 @@ko_sheet_info.tps;
 @@ko_subject_instance.tps;
 @@ko_specialty.tps;

@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY Veetou_Ko_Preamble_Typ AS
-    CONSTRUCTOR FUNCTION Veetou_Ko_Preamble_Typ(
-          SELF IN OUT NOCOPY Veetou_Ko_Preamble_Typ
+CREATE OR REPLACE TYPE BODY V2u_Ko_Preamble_t AS
+    CONSTRUCTOR FUNCTION V2u_Ko_Preamble_t(
+          SELF IN OUT NOCOPY V2u_Ko_Preamble_t
         , id NUMBER := NULL
         , studies_modetier VARCHAR := NULL
         , title VARCHAR := NULL
@@ -29,30 +29,30 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Preamble_Typ AS
         RETURN;
     END;
 
-    ORDER MEMBER FUNCTION cmp_with(other IN Veetou_Ko_Preamble_Typ)
+    ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Preamble_t)
         RETURN NUMBER
     IS
         ord NUMBER;
     BEGIN
-        ord := VEETOU_Util.StrNullIcmp(student_index, other.student_index);
+        ord := V2U_Util.StrNullIcmp(student_index, other.student_index);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := VEETOU_Util.StrNullIcmp(first_name, other.first_name);
+        ord := V2U_Util.StrNullIcmp(first_name, other.first_name);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := VEETOU_Util.StrNullIcmp(last_name, other.last_name);
+        ord := V2U_Util.StrNullIcmp(last_name, other.last_name);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := VEETOU_Util.StrNullIcmp(student_name, other.student_name);
+        ord := V2U_Util.StrNullIcmp(student_name, other.student_name);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := VEETOU_Util.StrNullIcmp(studies_modetier, other.studies_modetier);
+        ord := V2U_Util.StrNullIcmp(studies_modetier, other.studies_modetier);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := VEETOU_Util.StrNullIcmp(studies_field, other.studies_field);
+        ord := V2U_Util.StrNullIcmp(studies_field, other.studies_field);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := VEETOU_Util.StrNullIcmp(studies_specialty, other.studies_specialty);
+        ord := V2U_Util.StrNullIcmp(studies_specialty, other.studies_specialty);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := VEETOU_Util.StrNullIcmp(semester_code, other.semester_code);
+        ord := V2U_Util.StrNullIcmp(semester_code, other.semester_code);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := VEETOU_Util.NumNullCmp(semester_number, other.semester_number);
+        ord := V2U_Util.NumNullCmp(semester_number, other.semester_number);
         IF ord <> 0 THEN RETURN ord; END IF;
-        RETURN VEETOU_Util.StrNullIcmp(title, other.title);
+        RETURN V2U_Util.StrNullIcmp(title, other.title);
     END;
 END;
 

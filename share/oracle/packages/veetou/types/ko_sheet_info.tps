@@ -1,4 +1,4 @@
-CREATE OR REPLACE TYPE Veetou_Ko_Sheet_Info_Typ FORCE AUTHID CURRENT_USER AS OBJECT
+CREATE OR REPLACE TYPE V2u_Ko_Sheet_Info_t FORCE AUTHID CURRENT_USER AS OBJECT
     ( university VARCHAR2(256 CHAR)
     , faculty VARCHAR2(256 CHAR)
     , studies_modetier VARCHAR(256 CHAR)
@@ -15,8 +15,8 @@ CREATE OR REPLACE TYPE Veetou_Ko_Sheet_Info_Typ FORCE AUTHID CURRENT_USER AS OBJ
     , ects_total NUMBER(4)
     , ects_attained NUMBER(4)
 
-    , CONSTRUCTOR FUNCTION Veetou_Ko_Sheet_Info_Typ(
-              SELF IN OUT NOCOPY Veetou_Ko_Sheet_Info_Typ
+    , CONSTRUCTOR FUNCTION V2u_Ko_Sheet_Info_t(
+              SELF IN OUT NOCOPY V2u_Ko_Sheet_Info_t
             , university IN VARCHAR := NULL
             , faculty IN VARCHAR := NULL
             -- preamble
@@ -36,15 +36,15 @@ CREATE OR REPLACE TYPE Veetou_Ko_Sheet_Info_Typ FORCE AUTHID CURRENT_USER AS OBJ
             , ects_attained IN NUMBER := NULL
             ) RETURN SELF AS RESULT
 
-    , CONSTRUCTOR FUNCTION Veetou_Ko_Sheet_Info_Typ(
-              SELF IN OUT NOCOPY Veetou_Ko_Sheet_Info_Typ
-            , header IN Veetou_Ko_Header_Typ
-            , preamble IN Veetou_Ko_Preamble_Typ
-            , sheet IN Veetou_Ko_Sheet_Typ
+    , CONSTRUCTOR FUNCTION V2u_Ko_Sheet_Info_t(
+              SELF IN OUT NOCOPY V2u_Ko_Sheet_Info_t
+            , header IN V2u_Ko_Header_t
+            , preamble IN V2u_Ko_Preamble_t
+            , sheet IN V2u_Ko_Sheet_t
             ) RETURN SELF AS RESULT
 
     , ORDER MEMBER FUNCTION cmp_with(
-                other IN Veetou_Ko_Sheet_Info_Typ
+                other IN V2u_Ko_Sheet_Info_t
             ) RETURN INTEGER
     );
 
