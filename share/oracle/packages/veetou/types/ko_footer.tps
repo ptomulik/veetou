@@ -16,10 +16,10 @@ CREATE OR REPLACE TYPE Veetou_Ko_Footer_Typ FORCE AUTHID CURRENT_USER AS OBJECT
             , generator_home IN VARCHAR := NULL
             ) RETURN SELF AS RESULT
 
-    , MAP MEMBER FUNCTION cat_attribs RETURN VARCHAR
---
---    , ORDER MEMBER FUNCTION cmp_with(other IN Veetou_Ko_Footer_Typ)
---            RETURN NUMBER
+--    , MAP MEMBER FUNCTION cat_attribs RETURN VARCHAR
+
+    , ORDER MEMBER FUNCTION cmp_with(other IN Veetou_Ko_Footer_Typ)
+            RETURN NUMBER
     );
 /
 CREATE OR REPLACE TYPE Veetou_Ko_Footers_Typ

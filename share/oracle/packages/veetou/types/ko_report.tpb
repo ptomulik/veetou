@@ -18,6 +18,7 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Report_Typ AS
         SELF.pages_parsed := pages_parsed;
         RETURN;
     END;
+
     ORDER MEMBER FUNCTION cmp_with(other IN Veetou_Ko_Report_Typ)
         RETURN NUMBER
     IS

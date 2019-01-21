@@ -19,35 +19,35 @@ CREATE OR REPLACE TYPE BODY Veetou_Ko_Footer_Typ AS
         RETURN;
     END;
 
-    MAP MEMBER FUNCTION cat_attribs RETURN VARCHAR
-    IS
-    BEGIN
-        RETURN  VEETOU_Util.To_CharMap(sheet_page_number, 'S09', ifnull=>'   ')
-                || '|' ||
-                VEETOU_Util.To_CharMap(sheet_pages_total, 'S09', ifnull=>'   ')
-                || '|' ||
-                VEETOU_Util.To_CharMap(pagination,  5)
-                || '|' ||
-                VEETOU_Util.To_CharMap(generator_name, 100)
-                || '|' ||
-                generator_home;
-    END;
-
---    ORDER MEMBER FUNCTION cmp_with(other IN Veetou_Ko_Footer_Typ)
---        RETURN NUMBER
+--    MAP MEMBER FUNCTION cat_attribs RETURN VARCHAR
 --    IS
---        ord NUMBER;
 --    BEGIN
---        ord := VEETOU_Util.StrNullIcmp(sheet_page_number, other.sheet_page_number);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := VEETOU_Util.NumNullCmp(sheet_pages_total, other.sheet_pages_total);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := VEETOU_Util.StrNullIcmp(pagination, other.pagination);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := VEETOU_Util.StrNullIcmp(generator_name, other.generator_name);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        RETURN VEETOU_Util.StrNullIcmp(generator_home, other.generator_home);
+--        RETURN  VEETOU_Util.To_CharMap(sheet_page_number, 'S09', ifnull=>'   ')
+--                || '|' ||
+--                VEETOU_Util.To_CharMap(sheet_pages_total, 'S09', ifnull=>'   ')
+--                || '|' ||
+--                VEETOU_Util.To_CharMap(pagination,  5)
+--                || '|' ||
+--                VEETOU_Util.To_CharMap(generator_name, 100)
+--                || '|' ||
+--                generator_home;
 --    END;
+
+    ORDER MEMBER FUNCTION cmp_with(other IN Veetou_Ko_Footer_Typ)
+        RETURN NUMBER
+    IS
+        ord NUMBER;
+    BEGIN
+        ord := VEETOU_Util.StrNullIcmp(sheet_page_number, other.sheet_page_number);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := VEETOU_Util.NumNullCmp(sheet_pages_total, other.sheet_pages_total);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := VEETOU_Util.StrNullIcmp(pagination, other.pagination);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := VEETOU_Util.StrNullIcmp(generator_name, other.generator_name);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        RETURN VEETOU_Util.StrNullIcmp(generator_home, other.generator_home);
+    END;
 END;
 
 -- vim: set ft=sql ts=4 sw=4 et:
