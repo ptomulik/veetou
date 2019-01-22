@@ -1,6 +1,8 @@
 CREATE OR REPLACE VIEW v2u_ko_x_trs
 AS SELECT
-      v.tr.job_uuid tr_job_uuid
+      v.job_uuid job_uuid
+    , v.id id
+    , v.tr.job_uuid tr_job_uuid
     , v.tr.id tr_id
     , v.tr.subj_code tr_subj_code
     , v.tr.subj_name tr_subj_name

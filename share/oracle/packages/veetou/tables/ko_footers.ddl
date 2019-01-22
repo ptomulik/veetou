@@ -1,13 +1,9 @@
 CREATE TABLE v2u_ko_footers
-    ( job_uuid RAW(16) NOT NULL
-    , id NUMBER(38) NOT NULL
-    , pagination VARCHAR(5 CHAR) CHECK('|' NOT IN pagination)
-    , sheet_page_number NUMBER(2) CHECK(sheet_page_number >= 0)
-    , sheet_pages_total NUMBER(2) CHECK(sheet_pages_total >= 0)
-    , generator_name VARCHAR(100 CHAR) CHECK('|' NOT IN generator_name)
-    , generator_home VARCHAR(100 CHAR) CHECK('|' NOT IN generator_home)
-    , CONSTRAINT v2u_ko_footers_pk PRIMARY KEY (job_uuid, id)
-    , CONSTRAINT v2u_ko_footers_fk0 FOREIGN KEY (job_uuid) REFERENCES v2u_ko_jobs(job_uuid));
+OF V2u_Ko_Footer_t
+    (
+      CONSTRAINT v2u_ko_footers_pk PRIMARY KEY (job_uuid, id)
+    , CONSTRAINT v2u_ko_footers_fk0 FOREIGN KEY (job_uuid) REFERENCES v2u_ko_jobs(job_uuid)
+    );
 
 COMMENT ON TABLE v2u_ko_footers IS 'Stopki na Kartach Osiągnięć';
 COMMENT ON COLUMN v2u_ko_footers.job_uuid IS 'Unikalny identyfikator uruchomienia VEETOU z którego pochodzi rekord';

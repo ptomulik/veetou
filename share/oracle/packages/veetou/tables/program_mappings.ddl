@@ -1,17 +1,6 @@
 CREATE TABLE v2u_program_mappings
-    ( id NUMBER(38) NOT NULL
-    , university VARCHAR(256 CHAR)
-    , faculty VARCHAR(256 CHAR)
-    , studies_modetier VARCHAR(256 CHAR)
-    , studies_field VARCHAR(256 CHAR)
-    , studies_specialty VARCHAR(256 CHAR)
-    , mapped_program_code VARCHAR(32 CHAR)
-    , mapped_modetier_code VARCHAR(32 CHAR)
-    , mapped_field_code VARCHAR(32 CHAR)
-    , expr_semester_code VARCHAR(256 CHAR)
-
-    , CONSTRAINT v2u_program_mappings_pk PRIMARY KEY(id)
-    );
+OF V2u_Program_Mapping_t
+    ( CONSTRAINT v2u_program_mappings_pk PRIMARY KEY(id) );
 
 COMMENT ON TABLE v2u_program_mappings IS 'Odwzorowanie programów studiów (VEE->USOS)';
 COMMENT ON COLUMN v2u_program_mappings.university IS 'Nazwa uczelni (VEE)';

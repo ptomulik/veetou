@@ -3,7 +3,7 @@ AS WITH joined AS (
     SELECT
           si.job_uuid job_uuid
         , sm.id subject_mapping_id
-        , sm.subject_mapping.match_expr_fields(si.subject_instance) matching_score
+        , V2u_Match.Expr_Fields(sm.subject_mapping, si.subject_instance) matching_score
         , si.subject_instance subject_instance
         , sm.subject_mapping subject_mapping
         , si.trs_count trs_count

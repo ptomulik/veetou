@@ -1,18 +1,9 @@
 CREATE TABLE v2u_ko_preambles
-     ( job_uuid RAW(16) NOT NULL
-     , id NUMBER(38) NOT NULL
-     , studies_modetier VARCHAR(256 CHAR)
-     , title VARCHAR(256 CHAR)
-     , student_index VARCHAR(32 CHAR)
-     , first_name VARCHAR(48 CHAR)
-     , last_name VARCHAR(48 CHAR)
-     , student_name VARCHAR(128 CHAR)
-     , semester_code VARCHAR(5 CHAR)
-     , studies_field VARCHAR(256 CHAR)
-     , semester_number NUMBER(2) CHECK(semester_number > 0)
-     , studies_specialty VARCHAR(256 CHAR)
-     , CONSTRAINT v2u_ko_preambles_pk PRIMARY KEY (job_uuid, id)
-     , CONSTRAINT v2u_ko_preambles_fk0 FOREIGN KEY (job_uuid) REFERENCES v2u_ko_jobs(job_uuid));
+OF V2u_Ko_Preamble_t
+    (
+      CONSTRAINT v2u_ko_preambles_pk PRIMARY KEY (job_uuid, id)
+    , CONSTRAINT v2u_ko_preambles_fk0 FOREIGN KEY (job_uuid) REFERENCES v2u_ko_jobs(job_uuid)
+    );
 
 COMMENT ON TABLE v2u_ko_preambles IS 'Preambuły występujące na Kartach Osiągnięć';
 COMMENT ON COLUMN v2u_ko_preambles.job_uuid IS 'Unikalny identyfikator uruchomienia VEETOU z którego pochodzi rekord';

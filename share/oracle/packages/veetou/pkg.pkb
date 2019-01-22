@@ -1,35 +1,35 @@
 CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
-    FUNCTION Not_Exists_Errcode(schema_type IN VARCHAR)
-        RETURN NUMBER
+    FUNCTION Is_Not_Exists_Errcode(schema_type IN VARCHAR, err_code IN NUMBER)
+        RETURN BOOLEAN
     IS
     BEGIN
         IF (UPPER(schema_type) = 'TABLE') OR (UPPER(schema_type) = 'VIEW') THEN
-            RETURN(-942);
+            RETURN (err_code = -942);
         ELSIF UPPER(schema_type) = 'SEQUENCE' THEN
-            RETURN(-2289);
+            RETURN (err_code = -2289);
         ELSIF UPPER(schema_type) = 'TRIGGER' THEN
-            RETURN(-4080);
+            RETURN (err_code = -4080);
         ELSIF UPPER(schema_type) = 'INDEX' THEN
-            RETURN(-1418);
+            RETURN (err_code = -1418);
         ELSIF UPPER(schema_type) = 'COLUMN' THEN
-            RETURN(-904);
+            RETURN (err_code = -904);
         ELSIF UPPER(schema_type) = 'DATABASE LINK' THEN
-            RETURN(-2024);
+            RETURN (err_code = -2024);
         ELSIF UPPER(schema_type) = 'MATERIALIZED VIEW LOG ON' THEN
-            RETURN(-12002);
+            RETURN (err_code = -12002 OR err_code = -942);
         ELSIF UPPER(schema_type) = 'MATERIALIZED VIEW' THEN
-            RETURN(-12003);
+            RETURN (err_code = -12003);
         ELSIF UPPER(schema_type) = 'CONSTRAINT' THEN
-            RETURN(-2443);
+            RETURN (err_code = -2443);
         ELSIF UPPER(schema_type) = 'USER' THEN
-            RETURN(-1918);
+            RETURN (err_code = -1918);
         ELSIF (UPPER(schema_type) = 'TYPE') OR
               (UPPER(schema_type) = 'PACKAGE') OR
               (UPPER(schema_type) = 'PROCEDURE') OR
               (UPPER(schema_type) = 'FUNCTION') THEN
-            RETURN(-4043);
+            RETURN (err_code = -4043);
         ELSIF UPPER(schema_type) = 'TABLESPACE' THEN
-            RETURN(-959);
+            RETURN (err_code = -959);
         ELSE
             RAISE PROGRAM_ERROR;
         END IF;
@@ -55,7 +55,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         Drop_DB_Object(schema_type, name, how);
     EXCEPTION
         WHEN OTHERS THEN
-            IF SQLCODE != Not_Exists_Errcode(schema_type) THEN
+            IF NOT Is_Not_Exists_Errcode(schema_type, SQLCODE) THEN
                 RAISE;
             END IF;
     END;
@@ -91,32 +91,37 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
     END;
 
 
-    PROCEDURE Drop_View(primary_view IN VARCHAR,
-                        secondary_view IN VARCHAR := NULL)
+    PROCEDURE Drop_View(view_name IN VARCHAR,
+                        dependent_view IN VARCHAR := NULL,
+                        dependent_kind IN VARCHAR := NULL)
     IS
     BEGIN
-        IF secondary_view IS NOT NULL THEN
-            Drop_If_Exists('VIEW', 'v2u_' || secondary_view);
+        IF dependent_view IS NOT NULL THEN
+            IF dependent_kind IS NULL THEN
+                Drop_If_Exists('VIEW', 'v2u_' || dependent_view);
+            ELSE
+                Drop_If_Exists(dependent_kind, 'v2u_' || dependent_view);
+            END IF;
         END IF;
-        IF primary_view IS NOT NULL THEN
-            Drop_If_Exists('VIEW', 'v2u_' || primary_view);
+        IF view_name IS NOT NULL THEN
+            Drop_If_Exists('VIEW', 'v2u_' || view_name);
         END IF;
     END;
 
-    PROCEDURE Drop_Materialized_View(primary_view IN VARCHAR,
-                                     secondary_view IN VARCHAR := NULL,
-                                     secondary_type IN VARCHAR := NULL)
+    PROCEDURE Drop_Materialized_View(view_name IN VARCHAR,
+                                     dependent_view IN VARCHAR := NULL,
+                                     dependent_kind IN VARCHAR := NULL)
     IS
     BEGIN
-        IF secondary_view IS NOT NULL THEN
-            IF secondary_type is NULL THEN
-                Drop_If_Exists('VIEW', 'v2u_' || secondary_view);
+        IF dependent_view IS NOT NULL THEN
+            IF dependent_kind is NULL THEN
+                Drop_If_Exists('VIEW', 'v2u_' || dependent_view);
             ELSE
-                Drop_If_Exists(secondary_type, 'v2u_' || secondary_view);
+                Drop_If_Exists(dependent_kind, 'v2u_' || dependent_view);
             END IF;
         END IF;
-        IF primary_view IS NOT NULL THEN
-            Drop_If_Exists('MATERIALIZED VIEW', 'v2u_' || primary_view);
+        IF view_name IS NOT NULL THEN
+            Drop_If_Exists('MATERIALIZED VIEW', 'v2u_' || view_name);
         END IF;
     END;
 
@@ -175,11 +180,10 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
             Drop_Trigger('subject_mappings_tr1');
             Drop_Sequence('subject_mappings_sq1');
         END IF;
-        Drop_View('ko_subject_instances_ov', 'ko_subject_instances');
-        Drop_Materialized_View('ko_subject_instances_mv');
         Drop_View('ko_sheet_infos_ov', 'ko_sheet_infos');
         Drop_View('ko_x_sheets_ov', 'ko_x_sheets');
         Drop_View('ko_students_ov', 'ko_students');
+        Drop_View('ko_subject_instances_ov', 'ko_subject_instances', 'MATERIALIZED VIEW');
         Drop_View('ko_x_trs_ov', 'ko_x_trs');
 
         IF how <> 'KEEP' THEN
@@ -211,15 +215,21 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         Drop_Table('ko_tbodies', 'ko_tbodies_ov', how);
         Drop_Table('ko_trs', 'ko_trs_ov', how);
         Drop_Table('ko_jobs', 'ko_jobs_ov', how);
+        Drop_Trigger('semesters_tr1');
         Drop_Table('semesters', 'semesters_ov', how);
 
         -- PACKAGES: all, except the V2U_Pkg package
         Drop_Package('Match');
         Drop_Package('Util');
+        Drop_Package('To');
 
-        Drop_Type('Program_Mapping_t', 'Program_Mappings_t');
+        IF how <> 'KEEP' THEN
+            Drop_Type('Program_Mapping_t', 'Program_Mappings_t');
+        END IF;
         Drop_Type('Ko_Specialty_t');
-        Drop_Type('Subject_Mapping_t', 'Subject_Mappings_t');
+        IF how <> 'KEEP' THEN
+            Drop_Type('Subject_Mapping_t', 'Subject_Mappings_t');
+        END IF;
         Drop_Type('Ko_Subject_Instance_t');
         Drop_Type('Ko_Thread_Indices_t');
         Drop_Type('Ko_Semester_Threads_t');
@@ -228,17 +238,20 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         Drop_Type('Ko_Student_t');
         Drop_Type('Ko_X_Sheet_t', 'Ko_X_Sheets_t');
         Drop_Type('Ko_X_Tr_t', 'Ko_X_Trs_t');
-        Drop_Type('Ko_Footer_t', 'Ko_Footers_t');
-        Drop_Type('Ko_Header_t', 'Ko_Headers_t');
-        Drop_Type('Ko_Page_t', 'Ko_Pages_t', 'Ko_Page_Refs_t');
-        Drop_Type('Ko_Preamble_t', 'Ko_Preambles_t');
-        Drop_Type('Ko_Report_t', 'Ko_Reports_t');
-        Drop_Type('Ko_Sheet_t', 'Ko_Sheets_t');
-        Drop_Type('Ko_Tbody_t', 'Ko_Tbodies_t');
-        Drop_Type('Ko_Tr_t', 'Ko_Trs_t', 'Ko_Tr_Refs_t');
-        Drop_Type('Ko_Job_t', 'Ko_Jobs_t');
-        Drop_Type('Semester_Codes_t');
-        Drop_Type('Semester_t', 'Semesters_t');
+        IF how <> 'KEEP' THEN
+            Drop_Type('Ko_Footer_t', 'Ko_Footers_t');
+            Drop_Type('Ko_Header_t', 'Ko_Headers_t');
+            Drop_Type('Ko_Page_t', 'Ko_Pages_t');
+            Drop_Type('Ko_Preamble_t', 'Ko_Preambles_t');
+            Drop_Type('Ko_Report_t', 'Ko_Reports_t');
+            Drop_Type('Ko_Sheet_t', 'Ko_Sheets_t');
+            Drop_Type('Ko_Tbody_t', 'Ko_Tbodies_t');
+            Drop_Type('Ko_Tr_t', 'Ko_Trs_t');
+            Drop_Type('Ko_Job_t', 'Ko_Jobs_t');
+            Drop_Type('Semester_Codes_t');
+            Drop_Type('Semester_t', 'Semesters_t');
+        END IF;
+        Drop_Type('Ko_Subj_Grades_t');
         Drop_Type('Ko_Ids_t');
     END;
 

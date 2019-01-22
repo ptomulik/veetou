@@ -1,13 +1,9 @@
 CREATE TABLE v2u_ko_reports
-     ( job_uuid RAW(16) NOT NULL
-     , id NUMBER(38) NOT NULL
-     , source VARCHAR(512 CHAR)
-     , datetime TIMESTAMP
-     , first_page NUMBER(10)
-     , sheets_parsed NUMBER(10)
-     , pages_parsed NUMBER(10)
-     , CONSTRAINT v2u_ko_reports_pk PRIMARY KEY (job_uuid, id)
-     , CONSTRAINT v2u_ko_reports_fk0 FOREIGN KEY (job_uuid) REFERENCES v2u_ko_jobs(job_uuid));
+OF V2u_Ko_Report_t
+    (
+      CONSTRAINT v2u_ko_reports_pk PRIMARY KEY (job_uuid, id)
+    , CONSTRAINT v2u_ko_reports_fk0 FOREIGN KEY (job_uuid) REFERENCES v2u_ko_jobs(job_uuid)
+    );
 
 COMMENT ON TABLE v2u_ko_reports IS 'Dokumenty typu Karta Osiągnięć przetworzone w ramach uruchomienia VEETOU';
 COMMENT ON COLUMN v2u_ko_reports.job_uuid IS 'Unikalny identyfikator uruchomienia VEETOU z którego pochodzi rekord';

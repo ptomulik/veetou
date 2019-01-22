@@ -11,7 +11,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Tr_t FORCE AUTHID CURRENT_USER AS OBJECT
     , subj_credit_kind VARCHAR(16 CHAR)
     , subj_ects NUMBER(4)
     , subj_tutor VARCHAR(256 CHAR)
-    , subj_grade VARCHAR(32 CHAR)
+    , subj_grade VARCHAR(8 CHAR)
     , subj_grade_date DATE
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Tr_t(
@@ -38,8 +38,5 @@ CREATE OR REPLACE TYPE V2u_Ko_Tr_t FORCE AUTHID CURRENT_USER AS OBJECT
 /
 CREATE OR REPLACE TYPE V2u_Ko_Trs_t
     AS TABLE OF V2u_Ko_Tr_t;
-/
-CREATE OR REPLACE TYPE V2u_Ko_Tr_Refs_t
-    AS TABLE OF REF V2u_Ko_Tr_t;
 
 -- vim: set ft=sql ts=4 sw=4 et:

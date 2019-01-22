@@ -44,128 +44,141 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Mapping_t AS
     END;
 
     MEMBER FUNCTION match_expr_fields(
-            SELF IN V2u_Subject_Mapping_t,
-            subject IN V2u_Ko_Subject_Instance_t
+          subj_name IN VARCHAR
+        , university IN VARCHAR
+        , faculty IN VARCHAR
+        , studies_modetier IN VARCHAR
+        , studies_field IN VARCHAR
+        , studies_specialty IN VARCHAR
+        , semester_code IN VARCHAR
+        , subj_hours_w IN VARCHAR
+        , subj_hours_c IN VARCHAR
+        , subj_hours_l IN VARCHAR
+        , subj_hours_p IN VARCHAR
+        , subj_hours_s IN VARCHAR
+        , subj_credit_kind IN VARCHAR
+        , subj_ects IN VARCHAR
+        , subj_tutor IN VARCHAR
         ) RETURN INTEGER
     IS
         score NUMBER;
         local NUMBER;
     BEGIN
         score := 1;     -- if all expressions are NULL, then match is positive
-        IF SELF.expr_subj_name IS NOT NULL THEN
-            local := SELF.match_subj_name(subject.subj_name);
+        IF expr_subj_name IS NOT NULL THEN
+            local := match_subj_name(subj_name);
             IF local < 1 THEN
                 RETURN local;
             ELSE
                 score := score + 1;
             END IF;
         END IF;
-        IF SELF.expr_university IS NOT NULL THEN
-            local := SELF.match_university(subject.university);
+        IF expr_university IS NOT NULL THEN
+            local := match_university(university);
             IF local < 1 THEN
                 RETURN local;
             ELSE
                 score := score + 1;
             END IF;
         END IF;
-        IF SELF.expr_faculty IS NOT NULL THEN
-            local := SELF.match_faculty(subject.faculty);
+        IF expr_faculty IS NOT NULL THEN
+            local := match_faculty(faculty);
             IF local < 1 THEN
                 RETURN local;
             ELSE
                 score := score + 1;
             END IF;
         END IF;
-        IF SELF.expr_studies_modetier IS NOT NULL THEN
-            local := SELF.match_studies_modetier(subject.studies_modetier);
+        IF expr_studies_modetier IS NOT NULL THEN
+            local := match_studies_modetier(studies_modetier);
             IF local < 1 THEN
                 RETURN local;
             ELSE
                 score := score + 1;
             END IF;
         END IF;
-        IF SELF.expr_studies_field IS NOT NULL THEN
-            local := SELF.match_studies_field(subject.studies_field);
+        IF expr_studies_field IS NOT NULL THEN
+            local := match_studies_field(studies_field);
             IF local < 1 THEN
                 RETURN local;
             ELSE
                 score := score + 1;
             END IF;
         END IF;
-        IF SELF.expr_studies_specialty IS NOT NULL THEN
-            local := SELF.match_studies_specialty(subject.studies_specialty);
+        IF expr_studies_specialty IS NOT NULL THEN
+            local := match_studies_specialty(studies_specialty);
             IF local < 1 THEN
                 RETURN local;
             ELSE
                 score := score + 1;
             END IF;
         END IF;
-        IF SELF.expr_semester_code IS NOT NULL THEN
-            local := SELF.match_semester_code(subject.semester_code);
+        IF expr_semester_code IS NOT NULL THEN
+            local := match_semester_code(semester_code);
             IF local < 1 THEN
                 RETURN local;
             ELSE
                 score := score + 1;
             END IF;
         END IF;
-        IF SELF.expr_subj_hours_w IS NOT NULL THEN
-            local := SELF.match_subj_hours_w(subject.subj_hours_w);
+        IF expr_subj_hours_w IS NOT NULL THEN
+            local := match_subj_hours_w(subj_hours_w);
             IF local < 1 THEN
                 RETURN local;
             ELSE
                 score := score + 1;
             END IF;
         END IF;
-        IF SELF.expr_subj_hours_c IS NOT NULL THEN
-            local := SELF.match_subj_hours_c(subject.subj_hours_c);
+        IF expr_subj_hours_c IS NOT NULL THEN
+            local := match_subj_hours_c(subj_hours_c);
             IF local < 1 THEN
                 RETURN local;
             ELSE
                 score := score + 1;
             END IF;
         END IF;
-        IF SELF.expr_subj_hours_l IS NOT NULL THEN
-            local := SELF.match_subj_hours_l(subject.subj_hours_l);
+        IF expr_subj_hours_l IS NOT NULL THEN
+            local := match_subj_hours_l(subj_hours_l);
             IF local < 1 THEN
                 RETURN local;
             ELSE
                 score := score + 1;
             END IF;
         END IF;
-        IF SELF.expr_subj_hours_p IS NOT NULL THEN
-            local := SELF.match_subj_hours_p(subject.subj_hours_p);
+        IF expr_subj_hours_p IS NOT NULL THEN
+            local := match_subj_hours_p(subj_hours_p);
             IF local < 1 THEN
                 RETURN local;
             ELSE
                 score := score + 1;
             END IF;
         END IF;
-        IF SELF.expr_subj_hours_s IS NOT NULL THEN
-            local := SELF.match_subj_hours_s(subject.subj_hours_s);
+        IF expr_subj_hours_s IS NOT NULL THEN
+            local := match_subj_hours_s(subj_hours_s);
             IF local < 1 THEN
                 RETURN local;
             ELSE
                 score := score + 1;
             END IF;
         END IF;
-        IF SELF.expr_subj_credit_kind IS NOT NULL THEN
-            local := SELF.match_subj_credit_kind(subject.subj_credit_kind);
+        IF expr_subj_credit_kind IS NOT NULL THEN
+            local := match_subj_credit_kind(subj_credit_kind);
             IF local < 1 THEN
                 RETURN local;
             ELSE
                 score := score + 1;
             END IF;
         END IF;
-        IF SELF.expr_subj_ects IS NOT NULL THEN
-            local := SELF.match_subj_ects(subject.subj_ects);
+        IF expr_subj_ects IS NOT NULL THEN
+            local := match_subj_ects(subj_ects);
             IF local < 1 THEN
                 RETURN local;
             ELSE
                 score := score + 1;
             END IF;
         END IF;
-        IF SELF.expr_subj_tutor IS NOT NULL THEN
-            local := SELF.match_subj_tutor(subject.subj_tutor);
+        IF expr_subj_tutor IS NOT NULL THEN
+            local := match_subj_tutor(subj_tutor);
             IF local < 1 THEN
                 RETURN local;
             ELSE

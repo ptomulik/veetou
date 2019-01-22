@@ -19,6 +19,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Instance_t AS
         , subj_credit_kind IN VARCHAR2 := NULL
         , subj_ects IN NUMBER := NULL
         , subj_tutor IN VARCHAR2 := NULL
+        , subj_grades IN V2u_Ko_Subj_Grades_t := NULL
         ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -40,40 +41,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Instance_t AS
         SELF.subj_credit_kind := subj_credit_kind;
         SELF.subj_ects := subj_ects;
         SELF.subj_tutor := subj_tutor;
-        RETURN;
-    END;
-
-    CONSTRUCTOR FUNCTION V2u_Ko_Subject_Instance_t(
-              SELF IN OUT NOCOPY V2u_Ko_Subject_Instance_t
-            , job_uuid IN RAW
-            , id IN NUMBER
-            , header IN V2u_Ko_Header_t
-            , preamble IN V2u_Ko_Preamble_t
-            , tr IN V2u_Ko_Tr_t
-            ) RETURN SELF AS RESULT
-    IS
-    BEGIN
-        SELF.job_uuid := job_uuid;
-        SELF.id := id;
-        --
-        SELF.university := header.university;
-        SELF.faculty := header.faculty;
-        --
-        SELF.studies_modetier := preamble.studies_modetier;
-        SELF.studies_field := preamble.studies_field;
-        SELF.studies_specialty := preamble.studies_specialty;
-        SELF.semester_code := preamble.semester_code;
-        --
-        SELF.subj_code := tr.subj_code;
-        SELF.subj_name := tr.subj_name;
-        SELF.subj_hours_w := tr.subj_hours_w;
-        SELF.subj_hours_c := tr.subj_hours_c;
-        SELF.subj_hours_l := tr.subj_hours_l;
-        SELF.subj_hours_p := tr.subj_hours_p;
-        SELF.subj_hours_s := tr.subj_hours_s;
-        SELF.subj_credit_kind := tr.subj_credit_kind;
-        SELF.subj_ects := tr.subj_ects;
-        SELF.subj_tutor := tr.subj_tutor;
+        SELF.subj_grades := subj_grades;
         RETURN;
     END;
 
@@ -83,8 +51,6 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Instance_t AS
     IS
         ord NUMBER;
     BEGIN
-        ord := V2u_Util.RawNullCmp(job_uuid, other.job_uuid);
-        IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Util.StrNullIcmp(subj_code, other.subj_code);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Util.StrNullIcmp(subj_name, other.subj_name);
@@ -115,7 +81,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Instance_t AS
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Util.NumNullCmp(subj_ects, other.subj_ects);
         IF ord <> 0 THEN RETURN ord; END IF;
-        RETURN V2U_Util.StrNullIcmp(subj_tutor, other.subj_tutor);
+        ord := V2U_Util.StrNullIcmp(subj_tutor, other.subj_tutor);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        RETURN V2u_Util.RawNullCmp(job_uuid, other.job_uuid);
     END;
 END;
 

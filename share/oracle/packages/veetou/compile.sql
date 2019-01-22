@@ -1,4 +1,6 @@
-@@types/create_specs.sql;
+--@@types/create_specs.sql;
+@@types/basic_specs.tps;
+@@types/create_view_specs.sql;
 @@packages/create_specs.sql;
 @@types/create_bodies.sql;
 @@packages/create_bodies.sql;

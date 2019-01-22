@@ -22,14 +22,14 @@ CREATE OR REPLACE TYPE V2u_Ko_Semester_Instance_t FORCE AUTHID CURRENT_USER AS O
             , sheet_id IN NUMBER := NULL
             ) RETURN SELF AS RESULT
 
-    , CONSTRUCTOR FUNCTION V2u_Ko_Semester_Instance_t(
-              SELF IN OUT NOCOPY V2u_Ko_Semester_Instance_t
-            , job_uuid RAW
-            , id NUMBER
-            , preamble IN V2u_Ko_Preamble_t
-            , sheet IN V2u_Ko_Sheet_t
-            , sheet_id IN NUMBER := NULL
-      ) RETURN SELF AS RESULT
+--    , CONSTRUCTOR FUNCTION V2u_Ko_Semester_Instance_t(
+--              SELF IN OUT NOCOPY V2u_Ko_Semester_Instance_t
+--            , job_uuid RAW
+--            , id NUMBER
+--            , preamble IN V2u_Ko_Preamble_t
+--            , sheet IN V2u_Ko_Sheet_t
+--            , sheet_id IN NUMBER := NULL
+--      ) RETURN SELF AS RESULT
 
     , ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Semester_Instance_t)
         RETURN NUMBER

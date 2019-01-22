@@ -1,9 +1,7 @@
 CREATE TABLE v2u_semesters
-    ( id NUMBER(38) NOT NULL
-    , code VARCHAR(32 CHAR) NOT NULL
-    , start_date DATE DEFAULT NULL
-    , end_date DATE DEFAULT NULL
-    , CONSTRAINT v2u_semesters_pk PRIMARY KEY (id)
+OF V2u_Semester_t
+    (
+      CONSTRAINT v2u_semesters_pk PRIMARY KEY (id)
     , CONSTRAINT v2u_semesters_u1 UNIQUE (code)
     , CONSTRAINT v2u_semesters_code_chk1 CHECK
         (REGEXP_INSTR(UPPER(code), '^(19|20)[0-9]{2}[LZ]$')=1)

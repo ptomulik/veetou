@@ -24,10 +24,8 @@ CREATE OR REPLACE TYPE V2u_Program_Mapping_t FORCE AUTHID CURRENT_USER AS OBJECT
             , expr_semester_code IN VARCHAR := NULL
             ) RETURN SELF AS RESULT
 
-    , MEMBER FUNCTION match_expr_fields(
-              specialty IN V2u_Ko_Specialty_t
-            , semester_code IN VARCHAR
-            ) RETURN INTEGER
+    , MEMBER FUNCTION match_expr_fields(semester_code IN VARCHAR)
+            RETURN INTEGER
 
     , MEMBER FUNCTION match_semester_code(semester_code IN VARCHAR)
             RETURN INTEGER

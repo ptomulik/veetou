@@ -1,6 +1,8 @@
 CREATE OR REPLACE VIEW v2u_ko_x_sheets
 AS SELECT
-      v.sheet.job_uuid sheet_job_uuid
+      v.job_uuid job_uuid
+    , v.id id
+    , v.sheet.job_uuid sheet_job_uuid
     , v.sheet.id sheet_id
     , v.sheet.pages_parsed sheet_pages_parsed
     , v.sheet.first_page sheet_first_page
@@ -11,19 +13,19 @@ AS SELECT
 
     , (
         SELECT LISTAGG(VALUE(t).id, ',')
-        WITHIN GROUP (ORDER BY DEREF(VALUE(t)))
+        WITHIN GROUP (ORDER BY VALUE(t))
         FROM TABLE(pages) t
         GROUP BY 1
       ) page_ids
     , (
         SELECT LISTAGG(VALUE(t).page_number, ',')
-        WITHIN GROUP (ORDER BY DEREF(VALUE(t)))
+        WITHIN GROUP (ORDER BY VALUE(t))
         FROM TABLE(pages) t
         GROUP BY 1
       ) page_page_numbers
     , (
         SELECT LISTAGG(VALUE(t).parser_page_number, ',')
-        WITHIN GROUP (ORDER BY DEREF(VALUE(t)))
+        WITHIN GROUP (ORDER BY VALUE(t))
         FROM TABLE(pages) t
         GROUP BY 1
       ) page_parser_page_numbers

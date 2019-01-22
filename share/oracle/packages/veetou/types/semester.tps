@@ -1,16 +1,18 @@
 CREATE OR REPLACE TYPE V2u_Semester_t FORCE AUTHID CURRENT_USER AS OBJECT
     ( code VARCHAR(5 CHAR)
+    , id NUMBER(38)
     , start_date DATE
     , end_date DATE
 
     , CONSTRUCTOR FUNCTION V2u_Semester_t(
               SELF IN OUT NOCOPY V2u_Semester_t
             , code IN VARCHAR
+            , id IN NUMBER := NULL
             , start_date IN DATE := NULL
             , end_date IN DATE := NULL
             ) RETURN SELF AS RESULT
 
-    , MAP MEMBER FUNCTION id RETURN NUMBER
+    , MAP MEMBER FUNCTION map_id RETURN NUMBER
     );
 /
 CREATE OR REPLACE TYPE V2u_Semester_Codes_t

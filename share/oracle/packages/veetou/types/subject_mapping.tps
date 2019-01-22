@@ -42,8 +42,21 @@ CREATE OR REPLACE TYPE V2u_Subject_Mapping_t FORCE AUTHID CURRENT_USER AS OBJECT
         RETURN SELF AS RESULT
 
     , MEMBER FUNCTION match_expr_fields(
-              SELF IN V2u_Subject_Mapping_t
-            , subject IN V2u_Ko_Subject_Instance_t
+              subj_name IN VARCHAR
+            , university IN VARCHAR
+            , faculty IN VARCHAR
+            , studies_modetier IN VARCHAR
+            , studies_field IN VARCHAR
+            , studies_specialty IN VARCHAR
+            , semester_code IN VARCHAR
+            , subj_hours_w IN VARCHAR
+            , subj_hours_c IN VARCHAR
+            , subj_hours_l IN VARCHAR
+            , subj_hours_p IN VARCHAR
+            , subj_hours_s IN VARCHAR
+            , subj_credit_kind IN VARCHAR
+            , subj_ects IN VARCHAR
+            , subj_tutor IN VARCHAR
             ) RETURN INTEGER
 
     , MEMBER FUNCTION match_subj_name(

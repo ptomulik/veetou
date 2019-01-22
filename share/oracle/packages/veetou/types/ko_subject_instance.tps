@@ -17,6 +17,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Instance_t FORCE AUTHID CURRENT_USER AS OB
     , subj_credit_kind VARCHAR2(16 CHAR)
     , subj_ects NUMBER(4)
     , subj_tutor VARCHAR2(256 CHAR)
+    , subj_grades V2u_Ko_Subj_Grades_t
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Subject_Instance_t(
               SELF IN OUT NOCOPY V2u_Ko_Subject_Instance_t
@@ -38,15 +39,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Instance_t FORCE AUTHID CURRENT_USER AS OB
             , subj_credit_kind IN VARCHAR2 := NULL
             , subj_ects IN NUMBER := NULL
             , subj_tutor IN VARCHAR2 := NULL
-            ) RETURN SELF AS RESULT
-
-    , CONSTRUCTOR FUNCTION V2u_Ko_Subject_Instance_t(
-              SELF IN OUT NOCOPY V2u_Ko_Subject_Instance_t
-            , job_uuid IN RAW
-            , id IN NUMBER
-            , header IN V2u_Ko_Header_t
-            , preamble IN V2u_Ko_Preamble_t
-            , tr IN V2u_Ko_Tr_t
+            , subj_grades IN V2u_Ko_Subj_Grades_t := NULL
             ) RETURN SELF AS RESULT
 
     , ORDER MEMBER FUNCTION cmp_with (

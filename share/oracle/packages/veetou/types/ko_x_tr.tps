@@ -1,23 +1,27 @@
 CREATE OR REPLACE TYPE V2u_Ko_X_Tr_t FORCE AUTHID CURRENT_USER AS OBJECT
-    ( tr REF V2u_Ko_Tr_t
-    , page REF V2u_Ko_Page_t
-    , header REF V2u_Ko_Header_t
-    , preamble REF V2u_Ko_Preamble_t
-    , tbody REF V2u_Ko_Tbody_t
-    , footer REF V2u_Ko_Footer_t
-    , sheet REF V2u_Ko_Sheet_t
-    , report REF V2u_Ko_Report_t
+    ( job_uuid RAW(16)
+    , id NUMBER(38)
+    , tr V2u_Ko_Tr_t
+    , page V2u_Ko_Page_t
+    , header V2u_Ko_Header_t
+    , preamble V2u_Ko_Preamble_t
+    , tbody V2u_Ko_Tbody_t
+    , footer V2u_Ko_Footer_t
+    , sheet V2u_Ko_Sheet_t
+    , report V2u_Ko_Report_t
 
     , CONSTRUCTOR FUNCTION V2u_Ko_X_Tr_t(
               SELF IN OUT NOCOPY V2u_Ko_X_Tr_t
-            , tr IN REF V2u_Ko_Tr_t
-            , page IN REF V2u_Ko_Page_t
-            , header IN REF V2u_Ko_Header_t
-            , preamble IN REF V2u_Ko_Preamble_t
-            , tbody IN REF V2u_Ko_Tbody_t
-            , footer IN REF V2u_Ko_Footer_t
-            , sheet IN REF V2u_Ko_Sheet_t
-            , report IN REF V2u_Ko_Report_t
+            , job_uuid RAW
+            , id IN NUMBER
+            , tr IN V2u_Ko_Tr_t
+            , page IN V2u_Ko_Page_t
+            , header IN V2u_Ko_Header_t
+            , preamble IN V2u_Ko_Preamble_t
+            , tbody IN V2u_Ko_Tbody_t
+            , footer IN V2u_Ko_Footer_t
+            , sheet IN V2u_Ko_Sheet_t
+            , report IN V2u_Ko_Report_t
             ) RETURN SELF AS RESULT
     );
 /

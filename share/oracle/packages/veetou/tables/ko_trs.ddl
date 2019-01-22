@@ -1,20 +1,9 @@
 CREATE TABLE v2u_ko_trs
-     ( job_uuid RAW(16) NOT NULL
-     , id NUMBER(38) NOT NULL
-     , subj_code VARCHAR(32 CHAR)
-     , subj_name VARCHAR(256 CHAR)
-     , subj_hours_w NUMBER(8)
-     , subj_hours_c NUMBER(8)
-     , subj_hours_l NUMBER(8)
-     , subj_hours_p NUMBER(8)
-     , subj_hours_s NUMBER(8)
-     , subj_credit_kind VARCHAR(16 CHAR)
-     , subj_ects NUMBER(4)
-     , subj_tutor VARCHAR(256 CHAR)
-     , subj_grade VARCHAR(32 CHAR)
-     , subj_grade_date DATE
-     , CONSTRAINT v2u_ko_trs_pk PRIMARY KEY (job_uuid, id)
-     , CONSTRAINT v2u_ko_trs_fk0 FOREIGN KEY (job_uuid) REFERENCES v2u_ko_jobs(job_uuid));
+OF V2u_Ko_Tr_t
+    (
+      CONSTRAINT v2u_ko_trs_pk PRIMARY KEY (job_uuid, id)
+    , CONSTRAINT v2u_ko_trs_fk0 FOREIGN KEY (job_uuid) REFERENCES v2u_ko_jobs(job_uuid)
+    );
 
 COMMENT ON TABLE v2u_ko_trs IS 'Wiersze tabel znajdujących się na Kartach Osiągnięć';
 COMMENT ON COLUMN v2u_ko_trs.job_uuid IS 'Unikalny identyfikator uruchomienia VEETOU z którego pochodzi rekord';

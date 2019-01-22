@@ -27,10 +27,7 @@ CREATE OR REPLACE TYPE BODY V2u_Program_Mapping_t AS
         RETURN;
     END;
 
-    MEMBER FUNCTION match_expr_fields(
-          specialty IN V2u_Ko_Specialty_t
-        , semester_code IN VARCHAR
-        ) RETURN INTEGER
+    MEMBER FUNCTION match_expr_fields(semester_code IN VARCHAR) RETURN INTEGER
     IS
         score NUMBER;
         local NUMBER;
