@@ -1,5 +1,6 @@
 CREATE OR REPLACE TYPE V2u_Ko_Sheet_t FORCE AUTHID CURRENT_USER AS OBJECT
-    ( id NUMBER(38)
+    ( job_uuid RAW(16)
+    , id NUMBER(38)
     , pages_parsed NUMBER(2)
     , first_page NUMBER(10)
     , ects_mandatory NUMBER(4)
@@ -9,6 +10,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Sheet_t FORCE AUTHID CURRENT_USER AS OBJECT
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Sheet_t(
               SELF IN OUT NOCOPY V2u_Ko_Sheet_t
+            , job_uuid IN RAW
             , id IN NUMBER
             , pages_parsed IN NUMBER := NULL
             , first_page IN NUMBER := NULL

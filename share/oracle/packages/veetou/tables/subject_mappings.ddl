@@ -1,5 +1,5 @@
 CREATE TABLE v2u_subject_mappings
-    ( id NUMBER NOT NULL
+    ( id NUMBER(38) NOT NULL
     , subj_code VARCHAR(20 CHAR) NOT NULL
     , mapped_subj_code VARCHAR(20 CHAR)
 

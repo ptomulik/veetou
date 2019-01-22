@@ -1,6 +1,7 @@
 CREATE OR REPLACE TYPE BODY V2u_Ko_Sheet_t AS
     CONSTRUCTOR FUNCTION V2u_Ko_Sheet_t(
           SELF IN OUT NOCOPY V2u_Ko_Sheet_t
+        , job_uuid IN RAW
         , id IN NUMBER
         , pages_parsed IN NUMBER := NULL
         , first_page IN NUMBER := NULL
@@ -11,6 +12,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Sheet_t AS
         ) RETURN SELF AS RESULT
     IS
     BEGIN
+        SELF.job_uuid := job_uuid;
         SELF.id := id;
         SELF.pages_parsed := pages_parsed;
         SELF.first_page := first_page;

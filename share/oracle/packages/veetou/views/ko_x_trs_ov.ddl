@@ -1,22 +1,14 @@
 CREATE OR REPLACE VIEW v2u_ko_x_trs_ov
-AS SELECT
-      trs.job_uuid job_uuid
-    , trs.id tr_id
-    , trs.tr tr
-    , tbodies.id tbody_id
-    , tbodies.tbody tbody
-    , pages.id page_id
-    , pages.page page
-    , sheets.id sheet_id
-    , sheets.sheet sheet
-    , reports.id report_id
-    , reports.report report
-    , preambles.id preamble_id
-    , preambles.preamble preamble
-    , headers.id header_id
-    , headers.header header
-    , footers.id footer_id
-    , footers.footer footer
+OF V2u_Ko_X_Tr_t
+WITH OBJECT IDENTIFIER(tr.job_uuid, tr.id)
+AS SELECT REF(trs)
+        , REF(pages)
+        , REF(headers)
+        , REF(preambles)
+        , REF(tbodies)
+        , REF(footers)
+        , REF(sheets)
+        , REF(reports)
 FROM v2u_ko_trs_ov trs
 INNER JOIN v2u_ko_tbody_trs tbody_trs
       ON (tbody_trs.job_uuid = trs.job_uuid AND

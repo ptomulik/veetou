@@ -62,11 +62,15 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
 
 
     PROCEDURE Drop_Type(primary_type IN VARCHAR,
-                        secondary_type IN VARCHAR := NULL)
+                        dependent_type1 IN VARCHAR := NULL,
+                        dependent_type2 IN VARCHAR := NULL)
     IS
     BEGIN
-        IF secondary_type IS NOT NULL THEN
-            Drop_If_Exists('TYPE', 'V2u_' || secondary_type);
+        IF dependent_type2 IS NOT NULL THEN
+            Drop_If_Exists('TYPE', 'V2u_' || dependent_type2);
+        END IF;
+        IF dependent_type1 IS NOT NULL THEN
+            Drop_If_Exists('TYPE', 'V2u_' || dependent_type1);
         END IF;
         Drop_If_Exists('TYPE', 'V2u_' || primary_type);
     END;
@@ -172,6 +176,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
             Drop_Sequence('subject_mappings_sq1');
         END IF;
         Drop_View('ko_subject_instances_ov', 'ko_subject_instances');
+        Drop_Materialized_View('ko_subject_instances_mv');
         Drop_View('ko_sheet_infos_ov', 'ko_sheet_infos');
         Drop_View('ko_x_sheets_ov', 'ko_x_sheets');
         Drop_View('ko_students_ov', 'ko_students');
@@ -221,14 +226,16 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         Drop_Type('Ko_Semester_Instance_t', 'Ko_Semester_Instances_t');
         Drop_Type('Ko_Sheet_Info_t');
         Drop_Type('Ko_Student_t');
+        Drop_Type('Ko_X_Sheet_t', 'Ko_X_Sheets_t');
+        Drop_Type('Ko_X_Tr_t', 'Ko_X_Trs_t');
         Drop_Type('Ko_Footer_t', 'Ko_Footers_t');
         Drop_Type('Ko_Header_t', 'Ko_Headers_t');
-        Drop_Type('Ko_Page_t', 'Ko_Pages_t');
+        Drop_Type('Ko_Page_t', 'Ko_Pages_t', 'Ko_Page_Refs_t');
         Drop_Type('Ko_Preamble_t', 'Ko_Preambles_t');
         Drop_Type('Ko_Report_t', 'Ko_Reports_t');
         Drop_Type('Ko_Sheet_t', 'Ko_Sheets_t');
         Drop_Type('Ko_Tbody_t', 'Ko_Tbodies_t');
-        Drop_Type('Ko_Tr_t', 'Ko_Trs_t');
+        Drop_Type('Ko_Tr_t', 'Ko_Trs_t', 'Ko_Tr_Refs_t');
         Drop_Type('Ko_Job_t', 'Ko_Jobs_t');
         Drop_Type('Semester_Codes_t');
         Drop_Type('Semester_t', 'Semesters_t');

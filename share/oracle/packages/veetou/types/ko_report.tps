@@ -1,5 +1,6 @@
 CREATE OR REPLACE TYPE V2u_Ko_Report_t FORCE AUTHID CURRENT_USER AS OBJECT
-    ( id NUMBER(38)
+    ( job_uuid RAW(16)
+    , id NUMBER(38)
     , source VARCHAR(512 CHAR)
     , datetime TIMESTAMP
     , first_page NUMBER(10)
@@ -8,6 +9,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Report_t FORCE AUTHID CURRENT_USER AS OBJECT
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Report_t(
               SELF IN OUT NOCOPY V2u_Ko_Report_t
+            , job_uuid IN RAW
             , id IN NUMBER
             , source IN VARCHAR := NULL
             , datetime IN TIMESTAMP := NULL

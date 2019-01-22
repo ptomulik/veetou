@@ -63,6 +63,21 @@ CREATE OR REPLACE PACKAGE BODY V2U_Util AS
         END IF;
     END;
 
+    FUNCTION RawCmp(r1 IN RAW, r2 IN RAW)
+        RETURN NUMBER
+    IS
+    BEGIN
+        IF r1 = r2 THEN
+            RETURN 0;
+        ELSIF r1 > r2 THEN
+            RETURN 1;
+        ELSIF r1 < r2 THEN
+            RETURN -1;
+        ELSE
+            RETURN NULL;
+        END IF;
+    END;
+
     FUNCTION StrIcmp(str1 IN VARCHAR, str2 IN VARCHAR)
         RETURN NUMBER
     IS
@@ -121,6 +136,18 @@ CREATE OR REPLACE PACKAGE BODY V2U_Util AS
         ord := NullCmp(ts1 IS NULL, ts2 IS NULL);
         IF ord IS NULL THEN
             ord := TimestampCmp(ts1, ts2);
+        END IF;
+        RETURN ord;
+    END;
+
+    FUNCTION RawNullCmp(r1 IN RAW, r2 IN RAW)
+        RETURN NUMBER
+    IS
+        ord NUMBER;
+    BEGIN
+        ord := NullCmp(r2 IS NULL, r2 IS NULL);
+        IF ord IS NULL THEN
+            ord := RawCmp(r1, r2);
         END IF;
         RETURN ord;
     END;
@@ -252,7 +279,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Util AS
                 IF tn(j) = i THEN
                     tt(i).EXTEND(1);
                     tt(i)(tt(i).COUNT) := V2u_Ko_Semester_Instance_t(
-                          semester_code => s.semester_code
+                          job_uuid => s.job_uuid
+                        , id => s.id
+                        , semester_code => s.semester_code
                         , semester_number => s.semester_number
                         , ects_mandatory => s.ects_mandatory
                         , ects_other => s.ects_other

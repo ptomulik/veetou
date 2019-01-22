@@ -1,5 +1,6 @@
 CREATE OR REPLACE TYPE V2u_Subject_Mapping_t FORCE AUTHID CURRENT_USER AS OBJECT
-    ( subj_code VARCHAR(20 CHAR)
+    ( id NUMBER(38)
+    , subj_code VARCHAR(20 CHAR)
     , mapped_subj_code VARCHAR(20 CHAR)
     , expr_subj_name VARCHAR(256 CHAR)
     , expr_university VARCHAR(256 CHAR)
@@ -19,6 +20,7 @@ CREATE OR REPLACE TYPE V2u_Subject_Mapping_t FORCE AUTHID CURRENT_USER AS OBJECT
 
     , CONSTRUCTOR FUNCTION V2u_Subject_Mapping_t(
               SELF IN OUT NOCOPY V2u_Subject_Mapping_t
+            , id IN NUMBER
             , subj_code IN VARCHAR := NULL
             , mapped_subj_code IN VARCHAR := NULL
             , expr_subj_name IN VARCHAR := NULL

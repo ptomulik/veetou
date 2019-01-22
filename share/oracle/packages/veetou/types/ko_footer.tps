@@ -1,5 +1,6 @@
 CREATE OR REPLACE TYPE V2u_Ko_Footer_t FORCE AUTHID CURRENT_USER AS OBJECT
-    ( id NUMBER(38)
+    ( job_uuid RAW(16)
+    , id NUMBER(38)
     , pagination VARCHAR(5 CHAR)
     , sheet_page_number NUMBER(2)
     , sheet_pages_total NUMBER(2)
@@ -8,6 +9,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Footer_t FORCE AUTHID CURRENT_USER AS OBJECT
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Footer_t(
               SELF IN OUT NOCOPY V2u_Ko_Footer_t
+            , job_uuid IN RAW
             , id IN NUMBER
             , pagination IN VARCHAR := NULL
             , sheet_page_number IN NUMBER := NULL

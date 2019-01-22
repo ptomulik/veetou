@@ -1,5 +1,7 @@
 CREATE OR REPLACE TYPE V2u_Ko_Subject_Instance_t FORCE AUTHID CURRENT_USER AS OBJECT
-    ( subj_code VARCHAR2(32 CHAR)
+    ( job_uuid RAW(16)
+    , id NUMBER(38)
+    , subj_code VARCHAR2(32 CHAR)
     , subj_name VARCHAR2(256 CHAR)
     , university VARCHAR2(256 CHAR)
     , faculty VARCHAR2(256 CHAR)
@@ -18,6 +20,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Instance_t FORCE AUTHID CURRENT_USER AS OB
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Subject_Instance_t(
               SELF IN OUT NOCOPY V2u_Ko_Subject_Instance_t
+            , job_uuid IN RAW
+            , id IN NUMBER
             , subj_code IN VARCHAR2 := NULL
             , subj_name IN VARCHAR2 := NULL
             , university IN VARCHAR2 := NULL
@@ -38,12 +42,14 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Instance_t FORCE AUTHID CURRENT_USER AS OB
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Subject_Instance_t(
               SELF IN OUT NOCOPY V2u_Ko_Subject_Instance_t
+            , job_uuid IN RAW
+            , id IN NUMBER
             , header IN V2u_Ko_Header_t
             , preamble IN V2u_Ko_Preamble_t
             , tr IN V2u_Ko_Tr_t
             ) RETURN SELF AS RESULT
 
-    , ORDER MEMBER FUNCTION ord_all_attr (
+    , ORDER MEMBER FUNCTION cmp_with (
               other V2u_Ko_Subject_Instance_t
             ) RETURN NUMBER
     );

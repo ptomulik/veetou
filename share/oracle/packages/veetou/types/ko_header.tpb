@@ -1,6 +1,7 @@
 CREATE OR REPLACE TYPE BODY V2u_Ko_Header_t AS
     CONSTRUCTOR FUNCTION V2u_Ko_Header_t(
           SELF IN OUT NOCOPY V2u_Ko_Header_t
+        , job_uuid IN RAW
         , id IN NUMBER
         , university IN VARCHAR := NULL
         , faculty IN VARCHAR := NULL
@@ -8,6 +9,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Header_t AS
         RETURN SELF AS RESULT
     IS
     BEGIN
+        SELF.job_uuid := job_uuid;
         SELF.id := id;
         SELF.university := university;
         SELF.faculty := faculty;
@@ -28,6 +30,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Header_t AS
     IS
         ord NUMBER;
     BEGIN
+        ord := V2u_Util.RawNullCmp(job_uuid, other.job_uuid);
+        IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Util.StrNullIcmp(university, other.university);
         IF ord <> 0 THEN RETURN ord; END IF;
         RETURN V2U_Util.StrNullIcmp(faculty, other.faculty);

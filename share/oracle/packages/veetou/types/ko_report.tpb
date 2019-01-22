@@ -1,6 +1,7 @@
 CREATE OR REPLACE TYPE BODY V2u_Ko_Report_t AS
     CONSTRUCTOR FUNCTION V2u_Ko_Report_t(
           SELF IN OUT NOCOPY V2u_Ko_Report_t
+        , job_uuid IN RAW
         , id IN NUMBER
         , source IN VARCHAR := NULL
         , datetime IN TIMESTAMP := NULL
@@ -10,6 +11,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Report_t AS
         ) RETURN SELF AS RESULT
     IS
     BEGIN
+        SELF.job_uuid := job_uuid;
         SELF.id := id;
         SELF.source := source;
         SELF.datetime := datetime;
@@ -24,6 +26,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Report_t AS
     IS
         ord INTEGER;
     BEGIN
+        ord := V2u_Util.RawNullCmp(job_uuid, other.job_uuid);
+        IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Util.StrNullCmp(source, other.source);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Util.TimestampNullCmp(datetime, other.datetime);

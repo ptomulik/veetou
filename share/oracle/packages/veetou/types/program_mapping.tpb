@@ -1,18 +1,20 @@
 CREATE OR REPLACE TYPE BODY V2u_Program_Mapping_t AS
     CONSTRUCTOR FUNCTION V2u_Program_Mapping_t(
           SELF IN OUT NOCOPY V2u_Program_Mapping_t
-        , university VARCHAR := NULL
-        , faculty VARCHAR := NULL
-        , studies_modetier VARCHAR := NULL
-        , studies_field VARCHAR := NULL
-        , studies_specialty VARCHAR := NULL
-        , mapped_program_code VARCHAR := NULL
-        , mapped_modetier_code VARCHAR := NULL
-        , mapped_field_code VARCHAR := NULL
-        , expr_semester_code VARCHAR := NULL
+        , id IN NUMBER
+        , university IN VARCHAR := NULL
+        , faculty IN VARCHAR := NULL
+        , studies_modetier IN VARCHAR := NULL
+        , studies_field IN VARCHAR := NULL
+        , studies_specialty IN VARCHAR := NULL
+        , mapped_program_code IN VARCHAR := NULL
+        , mapped_modetier_code IN VARCHAR := NULL
+        , mapped_field_code IN VARCHAR := NULL
+        , expr_semester_code IN VARCHAR := NULL
         ) RETURN SELF AS RESULT
     IS
     BEGIN
+        SELF.id := id;
         SELF.university := university;
         SELF.faculty := faculty;
         SELF.studies_modetier := studies_modetier;

@@ -1,3 +1,4 @@
+@@ko_subject_instances_mv.ddl
 @@ko_subject_instances_ov.ddl
 @@ko_subject_instances.ddl
 

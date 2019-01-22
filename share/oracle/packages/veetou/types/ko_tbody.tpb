@@ -1,11 +1,13 @@
 CREATE OR REPLACE TYPE BODY V2u_Ko_Tbody_t AS
     CONSTRUCTOR FUNCTION V2u_Ko_Tbody_t(
           SELF IN OUT NOCOPY V2u_Ko_Tbody_t
+        , job_uuid IN RAW
         , id IN NUMBER
         , remark IN VARCHAR := NULL
         ) RETURN SELF AS RESULT
     IS
     BEGIN
+        SELF.job_uuid := job_uuid;
         SELF.id := id;
         SELF.remark := remark;
         RETURN;

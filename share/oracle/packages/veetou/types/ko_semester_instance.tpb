@@ -1,6 +1,8 @@
 CREATE OR REPLACE TYPE BODY V2u_Ko_Semester_Instance_t AS
     CONSTRUCTOR FUNCTION V2u_Ko_Semester_Instance_t(
               SELF IN OUT NOCOPY V2u_Ko_Semester_Instance_t
+            , job_uuid IN RAW
+            , id IN NUMBER
             , semester_code IN VARCHAR := NULL
             , semester_number IN NUMBER := NULL
             , ects_mandatory IN NUMBER := NULL
@@ -12,6 +14,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Semester_Instance_t AS
         RETURN SELF AS RESULT
     IS
     BEGIN
+        SELF.job_uuid := job_uuid;
+        SELF.id := id;
         SELF.semester_code := semester_code;
         SELF.semester_number := semester_number;
         SELF.ects_mandatory := ects_mandatory;
@@ -24,12 +28,16 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Semester_Instance_t AS
 
     CONSTRUCTOR FUNCTION V2u_Ko_Semester_Instance_t(
               SELF IN OUT NOCOPY V2u_Ko_Semester_Instance_t
+            , job_uuid IN RAW
+            , id IN NUMBER
             , preamble IN V2u_Ko_Preamble_t
             , sheet IN V2u_Ko_Sheet_t
             , sheet_id IN NUMBER := NULL
       ) RETURN SELF AS RESULT
     IS
     BEGIN
+        SELF.job_uuid := job_uuid;
+        SELF.id := id;
         SELF.semester_code := preamble.semester_code;
         SELF.semester_number := preamble.semester_number;
         SELF.ects_mandatory := sheet.ects_mandatory;
@@ -45,6 +53,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Semester_Instance_t AS
     IS
         ord NUMBER;
     BEGIN
+        ord := V2u_Util.RawNullCmp(job_uuid, other.job_uuid);
+        IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Util.NumNullCmp(
                       V2U_Util.To_Semester_Id(semester_code)
                     , V2U_Util.To_Semester_Id(other.semester_code)

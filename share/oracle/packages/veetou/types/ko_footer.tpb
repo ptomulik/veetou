@@ -1,6 +1,7 @@
 CREATE OR REPLACE TYPE BODY V2u_Ko_Footer_t AS
     CONSTRUCTOR FUNCTION V2u_Ko_Footer_t(
           SELF IN OUT NOCOPY V2u_Ko_Footer_t
+        , job_uuid IN RAW
         , id IN NUMBER
         , pagination IN VARCHAR := NULL
         , sheet_page_number IN NUMBER := NULL
@@ -10,6 +11,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Footer_t AS
         ) RETURN SELF AS RESULT
     IS
     BEGIN
+        SELF.job_uuid := job_uuid;
         SELF.id := id;
         SELF.pagination := pagination;
         SELF.sheet_page_number := sheet_page_number;
@@ -38,6 +40,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Footer_t AS
     IS
         ord NUMBER;
     BEGIN
+        ord := V2u_Util.RawNullCmp(job_uuid, other.job_uuid);
+        IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Util.StrNullIcmp(sheet_page_number, other.sheet_page_number);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Util.NumNullCmp(sheet_pages_total, other.sheet_pages_total);

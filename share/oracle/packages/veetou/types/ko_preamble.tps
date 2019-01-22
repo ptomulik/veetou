@@ -1,5 +1,6 @@
 CREATE OR REPLACE TYPE V2u_Ko_Preamble_t FORCE AUTHID CURRENT_USER AS OBJECT
-    ( id NUMBER(38)
+    ( job_uuid RAW(16)
+    , id NUMBER(38)
     , studies_modetier VARCHAR(256 CHAR)
     , title VARCHAR(256 CHAR)
     , student_index VARCHAR(32 CHAR)
@@ -13,6 +14,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Preamble_t FORCE AUTHID CURRENT_USER AS OBJECT
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Preamble_t(
               SELF IN OUT NOCOPY V2u_Ko_Preamble_t
+            , job_uuid IN RAW
             , id IN NUMBER
             , studies_modetier IN VARCHAR := NULL
             , title IN VARCHAR := NULL

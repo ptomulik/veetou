@@ -1,6 +1,7 @@
 CREATE OR REPLACE TYPE BODY V2u_Ko_Tr_t AS
     CONSTRUCTOR FUNCTION V2u_Ko_Tr_t(
           SELF IN OUT NOCOPY V2u_Ko_Tr_t
+        , job_uuid IN RAW
         , id IN NUMBER
         , subj_code IN VARCHAR := NULL
         , subj_name IN VARCHAR := NULL
@@ -17,6 +18,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Tr_t AS
         ) RETURN SELF AS RESULT
     IS
     BEGIN
+        SELF.job_uuid := job_uuid;
         SELF.id := id;
         SELF.subj_code := subj_code;
         SELF.subj_name := subj_name;
@@ -38,6 +40,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Tr_t AS
     IS
         ord NUMBER;
     BEGIN
+        ord := V2u_Util.RawNullCmp(job_uuid, other.job_uuid);
+        IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Util.StrNullIcmp(subj_code, other.subj_code);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Util.StrNullIcmp(subj_name, other.subj_name);

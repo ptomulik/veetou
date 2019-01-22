@@ -1,5 +1,6 @@
 CREATE OR REPLACE TYPE V2u_Ko_Tr_t FORCE AUTHID CURRENT_USER AS OBJECT
-    ( id NUMBER(38)
+    ( job_uuid RAW(16)
+    , id NUMBER(38)
     , subj_code VARCHAR(32 CHAR)
     , subj_name VARCHAR(256 CHAR)
     , subj_hours_w NUMBER(8)
@@ -15,6 +16,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Tr_t FORCE AUTHID CURRENT_USER AS OBJECT
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Tr_t(
               SELF IN OUT NOCOPY V2u_Ko_Tr_t
+            , job_uuid IN RAW
             , id IN NUMBER
             , subj_code IN VARCHAR := NULL
             , subj_name IN VARCHAR := NULL
@@ -36,5 +38,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Tr_t FORCE AUTHID CURRENT_USER AS OBJECT
 /
 CREATE OR REPLACE TYPE V2u_Ko_Trs_t
     AS TABLE OF V2u_Ko_Tr_t;
+/
+CREATE OR REPLACE TYPE V2u_Ko_Tr_Refs_t
+    AS TABLE OF REF V2u_Ko_Tr_t;
 
 -- vim: set ft=sql ts=4 sw=4 et:

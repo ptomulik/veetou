@@ -69,6 +69,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Sheet_Info_t AS
     IS
         ord INTEGER;
     BEGIN
+        ord := V2u_Util.RawNullCmp(job_uuid, other.job_uuid);
+        IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Util.StrNullIcmp(student_index, other.student_index);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Util.StrNullIcmp(first_name, other.first_name);

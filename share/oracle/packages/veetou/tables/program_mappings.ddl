@@ -1,5 +1,5 @@
 CREATE TABLE v2u_program_mappings
-    ( id NUMBER NOT NULL
+    ( id NUMBER(38) NOT NULL
     , university VARCHAR(256 CHAR)
     , faculty VARCHAR(256 CHAR)
     , studies_modetier VARCHAR(256 CHAR)

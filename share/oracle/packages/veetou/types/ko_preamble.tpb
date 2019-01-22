@@ -1,6 +1,7 @@
 CREATE OR REPLACE TYPE BODY V2u_Ko_Preamble_t AS
     CONSTRUCTOR FUNCTION V2u_Ko_Preamble_t(
           SELF IN OUT NOCOPY V2u_Ko_Preamble_t
+        , job_uuid IN RAW
         , id IN NUMBER
         , studies_modetier IN VARCHAR := NULL
         , title IN VARCHAR := NULL
@@ -15,6 +16,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Preamble_t AS
         ) RETURN SELF AS RESULT
     IS
     BEGIN
+        SELF.job_uuid := job_uuid;
         SELF.id := id;
         SELF.studies_modetier := studies_modetier;
         SELF.title := title;
@@ -34,6 +36,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Preamble_t AS
     IS
         ord NUMBER;
     BEGIN
+        ord := V2u_Util.RawNullCmp(job_uuid, other.job_uuid);
+        IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Util.StrNullIcmp(student_index, other.student_index);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Util.StrNullIcmp(first_name, other.first_name);
