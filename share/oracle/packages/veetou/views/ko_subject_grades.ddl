@@ -21,6 +21,6 @@
 --        WITHIN GROUP (ORDER BY VALUE(t))
 --        FROM TABLE(semester_instances) t GROUP BY 1
 --      ) semesters
---FROM v2u_ko_student_specialties_ov v;
+--FROM v2u_ko_student_specialties_dv v;
 
 -- vim: set ft=sql ts=4 sw=4 et:

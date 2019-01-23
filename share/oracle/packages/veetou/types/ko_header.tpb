@@ -16,25 +16,11 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Header_t AS
         RETURN;
     END;
 
---    MAP MEMBER FUNCTION cat_attribs
---        RETURN VARCHAR
---    IS
---    BEGIN
---        RETURN V2U_Util.To_CharMap(university, 100)
---                || '|' ||
---                faculty;
---    END;
-
-    ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Header_t)
-        RETURN NUMBER
+    MAP MEMBER FUNCTION rawpk
+        RETURN RAW
     IS
-        ord NUMBER;
     BEGIN
-        ord := V2U_Util.StrNullIcmp(university, other.university);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(faculty, other.faculty);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        RETURN V2u_Util.RawNullCmp(job_uuid, other.job_uuid);
+        RETURN UTL_RAW.CONCAT(UTL_RAW.CAST_FROM_NUMBER(id), job_uuid);
     END;
 END;
 

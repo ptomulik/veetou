@@ -1,7 +1,7 @@
 CREATE TABLE v2u_ko_tbodies
 OF V2u_Ko_Tbody_t
     (
-      CONSTRAINTS v2u_ko_tbodies_pk PRIMARY KEY (job_uuid, id)
+      CONSTRAINTS v2u_ko_tbodies_pk PRIMARY KEY (id, job_uuid)
     , CONSTRAINTS v2u_ko_tbodies_fk0 FOREIGN KEY (job_uuid) REFERENCES v2u_ko_jobs(job_uuid)
     )
 OBJECT IDENTIFIER IS PRIMARY KEY;

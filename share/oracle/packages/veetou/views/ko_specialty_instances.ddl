@@ -9,6 +9,6 @@ AS SELECT
     , v.semester_code semester_code
     , v.pages_count pages_count
     , v.sheets_count sheets_count
-FROM v2u_ko_specialty_instances_ov v;
+FROM v2u_ko_specialty_instances_dv v;
 
 -- vim: set ft=sql ts=4 sw=4 et:

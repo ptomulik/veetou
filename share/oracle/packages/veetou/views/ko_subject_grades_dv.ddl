@@ -1,4 +1,4 @@
---CREATE OR REPLACE VIEW v2u_ko_subject_grades_ov
+--CREATE OR REPLACE VIEW v2u_ko_subject_grades_dv
 --AS WITH ungrouped AS (
 --    SELECT
 --          job_uuid

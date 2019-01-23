@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW v2u_ko_specialty_instances_ov
+CREATE OR REPLACE VIEW v2u_ko_specialty_instances_dv
 AS WITH ungrouped AS
     (
         SELECT

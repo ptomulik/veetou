@@ -11,7 +11,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Tr_t FORCE AUTHID CURRENT_USER AS OBJECT
     , subj_credit_kind VARCHAR(16 CHAR)
     , subj_ects NUMBER(4)
     , subj_tutor VARCHAR(256 CHAR)
-    , subj_grade VARCHAR(8 CHAR)
+    , subj_grade VARCHAR(32 CHAR)
     , subj_grade_date DATE
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Tr_t(
@@ -32,8 +32,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Tr_t FORCE AUTHID CURRENT_USER AS OBJECT
             , subj_grade_date IN DATE := NULL
             ) RETURN SELF AS RESULT
 
-    , ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Tr_t)
-        RETURN NUMBER
+    , MAP MEMBER FUNCTION rawpk RETURN RAW
     );
 /
 CREATE OR REPLACE TYPE V2u_Ko_Trs_t

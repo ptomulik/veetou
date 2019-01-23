@@ -1,7 +1,7 @@
 CREATE TABLE v2u_ko_pages
 OF V2u_Ko_Page_t
     (
-      CONSTRAINT v2u_ko_pages_pk PRIMARY KEY (job_uuid, id)
+      CONSTRAINT v2u_ko_pages_pk PRIMARY KEY (id, job_uuid)
     , CONSTRAINT v2u_ko_pages_fk0 FOREIGN KEY (job_uuid) REFERENCES v2u_ko_jobs(job_uuid)
     )
 OBJECT IDENTIFIER IS PRIMARY KEY;

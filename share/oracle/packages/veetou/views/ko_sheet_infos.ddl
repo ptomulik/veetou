@@ -19,6 +19,6 @@ AS SELECT
     , v.sheet_info.ects_other ects_other
     , v.sheet_info.ects_total ects_total
     , v.sheet_info.ects_attained ects_attained
-FROM v2u_ko_sheet_infos_ov v;
+FROM v2u_ko_sheet_infos_dv v;
 
 -- vim: set ft=sql ts=4 sw=4 et:

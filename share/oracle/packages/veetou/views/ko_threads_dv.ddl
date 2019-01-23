@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW v2u_ko_threads_ov
+CREATE OR REPLACE VIEW v2u_ko_threads_dv
 AS SELECT
       s.job_uuid job_uuid
     , s.sheet_id sheet_id
@@ -9,7 +9,7 @@ AS SELECT
     , t.max_admission_semester max_admission_semester
     , t.thread_semesters thread_semesters
 FROM v2u_ko_x_sheets s
-LEFT JOIN v2u_ko_student_threads_ov t
+LEFT JOIN v2u_ko_student_threads_dv t
 ON  (
         s.job_uuid = t.job_uuid AND
         s.preamble.student_index = t.student.student_index

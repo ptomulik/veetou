@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW v2u_ko_student_specialties_ov
+CREATE OR REPLACE VIEW v2u_ko_student_specialties_dv
 AS WITH ungrouped AS (
     SELECT
           job_uuid

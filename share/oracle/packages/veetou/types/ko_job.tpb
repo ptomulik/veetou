@@ -16,18 +16,12 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Job_t AS
         SELF.job_name := job_name;
         RETURN;
     END;
-    ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Job_t)
-        RETURN NUMBER
+
+    MAP MEMBER FUNCTION rawpk
+        RETURN RAW
     IS
-        ord NUMBER;
     BEGIN
-        ord := V2U_Util.TimestampNullCmp(job_timestamp, other.job_timestamp);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(job_host, other.job_host);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(job_user, other.job_user);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        RETURN V2U_Util.StrNullIcmp(job_name, other.job_name);
+        RETURN job_uuid;
     END;
 END;
 

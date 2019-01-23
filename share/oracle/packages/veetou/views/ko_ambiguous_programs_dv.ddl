@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW v2u_ko_ambiguous_programs_ov
+CREATE OR REPLACE VIEW v2u_ko_ambiguous_programs_dv
 AS WITH grouped_mappings AS (
     SELECT
           v.job_uuid job_uuid
@@ -13,7 +13,7 @@ AS WITH grouped_mappings AS (
         , v.semester_code semester_code
         , CAST(COLLECT(v.program_mapping) AS V2u_Program_Mappings_t) program_mappings
         , LISTAGG(v.pages_count, ',') WITHIN GROUP (ORDER BY v.program_mapping_id) pages_counts
-    FROM v2u_ko_mapped_programs_ov v
+    FROM v2u_ko_mapped_programs_dv v
     GROUP BY v.job_uuid, v.specialty, v.semester_code
     ORDER BY v.job_uuid, v.specialty, v.semester_code
 )

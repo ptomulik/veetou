@@ -13,11 +13,11 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Tbody_t AS
         RETURN;
     END;
 
-    MAP MEMBER FUNCTION cat_attribs
-        RETURN VARCHAR
+    MAP MEMBER FUNCTION rawpk
+        RETURN RAW
     IS
     BEGIN
-        RETURN remark;
+        RETURN UTL_RAW.CONCAT(UTL_RAW.CAST_FROM_NUMBER(id), job_uuid);
     END;
 END;
 

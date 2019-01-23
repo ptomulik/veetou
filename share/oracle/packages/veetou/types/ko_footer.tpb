@@ -21,36 +21,11 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Footer_t AS
         RETURN;
     END;
 
---    MAP MEMBER FUNCTION cat_attribs RETURN VARCHAR
---    IS
---    BEGIN
---        RETURN  V2U_Util.To_CharMap(sheet_page_number, 'S09', ifnull=>'   ')
---                || '|' ||
---                V2U_Util.To_CharMap(sheet_pages_total, 'S09', ifnull=>'   ')
---                || '|' ||
---                V2U_Util.To_CharMap(pagination,  5)
---                || '|' ||
---                V2U_Util.To_CharMap(generator_name, 100)
---                || '|' ||
---                generator_home;
---    END;
-
-    ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Footer_t)
-        RETURN NUMBER
+    MAP MEMBER FUNCTION rawpk
+        RETURN RAW
     IS
-        ord NUMBER;
     BEGIN
-        ord := V2u_Util.RawNullCmp(job_uuid, other.job_uuid);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(sheet_page_number, other.sheet_page_number);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.NumNullCmp(sheet_pages_total, other.sheet_pages_total);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(pagination, other.pagination);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(generator_name, other.generator_name);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        RETURN V2U_Util.StrNullIcmp(generator_home, other.generator_home);
+        RETURN UTL_RAW.CONCAT(UTL_RAW.CAST_FROM_NUMBER(id), job_uuid);
     END;
 END;
 

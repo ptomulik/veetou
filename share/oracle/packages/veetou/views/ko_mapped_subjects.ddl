@@ -45,6 +45,6 @@ AS SELECT
         FROM TABLE(v.trs) t GROUP BY 1
       ) tr_ids
 
-FROM v2u_ko_mapped_subjects_ov v;
+FROM v2u_ko_mapped_subjects_dv v;
 
 -- vim: set ft=sql ts=4 sw=4 et:

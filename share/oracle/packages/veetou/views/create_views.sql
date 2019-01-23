@@ -1,11 +1,11 @@
---@@subject_mappings_ov.ddl;
---@@program_mappings_ov.ddl;
 ----
-@@ko_x_trs.ddl;
-@@ko_x_sheets.ddl;
+@@ko_x_trs.sql;
+@@ko_x_sheets.sql;
 --@@ko_sheet_infos.sql;
+--
 @@ko_subject_instances.sql;
 @@ko_specialties.sql;
+--
 --@@ko_specialty_instances.sql;
 --@@ko_students.sql;
 --@@ko_student_specialties.sql;

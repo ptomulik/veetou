@@ -24,6 +24,6 @@ AS SELECT
         WITHIN GROUP (ORDER BY VALUE(t))
         FROM TABLE(v.thread_semesters) t GROUP BY 1
       ) thread_semesters
-FROM v2u_ko_threads_ov v;
+FROM v2u_ko_threads_dv v;
 
 -- vim: set ft=sql ts=4 sw=4 et:

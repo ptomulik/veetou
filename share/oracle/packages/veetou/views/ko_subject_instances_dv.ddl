@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW v2u_ko_subject_instances_ov
+CREATE OR REPLACE VIEW v2u_ko_subject_instances_dv
 OF V2u_Ko_Subject_Instance_t
 WITH OBJECT IDENTIFIER(job_uuid, id)
 AS
@@ -11,22 +11,24 @@ WITH
         FROM v2u_ko_x_trs
     ),
     v AS
-    ( -- grouping by subject instance
-        SELECT si, CAST(COLLECT(tr) AS V2u_Ko_Trs_t) trs
-        FROM u
+    ( -- grouping by subject instance and collecting trs
+        SELECT
+              si
+            , CAST(COLLECT(tr) AS V2u_Ko_Trs_t) trs
+        FROM u u
         GROUP BY si
     ),
     w AS
-    ( -- collecting extra characteristics
+    (
         SELECT
               si
-            /*, CAST(MULTISET(
-                    SELECT DISTINCT id FROM TABLE(v.trs)
-              ) AS V2u_Ko_Ids_t) tr_ids*/
-            /*, CAST(MULTISET(
-                    SELECT DISTINCT subj_grade FROM TABLE(v.trs)
-              ) AS V2u_Ko_Subj_Grades_t) subject_grades */
-        FROM v
+            , CAST(MULTISET(
+                    SELECT DISTINCT t.subj_grade FROM TABLE(trs) t
+              ) AS V2u_Ko_Subj_Grades_t) subj_grades
+            , CAST(MULTISET(
+                    SELECT t.id FROM TABLE(trs) t
+              ) AS V2u_Ko_Ids_t) tr_ids
+        FROM v v
     )
 SELECT
       w.si.job_uuid
@@ -47,8 +49,8 @@ SELECT
     , w.si.subj_credit_kind
     , w.si.subj_ects
     , w.si.subj_tutor
-    , NULL -- w.subject_grades
-    , NULL -- w.tr_ids
+    , w.subj_grades
+    , w.tr_ids
 FROM w w;
 
 -- vim: set ft=sql ts=4 sw=4 et:

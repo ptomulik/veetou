@@ -18,10 +18,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Footer_t FORCE AUTHID CURRENT_USER AS OBJECT
             , generator_home IN VARCHAR := NULL
             ) RETURN SELF AS RESULT
 
---    , MAP MEMBER FUNCTION cat_attribs RETURN VARCHAR
-
-    , ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Footer_t)
-            RETURN NUMBER
+    , MAP MEMBER FUNCTION rawpk RETURN RAW
     );
 /
 CREATE OR REPLACE TYPE V2u_Ko_Footers_t

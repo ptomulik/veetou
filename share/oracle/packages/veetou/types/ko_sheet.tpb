@@ -23,23 +23,11 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Sheet_t AS
         RETURN;
     END;
 
-    MAP MEMBER FUNCTION cat_attribs
-        RETURN VARCHAR
+    MAP MEMBER FUNCTION rawpk
+        RETURN RAW
     IS
     BEGIN
-        RETURN  V2U_Util.To_CharMap(first_page, 'S0XXXXXXXX', ifnull=>'          ')
-                || '|' ||
-                V2U_Util.To_CharMap(pages_parsed, 'S0XX', ifnull=>'    ')
-                || '|' ||
-                V2U_Util.To_CharMap(ects_mandatory, 'S0XXX', ifnull=>'     ')
-                || '|' ||
-                V2U_Util.To_CharMap(ects_other, 'S0XXX', ifnull=>'     ')
-                || '|' ||
-                V2U_Util.To_CharMap(ects_total, 'S0XXX', ifnull=>'     ')
-                || '|' ||
-                V2U_Util.To_CharMap(ects_attained, 'S0XXX', ifnull=>'     ')
-                || '|' ||
-                RAWTOHEX(job_uuid);
+        RETURN UTL_RAW.CONCAT(UTL_RAW.CAST_FROM_NUMBER(id), job_uuid);
     END;
 END;
 

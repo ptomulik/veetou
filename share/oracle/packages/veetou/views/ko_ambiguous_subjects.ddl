@@ -27,6 +27,6 @@ AS SELECT
     -- ko table rows counts
     , v.trs_counts trs_counts
 
-FROM v2u_ko_ambiguous_subjects_ov v;
+FROM v2u_ko_ambiguous_subjects_dv v;
 
 -- vim: set ft=sql ts=4 sw=4 et:

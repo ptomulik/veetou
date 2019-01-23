@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW v2u_ko_mapped_programs_ov
+CREATE OR REPLACE VIEW v2u_ko_mapped_programs_dv
 AS WITH joined AS (
     SELECT
           i.job_uuid job_uuid
@@ -8,7 +8,7 @@ AS WITH joined AS (
         , i.semester_code semester_code
         , m.program_mapping program_mapping
         , i.pages_count pages_count
-    FROM v2u_ko_specialty_instances_ov i
+    FROM v2u_ko_specialty_instances_dv i
     LEFT JOIN v2u_program_mappings m ON
         (
             i.specialty.university = m.program_mapping.university AND

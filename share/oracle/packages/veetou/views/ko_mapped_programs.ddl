@@ -18,6 +18,6 @@ AS SELECT
     , v.program_mapping.expr_semester_code expr_semester_code
     -- count
     , v.pages_count pages_count
-FROM v2u_ko_mapped_programs_ov v;
+FROM v2u_ko_mapped_programs_dv v;
 
 -- vim: set ft=sql ts=4 sw=4 et:

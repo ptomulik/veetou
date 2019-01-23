@@ -15,15 +15,11 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Page_t AS
         RETURN;
     END;
 
-    MAP MEMBER FUNCTION cat_attribs
-        RETURN VARCHAR
+    MAP MEMBER FUNCTION rawpk
+        RETURN RAW
     IS
     BEGIN
-        RETURN V2U_Util.To_CharMap(page_number, 'S0XXXXXXXXX',
-                                         ifnull => '           ')
-               || '|' ||
-               V2U_Util.To_CharMap(parser_page_number, 'S0XXXXXXXXX',
-                                                ifnull => '           ');
+        RETURN UTL_RAW.CONCAT(UTL_RAW.CAST_FROM_NUMBER(id), job_uuid);
     END;
 END;
 

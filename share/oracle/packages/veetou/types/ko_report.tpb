@@ -21,20 +21,11 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Report_t AS
         RETURN;
     END;
 
-    ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Report_t)
-        RETURN NUMBER
+    MAP MEMBER FUNCTION rawpk
+        RETURN RAW
     IS
-        ord INTEGER;
     BEGIN
-        ord := V2u_Util.RawNullCmp(job_uuid, other.job_uuid);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullCmp(source, other.source);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.TimestampNullCmp(datetime, other.datetime);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.NumNullCmp(first_page, other.first_page);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        RETURN V2U_Util.NumNullCmp(pages_parsed, other.pages_parsed);
+        RETURN UTL_RAW.CONCAT(UTL_RAW.CAST_FROM_NUMBER(id), job_uuid);
     END;
 END;
 

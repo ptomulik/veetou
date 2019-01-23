@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW v2u_ko_sheet_infos_ov
+CREATE OR REPLACE VIEW v2u_ko_sheet_infos_dv
 AS SELECT
       job_uuid
     , header_id

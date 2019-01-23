@@ -40,6 +40,6 @@ AS SELECT
     -- count
     , v.trs_count trs_count
 
-FROM v2u_ko_unmapped_subjects_ov v;
+FROM v2u_ko_unmapped_subjects_dv v;
 
 -- vim: set ft=sql ts=4 sw=4 et:

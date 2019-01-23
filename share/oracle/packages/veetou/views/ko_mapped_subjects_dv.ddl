@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW v2u_ko_mapped_subjects_ov
+CREATE OR REPLACE VIEW v2u_ko_mapped_subjects_dv
 AS WITH joined AS (
     SELECT
           si.job_uuid job_uuid
@@ -8,8 +8,8 @@ AS WITH joined AS (
         , sm.subject_mapping subject_mapping
         , si.trs_count trs_count
         , si.trs trs
-    FROM v2u_ko_subject_instances_ov si
-    LEFT JOIN v2u_subject_mappings_ov sm
+    FROM v2u_ko_subject_instances_dv si
+    LEFT JOIN v2u_subject_mappings_dv sm
     ON sm.subject_mapping.subj_code = si.subject_instance.subj_code
 )
 SELECT * FROM joined

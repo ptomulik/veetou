@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW v2u_ko_specialties_ov
+CREATE OR REPLACE VIEW v2u_ko_specialties_dv
 OF V2u_Ko_Specialty_t
 WITH OBJECT IDENTIFIER(job_uuid, id)
 AS

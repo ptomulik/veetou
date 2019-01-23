@@ -31,32 +31,11 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Preamble_t AS
         RETURN;
     END;
 
-    ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Preamble_t)
-        RETURN NUMBER
+    MAP MEMBER FUNCTION rawpk
+        RETURN RAW
     IS
-        ord NUMBER;
     BEGIN
-        ord := V2U_Util.StrNullCmp(student_index, other.student_index);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullCmp(first_name, other.first_name);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullCmp(last_name, other.last_name);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullCmp(student_name, other.student_name);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullCmp(studies_modetier, other.studies_modetier);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullCmp(studies_field, other.studies_field);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullCmp(studies_specialty, other.studies_specialty);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullCmp(semester_code, other.semester_code);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.NumNullCmp(semester_number, other.semester_number);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullCmp(title, other.title);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        RETURN V2u_Util.RawNullCmp(job_uuid, other.job_uuid);
+        RETURN UTL_RAW.CONCAT(UTL_RAW.CAST_FROM_NUMBER(id), job_uuid);
     END;
 END;
 

@@ -1,11 +1,11 @@
-CREATE OR REPLACE VIEW v2u_ko_student_threads_ov
+CREATE OR REPLACE VIEW v2u_ko_student_threads_dv
 AS WITH specialties AS (
     SELECT
           job_uuid
         , student
         , specialty
         , V2U_Util.To_Threads(semester_instances) threads
-    FROM v2u_ko_student_specialties_ov
+    FROM v2u_ko_student_specialties_dv
 )
 SELECT
       job_uuid

@@ -18,8 +18,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Report_t FORCE AUTHID CURRENT_USER AS OBJECT
             , pages_parsed IN NUMBER := NULL
             ) RETURN SELF AS RESULT
 
-    , ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Report_t)
-        RETURN NUMBER
+    , MAP MEMBER FUNCTION rawpk RETURN RAW
     );
 /
 CREATE OR REPLACE TYPE V2u_Ko_Reports_t

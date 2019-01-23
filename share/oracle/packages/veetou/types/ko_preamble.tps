@@ -28,8 +28,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Preamble_t FORCE AUTHID CURRENT_USER AS OBJECT
             , studies_specialty IN VARCHAR := NULL
             ) RETURN SELF AS RESULT
 
-    , ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Preamble_t)
-        RETURN NUMBER
+    , MAP MEMBER FUNCTION rawpk RETURN RAW
     );
 /
 CREATE OR REPLACE TYPE V2u_Ko_Preambles_t

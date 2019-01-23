@@ -5,10 +5,8 @@ CREATE OR REPLACE TYPE V2u_Ko_X_Sheet_t FORCE AUTHID CURRENT_USER AS OBJECT
     , pages V2u_Ko_Pages_t
     , header V2u_Ko_Header_t
     , preamble V2u_Ko_Preamble_t
+    , footers V2u_Ko_Footers_t
     , report V2u_Ko_Report_t
-    , distinct_headers_count NUMBER(38)
-    , distinct_preambles_count NUMBER(38)
-    , distinct_reports_count NUMBER(38)
 
     , CONSTRUCTOR FUNCTION V2u_Ko_X_Sheet_t(
               SELF IN OUT NOCOPY V2u_Ko_X_Sheet_t
@@ -18,10 +16,8 @@ CREATE OR REPLACE TYPE V2u_Ko_X_Sheet_t FORCE AUTHID CURRENT_USER AS OBJECT
             , pages IN V2u_Ko_Pages_t
             , header IN V2u_Ko_Header_t
             , preamble IN V2u_Ko_Preamble_t
+            , footers IN V2u_Ko_Footers_t
             , report IN V2u_Ko_Report_t
-            , distinct_headers_count IN NUMBER
-            , distinct_preambles_count IN NUMBER
-            , distinct_reports_count IN NUMBER
             ) RETURN SELF AS RESULT
     );
 /

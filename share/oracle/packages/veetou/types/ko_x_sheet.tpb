@@ -7,10 +7,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_X_Sheet_t AS
         , pages IN V2u_Ko_Pages_t
         , header IN V2u_Ko_Header_t
         , preamble IN V2u_Ko_Preamble_t
+        , footers IN V2u_Ko_Footers_t
         , report IN V2u_Ko_Report_t
-        , distinct_headers_count IN NUMBER
-        , distinct_preambles_count IN NUMBER
-        , distinct_reports_count IN NUMBER
         ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -20,10 +18,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_X_Sheet_t AS
         SELF.pages := pages;
         SELF.header := header;
         SELF.preamble := preamble;
+        SELF.footers := footers;
         SELF.report := report;
-        SELF.distinct_headers_count := distinct_headers_count;
-        SELF.distinct_preambles_count := distinct_preambles_count;
-        SELF.distinct_reports_count := distinct_reports_count;
         RETURN;
     END;
 END;
