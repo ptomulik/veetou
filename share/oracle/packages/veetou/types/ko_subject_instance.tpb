@@ -20,6 +20,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Instance_t AS
         , subj_ects IN NUMBER := NULL
         , subj_tutor IN VARCHAR2 := NULL
         , subj_grades IN V2u_Ko_Subj_Grades_t := NULL
+        , tr_ids IN V2u_Ko_Ids_t := NULL
         ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -42,6 +43,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Instance_t AS
         SELF.subj_ects := subj_ects;
         SELF.subj_tutor := subj_tutor;
         SELF.subj_grades := subj_grades;
+        SELF.tr_ids := tr_ids;
         RETURN;
     END;
 

@@ -9,7 +9,7 @@ AS WITH joined AS (
         , m.program_mapping program_mapping
         , i.pages_count pages_count
     FROM v2u_ko_specialty_instances_ov i
-    LEFT JOIN v2u_program_mappings_ov m ON
+    LEFT JOIN v2u_program_mappings m ON
         (
             i.specialty.university = m.program_mapping.university AND
             i.specialty.faculty = m.program_mapping.faculty AND

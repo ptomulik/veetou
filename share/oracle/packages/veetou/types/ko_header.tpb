@@ -30,11 +30,11 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Header_t AS
     IS
         ord NUMBER;
     BEGIN
-        ord := V2u_Util.RawNullCmp(job_uuid, other.job_uuid);
-        IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Util.StrNullIcmp(university, other.university);
         IF ord <> 0 THEN RETURN ord; END IF;
-        RETURN V2U_Util.StrNullIcmp(faculty, other.faculty);
+        ord := V2U_Util.StrNullIcmp(faculty, other.faculty);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        RETURN V2u_Util.RawNullCmp(job_uuid, other.job_uuid);
     END;
 END;
 

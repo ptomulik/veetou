@@ -3,7 +3,8 @@ OF V2u_Ko_Preamble_t
     (
       CONSTRAINT v2u_ko_preambles_pk PRIMARY KEY (job_uuid, id)
     , CONSTRAINT v2u_ko_preambles_fk0 FOREIGN KEY (job_uuid) REFERENCES v2u_ko_jobs(job_uuid)
-    );
+    )
+OBJECT IDENTIFIER IS PRIMARY KEY;
 
 COMMENT ON TABLE v2u_ko_preambles IS 'Preambuły występujące na Kartach Osiągnięć';
 COMMENT ON COLUMN v2u_ko_preambles.job_uuid IS 'Unikalny identyfikator uruchomienia VEETOU z którego pochodzi rekord';

@@ -3,11 +3,11 @@ AS WITH ungrouped AS
     (
         SELECT
               job_uuid
-            , V2u_Ko_Specialty_t(header, preamble) specialty
+            , V2u_To.Ko_Specialty(header, preamble) specialty
             , v.preamble.semester_code semester_code
             , distinct_page_ids_count
             , sheet_id
-        FROM v2u_ko_x_sheets_ov v
+        FROM v2u_ko_x_sheets v
     )
 SELECT
       job_uuid

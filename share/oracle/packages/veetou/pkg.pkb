@@ -170,7 +170,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         Drop_View('ko_student_threads_ov', 'ko_student_threads');
         Drop_View('ko_student_specialties_ov', 'ko_student_specialties');
         Drop_View('ko_specialty_instances_ov', 'ko_specialty_instances');
-        Drop_View('ko_specialties_ov', 'ko_specialties');
+        Drop_View('ko_specialties_ov', 'ko_specialties', 'MATERIALIZED VIEW');
         Drop_View('ko_unmapped_subjects_ov', 'ko_unmapped_subjects');
         Drop_View('ko_ambiguous_subjects_ov', 'ko_ambiguous_subjects');
         Drop_View('ko_mapped_subjects_ov', 'ko_mapped_subjects');
@@ -181,10 +181,10 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
             Drop_Sequence('subject_mappings_sq1');
         END IF;
         Drop_View('ko_sheet_infos_ov', 'ko_sheet_infos');
-        Drop_View('ko_x_sheets_ov', 'ko_x_sheets');
+        Drop_View('ko_x_sheets');
         Drop_View('ko_students_ov', 'ko_students');
         Drop_View('ko_subject_instances_ov', 'ko_subject_instances', 'MATERIALIZED VIEW');
-        Drop_View('ko_x_trs_ov', 'ko_x_trs');
+        Drop_View('ko_x_trs');
 
         IF how <> 'KEEP' THEN
             Drop_Index('ko_headers_idx1');
@@ -241,10 +241,10 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         IF how <> 'KEEP' THEN
             Drop_Type('Ko_Footer_t', 'Ko_Footers_t');
             Drop_Type('Ko_Header_t', 'Ko_Headers_t');
-            Drop_Type('Ko_Page_t', 'Ko_Pages_t');
+            Drop_Type('Ko_Page_t', 'Ko_Pages_t', 'Ko_Page_Refs_t');
             Drop_Type('Ko_Preamble_t', 'Ko_Preambles_t');
             Drop_Type('Ko_Report_t', 'Ko_Reports_t');
-            Drop_Type('Ko_Sheet_t', 'Ko_Sheets_t');
+            Drop_Type('Ko_Sheet_t', 'Ko_Sheets_t', 'Ko_Sheet_Refs_t');
             Drop_Type('Ko_Tbody_t', 'Ko_Tbodies_t');
             Drop_Type('Ko_Tr_t', 'Ko_Trs_t');
             Drop_Type('Ko_Job_t', 'Ko_Jobs_t');

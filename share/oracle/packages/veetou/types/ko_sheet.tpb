@@ -37,7 +37,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Sheet_t AS
                 || '|' ||
                 V2U_Util.To_CharMap(ects_total, 'S0XXX', ifnull=>'     ')
                 || '|' ||
-                V2U_Util.To_CharMap(ects_attained, 'S0XXX', ifnull=>'     ');
+                V2U_Util.To_CharMap(ects_attained, 'S0XXX', ifnull=>'     ')
+                || '|' ||
+                RAWTOHEX(job_uuid);
     END;
 END;
 

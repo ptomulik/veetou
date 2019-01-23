@@ -8,7 +8,7 @@ AS SELECT
     , t.threads_count
     , t.max_admission_semester max_admission_semester
     , t.thread_semesters thread_semesters
-FROM v2u_ko_x_sheets_ov s
+FROM v2u_ko_x_sheets s
 LEFT JOIN v2u_ko_student_threads_ov t
 ON  (
         s.job_uuid = t.job_uuid AND

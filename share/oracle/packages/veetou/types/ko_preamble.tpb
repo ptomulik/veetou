@@ -36,27 +36,27 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Preamble_t AS
     IS
         ord NUMBER;
     BEGIN
-        ord := V2u_Util.RawNullCmp(job_uuid, other.job_uuid);
+        ord := V2U_Util.StrNullCmp(student_index, other.student_index);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(student_index, other.student_index);
+        ord := V2U_Util.StrNullCmp(first_name, other.first_name);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(first_name, other.first_name);
+        ord := V2U_Util.StrNullCmp(last_name, other.last_name);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(last_name, other.last_name);
+        ord := V2U_Util.StrNullCmp(student_name, other.student_name);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(student_name, other.student_name);
+        ord := V2U_Util.StrNullCmp(studies_modetier, other.studies_modetier);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(studies_modetier, other.studies_modetier);
+        ord := V2U_Util.StrNullCmp(studies_field, other.studies_field);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(studies_field, other.studies_field);
+        ord := V2U_Util.StrNullCmp(studies_specialty, other.studies_specialty);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(studies_specialty, other.studies_specialty);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(semester_code, other.semester_code);
+        ord := V2U_Util.StrNullCmp(semester_code, other.semester_code);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Util.NumNullCmp(semester_number, other.semester_number);
         IF ord <> 0 THEN RETURN ord; END IF;
-        RETURN V2U_Util.StrNullIcmp(title, other.title);
+        ord := V2U_Util.StrNullCmp(title, other.title);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        RETURN V2u_Util.RawNullCmp(job_uuid, other.job_uuid);
     END;
 END;
 

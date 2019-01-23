@@ -1,6 +1,6 @@
 CREATE MATERIALIZED VIEW v2u_ko_subject_instances
 OF V2u_Ko_Subject_Instance_t
-BUILD IMMEDIATE
+BUILD DEFERRED
 REFRESH COMPLETE
 AS SELECT * FROM v2u_ko_subject_instances_ov;
 

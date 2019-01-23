@@ -27,6 +27,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_To AS
             , preamble IN V2u_Ko_Preamble_t
             , tr IN V2u_Ko_Tr_t
             , subj_grades IN V2u_Ko_Subj_Grades_t := NULL
+            , tr_ids IN V2u_Ko_Ids_t := NULL
             ) RETURN V2u_Ko_Subject_Instance_t
     IS
     BEGIN
@@ -50,7 +51,50 @@ CREATE OR REPLACE PACKAGE BODY V2U_To AS
             , subj_ects => tr.subj_ects
             , subj_tutor => tr.subj_tutor
             , subj_grades => subj_grades
+            , tr_ids => tr_ids
             );
+    END;
+
+    FUNCTION Ko_Specialty(
+              job_uuid IN RAW
+            , id IN NUMBER
+            , subject_instance IN V2u_Ko_Subject_Instance_t
+            , sheet_ids IN V2u_Ko_Ids_t := NULL
+            ) RETURN V2u_Ko_Specialty_t
+    IS
+    BEGIN
+        RETURN V2u_Ko_Specialty_t(
+                  job_uuid => job_uuid
+                , id => id
+                , university => subject_instance.university
+                , faculty => subject_instance.faculty
+                , studies_modetier => subject_instance.studies_modetier
+                , studies_field => subject_instance.studies_field
+                , studies_specialty => subject_instance.studies_specialty
+                , sheet_ids => sheet_ids
+                );
+    END;
+
+
+    FUNCTION Ko_Specialty(
+              job_uuid IN RAW
+            , id IN NUMBER
+            , header IN V2u_Ko_Header_t
+            , preamble IN V2u_Ko_Preamble_t
+            , sheet_ids V2u_Ko_Ids_t := NULL
+            ) RETURN V2u_Ko_Specialty_t
+    IS
+    BEGIN
+        RETURN V2u_Ko_Specialty_t(
+                  job_uuid => job_uuid
+                , id => id
+                , university => header.university
+                , faculty => header.faculty
+                , studies_modetier => preamble.studies_modetier
+                , studies_field => preamble.studies_field
+                , studies_specialty => preamble.studies_specialty
+                , sheet_ids => sheet_ids
+                );
     END;
 END V2U_To;
 
