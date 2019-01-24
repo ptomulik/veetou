@@ -82,8 +82,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Match AS
         IF NOT V2U_Util.Split_Range(expr, smin, smax) THEN
             RETURN -1;
         END IF;
-        nmin := V2U_Util.To_Number_Or_Null(smin);
-        nmax := V2U_Util.To_Number_Or_Null(smax);
+        nmin := V2U_To.Number_Or_Null(smin);
+        nmax := V2U_To.Number_Or_Null(smax);
         IF nmin IS NOT NULL AND nmin > value THEN
             RETURN 0;
         ELSIF nmax IS NOT NULL AND value > nmax THEN
@@ -100,7 +100,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Match AS
         smax VARCHAR(1024);
         nval NUMBER;
     BEGIN
-        nval := V2U_Util.To_Number_Or_Null(value);
+        nval := V2U_To.Number_Or_Null(value);
         IF nval IS NULL THEN
             RETURN -1;
         ELSE

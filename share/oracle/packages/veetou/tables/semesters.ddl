@@ -17,7 +17,7 @@ CREATE OR REPLACE TRIGGER v2u_semesters_tr1
     BEFORE INSERT ON v2u_semesters
 FOR EACH ROW
 BEGIN
-    SELECT V2U_Util.To_Semester_Id(:new.code)
+    SELECT V2U_To.Semester_Id(:new.code)
         INTO :new.id
     FROM dual;
 END;

@@ -1,12 +1,3 @@
---@@ko_job.tps;
---@@ko_report.tps;
---@@ko_footer.tps;
---@@ko_header.tps;
---@@ko_preamble.tps;
---@@ko_page.tps;
---@@ko_sheet.tps;
---@@ko_tbody.tps;
---@@ko_tr.tps;
 @@ko_x_tr.tps;
 @@ko_x_sheet.tps;
 @@ko_semester_instance.tps;
@@ -16,6 +7,6 @@
 @@ko_student.tps;
 --@@program_mapping.tps;
 --@@semester.tps;
---@@subject_mapping.tps;
+@@ko_mapped_subject.tps;
 
 -- vim: set ft=sql ts=4 sw=4 et:

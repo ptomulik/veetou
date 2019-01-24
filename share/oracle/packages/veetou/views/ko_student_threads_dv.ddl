@@ -4,7 +4,7 @@ AS WITH specialties AS (
           job_uuid
         , student
         , specialty
-        , V2U_Util.To_Threads(semester_instances) threads
+        , V2U_To.Threads(semester_instances) threads
     FROM v2u_ko_student_specialties_dv
 )
 SELECT

@@ -6,22 +6,23 @@ WITH
     u AS
     ( -- retrieving
         SELECT
-              V2u_To.Ko_Subject_Instance(job_uuid, NULL, header, preamble, tr) si
-            , tr
-        FROM v2u_ko_x_trs
+              V2u_To.Ko_Subject_Instance(job_uuid, NULL, VALUE(x)) si
+            , DEREF(tr) tr
+        FROM v2u_ko_x_trs x
     ),
     v AS
     ( -- grouping by subject instance and collecting trs
-        SELECT
-              si
-            , CAST(COLLECT(tr) AS V2u_Ko_Trs_t) trs
-        FROM u u
+        SELECT si, CAST(COLLECT(tr) AS V2u_Ko_Trs_t) trs
+        FROM u
         GROUP BY si
     ),
     w AS
     (
         SELECT
               si
+            -- sorry, but for some reason COLLECT(DISTINCT...) didn't work in
+            -- the subquery v (it selected all occurences, not only distinct
+            -- grades).
             , CAST(MULTISET(
                     SELECT DISTINCT t.subj_grade FROM TABLE(trs) t
               ) AS V2u_Ko_Subj_Grades_t) subj_grades

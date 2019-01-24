@@ -10,7 +10,7 @@ CREATE OR REPLACE TYPE BODY V2u_Semester_t AS
     BEGIN
         SELF.code := code;
         IF id IS NULL THEN
-            SELF.id := V2u_Util.To_Semester_Id(code);
+            SELF.id := V2U_To.Semester_Id(code);
         ELSE
             SELF.id := id;
         END IF;

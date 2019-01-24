@@ -1,7 +1,7 @@
 CREATE OR REPLACE VIEW v2u_ko_mapped_subjects
 AS SELECT
       v.job_uuid job_uuid
-    , v.subject_mapping_id subject_mapping_id
+    , v.id id
     , v.matching_score matching_score
     -- instance
     , v.subject_instance.subj_code subj_code
@@ -38,13 +38,8 @@ AS SELECT
     , v.subject_mapping.expr_subj_ects expr_subj_ects
     , v.subject_mapping.expr_subj_tutor expr_subj_tutor
     -- count
-    , v.trs_count trs_count
-    , (
-        SELECT LISTAGG(id, ',')
-        WITHIN GROUP (ORDER BY VALUE(t))
-        FROM TABLE(v.trs) t GROUP BY 1
-      ) tr_ids
-
+    , (SELECT COUNT(*) FROM TABLE(v.subject_instance.tr_ids) GROUP BY 1) trs_count
+    , v.subject_instance.tr_ids tr_ids
 FROM v2u_ko_mapped_subjects_dv v;
 
 -- vim: set ft=sql ts=4 sw=4 et:

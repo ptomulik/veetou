@@ -1,28 +1,6 @@
 CREATE TABLE v2u_subject_mappings
-    ( id NUMBER(38) NOT NULL
-    , subj_code VARCHAR(20 CHAR) NOT NULL
-    , mapped_subj_code VARCHAR(20 CHAR)
-
-    -- additional selectors
-
-    , expr_subj_name VARCHAR(256 CHAR)
-    , expr_university VARCHAR(256 CHAR)
-    , expr_faculty VARCHAR(256 CHAR)
-    , expr_studies_modetier VARCHAR(256 CHAR)
-    , expr_studies_field VARCHAR(256 CHAR)
-    , expr_studies_specialty VARCHAR(256 CHAR)
-    , expr_semester_code VARCHAR(256 CHAR)
-    , expr_subj_hours_w VARCHAR(256 CHAR)
-    , expr_subj_hours_c VARCHAR(256 CHAR)
-    , expr_subj_hours_l VARCHAR(256 CHAR)
-    , expr_subj_hours_p VARCHAR(256 CHAR)
-    , expr_subj_hours_s VARCHAR(256 CHAR)
-    , expr_subj_credit_kind VARCHAR(256 CHAR)
-    , expr_subj_ects VARCHAR(256 CHAR)
-    , expr_subj_tutor VARCHAR(256 CHAR)
-
-    , CONSTRAINT v2u_subject_mappings_pk PRIMARY KEY(id)
-    );
+OF V2u_Subject_Mapping_t
+    ( CONSTRAINT v2u_subject_mappings_pk PRIMARY KEY(id) );
 
 COMMENT ON TABLE v2u_subject_mappings IS 'Odwzorowanie kodów przedmiotów (VEE->USOS)';
 COMMENT ON COLUMN v2u_subject_mappings.subj_code IS 'Kod przedmiotu (VEE)';

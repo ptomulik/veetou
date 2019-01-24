@@ -189,153 +189,123 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Mapping_t AS
     END;
 
 
-    MEMBER FUNCTION match_subj_name(
-            SELF IN V2u_Subject_Mapping_t
-          , subj_name IN VARCHAR
-      ) RETURN INTEGER
+    MEMBER FUNCTION match_subj_name(subj_name IN VARCHAR)
+        RETURN INTEGER
     IS
     BEGIN
-        RETURN V2U_Match.String_Like(SELF.expr_subj_name, subj_name);
+        RETURN V2U_Match.String_Like(expr_subj_name, subj_name);
     END;
 
 
-    MEMBER FUNCTION match_university(
-            SELF IN V2u_Subject_Mapping_t
-          , university IN VARCHAR
-      ) RETURN INTEGER
+    MEMBER FUNCTION match_university(university IN VARCHAR)
+        RETURN INTEGER
     IS
     BEGIN
-        RETURN V2U_Match.String_Like(SELF.expr_university, university);
+        RETURN V2U_Match.String_Like(expr_university, university);
     END;
 
 
-    MEMBER FUNCTION match_faculty(
-            SELF IN V2u_Subject_Mapping_t
-          , faculty IN VARCHAR
-      ) RETURN INTEGER
+    MEMBER FUNCTION match_faculty(faculty IN VARCHAR)
+        RETURN INTEGER
     IS
     BEGIN
-        RETURN V2U_Match.String_Like(SELF.expr_faculty, faculty);
+        RETURN V2U_Match.String_Like(expr_faculty, faculty);
     END;
 
 
-    MEMBER FUNCTION match_studies_modetier(
-            SELF IN V2u_Subject_Mapping_t
-          , studies_modetier IN VARCHAR
-      ) RETURN INTEGER
+    MEMBER FUNCTION match_studies_modetier(studies_modetier IN VARCHAR)
+        RETURN INTEGER
     IS
     BEGIN
-        RETURN V2U_Match.String_Like(SELF.expr_studies_modetier, studies_modetier);
+        RETURN V2U_Match.String_Like(expr_studies_modetier, studies_modetier);
     END;
 
 
-    MEMBER FUNCTION match_studies_field(
-            SELF IN V2u_Subject_Mapping_t
-          , studies_field IN VARCHAR
-      ) RETURN INTEGER
+    MEMBER FUNCTION match_studies_field(studies_field IN VARCHAR)
+        RETURN INTEGER
     IS
     BEGIN
-        RETURN V2U_Match.String_Like(SELF.expr_studies_field, studies_field);
+        RETURN V2U_Match.String_Like(expr_studies_field, studies_field);
     END;
 
 
-    MEMBER FUNCTION match_studies_specialty(
-            SELF IN V2u_Subject_Mapping_t
-          , studies_specialty IN VARCHAR
-      ) RETURN INTEGER
+    MEMBER FUNCTION match_studies_specialty(studies_specialty IN VARCHAR)
+        RETURN INTEGER
     IS
     BEGIN
-        RETURN V2U_Match.String_Like(SELF.expr_studies_specialty, studies_specialty);
+        RETURN V2U_Match.String_Like(expr_studies_specialty, studies_specialty);
     END;
 
 
-    MEMBER FUNCTION match_semester_code(
-            SELF IN V2u_Subject_Mapping_t
-          , semester_code IN VARCHAR
-      ) RETURN INTEGER
+    MEMBER FUNCTION match_semester_code(semester_code IN VARCHAR)
+        RETURN INTEGER
     IS
     BEGIN
-        RETURN V2U_Match.String_Range(SELF.expr_semester_code, semester_code);
+        RETURN V2U_Match.String_Range(expr_semester_code, semester_code);
     END;
 
 
-    MEMBER FUNCTION match_subj_hours_w(
-            SELF IN V2u_Subject_Mapping_t
-          , subj_hours_w IN VARCHAR
-      ) RETURN INTEGER
+    MEMBER FUNCTION match_subj_hours_w(subj_hours_w IN VARCHAR)
+        RETURN INTEGER
     IS
     BEGIN
-        RETURN V2U_Match.Number_Range(SELF.expr_subj_hours_w, subj_hours_w);
+        RETURN V2U_Match.Number_Range(expr_subj_hours_w, subj_hours_w);
     END;
 
 
-    MEMBER FUNCTION match_subj_hours_c(
-            SELF IN V2u_Subject_Mapping_t
-          , subj_hours_c IN INTEGER
-      ) RETURN INTEGER
+    MEMBER FUNCTION match_subj_hours_c(subj_hours_c IN INTEGER)
+        RETURN INTEGER
     IS
     BEGIN
-        RETURN V2U_Match.Number_Range(SELF.expr_subj_hours_c, subj_hours_c);
+        RETURN V2U_Match.Number_Range(expr_subj_hours_c, subj_hours_c);
     END;
 
 
-    MEMBER FUNCTION match_subj_hours_l(
-            SELF IN V2u_Subject_Mapping_t
-          , subj_hours_l IN INTEGER
-      ) RETURN INTEGER
+    MEMBER FUNCTION match_subj_hours_l(subj_hours_l IN INTEGER)
+        RETURN INTEGER
     IS
     BEGIN
-        RETURN V2U_Match.Number_Range(SELF.expr_subj_hours_l, subj_hours_l);
+        RETURN V2U_Match.Number_Range(expr_subj_hours_l, subj_hours_l);
     END;
 
 
-    MEMBER FUNCTION match_subj_hours_p(
-            SELF IN V2u_Subject_Mapping_t
-          , subj_hours_p IN INTEGER
-      ) RETURN INTEGER
+    MEMBER FUNCTION match_subj_hours_p(subj_hours_p IN INTEGER)
+        RETURN INTEGER
     IS
     BEGIN
-        RETURN V2U_Match.Number_Range(SELF.expr_subj_hours_p, subj_hours_p);
+        RETURN V2U_Match.Number_Range(expr_subj_hours_p, subj_hours_p);
     END;
 
 
-    MEMBER FUNCTION match_subj_hours_s(
-            SELF IN V2u_Subject_Mapping_t
-          , subj_hours_s IN INTEGER
-      ) RETURN INTEGER
+    MEMBER FUNCTION match_subj_hours_s(subj_hours_s IN INTEGER)
+        RETURN INTEGER
     IS
     BEGIN
-        RETURN V2U_Match.Number_Range(SELF.expr_subj_hours_s, subj_hours_s);
+        RETURN V2U_Match.Number_Range(expr_subj_hours_s, subj_hours_s);
     END;
 
 
-    MEMBER FUNCTION match_subj_credit_kind(
-            SELF IN V2u_Subject_Mapping_t
-          , subj_credit_kind IN INTEGER
-      ) RETURN INTEGER
+    MEMBER FUNCTION match_subj_credit_kind(subj_credit_kind IN INTEGER)
+        RETURN INTEGER
     IS
     BEGIN
-        RETURN V2U_Match.String_Like(SELF.expr_subj_credit_kind, subj_credit_kind);
+        RETURN V2U_Match.String_Like(expr_subj_credit_kind, subj_credit_kind);
     END;
 
 
-    MEMBER FUNCTION match_subj_ects(
-            SELF IN V2u_Subject_Mapping_t
-          , subj_ects IN INTEGER
-      ) RETURN INTEGER
+    MEMBER FUNCTION match_subj_ects(subj_ects IN INTEGER)
+        RETURN INTEGER
     IS
     BEGIN
-        RETURN V2U_Match.Number_Range(SELF.expr_subj_ects, subj_ects);
+        RETURN V2U_Match.Number_Range(expr_subj_ects, subj_ects);
     END;
 
 
-    MEMBER FUNCTION match_subj_tutor(
-            SELF IN V2u_Subject_Mapping_t
-          , subj_tutor IN VARCHAR
-      ) RETURN INTEGER
+    MEMBER FUNCTION match_subj_tutor(subj_tutor IN VARCHAR)
+        RETURN INTEGER
     IS
     BEGIN
-        RETURN V2U_Match.Person_Name(SELF.expr_subj_tutor, subj_tutor);
+        RETURN V2U_Match.Person_Name(expr_subj_tutor, subj_tutor);
     END;
 
 

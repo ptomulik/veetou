@@ -3,14 +3,14 @@ OF V2u_Ko_X_Tr_t
 WITH OBJECT IDENTIFIER(job_uuid, id)
 AS SELECT trs.job_uuid
         , trs.id
-        , VALUE(trs)
-        , VALUE(pages)
-        , VALUE(headers)
-        , VALUE(preambles)
-        , VALUE(tbodies)
-        , VALUE(footers)
-        , VALUE(sheets)
-        , VALUE(reports)
+        , REF(trs)
+        , REF(pages)
+        , REF(headers)
+        , REF(preambles)
+        , REF(tbodies)
+        , REF(footers)
+        , REF(sheets)
+        , REF(reports)
 FROM v2u_ko_trs trs
 INNER JOIN v2u_ko_tbody_trs tbody_trs
       ON (tbody_trs.job_uuid = trs.job_uuid AND

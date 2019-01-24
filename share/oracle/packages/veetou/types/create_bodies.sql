@@ -17,5 +17,6 @@
 @@program_mapping.tpb;
 @@semester.tpb;
 @@subject_mapping.tpb;
+@@ko_mapped_subject.tpb;
 
 -- vim: set ft=sql ts=4 sw=4 et:

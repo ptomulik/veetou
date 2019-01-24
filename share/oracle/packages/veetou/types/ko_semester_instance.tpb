@@ -56,8 +56,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Semester_Instance_t AS
         ord := V2u_Util.RawNullCmp(job_uuid, other.job_uuid);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Util.NumNullCmp(
-                      V2U_Util.To_Semester_Id(semester_code)
-                    , V2U_Util.To_Semester_Id(other.semester_code)
+                      V2U_To.Semester_Id(semester_code)
+                    , V2U_To.Semester_Id(other.semester_code)
                     );
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Util.NumNullCmp(semester_number, other.semester_number);

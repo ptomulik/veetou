@@ -242,6 +242,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
 
         Drop_Collect_Types();
 
+        Drop_Type('Ko_Mapped_Subject_t', 'Ko_Mapped_Subjects_t');
         IF how <> 'KEEP' THEN
             Drop_Type('Program_Mapping_t', 'Program_Mappings_t');
         END IF;
@@ -256,17 +257,19 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         Drop_Type('Ko_Sheet_Info_t');
         Drop_Type('Ko_Student_t');
         Drop_Type('Ko_X_Sheet_t', 'Ko_X_Sheets_t');
+        Drop_TYpe('Ko_X_Sheet_Pages_t');
+        Drop_TYpe('Ko_X_Sheet_Footers_t');
         Drop_Type('Ko_X_Tr_t', 'Ko_X_Trs_t');
         IF how <> 'KEEP' THEN
-            Drop_Type('Ko_Footer_t', 'Ko_Footers_t');
-            Drop_Type('Ko_Header_t', 'Ko_Headers_t');
+            Drop_Type('Ko_Footer_t', 'Ko_Footers_t', 'Ko_Footer_Refs_t');
+            Drop_Type('Ko_Header_t', 'Ko_Headers_t', 'Ko_Header_Refs_t');
             Drop_Type('Ko_Page_t', 'Ko_Pages_t', 'Ko_Page_Refs_t');
-            Drop_Type('Ko_Preamble_t', 'Ko_Preambles_t');
-            Drop_Type('Ko_Report_t', 'Ko_Reports_t');
+            Drop_Type('Ko_Preamble_t', 'Ko_Preambles_t', 'Ko_Preamble_Refs_t');
+            Drop_Type('Ko_Report_t', 'Ko_Reports_t', 'Ko_Report_Refs_t');
             Drop_Type('Ko_Sheet_t', 'Ko_Sheets_t', 'Ko_Sheet_Refs_t');
-            Drop_Type('Ko_Tbody_t', 'Ko_Tbodies_t');
+            Drop_Type('Ko_Tbody_t', 'Ko_Tbodies_t', 'Ko_Tbody_Refs_t');
             Drop_Type('Ko_Tr_t', 'Ko_Trs_t', 'Ko_Tr_Refs_t');
-            Drop_Type('Ko_Job_t', 'Ko_Jobs_t');
+            Drop_Type('Ko_Job_t', 'Ko_Jobs_t', 'Ko_Job_Refs_t');
             Drop_Type('Semester_Codes_t');
             Drop_Type('Semester_t', 'Semesters_t');
         END IF;

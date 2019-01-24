@@ -5,8 +5,8 @@ AS
 WITH u AS
     ( -- iterate over sheets
         SELECT
-              VALUE(sheets) sheet
-            , VALUE(reports) report
+              REF(sheets) sheet
+            , REF(reports) report
 
         FROM v2u_ko_report_sheets report_sheets
         INNER JOIN v2u_ko_sheets sheets
@@ -21,9 +21,9 @@ WITH u AS
         SELECT
               sheet
             , report
-            , CAST(COLLECT(VALUE(pages) ORDER BY VALUE(pages)) AS V2u_Ko_Pages_t) pages
-            , MIN(VALUE(pages)) KEEP (DENSE_RANK FIRST ORDER BY VALUE(pages)) page
-            , CAST(COLLECT(VALUE(footers) ORDER BY VALUE(pages)) AS V2u_Ko_Footers_t) footers
+            , CAST(COLLECT(pages.id ORDER BY pages.id) AS V2u_Ko_X_Sheet_Pages_t) pages
+            , MIN(REF(pages)) KEEP (DENSE_RANK FIRST ORDER BY VALUE(pages)) page
+            , CAST(COLLECT(footers.id ORDER BY pages.id) AS V2u_Ko_X_Sheet_Footers_t) footers
         FROM v2u_ko_sheet_pages sheet_pages
         INNER JOIN u u
             ON (sheet_pages.ko_sheet_id = u.sheet.id AND
@@ -44,8 +44,8 @@ SELECT -- having sheet and its first page selected, add header and preamble
     , v.sheet.id
     , v.sheet
     , v.pages
-    , VALUE(headers)
-    , VALUE(preambles)
+    , REF(headers)
+    , REF(preambles)
     , v.footers
     , report
 FROM v v

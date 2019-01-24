@@ -57,82 +57,24 @@ CREATE OR REPLACE TYPE V2u_Subject_Mapping_t FORCE AUTHID CURRENT_USER AS OBJECT
             , subj_credit_kind IN VARCHAR
             , subj_ects IN VARCHAR
             , subj_tutor IN VARCHAR
-            ) RETURN INTEGER
+            )
+        RETURN INTEGER
 
-    , MEMBER FUNCTION match_subj_name(
-              SELF IN V2u_Subject_Mapping_t
-            , subj_name IN VARCHAR
-            ) RETURN INTEGER
-
-    , MEMBER FUNCTION match_university(
-              SELF IN V2u_Subject_Mapping_t
-            , university IN VARCHAR
-            ) RETURN INTEGER
-
-    , MEMBER FUNCTION match_faculty(
-              SELF IN V2u_Subject_Mapping_t
-            , faculty IN VARCHAR
-            ) RETURN INTEGER
-
-    , MEMBER FUNCTION match_studies_modetier(
-              SELF IN V2u_Subject_Mapping_t
-            , studies_modetier IN VARCHAR
-            ) RETURN INTEGER
-
-    , MEMBER FUNCTION match_studies_field(
-              SELF IN V2u_Subject_Mapping_t
-            , studies_field IN VARCHAR
-            ) RETURN INTEGER
-
-    , MEMBER FUNCTION match_studies_specialty(
-              SELF IN V2u_Subject_Mapping_t
-            , studies_specialty IN VARCHAR
-            ) RETURN INTEGER
-
-    , MEMBER FUNCTION match_semester_code(
-              SELF IN V2u_Subject_Mapping_t
-            , semester_code IN VARCHAR
-            ) RETURN INTEGER
-
-    , MEMBER FUNCTION match_subj_hours_w(
-              SELF IN V2u_Subject_Mapping_t
-            , subj_hours_w IN VARCHAR
-            ) RETURN INTEGER
-
-    , MEMBER FUNCTION match_subj_hours_c(
-              SELF IN V2u_Subject_Mapping_t
-            , subj_hours_c IN INTEGER
-            ) RETURN INTEGER
-
-    , MEMBER FUNCTION match_subj_hours_l(
-              SELF IN V2u_Subject_Mapping_t
-            , subj_hours_l IN INTEGER
-            ) RETURN INTEGER
-
-    , MEMBER FUNCTION match_subj_hours_p(
-              SELF IN V2u_Subject_Mapping_t
-            , subj_hours_p IN INTEGER
-            ) RETURN INTEGER
-
-    , MEMBER FUNCTION match_subj_hours_s(
-              SELF IN V2u_Subject_Mapping_t
-            , subj_hours_s IN INTEGER
-            ) RETURN INTEGER
-
-    , MEMBER FUNCTION match_subj_credit_kind(
-              SELF IN V2u_Subject_Mapping_t
-            , subj_credit_kind IN INTEGER
-            ) RETURN INTEGER
-
-    , MEMBER FUNCTION match_subj_ects(
-              SELF IN V2u_Subject_Mapping_t
-            , subj_ects IN INTEGER
-            ) RETURN INTEGER
-
-    , MEMBER FUNCTION match_subj_tutor(
-              SELF IN V2u_Subject_Mapping_t
-            , subj_tutor IN VARCHAR
-            ) RETURN INTEGER
+    , MEMBER FUNCTION match_subj_name(subj_name IN VARCHAR) RETURN INTEGER
+    , MEMBER FUNCTION match_university(university IN VARCHAR) RETURN INTEGER
+    , MEMBER FUNCTION match_faculty(faculty IN VARCHAR) RETURN INTEGER
+    , MEMBER FUNCTION match_studies_modetier(studies_modetier IN VARCHAR) RETURN INTEGER
+    , MEMBER FUNCTION match_studies_field(studies_field IN VARCHAR) RETURN INTEGER
+    , MEMBER FUNCTION match_studies_specialty(studies_specialty IN VARCHAR) RETURN INTEGER
+    , MEMBER FUNCTION match_semester_code(semester_code IN VARCHAR) RETURN INTEGER
+    , MEMBER FUNCTION match_subj_hours_w(subj_hours_w IN VARCHAR) RETURN INTEGER
+    , MEMBER FUNCTION match_subj_hours_c(subj_hours_c IN INTEGER) RETURN INTEGER
+    , MEMBER FUNCTION match_subj_hours_l(subj_hours_l IN INTEGER) RETURN INTEGER
+    , MEMBER FUNCTION match_subj_hours_p(subj_hours_p IN INTEGER) RETURN INTEGER
+    , MEMBER FUNCTION match_subj_hours_s(subj_hours_s IN INTEGER) RETURN INTEGER
+    , MEMBER FUNCTION match_subj_credit_kind(subj_credit_kind IN INTEGER) RETURN INTEGER
+    , MEMBER FUNCTION match_subj_ects(subj_ects IN INTEGER) RETURN INTEGER
+    , MEMBER FUNCTION match_subj_tutor(subj_tutor IN VARCHAR) RETURN INTEGER
 
     );
 /
