@@ -187,10 +187,12 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         Drop_View('ko_student_threads_dv', 'ko_student_threads');
         Drop_View('ko_student_specialties_dv', 'ko_student_specialties');
         Drop_View('ko_specialty_instances_dv', 'ko_specialty_instances');
-        Drop_View('ko_specialties_dv', 'ko_specialties', 'MATERIALIZED VIEW');
+        Drop_View('ko_specialties');
+        Drop_View('ko_specialties_dv', 'ko_specialties_mv', 'MATERIALIZED VIEW');
         Drop_View('ko_unmapped_subjects_dv', 'ko_unmapped_subjects');
         Drop_View('ko_ambiguous_subjects_dv', 'ko_ambiguous_subjects');
-        Drop_View('ko_mapped_subjects_dv', 'ko_mapped_subjects');
+        Drop_View('ko_mapped_subjects');
+        Drop_View('ko_mapped_subjects_dv', 'ko_mapped_subjects_mv', 'MATERIALIZED VIEW');
         IF how <> 'KEEP' THEN
             Drop_Index('subject_mappings_idx1');
             Drop_Index('subject_mappings_idx2');
@@ -198,10 +200,13 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
             Drop_Sequence('subject_mappings_sq1');
         END IF;
         Drop_View('ko_sheet_infos_dv', 'ko_sheet_infos');
-        Drop_View('ko_x_sheets_dv', 'ko_x_sheets', 'MATERIALIZED VIEW');
+        Drop_View('ko_x_sheets');
+        Drop_View('ko_x_sheets_dv', 'ko_x_sheets_mv', 'MATERIALIZED VIEW');
         Drop_View('ko_students_dv', 'ko_students');
-        Drop_View('ko_subject_instances_dv', 'ko_subject_instances', 'MATERIALIZED VIEW');
-        Drop_View('ko_x_trs_dv', 'ko_x_trs', 'MATERIALIZED VIEW');
+        Drop_View('ko_subject_instances');
+        Drop_View('ko_subject_instances_dv', 'ko_subject_instances_mv', 'MATERIALIZED VIEW');
+        Drop_View('ko_x_trs');
+        Drop_View('ko_x_trs_dv', 'ko_x_trs_mv', 'MATERIALIZED VIEW');
 
         IF how <> 'KEEP' THEN
             Drop_Index('ko_headers_idx1');
@@ -273,7 +278,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
             Drop_Type('Semester_Codes_t');
             Drop_Type('Semester_t', 'Semesters_t');
         END IF;
-        Drop_Type('Ko_Subj_Grades_t');
+        Drop_Type('Subj_Grades_t');
         Drop_Type('Ko_Ids_t');
     END;
 

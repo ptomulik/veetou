@@ -11,7 +11,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Tr_t FORCE AUTHID CURRENT_USER AS OBJECT
     , subj_credit_kind VARCHAR(16 CHAR)
     , subj_ects NUMBER(4)
     , subj_tutor VARCHAR(256 CHAR)
-    , subj_grade VARCHAR(32 CHAR)
+    , subj_grade VARCHAR(10 CHAR)
     , subj_grade_date DATE
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Tr_t(

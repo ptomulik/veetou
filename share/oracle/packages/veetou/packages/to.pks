@@ -13,34 +13,12 @@ CREATE OR REPLACE PACKAGE V2U_To AUTHID CURRENT_USER AS
     FUNCTION Ko_Subject_Instance(
               job_uuid IN RAW
             , id IN NUMBER
-            , x_tr IN V2u_Ko_X_Tr_t
-            , subj_grades IN V2u_Ko_Subj_Grades_t := NULL
-            , tr_ids IN V2u_Ko_Ids_t := NULL
-            ) RETURN V2u_Ko_Subject_Instance_t;
-
-    FUNCTION Ko_Subject_Instance(
-              job_uuid IN RAW
-            , id IN NUMBER
             , header IN V2u_Ko_Header_t
             , preamble IN V2u_Ko_Preamble_t
             , tr IN V2u_Ko_Tr_t
-            , subj_grades IN V2u_Ko_Subj_Grades_t := NULL
+            , subj_grades IN V2u_Grade_Scale_t := NULL
             , tr_ids IN V2u_Ko_Ids_t := NULL
             ) RETURN V2u_Ko_Subject_Instance_t;
-
-    FUNCTION Ko_Specialty(
-              job_uuid IN RAW
-            , id IN NUMBER
-            , x_sheet IN V2u_Ko_X_Sheet_t
-            , sheet_ids IN V2u_Ko_Ids_t := NULL
-            ) RETURN V2u_Ko_Specialty_t;
-
-    FUNCTION Ko_Specialty(
-              job_uuid IN RAW
-            , id IN NUMBER
-            , x_tr IN V2u_Ko_X_Tr_t
-            , sheet_ids V2u_Ko_Ids_t := NULL
-            ) RETURN V2u_Ko_Specialty_t;
 
     FUNCTION Ko_Specialty(
               job_uuid IN RAW

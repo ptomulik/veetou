@@ -118,28 +118,32 @@ CREATE OR REPLACE PACKAGE BODY V2U_Match AS
     END;
 
     FUNCTION Expr_Fields(
-              subject_mapping IN V2u_Subject_Mapping_t
-            , subject_instance IN V2u_Ko_Subject_Instance_t
+              subject_mapping IN V2u_Subject_Mapping_t := NULL
+            , subject_instance IN V2u_Ko_Subject_Instance_t := NULL
             ) RETURN NUMBER
     IS
     BEGIN
-        RETURN subject_mapping.match_expr_fields(
-                  subj_name => subject_instance.subj_name
-                , university => subject_instance.university
-                , faculty => subject_instance.faculty
-                , studies_modetier => subject_instance.studies_modetier
-                , studies_field => subject_instance.studies_field
-                , studies_specialty => subject_instance.studies_specialty
-                , semester_code => subject_instance.semester_code
-                , subj_hours_w => subject_instance.subj_hours_w
-                , subj_hours_c => subject_instance.subj_hours_c
-                , subj_hours_l => subject_instance.subj_hours_l
-                , subj_hours_p => subject_instance.subj_hours_p
-                , subj_hours_s => subject_instance.subj_hours_s
-                , subj_credit_kind => subject_instance.subj_credit_kind
-                , subj_ects => subject_instance.subj_ects
-                , subj_tutor => subject_instance.subj_tutor
-                );
+        IF subject_mapping IS NOT NULL AND subject_instance IS NOT NULL THEN
+            RETURN subject_mapping.match_expr_fields(
+                      subj_name => subject_instance.subj_name
+                    , university => subject_instance.university
+                    , faculty => subject_instance.faculty
+                    , studies_modetier => subject_instance.studies_modetier
+                    , studies_field => subject_instance.studies_field
+                    , studies_specialty => subject_instance.studies_specialty
+                    , semester_code => subject_instance.semester_code
+                    , subj_hours_w => subject_instance.subj_hours_w
+                    , subj_hours_c => subject_instance.subj_hours_c
+                    , subj_hours_l => subject_instance.subj_hours_l
+                    , subj_hours_p => subject_instance.subj_hours_p
+                    , subj_hours_s => subject_instance.subj_hours_s
+                    , subj_credit_kind => subject_instance.subj_credit_kind
+                    , subj_ects => subject_instance.subj_ects
+                    , subj_tutor => subject_instance.subj_tutor
+                    );
+        ELSE
+            RETURN 0;
+        END IF;
     END;
 END V2U_Match;
 

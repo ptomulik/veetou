@@ -37,9 +37,12 @@ AS SELECT
     , v.subject_mapping.expr_subj_credit_kind expr_subj_credit_kind
     , v.subject_mapping.expr_subj_ects expr_subj_ects
     , v.subject_mapping.expr_subj_tutor expr_subj_tutor
-    -- count
-    , (SELECT COUNT(*) FROM TABLE(v.subject_instance.tr_ids) GROUP BY 1) trs_count
-    , v.subject_instance.tr_ids tr_ids
-FROM v2u_ko_mapped_subjects_dv v;
+--    -- count
+--    --, (SELECT COUNT(*) FROM TABLE(v.subject_instance.tr_ids) GROUP BY 1) trs_count
+    , v.subject_instance.subj_grades subj_grades
+    -- XXX: another bug??? "VEETOU"."P000003$"."SYS_NC0002200023$": invalid identifier
+    --, v.subject_instance.tr_ids tr_ids
+FROM v2u_ko_mapped_subjects_mv v
+WITH READ ONLY;
 
 -- vim: set ft=sql ts=4 sw=4 et:

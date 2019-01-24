@@ -143,23 +143,6 @@ CREATE OR REPLACE PACKAGE BODY V2U_To AS
                 );
     END;
 
-    FUNCTION Ko_Subject_Instance(
-              job_uuid IN RAW
-            , id IN NUMBER
-            , x_tr IN V2u_Ko_X_Tr_t
-            , subj_grades IN V2u_Ko_Subj_Grades_t := NULL
-            , tr_ids IN V2u_Ko_Ids_t := NULL
-            ) RETURN V2u_Ko_Subject_Instance_t
-    IS
-        header V2u_Ko_Header_t;
-        preamble V2u_Ko_Preamble_t;
-        tr V2u_Ko_Tr_t;
-    BEGIN
-        SELECT DEREF(x_tr.header) INTO header FROM dual;
-        SELECT DEREF(x_tr.preamble) INTO preamble FROM dual;
-        SELECT DEREF(x_tr.tr) INTO tr FROM dual;
-        RETURN Ko_Subject_Instance(job_uuid, id, header, preamble, tr, subj_grades, tr_ids);
-    END;
 
     FUNCTION Ko_Subject_Instance(
               job_uuid IN RAW
@@ -167,7 +150,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_To AS
             , header IN V2u_Ko_Header_t
             , preamble IN V2u_Ko_Preamble_t
             , tr IN V2u_Ko_Tr_t
-            , subj_grades IN V2u_Ko_Subj_Grades_t := NULL
+            , subj_grades IN V2u_Grade_Scale_t := NULL
             , tr_ids IN V2u_Ko_Ids_t := NULL
             ) RETURN V2u_Ko_Subject_Instance_t
     IS
@@ -196,36 +179,6 @@ CREATE OR REPLACE PACKAGE BODY V2U_To AS
             );
     END;
 
-    FUNCTION Ko_Specialty(
-              job_uuid IN RAW
-            , id IN NUMBER
-            , x_sheet IN V2u_Ko_X_Sheet_t
-            , sheet_ids IN V2u_Ko_Ids_t := NULL
-            ) RETURN V2u_Ko_Specialty_t
-    IS
-        header V2u_Ko_Header_t;
-        preamble V2u_Ko_Preamble_t;
-    BEGIN
-        SELECT DEREF(x_sheet.header) INTO header FROM dual;
-        SELECT DEREF(x_sheet.preamble) INTO preamble FROM dual;
-        RETURN Ko_Specialty(job_uuid, id, header, preamble, sheet_ids);
-    END;
-
-
-    FUNCTION Ko_Specialty(
-              job_uuid IN RAW
-            , id IN NUMBER
-            , x_tr IN V2u_Ko_X_Tr_t
-            , sheet_ids V2u_Ko_Ids_t := NULL
-            ) RETURN V2u_Ko_Specialty_t
-    IS
-        header V2u_Ko_Header_t;
-        preamble V2u_Ko_Preamble_t;
-    BEGIN
-        SELECT DEREF(x_tr.header) INTO header FROM dual;
-        SELECT DEREF(x_tr.preamble) INTO preamble FROM dual;
-        RETURN Ko_Specialty(job_uuid, id, header, preamble, sheet_ids);
-    END;
 
     FUNCTION Ko_Specialty(
               job_uuid IN RAW
