@@ -1,9 +1,14 @@
-CREATE OR REPLACE VIEW v2u_ko_subject_instances_dv
+CREATE SEQUENCE v2u_ko_subject_instances_sq1 START WITH 1;
+/
+CREATE TABLE v2u_ko_subject_instances
 OF V2u_Ko_Subject_Instance_t
-WITH OBJECT IDENTIFIER(job_uuid, id)
-AS
-WITH
-    u AS
+    (
+          CONSTRAINT v2u_ko_subject_instances_pk PRIMARY KEY (id, job_uuid)
+    )
+OBJECT IDENTIFIER IS PRIMARY KEY
+VARRAY subj_grades STORE AS LOB (ENABLE STORAGE IN ROW)
+NESTED TABLE tr_ids STORE AS v2u_ko_subj_inst_trs_nt
+AS WITH u AS
     (
         SELECT
               VALUE(trs) tr
@@ -49,6 +54,7 @@ WITH
             , CAST(COLLECT(tr) AS V2u_Ko_Trs_t) trs
         FROM u u
         GROUP BY subj_instance
+        ORDER BY subj_instance
     ),
     w AS
     (
@@ -63,12 +69,12 @@ WITH
             , CAST(MULTISET(
                     SELECT DISTINCT t.subj_grade FROM TABLE(trs) t
                     ORDER BY t.subj_grade
-              ) AS V2u_Grade_Scale_t) distinct_subj_grades
+              ) AS V2u_Subj_Grades20_t) distinct_subj_grades
         FROM v v
     )
 SELECT
       w.subj_instance.job_uuid
-    , ROWNUM
+    , V2u_Util.Next_Val('v2u_ko_subject_instances_sq1')
     , w.subj_instance.subj_code
     , w.subj_instance.subj_name
     , w.subj_instance.university
@@ -88,5 +94,14 @@ SELECT
     , w.distinct_subj_grades
     , w.tr_ids
 FROM w w;
+/
+
+CREATE OR REPLACE TRIGGER v2u_ko_subject_instances_tr1
+    BEFORE INSERT ON v2u_ko_subject_instances
+    FOR EACH ROW
+    WHEN (new.id IS NULL)
+    BEGIN
+        SELECT v2u_ko_subject_instances_sq1.NEXTVAL INTO :new.id FROM dual;
+    END;
 
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -19,7 +19,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Instance_t AS
         , subj_credit_kind IN VARCHAR2 := NULL
         , subj_ects IN NUMBER := NULL
         , subj_tutor IN VARCHAR2 := NULL
-        , subj_grades IN V2u_Grade_Scale_t := NULL
+        , subj_grades IN V2u_Subj_Grades20_t := NULL
         , tr_ids IN V2u_Ko_Ids_t := NULL
         ) RETURN SELF AS RESULT
     IS
@@ -53,6 +53,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Instance_t AS
     IS
         ord NUMBER;
     BEGIN
+        ord := V2U_Util.NumNullCmp(id, other.id);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        -- if id's are not set...
         ord := V2U_Util.StrNullIcmp(subj_code, other.subj_code);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Util.StrNullIcmp(subj_name, other.subj_name);

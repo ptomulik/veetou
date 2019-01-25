@@ -185,7 +185,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         END IF;
         Drop_View('ko_threads_dv', 'ko_threads');
         Drop_View('ko_student_threads_dv', 'ko_student_threads');
-        Drop_View('ko_student_specialties_dv', 'ko_student_specialties');
+        --Drop_View('ko_student_specialties_dv', 'ko_student_specialties');
         Drop_View('ko_specialty_instances_dv', 'ko_specialty_instances');
         Drop_View('ko_specialties');
         Drop_View('ko_specialties_dv', 'ko_specialties_mv', 'MATERIALIZED VIEW');
@@ -203,7 +203,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         Drop_View('ko_x_sheets');
         Drop_View('ko_x_sheets_dv', 'ko_x_sheets_mv', 'MATERIALIZED VIEW');
         --Drop_View('ko_students_dv', 'ko_students');
-        Drop_View('ko_subject_instances');
+        --Drop_View('ko_subject_instances');
         Drop_View('ko_subject_instances_dv', 'ko_subject_instances_mv', 'MATERIALIZED VIEW');
         Drop_Materialized_View('ko_subj_instance_trs_mv', 'ko_subj_instance_trs');
         Drop_View('ko_x_trs');
@@ -220,9 +220,26 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
             Drop_Index('ko_trs_idx2');
         END IF;
 
+        --
+        Drop_Table('ko_student_preambles', how => 'PURGE');
+        --
         Drop_Trigger('ko_students_tr1');
         Drop_Sequence('ko_students_sq1');
-        Drop_Table('ko_students', 'PURGE');
+        Drop_Index('ko_students_idx1');
+        Drop_Table('ko_students', how => 'PURGE');
+        --
+        Drop_Table('ko_subj_inst_mapping', how => 'PURGE');
+        Drop_Table('ko_subj_inst_trs', how => 'PURGE');
+        --
+        Drop_Trigger('ko_subject_instances_tr1');
+        Drop_Sequence('ko_subject_instances_sq1');
+        Drop_Table('ko_subject_instances', how => 'PURGE');
+        --
+        Drop_Table('ko_specialty_sheets', how => 'PURGE');
+        --
+        Drop_Trigger('ko_specialties_tr1');
+        Drop_Sequence('ko_specialties_sq1');
+        Drop_Table('ko_specialties', how => 'PURGE');
         --
         Drop_Table('program_mappings', 'program_mappings_dv', how);
         Drop_Table('subject_mappings', 'subject_mappings_dv', how);

@@ -195,6 +195,16 @@ CREATE OR REPLACE PACKAGE BODY V2U_Util AS
         RETURN Semester_Sub(lowest.semester_code, (lowest.semester_number-1));
     END;
 
+    FUNCTION Next_Val(sequence IN VARCHAR2)
+        RETURN NUMBER
+    IS
+        nextval NUMBER;
+        column VARCHAR2(128);
+    BEGIN
+        column := DBMS_ASSERT.SQL_OBJECT_NAME(sequence) || '.NEXTVAL';
+        EXECUTE IMMEDIATE 'SELECT ' || column || ' FROM dual' INTO nextval;
+        RETURN nextval;
+    END;
 END V2U_Util;
 
 -- vim: set ft=sql ts=4 sw=4 et:

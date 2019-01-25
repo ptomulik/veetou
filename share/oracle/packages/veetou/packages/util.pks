@@ -32,6 +32,7 @@ CREATE OR REPLACE PACKAGE V2U_Util AUTHID CURRENT_USER AS
     FUNCTION Max_Admission_Semester(semesters IN V2u_Ko_Semester_Instances_t)
         RETURN VARCHAR2;
 
+    FUNCTION Next_Val(sequence IN VARCHAR2) RETURN NUMBER;
 END V2U_Util;
 
 -- vim: set ft=sql ts=4 sw=4 et:

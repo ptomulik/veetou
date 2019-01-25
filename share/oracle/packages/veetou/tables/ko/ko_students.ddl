@@ -7,7 +7,7 @@ OF V2u_Ko_Student_t
         , CONSTRAINT v2u_ko_students_u1 UNIQUE (student_index, job_uuid)
     )
 OBJECT IDENTIFIER IS PRIMARY KEY
-NESTED TABLE preamble_ids STORE AS v2u_ko_students_c1_nt
+NESTED TABLE preamble_ids STORE AS v2u_ko_student_preambles_nt
 AS WITH u AS
     (
         SELECT
@@ -23,22 +23,22 @@ AS WITH u AS
     )
 SELECT
       job_uuid
-    , (SELECT v2u_ko_students_sq1.NEXTVAL FROM dual)
+    , V2u_Util.Next_Val('v2u_ko_students_sq1')
     , student_index
     , student_name
     , first_name
     , last_name
     , preamble_ids
 FROM u;
+/
 
 CREATE OR REPLACE TRIGGER v2u_ko_students_tr1
     BEFORE INSERT ON v2u_ko_students
-FOR EACH ROW
-BEGIN
-    SELECT v2u_ko_students_sq1.NEXTVAL
-        INTO :new.id
-    FROM dual;
-END;
+    FOR EACH ROW
+    WHEN (new.id IS NULL)
+    BEGIN
+        SELECT v2u_ko_students_sq1.NEXTVAL INTO :new.id FROM dual;
+    END;
 /
 
 CREATE INDEX v2u_ko_students_idx1

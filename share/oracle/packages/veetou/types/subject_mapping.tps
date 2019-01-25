@@ -1,7 +1,7 @@
 CREATE OR REPLACE TYPE V2u_Subject_Mapping_t FORCE AUTHID CURRENT_USER AS OBJECT
     ( id NUMBER(38)
-    , subj_code VARCHAR2(20 CHAR)
-    , mapped_subj_code VARCHAR2(20 CHAR)
+    , subj_code VARCHAR2(32 CHAR)
+    , mapped_subj_code VARCHAR2(32 CHAR)
     , expr_subj_name VARCHAR2(256 CHAR)
     , expr_university VARCHAR2(256 CHAR)
     , expr_faculty VARCHAR2(256 CHAR)

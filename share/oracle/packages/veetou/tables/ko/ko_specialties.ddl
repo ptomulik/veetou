@@ -1,9 +1,13 @@
-CREATE OR REPLACE VIEW v2u_ko_specialties_dv
+CREATE SEQUENCE v2u_ko_specialties_sq1 START WITH 1;
+/
+CREATE TABLE v2u_ko_specialties
 OF V2u_Ko_Specialty_t
-WITH OBJECT IDENTIFIER(job_uuid, id)
-AS
-WITH
-    u AS
+    (
+          CONSTRAINT v2u_ko_specialties_pk PRIMARY KEY (id, job_uuid)
+    )
+OBJECT IDENTIFIER IS PRIMARY KEY
+NESTED TABLE sheet_ids STORE AS v2u_ko_specialty_sheets_nt
+AS WITH u AS
     (
         SELECT VALUE(sheets) sheet
              , VALUE(preambles) preamble
@@ -19,7 +23,7 @@ WITH
             ON (page_preamble.ko_page_id = pages.id AND
                 page_preamble.job_uuid = pages.job_uuid)
         INNER JOIN v2u_ko_preambles preambles
-            ON (page_preamble.ko_page_id = preambles.id AND
+            ON (page_preamble.ko_preamble_id = preambles.id AND
                 page_preamble.job_uuid = preambles.job_uuid)
         INNER JOIN v2u_ko_page_header page_header
             ON (page_header.ko_page_id = pages.id AND
@@ -44,7 +48,7 @@ WITH
     )
 SELECT
       w.specialty.job_uuid
-    , ROWNUM
+    , V2U_Util.Next_Val('v2u_ko_specialties_sq1')
     , w.specialty.university
     , w.specialty.faculty
     , w.specialty.studies_modetier
@@ -52,5 +56,14 @@ SELECT
     , w.specialty.studies_specialty
     , w.sheet_ids
 FROM w w;
+
+CREATE OR REPLACE TRIGGER v2u_ko_specialties_tr1
+    BEFORE INSERT ON v2u_ko_specialties
+    FOR EACH ROW
+    WHEN (new.id IS NULL)
+    BEGIN
+        SELECT v2u_ko_specialties_sq1.NEXTVAL INTO :new.id FROM dual;
+    END;
+/
 
 -- vim: set ft=sql ts=4 sw=4 et:

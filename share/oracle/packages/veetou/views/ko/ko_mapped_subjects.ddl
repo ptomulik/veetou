@@ -1,48 +1,49 @@
 CREATE OR REPLACE VIEW v2u_ko_mapped_subjects
+OF V2u_Ko_Mapped_Subject_t
+WITH OBJECT IDENTIFIER (job_uuid, subject_instance_id, subject_mapping_id)
 AS SELECT
-      v.job_uuid job_uuid
-    , v.id id
-    , v.matching_score matching_score
-    -- instance
-    , v.subject_instance.subj_code subj_code
-    , v.subject_instance.subj_name subj_name
-    , v.subject_instance.university university
-    , v.subject_instance.faculty faculty
-    , v.subject_instance.studies_modetier studies_modetier
-    , v.subject_instance.studies_field studies_field
-    , v.subject_instance.studies_specialty studies_specialty
-    , v.subject_instance.semester_code semester_code
-    , v.subject_instance.subj_hours_w subj_hours_w
-    , v.subject_instance.subj_hours_c subj_hours_c
-    , v.subject_instance.subj_hours_l subj_hours_l
-    , v.subject_instance.subj_hours_p subj_hours_p
-    , v.subject_instance.subj_hours_s subj_hours_s
-    , v.subject_instance.subj_credit_kind subj_credit_kind
-    , v.subject_instance.subj_ects subj_ects
-    , v.subject_instance.subj_tutor subj_tutor
-    -- mapped
-    , v.subject_mapping.mapped_subj_code mapped_subj_code
-    , v.subject_mapping.expr_subj_name expr_subj_name
-    , v.subject_mapping.expr_university expr_university
-    , v.subject_mapping.expr_faculty expr_faculty
-    , v.subject_mapping.expr_studies_modetier expr_studies_modetier
-    , v.subject_mapping.expr_studies_field expr_studies_field
-    , v.subject_mapping.expr_studies_specialty expr_studies_specialty
-    , v.subject_mapping.expr_semester_code expr_semester_code
-    , v.subject_mapping.expr_subj_hours_w expr_subj_hours_w
-    , v.subject_mapping.expr_subj_hours_c expr_subj_hours_c
-    , v.subject_mapping.expr_subj_hours_l expr_subj_hours_l
-    , v.subject_mapping.expr_subj_hours_p expr_subj_hours_p
-    , v.subject_mapping.expr_subj_hours_s expr_subj_hours_s
-    , v.subject_mapping.expr_subj_credit_kind expr_subj_credit_kind
-    , v.subject_mapping.expr_subj_ects expr_subj_ects
-    , v.subject_mapping.expr_subj_tutor expr_subj_tutor
---    -- count
---    --, (SELECT COUNT(*) FROM TABLE(v.subject_instance.tr_ids) GROUP BY 1) trs_count
-    , v.subject_instance.subj_grades subj_grades
-    -- XXX: another bug??? "VEETOU"."P000003$"."SYS_NC0002200023$": invalid identifier
-    --, v.subject_instance.tr_ids tr_ids
-FROM v2u_ko_mapped_subjects_mv v
+      si.job_uuid
+    , si.id
+    , sm.id
+    , sim.matching_score
+    , si.subj_code
+    , sm.mapped_subj_code
+    , si.subj_name
+    , sm.expr_subj_name
+    , si.university
+    , sm.expr_university
+    , si.faculty
+    , sm.expr_faculty
+    , si.studies_modetier
+    , sm.expr_studies_modetier
+    , si.studies_field
+    , sm.expr_studies_field
+    , si.studies_specialty
+    , sm.expr_studies_specialty
+    , si.semester_code
+    , sm.expr_semester_code
+    , si.subj_hours_w
+    , sm.expr_subj_hours_w
+    , si.subj_hours_c
+    , sm.expr_subj_hours_c
+    , si.subj_hours_l
+    , sm.expr_subj_hours_l
+    , si.subj_hours_p
+    , sm.expr_subj_hours_p
+    , si.subj_hours_s
+    , sm.expr_subj_hours_s
+    , si.subj_credit_kind
+    , sm.expr_subj_credit_kind
+    , si.subj_ects
+    , sm.expr_subj_ects
+    , si.subj_tutor
+    , sm.expr_subj_tutor
+FROM v2u_ko_subject_instances si
+LEFT JOIN v2u_ko_subj_inst_mapping sim
+    ON (sim.subject_instance_id = si.id AND
+        sim.job_uuid = si.job_uuid)
+LEFT JOIN v2u_subject_mappings sm
+    ON (sim.subject_mapping_id = sm.id)
 WITH READ ONLY;
 
 -- vim: set ft=sql ts=4 sw=4 et:

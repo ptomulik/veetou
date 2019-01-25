@@ -16,7 +16,7 @@ CREATE OR REPLACE PACKAGE V2U_To AUTHID CURRENT_USER AS
             , header IN V2u_Ko_Header_t
             , preamble IN V2u_Ko_Preamble_t
             , tr IN V2u_Ko_Tr_t
-            , subj_grades IN V2u_Grade_Scale_t := NULL
+            , subj_grades IN V2u_Subj_Grades20_t := NULL
             , tr_ids IN V2u_Ko_Ids_t := NULL
             ) RETURN V2u_Ko_Subject_Instance_t;
 
@@ -27,6 +27,12 @@ CREATE OR REPLACE PACKAGE V2U_To AUTHID CURRENT_USER AS
             , preamble IN V2u_Ko_Preamble_t
             , sheet_ids V2u_Ko_Ids_t := NULL
             ) RETURN V2u_Ko_Specialty_t;
+
+    FUNCTION Ko_Mapped_Subject(
+              subject_instance IN V2u_Ko_Subject_Instance_t
+            , subject_mapping IN V2u_Subject_Mapping_t
+            , matching_score IN NUMBER := NULL
+            ) RETURN V2u_Ko_Mapped_Subject_t;
 END V2U_To;
 
 -- vim: set ft=sql ts=4 sw=4 et:

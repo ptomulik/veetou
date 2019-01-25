@@ -1,5 +1,0 @@
-@@ko_specialties_dv.ddl;
-@@ko_specialties_mv.ddl;
-@@ko_specialties.ddl;
-
--- vim: set ft=sql ts=4 sw=4 et:
