@@ -1,5 +1,5 @@
 CREATE OR REPLACE PACKAGE BODY V2U_To AS
-    FUNCTION Number_Or_Null(value IN VARCHAR)
+    FUNCTION Number_Or_Null(value IN VARCHAR2)
         RETURN INTEGER
     IS
     BEGIN
@@ -10,7 +10,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_To AS
     END;
 
     FUNCTION Semester_Code(semester_id IN NUMBER)
-        RETURN VARCHAR
+        RETURN VARCHAR2
     IS
         y NUMBER;
         s CHARACTER(1);
@@ -23,7 +23,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_To AS
         RETURN TO_CHAR(y, '0999') || s;
     END;
 
-    FUNCTION Semester_Id(semester_code IN VARCHAR)
+    FUNCTION Semester_Id(semester_code IN VARCHAR2)
         RETURN NUMBER
     IS
         y NUMBER;

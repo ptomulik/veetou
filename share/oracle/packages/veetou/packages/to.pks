@@ -1,7 +1,7 @@
 CREATE OR REPLACE PACKAGE V2U_To AUTHID CURRENT_USER AS
-    FUNCTION Number_Or_Null(value IN VARCHAR) RETURN INTEGER;
-    FUNCTION Semester_Code(semester_id IN NUMBER) RETURN VARCHAR;
-    FUNCTION Semester_Id(semester_code IN VARCHAR) RETURN NUMBER;
+    FUNCTION Number_Or_Null(value IN VARCHAR2) RETURN INTEGER;
+    FUNCTION Semester_Code(semester_id IN NUMBER) RETURN VARCHAR2;
+    FUNCTION Semester_Id(semester_code IN VARCHAR2) RETURN NUMBER;
     FUNCTION Threads(semesters IN V2u_Ko_Semester_Instances_t)
         RETURN V2u_Ko_Semester_Threads_t;
     FUNCTION Ko_Semester_Instance(

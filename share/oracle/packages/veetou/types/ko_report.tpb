@@ -3,7 +3,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Report_t AS
           SELF IN OUT NOCOPY V2u_Ko_Report_t
         , job_uuid IN RAW
         , id IN NUMBER
-        , source IN VARCHAR := NULL
+        , source IN VARCHAR2 := NULL
         , datetime IN TIMESTAMP := NULL
         , first_page IN NUMBER := NULL
         , sheets_parsed IN NUMBER := NULL

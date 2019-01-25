@@ -1,15 +1,15 @@
 CREATE OR REPLACE TYPE V2u_Ko_Sheet_Info_t FORCE AUTHID CURRENT_USER AS OBJECT
     ( university VARCHAR2(256 CHAR)
     , faculty VARCHAR2(256 CHAR)
-    , studies_modetier VARCHAR(256 CHAR)
-    , student_index VARCHAR(32 CHAR)
-    , first_name VARCHAR(48 CHAR)
-    , last_name VARCHAR(48 CHAR)
-    , student_name VARCHAR(128 CHAR)
-    , semester_code VARCHAR(5 CHAR)
-    , studies_field VARCHAR(256 CHAR)
+    , studies_modetier VARCHAR2(256 CHAR)
+    , student_index VARCHAR2(32 CHAR)
+    , first_name VARCHAR2(48 CHAR)
+    , last_name VARCHAR2(48 CHAR)
+    , student_name VARCHAR2(128 CHAR)
+    , semester_code VARCHAR2(5 CHAR)
+    , studies_field VARCHAR2(256 CHAR)
     , semester_number NUMBER(2)
-    , studies_specialty VARCHAR(256 CHAR)
+    , studies_specialty VARCHAR2(256 CHAR)
     , ects_mandatory NUMBER(4)
     , ects_other NUMBER(4)
     , ects_total NUMBER(4)
@@ -17,18 +17,18 @@ CREATE OR REPLACE TYPE V2u_Ko_Sheet_Info_t FORCE AUTHID CURRENT_USER AS OBJECT
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Sheet_Info_t(
               SELF IN OUT NOCOPY V2u_Ko_Sheet_Info_t
-            , university IN VARCHAR := NULL
-            , faculty IN VARCHAR := NULL
+            , university IN VARCHAR2 := NULL
+            , faculty IN VARCHAR2 := NULL
             -- preamble
-            , studies_modetier IN VARCHAR := NULL
-            , student_index IN VARCHAR := NULL
-            , first_name IN VARCHAR := NULL
-            , last_name IN VARCHAR := NULL
-            , student_name IN VARCHAR := NULL
-            , semester_code IN VARCHAR := NULL
-            , studies_field IN VARCHAR := NULL
+            , studies_modetier IN VARCHAR2 := NULL
+            , student_index IN VARCHAR2 := NULL
+            , first_name IN VARCHAR2 := NULL
+            , last_name IN VARCHAR2 := NULL
+            , student_name IN VARCHAR2 := NULL
+            , semester_code IN VARCHAR2 := NULL
+            , studies_field IN VARCHAR2 := NULL
             , semester_number IN NUMBER := NULL
-            , studies_specialty IN VARCHAR := NULL
+            , studies_specialty IN VARCHAR2 := NULL
             -- sheet
             , ects_mandatory IN NUMBER := NULL
             , ects_other IN NUMBER := NULL

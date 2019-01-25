@@ -1,5 +1,5 @@
 CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
-    FUNCTION Is_Not_Exists_Errcode(schema_type IN VARCHAR, err_code IN NUMBER)
+    FUNCTION Is_Not_Exists_Errcode(schema_type IN VARCHAR2, err_code IN NUMBER)
         RETURN BOOLEAN
     IS
     BEGIN
@@ -36,20 +36,20 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
     END;
 
 
-    PROCEDURE Drop_DB_Object(schema_type IN VARCHAR,
-                             name IN VARCHAR,
-                             how IN VARCHAR := '')
+    PROCEDURE Drop_DB_Object(schema_type IN VARCHAR2,
+                             name IN VARCHAR2,
+                             how IN VARCHAR2 := '')
     IS
-        cmd VARCHAR(1024);
+        cmd VARCHAR2(1024);
     BEGIN
         cmd := 'DROP ' || UPPER(schema_type) || ' ' || name || ' ' || how;
         DBMS_Utility.Exec_DDL_Statement(cmd);
     END;
 
 
-    PROCEDURE Drop_If_Exists(schema_type IN VARCHAR,
-                             name IN VARCHAR,
-                             how IN VARCHAR := '')
+    PROCEDURE Drop_If_Exists(schema_type IN VARCHAR2,
+                             name IN VARCHAR2,
+                             how IN VARCHAR2 := '')
     IS
     BEGIN
         Drop_DB_Object(schema_type, name, how);
@@ -60,9 +60,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
             END IF;
     END;
 
-    PROCEDURE Drop_Type(type_name IN VARCHAR,
-                        dependent_type1 IN VARCHAR := NULL,
-                        dependent_type2 IN VARCHAR := NULL)
+    PROCEDURE Drop_Type(type_name IN VARCHAR2,
+                        dependent_type1 IN VARCHAR2 := NULL,
+                        dependent_type2 IN VARCHAR2 := NULL)
     IS
     BEGIN
         DBMS_Output.Put_Line(type_name);
@@ -93,9 +93,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
     END;
 
 
-    PROCEDURE Drop_Table(table_name IN VARCHAR,
-                         view_name IN VARCHAR := NULL,
-                         how IN VARCHAR := '')
+    PROCEDURE Drop_Table(table_name IN VARCHAR2,
+                         view_name IN VARCHAR2 := NULL,
+                         how IN VARCHAR2 := '')
     IS
     BEGIN
         IF view_name IS NOT NULL THEN
@@ -108,9 +108,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
     END;
 
 
-    PROCEDURE Drop_View(view_name IN VARCHAR,
-                        dependent_view IN VARCHAR := NULL,
-                        dependent_kind IN VARCHAR := NULL)
+    PROCEDURE Drop_View(view_name IN VARCHAR2,
+                        dependent_view IN VARCHAR2 := NULL,
+                        dependent_kind IN VARCHAR2 := NULL)
     IS
     BEGIN
         IF dependent_view IS NOT NULL THEN
@@ -125,9 +125,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         END IF;
     END;
 
-    PROCEDURE Drop_Materialized_View(view_name IN VARCHAR,
-                                     dependent_view IN VARCHAR := NULL,
-                                     dependent_kind IN VARCHAR := NULL)
+    PROCEDURE Drop_Materialized_View(view_name IN VARCHAR2,
+                                     dependent_view IN VARCHAR2 := NULL,
+                                     dependent_kind IN VARCHAR2 := NULL)
     IS
     BEGIN
         IF dependent_view IS NOT NULL THEN
@@ -143,34 +143,34 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
     END;
 
 
-    PROCEDURE Drop_Index(index_name IN VARCHAR)
+    PROCEDURE Drop_Index(index_name IN VARCHAR2)
     IS
     BEGIN
         Drop_If_Exists('INDEX', 'v2u_' || index_name);
     END;
 
 
-    PROCEDURE Drop_Sequence(sequence_name IN VARCHAR)
+    PROCEDURE Drop_Sequence(sequence_name IN VARCHAR2)
     IS
     BEGIN
         Drop_If_Exists('SEQUENCE', 'v2u_' || sequence_name);
     END;
 
 
-    PROCEDURE Drop_Trigger(sequence_name IN VARCHAR)
+    PROCEDURE Drop_Trigger(sequence_name IN VARCHAR2)
     IS
     BEGIN
         Drop_If_Exists('TRIGGER', 'v2u_' || sequence_name);
     END;
 
 
-    PROCEDURE Drop_Package(package_name IN VARCHAR)
+    PROCEDURE Drop_Package(package_name IN VARCHAR2)
     IS
     BEGIN
         Drop_If_Exists('PACKAGE', 'V2U_' || package_name);
     END;
 
-    PROCEDURE Uninstall(how IN VARCHAR := 'KEEP')
+    PROCEDURE Uninstall(how IN VARCHAR2 := 'KEEP')
     IS
     BEGIN
         Drop_View('ko_subject_grades_dv', 'ko_subject_grades');
@@ -205,6 +205,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         Drop_View('ko_students_dv', 'ko_students');
         Drop_View('ko_subject_instances');
         Drop_View('ko_subject_instances_dv', 'ko_subject_instances_mv', 'MATERIALIZED VIEW');
+        Drop_Materialized_View('ko_subj_instance_trs_mv', 'ko_subj_instance_trs');
         Drop_View('ko_x_trs');
         Drop_View('ko_x_trs_dv', 'ko_x_trs_mv', 'MATERIALIZED VIEW');
 

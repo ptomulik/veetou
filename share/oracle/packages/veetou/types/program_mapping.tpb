@@ -2,15 +2,15 @@ CREATE OR REPLACE TYPE BODY V2u_Program_Mapping_t AS
     CONSTRUCTOR FUNCTION V2u_Program_Mapping_t(
           SELF IN OUT NOCOPY V2u_Program_Mapping_t
         , id IN NUMBER
-        , university IN VARCHAR := NULL
-        , faculty IN VARCHAR := NULL
-        , studies_modetier IN VARCHAR := NULL
-        , studies_field IN VARCHAR := NULL
-        , studies_specialty IN VARCHAR := NULL
-        , mapped_program_code IN VARCHAR := NULL
-        , mapped_modetier_code IN VARCHAR := NULL
-        , mapped_field_code IN VARCHAR := NULL
-        , expr_semester_code IN VARCHAR := NULL
+        , university IN VARCHAR2 := NULL
+        , faculty IN VARCHAR2 := NULL
+        , studies_modetier IN VARCHAR2 := NULL
+        , studies_field IN VARCHAR2 := NULL
+        , studies_specialty IN VARCHAR2 := NULL
+        , mapped_program_code IN VARCHAR2 := NULL
+        , mapped_modetier_code IN VARCHAR2 := NULL
+        , mapped_field_code IN VARCHAR2 := NULL
+        , expr_semester_code IN VARCHAR2 := NULL
         ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -27,7 +27,7 @@ CREATE OR REPLACE TYPE BODY V2u_Program_Mapping_t AS
         RETURN;
     END;
 
-    MEMBER FUNCTION match_expr_fields(semester_code IN VARCHAR) RETURN INTEGER
+    MEMBER FUNCTION match_expr_fields(semester_code IN VARCHAR2) RETURN INTEGER
     IS
         score NUMBER;
         local NUMBER;
@@ -45,7 +45,7 @@ CREATE OR REPLACE TYPE BODY V2u_Program_Mapping_t AS
     END;
 
 
-    MEMBER FUNCTION match_semester_code(semester_code IN VARCHAR)
+    MEMBER FUNCTION match_semester_code(semester_code IN VARCHAR2)
         RETURN INTEGER
     IS
     BEGIN

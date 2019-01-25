@@ -3,17 +3,17 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Tr_t AS
           SELF IN OUT NOCOPY V2u_Ko_Tr_t
         , job_uuid IN RAW
         , id IN NUMBER
-        , subj_code IN VARCHAR := NULL
-        , subj_name IN VARCHAR := NULL
+        , subj_code IN VARCHAR2 := NULL
+        , subj_name IN VARCHAR2 := NULL
         , subj_hours_w IN NUMBER := NULL
         , subj_hours_c IN NUMBER := NULL
         , subj_hours_l IN NUMBER := NULL
         , subj_hours_p IN NUMBER := NULL
         , subj_hours_s IN NUMBER := NULL
-        , subj_credit_kind IN VARCHAR := NULL
+        , subj_credit_kind IN VARCHAR2 := NULL
         , subj_ects IN NUMBER := NULL
-        , subj_tutor IN VARCHAR := NULL
-        , subj_grade IN VARCHAR := NULL
+        , subj_tutor IN VARCHAR2 := NULL
+        , subj_grade IN VARCHAR2 := NULL
         , subj_grade_date IN DATE := NULL
         ) RETURN SELF AS RESULT
     IS

@@ -1,12 +1,12 @@
 CREATE OR REPLACE PACKAGE BODY V2U_Match AS
 
-    FUNCTION Strip_Person_Degrees(value IN VARCHAR)
-        RETURN VARCHAR
+    FUNCTION Strip_Person_Degrees(value IN VARCHAR2)
+        RETURN VARCHAR2
     IS
-        SUBTYPE Degree_Typ IS VARCHAR(10);
+        SUBTYPE Degree_Typ IS VARCHAR2(10);
         TYPE Degrees_Array IS VARRAY(20) OF Degree_Typ;
         n NUMBER;
-        s VARCHAR(1024);
+        s VARCHAR2(1024);
         i NUMBER;
         d Degree_Typ;
         degrees Degrees_Array := Degrees_Array('prof. ',
@@ -33,18 +33,18 @@ CREATE OR REPLACE PACKAGE BODY V2U_Match AS
         RETURN s;
     END;
 
-    FUNCTION String_Like(expr IN VARCHAR, value IN VARCHAR)
+    FUNCTION String_Like(expr IN VARCHAR2, value IN VARCHAR2)
         RETURN INTEGER
     IS
     BEGIN
         RETURN CASE (value LIKE expr) WHEN TRUE THEN 1 ELSE 0 END;
     END;
 
-    FUNCTION String_Range(expr IN VARCHAR, value IN VARCHAR)
+    FUNCTION String_Range(expr IN VARCHAR2, value IN VARCHAR2)
         RETURN INTEGER
     IS
-        smin VARCHAR(1024);
-        smax VARCHAR(1024);
+        smin VARCHAR2(1024);
+        smax VARCHAR2(1024);
     BEGIN
         IF NOT V2U_Util.Split_Range(expr, smin, smax) THEN
             RETURN -1;
@@ -62,20 +62,20 @@ CREATE OR REPLACE PACKAGE BODY V2U_Match AS
     END;
 
 
-    FUNCTION Code_Range(expr IN VARCHAR, value IN VARCHAR)
+    FUNCTION Code_Range(expr IN VARCHAR2, value IN VARCHAR2)
         RETURN INTEGER
     IS
-        smin VARCHAR(1024);
-        smax VARCHAR(1024);
+        smin VARCHAR2(1024);
+        smax VARCHAR2(1024);
     BEGIN
         RETURN String_Range(UPPER(expr), UPPER(value));
     END;
 
-    FUNCTION Number_Range(expr IN VARCHAR, value IN NUMBER)
+    FUNCTION Number_Range(expr IN VARCHAR2, value IN NUMBER)
         RETURN INTEGER
     IS
-        smin VARCHAR(1024);
-        smax VARCHAR(1024);
+        smin VARCHAR2(1024);
+        smax VARCHAR2(1024);
         nmin NUMBER;
         nmax NUMBER;
     BEGIN
@@ -93,11 +93,11 @@ CREATE OR REPLACE PACKAGE BODY V2U_Match AS
         END IF;
     END;
 
-    FUNCTION Number_Range(expr IN VARCHAR, value IN VARCHAR)
+    FUNCTION Number_Range(expr IN VARCHAR2, value IN VARCHAR2)
         RETURN INTEGER
     IS
-        smin VARCHAR(1024);
-        smax VARCHAR(1024);
+        smin VARCHAR2(1024);
+        smax VARCHAR2(1024);
         nval NUMBER;
     BEGIN
         nval := V2U_To.Number_Or_Null(value);
@@ -108,16 +108,16 @@ CREATE OR REPLACE PACKAGE BODY V2U_Match AS
         END IF;
     END;
 
-    FUNCTION Person_Name(expr IN VARCHAR, value IN VARCHAR)
+    FUNCTION Person_Name(expr IN VARCHAR2, value IN VARCHAR2)
         RETURN INTEGER
     IS
-        name VARCHAR(1024);
+        name VARCHAR2(1024);
     BEGIN
         name := Strip_Person_Degrees(value);
         RETURN String_Like(expr, name);
     END;
 
-    FUNCTION Expr_Fields(
+    FUNCTION Attributes(
               subject_mapping IN V2u_Subject_Mapping_t := NULL
             , subject_instance IN V2u_Ko_Subject_Instance_t := NULL
             ) RETURN NUMBER

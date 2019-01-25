@@ -3,11 +3,11 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Footer_t AS
           SELF IN OUT NOCOPY V2u_Ko_Footer_t
         , job_uuid IN RAW
         , id IN NUMBER
-        , pagination IN VARCHAR := NULL
+        , pagination IN VARCHAR2 := NULL
         , sheet_page_number IN NUMBER := NULL
         , sheet_pages_total IN NUMBER := NULL
-        , generator_name IN VARCHAR := NULL
-        , generator_home IN VARCHAR := NULL
+        , generator_name IN VARCHAR2 := NULL
+        , generator_home IN VARCHAR2 := NULL
         ) RETURN SELF AS RESULT
     IS
     BEGIN

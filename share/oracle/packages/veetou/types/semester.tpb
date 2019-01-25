@@ -1,7 +1,7 @@
 CREATE OR REPLACE TYPE BODY V2u_Semester_t AS
     CONSTRUCTOR FUNCTION V2u_Semester_t(
           SELF IN OUT NOCOPY V2u_Semester_t
-        , code IN VARCHAR
+        , code IN VARCHAR2
         , id IN NUMBER := NULL
         , start_date IN DATE := NULL
         , end_date IN DATE := NULL

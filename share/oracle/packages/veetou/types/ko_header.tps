@@ -1,15 +1,15 @@
 CREATE OR REPLACE TYPE V2u_Ko_Header_t FORCE AUTHID CURRENT_USER AS OBJECT
     ( job_uuid RAW(16)
     , id NUMBER(38)
-    , university VARCHAR(100 CHAR)
-    , faculty VARCHAR(100 CHAR)
+    , university VARCHAR2(100 CHAR)
+    , faculty VARCHAR2(100 CHAR)
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Header_t(
           SELF IN OUT NOCOPY V2u_Ko_Header_t
         , job_uuid IN RAW
         , id IN NUMBER
-        , university IN VARCHAR := NULL
-        , faculty IN VARCHAR := NULL
+        , university IN VARCHAR2 := NULL
+        , faculty IN VARCHAR2 := NULL
         )
         RETURN SELF AS RESULT
 

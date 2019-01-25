@@ -1,5 +1,5 @@
 CREATE OR REPLACE PACKAGE BODY V2U_Util AS
-    FUNCTION Split_Range(str IN VARCHAR, left OUT VARCHAR, right OUT VARCHAR)
+    FUNCTION Split_Range(str IN VARCHAR2, left OUT VARCHAR2, right OUT VARCHAR2)
         RETURN BOOLEAN
     IS
         sp NUMBER;  -- separator position
@@ -33,7 +33,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Util AS
         END IF;
     END;
 
-    FUNCTION StrCmp(str1 IN VARCHAR, str2 IN VARCHAR)
+    FUNCTION StrCmp(str1 IN VARCHAR2, str2 IN VARCHAR2)
         RETURN NUMBER
     IS
     BEGIN
@@ -78,14 +78,14 @@ CREATE OR REPLACE PACKAGE BODY V2U_Util AS
         END IF;
     END;
 
-    FUNCTION StrIcmp(str1 IN VARCHAR, str2 IN VARCHAR)
+    FUNCTION StrIcmp(str1 IN VARCHAR2, str2 IN VARCHAR2)
         RETURN NUMBER
     IS
     BEGIN
         RETURN StrCmp(UPPER(str1), UPPER(str2));
     END;
 
-    FUNCTION StrNullCmp(str1 IN VARCHAR, str2 IN VARCHAR)
+    FUNCTION StrNullCmp(str1 IN VARCHAR2, str2 IN VARCHAR2)
         RETURN NUMBER
     IS
         ord NUMBER;
@@ -97,7 +97,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Util AS
         RETURN ord;
     END;
 
-    FUNCTION StrNullIcmp(str1 IN VARCHAR, str2 IN VARCHAR)
+    FUNCTION StrNullIcmp(str1 IN VARCHAR2, str2 IN VARCHAR2)
         RETURN NUMBER
     IS
     BEGIN
@@ -152,24 +152,24 @@ CREATE OR REPLACE PACKAGE BODY V2U_Util AS
         RETURN ord;
     END;
 
-    FUNCTION Semester_Add(semester_code IN VARCHAR, offset IN NUMBER)
-        RETURN VARCHAR
+    FUNCTION Semester_Add(semester_code IN VARCHAR2, offset IN NUMBER)
+        RETURN VARCHAR2
     IS
         n NUMBER;
     BEGIN
         RETURN V2U_To.Semester_Code(V2U_To.Semester_Id(semester_code) + offset);
     END;
 
-    FUNCTION Semester_Sub(semester_code IN VARCHAR, offset IN NUMBER)
-        RETURN VARCHAR
+    FUNCTION Semester_Sub(semester_code IN VARCHAR2, offset IN NUMBER)
+        RETURN VARCHAR2
     IS
         n NUMBER;
     BEGIN
         RETURN V2U_To.Semester_Code(V2U_To.Semester_Id(semester_code) - offset);
     END;
 
-    FUNCTION Semester_Diff( lhs_semester_code IN VARCHAR
-                          , rhs_semester_code IN VARCHAR)
+    FUNCTION Semester_Diff( lhs_semester_code IN VARCHAR2
+                          , rhs_semester_code IN VARCHAR2)
         RETURN NUMBER
     IS
         lhs_id NUMBER;
@@ -184,7 +184,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Util AS
     END;
 
     FUNCTION Max_Admission_Semester(semesters IN V2u_Ko_Semester_Instances_t)
-        RETURN VARCHAR
+        RETURN VARCHAR2
     IS
         lowest V2u_Ko_Semester_Instance_t;
     BEGIN

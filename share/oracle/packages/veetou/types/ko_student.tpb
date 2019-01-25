@@ -3,10 +3,10 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Student_t AS
               SELF IN OUT NOCOPY V2u_Ko_Student_t
             , job_uuid IN RAW
             , id IN NUMBER
-            , student_index IN VARCHAR
-            , student_name IN VARCHAR := NULL
-            , first_name IN VARCHAR := NULL
-            , last_name IN VARCHAR := NULL
+            , student_index IN VARCHAR2
+            , student_name IN VARCHAR2 := NULL
+            , first_name IN VARCHAR2 := NULL
+            , last_name IN VARCHAR2 := NULL
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -38,7 +38,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Student_t AS
     END;
 
     MAP MEMBER FUNCTION map_fcn
-        RETURN VARCHAR
+        RETURN VARCHAR2
     IS
     BEGIN
         RETURN LPAD(student_index, 32) || RAWTOHEX(job_uuid);

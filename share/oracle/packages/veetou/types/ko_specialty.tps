@@ -23,6 +23,6 @@ CREATE OR REPLACE TYPE V2u_Ko_Specialty_t
 
     , ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Specialty_t)
             RETURN INTEGER
-    )  NOT FINAL;
+    );
 
 -- vim: set ft=sql ts=4 sw=4 et:

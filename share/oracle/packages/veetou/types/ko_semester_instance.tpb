@@ -3,7 +3,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Semester_Instance_t AS
               SELF IN OUT NOCOPY V2u_Ko_Semester_Instance_t
             , job_uuid IN RAW
             , id IN NUMBER
-            , semester_code IN VARCHAR := NULL
+            , semester_code IN VARCHAR2 := NULL
             , semester_number IN NUMBER := NULL
             , ects_mandatory IN NUMBER := NULL
             , ects_other IN NUMBER := NULL

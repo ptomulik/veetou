@@ -3,9 +3,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Job_t AS
           SELF IN OUT NOCOPY V2u_Ko_Job_t
         , job_uuid RAW
         , job_timestamp IN TIMESTAMP := NULL
-        , job_host IN VARCHAR := NULL
-        , job_user IN VARCHAR := NULL
-        , job_name IN VARCHAR := NULL
+        , job_host IN VARCHAR2 := NULL
+        , job_user IN VARCHAR2 := NULL
+        , job_name IN VARCHAR2 := NULL
         ) RETURN SELF AS RESULT
     IS
     BEGIN

@@ -3,7 +3,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Tbody_t AS
           SELF IN OUT NOCOPY V2u_Ko_Tbody_t
         , job_uuid IN RAW
         , id IN NUMBER
-        , remark IN VARCHAR := NULL
+        , remark IN VARCHAR2 := NULL
         ) RETURN SELF AS RESULT
     IS
     BEGIN

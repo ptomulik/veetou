@@ -3,8 +3,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Header_t AS
           SELF IN OUT NOCOPY V2u_Ko_Header_t
         , job_uuid IN RAW
         , id IN NUMBER
-        , university IN VARCHAR := NULL
-        , faculty IN VARCHAR := NULL
+        , university IN VARCHAR2 := NULL
+        , faculty IN VARCHAR2 := NULL
         )
         RETURN SELF AS RESULT
     IS

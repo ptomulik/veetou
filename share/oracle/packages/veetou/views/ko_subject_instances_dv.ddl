@@ -55,8 +55,8 @@ WITH
         SELECT
               subj_instance
             -- 1. COLLECT(DISTINCT...) seems to be broken ("DISTINCT" is ignored)
-            -- 2. COLLECT(s) with s VARCHAR is unpredictable - it returns a
-            --    collection of VARCHAR(n) with "n" unknown.
+            -- 2. COLLECT(s) with s VARCHAR2 is unpredictable - it returns a
+            --    collection of VARCHAR2(n) with "n" unknown.
             , CAST(MULTISET(
                     SELECT t.id FROM TABLE(trs) t
                 ) AS V2u_Ko_Ids_t) tr_ids

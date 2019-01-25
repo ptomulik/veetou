@@ -1,17 +1,17 @@
 CREATE OR REPLACE TYPE BODY V2u_Ko_Sheet_Info_t AS
     CONSTRUCTOR FUNCTION V2u_Ko_Sheet_Info_t(
           SELF IN OUT NOCOPY V2u_Ko_Sheet_Info_t
-        , university IN VARCHAR := NULL
-        , faculty IN VARCHAR := NULL
-        , studies_modetier IN VARCHAR := NULL
-        , student_index IN VARCHAR := NULL
-        , first_name IN VARCHAR := NULL
-        , last_name IN VARCHAR := NULL
-        , student_name IN VARCHAR := NULL
-        , semester_code IN VARCHAR := NULL
-        , studies_field IN VARCHAR := NULL
+        , university IN VARCHAR2 := NULL
+        , faculty IN VARCHAR2 := NULL
+        , studies_modetier IN VARCHAR2 := NULL
+        , student_index IN VARCHAR2 := NULL
+        , first_name IN VARCHAR2 := NULL
+        , last_name IN VARCHAR2 := NULL
+        , student_name IN VARCHAR2 := NULL
+        , semester_code IN VARCHAR2 := NULL
+        , studies_field IN VARCHAR2 := NULL
         , semester_number IN NUMBER := NULL
-        , studies_specialty IN VARCHAR := NULL
+        , studies_specialty IN VARCHAR2 := NULL
         , ects_mandatory IN NUMBER := NULL
         , ects_other IN NUMBER := NULL
         , ects_total IN NUMBER := NULL

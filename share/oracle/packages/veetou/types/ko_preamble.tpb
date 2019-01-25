@@ -3,16 +3,16 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Preamble_t AS
           SELF IN OUT NOCOPY V2u_Ko_Preamble_t
         , job_uuid IN RAW
         , id IN NUMBER
-        , studies_modetier IN VARCHAR := NULL
-        , title IN VARCHAR := NULL
-        , student_index IN VARCHAR := NULL
-        , first_name IN VARCHAR := NULL
-        , last_name IN VARCHAR := NULL
-        , student_name IN VARCHAR := NULL
-        , semester_code IN VARCHAR := NULL
-        , studies_field IN VARCHAR := NULL
+        , studies_modetier IN VARCHAR2 := NULL
+        , title IN VARCHAR2 := NULL
+        , student_index IN VARCHAR2 := NULL
+        , first_name IN VARCHAR2 := NULL
+        , last_name IN VARCHAR2 := NULL
+        , student_name IN VARCHAR2 := NULL
+        , semester_code IN VARCHAR2 := NULL
+        , studies_field IN VARCHAR2 := NULL
         , semester_number IN NUMBER := NULL
-        , studies_specialty IN VARCHAR := NULL
+        , studies_specialty IN VARCHAR2 := NULL
         ) RETURN SELF AS RESULT
     IS
     BEGIN

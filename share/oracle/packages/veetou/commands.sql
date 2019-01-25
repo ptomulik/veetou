@@ -36,8 +36,9 @@
 
 
 
--- Refreshes materialized views. Execute it every time you import new data to
--- tables. This operation may be quite time-consuming.
+-- Refreshes materialized views. Execute it every time you (re)install/
+-- (re)compile the project or import new data to tables. This operation may be
+-- quite time-consuming.
 @@refresh.sql;
 
 -- vim: set ft=sql ts=4 sw=4 et:
