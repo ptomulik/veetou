@@ -13,8 +13,8 @@ ALTER TABLE v2u_ko_x_trs_mv ADD (SCOPE FOR (footer) IS v2u_ko_footers);
 ALTER TABLE v2u_ko_x_trs_mv ADD (SCOPE FOR (sheet) IS v2u_ko_sheets);
 ALTER TABLE v2u_ko_x_trs_mv ADD (SCOPE FOR (report) IS v2u_ko_reports);
 
-BEGIN
-DBMS_MVIEW.REFRESH('v2u_ko_x_trs_mv');
-END;
+--BEGIN
+--DBMS_MVIEW.REFRESH('v2u_ko_x_trs_mv');
+--END;
 
 -- vim: set ft=sql ts=4 sw=4 et:

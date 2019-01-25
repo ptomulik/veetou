@@ -202,7 +202,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         Drop_View('ko_sheet_infos_dv', 'ko_sheet_infos');
         Drop_View('ko_x_sheets');
         Drop_View('ko_x_sheets_dv', 'ko_x_sheets_mv', 'MATERIALIZED VIEW');
-        Drop_View('ko_students_dv', 'ko_students');
+        --Drop_View('ko_students_dv', 'ko_students');
         Drop_View('ko_subject_instances');
         Drop_View('ko_subject_instances_dv', 'ko_subject_instances_mv', 'MATERIALIZED VIEW');
         Drop_Materialized_View('ko_subj_instance_trs_mv', 'ko_subj_instance_trs');
@@ -220,6 +220,10 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
             Drop_Index('ko_trs_idx2');
         END IF;
 
+        Drop_Trigger('ko_students_tr1');
+        Drop_Sequence('ko_students_sq1');
+        Drop_Table('ko_students', 'PURGE');
+        --
         Drop_Table('program_mappings', 'program_mappings_dv', how);
         Drop_Table('subject_mappings', 'subject_mappings_dv', how);
         Drop_Table('ko_page_footer', how => how);

@@ -11,8 +11,8 @@ ALTER TABLE v2u_ko_x_sheets_mv ADD (SCOPE FOR (header) IS v2u_ko_headers);
 ALTER TABLE v2u_ko_x_sheets_mv ADD (SCOPE FOR (preamble) IS v2u_ko_preambles);
 ALTER TABLE v2u_ko_x_sheets_mv ADD (SCOPE FOR (report) IS v2u_ko_reports);
 
-BEGIN
-DBMS_MVIEW.REFRESH('v2u_ko_x_sheets_mv');
-END;
+--BEGIN
+--DBMS_MVIEW.REFRESH('v2u_ko_x_sheets_mv');
+--END;
 
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -7,8 +7,5 @@
 @@ko_sheet.tps;
 @@ko_tbody.tps;
 @@ko_tr.tps;
-@@program_mapping.tps;
-@@semester.tps;
-@@subject_mapping.tps;
 
 -- vim: set ft=sql ts=4 sw=4 et:

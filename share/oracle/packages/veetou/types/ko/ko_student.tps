@@ -5,6 +5,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Student_t FORCE AUTHID CURRENT_USER AS OBJECT
     , student_name VARCHAR2(128 CHAR)
     , first_name VARCHAR2(48 CHAR)
     , last_name VARCHAR2(48 CHAR)
+    , preamble_ids V2u_Ko_Ids_t
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Student_t(
               SELF IN OUT NOCOPY V2u_Ko_Student_t
@@ -14,13 +15,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Student_t FORCE AUTHID CURRENT_USER AS OBJECT
             , student_name IN VARCHAR2 := NULL
             , first_name IN VARCHAR2 := NULL
             , last_name IN VARCHAR2 := NULL
-            ) RETURN SELF AS RESULT
-
-    , CONSTRUCTOR FUNCTION V2u_Ko_Student_t(
-              SELF IN OUT NOCOPY V2u_Ko_Student_t
-            , job_uuid IN RAW
-            , id IN NUMBER
-            , preamble IN V2u_Ko_Preamble_t
+            , preamble_ids IN V2u_Ko_Ids_t := NULL
             ) RETURN SELF AS RESULT
 
     , MAP MEMBER FUNCTION map_fcn RETURN VARCHAR2
