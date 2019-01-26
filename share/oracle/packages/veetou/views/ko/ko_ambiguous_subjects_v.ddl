@@ -4,13 +4,13 @@ AS WITH u AS
         SELECT
               VALUE(si) subject_instance
             , VALUE(sm) subject_mapping
-            , sim.matching_score matching_score
+            , j.matching_score matching_score
         FROM v2u_ko_subject_instances si
-        INNER JOIN v2u_ko_subj_inst_mapping sim
-            ON (sim.subject_instance_id = si.id AND
-                sim.job_uuid = si.job_uuid)
+        INNER JOIN v2u_ko_subject_mappings_j j
+            ON (j.subject_instance_id = si.id AND
+                j.job_uuid = si.job_uuid)
         INNER JOIN v2u_subject_mappings sm
-            ON (sim.subject_mapping_id = sm.id)
+            ON (j.subject_mapping_id = sm.id)
     ),
     v AS
     (

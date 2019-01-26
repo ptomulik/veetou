@@ -61,16 +61,16 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Mapping_t AS
         , subj_tutor IN VARCHAR2
         ) RETURN INTEGER
     IS
-        score NUMBER;
+        total NUMBER;
         local NUMBER;
     BEGIN
-        score := 1;     -- if all expressions are NULL, then match is positive
+        total := 1;     -- if all expressions are NULL, then match is positive
         IF expr_subj_name IS NOT NULL THEN
             local := match_subj_name(subj_name);
             IF local < 1 THEN
                 RETURN local;
             ELSE
-                score := score + 1;
+                total := total + 1;
             END IF;
         END IF;
         IF expr_university IS NOT NULL THEN
@@ -78,7 +78,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Mapping_t AS
             IF local < 1 THEN
                 RETURN local;
             ELSE
-                score := score + 1;
+                total := total + 1;
             END IF;
         END IF;
         IF expr_faculty IS NOT NULL THEN
@@ -86,7 +86,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Mapping_t AS
             IF local < 1 THEN
                 RETURN local;
             ELSE
-                score := score + 1;
+                total := total + 1;
             END IF;
         END IF;
         IF expr_studies_modetier IS NOT NULL THEN
@@ -94,7 +94,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Mapping_t AS
             IF local < 1 THEN
                 RETURN local;
             ELSE
-                score := score + 1;
+                total := total + 1;
             END IF;
         END IF;
         IF expr_studies_field IS NOT NULL THEN
@@ -102,7 +102,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Mapping_t AS
             IF local < 1 THEN
                 RETURN local;
             ELSE
-                score := score + 1;
+                total := total + 1;
             END IF;
         END IF;
         IF expr_studies_specialty IS NOT NULL THEN
@@ -110,7 +110,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Mapping_t AS
             IF local < 1 THEN
                 RETURN local;
             ELSE
-                score := score + 1;
+                total := total + 1;
             END IF;
         END IF;
         IF expr_semester_code IS NOT NULL THEN
@@ -118,7 +118,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Mapping_t AS
             IF local < 1 THEN
                 RETURN local;
             ELSE
-                score := score + 1;
+                total := total + 1;
             END IF;
         END IF;
         IF expr_subj_hours_w IS NOT NULL THEN
@@ -126,7 +126,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Mapping_t AS
             IF local < 1 THEN
                 RETURN local;
             ELSE
-                score := score + 1;
+                total := total + 1;
             END IF;
         END IF;
         IF expr_subj_hours_c IS NOT NULL THEN
@@ -134,7 +134,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Mapping_t AS
             IF local < 1 THEN
                 RETURN local;
             ELSE
-                score := score + 1;
+                total := total + 1;
             END IF;
         END IF;
         IF expr_subj_hours_l IS NOT NULL THEN
@@ -142,7 +142,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Mapping_t AS
             IF local < 1 THEN
                 RETURN local;
             ELSE
-                score := score + 1;
+                total := total + 1;
             END IF;
         END IF;
         IF expr_subj_hours_p IS NOT NULL THEN
@@ -150,7 +150,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Mapping_t AS
             IF local < 1 THEN
                 RETURN local;
             ELSE
-                score := score + 1;
+                total := total + 1;
             END IF;
         END IF;
         IF expr_subj_hours_s IS NOT NULL THEN
@@ -158,7 +158,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Mapping_t AS
             IF local < 1 THEN
                 RETURN local;
             ELSE
-                score := score + 1;
+                total := total + 1;
             END IF;
         END IF;
         IF expr_subj_credit_kind IS NOT NULL THEN
@@ -166,7 +166,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Mapping_t AS
             IF local < 1 THEN
                 RETURN local;
             ELSE
-                score := score + 1;
+                total := total + 1;
             END IF;
         END IF;
         IF expr_subj_ects IS NOT NULL THEN
@@ -174,7 +174,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Mapping_t AS
             IF local < 1 THEN
                 RETURN local;
             ELSE
-                score := score + 1;
+                total := total + 1;
             END IF;
         END IF;
         IF expr_subj_tutor IS NOT NULL THEN
@@ -182,10 +182,14 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Mapping_t AS
             IF local < 1 THEN
                 RETURN local;
             ELSE
-                score := score + 1;
+                total := total + 1;
             END IF;
         END IF;
-        RETURN score;
+        -- bonus for mapped_subj_code being not NULL
+        IF mapped_subj_code IS NOT NULL THEN
+            total := total + 1;
+        END IF;
+        RETURN total;
     END;
 
 

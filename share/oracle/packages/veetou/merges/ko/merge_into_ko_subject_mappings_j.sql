@@ -1,4 +1,4 @@
-MERGE INTO v2u_ko_subj_inst_mapping tgt
+MERGE INTO v2u_ko_subject_mappings_j tgt
 USING
     (
         WITH u AS
@@ -20,7 +20,9 @@ ON (tgt.subject_mapping_id = src.subject_mapping_id AND
     tgt.subject_instance_id = src.subject_instance_id AND
     tgt.job_uuid = src.job_uuid)
 WHEN NOT MATCHED THEN
-    INSERT (job_uuid, subject_instance_id, subject_mapping_id, matching_score)
-    VALUES (src.job_uuid, src.subject_instance_id, src.subject_mapping_id, src.matching_score);
+    INSERT (    job_uuid,     subject_instance_id,     subject_mapping_id,     matching_score)
+    VALUES (src.job_uuid, src.subject_instance_id, src.subject_mapping_id, src.matching_score)
+WHEN MATCHED THEN
+    UPDATE SET tgt.matching_score = src.matching_score;
 
 -- vim: set ft=sql ts=4 sw=4 et:

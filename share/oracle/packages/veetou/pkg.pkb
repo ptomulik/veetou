@@ -173,28 +173,24 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
     PROCEDURE Uninstall(how IN VARCHAR2 := 'KEEP')
     IS
     BEGIN
-        Drop_View('ko_subject_grades_dv', 'ko_subject_grades');
-        Drop_View('ko_unmapped_programs_dv', 'ko_unmapped_programs');
-        Drop_View('ko_ambiguous_programs_dv', 'ko_ambiguous_programs');
-        Drop_View('ko_mapped_programs_dv', 'ko_mapped_programs');
+--        Drop_View('ko_subject_grades_dv', 'ko_subject_grades');
+--        Drop_View('ko_unmapped_programs_dv', 'ko_unmapped_programs');
+--        Drop_View('ko_ambiguous_programs_dv', 'ko_ambiguous_programs');
+--        Drop_View('ko_mapped_programs_dv', 'ko_mapped_programs');
         IF how <> 'KEEP' THEN
             Drop_Index('program_mappings_idx1');
             Drop_Index('program_mappings_idx2');
             Drop_Trigger('program_mappings_tr1');
             Drop_Sequence('program_mappings_sq1');
         END IF;
-        Drop_View('ko_threads_dv', 'ko_threads');
-        Drop_View('ko_student_threads_dv', 'ko_student_threads');
-        --Drop_View('ko_student_specialties_dv', 'ko_student_specialties');
-        Drop_View('ko_specialty_instances_dv', 'ko_specialty_instances');
+        --Drop_View('ko_threads_dv', 'ko_threads');
+        --Drop_View('ko_student_threads_dv', 'ko_student_threads');
+        --Drop_View('ko_specialty_instances_dv', 'ko_specialty_instances');
         Drop_View('ko_specialties');
-        Drop_View('ko_specialties_dv', 'ko_specialties_mv', 'MATERIALIZED VIEW');
+        --Drop_View('ko_specialties_dv', 'ko_specialties_mv', 'MATERIALIZED VIEW');
         Drop_View('ko_unmapped_subjects_v');
-        --Drop_View('ko_unmapped_subjects_dv', 'ko_unmapped_subjects');
         Drop_View('ko_ambiguous_subjects_v');
-        --Drop_View('ko_ambiguous_subjects_dv', 'ko_ambiguous_subjects');
         Drop_View('ko_mapped_subjects_v');
-        --Drop_View('ko_mapped_subjects_dv', 'ko_mapped_subjects_mv', 'MATERIALIZED VIEW');
         IF how <> 'KEEP' THEN
             Drop_Index('subject_mappings_idx1');
             Drop_Index('subject_mappings_idx2');
@@ -203,13 +199,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         END IF;
         Drop_View('ko_sheet_hdr_preamble_v');
         Drop_View('ko_tr_hdr_preamble_v');
-        --Drop_View('ko_sheet_infos_dv', 'ko_sheet_infos');
         Drop_View('ko_x_sheets_v');
-        --Drop_View('ko_x_sheets_dv', 'ko_x_sheets_mv', 'MATERIALIZED VIEW');
-        --Drop_View('ko_subject_instances_dv', 'ko_subject_instances_mv', 'MATERIALIZED VIEW');
-        --Drop_Materialized_View('ko_subj_instance_trs_mv', 'ko_subj_instance_trs');
         Drop_View('ko_x_trs_v');
-        --Drop_View('ko_x_trs_dv', 'ko_x_trs_mv', 'MATERIALIZED VIEW');
 
         IF how <> 'KEEP' THEN
             Drop_Index('ko_headers_idx1');
@@ -230,7 +221,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         Drop_Index('ko_students_idx1');
         Drop_Table('ko_students', how => 'PURGE');
         --
-        Drop_Table('ko_subj_inst_mapping', how => 'PURGE');
+        Drop_Table('ko_subject_mappings_j', how => 'PURGE');
         Drop_Table('ko_subj_inst_trs', how => 'PURGE');
         --
         Drop_Trigger('ko_subject_instances_tr1');

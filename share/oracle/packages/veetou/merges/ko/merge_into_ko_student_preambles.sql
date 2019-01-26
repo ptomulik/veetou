@@ -17,7 +17,7 @@ ON (tgt.preamble_id = src.preamble_id AND
     tgt.student_id = src.student_id AND
     tgt.job_uuid = src.job_uuid)
 WHEN NOT MATCHED THEN
-    INSERT (job_uuid, student_id, preamble_id)
+    INSERT (    job_uuid,     student_id,     preamble_id)
     VALUES (src.job_uuid, src.student_id, src.preamble_id);
 
 -- vim: set ft=sql ts=4 sw=4 et:

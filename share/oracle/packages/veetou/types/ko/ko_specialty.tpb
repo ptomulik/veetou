@@ -57,12 +57,6 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_t AS
     IS
         ord INTEGER;
     BEGIN
-        ord := V2U_Util.NumNullCmp(id, other.id);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        --
-        -- the attribute comparison below is only performed for id = other.id,
-        -- or when ((id IS NULL) AND (other.id IS NULL)).
-        --
         ord := V2U_Util.StrNullIcmp(university, other.university);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Util.StrNullIcmp(faculty, other.faculty);

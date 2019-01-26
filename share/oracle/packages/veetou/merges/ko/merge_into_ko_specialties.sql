@@ -20,7 +20,7 @@ USING
         FROM v v
         GROUP BY v.specialty
     ) src
-ON (tgt.job_uuid = src.specialty.job_uuid AND tgt.id = src.specialty.id)
+ON (VALUE(tgt) = src.specialty)
 WHEN NOT MATCHED THEN INSERT VALUES(src.specialty);
 
 -- vim: set ft=sql ts=4 sw=4 et:
