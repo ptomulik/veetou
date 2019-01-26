@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY V2u_Ko_Tr_Hdr_Preamble_t AS
-    CONSTRUCTOR FUNCTION V2u_Ko_Tr_Hdr_Preamble_t(
-          SELF IN OUT NOCOPY V2u_Ko_Tr_Hdr_Preamble_t
+CREATE OR REPLACE TYPE BODY V2u_Ko_Tr_Hdr_Preamb_H_t AS
+    CONSTRUCTOR FUNCTION V2u_Ko_Tr_Hdr_Preamb_H_t(
+          SELF IN OUT NOCOPY V2u_Ko_Tr_Hdr_Preamb_H_t
         , job_uuid IN RAW
         , id IN NUMBER
         , tr IN REF V2u_Ko_Tr_t

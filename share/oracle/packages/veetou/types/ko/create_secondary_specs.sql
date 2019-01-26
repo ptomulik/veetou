@@ -2,8 +2,8 @@
 @@ko_x_sheet.tps;
 @@ko_semester_instance.tps;
 --@@ko_sheet_info.tps;
-@@ko_sheet_hdr_preamble.tps;
-@@ko_tr_hdr_preamble.tps;
+@@ko_sh_hdr_preamb.tps;
+@@ko_tr_hdr_preamb.tps;
 @@ko_subject_instance.tps;
 @@ko_specialty.tps;
 @@ko_student.tps;

@@ -1,5 +1,5 @@
-CREATE OR REPLACE VIEW v2u_ko_tr_hdr_preamble_h
-OF V2u_Ko_Tr_Hdr_Preamble_t
+CREATE OR REPLACE VIEW v2u_ko_tr_hdr_preamb_h
+OF V2u_Ko_Tr_Hdr_Preamb_H_t
 WITH OBJECT IDENTIFIER (job_uuid, id)
 AS SELECT
       VALUE(trs).job_uuid

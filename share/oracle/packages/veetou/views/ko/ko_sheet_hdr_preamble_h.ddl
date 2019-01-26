@@ -1,5 +1,5 @@
-CREATE OR REPLACE VIEW v2u_ko_sheet_hdr_preamble_h
-OF V2u_Ko_Sheet_Hdr_Preamble_t
+CREATE OR REPLACE VIEW v2u_ko_sh_hdr_preamb_h
+OF V2u_Ko_Sh_Hdr_Preamb_H_t
 WITH OBJECT IDENTIFIER (job_uuid, id)
 AS WITH u AS
     (
