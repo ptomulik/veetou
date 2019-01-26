@@ -1,5 +1,5 @@
 CREATE OR REPLACE VIEW v2u_ko_x_trs_h
-OF V2u_Ko_X_Tr_t
+OF V2u_Ko_X_Tr_H_t
 WITH OBJECT IDENTIFIER(job_uuid, id)
 AS SELECT trs.job_uuid
         , trs.id

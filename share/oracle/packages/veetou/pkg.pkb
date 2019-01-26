@@ -200,7 +200,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         Drop_View('ko_sh_hdr_preamb_h');
         Drop_View('ko_tr_hdr_preamb_h');
         Drop_View('ko_x_sheets_h');
+        Drop_View('ko_x_sheets_v');
         Drop_View('ko_x_trs_h');
+        Drop_View('ko_x_trs_v');
 
         IF how <> 'KEEP' THEN
             Drop_Index('ko_headers_idx1');
@@ -278,10 +280,10 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         Drop_Type('Ko_Student_t');
         Drop_Type('Ko_Sh_Hdr_Preamb_H_t', 'Ko_Sh_Hdr_Preambs_H_t');
         Drop_Type('Ko_Tr_Hdr_Preamb_H_t', 'Ko_Tr_Hdr_Preambs_H_t');
-        Drop_Type('Ko_X_Sheet_t', 'Ko_X_Sheets_t');
+        Drop_Type('Ko_X_Sheet_H_t', 'Ko_X_Sheets_H_t');
         Drop_TYpe('Ko_X_Sheet_Pages_t');
         Drop_TYpe('Ko_X_Sheet_Footers_t');
-        Drop_Type('Ko_X_Tr_t', 'Ko_X_Trs_t');
+        Drop_Type('Ko_X_Tr_H_t', 'Ko_X_Trs_H_t');
         IF how <> 'KEEP' THEN
             Drop_Type('Ko_Footer_t', 'Ko_Footers_t', 'Ko_Footer_Refs_t');
             Drop_Type('Ko_Header_t', 'Ko_Headers_t', 'Ko_Header_Refs_t');

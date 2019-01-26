@@ -1,5 +1,5 @@
 CREATE OR REPLACE VIEW v2u_ko_x_sheets_h
-OF V2u_Ko_X_Sheet_t
+OF V2u_Ko_X_Sheet_H_t
 WITH OBJECT IDENTIFIER(job_uuid, id)
 AS
 WITH u AS

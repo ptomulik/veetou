@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY V2u_Ko_X_Sheet_t AS
-    CONSTRUCTOR FUNCTION V2u_Ko_X_Sheet_t(
-          SELF IN OUT NOCOPY V2u_Ko_X_Sheet_t
+CREATE OR REPLACE TYPE BODY V2u_Ko_X_Sheet_H_t AS
+    CONSTRUCTOR FUNCTION V2u_Ko_X_Sheet_H_t(
+          SELF IN OUT NOCOPY V2u_Ko_X_Sheet_H_t
         , job_uuid IN RAW
         , id IN NUMBER
         , sheet IN REF V2u_Ko_Sheet_t

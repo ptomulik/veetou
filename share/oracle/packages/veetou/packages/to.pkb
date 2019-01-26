@@ -121,7 +121,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_To AS
     FUNCTION Ko_Semester_Instance(
           job_uuid IN RAW
         , id IN NUMBER
-        , x_sheet IN V2u_Ko_X_Sheet_t
+        , x_sheet IN V2u_Ko_X_Sheet_H_t
         )
         RETURN V2u_Ko_Semester_Instance_t
     IS

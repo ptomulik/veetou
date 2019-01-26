@@ -1,6 +1,5 @@
 ----
 @@ko_x_trs_h.ddl;
-@@ko_x_trs_v.ddl;
 @@ko_x_sheets_h.ddl;
 @@ko_sh_hdr_preamb_h.ddl;
 @@ko_tr_hdr_preamb_h.ddl;
