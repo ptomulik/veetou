@@ -5,5 +5,6 @@
 @@tables/create_tables.sql;
 @@tables/create_mview_logs.sql;
 @@views/create_views.sql;
+@@merges/execute_merges.sql;
 
 -- vim: set ft=sql ts=4 sw=4 et:

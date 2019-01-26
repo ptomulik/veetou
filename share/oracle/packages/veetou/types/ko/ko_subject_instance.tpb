@@ -19,7 +19,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Instance_t AS
         , subj_credit_kind IN VARCHAR2 := NULL
         , subj_ects IN NUMBER := NULL
         , subj_tutor IN VARCHAR2 := NULL
-        , subj_grades IN V2u_Subj_Grades20_t := NULL
+        , subj_grades IN V2u_Subj_20Grades_t := NULL
         , tr_ids IN V2u_Ko_Ids_t := NULL
         ) RETURN SELF AS RESULT
     IS

@@ -16,7 +16,7 @@ CREATE OR REPLACE PACKAGE V2U_To AUTHID CURRENT_USER AS
             , header IN V2u_Ko_Header_t
             , preamble IN V2u_Ko_Preamble_t
             , tr IN V2u_Ko_Tr_t
-            , subj_grades IN V2u_Subj_Grades20_t := NULL
+            , subj_grades IN V2u_Subj_20Grades_t := NULL
             , tr_ids IN V2u_Ko_Ids_t := NULL
             ) RETURN V2u_Ko_Subject_Instance_t;
 

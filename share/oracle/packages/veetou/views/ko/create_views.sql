@@ -1,6 +1,7 @@
 ----
 @@ko_x_trs.sql;
 @@ko_x_sheets.sql;
+@@ko_sheet_hdr_preamble_v.ddl;
 --@@ko_sheet_infos.sql;
 --
 --@@ko_specialty_instances.sql;
@@ -11,7 +12,7 @@
 --@@ko_mapped_programs.sql;
 @@ko_ambiguous_subjects.ddl;
 --@@ko_ambiguous_programs.sql;
---@@ko_unmapped_subjects.sql;
+--@@ko_unmapped_subjects.ddl;
 --@@ko_unmapped_programs.sql;
 --@@ko_subject_grades.sql;
 

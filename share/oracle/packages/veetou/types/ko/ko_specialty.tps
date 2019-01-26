@@ -12,7 +12,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Specialty_t
     , CONSTRUCTOR FUNCTION V2u_Ko_Specialty_t(
               SELF IN OUT NOCOPY V2u_Ko_Specialty_t
             , job_uuid IN RAW
-            , id IN NUMBER
+            , id IN NUMBER := NULL
             , university IN VARCHAR2 := NULL
             , faculty IN VARCHAR2 := NULL
             , studies_modetier IN VARCHAR2 := NULL
@@ -20,6 +20,16 @@ CREATE OR REPLACE TYPE V2u_Ko_Specialty_t
             , studies_specialty IN VARCHAR2 := NULL
             , sheet_ids IN V2u_Ko_Ids_t := NULL
             ) RETURN SELF AS RESULT
+
+    , MEMBER FUNCTION dup_with(
+              new_id IN NUMBER := NULL
+            , new_sheet_ids IN V2u_Ko_Ids_t := NULL
+            ) RETURN V2u_Ko_Specialty_t
+
+    , MEMBER FUNCTION dup_with(
+              new_id_seq IN VARCHAR2
+            , new_sheet_ids IN V2u_Ko_Ids_t := NULL
+            ) RETURN V2u_Ko_Specialty_t
 
     , ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Specialty_t)
             RETURN INTEGER

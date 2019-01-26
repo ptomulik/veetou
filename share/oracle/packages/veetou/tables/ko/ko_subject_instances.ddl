@@ -69,7 +69,7 @@ AS WITH u AS
             , CAST(MULTISET(
                     SELECT DISTINCT t.subj_grade FROM TABLE(trs) t
                     ORDER BY t.subj_grade
-              ) AS V2u_Subj_Grades20_t) distinct_subj_grades
+              ) AS V2u_Subj_20Grades_t) distinct_subj_grades
         FROM v v
     )
 SELECT

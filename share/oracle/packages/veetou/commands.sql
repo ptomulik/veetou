@@ -35,6 +35,8 @@
 @@recompile.sql;
 
 
+@@merge.sql;
+
 
 -- Refreshes materialized views. Execute it every time you (re)install/
 -- (re)compile the project or import new data to tables. This operation may be

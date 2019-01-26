@@ -11,6 +11,7 @@
 @@ko_x_sheet.tpb;
 @@ko_semester_instance.tpb;
 --@@ko_sheet_info.tpb;
+@@ko_sheet_hdr_preamble.tpb;
 @@ko_subject_instance.tpb;
 @@ko_specialty.tpb;
 @@ko_student.tpb;

@@ -199,6 +199,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
             Drop_Trigger('subject_mappings_tr1');
             Drop_Sequence('subject_mappings_sq1');
         END IF;
+        Drop_View('ko_sheet_hdr_preamble_v');
         Drop_View('ko_sheet_infos_dv', 'ko_sheet_infos');
         Drop_View('ko_x_sheets');
         Drop_View('ko_x_sheets_dv', 'ko_x_sheets_mv', 'MATERIALIZED VIEW');
@@ -283,6 +284,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         Drop_Type('Ko_Semester_Instance_t', 'Ko_Semester_Instances_t');
         Drop_Type('Ko_Sheet_Info_t');
         Drop_Type('Ko_Student_t');
+        Drop_Type('Ko_Sheet_Hdr_Preamble_t', 'Ko_Sheet_Hdr_Preambles_t');
         Drop_Type('Ko_X_Sheet_t', 'Ko_X_Sheets_t');
         Drop_TYpe('Ko_X_Sheet_Pages_t');
         Drop_TYpe('Ko_X_Sheet_Footers_t');
@@ -301,7 +303,12 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
             Drop_Type('Semester_t', 'Semesters_t');
         END IF;
         Drop_Type('Subj_Grades_t');
+        Drop_Type('Subj_Codes_t');
         Drop_Type('Ko_Ids_t');
+        Drop_Type('Integers_t');
+        Drop_Type('Subj_20Grades_t');
+        Drop_Type('Subj_20Codes_t');
+        Drop_Type('Ko_5Ids_t');
     END;
 
 END V2U_Pkg;

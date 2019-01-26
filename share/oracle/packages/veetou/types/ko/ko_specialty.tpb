@@ -23,12 +23,46 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_t AS
         RETURN;
     END;
 
+    MEMBER FUNCTION dup_with(
+              new_id IN NUMBER := NULL
+            , new_sheet_ids IN V2u_Ko_Ids_t := NULL
+            ) RETURN V2u_Ko_Specialty_t
+    IS
+    BEGIN
+        RETURN V2u_Ko_Specialty_t(
+              job_uuid => job_uuid
+            , id => new_id
+            , university => university
+            , faculty => faculty
+            , studies_modetier => studies_modetier
+            , studies_field => studies_field
+            , studies_specialty => studies_specialty
+            , sheet_ids => new_sheet_ids
+        );
+    END;
+
+
+    MEMBER FUNCTION dup_with(
+              new_id_seq IN VARCHAR2
+            , new_sheet_ids IN V2u_Ko_Ids_t := NULL
+            ) RETURN V2u_Ko_Specialty_t
+    IS
+    BEGIN
+        RETURN dup_with(V2U_Util.Next_Val(new_id_seq), new_sheet_ids);
+    END;
+
 
     ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Specialty_t)
         RETURN INTEGER
     IS
         ord INTEGER;
     BEGIN
+        ord := V2U_Util.NumNullCmp(id, other.id);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        --
+        -- the attribute comparison below is only performed for id = other.id,
+        -- or when ((id IS NULL) AND (other.id IS NULL)).
+        --
         ord := V2U_Util.StrNullIcmp(university, other.university);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Util.StrNullIcmp(faculty, other.faculty);
