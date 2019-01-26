@@ -5,7 +5,13 @@ OF V2u_Ko_Subject_Instance_t
     )
 OBJECT IDENTIFIER IS PRIMARY KEY
 VARRAY subj_grades STORE AS LOB (ENABLE STORAGE IN ROW)
-NESTED TABLE tr_ids STORE AS v2u_ko_subject_trs_nt;
+NESTED TABLE tr_ids STORE AS v2u_ko_subject_trs_nt
+    (
+        (
+            CONSTRAINT v2u_ko_subject_tra_nt_pk PRIMARY KEY (nested_table_id, column_value)
+        )
+        ORGANIZATION INDEX
+    );
 /
 CREATE SEQUENCE v2u_ko_subject_instances_sq1 START WITH 1;
 /
