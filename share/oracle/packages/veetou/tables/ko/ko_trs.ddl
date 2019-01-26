@@ -2,7 +2,7 @@ CREATE TABLE v2u_ko_trs
 OF V2u_Ko_Tr_t
     (
       CONSTRAINT v2u_ko_trs_pk PRIMARY KEY (id, job_uuid)
-    , CONSTRAINT v2u_ko_trs_fk0 FOREIGN KEY (job_uuid) REFERENCES v2u_ko_jobs(job_uuid)
+    , CONSTRAINT v2u_ko_trs_f0 FOREIGN KEY (job_uuid) REFERENCES v2u_ko_jobs(job_uuid)
     )
 OBJECT IDENTIFIER IS PRIMARY KEY;
 

@@ -214,7 +214,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         END IF;
 
         --
-        Drop_Table('ko_student_preambles', how => 'PURGE');
+        Drop_Table('ko_student_preambles_j', how => 'PURGE');
         --
         Drop_Trigger('ko_students_tr1');
         Drop_Sequence('ko_students_sq1');
@@ -222,13 +222,13 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         Drop_Table('ko_students', how => 'PURGE');
         --
         Drop_Table('ko_subject_mappings_j', how => 'PURGE');
-        Drop_Table('ko_subj_inst_trs', how => 'PURGE');
+        Drop_Table('ko_subject_trs_j', how => 'PURGE');
         --
         Drop_Trigger('ko_subject_instances_tr1');
         Drop_Sequence('ko_subject_instances_sq1');
         Drop_Table('ko_subject_instances', how => 'PURGE');
         --
-        Drop_Table('ko_specialty_sheets', how => 'PURGE');
+        Drop_Table('ko_specialty_sheets_j', how => 'PURGE');
         --
         Drop_Trigger('ko_specialties_tr1');
         Drop_Sequence('ko_specialties_sq1');

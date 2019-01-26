@@ -1,4 +1,4 @@
-MERGE INTO v2u_ko_student_preambles tgt
+MERGE INTO v2u_ko_student_preambles_j tgt
 USING
     (
         WITH u AS

@@ -1,4 +1,4 @@
-MERGE INTO v2u_ko_subj_inst_trs tgt
+MERGE INTO v2u_ko_subject_trs_j tgt
 USING
     (
         WITH u AS
