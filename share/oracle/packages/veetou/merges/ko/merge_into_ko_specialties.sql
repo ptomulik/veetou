@@ -10,7 +10,7 @@ USING
                         , preamble => DEREF(u.preamble)
                   ) specialty
                 , u.sheet.id sheet_id
-            FROM v2u_ko_sheet_hdr_preamble_v u
+            FROM v2u_ko_sheet_hdr_preamble_h u
         )
         SELECT
               v.specialty.dup_with(

@@ -197,10 +197,10 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
             Drop_Trigger('subject_mappings_tr1');
             Drop_Sequence('subject_mappings_sq1');
         END IF;
-        Drop_View('ko_sheet_hdr_preamble_v');
-        Drop_View('ko_tr_hdr_preamble_v');
-        Drop_View('ko_x_sheets_v');
-        Drop_View('ko_x_trs_v');
+        Drop_View('ko_sheet_hdr_preamble_h');
+        Drop_View('ko_tr_hdr_preamble_h');
+        Drop_View('ko_x_sheets_h');
+        Drop_View('ko_x_trs_h');
 
         IF how <> 'KEEP' THEN
             Drop_Index('ko_headers_idx1');

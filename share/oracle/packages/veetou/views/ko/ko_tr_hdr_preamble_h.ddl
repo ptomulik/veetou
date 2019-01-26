@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW v2u_ko_tr_hdr_preamble_v
+CREATE OR REPLACE VIEW v2u_ko_tr_hdr_preamble_h
 OF V2u_Ko_Tr_Hdr_Preamble_t
 WITH OBJECT IDENTIFIER (job_uuid, id)
 AS SELECT

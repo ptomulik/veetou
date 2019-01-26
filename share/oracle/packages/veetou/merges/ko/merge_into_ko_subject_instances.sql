@@ -11,7 +11,7 @@ USING
                     , preamble => DEREF(t.preamble)
                     , tr => DEREF(t.tr)
                   ) subj_instance
-            FROM v2u_ko_tr_hdr_preamble_v t
+            FROM v2u_ko_tr_hdr_preamble_h t
         ),
         v AS
         (
