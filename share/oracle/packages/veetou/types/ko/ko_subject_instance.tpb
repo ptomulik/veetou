@@ -53,9 +53,6 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Instance_t AS
     IS
         ord NUMBER;
     BEGIN
-        ord := V2U_Util.NumNullCmp(id, other.id);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        -- if id's are not set...
         ord := V2U_Util.StrNullIcmp(subj_code, other.subj_code);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Util.StrNullIcmp(subj_name, other.subj_name);
@@ -89,6 +86,48 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Instance_t AS
         ord := V2U_Util.StrNullIcmp(subj_tutor, other.subj_tutor);
         IF ord <> 0 THEN RETURN ord; END IF;
         RETURN V2u_Util.RawNullCmp(job_uuid, other.job_uuid);
+    END;
+
+    MEMBER FUNCTION dup_with(
+              new_id IN NUMBER
+            , new_subj_grades IN V2u_Subj_20Grades_t := NULL
+            , new_tr_ids IN V2u_Ko_Ids_t := NULL
+            ) RETURN V2u_Ko_Subject_Instance_t
+    IS
+    BEGIN
+        RETURN V2u_Ko_Subject_Instance_t(
+              job_uuid => job_uuid
+            , id => new_id
+            , subj_code => subj_code
+            , subj_name => subj_name
+            , university => university
+            , faculty => faculty
+            , studies_modetier => studies_modetier
+            , studies_field => studies_field
+            , studies_specialty => studies_specialty
+            , semester_code => semester_code
+            , subj_hours_w => subj_hours_w
+            , subj_hours_c => subj_hours_c
+            , subj_hours_l => subj_hours_l
+            , subj_hours_p => subj_hours_p
+            , subj_hours_s => subj_hours_s
+            , subj_credit_kind => subj_credit_kind
+            , subj_ects => subj_ects
+            , subj_tutor => subj_tutor
+            , subj_grades => new_subj_grades
+            , tr_ids => new_tr_ids
+            );
+    END;
+
+    MEMBER FUNCTION dup_with(
+              new_id_seq IN VARCHAR2
+            , new_subj_grades IN V2u_Subj_20Grades_t := NULL
+            , new_tr_ids IN V2u_Ko_Ids_t := NULL
+            ) RETURN V2u_Ko_Subject_Instance_t
+    IS
+    BEGIN
+        RETURN dup_with( V2U_Util.Next_Val(new_id_seq)
+                       , new_subj_grades, new_tr_ids);
     END;
 END;
 

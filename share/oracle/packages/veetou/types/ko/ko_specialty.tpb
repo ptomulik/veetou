@@ -2,12 +2,12 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_t AS
     CONSTRUCTOR FUNCTION V2u_Ko_Specialty_t(
               SELF IN OUT NOCOPY V2u_Ko_Specialty_t
             , job_uuid IN RAW
-            , id IN NUMBER
-            , university IN VARCHAR2 := NULL
-            , faculty IN VARCHAR2 := NULL
-            , studies_modetier IN VARCHAR2 := NULL
-            , studies_field IN VARCHAR2 := NULL
-            , studies_specialty IN VARCHAR2 := NULL
+            , id IN NUMBER := NULL
+            , university IN VARCHAR2
+            , faculty IN VARCHAR2
+            , studies_modetier IN VARCHAR2
+            , studies_field IN VARCHAR2
+            , studies_specialty IN VARCHAR2
             , sheet_ids IN V2u_Ko_Ids_t := NULL
             ) RETURN SELF AS RESULT
     IS

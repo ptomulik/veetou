@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW v2u_ko_mapped_subjects
+CREATE OR REPLACE VIEW v2u_ko_mapped_subjects_v
 OF V2u_Ko_Mapped_Subject_t
 WITH OBJECT IDENTIFIER (job_uuid, subject_instance_id, subject_mapping_id)
 AS SELECT

@@ -1,5 +1,3 @@
-CREATE SEQUENCE v2u_ko_students_sq1 START WITH 1;
-/
 CREATE TABLE v2u_ko_students
 OF V2u_Ko_Student_t
     (
@@ -7,31 +5,10 @@ OF V2u_Ko_Student_t
         , CONSTRAINT v2u_ko_students_u1 UNIQUE (student_index, job_uuid)
     )
 OBJECT IDENTIFIER IS PRIMARY KEY
-NESTED TABLE preamble_ids STORE AS v2u_ko_student_preambles_nt
-AS WITH u AS
-    (
-        SELECT
-              job_uuid
-            , student_index
-            , student_name
-            , first_name
-            , last_name
-            , CAST(COLLECT(p.id) AS V2u_Ko_Ids_t) preamble_ids
-        FROM v2u_ko_preambles p
-        GROUP BY student_index, student_name, first_name, last_name, job_uuid
-        ORDER BY student_index, student_name, first_name, last_name, job_uuid
-    )
-SELECT
-      job_uuid
-    , V2u_Util.Next_Val('v2u_ko_students_sq1')
-    , student_index
-    , student_name
-    , first_name
-    , last_name
-    , preamble_ids
-FROM u;
+NESTED TABLE preamble_ids STORE AS v2u_ko_student_preambles_nt;
 /
-
+CREATE SEQUENCE v2u_ko_students_sq1 START WITH 1;
+/
 CREATE OR REPLACE TRIGGER v2u_ko_students_tr1
     BEFORE INSERT ON v2u_ko_students
     FOR EACH ROW

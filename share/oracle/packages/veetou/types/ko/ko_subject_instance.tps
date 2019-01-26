@@ -23,7 +23,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Instance_t FORCE AUTHID CURRENT_USER AS OB
     , CONSTRUCTOR FUNCTION V2u_Ko_Subject_Instance_t(
               SELF IN OUT NOCOPY V2u_Ko_Subject_Instance_t
             , job_uuid IN RAW
-            , id IN NUMBER
+            , id IN NUMBER := NULL
             , subj_code IN VARCHAR2 := NULL
             , subj_name IN VARCHAR2 := NULL
             , university IN VARCHAR2 := NULL
@@ -47,6 +47,18 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Instance_t FORCE AUTHID CURRENT_USER AS OB
     , ORDER MEMBER FUNCTION cmp_with (
               other V2u_Ko_Subject_Instance_t
             ) RETURN NUMBER
+
+    , MEMBER FUNCTION dup_with(
+              new_id IN NUMBER
+            , new_subj_grades IN V2u_Subj_20Grades_t := NULL
+            , new_tr_ids IN V2u_Ko_Ids_t := NULL
+            ) RETURN V2u_Ko_Subject_Instance_t
+
+    , MEMBER FUNCTION dup_with(
+              new_id_seq IN VARCHAR2
+            , new_subj_grades IN V2u_Subj_20Grades_t := NULL
+            , new_tr_ids IN V2u_Ko_Ids_t := NULL
+            ) RETURN V2u_Ko_Subject_Instance_t
     );
 
 -- vim: set ft=sql ts=4 sw=4 et:

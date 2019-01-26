@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW v2u_ko_ambiguous_subjects
+CREATE OR REPLACE VIEW v2u_ko_ambiguous_subjects_v
 AS WITH u AS
     (
         SELECT

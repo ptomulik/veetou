@@ -10,15 +10,26 @@ CREATE OR REPLACE TYPE V2u_Ko_Student_t FORCE AUTHID CURRENT_USER AS OBJECT
     , CONSTRUCTOR FUNCTION V2u_Ko_Student_t(
               SELF IN OUT NOCOPY V2u_Ko_Student_t
             , job_uuid IN RAW
-            , id IN NUMBER
+            , id IN NUMBER := NULL
             , student_index IN VARCHAR2
-            , student_name IN VARCHAR2 := NULL
-            , first_name IN VARCHAR2 := NULL
-            , last_name IN VARCHAR2 := NULL
+            , student_name IN VARCHAR2
+            , first_name IN VARCHAR2
+            , last_name IN VARCHAR2
             , preamble_ids IN V2u_Ko_Ids_t := NULL
             ) RETURN SELF AS RESULT
 
-    , MAP MEMBER FUNCTION map_fcn RETURN VARCHAR2
+    , ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Student_t)
+        RETURN NUMBER
+
+    , MEMBER FUNCTION dup_with(
+              new_id IN NUMBER
+            , new_preamble_ids IN V2u_Ko_Ids_t := NULL
+            ) RETURN V2u_Ko_Student_t
+
+    , MEMBER FUNCTION dup_with(
+              new_id_seq IN VARCHAR2
+            , new_preamble_ids IN V2u_Ko_Ids_t := NULL
+            ) RETURN V2u_Ko_Student_t
     );
 
 -- vim: set ft=sql ts=4 sw=4 et:

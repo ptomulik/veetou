@@ -5,10 +5,9 @@ USING
         (
             SELECT
                   V2u_To.Ko_Specialty(
-                          u.job_uuid
-                        , NULL
-                        , DEREF(u.header)
-                        , DEREF(u.preamble)
+                          job_uuid => u.job_uuid
+                        , header => DEREF(u.header)
+                        , preamble => DEREF(u.preamble)
                   ) specialty
                 , u.sheet.id sheet_id
             FROM v2u_ko_sheet_hdr_preamble_v u

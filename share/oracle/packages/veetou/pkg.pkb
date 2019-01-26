@@ -189,10 +189,12 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         Drop_View('ko_specialty_instances_dv', 'ko_specialty_instances');
         Drop_View('ko_specialties');
         Drop_View('ko_specialties_dv', 'ko_specialties_mv', 'MATERIALIZED VIEW');
-        Drop_View('ko_unmapped_subjects_dv', 'ko_unmapped_subjects');
-        Drop_View('ko_ambiguous_subjects_dv', 'ko_ambiguous_subjects');
-        Drop_View('ko_mapped_subjects');
-        Drop_View('ko_mapped_subjects_dv', 'ko_mapped_subjects_mv', 'MATERIALIZED VIEW');
+        Drop_View('ko_unmapped_subjects_v');
+        --Drop_View('ko_unmapped_subjects_dv', 'ko_unmapped_subjects');
+        Drop_View('ko_ambiguous_subjects_v');
+        --Drop_View('ko_ambiguous_subjects_dv', 'ko_ambiguous_subjects');
+        Drop_View('ko_mapped_subjects_v');
+        --Drop_View('ko_mapped_subjects_dv', 'ko_mapped_subjects_mv', 'MATERIALIZED VIEW');
         IF how <> 'KEEP' THEN
             Drop_Index('subject_mappings_idx1');
             Drop_Index('subject_mappings_idx2');
@@ -200,15 +202,14 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
             Drop_Sequence('subject_mappings_sq1');
         END IF;
         Drop_View('ko_sheet_hdr_preamble_v');
-        Drop_View('ko_sheet_infos_dv', 'ko_sheet_infos');
-        Drop_View('ko_x_sheets');
-        Drop_View('ko_x_sheets_dv', 'ko_x_sheets_mv', 'MATERIALIZED VIEW');
-        --Drop_View('ko_students_dv', 'ko_students');
-        --Drop_View('ko_subject_instances');
-        Drop_View('ko_subject_instances_dv', 'ko_subject_instances_mv', 'MATERIALIZED VIEW');
-        Drop_Materialized_View('ko_subj_instance_trs_mv', 'ko_subj_instance_trs');
-        Drop_View('ko_x_trs');
-        Drop_View('ko_x_trs_dv', 'ko_x_trs_mv', 'MATERIALIZED VIEW');
+        Drop_View('ko_tr_hdr_preamble_v');
+        --Drop_View('ko_sheet_infos_dv', 'ko_sheet_infos');
+        Drop_View('ko_x_sheets_v');
+        --Drop_View('ko_x_sheets_dv', 'ko_x_sheets_mv', 'MATERIALIZED VIEW');
+        --Drop_View('ko_subject_instances_dv', 'ko_subject_instances_mv', 'MATERIALIZED VIEW');
+        --Drop_Materialized_View('ko_subj_instance_trs_mv', 'ko_subj_instance_trs');
+        Drop_View('ko_x_trs_v');
+        --Drop_View('ko_x_trs_dv', 'ko_x_trs_mv', 'MATERIALIZED VIEW');
 
         IF how <> 'KEEP' THEN
             Drop_Index('ko_headers_idx1');
@@ -285,6 +286,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         Drop_Type('Ko_Sheet_Info_t');
         Drop_Type('Ko_Student_t');
         Drop_Type('Ko_Sheet_Hdr_Preamble_t', 'Ko_Sheet_Hdr_Preambles_t');
+        Drop_Type('Ko_Tr_Hdr_Preamble_t', 'Ko_Tr_Hdr_Preambles_t');
         Drop_Type('Ko_X_Sheet_t', 'Ko_X_Sheets_t');
         Drop_TYpe('Ko_X_Sheet_Pages_t');
         Drop_TYpe('Ko_X_Sheet_Footers_t');
