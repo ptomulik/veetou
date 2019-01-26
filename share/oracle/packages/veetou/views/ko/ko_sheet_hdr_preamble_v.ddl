@@ -13,19 +13,19 @@ AS WITH u AS
             , COUNT(DISTINCT preambles.id) distinct_preambles_count
 
         FROM v2u_ko_sheets sheets
-        INNER JOIN v2u_ko_sheet_pages sheet_pages
+        INNER JOIN v2u_ko_sheet_pages_j sheet_pages
             ON (sheet_pages.ko_sheet_id = sheets.id AND
                 sheet_pages.job_uuid = sheets.job_uuid)
         INNER JOIN v2u_ko_pages pages
             ON (sheet_pages.ko_page_id = pages.id AND
                 sheet_pages.job_uuid = pages.job_uuid)
-        INNER JOIN v2u_ko_page_preamble page_preamble
+        INNER JOIN v2u_ko_page_preamble_j page_preamble
             ON (page_preamble.ko_page_id = pages.id AND
                 page_preamble.job_uuid = pages.job_uuid)
         INNER JOIN v2u_ko_preambles preambles
             ON (page_preamble.ko_preamble_id = preambles.id AND
                 page_preamble.job_uuid = preambles.job_uuid)
-        INNER JOIN v2u_ko_page_header page_header
+        INNER JOIN v2u_ko_page_header_j page_header
             ON (page_header.ko_page_id = pages.id AND
                 page_header.job_uuid = pages.job_uuid)
         INNER JOIN v2u_ko_headers headers

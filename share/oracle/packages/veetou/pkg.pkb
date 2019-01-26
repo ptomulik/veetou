@@ -236,13 +236,13 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         --
         Drop_Table('program_mappings', 'program_mappings_dv', how);
         Drop_Table('subject_mappings', 'subject_mappings_dv', how);
-        Drop_Table('ko_page_footer', how => how);
-        Drop_Table('ko_page_header', how => how);
-        Drop_Table('ko_page_preamble', how => how);
-        Drop_Table('ko_page_tbody', how => how);
-        Drop_Table('ko_report_sheets', how => how);
-        Drop_Table('ko_sheet_pages', how => how);
-        Drop_Table('ko_tbody_trs', how => how);
+        Drop_Table('ko_page_footer_j', how => how);
+        Drop_Table('ko_page_header_j', how => how);
+        Drop_Table('ko_page_preamble_j', how => how);
+        Drop_Table('ko_page_tbody_j', how => how);
+        Drop_Table('ko_report_sheets_j', how => how);
+        Drop_Table('ko_sheet_pages_j', how => how);
+        Drop_Table('ko_tbody_trs_j', how => how);
         Drop_Table('ko_footers', 'ko_footers_dv', how);
         Drop_Table('ko_headers', 'ko_headers_dv', how);
         Drop_Table('ko_pages', 'ko_pages_dv', how);

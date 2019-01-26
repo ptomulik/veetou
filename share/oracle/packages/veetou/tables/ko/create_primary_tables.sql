@@ -9,10 +9,10 @@
 @@ko_footers.ddl;
 @@ko_trs.ddl;
 -- junctions
-@@ko_page_footer.ddl;
-@@ko_page_header.ddl;
-@@ko_page_preamble.ddl;
-@@ko_page_tbody.ddl;
-@@ko_report_sheets.ddl;
-@@ko_sheet_pages.ddl;
-@@ko_tbody_trs.ddl;
+@@ko_page_footer_j.ddl;
+@@ko_page_header_j.ddl;
+@@ko_page_preamble_j.ddl;
+@@ko_page_tbody_j.ddl;
+@@ko_report_sheets_j.ddl;
+@@ko_sheet_pages_j.ddl;
+@@ko_tbody_trs_j.ddl;
