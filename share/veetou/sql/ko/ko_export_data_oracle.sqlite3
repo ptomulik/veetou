@@ -143,7 +143,7 @@ INSERT INTO table_decls VALUES(
 );
 
 INSERT INTO table_decls VALUES(
-    'ko_page_footer',
+    'ko_page_footer_j',
     'J01',
     '(
         tab_id FILLER POSITION(1) CHAR
@@ -154,7 +154,7 @@ INSERT INTO table_decls VALUES(
 );
 
 INSERT INTO table_decls VALUES(
-    'ko_page_header',
+    'ko_page_header_j',
     'J02',
     '(
       tab_id FILLER POSITION(1) CHAR
@@ -165,7 +165,7 @@ INSERT INTO table_decls VALUES(
 );
 
 INSERT INTO table_decls VALUES(
-    'ko_page_preamble',
+    'ko_page_preamble_j',
     'J03',
     '(
       tab_id FILLER POSITION(1) CHAR
@@ -176,7 +176,7 @@ INSERT INTO table_decls VALUES(
 );
 
 INSERT INTO table_decls VALUES(
-    'ko_page_tbody',
+    'ko_page_tbody_j',
     'J04',
     '(
       tab_id FILLER POSITION(1) CHAR
@@ -187,7 +187,7 @@ INSERT INTO table_decls VALUES(
 );
 
 INSERT INTO table_decls VALUES(
-    'ko_report_sheets',
+    'ko_report_sheets_j',
     'J05',
     '(
       tab_id FILLER POSITION(1) CHAR
@@ -198,7 +198,7 @@ INSERT INTO table_decls VALUES(
 );
 
 INSERT INTO table_decls VALUES(
-    'ko_sheet_pages',
+    'ko_sheet_pages_j',
     'J06',
     '(
       tab_id FILLER POSITION(1) CHAR
@@ -209,7 +209,7 @@ INSERT INTO table_decls VALUES(
 );
 
 INSERT INTO table_decls VALUES(
-    'ko_tbody_trs',
+    'ko_tbody_trs_j',
     'J07',
     '(
       tab_id FILLER POSITION(1) CHAR
@@ -253,13 +253,13 @@ SELECT decl FROM table_decl_strings WHERE table_name='ko_reports';
 SELECT decl FROM table_decl_strings WHERE table_name='ko_sheets';
 SELECT decl FROM table_decl_strings WHERE table_name='ko_tbodies';
 SELECT decl FROM table_decl_strings WHERE table_name='ko_trs';
-SELECT decl FROM table_decl_strings WHERE table_name='ko_page_footer';
-SELECT decl FROM table_decl_strings WHERE table_name='ko_page_header';
-SELECT decl FROM table_decl_strings WHERE table_name='ko_page_preamble';
-SELECT decl FROM table_decl_strings WHERE table_name='ko_page_tbody';
-SELECT decl FROM table_decl_strings WHERE table_name='ko_report_sheets';
-SELECT decl FROM table_decl_strings WHERE table_name='ko_sheet_pages';
-SELECT decl FROM table_decl_strings WHERE table_name='ko_tbody_trs';
+SELECT decl FROM table_decl_strings WHERE table_name='ko_page_footer_j';
+SELECT decl FROM table_decl_strings WHERE table_name='ko_page_header_j';
+SELECT decl FROM table_decl_strings WHERE table_name='ko_page_preamble_j';
+SELECT decl FROM table_decl_strings WHERE table_name='ko_page_tbody_j';
+SELECT decl FROM table_decl_strings WHERE table_name='ko_report_sheets_j';
+SELECT decl FROM table_decl_strings WHERE table_name='ko_sheet_pages_j';
+SELECT decl FROM table_decl_strings WHERE table_name='ko_tbody_trs_j';
 
 SELECT '';
 SELECT 'BEGINDATA';
@@ -347,49 +347,49 @@ FROM ko_trs;
 
 ----------- ko_page_footer
 SELECT
-    (SELECT table_id FROM table_decls WHERE table_name = 'ko_page_footer') AS table_id
+    (SELECT table_id FROM table_decls WHERE table_name = 'ko_page_footer_j') AS table_id
   , (SELECT value FROM job_uuid) AS job_uuid
   , ko_page_footer.*
 FROM ko_page_footer;
 
 ----------- ko_page_header
 SELECT
-    (SELECT table_id FROM table_decls WHERE table_name = 'ko_page_header') AS table_id
+    (SELECT table_id FROM table_decls WHERE table_name = 'ko_page_header_j') AS table_id
   , (SELECT value FROM job_uuid) AS job_uuid
   , ko_page_header.*
 FROM ko_page_header;
 
 ----------- ko_page_preamble
 SELECT
-    (SELECT table_id FROM table_decls WHERE table_name = 'ko_page_preamble') AS table_id
+    (SELECT table_id FROM table_decls WHERE table_name = 'ko_page_preamble_j') AS table_id
   , (SELECT value FROM job_uuid) AS job_uuid
   , ko_page_preamble.*
 FROM ko_page_preamble;
 
 ----------- ko_page_tbody
 SELECT
-    (SELECT table_id FROM table_decls WHERE table_name = 'ko_page_tbody') AS table_id
+    (SELECT table_id FROM table_decls WHERE table_name = 'ko_page_tbody_j') AS table_id
   , (SELECT value FROM job_uuid) AS job_uuid
   , ko_page_tbody.*
 FROM ko_page_tbody;
 
 ----------- ko_report_sheets
 SELECT
-    (SELECT table_id FROM table_decls WHERE table_name = 'ko_report_sheets') AS table_id
+    (SELECT table_id FROM table_decls WHERE table_name = 'ko_report_sheets_j') AS table_id
   , (SELECT value FROM job_uuid) AS job_uuid
   , ko_report_sheets.*
 FROM ko_report_sheets;
 
 ----------- ko_sheet_pages
 SELECT
-    (SELECT table_id FROM table_decls WHERE table_name = 'ko_sheet_pages') AS table_id
+    (SELECT table_id FROM table_decls WHERE table_name = 'ko_sheet_pages_j') AS table_id
   , (SELECT value FROM job_uuid) AS job_uuid
   , ko_sheet_pages.*
 FROM ko_sheet_pages;
 
 ----------- ko_tbody_trs
 SELECT
-    (SELECT table_id FROM table_decls WHERE table_name = 'ko_tbody_trs') AS table_id
+    (SELECT table_id FROM table_decls WHERE table_name = 'ko_tbody_trs_j') AS table_id
   , (SELECT value FROM job_uuid) AS job_uuid
   , ko_tbody_trs.*
 FROM ko_tbody_trs;
