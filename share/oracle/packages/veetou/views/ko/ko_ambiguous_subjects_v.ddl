@@ -5,7 +5,7 @@ AS WITH u AS
               VALUE(si) subject_instance
             , VALUE(sm) subject_mapping
             , j.matching_score matching_score
-        FROM v2u_ko_subject_instances si
+        FROM v2u_ko_subject_issues si
         INNER JOIN v2u_ko_subject_mappings_j j
             ON (j.subject_instance_id = si.id AND
                 j.job_uuid = si.job_uuid)

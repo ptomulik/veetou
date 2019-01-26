@@ -10,7 +10,7 @@ CREATE OR REPLACE PACKAGE V2U_To AUTHID CURRENT_USER AS
             , x_sheet IN V2u_Ko_X_Sheet_H_t
             ) RETURN V2u_Ko_Semester_Instance_t;
 
-    FUNCTION Ko_Subject_Instance(
+    FUNCTION Ko_Subject_Issue(
               job_uuid IN RAW
             , id IN NUMBER := NULL
             , header IN V2u_Ko_Header_t
@@ -18,7 +18,7 @@ CREATE OR REPLACE PACKAGE V2U_To AUTHID CURRENT_USER AS
             , tr IN V2u_Ko_Tr_t
             , subj_grades IN V2u_Subj_20Grades_t := NULL
             , tr_ids IN V2u_Ko_Ids_t := NULL
-            ) RETURN V2u_Ko_Subject_Instance_t;
+            ) RETURN V2u_Ko_Subject_Issue_t;
 
     FUNCTION Ko_Specialty(
               job_uuid IN RAW
@@ -29,7 +29,7 @@ CREATE OR REPLACE PACKAGE V2U_To AUTHID CURRENT_USER AS
             ) RETURN V2u_Ko_Specialty_t;
 
     FUNCTION Ko_Mapped_Subject(
-              subject_instance IN V2u_Ko_Subject_Instance_t
+              subject_instance IN V2u_Ko_Subject_Issue_t
             , subject_mapping IN V2u_Subject_Mapping_t
             , matching_score IN NUMBER := NULL
             ) RETURN V2u_Ko_Mapped_Subject_t;

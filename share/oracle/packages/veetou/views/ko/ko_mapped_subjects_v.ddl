@@ -38,7 +38,7 @@ AS SELECT
     , sm.expr_subj_ects
     , si.subj_tutor
     , sm.expr_subj_tutor
-FROM v2u_ko_subject_instances si
+FROM v2u_ko_subject_issues si
 LEFT JOIN v2u_ko_subject_mappings_j sim
     ON (sim.subject_instance_id = si.id AND
         sim.job_uuid = si.job_uuid)

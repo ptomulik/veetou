@@ -1,11 +1,11 @@
-MERGE INTO v2u_ko_subject_instances tgt
+MERGE INTO v2u_ko_subject_issues tgt
 USING
     (
         WITH u AS
         (
             SELECT
                   t.tr tr
-                , V2u_To.Ko_Subject_Instance(
+                , V2u_To.Ko_Subject_Issue(
                       job_uuid => t.tr.job_uuid
                     , header => DEREF(t.header)
                     , preamble => DEREF(t.preamble)
@@ -29,7 +29,7 @@ USING
             -- So, I decided to collect tr objects first into a table and then
             -- use SELECT on this table.
             v.subj_instance.dup_with(
-                      new_id_seq => 'v2u_ko_subject_instances_sq1'
+                      new_id_seq => 'v2u_ko_subject_issues_sq1'
                     , new_tr_ids => CAST(MULTISET(
                             SELECT t.id FROM TABLE(v.trs) t
                       ) AS V2u_Ko_Ids_t)

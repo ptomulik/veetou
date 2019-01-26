@@ -119,7 +119,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Match AS
 
     FUNCTION Attributes(
               subject_mapping IN V2u_Subject_Mapping_t := NULL
-            , subject_instance IN V2u_Ko_Subject_Instance_t := NULL
+            , subject_instance IN V2u_Ko_Subject_Issue_t := NULL
             ) RETURN NUMBER
     IS
     BEGIN

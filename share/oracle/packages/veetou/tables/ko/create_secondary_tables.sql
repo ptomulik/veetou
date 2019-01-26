@@ -1,6 +1,6 @@
 @@ko_students.ddl;
 @@ko_student_preambles_j.ddl;
-@@ko_subject_instances.ddl;
+@@ko_subject_issues.ddl;
 @@ko_subject_trs_j.ddl;
 @@ko_subject_mappings_j.ddl;
 @@ko_specialties.ddl;

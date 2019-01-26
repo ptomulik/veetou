@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Instance_t AS
-    CONSTRUCTOR FUNCTION V2u_Ko_Subject_Instance_t(
-          SELF IN OUT NOCOPY V2u_Ko_Subject_Instance_t
+CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Issue_t AS
+    CONSTRUCTOR FUNCTION V2u_Ko_Subject_Issue_t(
+          SELF IN OUT NOCOPY V2u_Ko_Subject_Issue_t
         , job_uuid IN RAW
         , id IN NUMBER
         , subj_code IN VARCHAR2 := NULL
@@ -48,7 +48,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Instance_t AS
     END;
 
     ORDER MEMBER FUNCTION cmp_with(
-              other V2u_Ko_Subject_Instance_t
+              other V2u_Ko_Subject_Issue_t
             ) RETURN NUMBER
     IS
         ord NUMBER;
@@ -92,10 +92,10 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Instance_t AS
               new_id IN NUMBER
             , new_subj_grades IN V2u_Subj_20Grades_t := NULL
             , new_tr_ids IN V2u_Ko_Ids_t := NULL
-            ) RETURN V2u_Ko_Subject_Instance_t
+            ) RETURN V2u_Ko_Subject_Issue_t
     IS
     BEGIN
-        RETURN V2u_Ko_Subject_Instance_t(
+        RETURN V2u_Ko_Subject_Issue_t(
               job_uuid => job_uuid
             , id => new_id
             , subj_code => subj_code
@@ -123,7 +123,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Instance_t AS
               new_id_seq IN VARCHAR2
             , new_subj_grades IN V2u_Subj_20Grades_t := NULL
             , new_tr_ids IN V2u_Ko_Ids_t := NULL
-            ) RETURN V2u_Ko_Subject_Instance_t
+            ) RETURN V2u_Ko_Subject_Issue_t
     IS
     BEGIN
         RETURN dup_with( V2U_Util.Next_Val(new_id_seq)

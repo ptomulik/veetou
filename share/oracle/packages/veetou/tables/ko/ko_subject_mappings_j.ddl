@@ -7,7 +7,7 @@ CREATE TABLE v2u_ko_subject_mappings_j
         , CONSTRAINT v2u_ko_subject_mappings_j_pk PRIMARY KEY (subject_mapping_id, subject_instance_id, job_uuid)
         , CONSTRAINT v2u_ko_subject_mappings_j_f0 FOREIGN KEY (job_uuid) REFERENCES v2u_ko_jobs(job_uuid)
         , CONSTRAINT v2u_ko_subject_mappings_j_f1 FOREIGN KEY (subject_mapping_id) REFERENCES v2u_subject_mappings(id)
-        , CONSTRAINT v2u_ko_subject_mappings_j_f2 FOREIGN KEY (subject_instance_id, job_uuid) REFERENCES v2u_ko_subject_instances(id, job_uuid)
+        , CONSTRAINT v2u_ko_subject_mappings_j_f2 FOREIGN KEY (subject_instance_id, job_uuid) REFERENCES v2u_ko_subject_issues(id, job_uuid)
     );
 
 

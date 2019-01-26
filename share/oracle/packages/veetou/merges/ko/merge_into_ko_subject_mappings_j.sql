@@ -8,7 +8,7 @@ USING
                 , si.id subject_instance_id
                 , sm.id subject_mapping_id
                 , V2U_Match.Attributes(VALUE(sm), VALUE(si)) matching_score
-            FROM v2u_ko_subject_instances si
+            FROM v2u_ko_subject_issues si
             LEFT JOIN v2u_subject_mappings sm
             ON sm.subj_code = si.subj_code
         )
