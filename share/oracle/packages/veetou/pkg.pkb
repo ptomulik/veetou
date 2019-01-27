@@ -79,7 +79,10 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
     IS
         CURSOR types_cur
         IS SELECT OBJECT_NAME FROM USER_OBJECTS
-           WHERE OBJECT_TYPE = 'TYPE' AND OBJECT_NAME LIKE 'ST0000%';
+            WHERE OBJECT_TYPE = 'TYPE' AND (
+                OBJECT_NAME LIKE 'ST0000%' OR
+                OBJECT_NAME LIKE 'SYSTP%'
+            );
         name USER_OBJECTS.OBJECT_NAME%TYPE;
     BEGIN
         OPEN types_cur;
@@ -172,10 +175,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
     PROCEDURE Uninstall(how IN VARCHAR2 := 'KEEP')
     IS
     BEGIN
---        Drop_View('ko_subject_grades_dv', 'ko_subject_grades');
---        Drop_View('ko_unmapped_programs_dv', 'ko_unmapped_programs');
---        Drop_View('ko_ambiguous_programs_dv', 'ko_ambiguous_programs');
---        Drop_View('ko_mapped_programs_dv', 'ko_mapped_programs');
+        Drop_View('ko_unmapped_specialties_v');
+        Drop_View('ko_ambiguous_specialties_v');
+        Drop_View('ko_mapped_specialties_v');
         IF how <> 'KEEP' THEN
             Drop_Index('specialty_map_idx1');
             Drop_Index('specialty_map_idx2');
@@ -278,10 +280,12 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         Drop_Package('Match');
         Drop_Package('Util');
         Drop_Package('To');
+        Drop_Package('Get');
 
         Drop_Collect_Types();
 
         Drop_Type('Ko_Mapped_Subject_t', 'Ko_Mapped_Subjects_t');
+        Drop_Type('Ko_Mapped_Specialty_t', 'Ko_Mapped_Specialties_t');
         IF how <> 'KEEP' THEN
             Drop_Type('Specialty_Map_t', 'Specialty_Maps_t');
         END IF;
@@ -313,8 +317,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
             Drop_Type('Ko_Job_t', 'Ko_Jobs_t');
             Drop_Type('Semester_Codes_t');
             Drop_Type('Semester_t', 'Semesters_t');
-            Drop_Type('Faculty_t', 'Faculties_t');
-            Drop_Type('University_t', 'Universities_t');
+            Drop_Type('Faculty_t', 'Faculties_t', 'Faculty_Codes_t');
+            Drop_Type('University_t', 'Universities_t', 'University_Codes_t');
         END IF;
         Drop_Type('Subj_Grades_t');
         Drop_Type('Subj_Codes_t');

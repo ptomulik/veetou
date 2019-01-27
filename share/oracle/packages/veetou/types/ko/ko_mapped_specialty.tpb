@@ -51,17 +51,17 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Mapped_Specialty_t AS
     IS
         ord NUMBER;
     BEGIN
-        ord := V2U_Util.NumNullCmp(matching_score, other.matching_score);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(university, other.university);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(faculty, other.faculty);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(studies_modetier, other.studies_modetier);
+        ord := V2U_Util.StrNullIcmp(studies_specialty, other.studies_specialty);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Util.StrNullIcmp(studies_field, other.studies_field);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(studies_specialty, other.studies_specialty);
+        ord := V2U_Util.StrNullIcmp(studies_modetier, other.studies_modetier);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Util.StrNullIcmp(faculty, other.faculty);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Util.StrNullIcmp(university, other.university);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Util.NumNullCmp(matching_score, other.matching_score);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Util.NumNullCmp(semester_number, other.semester_number);
         IF ord <> 0 THEN RETURN ord; END IF;
