@@ -5,7 +5,7 @@ AS SELECT
     , v.mapped_program_codes mapped_program_codes
     , v.matching_scores matching_scores
     , v.specialty_map_count specialty_map_count
-    -- instance
+    -- issue
     , v.specialty.university university
     , v.specialty.faculty faculty
     , v.specialty.studies_modetier studies_modetier

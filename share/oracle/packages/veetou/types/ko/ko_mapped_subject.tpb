@@ -2,7 +2,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Mapped_Subject_t AS
     CONSTRUCTOR FUNCTION V2u_Ko_Mapped_Subject_t(
           SELF IN OUT NOCOPY V2u_Ko_Mapped_Subject_t
         , job_uuid IN RAW
-        , subject_instance_id IN NUMBER
+        , subject_issue_id IN NUMBER
         , subject_map_id IN NUMBER
         , matching_score IN NUMBER
         , subj_code IN VARCHAR2 := NULL
@@ -41,7 +41,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Mapped_Subject_t AS
     IS
     BEGIN
         SELF.job_uuid := job_uuid;
-        SELF.subject_instance_id := subject_instance_id;
+        SELF.subject_issue_id := subject_issue_id;
         SELF.subject_map_id := subject_map_id;
         SELF.matching_score := matching_score;
         SELF.subj_code := subj_code;

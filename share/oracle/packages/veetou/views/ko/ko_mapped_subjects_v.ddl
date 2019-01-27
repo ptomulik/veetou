@@ -1,6 +1,6 @@
 CREATE OR REPLACE VIEW v2u_ko_mapped_subjects_v
 OF V2u_Ko_Mapped_Subject_t
-WITH OBJECT IDENTIFIER (job_uuid, subject_instance_id, subject_map_id)
+WITH OBJECT IDENTIFIER (job_uuid, subject_issue_id, subject_map_id)
 AS SELECT
       si.job_uuid
     , si.id
@@ -40,7 +40,7 @@ AS SELECT
     , sm.expr_subj_tutor
 FROM v2u_ko_subject_issues si
 LEFT JOIN v2u_ko_subject_map_j sim
-    ON (sim.subject_instance_id = si.id AND
+    ON (sim.subject_issue_id = si.id AND
         sim.job_uuid = si.job_uuid)
 LEFT JOIN v2u_subject_map sm
     ON (sim.subject_map_id = sm.id)

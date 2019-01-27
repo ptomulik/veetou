@@ -38,7 +38,7 @@ CREATE OR REPLACE PACKAGE V2U_To AUTHID CURRENT_USER AS
             ) RETURN V2u_Ko_Specialty_t;
 
     FUNCTION Ko_Mapped_Subject(
-              subject_instance IN V2u_Ko_Subject_Issue_t
+              subject_issue IN V2u_Ko_Subject_Issue_t
             , subject_map IN V2u_Subject_Map_t
             , matching_score IN NUMBER := NULL
             ) RETURN V2u_Ko_Mapped_Subject_t;

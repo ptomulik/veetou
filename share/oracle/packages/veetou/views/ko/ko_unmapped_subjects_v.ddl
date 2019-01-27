@@ -1,9 +1,9 @@
 CREATE OR REPLACE VIEW v2u_ko_unmapped_subjects_v
 OF V2u_Ko_Mapped_Subject_t
-WITH OBJECT IDENTIFIER (job_uuid, subject_instance_id, subject_map_id)
+WITH OBJECT IDENTIFIER (job_uuid, subject_issue_id, subject_map_id)
 AS SELECT
       v.job_uuid
-    , v.subject_instance_id
+    , v.subject_issue_id
     , v.subject_map_id
     , v.matching_score
     , v.subj_code

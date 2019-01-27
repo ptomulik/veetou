@@ -3,7 +3,7 @@ AS SELECT
       v.job_uuid job_uuid
     , v.specialty_map_id specialty_map_id
     , v.matching_score matching_score
-    -- instance
+    -- issue
     , v.specialty.university university
     , v.specialty.faculty faculty
     , v.specialty.studies_modetier studies_modetier
