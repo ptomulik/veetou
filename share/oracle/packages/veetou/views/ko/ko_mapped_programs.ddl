@@ -1,7 +1,7 @@
 CREATE OR REPLACE VIEW v2u_ko_mapped_programs
 AS SELECT
       v.job_uuid job_uuid
-    , v.program_mapping_id program_mapping_id
+    , v.specialty_map_id specialty_map_id
     , v.matching_score matching_score
     -- instance
     , v.specialty.university university
@@ -11,11 +11,11 @@ AS SELECT
     , v.specialty.studies_specialty studies_specialty
     , v.semester_code semester_code
     -- mapping
-    , v.program_mapping.mapped_program_code mapped_program_code
-    , v.program_mapping.mapped_modetier_code mapped_modetier_code
-    , v.program_mapping.mapped_field_code mapped_field_code
-    , v.program_mapping.studies_specialty matched_studies_specialty
-    , v.program_mapping.expr_semester_code expr_semester_code
+    , v.specialty_map.mapped_program_code mapped_program_code
+    , v.specialty_map.mapped_modetier_code mapped_modetier_code
+    , v.specialty_map.mapped_field_code mapped_field_code
+    , v.specialty_map.studies_specialty matched_studies_specialty
+    , v.specialty_map.expr_semester_code expr_semester_code
     -- count
     , v.pages_count pages_count
 FROM v2u_ko_mapped_programs_dv v;

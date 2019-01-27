@@ -1,7 +1,7 @@
 CREATE OR REPLACE VIEW v2u_ko_unmapped_subjects
 AS SELECT
       v.job_uuid job_uuid
-    , v.subject_mapping_id subject_mapping_id
+    , v.subject_map_id subject_map_id
     , v.matching_score matching_score
     -- instance
     , v.subject_instance.subj_code subj_code
@@ -21,22 +21,22 @@ AS SELECT
     , v.subject_instance.subj_ects subj_ects
     , v.subject_instance.subj_tutor subj_tutor
     -- mapped
-    , v.subject_mapping.mapped_subj_code mapped_subj_code
-    , v.subject_mapping.expr_subj_name expr_subj_name
-    , v.subject_mapping.expr_university expr_university
-    , v.subject_mapping.expr_faculty expr_faculty
-    , v.subject_mapping.expr_studies_modetier expr_studies_modetier
-    , v.subject_mapping.expr_studies_field expr_studies_field
-    , v.subject_mapping.expr_studies_specialty expr_studies_specialty
-    , v.subject_mapping.expr_semester_code expr_semester_code
-    , v.subject_mapping.expr_subj_hours_w expr_subj_hours_w
-    , v.subject_mapping.expr_subj_hours_c expr_subj_hours_c
-    , v.subject_mapping.expr_subj_hours_l expr_subj_hours_l
-    , v.subject_mapping.expr_subj_hours_p expr_subj_hours_p
-    , v.subject_mapping.expr_subj_hours_s expr_subj_hours_s
-    , v.subject_mapping.expr_subj_credit_kind expr_subj_credit_kind
-    , v.subject_mapping.expr_subj_ects expr_subj_ects
-    , v.subject_mapping.expr_subj_tutor expr_subj_tutor
+    , v.subject_map.mapped_subj_code mapped_subj_code
+    , v.subject_map.expr_subj_name expr_subj_name
+    , v.subject_map.expr_university expr_university
+    , v.subject_map.expr_faculty expr_faculty
+    , v.subject_map.expr_studies_modetier expr_studies_modetier
+    , v.subject_map.expr_studies_field expr_studies_field
+    , v.subject_map.expr_studies_specialty expr_studies_specialty
+    , v.subject_map.expr_semester_code expr_semester_code
+    , v.subject_map.expr_subj_hours_w expr_subj_hours_w
+    , v.subject_map.expr_subj_hours_c expr_subj_hours_c
+    , v.subject_map.expr_subj_hours_l expr_subj_hours_l
+    , v.subject_map.expr_subj_hours_p expr_subj_hours_p
+    , v.subject_map.expr_subj_hours_s expr_subj_hours_s
+    , v.subject_map.expr_subj_credit_kind expr_subj_credit_kind
+    , v.subject_map.expr_subj_ects expr_subj_ects
+    , v.subject_map.expr_subj_tutor expr_subj_tutor
     -- count
     , v.trs_count trs_count
 

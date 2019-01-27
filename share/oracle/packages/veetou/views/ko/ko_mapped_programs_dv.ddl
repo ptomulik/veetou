@@ -2,21 +2,21 @@ CREATE OR REPLACE VIEW v2u_ko_mapped_programs_dv
 AS WITH joined AS (
     SELECT
           i.job_uuid job_uuid
-        , m.id program_mapping_id
-        , m.program_mapping.match_expr_fields(i.specialty, i.semester_code) matching_score
+        , m.id specialty_map_id
+        , m.specialty_map.match_expr_fields(i.specialty, i.semester_code) matching_score
         , i.specialty specialty
         , i.semester_code semester_code
-        , m.program_mapping program_mapping
+        , m.specialty_map specialty_map
         , i.pages_count pages_count
     FROM v2u_ko_specialty_issues_dv i
-    LEFT JOIN v2u_program_mappings m ON
+    LEFT JOIN v2u_specialty_map m ON
         (
-            i.specialty.university = m.program_mapping.university AND
-            i.specialty.faculty = m.program_mapping.faculty AND
-            i.specialty.studies_modetier = m.program_mapping.studies_modetier AND
-            i.specialty.studies_field = m.program_mapping.studies_field AND (
-                m.program_mapping.studies_specialty IS NULL OR (
-                    i.specialty.studies_specialty = m.program_mapping.studies_specialty
+            i.specialty.university = m.specialty_map.university AND
+            i.specialty.faculty = m.specialty_map.faculty AND
+            i.specialty.studies_modetier = m.specialty_map.studies_modetier AND
+            i.specialty.studies_field = m.specialty_map.studies_field AND (
+                m.specialty_map.studies_specialty IS NULL OR (
+                    i.specialty.studies_specialty = m.specialty_map.studies_specialty
                 )
             )
         )

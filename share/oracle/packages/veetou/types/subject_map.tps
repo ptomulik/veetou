@@ -1,4 +1,4 @@
-CREATE OR REPLACE TYPE V2u_Subject_Mapping_t FORCE AUTHID CURRENT_USER AS OBJECT
+CREATE OR REPLACE TYPE V2u_Subject_Map_t FORCE AUTHID CURRENT_USER AS OBJECT
     ( id NUMBER(38)
     , subj_code VARCHAR2(32 CHAR)
     , mapped_subj_code VARCHAR2(32 CHAR)
@@ -18,8 +18,8 @@ CREATE OR REPLACE TYPE V2u_Subject_Mapping_t FORCE AUTHID CURRENT_USER AS OBJECT
     , expr_subj_ects VARCHAR2(256 CHAR)
     , expr_subj_tutor VARCHAR2(256 CHAR)
 
-    , CONSTRUCTOR FUNCTION V2u_Subject_Mapping_t(
-              SELF IN OUT NOCOPY V2u_Subject_Mapping_t
+    , CONSTRUCTOR FUNCTION V2u_Subject_Map_t(
+              SELF IN OUT NOCOPY V2u_Subject_Map_t
             , id IN NUMBER
             , subj_code IN VARCHAR2 := NULL
             , mapped_subj_code IN VARCHAR2 := NULL
@@ -78,7 +78,7 @@ CREATE OR REPLACE TYPE V2u_Subject_Mapping_t FORCE AUTHID CURRENT_USER AS OBJECT
 
     );
 /
-CREATE OR REPLACE TYPE V2u_Subject_Mappings_t
-    AS TABLE OF V2u_Subject_Mapping_t;
+CREATE OR REPLACE TYPE V2u_Subject_Maps_t
+    AS TABLE OF V2u_Subject_Map_t;
 
 -- vim: set ft=sql ts=4 sw=4 et:

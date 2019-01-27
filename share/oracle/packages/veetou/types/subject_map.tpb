@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY V2u_Subject_Mapping_t AS
-    CONSTRUCTOR FUNCTION V2u_Subject_Mapping_t(
-          SELF IN OUT NOCOPY V2u_Subject_Mapping_t
+CREATE OR REPLACE TYPE BODY V2u_Subject_Map_t AS
+    CONSTRUCTOR FUNCTION V2u_Subject_Map_t(
+          SELF IN OUT NOCOPY V2u_Subject_Map_t
         , id IN NUMBER
         , subj_code IN VARCHAR2 := NULL
         , mapped_subj_code IN VARCHAR2 := NULL

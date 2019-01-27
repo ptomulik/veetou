@@ -1,4 +1,4 @@
-CREATE OR REPLACE TYPE V2u_Program_Mapping_t FORCE AUTHID CURRENT_USER AS OBJECT
+CREATE OR REPLACE TYPE V2u_Specialty_Map_t FORCE AUTHID CURRENT_USER AS OBJECT
     ( id NUMBER(38)
     , university VARCHAR2(256 CHAR)
     , faculty VARCHAR2(256 CHAR)
@@ -14,8 +14,8 @@ CREATE OR REPLACE TYPE V2u_Program_Mapping_t FORCE AUTHID CURRENT_USER AS OBJECT
     , expr_ects_other VARCHAR2(256 CHAR)
     , expr_ects_total VARCHAR2(256 CHAR)
 
-    , CONSTRUCTOR FUNCTION V2u_Program_Mapping_t(
-              SELF IN OUT NOCOPY V2u_Program_Mapping_t
+    , CONSTRUCTOR FUNCTION V2u_Specialty_Map_t(
+              SELF IN OUT NOCOPY V2u_Specialty_Map_t
             , id IN NUMBER
             , university IN VARCHAR2 := NULL
             , faculty IN VARCHAR2 := NULL
@@ -56,7 +56,7 @@ CREATE OR REPLACE TYPE V2u_Program_Mapping_t FORCE AUTHID CURRENT_USER AS OBJECT
         RETURN INTEGER
     );
 /
-CREATE OR REPLACE TYPE V2u_Program_Mappings_t
-    AS TABLE OF V2u_Program_Mapping_t;
+CREATE OR REPLACE TYPE V2u_Specialty_Maps_t
+    AS TABLE OF V2u_Specialty_Map_t;
 
 -- vim: set ft=sql ts=4 sw=4 et:

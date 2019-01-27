@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY V2u_Program_Mapping_t AS
-    CONSTRUCTOR FUNCTION V2u_Program_Mapping_t(
-              SELF IN OUT NOCOPY V2u_Program_Mapping_t
+CREATE OR REPLACE TYPE BODY V2u_Specialty_Map_t AS
+    CONSTRUCTOR FUNCTION V2u_Specialty_Map_t(
+              SELF IN OUT NOCOPY V2u_Specialty_Map_t
             , id IN NUMBER
             , university IN VARCHAR2 := NULL
             , faculty IN VARCHAR2 := NULL

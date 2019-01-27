@@ -177,10 +177,10 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
 --        Drop_View('ko_ambiguous_programs_dv', 'ko_ambiguous_programs');
 --        Drop_View('ko_mapped_programs_dv', 'ko_mapped_programs');
         IF how <> 'KEEP' THEN
-            Drop_Index('program_mappings_idx1');
-            Drop_Index('program_mappings_idx2');
-            Drop_Trigger('program_mappings_tr1');
-            Drop_Sequence('program_mappings_sq1');
+            Drop_Index('specialty_map_idx1');
+            Drop_Index('specialty_map_idx2');
+            Drop_Trigger('specialty_map_tr1');
+            Drop_Sequence('specialty_map_sq1');
         END IF;
         --Drop_View('ko_threads_dv', 'ko_threads');
         --Drop_View('ko_student_threads_dv', 'ko_student_threads');
@@ -190,10 +190,10 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         Drop_View('ko_ambiguous_subjects_v');
         Drop_View('ko_mapped_subjects_v');
         IF how <> 'KEEP' THEN
-            Drop_Index('subject_mappings_idx1');
-            Drop_Index('subject_mappings_idx2');
-            Drop_Trigger('subject_mappings_tr1');
-            Drop_Sequence('subject_mappings_sq1');
+            Drop_Index('subject_map_idx1');
+            Drop_Index('subject_map_idx2');
+            Drop_Trigger('subject_map_tr1');
+            Drop_Sequence('subject_map_sq1');
         END IF;
         Drop_View('ko_sh_hdr_preamb_h');
         Drop_View('ko_tr_hdr_preamb_h');
@@ -221,7 +221,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         Drop_Index('ko_students_idx1');
         Drop_Table('ko_students', how => 'PURGE');
         --
-        Drop_Table('ko_subject_mappings_j', how => 'PURGE');
+        Drop_Table('ko_subject_map_j', how => 'PURGE');
         Drop_Table('ko_subject_trs_j', how => 'PURGE');
         --
         Drop_Trigger('ko_subject_issues_tr1');
@@ -238,8 +238,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         Drop_Sequence('ko_specialty_issues_sq1');
         Drop_Table('ko_specialty_issues', how => 'PURGE');
         --
-        Drop_Table('program_mappings', how=>how);
-        Drop_Table('subject_mappings', how=>how);
+        Drop_Table('specialty_map', how=>how);
+        Drop_Table('subject_map', how=>how);
         Drop_Table('ko_page_footer_j', how => how);
         Drop_Table('ko_page_header_j', how => how);
         Drop_Table('ko_page_preamble_j', how => how);
@@ -280,12 +280,12 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
 
         Drop_Type('Ko_Mapped_Subject_t', 'Ko_Mapped_Subjects_t');
         IF how <> 'KEEP' THEN
-            Drop_Type('Program_Mapping_t', 'Program_Mappings_t');
+            Drop_Type('Specialty_Map_t', 'Specialty_Maps_t');
         END IF;
         Drop_Type('Ko_Specialty_t');
         Drop_Type('Ko_Specialty_Issue_t');
         IF how <> 'KEEP' THEN
-            Drop_Type('Subject_Mapping_t', 'Subject_Mappings_t');
+            Drop_Type('Subject_Map_t', 'Subject_Maps_t');
         END IF;
         Drop_Type('Ko_Subject_Issue_t');
         Drop_Type('Ko_Thread_Indices_t');

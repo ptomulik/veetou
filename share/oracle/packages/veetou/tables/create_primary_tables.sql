@@ -3,7 +3,7 @@
 @@universities.ddl;
 @@faculties.ddl;
 @@semesters.ddl;
-@@subject_mappings.ddl;
-@@program_mappings.ddl;
+@@subject_map.ddl;
+@@specialty_map.ddl;
 
 -- vim: set ft=sql ts=4 sw=4 et:

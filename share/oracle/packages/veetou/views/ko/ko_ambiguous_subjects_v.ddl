@@ -3,39 +3,39 @@ AS WITH u AS
     (
         SELECT
               VALUE(si) subject_instance
-            , VALUE(sm) subject_mapping
+            , VALUE(sm) subject_map
             , j.matching_score matching_score
         FROM v2u_ko_subject_issues si
-        INNER JOIN v2u_ko_subject_mappings_j j
+        INNER JOIN v2u_ko_subject_map_j j
             ON (j.subject_instance_id = si.id AND
                 j.job_uuid = si.job_uuid)
-        INNER JOIN v2u_subject_mappings sm
-            ON (j.subject_mapping_id = sm.id)
+        INNER JOIN v2u_subject_map sm
+            ON (j.subject_map_id = sm.id)
     ),
     v AS
     (
         SELECT
               u.subject_instance subject_instance
-            , CAST( COLLECT(subject_mapping ORDER BY u.subject_mapping.id)
-                    AS V2u_Subject_Mappings_t
-              ) subject_mappings
-            , CAST( COLLECT(matching_score ORDER BY u.subject_mapping.id)
+            , CAST( COLLECT(subject_map ORDER BY u.subject_map.id)
+                    AS V2u_Subject_Maps_t
+              ) subject_map
+            , CAST( COLLECT(matching_score ORDER BY u.subject_map.id)
                     AS V2u_Integers_t
               ) matching_scores
-            , COUNT(*) subject_mappings_count
+            , COUNT(*) subject_map_count
         FROM u u
         GROUP BY u.subject_instance
     )
 SELECT
       v.subject_instance.job_uuid job_uuid
-    , v.subject_mappings_count subject_mappings_count
+    , v.subject_map_count subject_map_count
     , CAST(MULTISET(
-            SELECT t.id FROM TABLE(v.subject_mappings) t
+            SELECT t.id FROM TABLE(v.subject_map) t
             WHERE ROWNUM <= 20
             ORDER BY t.id
-      ) AS V2u_Ko_Ids_t) subject_mapping_ids
+      ) AS V2u_Ko_Ids_t) subject_map_ids
     , CAST(MULTISET(
-            SELECT t.mapped_subj_code FROM TABLE(v.subject_mappings) t
+            SELECT t.mapped_subj_code FROM TABLE(v.subject_map) t
             WHERE ROWNUM <= 20
             ORDER BY t.id
       ) AS V2u_Subj_Codes_t) mapped_subj_codes
@@ -58,7 +58,7 @@ SELECT
     , v.subject_instance.subj_ects subj_ects
     , v.subject_instance.subj_tutor subj_tutor
 FROM v v
-WHERE v.subject_mappings_count > 1
+WHERE v.subject_map_count > 1
 WITH READ ONLY;
 
 -- vim: set ft=sql ts=4 sw=4 et:

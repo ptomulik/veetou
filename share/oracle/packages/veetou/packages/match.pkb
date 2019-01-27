@@ -116,13 +116,13 @@ CREATE OR REPLACE PACKAGE BODY V2U_Match AS
     END;
 
     FUNCTION Attributes(
-              subject_mapping IN V2u_Subject_Mapping_t := NULL
+              subject_map IN V2u_Subject_Map_t := NULL
             , subject_instance IN V2u_Ko_Subject_Issue_t := NULL
             ) RETURN NUMBER
     IS
     BEGIN
-        IF subject_mapping IS NOT NULL AND subject_instance IS NOT NULL THEN
-            RETURN subject_mapping.match_expr_fields(
+        IF subject_map IS NOT NULL AND subject_instance IS NOT NULL THEN
+            RETURN subject_map.match_expr_fields(
                       subj_name => subject_instance.subj_name
                     , university => subject_instance.university
                     , faculty => subject_instance.faculty
@@ -145,13 +145,13 @@ CREATE OR REPLACE PACKAGE BODY V2U_Match AS
     END;
 
     FUNCTION Attributes(
-              program_mapping IN V2u_Program_Mapping_t
+              specialty_map IN V2u_Specialty_Map_t
             , specialty_instance IN V2u_Ko_Specialty_Issue_t
             ) RETURN NUMBER
     IS
     BEGIN
-        IF program_mapping IS NOT NULL AND specialty_instance IS NOT NULL THEN
-            RETURN program_mapping.match_expr_fields(
+        IF specialty_map IS NOT NULL AND specialty_instance IS NOT NULL THEN
+            RETURN specialty_map.match_expr_fields(
               semester_number => specialty_instance.semester_number
             , semester_code => specialty_instance.semester_code
             , ects_mandatory => specialty_instance.ects_mandatory

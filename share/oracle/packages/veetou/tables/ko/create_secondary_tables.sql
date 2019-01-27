@@ -2,7 +2,7 @@
 @@ko_student_preambles_j.ddl;
 @@ko_subject_issues.ddl;
 @@ko_subject_trs_j.ddl;
-@@ko_subject_mappings_j.ddl;
+@@ko_subject_map_j.ddl;
 @@ko_specialty_issues.ddl;
 @@ko_specialties.ddl;
 @@ko_specialty_sheets_j.ddl;

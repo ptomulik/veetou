@@ -3,7 +3,7 @@
 @@university.tps;
 @@faculty.tps;
 @@semester.tps;
-@@program_mapping.tps;
-@@subject_mapping.tps;
+@@specialty_map.tps;
+@@subject_map.tps;
 
 -- vim: set ft=sql ts=4 sw=4 et:

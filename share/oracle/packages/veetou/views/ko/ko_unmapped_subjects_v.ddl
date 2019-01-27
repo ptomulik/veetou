@@ -1,10 +1,10 @@
 CREATE OR REPLACE VIEW v2u_ko_unmapped_subjects_v
 OF V2u_Ko_Mapped_Subject_t
-WITH OBJECT IDENTIFIER (job_uuid, subject_instance_id, subject_mapping_id)
+WITH OBJECT IDENTIFIER (job_uuid, subject_instance_id, subject_map_id)
 AS SELECT
       v.job_uuid
     , v.subject_instance_id
-    , v.subject_mapping_id
+    , v.subject_map_id
     , v.matching_score
     , v.subj_code
     , v.mapped_subj_code
@@ -39,7 +39,7 @@ AS SELECT
     , v.subj_tutor
     , v.expr_subj_tutor
 FROM v2u_ko_mapped_subjects_v v
-WHERE v.subject_mapping_id IS NULL OR
+WHERE v.subject_map_id IS NULL OR
       v.mapped_subj_code IS NULL OR
       v.matching_score < 1;
 
