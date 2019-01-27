@@ -143,6 +143,25 @@ CREATE OR REPLACE PACKAGE BODY V2U_Match AS
             RETURN 0;
         END IF;
     END;
+
+    FUNCTION Attributes(
+              program_mapping IN V2u_Program_Mapping_t
+            , specialty_instance IN V2u_Ko_Specialty_Issue_t
+            ) RETURN NUMBER
+    IS
+    BEGIN
+        IF program_mapping IS NOT NULL AND specialty_instance IS NOT NULL THEN
+            RETURN program_mapping.match_expr_fields(
+              semester_number => specialty_instance.semester_number
+            , semester_code => specialty_instance.semester_code
+            , ects_mandatory => specialty_instance.ects_mandatory
+            , ects_other => specialty_instance.ects_other
+            , ects_total => specialty_instance.ects_total
+            );
+        ELSE
+            RETURN 0;
+        END IF;
+    END;
 END V2U_Match;
 
 -- vim: set ft=sql ts=4 sw=4 et:

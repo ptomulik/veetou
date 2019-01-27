@@ -11,7 +11,11 @@ COMMENT ON COLUMN v2u_program_mappings.studies_specialty IS 'Specjalność (VEE)
 COMMENT ON COLUMN v2u_program_mappings.mapped_program_code IS 'Wynikowy kod programu studiów (USOS)';
 COMMENT ON COLUMN v2u_program_mappings.mapped_modetier_code IS 'Wynikowy kod poziomu i trybu studiów (USOS)';
 COMMENT ON COLUMN v2u_program_mappings.mapped_field_code IS 'Wynikowy kod kierunku studiów';
+COMMENT ON COLUMN v2u_program_mappings.expr_semester_number IS 'Wyrażenie ograniczające dopuszczalny numer semestru studiów';
 COMMENT ON COLUMN v2u_program_mappings.expr_semester_code IS 'Wyrażenie ograniczające dopuszczalny semestr występowania programu';
+COMMENT ON COLUMN v2u_program_mappings.expr_ects_mandatory IS 'Wyrażenie określające liczbę wymaganych punktów ECTS';
+COMMENT ON COLUMN v2u_program_mappings.expr_ects_other IS 'Wyrażenie określające liczbę pozostałych punktów ECTS';
+COMMENT ON COLUMN v2u_program_mappings.expr_ects_total IS 'Wyrażenie określające całkowitą liczbę punktów ECTS';
 
 CREATE SEQUENCE v2u_program_mappings_sq1 START WITH 1;
 /

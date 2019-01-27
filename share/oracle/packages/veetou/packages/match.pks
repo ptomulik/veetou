@@ -11,10 +11,10 @@ CREATE OR REPLACE PACKAGE V2U_Match AUTHID CURRENT_USER AS
             , subject_instance IN V2u_Ko_Subject_Issue_t := NULL
             ) RETURN NUMBER;
 
---    FUNCTION Attributes(
---              program_mapping IN V2u_Program_Mapping_t
---            , specialty_instance IN V2u_Ko_Specialty_Issue_t
---            ) RETURN NUMBER;
+    FUNCTION Attributes(
+              program_mapping IN V2u_Program_Mapping_t
+            , specialty_instance IN V2u_Ko_Specialty_Issue_t
+            ) RETURN NUMBER;
 END V2U_Match;
 
 -- vim: set ft=sql ts=4 sw=4 et:
