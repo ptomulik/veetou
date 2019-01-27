@@ -4,32 +4,35 @@
  ****************************************************************************/
 
 -- Whipes-out whole database. --
-@@uninstall.sql;
+@@drop_all.sql;
 
 
 -- Creates empty veetou schema (first time, or after uninstall). --
-@@install.sql;
+@@create_all.sql;
 
 
 
 -- Wipes-out whole database and recreates empty schema. --
 -- This is merely a sequence of @@uninstall.sql and @@install.sql
-@@reinstall.sql;
+@@recreate_all.sql;
 
 
 
 -- Drops views, packages, secondary tables and types.
-@@uncompile.sql;
+@@drop_secondaries.sql;
 
 
 
 -- Creates views, packages, secondary tables and types.
-@@compile.sql;
+@@create_secondaries.sql;
 
 
 
 -- Drops and then recreates views, packages, secondary tables and types.
-@@recompile.sql;
+@@recreate_secondaries.sql;
 
+
+-- Merge data from primary tables into secondary tables
+@reload_secondaries.sql;
 
 -- vim: set ft=sql ts=4 sw=4 et:

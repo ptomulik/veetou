@@ -5,6 +5,6 @@ BEGIN
 END;
 /
 DROP PACKAGE V2U_Pkg;
-COMMIT;
+
 
 -- vim: set ft=sql ts=4 sw=4 et:
