@@ -14,13 +14,13 @@ CREATE OR REPLACE TYPE BODY V2u_Faculty_t AS
     END;
 
     ORDER MEMBER FUNCTION cmp_with(other IN V2u_Faculty_t)
-        RETURN NUMBER
+        RETURN INTEGER
     IS
-        ord NUMBER;
+        ord INTEGER;
     BEGIN
-        ord := V2U_Util.StrNullIcmp(abbriev, other.abbriev);
+        ord := V2U_Cmp.StrNI(abbriev, other.abbriev);
         IF ord <> 0 THEN RETURN ord; END IF;
-        RETURN V2U_Util.StrNullIcmp(name, other.name);
+        RETURN V2U_Cmp.StrNI(name, other.name);
     END;
 END;
 

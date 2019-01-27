@@ -52,17 +52,17 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_t AS
     IS
         ord INTEGER;
     BEGIN
-        ord := V2U_Util.StrNullIcmp(university, other.university);
+        ord := V2U_Cmp.StrNI(university, other.university);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(faculty, other.faculty);
+        ord := V2U_Cmp.StrNI(faculty, other.faculty);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(studies_modetier, other.studies_modetier);
+        ord := V2U_Cmp.StrNI(studies_modetier, other.studies_modetier);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(studies_field, other.studies_field);
+        ord := V2U_Cmp.StrNI(studies_field, other.studies_field);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(studies_specialty, other.studies_specialty);
+        ord := V2U_Cmp.StrNI(studies_specialty, other.studies_specialty);
         IF ord <> 0 THEN RETURN ord; END IF;
-        RETURN V2u_Util.RawNullCmp(job_uuid, other.job_uuid);
+        RETURN V2U_Cmp.RawN(job_uuid, other.job_uuid);
     END;
 END;
 

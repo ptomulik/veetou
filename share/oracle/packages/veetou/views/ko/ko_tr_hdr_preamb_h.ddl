@@ -1,6 +1,7 @@
-CREATE OR REPLACE VIEW v2u_ko_tr_hdr_preamb_h
+CREATE MATERIALIZED VIEW v2u_ko_tr_hdr_preamb_h
 OF V2u_Ko_Tr_Hdr_Preamb_H_t
-WITH OBJECT IDENTIFIER (job_uuid, id)
+BUILD DEFERRED
+REFRESH COMPLETE
 AS SELECT
       VALUE(trs).job_uuid
     , VALUE(trs).id

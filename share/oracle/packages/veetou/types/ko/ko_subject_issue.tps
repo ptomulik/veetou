@@ -46,7 +46,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Issue_t FORCE AUTHID CURRENT_USER AS OBJEC
 
     , ORDER MEMBER FUNCTION cmp_with (
               other V2u_Ko_Subject_Issue_t
-            ) RETURN NUMBER
+            ) RETURN INTEGER
 
     , MEMBER FUNCTION dup_with(
               new_id IN NUMBER

@@ -196,8 +196,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
             Drop_Trigger('subject_map_tr1');
             Drop_Sequence('subject_map_sq1');
         END IF;
-        Drop_View('ko_sh_hdr_preamb_h');
-        Drop_View('ko_tr_hdr_preamb_h');
+        Drop_Materialized_View('ko_sh_hdr_preamb_h');
+        Drop_Materialized_View('ko_tr_hdr_preamb_h');
         Drop_View('ko_x_sheets_h');
         Drop_View('ko_x_sheets_v');
         Drop_View('ko_x_trs_h');
@@ -281,6 +281,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         Drop_Package('Util');
         Drop_Package('To');
         Drop_Package('Get');
+        Drop_Package('Cmp');
 
         Drop_Collect_Types();
 

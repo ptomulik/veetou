@@ -27,28 +27,28 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Semester_Instance_t AS
     END;
 
     ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Semester_Instance_t)
-        RETURN NUMBER
+        RETURN INTEGER
     IS
-        ord NUMBER;
+        ord INTEGER;
     BEGIN
-        ord := V2U_Util.NumNullCmp(
+        ord := V2U_Cmp.NumN(
                       V2U_To.Semester_Id(semester_code)
                     , V2U_To.Semester_Id(other.semester_code)
                     );
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.NumNullCmp(semester_number, other.semester_number);
+        ord := V2U_Cmp.NumN(semester_number, other.semester_number);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.NumNullCmp(ects_mandatory, other.ects_mandatory);
+        ord := V2U_Cmp.NumN(ects_mandatory, other.ects_mandatory);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.NumNullCmp(ects_other, other.ects_other);
+        ord := V2U_Cmp.NumN(ects_other, other.ects_other);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.NumNullCmp(ects_total, other.ects_total);
+        ord := V2U_Cmp.NumN(ects_total, other.ects_total);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.NumNullCmp(ects_attained, other.ects_attained);
+        ord := V2U_Cmp.NumN(ects_attained, other.ects_attained);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.NumNullCmp(sheet_id, other.sheet_id);
+        ord := V2U_Cmp.NumN(sheet_id, other.sheet_id);
         IF ord <> 0 THEN RETURN ord; END IF;
-        RETURN V2u_Util.RawNullCmp(job_uuid, other.job_uuid);
+        RETURN V2U_Cmp.RawN(job_uuid, other.job_uuid);
     END;
 END;
 

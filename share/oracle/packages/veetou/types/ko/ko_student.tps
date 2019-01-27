@@ -19,7 +19,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Student_t FORCE AUTHID CURRENT_USER AS OBJECT
             ) RETURN SELF AS RESULT
 
     , ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Student_t)
-        RETURN NUMBER
+        RETURN INTEGER
 
     , MEMBER FUNCTION dup_with(
               new_id IN NUMBER

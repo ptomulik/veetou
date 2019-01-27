@@ -20,7 +20,15 @@ USING
         FROM v v
         GROUP BY v.specialty
     ) src
-ON (VALUE(tgt) = src.specialty)
+ON
+    (
+            DECODE(src.specialty.studies_specialty, tgt.studies_specialty, 1, 0) = 1
+        AND DECODE(src.specialty.studies_field, tgt.studies_field, 1, 0) = 1
+        AND DECODE(src.specialty.studies_modetier, tgt.studies_modetier, 1, 0) = 1
+        AND DECODE(src.specialty.faculty, tgt.faculty, 1, 0) = 1
+        AND DECODE(src.specialty.university, tgt.university, 1, 0) = 1
+        AND DECODE(src.specialty.job_uuid, tgt.job_uuid, 1, 0) = 1
+    )
 WHEN NOT MATCHED THEN INSERT VALUES(src.specialty);
 
 -- vim: set ft=sql ts=4 sw=4 et:

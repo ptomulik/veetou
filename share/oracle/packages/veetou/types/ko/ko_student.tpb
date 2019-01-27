@@ -23,19 +23,19 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Student_t AS
 
 
     ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Student_t)
-        RETURN NUMBER
+        RETURN INTEGER
     IS
-        ord NUMBER;
+        ord INTEGER;
     BEGIN
-        ord := V2U_Util.StrNullIcmp(student_index, other.student_index);
+        ord := V2U_Cmp.StrNI(student_index, other.student_index);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(student_name, other.student_name);
+        ord := V2U_Cmp.StrNI(student_name, other.student_name);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(first_name, other.first_name);
+        ord := V2U_Cmp.StrNI(first_name, other.first_name);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(last_name, other.last_name);
+        ord := V2U_Cmp.StrNI(last_name, other.last_name);
         IF ord <> 0 THEN RETURN ord; END IF;
-        RETURN V2U_Util.RawNullCmp(job_uuid, other.job_uuid);
+        RETURN V2U_Cmp.RawN(job_uuid, other.job_uuid);
     END;
 
     MEMBER FUNCTION dup_with(

@@ -78,7 +78,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Mapped_Subject_t FORCE AUTHID CURRENT_USER AS OBJE
 
     , ORDER MEMBER FUNCTION cmp_with (
               other V2u_Ko_Mapped_Subject_t
-            ) RETURN NUMBER
+            ) RETURN INTEGER
     );
 
 -- vim: set ft=sql ts=4 sw=4 et:

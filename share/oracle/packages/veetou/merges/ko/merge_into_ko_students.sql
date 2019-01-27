@@ -23,7 +23,14 @@ USING
         GROUP BY u.student
         ORDER BY u.student
     ) src
-ON (VALUE(tgt) = src.student)
+ON
+    (
+            DECODE(src.student.student_index, tgt.student_index, 1, 0) = 1
+        AND DECODE(src.student.job_uuid, tgt.job_uuid, 1, 0) = 1
+        AND DECODE(src.student.student_name, tgt.student_name, 1, 0) = 1
+        AND DECODE(src.student.first_name, tgt.first_name, 1, 0) = 1
+        AND DECODE(src.student.last_name, tgt.last_name, 1, 0) = 1
+    )
 WHEN NOT MATCHED THEN INSERT VALUES(src.student);
 
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -50,9 +50,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Match AS
             RETURN -1;
         END IF;
 
-        IF smin IS NOT NULL AND V2U_Util.StrCmp(smin, value) > 0 THEN
+        IF smin IS NOT NULL AND V2U_Cmp.Str(smin, value) > 0 THEN
             RETURN 0;
-        ELSIF smax IS NOT NULL AND V2U_Util.StrCmp(value, smax) > 0 THEN
+        ELSIF smax IS NOT NULL AND V2U_Cmp.Str(value, smax) > 0 THEN
             RETURN 0;
         ELSE
             RETURN 1;

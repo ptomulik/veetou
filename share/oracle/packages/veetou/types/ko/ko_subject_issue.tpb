@@ -49,43 +49,43 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Issue_t AS
 
     ORDER MEMBER FUNCTION cmp_with(
               other V2u_Ko_Subject_Issue_t
-            ) RETURN NUMBER
+            ) RETURN INTEGER
     IS
-        ord NUMBER;
+        ord INTEGER;
     BEGIN
-        ord := V2U_Util.StrNullIcmp(subj_code, other.subj_code);
+        ord := V2U_Cmp.StrNI(subj_code, other.subj_code);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(subj_name, other.subj_name);
+        ord := V2U_Cmp.NumN(subj_hours_w, other.subj_hours_w);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(university, other.university);
+        ord := V2U_Cmp.NumN(subj_hours_c, other.subj_hours_c);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(faculty, other.faculty);
+        ord := V2U_Cmp.NumN(subj_hours_l, other.subj_hours_l);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(studies_modetier, other.studies_modetier);
+        ord := V2U_Cmp.NumN(subj_hours_p, other.subj_hours_p);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(studies_field, other.studies_field);
+        ord := V2U_Cmp.NumN(subj_hours_s, other.subj_hours_s);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(studies_specialty, other.studies_specialty);
+        ord := V2U_Cmp.StrNI(subj_tutor, other.subj_tutor);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(semester_code, other.semester_code);
+        ord := V2U_Cmp.StrNI(subj_credit_kind, other.subj_credit_kind);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.NumNullCmp(subj_hours_w, other.subj_hours_w);
+        ord := V2U_Cmp.StrNI(subj_name, other.subj_name);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.NumNullCmp(subj_hours_c, other.subj_hours_c);
+        ord := V2U_Cmp.StrNI(university, other.university);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.NumNullCmp(subj_hours_l, other.subj_hours_l);
+        ord := V2U_Cmp.StrNI(faculty, other.faculty);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.NumNullCmp(subj_hours_p, other.subj_hours_p);
+        ord := V2U_Cmp.StrNI(studies_modetier, other.studies_modetier);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.NumNullCmp(subj_hours_s, other.subj_hours_s);
+        ord := V2U_Cmp.StrNI(studies_field, other.studies_field);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(subj_credit_kind, other.subj_credit_kind);
+        ord := V2U_Cmp.StrNI(studies_specialty, other.studies_specialty);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.NumNullCmp(subj_ects, other.subj_ects);
+        ord := V2U_Cmp.StrNI(semester_code, other.semester_code);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Util.StrNullIcmp(subj_tutor, other.subj_tutor);
+        ord := V2U_Cmp.NumN(subj_ects, other.subj_ects);
         IF ord <> 0 THEN RETURN ord; END IF;
-        RETURN V2u_Util.RawNullCmp(job_uuid, other.job_uuid);
+        RETURN V2U_Cmp.RawN(job_uuid, other.job_uuid);
     END;
 
     MEMBER FUNCTION dup_with(
