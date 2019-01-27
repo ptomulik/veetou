@@ -179,13 +179,12 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         IF how <> 'KEEP' THEN
             Drop_Index('specialty_map_idx1');
             Drop_Index('specialty_map_idx2');
+            Drop_Index('specialty_map_idx3');
             Drop_Trigger('specialty_map_tr1');
             Drop_Sequence('specialty_map_sq1');
         END IF;
         --Drop_View('ko_threads_dv', 'ko_threads');
         --Drop_View('ko_student_threads_dv', 'ko_student_threads');
-        --Drop_View('ko_specialty_issues_dv', 'ko_specialty_issues');
-        --Drop_View('ko_specialties_dv', 'ko_specialties_mv', 'MATERIALIZED VIEW');
         Drop_View('ko_unmapped_subjects_v');
         Drop_View('ko_ambiguous_subjects_v');
         Drop_View('ko_mapped_subjects_v');
@@ -226,8 +225,10 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         --
         Drop_Trigger('ko_subject_issues_tr1');
         Drop_Sequence('ko_subject_issues_sq1');
+        Drop_Index('ko_subject_issues_idx1');
         Drop_Table('ko_subject_issues', how => 'PURGE');
         --
+        Drop_Table('ko_specialty_map_j', how=>'PURGE');
         Drop_Table('ko_specialty_sheets_j', how => 'PURGE');
         --
         Drop_Trigger('ko_specialties_tr1');
@@ -236,6 +237,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         --
         Drop_Trigger('ko_specialty_issues_tr1');
         Drop_Sequence('ko_specialty_issues_sq1');
+        Drop_Sequence('ko_specialty_issues_idx1');
+        Drop_Sequence('ko_specialty_issues_idx2');
         Drop_Table('ko_specialty_issues', how => 'PURGE');
         --
         Drop_Table('specialty_map', how=>how);
@@ -291,7 +294,6 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         Drop_Type('Ko_Thread_Indices_t');
         Drop_Type('Ko_Semester_Threads_t');
         Drop_Type('Ko_Semester_Instance_t', 'Ko_Semester_Instances_t');
-        Drop_Type('Ko_Sheet_Info_t');
         Drop_Type('Ko_Student_t');
         Drop_Type('Ko_Sh_Hdr_Preamb_H_t', 'Ko_Sh_Hdr_Preambs_H_t');
         Drop_Type('Ko_Tr_Hdr_Preamb_H_t', 'Ko_Tr_Hdr_Preambs_H_t');

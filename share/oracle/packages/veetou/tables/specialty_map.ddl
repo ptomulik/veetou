@@ -35,9 +35,12 @@ END;
 --
 
 CREATE INDEX v2u_specialty_map_idx1
-     ON v2u_specialty_map(faculty, studies_modetier, studies_field, studies_specialty);
-
+     ON v2u_specialty_map(university, faculty, studies_modetier, studies_field, studies_specialty);
+/
 CREATE INDEX v2u_specialty_map_idx2
+     ON v2u_specialty_map(university, faculty, studies_modetier, studies_field);
+/
+CREATE INDEX v2u_specialty_map_idx3
      ON v2u_specialty_map(mapped_program_code);
 
 -- vim: set ft=sql ts=4 sw=4 et:

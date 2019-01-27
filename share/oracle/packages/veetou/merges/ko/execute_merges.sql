@@ -3,6 +3,7 @@
 @@merge_into_ko_specialty_issues.sql;
 @@merge_into_ko_specialties.sql;
 @@merge_into_ko_specialty_sheets_j.sql;
+@@merge_into_ko_specialty_map_j.sql;
 @@merge_into_ko_subject_issues.sql;
 @@merge_into_ko_subject_trs_j.sql;
 @@merge_into_ko_subject_map_j.sql;

@@ -12,7 +12,6 @@
 @@ko_x_sheet_h.tpb;
 --@@ko_x_sheet_v.tpb;
 @@ko_semester_issue.tpb;
---@@ko_sheet_info.tpb;
 @@ko_sh_hdr_preamb_h.tpb;
 @@ko_tr_hdr_preamb_h.tpb;
 @@ko_subject_issue.tpb;
@@ -20,5 +19,6 @@
 @@ko_specialty.tpb;
 @@ko_student.tpb;
 @@ko_mapped_subject.tpb;
+@@ko_mapped_specialty.tpb;
 
 -- vim: set ft=sql ts=4 sw=4 et:

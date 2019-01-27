@@ -18,29 +18,21 @@
 
 
 
--- Drops views, materialized views, packages, and some types (except those
--- related to tables). This does not touch tables.
+-- Drops views, packages, secondary tables and types.
 @@uncompile.sql;
 
 
 
--- Creates views, materialized views, packages, and types (except
--- those related to tables). This does not touch tables.
+-- Creates views, packages, secondary tables and types.
 @@compile.sql;
 
 
 
--- Drops and then recreates views, materialized views, packages, and types
--- (except those related to tables). This does not touch tables.
+-- Drops and then recreates views, packages, secondary tables and types.
 @@recompile.sql;
 
 
 @@merge.sql;
 
-
--- Refreshes materialized views. Execute it every time you (re)install/
--- (re)compile the project or import new data to tables. This operation may be
--- quite time-consuming.
-@@refresh.sql;
 
 -- vim: set ft=sql ts=4 sw=4 et:
