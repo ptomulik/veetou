@@ -4,7 +4,7 @@ USING
         WITH u AS
         (
             SELECT job_uuid, id, sheet_ids
-            FROM v2u_ko_specialties
+            FROM v2u_ko_specialty_issues
         )
         SELECT
               u.job_uuid job_uuid

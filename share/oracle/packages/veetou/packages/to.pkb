@@ -12,30 +12,15 @@ CREATE OR REPLACE PACKAGE BODY V2U_To AS
     FUNCTION Semester_Code(semester_id IN NUMBER)
         RETURN VARCHAR2
     IS
-        y NUMBER;
-        s CHARACTER(1);
     BEGIN
-        y := TRUNC(semester_id/2);
-        IF semester_id IS NULL OR y < 1900 OR y > 2099 THEN
-            RETURN NULL;
-        END IF;
-        s := CASE MOD(semester_id, 2) WHEN 1 THEN 'Z' ELSE 'L' END;
-        RETURN TO_CHAR(y, '0999') || s;
+        RETURN V2u_Semester_t.to_code(semester_id);
     END;
 
     FUNCTION Semester_Id(semester_code IN VARCHAR2)
         RETURN NUMBER
     IS
-        y NUMBER;
-        s CHARACTER(1);
     BEGIN
-        IF REGEXP_INSTR(UPPER(semester_code), '^(19|20)[0-9]{2}[LZ]$') <> 1
-        THEN
-            RETURN NULL;
-        END IF;
-        y := TO_NUMBER(SUBSTR(semester_code, 1, 4));    -- year as number
-        s := SUBSTR(semester_code, 5, 1);               -- season (L/Z)
-        RETURN (2 * y + CASE UPPER(s) WHEN 'Z' THEN 1 ELSE 0 END);
+        RETURN V2u_Semester_t.to_id(semester_code);
     END;
 
 
@@ -158,8 +143,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_To AS
         RETURN V2u_Ko_Subject_Issue_t(
               job_uuid => job_uuid
             , id => id
-            , university => header.university
-            , faculty => header.faculty
+            , university => V2U_Get.University(name => header.university).abbriev
+            , faculty => V2U_Get.Faculty(name => header.faculty).abbriev
             , studies_modetier => preamble.studies_modetier
             , studies_field => preamble.studies_field
             , studies_specialty => preamble.studies_specialty
@@ -180,24 +165,50 @@ CREATE OR REPLACE PACKAGE BODY V2U_To AS
     END;
 
 
+    FUNCTION Ko_Specialty_Issue(
+              job_uuid IN RAW
+            , id IN NUMBER := NULL
+            , sheet IN V2u_Ko_Sheet_t
+            , header IN V2u_Ko_Header_t
+            , preamble IN V2u_Ko_Preamble_t
+            , sheet_ids V2u_Ko_Ids_t := NULL
+            ) RETURN V2u_Ko_Specialty_Issue_t
+    IS
+    BEGIN
+        RETURN V2u_Ko_Specialty_Issue_t(
+                  job_uuid => job_uuid
+                , id => id
+                , university => V2U_Get.University(name => header.university).abbriev
+                , faculty => V2U_Get.Faculty(name => header.faculty).abbriev
+                , studies_modetier => preamble.studies_modetier
+                , studies_field => preamble.studies_field
+                , studies_specialty => preamble.studies_specialty
+                , semester_number => preamble.semester_number
+                , semester_code => preamble.semester_code
+                , ects_mandatory => sheet.ects_mandatory
+                , ects_other => sheet.ects_other
+                , ects_total => sheet.ects_total
+                , sheet_ids => sheet_ids
+                );
+    END;
+
+
     FUNCTION Ko_Specialty(
               job_uuid IN RAW
             , id IN NUMBER := NULL
             , header IN V2u_Ko_Header_t
             , preamble IN V2u_Ko_Preamble_t
-            , sheet_ids V2u_Ko_Ids_t := NULL
             ) RETURN V2u_Ko_Specialty_t
     IS
     BEGIN
         RETURN V2u_Ko_Specialty_t(
                   job_uuid => job_uuid
                 , id => id
-                , university => header.university
-                , faculty => header.faculty
+                , university => V2U_Get.University(name => header.university).abbriev
+                , faculty => V2U_Get.Faculty(name => header.faculty).abbriev
                 , studies_modetier => preamble.studies_modetier
                 , studies_field => preamble.studies_field
                 , studies_specialty => preamble.studies_specialty
-                , sheet_ids => sheet_ids
                 );
     END;
 

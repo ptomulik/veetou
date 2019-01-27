@@ -1,6 +1,6 @@
 CREATE OR REPLACE TYPE V2u_Ko_Sheet_Info_t FORCE AUTHID CURRENT_USER AS OBJECT
-    ( university VARCHAR2(256 CHAR)
-    , faculty VARCHAR2(256 CHAR)
+    ( university VARCHAR2(8 CHAR)
+    , faculty VARCHAR2(8 CHAR)
     , studies_modetier VARCHAR2(256 CHAR)
     , student_index VARCHAR2(32 CHAR)
     , first_name VARCHAR2(48 CHAR)

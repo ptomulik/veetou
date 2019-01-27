@@ -4,6 +4,7 @@ CREATE OR REPLACE PACKAGE V2U_To AUTHID CURRENT_USER AS
     FUNCTION Semester_Id(semester_code IN VARCHAR2) RETURN NUMBER;
     FUNCTION Threads(semesters IN V2u_Ko_Semester_Instances_t)
         RETURN V2u_Ko_Semester_Threads_t;
+
     FUNCTION Ko_Semester_Instance(
               job_uuid IN RAW
             , id IN NUMBER
@@ -20,12 +21,20 @@ CREATE OR REPLACE PACKAGE V2U_To AUTHID CURRENT_USER AS
             , tr_ids IN V2u_Ko_Ids_t := NULL
             ) RETURN V2u_Ko_Subject_Issue_t;
 
+    FUNCTION Ko_Specialty_Issue(
+              job_uuid IN RAW
+            , id IN NUMBER := NULL
+            , sheet IN V2u_Ko_Sheet_t
+            , header IN V2u_Ko_Header_t
+            , preamble IN V2u_Ko_Preamble_t
+            , sheet_ids V2u_Ko_Ids_t := NULL
+            ) RETURN V2u_Ko_Specialty_Issue_t;
+
     FUNCTION Ko_Specialty(
               job_uuid IN RAW
             , id IN NUMBER := NULL
             , header IN V2u_Ko_Header_t
             , preamble IN V2u_Ko_Preamble_t
-            , sheet_ids V2u_Ko_Ids_t := NULL
             ) RETURN V2u_Ko_Specialty_t;
 
     FUNCTION Ko_Mapped_Subject(

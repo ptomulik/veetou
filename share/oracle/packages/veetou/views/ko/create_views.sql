@@ -5,7 +5,7 @@
 @@ko_tr_hdr_preamb_h.ddl;
 --@@ko_sheet_infos.sql;
 --
---@@ko_specialty_instances.sql;
+--@@ko_specialty_issues.sql;
 --@@ko_student_specialties_h.ddl;
 --@@ko_student_threads.sql;
 --@@ko_threads.sql;

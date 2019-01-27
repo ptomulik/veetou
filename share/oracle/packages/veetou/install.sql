@@ -1,8 +1,9 @@
 @@types/create_specs.sql;
 @@packages/create_specs.sql;
 @@types/create_bodies.sql;
+@@tables/create_primary_tables.sql;
 @@packages/create_bodies.sql;
-@@tables/create_tables.sql;
+@@tables/create_secondary_tables.sql;
 @@views/create_views.sql;
 @@merges/execute_merges.sql;
 

@@ -52,7 +52,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
                              how IN VARCHAR2 := '')
     IS
     BEGIN
-        Drop_DB_Object(schema_type, name, how);
+        Drop_DB_Object(schema_type, name, how=>how);
     EXCEPTION
         WHEN OTHERS THEN
             IF NOT Is_Not_Exists_Errcode(schema_type, SQLCODE) THEN
@@ -65,7 +65,6 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
                         dependent_type2 IN VARCHAR2 := NULL)
     IS
     BEGIN
-        DBMS_Output.Put_Line(type_name);
         IF dependent_type2 IS NOT NULL THEN
             Drop_If_Exists('TYPE', 'V2u_' || dependent_type2);
         END IF;
@@ -103,7 +102,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         END IF;
         Drop_If_Exists('MATERIALIZED VIEW LOG ON', 'v2u_' || table_name);
         IF how <> 'KEEP' THEN
-            Drop_If_Exists('TABLE', 'v2u_' || table_name, how);
+            Drop_If_Exists('TABLE', 'v2u_' || table_name, how=>how);
         END IF;
     END;
 
@@ -185,8 +184,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         END IF;
         --Drop_View('ko_threads_dv', 'ko_threads');
         --Drop_View('ko_student_threads_dv', 'ko_student_threads');
-        --Drop_View('ko_specialty_instances_dv', 'ko_specialty_instances');
-        Drop_View('ko_specialties');
+        --Drop_View('ko_specialty_issues_dv', 'ko_specialty_issues');
         --Drop_View('ko_specialties_dv', 'ko_specialties_mv', 'MATERIALIZED VIEW');
         Drop_View('ko_unmapped_subjects_v');
         Drop_View('ko_ambiguous_subjects_v');
@@ -236,8 +234,12 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         Drop_Sequence('ko_specialties_sq1');
         Drop_Table('ko_specialties', how => 'PURGE');
         --
-        Drop_Table('program_mappings', 'program_mappings_dv', how);
-        Drop_Table('subject_mappings', 'subject_mappings_dv', how);
+        Drop_Trigger('ko_specialty_issues_tr1');
+        Drop_Sequence('ko_specialty_issues_sq1');
+        Drop_Table('ko_specialty_issues', how => 'PURGE');
+        --
+        Drop_Table('program_mappings', how=>how);
+        Drop_Table('subject_mappings', how=>how);
         Drop_Table('ko_page_footer_j', how => how);
         Drop_Table('ko_page_header_j', how => how);
         Drop_Table('ko_page_preamble_j', how => how);
@@ -245,17 +247,29 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         Drop_Table('ko_report_sheets_j', how => how);
         Drop_Table('ko_sheet_pages_j', how => how);
         Drop_Table('ko_tbody_trs_j', how => how);
-        Drop_Table('ko_footers', 'ko_footers_dv', how);
-        Drop_Table('ko_headers', 'ko_headers_dv', how);
-        Drop_Table('ko_pages', 'ko_pages_dv', how);
-        Drop_Table('ko_preambles', 'ko_preambles_dv', how);
-        Drop_Table('ko_reports', 'ko_reports_dv', how);
-        Drop_Table('ko_sheets', 'ko_sheets_dv', how);
-        Drop_Table('ko_tbodies', 'ko_tbodies_dv', how);
-        Drop_Table('ko_trs', 'ko_trs_dv', how);
-        Drop_Table('ko_jobs', 'ko_jobs_dv', how);
-        Drop_Trigger('semesters_tr1');
-        Drop_Table('semesters', 'semesters_dv', how);
+        Drop_Table('ko_footers', how=>how);
+        Drop_Table('ko_headers', how=>how);
+        Drop_Table('ko_pages', how=>how);
+        Drop_Table('ko_preambles', how=>how);
+        Drop_Table('ko_reports', how=>how);
+        Drop_Table('ko_sheets', how=>how);
+        Drop_Table('ko_tbodies', how=>how);
+        Drop_Table('ko_trs', how=>how);
+        Drop_Table('ko_jobs', how=>how);
+        IF how <> 'KEEP' THEN
+            Drop_Trigger('semesters_tr1');
+        END IF;
+        Drop_Table('semesters', how=>how);
+        IF how <> 'KEEP' THEN
+            Drop_Sequence('faculties_sq1');
+            Drop_Trigger('faculties_tr1');
+        END IF;
+        Drop_Table('faculties', how=>how);
+        IF how <> 'KEEP' THEN
+            Drop_Sequence('universities_sq1');
+            Drop_Trigger('universities_tr1');
+        END IF;
+        Drop_Table('universities', how=>how);
 
         -- PACKAGES: all, except the V2U_Pkg package
         Drop_Package('Match');
@@ -269,6 +283,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
             Drop_Type('Program_Mapping_t', 'Program_Mappings_t');
         END IF;
         Drop_Type('Ko_Specialty_t');
+        Drop_Type('Ko_Specialty_Issue_t');
         IF how <> 'KEEP' THEN
             Drop_Type('Subject_Mapping_t', 'Subject_Mappings_t');
         END IF;
@@ -285,17 +300,19 @@ CREATE OR REPLACE PACKAGE BODY V2U_Pkg AS
         Drop_TYpe('Ko_X_Sheet_Footers_t');
         Drop_Type('Ko_X_Tr_H_t', 'Ko_X_Trs_H_t');
         IF how <> 'KEEP' THEN
-            Drop_Type('Ko_Footer_t', 'Ko_Footers_t', 'Ko_Footer_Refs_t');
-            Drop_Type('Ko_Header_t', 'Ko_Headers_t', 'Ko_Header_Refs_t');
-            Drop_Type('Ko_Page_t', 'Ko_Pages_t', 'Ko_Page_Refs_t');
-            Drop_Type('Ko_Preamble_t', 'Ko_Preambles_t', 'Ko_Preamble_Refs_t');
-            Drop_Type('Ko_Report_t', 'Ko_Reports_t', 'Ko_Report_Refs_t');
-            Drop_Type('Ko_Sheet_t', 'Ko_Sheets_t', 'Ko_Sheet_Refs_t');
-            Drop_Type('Ko_Tbody_t', 'Ko_Tbodies_t', 'Ko_Tbody_Refs_t');
-            Drop_Type('Ko_Tr_t', 'Ko_Trs_t', 'Ko_Tr_Refs_t');
-            Drop_Type('Ko_Job_t', 'Ko_Jobs_t', 'Ko_Job_Refs_t');
+            Drop_Type('Ko_Footer_t', 'Ko_Footers_t');
+            Drop_Type('Ko_Header_t', 'Ko_Headers_t');
+            Drop_Type('Ko_Page_t', 'Ko_Pages_t');
+            Drop_Type('Ko_Preamble_t', 'Ko_Preambles_t');
+            Drop_Type('Ko_Report_t', 'Ko_Reports_t');
+            Drop_Type('Ko_Sheet_t', 'Ko_Sheets_t');
+            Drop_Type('Ko_Tbody_t', 'Ko_Tbodies_t');
+            Drop_Type('Ko_Tr_t', 'Ko_Trs_t');
+            Drop_Type('Ko_Job_t', 'Ko_Jobs_t');
             Drop_Type('Semester_Codes_t');
             Drop_Type('Semester_t', 'Semesters_t');
+            Drop_Type('Faculty_t', 'Faculties_t');
+            Drop_Type('University_t', 'Universities_t');
         END IF;
         Drop_Type('Subj_Grades_t');
         Drop_Type('Subj_Codes_t');

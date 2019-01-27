@@ -1,5 +1,7 @@
 @@ko/create_primary_tables.sql
 
+@@universities.ddl;
+@@faculties.ddl;
 @@semesters.ddl;
 @@subject_mappings.ddl;
 @@program_mappings.ddl;

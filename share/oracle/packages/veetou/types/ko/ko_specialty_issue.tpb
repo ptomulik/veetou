@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Instance_t AS
-    CONSTRUCTOR FUNCTION V2u_Ko_Specialty_Instance_t(
-              SELF IN OUT NOCOPY V2u_Ko_Specialty_Instance_t
+CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Issue_t AS
+    CONSTRUCTOR FUNCTION V2u_Ko_Specialty_Issue_t(
+              SELF IN OUT NOCOPY V2u_Ko_Specialty_Issue_t
             , job_uuid IN RAW
             , id IN NUMBER := NULL
             , university IN VARCHAR2
@@ -8,7 +8,12 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Instance_t AS
             , studies_modetier IN VARCHAR2
             , studies_field IN VARCHAR2
             , studies_specialty IN VARCHAR2
---            , sheet_ids IN V2u_Ko_Ids_t := NULL
+            , semester_number IN NUMBER
+            , semester_code IN VARCHAR2
+            , ects_mandatory IN NUMBER
+            , ects_other IN NUMBER
+            , ects_total IN NUMBER
+            , sheet_ids IN V2u_Ko_Ids_t := NULL
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -19,17 +24,22 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Instance_t AS
         SELF.studies_modetier := studies_modetier;
         SELF.studies_field := studies_field;
         SELF.studies_specialty := studies_specialty;
---        SELF.sheet_ids := sheet_ids;
+        SELF.semester_number := semester_number;
+        SELF.semester_code := semester_code;
+        SELF.ects_mandatory := ects_mandatory;
+        SELF.ects_other := ects_other;
+        SELF.ects_total := ects_total;
+        SELF.sheet_ids := sheet_ids;
         RETURN;
     END;
 
     MEMBER FUNCTION dup_with(
               new_id IN NUMBER := NULL
---            , new_sheet_ids IN V2u_Ko_Ids_t := NULL
-            ) RETURN V2u_Ko_Specialty_Instance_t
+            , new_sheet_ids IN V2u_Ko_Ids_t := NULL
+            ) RETURN V2u_Ko_Specialty_Issue_t
     IS
     BEGIN
-        RETURN V2u_Ko_Specialty_Instance_t(
+        RETURN V2u_Ko_Specialty_Issue_t(
               job_uuid => job_uuid
             , id => new_id
             , university => university
@@ -37,22 +47,27 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Instance_t AS
             , studies_modetier => studies_modetier
             , studies_field => studies_field
             , studies_specialty => studies_specialty
---            , sheet_ids => new_sheet_ids
+            , semester_number => semester_number
+            , semester_code => semester_code
+            , ects_mandatory => ects_mandatory
+            , ects_other => ects_other
+            , ects_total => ects_total
+            , sheet_ids => new_sheet_ids
         );
     END;
 
 
     MEMBER FUNCTION dup_with(
               new_id_seq IN VARCHAR2
---            , new_sheet_ids IN V2u_Ko_Ids_t := NULL
-            ) RETURN V2u_Ko_Specialty_Instance_t
+            , new_sheet_ids IN V2u_Ko_Ids_t := NULL
+            ) RETURN V2u_Ko_Specialty_Issue_t
     IS
     BEGIN
         RETURN dup_with(V2U_Util.Next_Val(new_id_seq), new_sheet_ids);
     END;
 
 
-    ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Specialty_Instance_t)
+    ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Specialty_Issue_t)
         RETURN INTEGER
     IS
         ord INTEGER;
@@ -66,6 +81,16 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Instance_t AS
         ord := V2U_Util.StrNullIcmp(studies_field, other.studies_field);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Util.StrNullIcmp(studies_specialty, other.studies_specialty);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Util.NumNullCmp(semester_number, other.semester_number);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Util.StrNullIcmp(semester_code, other.semester_code);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Util.NumNullCmp(ects_mandatory, other.ects_mandatory);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Util.NumNullCmp(ects_other, other.ects_other);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Util.NumNullCmp(ects_total, other.ects_total);
         IF ord <> 0 THEN RETURN ord; END IF;
         RETURN V2u_Util.RawNullCmp(job_uuid, other.job_uuid);
     END;

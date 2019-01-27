@@ -13,7 +13,7 @@ CREATE OR REPLACE PACKAGE V2U_Match AUTHID CURRENT_USER AS
 
 --    FUNCTION Attributes(
 --              program_mapping IN V2u_Program_Mapping_t
---            , specialty_instance IN V2u_Ko_Specialty_Instance_t
+--            , specialty_instance IN V2u_Ko_Specialty_Issue_t
 --            ) RETURN NUMBER;
 END V2U_Match;
 
