@@ -7,6 +7,7 @@
 @@ko_specialty_entity.tpb;
 @@ko_specialty.tpb;
 @@ko_student.tpb;
+@@ko_student_specialty_h.tpb;
 @@ko_mapped_subject.tpb;
 @@ko_mapped_specialty.tpb;
 

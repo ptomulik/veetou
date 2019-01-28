@@ -7,10 +7,10 @@ AS WITH u AS
             , j.matching_score matching_score
         FROM v2u_ko_specialty_entities se
         INNER JOIN v2u_ko_specialty_map_j j
-            ON (j.specialty_entity_id = se.id AND
+            ON (j.specent_id = se.id AND
                 j.job_uuid = se.job_uuid)
         INNER JOIN v2u_specialty_map sm
-            ON (j.specialty_map_id = sm.id)
+            ON (j.specmap_id = sm.id)
     ),
     v AS
     (
@@ -33,7 +33,7 @@ SELECT
             SELECT t.id FROM TABLE(v.sm) t
             WHERE ROWNUM <= 20
             ORDER BY t.id
-      ) AS V2u_Ids_t) specialty_map_ids
+      ) AS V2u_Ids_t) specmap_ids
 --    , CAST(MULTISET(
 --            SELECT t.mapped_subj_code FROM TABLE(v.sm) t
 --            WHERE ROWNUM <= 20

@@ -175,9 +175,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     PROCEDURE Primaries
     IS
     BEGIN
-        Drop_Index('specialty_map_idx1');
-        Drop_Index('specialty_map_idx2');
-        Drop_Index('specialty_map_idx3');
+        Drop_Index('specmap_idx1');
+        Drop_Index('specmap_idx2');
+        Drop_Index('specmap_idx3');
         Drop_Trigger('specialty_map_tr1');
         Drop_Sequence('specialty_map_sq1');
         Drop_Table('specialty_map', how => 'PURGE');
@@ -265,6 +265,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_View('ko_ambiguous_subjects_v');
         Drop_View('ko_mapped_subjects_v');
         Drop_View('ko_student_specialties_v');
+        Drop_View('ko_student_specialties_h');
         Drop_Materialized_View('ko_sh_hdr_preamb_h');
         Drop_Materialized_View('ko_tr_hdr_preamb_h');
         Drop_View('ko_x_sheets_h');
@@ -311,6 +312,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
 
         Drop_Type('Ko_Mapped_Subject_t', 'Ko_Mapped_Subjects_t');
         Drop_Type('Ko_Mapped_Specialty_t', 'Ko_Mapped_Specialties_t');
+        Drop_Type('Ko_Student_Specialty_H_t');
         Drop_Type('Ko_Specialty_t');
         Drop_Type('Ko_Specialty_Entity_t', 'Ko_Specialty_Entities_t');
         Drop_Type('Ko_Subject_Entity_t');

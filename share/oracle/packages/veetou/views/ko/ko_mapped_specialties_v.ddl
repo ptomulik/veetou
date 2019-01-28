@@ -1,6 +1,6 @@
 CREATE OR REPLACE VIEW v2u_ko_mapped_specialties_v
 OF V2u_Ko_Mapped_Specialty_t
-WITH OBJECT IDENTIFIER (job_uuid, specialty_entity_id, specialty_map_id)
+WITH OBJECT IDENTIFIER (job_uuid, specent_id, specmap_id)
 AS SELECT
       se.job_uuid
     , se.id
@@ -11,6 +11,9 @@ AS SELECT
     , se.studies_modetier
     , se.studies_field
     , se.studies_specialty
+    , sm.mapped_program_code
+    , sm.mapped_modetier_code
+    , sm.mapped_field_code
     , se.semester_number
     , sm.expr_semester_number
     , se.semester_code
@@ -23,10 +26,10 @@ AS SELECT
     , sm.expr_ects_total
 FROM v2u_ko_specialty_entities se
 LEFT JOIN v2u_ko_specialty_map_j sim
-    ON (sim.specialty_entity_id = se.id AND
+    ON (sim.specent_id = se.id AND
         sim.job_uuid = se.job_uuid)
 LEFT JOIN v2u_specialty_map sm
-    ON (sim.specialty_map_id = sm.id)
+    ON (sim.specmap_id = sm.id)
 WITH READ ONLY;
 
 -- vim: set ft=sql ts=4 sw=4 et:

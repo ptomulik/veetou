@@ -2,14 +2,17 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Mapped_Specialty_t AS
     CONSTRUCTOR FUNCTION V2u_Ko_Mapped_Specialty_t(
           SELF IN OUT NOCOPY V2u_Ko_Mapped_Specialty_t
         , job_uuid IN RAW
-        , specialty_entity_id IN NUMBER
-        , specialty_map_id IN NUMBER
+        , specent_id IN NUMBER
+        , specmap_id IN NUMBER
         , matching_score IN NUMBER
         , university VARCHAR2
         , faculty VARCHAR2
         , studies_modetier VARCHAR2
         , studies_field VARCHAR2
         , studies_specialty VARCHAR2
+        , mapped_program_code VARCHAR2
+        , mapped_modetier_code VARCHAR2
+        , mapped_field_code VARCHAR2
         , semester_number NUMBER
         , expr_semester_number VARCHAR2
         , semester_code VARCHAR2
@@ -24,14 +27,17 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Mapped_Specialty_t AS
     IS
     BEGIN
         SELF.job_uuid := job_uuid;
-        SELF.specialty_entity_id := specialty_entity_id;
-        SELF.specialty_map_id := specialty_map_id;
+        SELF.specent_id := specent_id;
+        SELF.specmap_id := specmap_id;
         SELF.matching_score := matching_score;
         SELF.university := university;
         SELF.faculty := faculty;
         SELF.studies_modetier := studies_modetier;
         SELF.studies_field := studies_field;
         SELF.studies_specialty := studies_specialty;
+        SELF.mapped_program_code := mapped_program_code;
+        SELF.mapped_modetier_code := mapped_modetier_code;
+        SELF.mapped_field_code := mapped_field_code;
         SELF.semester_number := semester_number;
         SELF.expr_semester_number := expr_semester_number;
         SELF.semester_code := semester_code;
@@ -62,6 +68,12 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Mapped_Specialty_t AS
         ord := V2U_Cmp.StrNI(university, other.university);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.NumN(matching_score, other.matching_score);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(mapped_program_code, other.mapped_program_code);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(mapped_modetier_code, other.mapped_modetier_code);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(mapped_field_code, other.mapped_field_code);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.NumN(semester_number, other.semester_number);
         IF ord <> 0 THEN RETURN ord; END IF;
