@@ -1,6 +1,6 @@
 CREATE OR REPLACE TYPE V2u_Ko_Mapped_Subject_t FORCE AUTHID CURRENT_USER AS OBJECT
     ( job_uuid RAW(16)
-    , subject_issue_id NUMBER(38)
+    , subject_entity_id NUMBER(38)
     , subject_map_id NUMBER(38)
     , matching_score NUMBER(38)
     , subj_code VARCHAR2(32 CHAR)
@@ -39,7 +39,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Mapped_Subject_t FORCE AUTHID CURRENT_USER AS OBJE
     , CONSTRUCTOR FUNCTION V2u_Ko_Mapped_Subject_t(
               SELF IN OUT NOCOPY V2u_Ko_Mapped_Subject_t
             , job_uuid IN RAW
-            , subject_issue_id IN NUMBER
+            , subject_entity_id IN NUMBER
             , subject_map_id IN NUMBER
             , matching_score IN NUMBER
             , subj_code IN VARCHAR2 := NULL

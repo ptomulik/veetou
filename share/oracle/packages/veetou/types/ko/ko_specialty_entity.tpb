@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Issue_t AS
-    CONSTRUCTOR FUNCTION V2u_Ko_Specialty_Issue_t(
-              SELF IN OUT NOCOPY V2u_Ko_Specialty_Issue_t
+CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Entity_t AS
+    CONSTRUCTOR FUNCTION V2u_Ko_Specialty_Entity_t(
+              SELF IN OUT NOCOPY V2u_Ko_Specialty_Entity_t
             , job_uuid IN RAW
             , id IN NUMBER := NULL
             , university IN VARCHAR2
@@ -36,10 +36,10 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Issue_t AS
     MEMBER FUNCTION dup_with(
               new_id IN NUMBER := NULL
             , new_sheet_ids IN V2u_Ids_t := NULL
-            ) RETURN V2u_Ko_Specialty_Issue_t
+            ) RETURN V2u_Ko_Specialty_Entity_t
     IS
     BEGIN
-        RETURN V2u_Ko_Specialty_Issue_t(
+        RETURN V2u_Ko_Specialty_Entity_t(
               job_uuid => job_uuid
             , id => new_id
             , university => university
@@ -60,14 +60,14 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Issue_t AS
     MEMBER FUNCTION dup_with(
               new_id_seq IN VARCHAR2
             , new_sheet_ids IN V2u_Ids_t := NULL
-            ) RETURN V2u_Ko_Specialty_Issue_t
+            ) RETURN V2u_Ko_Specialty_Entity_t
     IS
     BEGIN
         RETURN dup_with(V2U_Util.Next_Val(new_id_seq), new_sheet_ids);
     END;
 
 
-    ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Specialty_Issue_t)
+    ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Specialty_Entity_t)
         RETURN INTEGER
     IS
         ord INTEGER;

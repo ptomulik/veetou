@@ -1,10 +1,10 @@
-MERGE INTO v2u_ko_specialty_issues tgt
+MERGE INTO v2u_ko_specialty_entities tgt
 USING
     (
         WITH v AS
         (
             SELECT
-                  V2u_To.Ko_Specialty_Issue(
+                  V2u_To.Ko_Specialty_Entity(
                           job_uuid => u.job_uuid
                         , sheet => u.sheet
                         , header => u.header
@@ -15,7 +15,7 @@ USING
         )
         SELECT
               v.specialty.dup_with(
-                  new_id_seq => 'v2u_ko_specialty_issues_sq1'
+                  new_id_seq => 'v2u_ko_specialty_entities_sq1'
                 , new_sheet_ids => CAST(COLLECT(v.sheet_id) AS V2u_Ids_t)
               ) specialty
         FROM v v

@@ -5,10 +5,10 @@ USING
         (
             SELECT
                   VALUE(si).job_uuid job_uuid
-                , si.id specialty_issue_id
+                , si.id specialty_entity_id
                 , sm.id specialty_map_id
                 , V2U_Fit.Attributes(VALUE(sm), VALUE(si)) matching_score
-            FROM v2u_ko_specialty_issues si
+            FROM v2u_ko_specialty_entities si
             LEFT JOIN v2u_specialty_map sm
             ON (sm.university = si.university AND
                 sm.faculty = si.faculty AND
@@ -19,14 +19,14 @@ USING
         )
         SELECT * FROM u
         WHERE u.matching_score > 0
-        ORDER BY specialty_issue_id
+        ORDER BY specialty_entity_id
     ) src
 ON (tgt.specialty_map_id = src.specialty_map_id AND
-    tgt.specialty_issue_id = src.specialty_issue_id AND
+    tgt.specialty_entity_id = src.specialty_entity_id AND
     tgt.job_uuid = src.job_uuid)
 WHEN NOT MATCHED THEN
-    INSERT (    job_uuid,     specialty_issue_id,     specialty_map_id,     matching_score)
-    VALUES (src.job_uuid, src.specialty_issue_id, src.specialty_map_id, src.matching_score)
+    INSERT (    job_uuid,     specialty_entity_id,     specialty_map_id,     matching_score)
+    VALUES (src.job_uuid, src.specialty_entity_id, src.specialty_map_id, src.matching_score)
 WHEN MATCHED THEN
     UPDATE SET tgt.matching_score = src.matching_score;
 

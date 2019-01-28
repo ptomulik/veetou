@@ -3,7 +3,7 @@ AS SELECT
       v.job_uuid job_uuid
     , v.subject_map_id subject_map_id
     , v.matching_score matching_score
-    , v.subject_issue subject_issue
+    , v.subject_entity subject_entity
     , v.subject_map subject_map
     , v.trs_count trs_count
 FROM v2u_ko_mapped_subjects_dv v

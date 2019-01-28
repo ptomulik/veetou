@@ -282,10 +282,10 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Table('ko_subject_map_j', how => 'PURGE');
         Drop_Table('ko_subject_trs_j', how => 'PURGE');
         --
-        Drop_Trigger('ko_subject_issues_tr1');
-        Drop_Sequence('ko_subject_issues_sq1');
-        Drop_Index('ko_subject_issues_idx1');
-        Drop_Table('ko_subject_issues', how => 'PURGE');
+        Drop_Trigger('ko_subject_entities_tr1');
+        Drop_Sequence('ko_subject_entities_sq1');
+        Drop_Index('ko_subject_entities_idx1');
+        Drop_Table('ko_subject_entities', how => 'PURGE');
         --
         Drop_Table('ko_specialty_map_j', how=>'PURGE');
         Drop_Table('ko_specialty_sheets_j', how => 'PURGE');
@@ -294,11 +294,11 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Sequence('ko_specialties_sq1');
         Drop_Table('ko_specialties', how => 'PURGE');
         --
-        Drop_Trigger('ko_specialty_issues_tr1');
-        Drop_Sequence('ko_specialty_issues_sq1');
-        Drop_Sequence('ko_specialty_issues_idx1');
-        Drop_Sequence('ko_specialty_issues_idx2');
-        Drop_Table('ko_specialty_issues', how => 'PURGE');
+        Drop_Trigger('ko_specialty_entities_tr1');
+        Drop_Sequence('ko_specialty_entities_sq1');
+        Drop_Sequence('ko_specialty_entities_idx1');
+        Drop_Sequence('ko_specialty_entities_idx2');
+        Drop_Table('ko_specialty_entities', how => 'PURGE');
         --
 
         --
@@ -310,8 +310,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Mapped_Subject_t', 'Ko_Mapped_Subjects_t');
         Drop_Type('Ko_Mapped_Specialty_t', 'Ko_Mapped_Specialties_t');
         Drop_Type('Ko_Specialty_t');
-        Drop_Type('Ko_Specialty_Issue_t');
-        Drop_Type('Ko_Subject_Issue_t');
+        Drop_Type('Ko_Specialty_Entity_t');
+        Drop_Type('Ko_Subject_Entity_t');
         Drop_Type('Ko_Thread_Indices_t');
         Drop_Type('Ko_Semester_Threads_t');
         Drop_Type('Ko_Semester_Instance_t', 'Ko_Semester_Instances_t');

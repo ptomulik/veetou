@@ -1,4 +1,4 @@
-CREATE OR REPLACE TYPE V2u_Ko_Specialty_Issue_t
+CREATE OR REPLACE TYPE V2u_Ko_Specialty_Entity_t
     FORCE AUTHID CURRENT_USER AS OBJECT
     ( job_uuid RAW(16)
     , id NUMBER(38)
@@ -14,8 +14,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Specialty_Issue_t
     , ects_total NUMBER(4)
     , sheet_ids V2u_Ids_t
 
-    , CONSTRUCTOR FUNCTION V2u_Ko_Specialty_Issue_t(
-              SELF IN OUT NOCOPY V2u_Ko_Specialty_Issue_t
+    , CONSTRUCTOR FUNCTION V2u_Ko_Specialty_Entity_t(
+              SELF IN OUT NOCOPY V2u_Ko_Specialty_Entity_t
             , job_uuid IN RAW
             , id IN NUMBER := NULL
             , university IN VARCHAR2
@@ -34,14 +34,14 @@ CREATE OR REPLACE TYPE V2u_Ko_Specialty_Issue_t
     , MEMBER FUNCTION dup_with(
               new_id IN NUMBER := NULL
             , new_sheet_ids IN V2u_Ids_t := NULL
-            ) RETURN V2u_Ko_Specialty_Issue_t
+            ) RETURN V2u_Ko_Specialty_Entity_t
 
     , MEMBER FUNCTION dup_with(
               new_id_seq IN VARCHAR2
             , new_sheet_ids IN V2u_Ids_t := NULL
-            ) RETURN V2u_Ko_Specialty_Issue_t
+            ) RETURN V2u_Ko_Specialty_Entity_t
 
-    , ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Specialty_Issue_t)
+    , ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Specialty_Entity_t)
             RETURN INTEGER
     );
 

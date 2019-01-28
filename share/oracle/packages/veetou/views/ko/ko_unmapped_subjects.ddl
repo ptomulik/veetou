@@ -3,23 +3,23 @@ AS SELECT
       v.job_uuid job_uuid
     , v.subject_map_id subject_map_id
     , v.matching_score matching_score
-    -- issue
-    , v.subject_issue.subj_code subj_code
-    , v.subject_issue.subj_name subj_name
-    , v.subject_issue.university university
-    , v.subject_issue.faculty faculty
-    , v.subject_issue.studies_modetier studies_modetier
-    , v.subject_issue.studies_field studies_field
-    , v.subject_issue.studies_specialty studies_specialty
-    , v.subject_issue.semester_code semester_code
-    , v.subject_issue.subj_hours_w subj_hours_w
-    , v.subject_issue.subj_hours_c subj_hours_c
-    , v.subject_issue.subj_hours_l subj_hours_l
-    , v.subject_issue.subj_hours_p subj_hours_p
-    , v.subject_issue.subj_hours_s subj_hours_s
-    , v.subject_issue.subj_credit_kind subj_credit_kind
-    , v.subject_issue.subj_ects subj_ects
-    , v.subject_issue.subj_tutor subj_tutor
+    -- entity
+    , v.subject_entity.subj_code subj_code
+    , v.subject_entity.subj_name subj_name
+    , v.subject_entity.university university
+    , v.subject_entity.faculty faculty
+    , v.subject_entity.studies_modetier studies_modetier
+    , v.subject_entity.studies_field studies_field
+    , v.subject_entity.studies_specialty studies_specialty
+    , v.subject_entity.semester_code semester_code
+    , v.subject_entity.subj_hours_w subj_hours_w
+    , v.subject_entity.subj_hours_c subj_hours_c
+    , v.subject_entity.subj_hours_l subj_hours_l
+    , v.subject_entity.subj_hours_p subj_hours_p
+    , v.subject_entity.subj_hours_s subj_hours_s
+    , v.subject_entity.subj_credit_kind subj_credit_kind
+    , v.subject_entity.subj_ects subj_ects
+    , v.subject_entity.subj_tutor subj_tutor
     -- mapped
     , v.subject_map.mapped_subj_code mapped_subj_code
     , v.subject_map.expr_subj_name expr_subj_name
