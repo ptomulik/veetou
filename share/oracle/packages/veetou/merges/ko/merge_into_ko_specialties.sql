@@ -6,8 +6,8 @@ USING
             SELECT
                   V2u_To.Ko_Specialty(
                           job_uuid => u.job_uuid
-                        , header => DEREF(u.header)
-                        , preamble => DEREF(u.preamble)
+                        , header => u.header
+                        , preamble => u.preamble
                   ) specialty
  --               , u.sheet.id sheet_id
             FROM v2u_ko_sh_hdr_preamb_h u
@@ -22,12 +22,13 @@ USING
     ) src
 ON
     (
-            DECODE(src.specialty.studies_specialty, tgt.studies_specialty, 1, 0) = 1
-        AND DECODE(src.specialty.studies_field, tgt.studies_field, 1, 0) = 1
-        AND DECODE(src.specialty.studies_modetier, tgt.studies_modetier, 1, 0) = 1
-        AND DECODE(src.specialty.faculty, tgt.faculty, 1, 0) = 1
-        AND DECODE(src.specialty.university, tgt.university, 1, 0) = 1
-        AND DECODE(src.specialty.job_uuid, tgt.job_uuid, 1, 0) = 1
+        -- we should use DECODE(...) for this, but it didn't seem to work here in the ON clause
+            ((src.specialty.studies_specialty = tgt.studies_specialty) OR (src.specialty.studies_specialty IS NULL AND tgt.studies_specialty IS NULL))
+        AND ((src.specialty.studies_field = tgt.studies_field) OR (src.specialty.studies_field IS NULL AND tgt.studies_field IS NULL))
+        AND ((src.specialty.studies_modetier = tgt.studies_modetier) OR (src.specialty.studies_modetier IS NULL AND tgt.studies_modetier IS NULL))
+        AND ((src.specialty.faculty = tgt.faculty) OR (src.specialty.faculty IS NULL AND tgt.faculty IS NULL))
+        AND ((src.specialty.university = tgt.university) OR (src.specialty.university IS NULL AND tgt.university IS NULL))
+        AND ((src.specialty.job_uuid = tgt.job_uuid) OR (src.specialty.job_uuid IS NULL AND tgt.job_uuid IS NULL))
     )
 WHEN NOT MATCHED THEN INSERT VALUES(src.specialty);
 

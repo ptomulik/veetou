@@ -7,9 +7,9 @@ USING
                   t.tr tr
                 , V2u_To.Ko_Subject_Issue(
                       job_uuid => t.tr.job_uuid
-                    , header => DEREF(t.header)
-                    , preamble => DEREF(t.preamble)
-                    , tr => DEREF(t.tr)
+                    , header => t.header
+                    , preamble => t.preamble
+                    , tr => t.tr
                   ) subj_issue
             FROM v2u_ko_tr_hdr_preamb_h t
         ),
@@ -17,7 +17,7 @@ USING
         (
             SELECT
                   u.subj_issue subj_issue
-                , CAST(COLLECT(DEREF(u.tr)) AS V2u_Ko_Trs_t) trs
+                , CAST(COLLECT(u.tr) AS V2u_Ko_Trs_t) trs
             FROM u u
             GROUP BY u.subj_issue
         )
@@ -42,23 +42,23 @@ USING
     ) src
 ON
     (       -- our ORDER member function couldn't be used here.. :(
-            DECODE(src.subj_issue.subj_code, tgt.subj_code, 1, 0) = 1
-        AND DECODE(src.subj_issue.semester_code, tgt.semester_code, 1, 0) = 1
-        AND DECODE(src.subj_issue.subj_hours_w, tgt.subj_hours_w, 1, 0) = 1
-        AND DECODE(src.subj_issue.subj_hours_c, tgt.subj_hours_c, 1, 0) = 1
-        AND DECODE(src.subj_issue.subj_hours_l, tgt.subj_hours_l, 1, 0) = 1
-        AND DECODE(src.subj_issue.subj_hours_p, tgt.subj_hours_p, 1, 0) = 1
-        AND DECODE(src.subj_issue.subj_hours_s, tgt.subj_hours_s, 1, 0) = 1
-        AND DECODE(src.subj_issue.subj_tutor, tgt.subj_tutor, 1, 0) = 1
-        AND DECODE(src.subj_issue.studies_specialty, tgt.studies_specialty, 1, 0) = 1
-        AND DECODE(src.subj_issue.studies_field, tgt.studies_field, 1, 0) = 1
-        AND DECODE(src.subj_issue.studies_modetier, tgt.studies_modetier, 1, 0) = 1
-        AND DECODE(src.subj_issue.subj_credit_kind, tgt.subj_credit_kind, 1, 0) = 1
-        AND DECODE(src.subj_issue.subj_ects, tgt.subj_ects, 1, 0) = 1
-        AND DECODE(src.subj_issue.subj_name, tgt.subj_name, 1, 0) = 1
-        AND DECODE(src.subj_issue.university, tgt.university, 1, 0) = 1
-        AND DECODE(src.subj_issue.faculty, tgt.faculty, 1, 0) = 1
-        AND DECODE(src.subj_issue.job_uuid, tgt.job_uuid, 1, 0) = 1
+            ((src.subj_issue.subj_code = tgt.subj_code) OR (src.subj_issue.subj_code IS NULL AND tgt.subj_code IS NULL))
+        AND ((src.subj_issue.semester_code = tgt.semester_code) OR (src.subj_issue.semester_code IS NULL AND tgt.semester_code IS NULL))
+        AND ((src.subj_issue.subj_hours_w = tgt.subj_hours_w) OR (src.subj_issue.subj_hours_w IS NULL AND tgt.subj_hours_w IS NULL))
+        AND ((src.subj_issue.subj_hours_c = tgt.subj_hours_c) OR (src.subj_issue.subj_hours_c IS NULL AND tgt.subj_hours_c IS NULL))
+        AND ((src.subj_issue.subj_hours_l = tgt.subj_hours_l) OR (src.subj_issue.subj_hours_l IS NULL AND tgt.subj_hours_l IS NULL))
+        AND ((src.subj_issue.subj_hours_p = tgt.subj_hours_p) OR (src.subj_issue.subj_hours_p IS NULL AND tgt.subj_hours_p IS NULL))
+        AND ((src.subj_issue.subj_hours_s = tgt.subj_hours_s) OR (src.subj_issue.subj_hours_s IS NULL AND tgt.subj_hours_s IS NULL))
+        AND ((src.subj_issue.subj_tutor = tgt.subj_tutor) OR (src.subj_issue.subj_tutor IS NULL AND tgt.subj_tutor IS NULL))
+        AND ((src.subj_issue.studies_specialty = tgt.studies_specialty) OR (src.subj_issue.studies_specialty IS NULL AND tgt.studies_specialty IS NULL))
+        AND ((src.subj_issue.studies_field = tgt.studies_field) OR (src.subj_issue.studies_field IS NULL AND tgt.studies_field IS NULL))
+        AND ((src.subj_issue.studies_modetier = tgt.studies_modetier) OR (src.subj_issue.studies_modetier IS NULL AND tgt.studies_modetier IS NULL))
+        AND ((src.subj_issue.subj_credit_kind = tgt.subj_credit_kind) OR (src.subj_issue.subj_credit_kind IS NULL AND tgt.subj_credit_kind IS NULL))
+        AND ((src.subj_issue.subj_ects = tgt.subj_ects) OR (src.subj_issue.subj_ects IS NULL AND tgt.subj_ects IS NULL))
+        AND ((src.subj_issue.subj_name = tgt.subj_name) OR (src.subj_issue.subj_name IS NULL AND tgt.subj_name IS NULL))
+        AND ((src.subj_issue.university = tgt.university) OR (src.subj_issue.university IS NULL AND tgt.university IS NULL))
+        AND ((src.subj_issue.faculty = tgt.faculty) OR (src.subj_issue.faculty IS NULL AND tgt.faculty IS NULL))
+        AND ((src.subj_issue.job_uuid = tgt.job_uuid) OR (src.subj_issue.job_uuid IS NULL AND tgt.job_uuid IS NULL))
     )
 WHEN NOT MATCHED THEN INSERT VALUES(src.subj_issue)
 WHEN MATCHED THEN UPDATE SET tgt.subj_grades = src.subj_issue.subj_grades

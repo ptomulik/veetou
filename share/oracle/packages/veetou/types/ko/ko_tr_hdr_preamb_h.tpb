@@ -3,9 +3,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Tr_Hdr_Preamb_H_t AS
           SELF IN OUT NOCOPY V2u_Ko_Tr_Hdr_Preamb_H_t
         , job_uuid IN RAW
         , id IN NUMBER
-        , tr IN REF V2u_Ko_Tr_t
-        , header IN REF V2u_Ko_Header_t
-        , preamble IN REF V2u_Ko_Preamble_t
+        , tr IN V2u_Ko_Tr_t
+        , header IN V2u_Ko_Header_t
+        , preamble IN V2u_Ko_Preamble_t
         ) RETURN SELF AS RESULT
     IS
     BEGIN

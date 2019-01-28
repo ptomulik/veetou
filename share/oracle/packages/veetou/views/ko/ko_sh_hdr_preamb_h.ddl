@@ -5,9 +5,9 @@ REFRESH COMPLETE
 AS WITH u AS
     (
         SELECT
-              REF(sheets) sheet
-            , MIN(REF(headers)) KEEP (DENSE_RANK FIRST ORDER BY VALUE(pages)) header
-            , MIN(REF(preambles)) KEEP (DENSE_RANK FIRST ORDER BY VALUE(pages)) preamble
+              VALUE(sheets) sheet
+            , MIN(VALUE(headers)) KEEP (DENSE_RANK FIRST ORDER BY VALUE(pages)) header
+            , MIN(VALUE(preambles)) KEEP (DENSE_RANK FIRST ORDER BY VALUE(pages)) preamble
             , CAST(COLLECT(pages.id ORDER BY pages.id) AS V2u_5Ids_t) page_ids
             -- both distinct_*_count fields should equal 1 for all rows!
             , COUNT(DISTINCT headers.id) distinct_headers_count
@@ -32,7 +32,7 @@ AS WITH u AS
         INNER JOIN v2u_ko_headers headers
             ON (page_header.ko_header_id = headers.id AND
                 page_header.job_uuid = headers.job_uuid)
-        GROUP BY REF(sheets)
+        GROUP BY VALUE(sheets)
     )
 SELECT
       u.sheet.job_uuid
@@ -44,10 +44,5 @@ SELECT
     , u.distinct_headers_count
     , u.distinct_preambles_count
 FROM u u;
-
-
-ALTER MATERIALIZED VIEW v2u_ko_sh_hdr_preamb_h ADD SCOPE FOR (sheet) IS v2u_ko_sheets;
-ALTER MATERIALIZED VIEW v2u_ko_sh_hdr_preamb_h ADD SCOPE FOR (header) IS v2u_ko_headers;
-ALTER MATERIALIZED VIEW v2u_ko_sh_hdr_preamb_h ADD SCOPE FOR (preamble) IS v2u_ko_preambles;
 
 -- vim: set ft=sql ts=4 sw=4 et:

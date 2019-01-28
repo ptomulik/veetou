@@ -1,13 +1,16 @@
+-- We could (better) use simple view instead of materialized one, but it
+-- wouldn't work on 11g (internal error). So, we use materialized view as a
+-- workaround.
 CREATE MATERIALIZED VIEW v2u_ko_tr_hdr_preamb_h
 OF V2u_Ko_Tr_Hdr_Preamb_H_t
 BUILD DEFERRED
 REFRESH COMPLETE
 AS SELECT
-      VALUE(trs).job_uuid
-    , VALUE(trs).id
-    , REF(trs) tr
-    , REF(headers) header
-    , REF(preambles) preamble
+      trs.job_uuid
+    , trs.id
+    , VALUE(trs) tr
+    , VALUE(headers) header
+    , VALUE(preambles) preamble
 FROM v2u_ko_tbody_trs_j tbody_trs
 INNER JOIN v2u_ko_trs trs
     ON (tbody_trs.ko_tr_id = trs.id AND
@@ -34,9 +37,5 @@ INNER JOIN v2u_ko_preambles preambles
     ON (page_preamble.ko_preamble_id = preambles.id AND
         page_preamble.job_uuid = preambles.job_uuid)
 ;
-
-ALTER MATERIALIZED VIEW v2u_ko_tr_hdr_preamb_h ADD SCOPE FOR (tr) IS v2u_ko_trs;
-ALTER MATERIALIZED VIEW v2u_ko_tr_hdr_preamb_h ADD SCOPE FOR (header) IS v2u_ko_headers;
-ALTER MATERIALIZED VIEW v2u_ko_tr_hdr_preamb_h ADD SCOPE FOR (preamble) IS v2u_ko_preambles;
 
 -- vim: set ft=sql ts=4 sw=4 et:
