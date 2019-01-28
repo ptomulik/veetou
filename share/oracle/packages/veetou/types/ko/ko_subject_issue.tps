@@ -18,7 +18,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Issue_t FORCE AUTHID CURRENT_USER AS OBJEC
     , subj_ects NUMBER(4)
     , subj_tutor VARCHAR2(256 CHAR)
     , subj_grades V2u_Subj_20Grades_t
-    , tr_ids V2u_Ko_Ids_t
+    , tr_ids V2u_Ids_t
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Subject_Issue_t(
               SELF IN OUT NOCOPY V2u_Ko_Subject_Issue_t
@@ -41,7 +41,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Issue_t FORCE AUTHID CURRENT_USER AS OBJEC
             , subj_ects IN NUMBER := NULL
             , subj_tutor IN VARCHAR2 := NULL
             , subj_grades IN V2u_Subj_20Grades_t := NULL
-            , tr_ids IN V2u_Ko_Ids_t := NULL
+            , tr_ids IN V2u_Ids_t := NULL
             ) RETURN SELF AS RESULT
 
     , ORDER MEMBER FUNCTION cmp_with (
@@ -51,13 +51,13 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Issue_t FORCE AUTHID CURRENT_USER AS OBJEC
     , MEMBER FUNCTION dup_with(
               new_id IN NUMBER
             , new_subj_grades IN V2u_Subj_20Grades_t := NULL
-            , new_tr_ids IN V2u_Ko_Ids_t := NULL
+            , new_tr_ids IN V2u_Ids_t := NULL
             ) RETURN V2u_Ko_Subject_Issue_t
 
     , MEMBER FUNCTION dup_with(
               new_id_seq IN VARCHAR2
             , new_subj_grades IN V2u_Subj_20Grades_t := NULL
-            , new_tr_ids IN V2u_Ko_Ids_t := NULL
+            , new_tr_ids IN V2u_Ids_t := NULL
             ) RETURN V2u_Ko_Subject_Issue_t
     );
 

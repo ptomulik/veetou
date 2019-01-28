@@ -31,7 +31,7 @@ USING
                       new_id_seq => 'v2u_ko_subject_issues_sq1'
                     , new_tr_ids => CAST(MULTISET(
                             SELECT t.id FROM TABLE(v.trs) t
-                      ) AS V2u_Ko_Ids_t)
+                      ) AS V2u_Ids_t)
                     , new_subj_grades => CAST(MULTISET(
                             SELECT DISTINCT t.subj_grade
                             FROM TABLE(v.trs) t

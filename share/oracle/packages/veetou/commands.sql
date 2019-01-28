@@ -3,28 +3,44 @@
  *            Just place a cursor on a command and press F9.
  ****************************************************************************/
 
--- Whipes-out whole database. --
-@@drop_primaries.sql;
-
 
 -- Creates empty veetou schema (first time, or after uninstall). --
+@@create_all.sql;
+
+
+
+-- Wipes-out whole database. --
+@@drop_all.sql;
+
+
+
+-- Wipe-out whole databse and create the emtpy schema from scratch.
+@@recreate_all.sql;
+
+
+
+-- Creates primary tables, types, packages, etc...
 @@create_primaries.sql;
 
 
 
--- Wipes-out whole database and recreates empty schema. --
--- This is merely a sequence of @@uninstall.sql and @@install.sql
+-- Wipes-out what was created by @@create_primaries.sql
+@@drop_primaries.sql;
+
+
+
+-- Wipes-out primaries and creates them from scratch.
 @@recreate_primaries.sql;
 
 
 
--- Drops views, packages, secondary tables and types.
-@@drop_secondaries.sql;
-
-
-
--- Creates views, packages, secondary tables and types.
+-- Creates secondary types, tables, views, packages, etc.
 @@create_secondaries.sql;
+
+
+
+-- Drops what was created by @@create_secondaries.sql;
+@@drop_secondaries.sql;
 
 
 
@@ -32,7 +48,8 @@
 @@recreate_secondaries.sql;
 
 
--- Merge data from primary tables into secondary tables
+
+-- Merge data from primary tables into secondary tables.
 @reload_secondaries.sql;
 
 -- vim: set ft=sql ts=4 sw=4 et:

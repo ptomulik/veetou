@@ -17,7 +17,7 @@ USING
         SELECT
             u.student.dup_with(
                   new_id_seq => 'v2u_ko_students_sq1'
-                , new_preamble_ids => CAST(COLLECT(u.p_id) AS V2u_Ko_Ids_t)
+                , new_preamble_ids => CAST(COLLECT(u.p_id) AS V2u_Ids_t)
             ) student
         FROM u u
         GROUP BY u.student

@@ -14,12 +14,12 @@ AS SELECT
 --    , (
 --        SELECT LISTAGG(sheet_id, ',')
 --        WITHIN GROUP (ORDER BY VALUE(t))
---        FROM TABLE(semester_issues) t GROUP BY 1
+--        FROM TABLE(semester_instances) t GROUP BY 1
 --      ) sheet_ids
     , (
         SELECT LISTAGG(semester_code || ':' || semester_number, ',')
         WITHIN GROUP (ORDER BY VALUE(t))
-        FROM TABLE(semester_issues) t GROUP BY 1
+        FROM TABLE(semester_instances) t GROUP BY 1
       ) semesters
 FROM v2u_ko_student_specialties_dv v;
 

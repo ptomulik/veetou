@@ -7,7 +7,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Student_t AS
             , student_name IN VARCHAR2
             , first_name IN VARCHAR2
             , last_name IN VARCHAR2
-            , preamble_ids IN V2u_Ko_Ids_t := NULL
+            , preamble_ids IN V2u_Ids_t := NULL
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -40,7 +40,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Student_t AS
 
     MEMBER FUNCTION dup_with(
               new_id IN NUMBER
-            , new_preamble_ids V2u_Ko_Ids_t := NULL
+            , new_preamble_ids V2u_Ids_t := NULL
             ) RETURN V2u_Ko_Student_t
     IS
     BEGIN
@@ -57,7 +57,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Student_t AS
 
     MEMBER FUNCTION dup_with(
               new_id_seq IN VARCHAR2
-            , new_preamble_ids IN V2u_Ko_Ids_t := NULL
+            , new_preamble_ids IN V2u_Ids_t := NULL
             ) RETURN V2u_Ko_Student_t
     IS
     BEGIN

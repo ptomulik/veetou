@@ -1,6 +1,6 @@
 @@ko_x_tr_h.tps;
 @@ko_x_sheet_h.tps;
-@@ko_semester_issue.tps;
+@@ko_semester_instance.tps;
 @@ko_sh_hdr_preamb_h.tps;
 @@ko_tr_hdr_preamb_h.tps;
 @@ko_subject_issue.tps;

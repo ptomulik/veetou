@@ -8,7 +8,7 @@ AS WITH u AS
               REF(sheets) sheet
             , MIN(REF(headers)) KEEP (DENSE_RANK FIRST ORDER BY VALUE(pages)) header
             , MIN(REF(preambles)) KEEP (DENSE_RANK FIRST ORDER BY VALUE(pages)) preamble
-            , CAST(COLLECT(pages.id ORDER BY pages.id) AS V2u_Ko_5Ids_t) page_ids
+            , CAST(COLLECT(pages.id ORDER BY pages.id) AS V2u_5Ids_t) page_ids
             -- both distinct_*_count fields should equal 1 for all rows!
             , COUNT(DISTINCT headers.id) distinct_headers_count
             , COUNT(DISTINCT preambles.id) distinct_preambles_count

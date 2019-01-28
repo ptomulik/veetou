@@ -4,7 +4,7 @@ AS WITH specialties AS (
           job_uuid
         , student
         , specialty
-        , V2U_To.Threads(semester_issues) threads
+        , V2U_To.Threads(semester_instances) threads
     FROM v2u_ko_student_specialties_dv
 )
 SELECT
@@ -15,7 +15,7 @@ SELECT
     , (SELECT MAX(ROWNUM) FROM TABLE(threads)) threads_count
     , V2U_Util.Max_Admission_Semester(VALUE(t)) max_admission_semester
     , CAST(MULTISET(SELECT sheet_id FROM TABLE(VALUE(t)) s ORDER BY VALUE(s))
-           AS V2u_Ko_Ids_t) sheet_ids
+           AS V2u_Ids_t) sheet_ids
     , VALUE(t) thread_semesters
 FROM specialties
 CROSS JOIN TABLE(threads) t;

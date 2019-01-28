@@ -33,7 +33,7 @@ SELECT
             SELECT t.id FROM TABLE(v.subject_map) t
             WHERE ROWNUM <= 20
             ORDER BY t.id
-      ) AS V2u_Ko_Ids_t) subject_map_ids
+      ) AS V2u_Ids_t) subject_map_ids
     , CAST(MULTISET(
             SELECT t.mapped_subj_code FROM TABLE(v.subject_map) t
             WHERE ROWNUM <= 20

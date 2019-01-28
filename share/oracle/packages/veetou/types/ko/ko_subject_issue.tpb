@@ -20,7 +20,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Issue_t AS
         , subj_ects IN NUMBER := NULL
         , subj_tutor IN VARCHAR2 := NULL
         , subj_grades IN V2u_Subj_20Grades_t := NULL
-        , tr_ids IN V2u_Ko_Ids_t := NULL
+        , tr_ids IN V2u_Ids_t := NULL
         ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -91,7 +91,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Issue_t AS
     MEMBER FUNCTION dup_with(
               new_id IN NUMBER
             , new_subj_grades IN V2u_Subj_20Grades_t := NULL
-            , new_tr_ids IN V2u_Ko_Ids_t := NULL
+            , new_tr_ids IN V2u_Ids_t := NULL
             ) RETURN V2u_Ko_Subject_Issue_t
     IS
     BEGIN
@@ -122,7 +122,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Issue_t AS
     MEMBER FUNCTION dup_with(
               new_id_seq IN VARCHAR2
             , new_subj_grades IN V2u_Subj_20Grades_t := NULL
-            , new_tr_ids IN V2u_Ko_Ids_t := NULL
+            , new_tr_ids IN V2u_Ids_t := NULL
             ) RETURN V2u_Ko_Subject_Issue_t
     IS
     BEGIN

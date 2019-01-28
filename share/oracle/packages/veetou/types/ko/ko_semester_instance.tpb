@@ -32,8 +32,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Semester_Instance_t AS
         ord INTEGER;
     BEGIN
         ord := V2U_Cmp.NumN(
-                      V2U_To.Semester_Id(semester_code)
-                    , V2U_To.Semester_Id(other.semester_code)
+                      V2u_Semester_t.to_id(semester_code)
+                    , V2u_Semester_t.to_id(other.semester_code)
                     );
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.NumN(semester_number, other.semester_number);

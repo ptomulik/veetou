@@ -13,7 +13,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Issue_t AS
             , ects_mandatory IN NUMBER
             , ects_other IN NUMBER
             , ects_total IN NUMBER
-            , sheet_ids IN V2u_Ko_Ids_t := NULL
+            , sheet_ids IN V2u_Ids_t := NULL
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -35,7 +35,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Issue_t AS
 
     MEMBER FUNCTION dup_with(
               new_id IN NUMBER := NULL
-            , new_sheet_ids IN V2u_Ko_Ids_t := NULL
+            , new_sheet_ids IN V2u_Ids_t := NULL
             ) RETURN V2u_Ko_Specialty_Issue_t
     IS
     BEGIN
@@ -59,7 +59,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Issue_t AS
 
     MEMBER FUNCTION dup_with(
               new_id_seq IN VARCHAR2
-            , new_sheet_ids IN V2u_Ko_Ids_t := NULL
+            , new_sheet_ids IN V2u_Ids_t := NULL
             ) RETURN V2u_Ko_Specialty_Issue_t
     IS
     BEGIN

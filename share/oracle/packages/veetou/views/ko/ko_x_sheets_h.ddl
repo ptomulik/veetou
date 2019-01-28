@@ -21,9 +21,9 @@ WITH u AS
         SELECT
               sheet
             , report
-            , CAST(COLLECT(pages.id ORDER BY pages.id) AS V2u_Ko_5Ids_t) pages
+            , CAST(COLLECT(pages.id ORDER BY pages.id) AS V2u_5Ids_t) pages
             , MIN(REF(pages)) KEEP (DENSE_RANK FIRST ORDER BY VALUE(pages)) page
-            , CAST(COLLECT(footers.id ORDER BY pages.id) AS V2u_Ko_5Ids_t) footers
+            , CAST(COLLECT(footers.id ORDER BY pages.id) AS V2u_5Ids_t) footers
         FROM v2u_ko_sheet_pages_j sheet_pages
         INNER JOIN u u
             ON (sheet_pages.ko_sheet_id = u.sheet.id AND

@@ -2,12 +2,12 @@
 -- NOTE: This destroys all the veetou data and structure.
 --
 
-@@pkg.pkg;
+@@packages/drop.pkg;
 
 BEGIN
-    V2U_Pkg.Uninstall('CASCADE CONSTRAINTS PURGE');
+    V2U_Drop.Primaries();
 END;
 /
-DROP PACKAGE V2U_Pkg;
+DROP PACKAGE V2U_Drop;
 
 -- vim: set ft=sql ts=4 sw=4 et:

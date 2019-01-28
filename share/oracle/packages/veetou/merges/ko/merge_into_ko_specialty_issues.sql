@@ -16,7 +16,7 @@ USING
         SELECT
               v.specialty.dup_with(
                   new_id_seq => 'v2u_ko_specialty_issues_sq1'
-                , new_sheet_ids => CAST(COLLECT(v.sheet_id) AS V2u_Ko_Ids_t)
+                , new_sheet_ids => CAST(COLLECT(v.sheet_id) AS V2u_Ids_t)
               ) specialty
         FROM v v
         GROUP BY v.specialty

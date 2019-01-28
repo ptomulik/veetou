@@ -18,7 +18,7 @@ CREATE OR REPLACE PACKAGE V2U_To AUTHID CURRENT_USER AS
             , preamble IN V2u_Ko_Preamble_t
             , tr IN V2u_Ko_Tr_t
             , subj_grades IN V2u_Subj_20Grades_t := NULL
-            , tr_ids IN V2u_Ko_Ids_t := NULL
+            , tr_ids IN V2u_Ids_t := NULL
             ) RETURN V2u_Ko_Subject_Issue_t;
 
     FUNCTION Ko_Specialty_Issue(
@@ -27,7 +27,7 @@ CREATE OR REPLACE PACKAGE V2U_To AUTHID CURRENT_USER AS
             , sheet IN V2u_Ko_Sheet_t
             , header IN V2u_Ko_Header_t
             , preamble IN V2u_Ko_Preamble_t
-            , sheet_ids V2u_Ko_Ids_t := NULL
+            , sheet_ids V2u_Ids_t := NULL
             ) RETURN V2u_Ko_Specialty_Issue_t;
 
     FUNCTION Ko_Specialty(
