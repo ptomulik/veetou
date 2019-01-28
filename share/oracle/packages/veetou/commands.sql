@@ -4,17 +4,17 @@
  ****************************************************************************/
 
 -- Whipes-out whole database. --
-@@drop_all.sql;
+@@drop_primaries.sql;
 
 
 -- Creates empty veetou schema (first time, or after uninstall). --
-@@create_all.sql;
+@@create_primaries.sql;
 
 
 
 -- Wipes-out whole database and recreates empty schema. --
 -- This is merely a sequence of @@uninstall.sql and @@install.sql
-@@recreate_all.sql;
+@@recreate_primaries.sql;
 
 
 

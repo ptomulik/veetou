@@ -7,7 +7,7 @@ USING
                   VALUE(si).job_uuid job_uuid
                 , si.id subject_issue_id
                 , sm.id subject_map_id
-                , V2U_Match.Attributes(VALUE(sm), VALUE(si)) matching_score
+                , V2U_Fit.Attributes(VALUE(sm), VALUE(si)) matching_score
             FROM v2u_ko_subject_issues si
             LEFT JOIN v2u_subject_map sm
             ON sm.subj_code = si.subj_code

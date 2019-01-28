@@ -1,4 +1,4 @@
-@@ko/create_bodies.sql;
+@@ko/create_primary_bodies.sql;
 
 @@university.tpb;
 @@faculty.tpb;

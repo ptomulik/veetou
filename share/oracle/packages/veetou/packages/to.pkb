@@ -1,14 +1,4 @@
 CREATE OR REPLACE PACKAGE BODY V2U_To AS
-    FUNCTION Number_Or_Null(value IN VARCHAR2)
-        RETURN INTEGER
-    IS
-    BEGIN
-        RETURN TO_NUMBER(value);
-    EXCEPTION
-        WHEN VALUE_ERROR THEN
-            RETURN NULL;
-    END;
-
     FUNCTION Semester_Code(semester_id IN NUMBER)
         RETURN VARCHAR2
     IS
