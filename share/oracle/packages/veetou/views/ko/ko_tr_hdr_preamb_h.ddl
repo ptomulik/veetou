@@ -35,4 +35,8 @@ INNER JOIN v2u_ko_preambles preambles
         page_preamble.job_uuid = preambles.job_uuid)
 ;
 
+ALTER MATERIALIZED VIEW v2u_ko_tr_hdr_preamb_h ADD SCOPE FOR (tr) IS v2u_ko_trs;
+ALTER MATERIALIZED VIEW v2u_ko_tr_hdr_preamb_h ADD SCOPE FOR (header) IS v2u_ko_headers;
+ALTER MATERIALIZED VIEW v2u_ko_tr_hdr_preamb_h ADD SCOPE FOR (preamble) IS v2u_ko_preambles;
+
 -- vim: set ft=sql ts=4 sw=4 et:

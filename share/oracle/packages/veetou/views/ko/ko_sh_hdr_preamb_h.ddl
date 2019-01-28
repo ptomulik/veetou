@@ -45,4 +45,9 @@ SELECT
     , u.distinct_preambles_count
 FROM u u;
 
+
+ALTER MATERIALIZED VIEW v2u_ko_sh_hdr_preamb_h ADD SCOPE FOR (sheet) IS v2u_ko_sheets;
+ALTER MATERIALIZED VIEW v2u_ko_sh_hdr_preamb_h ADD SCOPE FOR (header) IS v2u_ko_headers;
+ALTER MATERIALIZED VIEW v2u_ko_sh_hdr_preamb_h ADD SCOPE FOR (preamble) IS v2u_ko_preambles;
+
 -- vim: set ft=sql ts=4 sw=4 et:
