@@ -5,6 +5,13 @@ CREATE OR REPLACE PACKAGE V2U_To AUTHID CURRENT_USER AS
     FUNCTION Threads(semesters IN V2u_Ko_Semester_Instances_t)
         RETURN V2u_Ko_Semester_Threads_t;
 
+    FUNCTION Ko_Student(
+              job_uuid IN RAW
+            , id IN NUMBER := NULL
+            , preamble IN V2u_Ko_Preamble_t
+            , sheet_ids IN V2u_Ids_t := NULL
+            ) RETURN V2u_Ko_Student_t;
+
     FUNCTION Ko_Semester_Instance(
               job_uuid IN RAW
             , id IN NUMBER

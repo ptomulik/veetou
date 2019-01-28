@@ -2,29 +2,29 @@ CREATE OR REPLACE VIEW v2u_ko_mapped_specialties_v
 OF V2u_Ko_Mapped_Specialty_t
 WITH OBJECT IDENTIFIER (job_uuid, specialty_entity_id, specialty_map_id)
 AS SELECT
-      si.job_uuid
-    , si.id
+      se.job_uuid
+    , se.id
     , sm.id
     , sim.matching_score
-    , si.university
-    , si.faculty
-    , si.studies_modetier
-    , si.studies_field
-    , si.studies_specialty
-    , si.semester_number
+    , se.university
+    , se.faculty
+    , se.studies_modetier
+    , se.studies_field
+    , se.studies_specialty
+    , se.semester_number
     , sm.expr_semester_number
-    , si.semester_code
+    , se.semester_code
     , sm.expr_semester_code
-    , si.ects_mandatory
+    , se.ects_mandatory
     , sm.expr_ects_mandatory
-    , si.ects_other
+    , se.ects_other
     , sm.expr_ects_other
-    , si.ects_total
+    , se.ects_total
     , sm.expr_ects_total
-FROM v2u_ko_specialty_entities si
+FROM v2u_ko_specialty_entities se
 LEFT JOIN v2u_ko_specialty_map_j sim
-    ON (sim.specialty_entity_id = si.id AND
-        sim.job_uuid = si.job_uuid)
+    ON (sim.specialty_entity_id = se.id AND
+        sim.job_uuid = se.job_uuid)
 LEFT JOIN v2u_specialty_map sm
     ON (sim.specialty_map_id = sm.id)
 WITH READ ONLY;

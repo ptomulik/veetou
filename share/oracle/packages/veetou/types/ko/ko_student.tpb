@@ -7,7 +7,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Student_t AS
             , student_name IN VARCHAR2
             , first_name IN VARCHAR2
             , last_name IN VARCHAR2
-            , preamble_ids IN V2u_Ids_t := NULL
+            , sheet_ids IN V2u_Ids_t := NULL
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -17,7 +17,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Student_t AS
         SELF.student_name := student_name;
         SELF.first_name := first_name;
         SELF.last_name := last_name;
-        SELF.preamble_ids := preamble_ids;
+        SELF.sheet_ids := sheet_ids;
         RETURN;
     END;
 
@@ -40,7 +40,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Student_t AS
 
     MEMBER FUNCTION dup_with(
               new_id IN NUMBER
-            , new_preamble_ids V2u_Ids_t := NULL
+            , new_sheet_ids V2u_Ids_t := NULL
             ) RETURN V2u_Ko_Student_t
     IS
     BEGIN
@@ -51,17 +51,17 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Student_t AS
             , student_name => student_name
             , first_name => first_name
             , last_name => last_name
-            , preamble_ids => new_preamble_ids
+            , sheet_ids => new_sheet_ids
         );
     END;
 
     MEMBER FUNCTION dup_with(
               new_id_seq IN VARCHAR2
-            , new_preamble_ids IN V2u_Ids_t := NULL
+            , new_sheet_ids IN V2u_Ids_t := NULL
             ) RETURN V2u_Ko_Student_t
     IS
     BEGIN
-        return dup_with(V2U_Util.Next_Val(new_id_seq), new_preamble_ids);
+        return dup_with(V2U_Util.Next_Val(new_id_seq), new_sheet_ids);
     END;
 END;
 

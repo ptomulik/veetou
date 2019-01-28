@@ -93,6 +93,25 @@ CREATE OR REPLACE PACKAGE BODY V2U_To AS
         RETURN tt;
     END;
 
+
+    FUNCTION Ko_Student(
+              job_uuid IN RAW
+            , id IN NUMBER := NULL
+            , preamble IN V2u_Ko_Preamble_t
+            , sheet_ids IN V2u_Ids_t := NULL
+            ) RETURN V2u_Ko_Student_t
+    IS
+    BEGIN
+        RETURN V2u_Ko_Student_t(
+              job_uuid => job_uuid
+            , student_index => preamble.student_index
+            , student_name => preamble.student_name
+            , first_name => preamble.first_name
+            , last_name => preamble.last_name
+            );
+    END;
+
+
     FUNCTION Ko_Semester_Instance(
           job_uuid IN RAW
         , id IN NUMBER

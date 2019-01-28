@@ -2,48 +2,48 @@ CREATE OR REPLACE VIEW v2u_ko_mapped_subjects_v
 OF V2u_Ko_Mapped_Subject_t
 WITH OBJECT IDENTIFIER (job_uuid, subject_entity_id, subject_map_id)
 AS SELECT
-      si.job_uuid
-    , si.id
+      se.job_uuid
+    , se.id
     , sm.id
-    , sim.matching_score
-    , si.subj_code
+    , j.matching_score
+    , se.subj_code
     , sm.mapped_subj_code
-    , si.subj_name
+    , se.subj_name
     , sm.expr_subj_name
-    , si.university
+    , se.university
     , sm.expr_university
-    , si.faculty
+    , se.faculty
     , sm.expr_faculty
-    , si.studies_modetier
+    , se.studies_modetier
     , sm.expr_studies_modetier
-    , si.studies_field
+    , se.studies_field
     , sm.expr_studies_field
-    , si.studies_specialty
+    , se.studies_specialty
     , sm.expr_studies_specialty
-    , si.semester_code
+    , se.semester_code
     , sm.expr_semester_code
-    , si.subj_hours_w
+    , se.subj_hours_w
     , sm.expr_subj_hours_w
-    , si.subj_hours_c
+    , se.subj_hours_c
     , sm.expr_subj_hours_c
-    , si.subj_hours_l
+    , se.subj_hours_l
     , sm.expr_subj_hours_l
-    , si.subj_hours_p
+    , se.subj_hours_p
     , sm.expr_subj_hours_p
-    , si.subj_hours_s
+    , se.subj_hours_s
     , sm.expr_subj_hours_s
-    , si.subj_credit_kind
+    , se.subj_credit_kind
     , sm.expr_subj_credit_kind
-    , si.subj_ects
+    , se.subj_ects
     , sm.expr_subj_ects
-    , si.subj_tutor
+    , se.subj_tutor
     , sm.expr_subj_tutor
-FROM v2u_ko_subject_entities si
-LEFT JOIN v2u_ko_subject_map_j sim
-    ON (sim.subject_entity_id = si.id AND
-        sim.job_uuid = si.job_uuid)
+FROM v2u_ko_subject_entities se
+LEFT JOIN v2u_ko_subject_map_j j
+    ON (j.subject_entity_id = se.id AND
+        j.job_uuid = se.job_uuid)
 LEFT JOIN v2u_subject_map sm
-    ON (sim.subject_map_id = sm.id)
+    ON (j.subject_map_id = sm.id)
 WITH READ ONLY;
 
 -- vim: set ft=sql ts=4 sw=4 et:

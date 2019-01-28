@@ -264,6 +264,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_View('ko_unmapped_subjects_v');
         Drop_View('ko_ambiguous_subjects_v');
         Drop_View('ko_mapped_subjects_v');
+        Drop_View('ko_student_specialties_v');
         Drop_Materialized_View('ko_sh_hdr_preamb_h');
         Drop_Materialized_View('ko_tr_hdr_preamb_h');
         Drop_View('ko_x_sheets_h');
@@ -272,7 +273,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_View('ko_x_trs_v');
 
         --
-        Drop_Table('ko_student_preambles_j', how => 'PURGE');
+        Drop_Table('ko_student_sheets_j', how => 'PURGE');
+        Drop_Table('ko_student_specialties_j', how => 'PURGE');
         --
         Drop_Trigger('ko_students_tr1');
         Drop_Sequence('ko_students_sq1');
@@ -310,7 +312,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Mapped_Subject_t', 'Ko_Mapped_Subjects_t');
         Drop_Type('Ko_Mapped_Specialty_t', 'Ko_Mapped_Specialties_t');
         Drop_Type('Ko_Specialty_t');
-        Drop_Type('Ko_Specialty_Entity_t');
+        Drop_Type('Ko_Specialty_Entity_t', 'Ko_Specialty_Entities_t');
         Drop_Type('Ko_Subject_Entity_t');
         Drop_Type('Ko_Thread_Indices_t');
         Drop_Type('Ko_Semester_Threads_t');

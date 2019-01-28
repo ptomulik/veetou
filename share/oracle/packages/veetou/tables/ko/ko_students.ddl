@@ -5,8 +5,8 @@ OF V2u_Ko_Student_t
         , CONSTRAINT v2u_ko_students_u1 UNIQUE (student_index, job_uuid)
     )
 OBJECT IDENTIFIER IS PRIMARY KEY
-NESTED TABLE preamble_ids STORE AS v2u_ko_student_preambles_nt
-    ((CONSTRAINT v2u_ko_student_preambs_nt_pk PRIMARY KEY (NESTED_TABLE_ID, COLUMN_VALUE)));
+NESTED TABLE sheet_ids STORE AS v2u_ko_student_sheets_nt
+    ((CONSTRAINT v2u_ko_student_sheets_nt_pk PRIMARY KEY (NESTED_TABLE_ID, COLUMN_VALUE)));
 /
 CREATE SEQUENCE v2u_ko_students_sq1 START WITH 1;
 /

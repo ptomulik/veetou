@@ -2,13 +2,13 @@ CREATE OR REPLACE VIEW v2u_ko_ambiguous_subjects_v
 AS WITH u AS
     (
         SELECT
-              VALUE(si) subject_entity
+              VALUE(se) subject_entity
             , VALUE(sm) subject_map
             , j.matching_score matching_score
-        FROM v2u_ko_subject_entities si
+        FROM v2u_ko_subject_entities se
         INNER JOIN v2u_ko_subject_map_j j
-            ON (j.subject_entity_id = si.id AND
-                j.job_uuid = si.job_uuid)
+            ON (j.subject_entity_id = se.id AND
+                j.job_uuid = se.job_uuid)
         INNER JOIN v2u_subject_map sm
             ON (j.subject_map_id = sm.id)
     ),
