@@ -9,14 +9,10 @@ USING
                         , header => u.header
                         , preamble => u.preamble
                   ) specialty
- --               , u.sheet.id sheet_id
             FROM v2u_ko_sh_hdr_preamb_h u
         )
         SELECT
-              v.specialty.dup_with(
-                  new_id_seq => 'v2u_ko_specialties_sq1'
---                , new_sheet_ids => CAST(COLLECT(sheet_id) AS V2u_Ids_t)
-              ) specialty
+            v.specialty specialty
         FROM v v
         GROUP BY v.specialty
     ) src

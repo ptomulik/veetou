@@ -1,7 +1,7 @@
 @@ko_students.sql;
 @@ko_student_sheets_j.sql;
-@@ko_specialty_entities.sql;
 @@ko_specialties.sql;
+@@ko_specialty_entities.sql;
 @@ko_specialty_sheets_j.sql;
 @@ko_specialty_map_j.sql;
 @@ko_subject_entities.sql;
