@@ -8,6 +8,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_t AS
             , studies_modetier IN VARCHAR2
             , studies_field IN VARCHAR2
             , studies_specialty IN VARCHAR2
+            , sheet_ids IN V2u_Ids_t := NULL
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -18,7 +19,24 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_t AS
         SELF.studies_modetier := studies_modetier;
         SELF.studies_field := studies_field;
         SELF.studies_specialty := studies_specialty;
+        SELF.sheet_ids := sheet_ids;
         RETURN;
+    END;
+
+    MEMBER FUNCTION dup(new_sheet_ids IN V2u_Ids_t := NULL)
+            RETURN V2u_Ko_Specialty_t
+    IS
+    BEGIN
+        RETURN V2u_Ko_Specialty_t(
+              job_uuid => job_uuid
+            , id => id
+            , university => university
+            , faculty => faculty
+            , studies_modetier => studies_modetier
+            , studies_field => studies_field
+            , studies_specialty => studies_specialty
+            , sheet_ids => new_sheet_ids
+        );
     END;
 
     OVERRIDING MEMBER FUNCTION cmp_val(other IN V2u_Ko_Distinct_t)
