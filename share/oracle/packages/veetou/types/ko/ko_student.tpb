@@ -21,21 +21,20 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Student_t AS
         RETURN;
     END;
 
-
-    ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Student_t)
-        RETURN INTEGER
+    OVERRIDING MEMBER FUNCTION cmp_attributes(other IN V2u_Ko_Obj_t)
+            RETURN INTEGER
     IS
         ord INTEGER;
+        obj V2u_Ko_Student_t;
     BEGIN
-        ord := V2U_Cmp.StrNI(student_index, other.student_index);
+        obj := TREAT(other AS V2u_Ko_Student_t);
+        ord := V2U_Cmp.StrNI(student_index, obj.student_index);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(student_name, other.student_name);
+        ord := V2U_Cmp.StrNI(student_name, obj.student_name);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(first_name, other.first_name);
+        ord := V2U_Cmp.StrNI(first_name, obj.first_name);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(last_name, other.last_name);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        RETURN V2U_Cmp.RawN(job_uuid, other.job_uuid);
+        RETURN V2U_Cmp.StrNI(last_name, obj.last_name);
     END;
 
     MEMBER FUNCTION dup_with(

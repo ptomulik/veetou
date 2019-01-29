@@ -1,7 +1,5 @@
-CREATE OR REPLACE TYPE V2u_Ko_Student_t FORCE AUTHID CURRENT_USER AS OBJECT
-    ( job_uuid RAW(16)
-    , id NUMBER(38)
-    , student_index VARCHAR2(32 CHAR)
+CREATE OR REPLACE TYPE V2u_Ko_Student_t FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Obj_t
+    ( student_index VARCHAR2(32 CHAR)
     , student_name VARCHAR2(128 CHAR)
     , first_name VARCHAR2(48 CHAR)
     , last_name VARCHAR2(48 CHAR)
@@ -18,8 +16,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Student_t FORCE AUTHID CURRENT_USER AS OBJECT
             , sheet_ids IN V2u_Ids_t := NULL
             ) RETURN SELF AS RESULT
 
-    , ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Student_t)
-        RETURN INTEGER
+    , OVERRIDING MEMBER FUNCTION cmp_attributes(other IN V2u_Ko_Obj_t)
+            RETURN INTEGER
 
     , MEMBER FUNCTION dup_with(
               new_id IN NUMBER

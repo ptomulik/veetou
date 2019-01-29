@@ -241,6 +241,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Tbody_t', 'Ko_Tbodies_t');
         Drop_Type('Ko_Tr_t', 'Ko_Trs_t');
         Drop_Type('Ko_Job_t', 'Ko_Jobs_t');
+        Drop_Type('Ko_Obj_t');
+
         Drop_Type('Semester_Codes_t');
         Drop_Type('Semester_t', 'Semesters_t');
         Drop_Type('Faculty_t', 'Faculties_t', 'Faculty_Codes_t');
