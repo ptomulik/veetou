@@ -1,4 +1,4 @@
-MERGE INTO v2u_ko_specialty_sheets_j tgt
+MERGE INTO v2u_ko_specent_sheets_j tgt
 USING
     (
         WITH u AS

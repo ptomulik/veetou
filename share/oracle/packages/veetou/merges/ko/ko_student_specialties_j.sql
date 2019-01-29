@@ -6,7 +6,7 @@ USING
             , j1.specent_id specent_id
             , j2.student_id student_id
             , j2.sheet_id sheet_id
-        FROM v2u_ko_specialty_sheets_j j1
+        FROM v2u_ko_specent_sheets_j j1
         INNER JOIN v2u_ko_student_sheets_j j2
         ON (j1.sheet_id = j2.sheet_id AND j1.job_uuid = j2.job_uuid)
     ) src

@@ -4,8 +4,8 @@ OF V2u_Ko_Specialty_Entity_t
           CONSTRAINT v2u_ko_specialty_entities_pk PRIMARY KEY (id, job_uuid)
     )
 OBJECT IDENTIFIER IS PRIMARY KEY
-NESTED TABLE sheet_ids STORE AS v2u_ko_specialty_sheets_nt
-    ((CONSTRAINT v2u_ko_specialty_sheets_nt_pk PRIMARY KEY (NESTED_TABLE_ID, COLUMN_VALUE)));
+NESTED TABLE sheet_ids STORE AS v2u_ko_specent_sheets_nt
+    ((CONSTRAINT v2u_ko_specent_sheets_nt_pk PRIMARY KEY (NESTED_TABLE_ID, COLUMN_VALUE)));
 /
 
 CREATE SEQUENCE v2u_ko_specialty_entities_sq1 START WITH 1 INCREMENT BY 1;

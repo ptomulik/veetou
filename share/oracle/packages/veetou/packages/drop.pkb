@@ -293,7 +293,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Table('ko_subject_entities', how => 'PURGE');
         --
         Drop_Table('ko_specialty_map_j', how=>'PURGE');
-        Drop_Table('ko_specialty_sheets_j', how => 'PURGE');
+        Drop_Table('ko_specent_sheets_j', how => 'PURGE');
         --
         Drop_Trigger('ko_specialties_tr1');
         Drop_Sequence('ko_specialties_sq1');
