@@ -7,7 +7,7 @@
 --@@ko_specialty_entities.sql;
 @@ko_student_specialties_h.ddl;
 @@ko_student_specialties_v.ddl;
---@@ko_student_threads.sql;
+--@@ko_student_threads_h.ddl;
 --@@ko_threads.sql;
 @@ko_mapped_subjects_v.ddl;
 @@ko_mapped_specialties_v.ddl;

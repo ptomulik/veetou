@@ -27,6 +27,7 @@ AS SELECT
     , h.specialty_map.expr_ects_other expr_ects_other
     , h.specialty_entity.ects_total ects_total
     , h.specialty_map.expr_ects_total expr_ects_total
+    , h.ects_attained ects_attained
 
     FROM v2u_ko_student_specialties_h h
 ;

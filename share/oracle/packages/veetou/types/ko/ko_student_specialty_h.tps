@@ -7,6 +7,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Student_Specialty_H_t FORCE AUTHID CURRENT_USER AS
     , student V2u_Ko_Student_t
     , specialty_entity V2u_Ko_Specialty_Entity_t
     , specialty_map V2u_Specialty_Map_t
+    , ects_attained NUMBER(4)
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Student_Specialty_H_t(
               SELF IN OUT NOCOPY V2u_Ko_Student_Specialty_H_t
@@ -18,6 +19,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Student_Specialty_H_t FORCE AUTHID CURRENT_USER AS
             , student IN V2u_Ko_Student_t
             , specialty_entity IN V2u_Ko_Specialty_Entity_t
             , specialty_map IN V2u_Specialty_Map_t
+            , ects_attained IN NUMBER
             ) RETURN SELF AS RESULT
     );
 

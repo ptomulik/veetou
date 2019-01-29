@@ -9,6 +9,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Student_Specialty_H_t AS
             , student IN V2u_Ko_Student_t
             , specialty_entity IN V2u_Ko_Specialty_Entity_t
             , specialty_map IN V2u_Specialty_Map_t
+            , ects_attained IN NUMBER
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -20,6 +21,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Student_Specialty_H_t AS
         SELF.student := student;
         SELF.specialty_entity := specialty_entity;
         SELF.specialty_map := specialty_map;
+        SELF.ects_attained := ects_attained;
         RETURN;
     END;
 END;

@@ -78,8 +78,10 @@ CREATE OR REPLACE PACKAGE BODY V2U_To AS
                         , ects_mandatory => s.ects_mandatory
                         , ects_other => s.ects_other
                         , ects_total => s.ects_total
-                        , ects_attained => s.ects_attained
-                        , sheet_id => s.sheet_id
+                        --, ects_attained => s.ects_attained
+                        , ects_attained => NULL
+                        --, sheet_id => s.sheet_id
+                        , sheet_id => NULL
                     );
                     n := n + 1;
                 END IF;
