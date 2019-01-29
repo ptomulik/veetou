@@ -12,10 +12,7 @@ USING
             FROM v2u_ko_sh_hdr_preamb_h s
         )
         SELECT
-            u.student.dup_with(
-                  new_id_seq => 'v2u_ko_students_sq1'
-                , new_sheet_ids => CAST(COLLECT(u.s_id) AS V2u_Ids_t)
-            ) student
+            u.student.dup(CAST(COLLECT(u.s_id) AS V2u_Ids_t)) student
         FROM u u
         GROUP BY u.student
     ) src

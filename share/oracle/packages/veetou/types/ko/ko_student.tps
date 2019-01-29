@@ -1,4 +1,5 @@
-CREATE OR REPLACE TYPE V2u_Ko_Student_t FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Obj_t
+CREATE OR REPLACE TYPE V2u_Ko_Student_t
+    FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Distinct_t
     ( student_index VARCHAR2(32 CHAR)
     , student_name VARCHAR2(128 CHAR)
     , first_name VARCHAR2(48 CHAR)
@@ -16,18 +17,11 @@ CREATE OR REPLACE TYPE V2u_Ko_Student_t FORCE AUTHID CURRENT_USER UNDER V2u_Ko_O
             , sheet_ids IN V2u_Ids_t := NULL
             ) RETURN SELF AS RESULT
 
-    , OVERRIDING MEMBER FUNCTION cmp_attributes(other IN V2u_Ko_Obj_t)
+    , OVERRIDING MEMBER FUNCTION cmp_val(other IN V2u_Ko_Distinct_t)
             RETURN INTEGER
 
-    , MEMBER FUNCTION dup_with(
-              new_id IN NUMBER
-            , new_sheet_ids IN V2u_Ids_t := NULL
-            ) RETURN V2u_Ko_Student_t
-
-    , MEMBER FUNCTION dup_with(
-              new_id_seq IN VARCHAR2
-            , new_sheet_ids IN V2u_Ids_t := NULL
-            ) RETURN V2u_Ko_Student_t
+    , MEMBER FUNCTION dup(new_sheet_ids IN V2u_Ids_t := NULL)
+            RETURN V2u_Ko_Student_t
     );
 
 -- vim: set ft=sql ts=4 sw=4 et:

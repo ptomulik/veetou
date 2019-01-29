@@ -14,10 +14,7 @@ USING
             FROM v2u_ko_sh_hdr_preamb_h u
         )
         SELECT
-              v.specialty.dup_with(
-                  new_id_seq => 'v2u_ko_specialty_entities_sq1'
-                , new_sheet_ids => CAST(COLLECT(v.sheet_id) AS V2u_Ids_t)
-              ) specialty
+              v.specialty.dup(CAST(COLLECT(v.sheet_id) AS V2u_Ids_t)) specialty
         FROM v v
         GROUP BY v.specialty
     ) src

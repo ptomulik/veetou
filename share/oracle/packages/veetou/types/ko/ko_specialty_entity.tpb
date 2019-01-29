@@ -33,15 +33,13 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Entity_t AS
         RETURN;
     END;
 
-    MEMBER FUNCTION dup_with(
-              new_id IN NUMBER := NULL
-            , new_sheet_ids IN V2u_Ids_t := NULL
-            ) RETURN V2u_Ko_Specialty_Entity_t
+    MEMBER FUNCTION dup(new_sheet_ids IN V2u_Ids_t := NULL)
+        RETURN V2u_Ko_Specialty_Entity_t
     IS
     BEGIN
         RETURN V2u_Ko_Specialty_Entity_t(
               job_uuid => job_uuid
-            , id => new_id
+            , id => id
             , university => university
             , faculty => faculty
             , studies_modetier => studies_modetier
@@ -57,42 +55,32 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Entity_t AS
     END;
 
 
-    MEMBER FUNCTION dup_with(
-              new_id_seq IN VARCHAR2
-            , new_sheet_ids IN V2u_Ids_t := NULL
-            ) RETURN V2u_Ko_Specialty_Entity_t
-    IS
-    BEGIN
-        RETURN dup_with(V2U_Util.Next_Val(new_id_seq), new_sheet_ids);
-    END;
-
-
-    ORDER MEMBER FUNCTION cmp_with(other IN V2u_Ko_Specialty_Entity_t)
+    OVERRIDING MEMBER FUNCTION cmp_val(other IN V2u_Ko_Distinct_t)
         RETURN INTEGER
     IS
         ord INTEGER;
+        obj V2u_Ko_Specialty_Entity_t;
     BEGIN
-        ord := V2U_Cmp.StrNI(university, other.university);
+        obj := TREAT(other AS V2u_Ko_Specialty_Entity_t);
+        ord := V2U_Cmp.StrNI(university, obj.university);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(faculty, other.faculty);
+        ord := V2U_Cmp.StrNI(faculty, obj.faculty);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(studies_modetier, other.studies_modetier);
+        ord := V2U_Cmp.StrNI(studies_modetier, obj.studies_modetier);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(studies_field, other.studies_field);
+        ord := V2U_Cmp.StrNI(studies_field, obj.studies_field);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(studies_specialty, other.studies_specialty);
+        ord := V2U_Cmp.StrNI(studies_specialty, obj.studies_specialty);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.NumN(semester_number, other.semester_number);
+        ord := V2U_Cmp.NumN(semester_number, obj.semester_number);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(semester_code, other.semester_code);
+        ord := V2U_Cmp.StrNI(semester_code, obj.semester_code);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.NumN(ects_mandatory, other.ects_mandatory);
+        ord := V2U_Cmp.NumN(ects_mandatory, obj.ects_mandatory);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.NumN(ects_other, other.ects_other);
+        ord := V2U_Cmp.NumN(ects_other, obj.ects_other);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.NumN(ects_total, other.ects_total);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        RETURN V2U_Cmp.RawN(job_uuid, other.job_uuid);
+        RETURN V2U_Cmp.NumN(ects_total, obj.ects_total);
     END;
 END;
 

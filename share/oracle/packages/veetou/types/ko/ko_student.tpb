@@ -21,7 +21,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Student_t AS
         RETURN;
     END;
 
-    OVERRIDING MEMBER FUNCTION cmp_attributes(other IN V2u_Ko_Obj_t)
+    OVERRIDING MEMBER FUNCTION cmp_val(other IN V2u_Ko_Distinct_t)
             RETURN INTEGER
     IS
         ord INTEGER;
@@ -37,30 +37,19 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Student_t AS
         RETURN V2U_Cmp.StrNI(last_name, obj.last_name);
     END;
 
-    MEMBER FUNCTION dup_with(
-              new_id IN NUMBER
-            , new_sheet_ids V2u_Ids_t := NULL
-            ) RETURN V2u_Ko_Student_t
+    MEMBER FUNCTION dup(new_sheet_ids V2u_Ids_t := NULL)
+        RETURN V2u_Ko_Student_t
     IS
     BEGIN
         RETURN V2u_Ko_Student_t(
               job_uuid => job_uuid
-            , id => new_id
+            , id => id
             , student_index => student_index
             , student_name => student_name
             , first_name => first_name
             , last_name => last_name
             , sheet_ids => new_sheet_ids
         );
-    END;
-
-    MEMBER FUNCTION dup_with(
-              new_id_seq IN VARCHAR2
-            , new_sheet_ids IN V2u_Ids_t := NULL
-            ) RETURN V2u_Ko_Student_t
-    IS
-    BEGIN
-        return dup_with(V2U_Util.Next_Val(new_id_seq), new_sheet_ids);
     END;
 END;
 
