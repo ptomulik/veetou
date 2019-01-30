@@ -1,4 +1,3 @@
-@@ko_distinct.tps;
 @@ko_job.tps;
 @@ko_report.tps;
 @@ko_footer.tps;

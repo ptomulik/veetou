@@ -23,6 +23,7 @@ CREATE SEQUENCE v2u_specialty_map_sq1 START WITH 1;
 CREATE OR REPLACE TRIGGER v2u_specialty_map_tr1
     BEFORE INSERT ON v2u_specialty_map
 FOR EACH ROW
+WHEN (new.id IS NULL)
 BEGIN
     SELECT v2u_specialty_map_sq1.NEXTVAL
         INTO :new.id

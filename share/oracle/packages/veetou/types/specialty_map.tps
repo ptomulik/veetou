@@ -1,10 +1,10 @@
-CREATE OR REPLACE TYPE V2u_Specialty_Map_t FORCE AUTHID CURRENT_USER AS OBJECT
-    ( id NUMBER(38)
-    , university VARCHAR2(256 CHAR)
-    , faculty VARCHAR2(256 CHAR)
-    , studies_modetier VARCHAR2(256 CHAR)
-    , studies_field VARCHAR2(256 CHAR)
-    , studies_specialty VARCHAR2(256 CHAR)
+CREATE OR REPLACE TYPE V2u_Specialty_Map_t
+    FORCE AUTHID CURRENT_USER UNDER V2u_Distinct_t
+    ( university VARCHAR2(8 CHAR)
+    , faculty VARCHAR2(8 CHAR)
+    , studies_modetier VARCHAR2(100 CHAR)
+    , studies_field VARCHAR2(100 CHAR)
+    , studies_specialty VARCHAR2(100 CHAR)
     , mapped_program_code VARCHAR2(32 CHAR)
     , mapped_modetier_code VARCHAR2(32 CHAR)
     , mapped_field_code VARCHAR2(32 CHAR)
@@ -32,6 +32,12 @@ CREATE OR REPLACE TYPE V2u_Specialty_Map_t FORCE AUTHID CURRENT_USER AS OBJECT
             , expr_ects_total VARCHAR2 := NULL
             ) RETURN SELF AS RESULT
 
+    , OVERRIDING MEMBER FUNCTION cmp_val(other IN V2u_Distinct_t)
+        RETURN INTEGER
+
+    , MEMBER FUNCTION cmp_val(other IN V2u_Specialty_Map_t)
+        RETURN INTEGER
+
     , MEMBER FUNCTION match_expr_fields(
               semester_number IN VARCHAR2
             , semester_code IN VARCHAR2
@@ -44,7 +50,7 @@ CREATE OR REPLACE TYPE V2u_Specialty_Map_t FORCE AUTHID CURRENT_USER AS OBJECT
         RETURN INTEGER
 
     , MEMBER FUNCTION match_semester_code(semester_code IN VARCHAR2)
-            RETURN INTEGER
+        RETURN INTEGER
 
     , MEMBER FUNCTION match_ects_mandatory(ects_mandatory IN INTEGER)
         RETURN INTEGER

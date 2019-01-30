@@ -1,8 +1,8 @@
 CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Entity_t AS
     CONSTRUCTOR FUNCTION V2u_Ko_Specialty_Entity_t(
               SELF IN OUT NOCOPY V2u_Ko_Specialty_Entity_t
-            , job_uuid IN RAW
             , id IN NUMBER := NULL
+            , job_uuid IN RAW
             , university IN VARCHAR2
             , faculty IN VARCHAR2
             , studies_modetier IN VARCHAR2
@@ -17,8 +17,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Entity_t AS
             ) RETURN SELF AS RESULT
     IS
     BEGIN
-        SELF.job_uuid := job_uuid;
         SELF.id := id;
+        SELF.job_uuid := job_uuid;
         SELF.university := university;
         SELF.faculty := faculty;
         SELF.studies_modetier := studies_modetier;
@@ -55,7 +55,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Entity_t AS
     END;
 
 
-    OVERRIDING MEMBER FUNCTION cmp_val(other IN V2u_Ko_Distinct_t)
+    OVERRIDING MEMBER FUNCTION cmp_val(other IN V2u_Distinct_t)
         RETURN INTEGER
     IS
         ord INTEGER;

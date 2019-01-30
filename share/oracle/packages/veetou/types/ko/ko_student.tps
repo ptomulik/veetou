@@ -8,8 +8,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Student_t
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Student_t(
               SELF IN OUT NOCOPY V2u_Ko_Student_t
-            , job_uuid IN RAW
             , id IN NUMBER := NULL
+            , job_uuid IN RAW
             , student_index IN VARCHAR2
             , student_name IN VARCHAR2
             , first_name IN VARCHAR2
@@ -17,7 +17,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Student_t
             , sheet_ids IN V2u_Ids_t := NULL
             ) RETURN SELF AS RESULT
 
-    , OVERRIDING MEMBER FUNCTION cmp_val(other IN V2u_Ko_Distinct_t)
+    , OVERRIDING MEMBER FUNCTION cmp_val(other IN V2u_Distinct_t)
             RETURN INTEGER
 
     , MEMBER FUNCTION dup(new_sheet_ids IN V2u_Ids_t := NULL)

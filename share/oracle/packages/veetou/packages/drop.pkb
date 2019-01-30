@@ -247,6 +247,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Semester_t', 'Semesters_t');
         Drop_Type('Faculty_t', 'Faculties_t', 'Faculty_Codes_t');
         Drop_Type('University_t', 'Universities_t', 'University_Codes_t');
+        Drop_Type('Distinct_t');
 
 --        Drop_Type('Subj_Grades_t');
 --        Drop_Type('Subj_Codes_t');
@@ -329,6 +330,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_TYpe('Ko_X_Sheet_Pages_t');
         Drop_TYpe('Ko_X_Sheet_Footers_t');
         Drop_Type('Ko_X_Tr_H_t', 'Ko_X_Trs_H_t');
+        Drop_Type('Ko_Distinct_t');
 
         Drop_Type('Subj_Grades_t');
         Drop_Type('Subj_Codes_t');

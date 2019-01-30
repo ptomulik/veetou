@@ -1,4 +1,3 @@
-@@ko_distinct.tpb;
 @@ko_job.tpb;
 @@ko_report.tpb;
 @@ko_footer.tpb;

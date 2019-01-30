@@ -43,6 +43,53 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_t AS
         RETURN;
     END;
 
+    OVERRIDING MEMBER FUNCTION cmp_val(other IN V2u_Distinct_t)
+        RETURN INTEGER
+    IS
+    BEGIN
+        RETURN cmp_val(TREAT(other AS V2u_Subject_Map_t));
+    END;
+
+    MEMBER FUNCTION cmp_val(other IN V2u_Subject_Map_t)
+        RETURN INTEGER
+    IS
+        ord INTEGER;
+    BEGIN
+        ord := V2U_Cmp.StrNI(subj_code, other.subj_code);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(mapped_subj_code, other.mapped_subj_code);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(expr_subj_name, other.expr_subj_name);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(expr_university, other.expr_university);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(expr_faculty, other.expr_faculty);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(expr_studies_modetier, other.expr_studies_modetier);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(expr_studies_field, other.expr_studies_field);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(expr_studies_specialty, other.expr_studies_specialty);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(expr_semester_code, other.expr_semester_code);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(expr_subj_hours_w, other.expr_subj_hours_w);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(expr_subj_hours_c, other.expr_subj_hours_c);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(expr_subj_hours_l, other.expr_subj_hours_l);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(expr_subj_hours_p, other.expr_subj_hours_p);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(expr_subj_hours_s, other.expr_subj_hours_s);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(expr_subj_credit_kind, other.expr_subj_credit_kind);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(expr_subj_ects, other.expr_subj_ects);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        RETURN V2U_Cmp.StrNI(expr_subj_tutor, other.expr_subj_tutor);
+    END;
+
     MEMBER FUNCTION match_expr_fields(
           subj_name IN VARCHAR2
         , university IN VARCHAR2

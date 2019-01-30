@@ -1,7 +1,6 @@
-CREATE OR REPLACE TYPE V2u_Ko_Distinct_t
-    FORCE AUTHID CURRENT_USER UNDER V2u_Distinct_t
-    -- V2u_Ko_Distinct_t is a base type for objects identified via their value
-    -- (attributes). A subtype of V2u_Ko_Distinct_t should override the
+CREATE OR REPLACE TYPE V2u_Distinct_t FORCE AUTHID CURRENT_USER AS OBJECT
+    -- V2u_Distinct_t is a base type for objects identified via their value
+    -- (attributes). A subtype of V2u_Distinct_t should override the
     -- cmp_val() method. The method should compare objects using their
     -- values (attributes). It must return either -1, 0 or 1.
     --
@@ -15,15 +14,23 @@ CREATE OR REPLACE TYPE V2u_Ko_Distinct_t
     -- in ON or WHERE clauese, i.e. MERGE INTO ... ON (src = tgt) ... ; will
     -- not work as you would expect (cmp() will not be used here for object
     -- comparison).
-    ( job_uuid RAW(16)
+    ( id NUMBER(38)
 
-    , CONSTRUCTOR FUNCTION V2u_Ko_Distinct_t(
-              SELF IN OUT NOCOPY V2u_Ko_Distinct_t
+    , CONSTRUCTOR FUNCTION V2u_Distinct_t(
+              SELF IN OUT NOCOPY V2u_Distinct_t
             , id IN NUMBER := NULL
-            , job_uuid IN RAW
             ) RETURN SELF AS RESULT
 
-    , OVERRIDING MEMBER FUNCTION cmp_impl(other IN V2u_Distinct_t)
+    , ORDER MEMBER FUNCTION cmp(other IN V2u_Distinct_t)
+        RETURN INTEGER
+
+    , MEMBER FUNCTION cmp_impl(other IN V2u_Distinct_t)
+        RETURN INTEGER
+
+    , MEMBER FUNCTION cmp_id(other IN V2u_Distinct_t)
+        RETURN INTEGER
+
+    , MEMBER FUNCTION cmp_val(other IN V2u_Distinct_t)
         RETURN INTEGER
     )
 NOT FINAL;

@@ -1,10 +1,10 @@
 CREATE OR REPLACE TYPE BODY V2u_Semester_t AS
     CONSTRUCTOR FUNCTION V2u_Semester_t(
           SELF IN OUT NOCOPY V2u_Semester_t
-        , code IN VARCHAR2
         , id IN NUMBER := NULL
-        , start_date IN DATE := NULL
-        , end_date IN DATE := NULL
+        , code IN VARCHAR2
+        , start_date IN DATE
+        , end_date IN DATE
         ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -19,11 +19,23 @@ CREATE OR REPLACE TYPE BODY V2u_Semester_t AS
         RETURN;
     END;
 
-    MAP MEMBER FUNCTION map_id
-        RETURN NUMBER
+    OVERRIDING MEMBER FUNCTION cmp_val(other IN V2u_Distinct_t)
+        RETURN INTEGER
     IS
     BEGIN
-        RETURN id;
+        RETURN cmp_val(TREAT(other as V2u_Semester_t));
+    END;
+
+    MEMBER FUNCTION cmp_val(other IN V2u_Semester_t)
+        RETURN INTEGER
+    IS
+        ord INTEGER;
+    BEGIN
+        ord := V2u_Cmp.StrNI(code, other.code);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2u_Cmp.DateN(start_date, other.start_date);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        RETURN V2u_Cmp.DateN(end_date, other.end_date);
     END;
 
     STATIC FUNCTION to_code(semester_id IN NUMBER)

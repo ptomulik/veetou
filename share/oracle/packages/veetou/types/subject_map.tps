@@ -1,11 +1,11 @@
-CREATE OR REPLACE TYPE V2u_Subject_Map_t FORCE AUTHID CURRENT_USER AS OBJECT
-    ( id NUMBER(38)
-    , subj_code VARCHAR2(32 CHAR)
+CREATE OR REPLACE TYPE V2u_Subject_Map_t
+    FORCE AUTHID CURRENT_USER UNDER V2u_Distinct_t
+    ( subj_code VARCHAR2(32 CHAR)
     , mapped_subj_code VARCHAR2(32 CHAR)
     , expr_subj_name VARCHAR2(256 CHAR)
     , expr_university VARCHAR2(8 CHAR)
     , expr_faculty VARCHAR2(8 CHAR)
-    , expr_studies_modetier VARCHAR2(256 CHAR)
+    , expr_studies_modetier VARCHAR2(100 CHAR)
     , expr_studies_field VARCHAR2(256 CHAR)
     , expr_studies_specialty VARCHAR2(256 CHAR)
     , expr_semester_code VARCHAR2(256 CHAR)
@@ -40,6 +40,12 @@ CREATE OR REPLACE TYPE V2u_Subject_Map_t FORCE AUTHID CURRENT_USER AS OBJECT
             , expr_subj_tutor IN VARCHAR2 := NULL
             )
         RETURN SELF AS RESULT
+
+    , OVERRIDING MEMBER FUNCTION cmp_val(other IN V2u_Distinct_t)
+        RETURN INTEGER
+
+    , MEMBER FUNCTION cmp_val(other IN V2u_Subject_Map_t)
+        RETURN INTEGER
 
     , MEMBER FUNCTION match_expr_fields(
               subj_name IN VARCHAR2

@@ -35,6 +35,45 @@ CREATE OR REPLACE TYPE BODY V2u_Specialty_Map_t AS
         RETURN;
     END;
 
+    OVERRIDING MEMBER FUNCTION cmp_val(other IN V2u_Distinct_t)
+        RETURN INTEGER
+    IS
+    BEGIN
+        RETURN cmp_val(TREAT(other AS V2u_Specialty_Map_t));
+    END;
+
+    MEMBER FUNCTION cmp_val(other IN V2u_Specialty_Map_t)
+        RETURN INTEGER
+    IS
+        ord INTEGER;
+    BEGIN
+        ord := V2U_Cmp.StrNI(university, other.university);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(faculty, other.faculty);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(studies_modetier, other.studies_modetier);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(studies_field, other.studies_field);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(studies_specialty, other.studies_specialty);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(mapped_program_code, other.mapped_program_code);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(mapped_modetier_code, other.mapped_modetier_code);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(mapped_field_code, other.mapped_field_code);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(expr_semester_number, other.expr_semester_number);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(expr_semester_code, other.expr_semester_code);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(expr_ects_mandatory, other.expr_ects_mandatory);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(expr_ects_other, other.expr_ects_other);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        RETURN V2U_Cmp.StrNI(expr_ects_total, other.expr_ects_total);
+    END;
+
     MEMBER FUNCTION match_expr_fields(
               semester_number IN VARCHAR2
             , semester_code IN VARCHAR2

@@ -13,7 +13,14 @@ CREATE OR REPLACE TYPE BODY V2u_University_t AS
         RETURN;
     END;
 
-    ORDER MEMBER FUNCTION cmp_with(other IN V2u_University_t)
+    OVERRIDING MEMBER FUNCTION cmp_val(other IN V2u_Distinct_t)
+        RETURN INTEGER
+    IS
+    BEGIN
+        RETURN cmp_val(TREAT(other AS V2u_University_t));
+    END;
+
+    MEMBER FUNCTION cmp_val(other IN V2u_University_t)
         RETURN INTEGER
     IS
         ord INTEGER;

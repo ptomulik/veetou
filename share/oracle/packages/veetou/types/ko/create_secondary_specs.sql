@@ -1,3 +1,4 @@
+@@ko_distinct.tps;
 @@ko_x_tr_h.tps;
 @@ko_x_sheet_h.tps;
 @@ko_semester_instance.tps;
