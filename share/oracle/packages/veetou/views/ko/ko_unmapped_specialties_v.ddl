@@ -1,5 +1,5 @@
 CREATE OR REPLACE VIEW v2u_ko_unmapped_specialties_v
-OF V2u_Ko_Mapped_Specialty_t
+OF V2u_Ko_Specialty_Map_t
 WITH OBJECT IDENTIFIER (job_uuid, specsem_id, specmap_id)
 AS SELECT
       v.job_uuid
@@ -24,7 +24,7 @@ AS SELECT
     , v.expr_ects_other
     , v.ects_total
     , v.expr_ects_total
-FROM v2u_ko_mapped_specialties_v v
+FROM v2u_ko_specialty_map_v v
 WHERE v.specmap_id IS NULL OR
       v.matching_score < 1;
 

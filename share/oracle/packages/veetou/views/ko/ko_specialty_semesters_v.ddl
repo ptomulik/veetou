@@ -15,6 +15,7 @@ AS WITH u AS (
         ON (semesters.id = j1.semester_id AND
             semesters.job_uuid = specialties.job_uuid)
 )
-SELECT * FROM u u;
+SELECT * FROM u u
+WITH READ ONLY;
 
 -- vim: set ft=sql ts=4 sw=4 et:
