@@ -15,7 +15,7 @@ CREATE TABLE v2u_ko_specsem_sheets_j
             REFERENCES v2u_ko_sheets(id, job_uuid)
         , CONSTRAINT v2u_ko_specsem_sheets_j_f2
             FOREIGN KEY (specsem_id, job_uuid)
-            REFERENCES v2u_ko_specsems(id, job_uuid)
+            REFERENCES v2u_ko_specialty_semesters_j(id, job_uuid)
     );
 
 -- vim: set ft=sql ts=4 sw=4 et:

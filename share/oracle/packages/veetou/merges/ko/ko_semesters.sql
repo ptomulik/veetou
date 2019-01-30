@@ -4,18 +4,35 @@ USING
         WITH u AS
         (
             SELECT
+                  VALUE(sheets) sheet
+                , VALUE(preambles) preamble
+            FROM v2u_ko_sheets sheets
+            INNER JOIN v2u_ko_sheet_pages_j sheet_pages
+                ON (sheet_pages.ko_sheet_id = sheets.id AND
+                    sheet_pages.job_uuid = sheets.job_uuid)
+            INNER JOIN v2u_ko_page_preamble_j page_preamble
+                ON (page_preamble.ko_page_id = sheet_pages.ko_page_id AND
+                    page_preamble.job_uuid = sheets.job_uuid)
+            INNER JOIN v2u_ko_preambles preambles
+                ON (preambles.id = page_preamble.ko_preamble_id AND
+                    preambles.job_uuid = sheets.job_uuid)
+            GROUP BY VALUE(sheets), VALUE(preambles)
+        ),
+        v AS
+        (
+            SELECT
                   V2u_To.Ko_Semester(
-                          job_uuid => h.job_uuid
-                        , sheet => h.sheet
-                        , preamble => h.preamble
+                          job_uuid => u.sheet.job_uuid
+                        , sheet => u.sheet
+                        , preamble => u.preamble
                   ) semester
-                , h.sheet.id sheet_id
-            FROM v2u_ko_sh_hdr_preamb_h h
+                , u.sheet.id sheet_id
+            FROM u u
         )
         SELECT
-            u.semester.dup(CAST(COLLECT(u.sheet_id) AS V2u_Ids_t)) semester
-        FROM u u
-        GROUP BY u.semester
+            v.semester.dup(CAST(COLLECT(v.sheet_id) AS V2u_Ids_t)) semester
+        FROM v v
+        GROUP BY v.semester
     ) src
 ON
     (

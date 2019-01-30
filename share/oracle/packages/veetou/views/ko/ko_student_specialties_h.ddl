@@ -14,7 +14,7 @@ AS SELECT
 FROM v2u_ko_students st
 INNER JOIN v2u_ko_student_specialties_j j1
     ON (j1.student_id = st.id AND j1.job_uuid = st.job_uuid)
-INNER JOIN v2u_ko_specsems se
+INNER JOIN v2u_ko_specialty_semesters_j se
     ON (j1.specsem_id = se.id AND j1.job_uuid = se.job_uuid)
 INNER JOIN v2u_ko_sheets sh
     ON (j1.sheet_id = sh.id AND j1.job_uuid = sh.job_uuid)

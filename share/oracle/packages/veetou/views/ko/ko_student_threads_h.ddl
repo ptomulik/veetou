@@ -4,7 +4,7 @@ AS WITH u AS (
           student
         , specialty_map
         , V2U_To.Threads(
-            CAST(COLLECT(h.specialty_entity) AS V2u_Ko_SpecSems_t)
+            CAST(COLLECT(h.specialty_entity) AS V2u_Ko_Specialty_Semesters_t)
           ) threads
     FROM v2u_ko_student_specialties_h h
     GROUP BY student, specialty_map

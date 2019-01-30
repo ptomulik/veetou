@@ -1,5 +1,5 @@
 CREATE OR REPLACE PACKAGE BODY V2U_Fit AS
-    FUNCTION Attributes(
+    /* FUNCTION Attributes(
               subject_map IN V2u_Subject_Map_t := NULL
             , subject_entity IN V2u_Ko_Subject_Entity_t := NULL
             ) RETURN NUMBER
@@ -26,11 +26,11 @@ CREATE OR REPLACE PACKAGE BODY V2U_Fit AS
         ELSE
             RETURN 0;
         END IF;
-    END;
+    END; */
 
     FUNCTION Attributes(
               specialty_map IN V2u_Specialty_Map_t
-            , specialty_entity IN V2u_Ko_SpecSem_t
+            , specialty_entity IN V2u_Ko_Specialty_Semester_t
             ) RETURN NUMBER
     IS
     BEGIN

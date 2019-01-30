@@ -279,6 +279,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         --
         Drop_Table('ko_student_sheets_j', how => 'PURGE');
         Drop_Table('ko_student_specialties_j', how => 'PURGE');
+        Drop_Table('ko_student_semesters_j', how => 'PURGE');
+        Drop_Table('ko_subject_semesters_j', how => 'PURGE');
         --
         Drop_Trigger('ko_students_tr1');
         Drop_Sequence('ko_students_sq1');
@@ -288,14 +290,16 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Table('ko_subject_map_j', how => 'PURGE');
         Drop_Table('ko_subject_trs_j', how => 'PURGE');
         --
-        Drop_Trigger('ko_subject_entities_tr1');
-        Drop_Sequence('ko_subject_entities_sq1');
-        Drop_Index('ko_subject_entities_idx1');
-        Drop_Table('ko_subject_entities', how => 'PURGE');
+        Drop_Trigger('ko_subjects_tr1');
+        Drop_Sequence('ko_subjects_sq1');
+        Drop_Index('ko_subjects_idx1');
+        Drop_Table('ko_subjects', how => 'PURGE');
         --
         Drop_Table('ko_specialty_map_j', how=>'PURGE');
         Drop_Table('ko_specsem_sheets_j', how => 'PURGE');
         Drop_Table('ko_specialty_sheets_j', how => 'PURGE');
+        Drop_Table('ko_semester_sheets_j', how => 'PURGE');
+        Drop_Table('ko_specialty_semesters_j', how => 'PURGE');
         --
         Drop_Trigger('ko_semesters_tr1');
         Drop_Sequence('ko_semesters_sq1');
@@ -306,7 +310,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Sequence('ko_specsems_sq1');
         --Drop_Sequence('ko_specsems_idx1');
         --Drop_Sequence('ko_specsems_idx2');
-        Drop_Table('ko_specsems', how => 'PURGE');
+        Drop_Table('ko_specialty_semesters_j', how => 'PURGE');
         --
         Drop_Trigger('ko_specialties_tr1');
         Drop_Sequence('ko_specialties_sq1');
@@ -322,9 +326,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Mapped_Subject_t', 'Ko_Mapped_Subjects_t');
         Drop_Type('Ko_Mapped_Specialty_t', 'Ko_Mapped_Specialties_t');
         Drop_Type('Ko_Student_Specialty_H_t');
-        Drop_Type('Ko_SpecSem_t', 'Ko_SpecSems_t');
+        Drop_Type('Ko_Specialty_Semester_t', 'Ko_Specialty_Semesters_t');
         Drop_Type('Ko_Specialty_t');
-        Drop_Type('Ko_Subject_Entity_t');
+        Drop_Type('Ko_Subject_t');
         Drop_Type('Ko_Thread_Indices_t');
         Drop_Type('Ko_Semester_Threads_t');
         Drop_Type('Ko_Semester_t', 'Ko_Semesters_t');

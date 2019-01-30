@@ -5,7 +5,7 @@ AS WITH u AS
               VALUE(se) se
             , VALUE(sm) sm
             , j.matching_score matching_score
-        FROM v2u_ko_specsems se
+        FROM v2u_ko_specialty_semesters_j se
         INNER JOIN v2u_ko_specialty_map_j j
             ON (j.specsem_id = se.id AND
                 j.job_uuid = se.job_uuid)

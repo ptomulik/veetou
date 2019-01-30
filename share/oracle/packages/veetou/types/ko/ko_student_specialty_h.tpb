@@ -7,7 +7,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Student_Specialty_H_t AS
             , specmap_id IN NUMBER
             , matching_score IN NUMBER
             , student IN V2u_Ko_Student_t
-            , specialty_entity IN V2u_Ko_SpecSem_t
+            , specialty_entity IN V2u_Ko_Specialty_Semester_t
             , specialty_map IN V2u_Specialty_Map_t
             , ects_attained IN NUMBER
             ) RETURN SELF AS RESULT

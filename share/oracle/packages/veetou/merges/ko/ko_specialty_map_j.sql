@@ -8,7 +8,7 @@ USING
                 , ss.id specsem_id
                 , sm.id specmap_id
                 , V2U_Fit.Attributes(VALUE(sm), VALUE(ss)) matching_score
-            FROM v2u_ko_specsems ss
+            FROM v2u_ko_specialty_semesters_j ss
             LEFT JOIN v2u_specialty_map sm
             ON (sm.university = ss.specialty.university AND
                 sm.faculty = ss.specialty.faculty AND

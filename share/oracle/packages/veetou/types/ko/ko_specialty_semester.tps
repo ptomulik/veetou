@@ -1,4 +1,4 @@
-CREATE OR REPLACE TYPE V2u_Ko_SpecSem_t
+CREATE OR REPLACE TYPE V2u_Ko_Specialty_Semester_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Distinct_t
     ( /*university VARCHAR2(8 CHAR)
     , faculty VARCHAR2(8 CHAR)
@@ -13,8 +13,8 @@ CREATE OR REPLACE TYPE V2u_Ko_SpecSem_t
     , ects_total NUMBER(4)
     , sheet_ids V2u_Ids_t
 
-    , CONSTRUCTOR FUNCTION V2u_Ko_SpecSem_t(
-              SELF IN OUT NOCOPY V2u_Ko_SpecSem_t
+    , CONSTRUCTOR FUNCTION V2u_Ko_Specialty_Semester_t(
+              SELF IN OUT NOCOPY V2u_Ko_Specialty_Semester_t
             , id IN NUMBER := NULL
             , job_uuid IN RAW
             /*, university IN VARCHAR2
@@ -32,13 +32,13 @@ CREATE OR REPLACE TYPE V2u_Ko_SpecSem_t
             ) RETURN SELF AS RESULT
 
     , MEMBER FUNCTION dup(new_sheet_ids IN V2u_Ids_t := NULL)
-        RETURN V2u_Ko_SpecSem_t
+        RETURN V2u_Ko_Specialty_Semester_t
 
     , OVERRIDING MEMBER FUNCTION cmp_val(other IN V2u_Distinct_t)
             RETURN INTEGER
     );
 /
-CREATE OR REPLACE TYPE V2u_Ko_SpecSems_t
-    AS TABLE OF V2u_Ko_SpecSem_t;
+CREATE OR REPLACE TYPE V2u_Ko_Specialty_Semesters_t
+    AS TABLE OF V2u_Ko_Specialty_Semester_t;
 
 -- vim: set ft=sql ts=4 sw=4 et:

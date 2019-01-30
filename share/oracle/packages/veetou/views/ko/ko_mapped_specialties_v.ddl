@@ -24,7 +24,7 @@ AS SELECT
     , sm.expr_ects_other
     , se.ects_total
     , sm.expr_ects_total
-FROM v2u_ko_specsems se
+FROM v2u_ko_specialty_semesters_j se
 LEFT JOIN v2u_ko_specialty_map_j sim
     ON (sim.specsem_id = se.id AND
         sim.job_uuid = se.job_uuid)

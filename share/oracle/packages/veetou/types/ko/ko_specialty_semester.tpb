@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY V2u_Ko_SpecSem_t AS
-    CONSTRUCTOR FUNCTION V2u_Ko_SpecSem_t(
-              SELF IN OUT NOCOPY V2u_Ko_SpecSem_t
+CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Semester_t AS
+    CONSTRUCTOR FUNCTION V2u_Ko_Specialty_Semester_t(
+              SELF IN OUT NOCOPY V2u_Ko_Specialty_Semester_t
             , id IN NUMBER := NULL
             , job_uuid IN RAW
             /* , university IN VARCHAR2
@@ -36,10 +36,10 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_SpecSem_t AS
     END;
 
     MEMBER FUNCTION dup(new_sheet_ids IN V2u_Ids_t := NULL)
-        RETURN V2u_Ko_SpecSem_t
+        RETURN V2u_Ko_Specialty_Semester_t
     IS
     BEGIN
-        RETURN V2u_Ko_SpecSem_t(
+        RETURN V2u_Ko_Specialty_Semester_t(
               job_uuid => job_uuid
             , id => id
             /* , university => university
@@ -62,11 +62,11 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_SpecSem_t AS
         RETURN INTEGER
     IS
         ord INTEGER;
-        obj V2u_Ko_SpecSem_t;
+        obj V2u_Ko_Specialty_Semester_t;
         spec_l V2u_Ko_Specialty_t;
         spec_r V2u_Ko_Specialty_t;
     BEGIN
-        obj := TREAT(other AS V2u_Ko_SpecSem_t);
+        obj := TREAT(other AS V2u_Ko_Specialty_Semester_t);
 
         SELECT DEREF(specialty) INTO spec_l FROM dual;
         SELECT DEREF(obj.specialty) INTO spec_r FROM dual;
