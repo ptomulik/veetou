@@ -297,6 +297,11 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Table('ko_specsem_sheets_j', how => 'PURGE');
         Drop_Table('ko_specialty_sheets_j', how => 'PURGE');
         --
+        Drop_Trigger('ko_semesters_tr1');
+        Drop_Sequence('ko_semesters_sq1');
+        Drop_Index('ko_semesters_idx1');
+        Drop_Table('ko_semesters', how => 'PURGE');
+        --
         Drop_Trigger('ko_specsems_tr1');
         Drop_Sequence('ko_specsems_sq1');
         --Drop_Sequence('ko_specsems_idx1');
@@ -322,7 +327,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Subject_Entity_t');
         Drop_Type('Ko_Thread_Indices_t');
         Drop_Type('Ko_Semester_Threads_t');
-        Drop_Type('Ko_Semester_Instance_t', 'Ko_Semester_Instances_t');
+        Drop_Type('Ko_Semester_t', 'Ko_Semesters_t');
         Drop_Type('Ko_Student_t');
         Drop_Type('Ko_Sh_Hdr_Preamb_H_t', 'Ko_Sh_Hdr_Preambs_H_t');
         Drop_Type('Ko_Tr_Hdr_Preamb_H_t', 'Ko_Tr_Hdr_Preambs_H_t');

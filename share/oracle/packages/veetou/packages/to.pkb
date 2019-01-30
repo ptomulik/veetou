@@ -14,7 +14,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_To AS
     END;
 
 
-    FUNCTION Find_Threads(semesters IN V2u_Ko_Semester_Instances_t)
+    FUNCTION Find_Threads(semesters IN V2u_Ko_Semesters_t)
         RETURN V2u_Ko_Thread_Indices_t
     IS
         t V2u_Ko_Thread_Indices_t := V2u_Ko_Thread_Indices_t();
@@ -51,7 +51,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_To AS
         RETURN t;
     END;
 
-    FUNCTION Threads(semesters IN V2u_Ko_Semester_Instances_t)
+    FUNCTION Threads(semesters IN V2u_Ko_Semesters_t)
         RETURN V2u_Ko_Semester_Threads_t
     IS
         n NUMBER := 0;
@@ -64,13 +64,13 @@ CREATE OR REPLACE PACKAGE BODY V2U_To AS
         WHILE (n <> semesters.COUNT AND i < 10)
         LOOP
             tt.EXTEND(1);
-            tt(tt.COUNT) := V2u_Ko_Semester_Instances_t();
+            tt(tt.COUNT) := V2u_Ko_Semesters_t();
             j := 1;
             FOR s IN (SELECT * FROM TABLE(semesters) ORDER BY 1)
             LOOP
                 IF tn(j) = i THEN
                     tt(i).EXTEND(1);
-                    tt(i)(tt(i).COUNT) := V2u_Ko_Semester_Instance_t(
+                    tt(i)(tt(i).COUNT) := V2u_Ko_Semester_t(
                           job_uuid => s.job_uuid
                         , id => s.id
                         , semester_code => s.semester_code
@@ -79,9 +79,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_To AS
                         , ects_other => s.ects_other
                         , ects_total => s.ects_total
                         --, ects_attained => s.ects_attained
-                        , ects_attained => NULL
+                        --, ects_attained => NULL
                         --, sheet_id => s.sheet_id
-                        , sheet_id => NULL
+                        -- , sheet_id => NULL
                     );
                     n := n + 1;
                 END IF;
@@ -114,28 +114,23 @@ CREATE OR REPLACE PACKAGE BODY V2U_To AS
     END;
 
 
-    FUNCTION Ko_Semester_Instance(
-          job_uuid IN RAW
-        , id IN NUMBER
-        , x_sheet IN V2u_Ko_X_Sheet_H_t
+    FUNCTION Ko_Semester(
+          id IN NUMBER := NULL
+        , job_uuid IN RAW
+        , sheet IN V2u_Ko_Sheet_t
+        , preamble IN V2u_Ko_Preamble_t
         )
-        RETURN V2u_Ko_Semester_Instance_t
+        RETURN V2u_Ko_Semester_t
     IS
-        sheet V2u_Ko_Sheet_t;
-        preamble V2u_Ko_Preamble_t;
     BEGIN
-        SELECT DEREF(x_sheet.preamble) INTO preamble FROM dual;
-        SELECT DEREF(x_sheet.sheet) INTO sheet FROM dual;
-        RETURN V2u_Ko_Semester_Instance_t(
-                  job_uuid => job_uuid
-                , id => id
+        RETURN V2u_Ko_Semester_t(
+                  id => id
+                , job_uuid => job_uuid
                 , semester_code => preamble.semester_code
                 , semester_number => preamble.semester_number
                 , ects_mandatory => sheet.ects_mandatory
                 , ects_other => sheet.ects_other
                 , ects_total => sheet.ects_total
-                , ects_attained => sheet.ects_attained
-                , sheet_id => sheet.id
                 );
     END;
 

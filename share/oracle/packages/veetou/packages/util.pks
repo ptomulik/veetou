@@ -9,7 +9,7 @@ CREATE OR REPLACE PACKAGE V2U_Util AUTHID CURRENT_USER AS
 --                          , rhs_semester_code IN VARCHAR2)
 --        RETURN NUMBER;
 
---    FUNCTION Max_Admission_Semester(semesters IN V2u_Ko_Semester_Instances_t)
+--    FUNCTION Max_Admission_Semester(semesters IN V2u_Ko_Semesters_t)
 --        RETURN VARCHAR2;
 
     FUNCTION Next_Val(sequence IN VARCHAR2) RETURN NUMBER;

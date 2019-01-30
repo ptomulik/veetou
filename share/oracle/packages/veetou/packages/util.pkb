@@ -49,10 +49,10 @@ CREATE OR REPLACE PACKAGE BODY V2U_Util AS
 --        return lhs_id - rhs_id;
 --    END;
 
---    FUNCTION Max_Admission_Semester(semesters IN V2u_Ko_Semester_Instances_t)
+--    FUNCTION Max_Admission_Semester(semesters IN V2u_Ko_Semesters_t)
 --        RETURN VARCHAR2
 --    IS
---        lowest V2u_Ko_Semester_Instance_t;
+--        lowest V2u_Ko_Semester_t;
 --    BEGIN
 --        SELECT VALUE(s) INTO lowest
 --            FROM TABLE(semesters) s

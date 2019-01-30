@@ -5,6 +5,7 @@
 @@ko_subject_map_j.ddl;
 @@ko_specialties.ddl;
 @@ko_specialty_sheets_j.ddl;
+@@ko_semesters.ddl;
 @@ko_specsems.ddl;
 @@ko_specsem_sheets_j.ddl;
 @@ko_specialty_map_j.ddl;

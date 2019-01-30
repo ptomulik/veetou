@@ -10,10 +10,10 @@ USING
         INNER JOIN v2u_ko_student_sheets_j j2
         ON (j1.sheet_id = j2.sheet_id AND j1.job_uuid = j2.job_uuid)
     ) src
-ON (tgt.job_uuid = src.job_uuid AND
-    tgt.specsem_id = src.specsem_id AND
+ON (tgt.specsem_id = src.specsem_id AND
     tgt.student_id = src.student_id AND
-    tgt.sheet_id = src.sheet_id)
+    tgt.sheet_id = src.sheet_id AND
+    tgt.job_uuid = src.job_uuid)
 WHEN NOT MATCHED THEN
     INSERT (    job_uuid,     student_id,     specsem_id,     sheet_id)
     VALUES (src.job_uuid, src.student_id, src.specsem_id, src.sheet_id);
