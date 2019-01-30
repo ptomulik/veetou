@@ -37,14 +37,14 @@ CREATE OR REPLACE PACKAGE V2U_To AUTHID CURRENT_USER AS
 --            , tr_ids IN V2u_Ids_t := NULL
 --            ) RETURN V2u_Ko_Subject_Entity_t;
 
-    FUNCTION Ko_Specialty_Semester(
-              job_uuid IN RAW
-            , id IN NUMBER := NULL
-            , specialty IN REF V2u_Ko_Specialty_t
-            , sheet IN V2u_Ko_Sheet_t
-            , preamble IN V2u_Ko_Preamble_t
-            , sheet_ids V2u_Ids_t := NULL
-            ) RETURN V2u_Ko_Specialty_Semester_t;
+--    FUNCTION Ko_Specialty_Semester(
+--              job_uuid IN RAW
+--            , id IN NUMBER := NULL
+--            , specialty IN REF V2u_Ko_Specialty_t
+--            , sheet IN V2u_Ko_Sheet_t
+--            , preamble IN V2u_Ko_Preamble_t
+--            , sheet_ids V2u_Ids_t := NULL
+--            ) RETURN V2u_Ko_Specialty_Semester_t;
 
 --    FUNCTION Ko_Specialty_Semester(
 --              job_uuid IN RAW

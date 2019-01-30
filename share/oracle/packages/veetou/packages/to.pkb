@@ -196,33 +196,33 @@ CREATE OR REPLACE PACKAGE BODY V2U_To AS
 --            );
 --    END;
 
-    FUNCTION Ko_Specialty_Semester(
-              job_uuid IN RAW
-            , id IN NUMBER := NULL
-            , specialty IN REF V2u_Ko_Specialty_t
-            , sheet IN V2u_Ko_Sheet_t
-            , preamble IN V2u_Ko_Preamble_t
-            , sheet_ids V2u_Ids_t := NULL
-            ) RETURN V2u_Ko_Specialty_Semester_t
-    IS
-    BEGIN
-        RETURN V2u_Ko_Specialty_Semester_t(
-                  job_uuid => job_uuid
-                , id => id
-                /*, university => specialty.university
-                , faculty => specialty.faculty
-                , studies_modetier => specialty.studies_modetier
-                , studies_field => specialty.studies_field
-                , studies_specialty => specialty.studies_specialty */
-                , specialty => specialty
-                , semester_number => preamble.semester_number
-                , semester_code => preamble.semester_code
-                , ects_mandatory => sheet.ects_mandatory
-                , ects_other => sheet.ects_other
-                , ects_total => sheet.ects_total
-                , sheet_ids => sheet_ids
-                );
-    END;
+--    FUNCTION Ko_Specialty_Semester(
+--              job_uuid IN RAW
+--            , id IN NUMBER := NULL
+--            , specialty IN REF V2u_Ko_Specialty_t
+--            , sheet IN V2u_Ko_Sheet_t
+--            , preamble IN V2u_Ko_Preamble_t
+--            , sheet_ids V2u_Ids_t := NULL
+--            ) RETURN V2u_Ko_Specialty_Semester_t
+--    IS
+--    BEGIN
+--        RETURN V2u_Ko_Specialty_Semester_t(
+--                  job_uuid => job_uuid
+--                , id => id
+--                /*, university => specialty.university
+--                , faculty => specialty.faculty
+--                , studies_modetier => specialty.studies_modetier
+--                , studies_field => specialty.studies_field
+--                , studies_specialty => specialty.studies_specialty */
+--                , specialty => specialty
+--                , semester_number => preamble.semester_number
+--                , semester_code => preamble.semester_code
+--                , ects_mandatory => sheet.ects_mandatory
+--                , ects_other => sheet.ects_other
+--                , ects_total => sheet.ects_total
+--                , sheet_ids => sheet_ids
+--                );
+--    END;
 
 
 --    FUNCTION Ko_Specialty_Semester(

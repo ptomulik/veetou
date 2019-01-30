@@ -261,20 +261,23 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     PROCEDURE Secondaries
     IS
     BEGIN
-        Drop_View('ko_unmapped_specialties_v');
-        Drop_View('ko_ambiguous_specialties_v');
-        Drop_View('ko_mapped_specialties_v');
-        Drop_View('ko_unmapped_subjects_v');
-        Drop_View('ko_ambiguous_subjects_v');
-        Drop_View('ko_mapped_subjects_v');
-        Drop_View('ko_student_specialties_v');
-        Drop_View('ko_student_specialties_h');
-        Drop_Materialized_View('ko_sh_hdr_preamb_h');
-        Drop_Materialized_View('ko_tr_hdr_preamb_h');
-        Drop_View('ko_x_sheets_h');
-        Drop_View('ko_x_sheets_v');
-        Drop_View('ko_x_trs_h');
-        Drop_View('ko_x_trs_v');
+--        Drop_View('ko_unmapped_specialties_v');
+--        Drop_View('ko_ambiguous_specialties_v');
+--        Drop_View('ko_mapped_specialties_v');
+--        Drop_View('ko_unmapped_subjects_v');
+--        Drop_View('ko_ambiguous_subjects_v');
+--        Drop_View('ko_mapped_subjects_v');
+--        Drop_View('ko_student_specialties_v');
+--        Drop_View('ko_student_specialties_h');
+--        Drop_Materialized_View('ko_sh_hdr_preamb_h');
+--        Drop_Materialized_View('ko_tr_hdr_preamb_h');
+--        Drop_View('ko_x_sheets_h');
+--        Drop_View('ko_x_sheets_v');
+--        Drop_View('ko_x_trs_h');
+--        Drop_View('ko_x_trs_v');
+
+        Drop_View('ko_student_semesters_v');
+        Drop_View('ko_specialty_semesters_v');
 
         --
         Drop_Table('ko_student_sheets_j', how => 'PURGE');
@@ -306,12 +309,6 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('ko_semesters_idx1');
         Drop_Table('ko_semesters', how => 'PURGE');
         --
-        Drop_Trigger('ko_specsems_tr1');
-        Drop_Sequence('ko_specsems_sq1');
-        --Drop_Sequence('ko_specsems_idx1');
-        --Drop_Sequence('ko_specsems_idx2');
-        Drop_Table('ko_specialty_semesters_j', how => 'PURGE');
-        --
         Drop_Trigger('ko_specialties_tr1');
         Drop_Sequence('ko_specialties_sq1');
         Drop_Table('ko_specialties', how => 'PURGE');
@@ -327,6 +324,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Mapped_Specialty_t', 'Ko_Mapped_Specialties_t');
         Drop_Type('Ko_Student_Specialty_H_t');
         Drop_Type('Ko_Specialty_Semester_t', 'Ko_Specialty_Semesters_t');
+        Drop_Type('Ko_Student_Semester_t', 'Ko_Student_Semesters_t');
         Drop_Type('Ko_Specialty_t');
         Drop_Type('Ko_Subject_t');
         Drop_Type('Ko_Thread_Indices_t');

@@ -1,9 +1,14 @@
-CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Semester_t AS
-    CONSTRUCTOR FUNCTION V2u_Ko_Specialty_Semester_t(
-              SELF IN OUT NOCOPY V2u_Ko_Specialty_Semester_t
+CREATE OR REPLACE TYPE BODY V2u_Ko_Student_Semester_t AS
+    CONSTRUCTOR FUNCTION V2u_Ko_Student_Semester_t(
+              SELF IN OUT NOCOPY V2u_Ko_Student_Semester_t
             , job_uuid IN RAW
+            , student_id IN NUMBER
             , specialty_id IN NUMBER
             , semester_id IN NUMBER
+            , student_index VARCHAR2
+            , student_name VARCHAR2
+            , first_name VARCHAR2
+            , last_name VARCHAR2
             , university IN VARCHAR2
             , faculty IN VARCHAR2
             , studies_modetier IN VARCHAR2
@@ -14,13 +19,19 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Semester_t AS
             , ects_mandatory IN NUMBER
             , ects_other IN NUMBER
             , ects_total IN NUMBER
+            , ects_attained IN NUMBER
 --            , sheet_ids IN V2u_Ids_t := NULL
             ) RETURN SELF AS RESULT
     IS
     BEGIN
         SELF.job_uuid := job_uuid;
+        SELF.student_id := student_id;
         SELF.specialty_id := specialty_id;
         SELF.semester_id := semester_id;
+        SELF.student_index := student_index;
+        SELF.student_name := student_name;
+        SELF.first_name := first_name;
+        SELF.last_name := last_name;
         SELF.university := university;
         SELF.faculty := faculty;
         SELF.studies_modetier := studies_modetier;
@@ -31,20 +42,28 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Semester_t AS
         SELF.ects_mandatory := ects_mandatory;
         SELF.ects_other := ects_other;
         SELF.ects_total := ects_total;
+        SELF.ects_attained := ects_attained;
 --        SELF.sheet_ids := sheet_ids;
         RETURN;
     END;
 
-    CONSTRUCTOR FUNCTION V2u_Ko_Specialty_Semester_t(
-              SELF IN OUT NOCOPY V2u_Ko_Specialty_Semester_t
+    CONSTRUCTOR FUNCTION V2u_Ko_Student_Semester_t(
+              SELF IN OUT NOCOPY V2u_Ko_Student_Semester_t
+            , student IN V2u_Ko_Student_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
+            , ects_attained IN NUMBER
             ) RETURN SELF AS RESULT
     IS
     BEGIN
         SELF.job_uuid := specialty.job_uuid;
+        SELF.student_id := student.id;
         SELF.specialty_id := specialty.id;
         SELF.semester_id := semester.id;
+        SELF.student_index := student.student_index;
+        SELF.student_name := student.student_name;
+        SELF.first_name := student.first_name;
+        SELF.last_name := student.last_name;
         SELF.university := specialty.university;
         SELF.faculty := specialty.faculty;
         SELF.studies_modetier := specialty.studies_modetier;
@@ -55,15 +74,24 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Semester_t AS
         SELF.ects_mandatory := semester.ects_mandatory;
         SELF.ects_other := semester.ects_other;
         SELF.ects_total := semester.ects_total;
+        SELF.ects_attained := ects_attained;
  --       SELF.sheet_ids := semester.sheet_ids;
         RETURN;
     END;
 
-      ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Specialty_Semester_t)
+      ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Student_Semester_t)
             RETURN INTEGER
     IS
         ord INTEGER;
     BEGIN
+        ord := V2u_Cmp.StrNI(student_index, other.student_index);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2u_Cmp.StrNI(student_name, other.student_name);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2u_Cmp.StrNI(first_name, other.first_name);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2u_Cmp.StrNI(last_name, other.last_name);
+        IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.StrNI(university, other.university);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.StrNI(faculty, other.faculty);

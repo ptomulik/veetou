@@ -29,18 +29,18 @@ CREATE OR REPLACE PACKAGE BODY V2U_Fit AS
     END; */
 
     FUNCTION Attributes(
-              specialty_map IN V2u_Specialty_Map_t
-            , specialty_entity IN V2u_Ko_Specialty_Semester_t
-            ) RETURN NUMBER
+                  specialty_map IN V2u_Specialty_Map_t
+                , semester IN V2u_Ko_Semester_t
+                ) RETURN NUMBER
     IS
     BEGIN
-        IF specialty_map IS NOT NULL AND specialty_entity IS NOT NULL THEN
+        IF specialty_map IS NOT NULL AND semester IS NOT NULL THEN
             RETURN specialty_map.match_expr_fields(
-              semester_number => specialty_entity.semester_number
-            , semester_code => specialty_entity.semester_code
-            , ects_mandatory => specialty_entity.ects_mandatory
-            , ects_other => specialty_entity.ects_other
-            , ects_total => specialty_entity.ects_total
+              semester_number => semester.semester_number
+            , semester_code => semester.semester_code
+            , ects_mandatory => semester.ects_mandatory
+            , ects_other => semester.ects_other
+            , ects_total => semester.ects_total
             );
         ELSE
             RETURN 0;

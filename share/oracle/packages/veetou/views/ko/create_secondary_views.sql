@@ -4,6 +4,8 @@
 --@@ko_sh_hdr_preamb_h.ddl;
 --@@ko_tr_hdr_preamb_h.ddl;
 --
+@@ko_specialty_semesters_v.ddl;
+@@ko_student_semesters_v.ddl;
 ----@@ko_specialty_semesters_j.sql;
 --@@ko_student_specialties_h.ddl;
 --@@ko_student_specialties_v.ddl;

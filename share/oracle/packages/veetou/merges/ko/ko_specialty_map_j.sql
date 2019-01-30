@@ -4,29 +4,36 @@ USING
         WITH u AS
         (
             SELECT
-                  VALUE(ss).job_uuid job_uuid
-                , ss.id specsem_id
-                , sm.id specmap_id
-                , V2U_Fit.Attributes(VALUE(sm), VALUE(ss)) matching_score
-            FROM v2u_ko_specialty_semesters_j ss
-            LEFT JOIN v2u_specialty_map sm
-            ON (sm.university = ss.specialty.university AND
-                sm.faculty = ss.specialty.faculty AND
-                sm.studies_modetier = ss.specialty.studies_modetier AND
-                sm.studies_field = ss.specialty.studies_field AND
-                (sm.studies_specialty = ss.specialty.studies_specialty OR
-                (ss.specialty.studies_specialty IS NULL AND sm.studies_specialty IS NULL)))
+                  j.job_uuid job_uuid
+                , j.specialty_id specialty_id
+                , j.semester_id semester_id
+                , specialty_map.id map_id
+                , V2U_Fit.Attributes(VALUE(specialty_map), VALUE(semesters)) matching_score
+            FROM v2u_ko_specialty_semesters_j j
+            INNER JOIN v2u_ko_specialties specialties
+                ON (specialties.id = j.specialty_id AND
+                    specialties.job_uuid = j.job_uuid)
+            INNER JOIN v2u_ko_semesters semesters
+                ON (semesters.id = j.semester_id AND
+                    semesters.job_uuid = j.job_uuid)
+            LEFT JOIN v2u_specialty_map specialty_map
+            ON (specialty_map.university = specialties.university AND
+                specialty_map.faculty = specialties.faculty AND
+                specialty_map.studies_modetier = specialties.studies_modetier AND
+                specialty_map.studies_field = specialties.studies_field AND
+                (specialty_map.studies_specialty = specialties.studies_specialty OR
+                (specialties.studies_specialty IS NULL AND specialty_map.studies_specialty IS NULL)))
         )
         SELECT * FROM u
         WHERE u.matching_score > 0
-        ORDER BY specsem_id
     ) src
-ON (tgt.specmap_id = src.specmap_id AND
-    tgt.specsem_id = src.specsem_id AND
+ON (tgt.specialty_id = src.specialty_id AND
+    tgt.semester_id = src.semester_id AND
+    tgt.map_id = src.map_id AND
     tgt.job_uuid = src.job_uuid)
 WHEN NOT MATCHED THEN
-    INSERT (    job_uuid,     specsem_id,     specmap_id,     matching_score)
-    VALUES (src.job_uuid, src.specsem_id, src.specmap_id, src.matching_score)
+    INSERT (    job_uuid,     specialty_id,     semester_id,     map_id,     matching_score)
+    VALUES (src.job_uuid, src.specialty_id, src.semester_id, src.map_id, src.matching_score)
 WHEN MATCHED THEN
     UPDATE SET tgt.matching_score = src.matching_score;
 
