@@ -2,7 +2,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Mapped_Specialty_t AS
     CONSTRUCTOR FUNCTION V2u_Ko_Mapped_Specialty_t(
           SELF IN OUT NOCOPY V2u_Ko_Mapped_Specialty_t
         , job_uuid IN RAW
-        , specent_id IN NUMBER
+        , specsem_id IN NUMBER
         , specmap_id IN NUMBER
         , matching_score IN NUMBER
         , university VARCHAR2
@@ -27,7 +27,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Mapped_Specialty_t AS
     IS
     BEGIN
         SELF.job_uuid := job_uuid;
-        SELF.specent_id := specent_id;
+        SELF.specsem_id := specsem_id;
         SELF.specmap_id := specmap_id;
         SELF.matching_score := matching_score;
         SELF.university := university;

@@ -5,8 +5,8 @@
 @@ko_sh_hdr_preamb_h.tpb;
 @@ko_tr_hdr_preamb_h.tpb;
 @@ko_subject_entity.tpb;
-@@ko_specialty_entity.tpb;
 @@ko_specialty.tpb;
+@@ko_specsem.tpb;
 @@ko_student.tpb;
 @@ko_student_specialty_h.tpb;
 @@ko_mapped_subject.tpb;

@@ -30,7 +30,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Fit AS
 
     FUNCTION Attributes(
               specialty_map IN V2u_Specialty_Map_t
-            , specialty_entity IN V2u_Ko_Specialty_Entity_t
+            , specialty_entity IN V2u_Ko_SpecSem_t
             ) RETURN NUMBER
     IS
     BEGIN

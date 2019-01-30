@@ -2,9 +2,9 @@
 @@ko_student_sheets_j.sql;
 @@ko_specialties.sql;
 @@ko_specialty_sheets_j.sql;
-@@ko_specialty_entities.sql;
-@@ko_specent_sheets_j.sql;
-@@ko_specialty_map_j.sql;
+--@@ko_specsems.sql;
+--@@ko_specsem_sheets_j.sql;
+--@@ko_specialty_map_j.sql;
 @@ko_subject_entities.sql;
 @@ko_subject_trs_j.sql;
 @@ko_subject_map_j.sql;

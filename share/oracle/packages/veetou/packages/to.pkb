@@ -175,24 +175,25 @@ CREATE OR REPLACE PACKAGE BODY V2U_To AS
             );
     END;
 
-    FUNCTION Ko_Specialty_Entity(
+    FUNCTION Ko_SpecSem(
               job_uuid IN RAW
             , id IN NUMBER := NULL
-            , specialty IN V2u_Ko_Specialty_t
+            , specialty IN REF V2u_Ko_Specialty_t
             , sheet IN V2u_Ko_Sheet_t
             , preamble IN V2u_Ko_Preamble_t
             , sheet_ids V2u_Ids_t := NULL
-            ) RETURN V2u_Ko_Specialty_Entity_t
+            ) RETURN V2u_Ko_SpecSem_t
     IS
     BEGIN
-        RETURN V2u_Ko_Specialty_Entity_t(
+        RETURN V2u_Ko_SpecSem_t(
                   job_uuid => job_uuid
                 , id => id
-                , university => specialty.university
+                /*, university => specialty.university
                 , faculty => specialty.faculty
                 , studies_modetier => specialty.studies_modetier
                 , studies_field => specialty.studies_field
-                , studies_specialty => specialty.studies_specialty
+                , studies_specialty => specialty.studies_specialty */
+                , specialty => specialty
                 , semester_number => preamble.semester_number
                 , semester_code => preamble.semester_code
                 , ects_mandatory => sheet.ects_mandatory
@@ -203,32 +204,32 @@ CREATE OR REPLACE PACKAGE BODY V2U_To AS
     END;
 
 
-    FUNCTION Ko_Specialty_Entity(
-              job_uuid IN RAW
-            , id IN NUMBER := NULL
-            , sheet IN V2u_Ko_Sheet_t
-            , header IN V2u_Ko_Header_t
-            , preamble IN V2u_Ko_Preamble_t
-            , sheet_ids V2u_Ids_t := NULL
-            ) RETURN V2u_Ko_Specialty_Entity_t
-    IS
-    BEGIN
-        RETURN V2u_Ko_Specialty_Entity_t(
-                  job_uuid => job_uuid
-                , id => id
-                , university => V2U_Get.University(name => header.university).abbriev
-                , faculty => V2U_Get.Faculty(name => header.faculty).abbriev
-                , studies_modetier => preamble.studies_modetier
-                , studies_field => preamble.studies_field
-                , studies_specialty => preamble.studies_specialty
-                , semester_number => preamble.semester_number
-                , semester_code => preamble.semester_code
-                , ects_mandatory => sheet.ects_mandatory
-                , ects_other => sheet.ects_other
-                , ects_total => sheet.ects_total
-                , sheet_ids => sheet_ids
-                );
-    END;
+--    FUNCTION Ko_SpecSem(
+--              job_uuid IN RAW
+--            , id IN NUMBER := NULL
+--            , sheet IN V2u_Ko_Sheet_t
+--            , header IN V2u_Ko_Header_t
+--            , preamble IN V2u_Ko_Preamble_t
+--            , sheet_ids V2u_Ids_t := NULL
+--            ) RETURN V2u_Ko_SpecSem_t
+--    IS
+--    BEGIN
+--        RETURN V2u_Ko_SpecSem_t(
+--                  job_uuid => job_uuid
+--                , id => id
+--                , university => V2U_Get.University(name => header.university).abbriev
+--                , faculty => V2U_Get.Faculty(name => header.faculty).abbriev
+--                , studies_modetier => preamble.studies_modetier
+--                , studies_field => preamble.studies_field
+--                , studies_specialty => preamble.studies_specialty
+--                , semester_number => preamble.semester_number
+--                , semester_code => preamble.semester_code
+--                , ects_mandatory => sheet.ects_mandatory
+--                , ects_other => sheet.ects_other
+--                , ects_total => sheet.ects_total
+--                , sheet_ids => sheet_ids
+--                );
+--    END;
 
 
     FUNCTION Ko_Specialty(

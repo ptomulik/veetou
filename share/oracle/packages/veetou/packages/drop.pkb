@@ -294,18 +294,18 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Table('ko_subject_entities', how => 'PURGE');
         --
         Drop_Table('ko_specialty_map_j', how=>'PURGE');
-        Drop_Table('ko_specent_sheets_j', how => 'PURGE');
+        Drop_Table('ko_specsem_sheets_j', how => 'PURGE');
         Drop_Table('ko_specialty_sheets_j', how => 'PURGE');
+        --
+        Drop_Trigger('ko_specsems_tr1');
+        Drop_Sequence('ko_specsems_sq1');
+        --Drop_Sequence('ko_specsems_idx1');
+        --Drop_Sequence('ko_specsems_idx2');
+        Drop_Table('ko_specsems', how => 'PURGE');
         --
         Drop_Trigger('ko_specialties_tr1');
         Drop_Sequence('ko_specialties_sq1');
         Drop_Table('ko_specialties', how => 'PURGE');
-        --
-        Drop_Trigger('ko_specialty_entities_tr1');
-        Drop_Sequence('ko_specialty_entities_sq1');
-        Drop_Sequence('ko_specialty_entities_idx1');
-        Drop_Sequence('ko_specialty_entities_idx2');
-        Drop_Table('ko_specialty_entities', how => 'PURGE');
         --
 
         --
@@ -317,8 +317,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Mapped_Subject_t', 'Ko_Mapped_Subjects_t');
         Drop_Type('Ko_Mapped_Specialty_t', 'Ko_Mapped_Specialties_t');
         Drop_Type('Ko_Student_Specialty_H_t');
+        Drop_Type('Ko_SpecSem_t', 'Ko_SpecSems_t');
         Drop_Type('Ko_Specialty_t');
-        Drop_Type('Ko_Specialty_Entity_t', 'Ko_Specialty_Entities_t');
         Drop_Type('Ko_Subject_Entity_t');
         Drop_Type('Ko_Thread_Indices_t');
         Drop_Type('Ko_Semester_Threads_t');

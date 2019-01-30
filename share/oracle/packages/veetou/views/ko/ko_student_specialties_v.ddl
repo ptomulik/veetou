@@ -2,7 +2,7 @@ CREATE OR REPLACE VIEW v2u_ko_student_specialties_v
 AS SELECT
       h.student.job_uuid job_uuid
     , h.student.id student_id
-    , h.specent_id specent_id
+    , h.specsem_id specsem_id
     , h.specmap_id specmap_id
     , h.matching_score matching_score
     , h.student.student_index student_index

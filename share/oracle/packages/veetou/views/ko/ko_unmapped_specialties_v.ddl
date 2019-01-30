@@ -1,9 +1,9 @@
 CREATE OR REPLACE VIEW v2u_ko_unmapped_specialties_v
 OF V2u_Ko_Mapped_Specialty_t
-WITH OBJECT IDENTIFIER (job_uuid, specent_id, specmap_id)
+WITH OBJECT IDENTIFIER (job_uuid, specsem_id, specmap_id)
 AS SELECT
       v.job_uuid
-    , v.specent_id
+    , v.specsem_id
     , v.specmap_id
     , v.matching_score
     , v.university

@@ -1,6 +1,6 @@
 CREATE OR REPLACE TYPE V2u_Ko_Mapped_Specialty_t FORCE AUTHID CURRENT_USER AS OBJECT
     ( job_uuid RAW(16)
-    , specent_id NUMBER(38)
+    , specsem_id NUMBER(38)
     , specmap_id NUMBER(38)
     , matching_score NUMBER(38)
     , university VARCHAR2(8 CHAR)
@@ -25,7 +25,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Mapped_Specialty_t FORCE AUTHID CURRENT_USER AS OB
     , CONSTRUCTOR FUNCTION V2u_Ko_Mapped_Specialty_t(
               SELF IN OUT NOCOPY V2u_Ko_Mapped_Specialty_t
             , job_uuid IN RAW
-            , specent_id IN NUMBER
+            , specsem_id IN NUMBER
             , specmap_id IN NUMBER
             , matching_score IN NUMBER
             , university VARCHAR2

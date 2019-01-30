@@ -28,23 +28,23 @@ CREATE OR REPLACE PACKAGE V2U_To AUTHID CURRENT_USER AS
             , tr_ids IN V2u_Ids_t := NULL
             ) RETURN V2u_Ko_Subject_Entity_t;
 
-    FUNCTION Ko_Specialty_Entity(
+    FUNCTION Ko_SpecSem(
               job_uuid IN RAW
             , id IN NUMBER := NULL
-            , specialty IN V2u_Ko_Specialty_t
+            , specialty IN REF V2u_Ko_Specialty_t
             , sheet IN V2u_Ko_Sheet_t
             , preamble IN V2u_Ko_Preamble_t
             , sheet_ids V2u_Ids_t := NULL
-            ) RETURN V2u_Ko_Specialty_Entity_t;
+            ) RETURN V2u_Ko_SpecSem_t;
 
-    FUNCTION Ko_Specialty_Entity(
-              job_uuid IN RAW
-            , id IN NUMBER := NULL
-            , sheet IN V2u_Ko_Sheet_t
-            , header IN V2u_Ko_Header_t
-            , preamble IN V2u_Ko_Preamble_t
-            , sheet_ids V2u_Ids_t := NULL
-            ) RETURN V2u_Ko_Specialty_Entity_t;
+--    FUNCTION Ko_SpecSem(
+--              job_uuid IN RAW
+--            , id IN NUMBER := NULL
+--            , sheet IN V2u_Ko_Sheet_t
+--            , header IN V2u_Ko_Header_t
+--            , preamble IN V2u_Ko_Preamble_t
+--            , sheet_ids V2u_Ids_t := NULL
+--            ) RETURN V2u_Ko_SpecSem_t;
 
     FUNCTION Ko_Specialty(
               job_uuid IN RAW

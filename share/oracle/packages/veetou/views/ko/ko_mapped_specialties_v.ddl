@@ -1,6 +1,6 @@
 CREATE OR REPLACE VIEW v2u_ko_mapped_specialties_v
 OF V2u_Ko_Mapped_Specialty_t
-WITH OBJECT IDENTIFIER (job_uuid, specent_id, specmap_id)
+WITH OBJECT IDENTIFIER (job_uuid, specsem_id, specmap_id)
 AS SELECT
       se.job_uuid
     , se.id
@@ -24,9 +24,9 @@ AS SELECT
     , sm.expr_ects_other
     , se.ects_total
     , sm.expr_ects_total
-FROM v2u_ko_specialty_entities se
+FROM v2u_ko_specsems se
 LEFT JOIN v2u_ko_specialty_map_j sim
-    ON (sim.specent_id = se.id AND
+    ON (sim.specsem_id = se.id AND
         sim.job_uuid = se.job_uuid)
 LEFT JOIN v2u_specialty_map sm
     ON (sim.specmap_id = sm.id)

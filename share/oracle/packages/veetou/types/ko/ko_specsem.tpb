@@ -1,13 +1,14 @@
-CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Entity_t AS
-    CONSTRUCTOR FUNCTION V2u_Ko_Specialty_Entity_t(
-              SELF IN OUT NOCOPY V2u_Ko_Specialty_Entity_t
+CREATE OR REPLACE TYPE BODY V2u_Ko_SpecSem_t AS
+    CONSTRUCTOR FUNCTION V2u_Ko_SpecSem_t(
+              SELF IN OUT NOCOPY V2u_Ko_SpecSem_t
             , id IN NUMBER := NULL
             , job_uuid IN RAW
-            , university IN VARCHAR2
+            /* , university IN VARCHAR2
             , faculty IN VARCHAR2
             , studies_modetier IN VARCHAR2
             , studies_field IN VARCHAR2
-            , studies_specialty IN VARCHAR2
+            , studies_specialty IN VARCHAR2 */
+            , specialty IN REF V2u_Ko_Specialty_t
             , semester_number IN NUMBER
             , semester_code IN VARCHAR2
             , ects_mandatory IN NUMBER
@@ -19,11 +20,12 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Entity_t AS
     BEGIN
         SELF.id := id;
         SELF.job_uuid := job_uuid;
-        SELF.university := university;
+        /* SELF.university := university;
         SELF.faculty := faculty;
         SELF.studies_modetier := studies_modetier;
         SELF.studies_field := studies_field;
-        SELF.studies_specialty := studies_specialty;
+        SELF.studies_specialty := studies_specialty; */
+        SELF.specialty := specialty;
         SELF.semester_number := semester_number;
         SELF.semester_code := semester_code;
         SELF.ects_mandatory := ects_mandatory;
@@ -34,17 +36,18 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Entity_t AS
     END;
 
     MEMBER FUNCTION dup(new_sheet_ids IN V2u_Ids_t := NULL)
-        RETURN V2u_Ko_Specialty_Entity_t
+        RETURN V2u_Ko_SpecSem_t
     IS
     BEGIN
-        RETURN V2u_Ko_Specialty_Entity_t(
+        RETURN V2u_Ko_SpecSem_t(
               job_uuid => job_uuid
             , id => id
-            , university => university
+            /* , university => university
             , faculty => faculty
             , studies_modetier => studies_modetier
             , studies_field => studies_field
-            , studies_specialty => studies_specialty
+            , studies_specialty => studies_specialty */
+            , specialty => specialty
             , semester_number => semester_number
             , semester_code => semester_code
             , ects_mandatory => ects_mandatory
@@ -59,10 +62,15 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Entity_t AS
         RETURN INTEGER
     IS
         ord INTEGER;
-        obj V2u_Ko_Specialty_Entity_t;
+        obj V2u_Ko_SpecSem_t;
+        spec_l V2u_Ko_Specialty_t;
+        spec_r V2u_Ko_Specialty_t;
     BEGIN
-        obj := TREAT(other AS V2u_Ko_Specialty_Entity_t);
-        ord := V2U_Cmp.StrNI(university, obj.university);
+        obj := TREAT(other AS V2u_Ko_SpecSem_t);
+
+        SELECT DEREF(specialty) INTO spec_l FROM dual;
+        SELECT DEREF(obj.specialty) INTO spec_r FROM dual;
+        /*ord := V2U_Cmp.StrNI(university, obj.university);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.StrNI(faculty, obj.faculty);
         IF ord <> 0 THEN RETURN ord; END IF;
@@ -71,6 +79,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Entity_t AS
         ord := V2U_Cmp.StrNI(studies_field, obj.studies_field);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.StrNI(studies_specialty, obj.studies_specialty);
+        IF ord <> 0 THEN RETURN ord; END IF; */
+        ord := spec_l.cmp(spec_r);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.NumN(semester_number, obj.semester_number);
         IF ord <> 0 THEN RETURN ord; END IF;
