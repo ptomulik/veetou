@@ -263,7 +263,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     BEGIN
 --        Drop_View('ko_unmapped_specialties_v');
 --        Drop_View('ko_ambiguous_specialties_v');
---        Drop_View('ko_specialty_map_v');
+        Drop_View('ko_specialty_map_v');
 --        Drop_View('ko_unmapped_subjects_v');
 --        Drop_View('ko_ambiguous_subjects_v');
 --        Drop_View('ko_mapped_subjects_v');
@@ -276,6 +276,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
 --        Drop_View('ko_x_trs_h');
 --        Drop_View('ko_x_trs_v');
 
+        Drop_View('ko_subject_semesters_v');
         Drop_View('ko_student_semesters_v');
         Drop_View('ko_specialty_semesters_v');
 
@@ -325,6 +326,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Student_Specialty_H_t');
         Drop_Type('Ko_Specialty_Semester_t', 'Ko_Specialty_Semesters_t');
         Drop_Type('Ko_Student_Semester_t', 'Ko_Student_Semesters_t');
+        Drop_Type('Ko_Subject_Semester_t', 'Ko_Subject_Semesters_t');
         Drop_Type('Ko_Specialty_t');
         Drop_Type('Ko_Subject_t');
         Drop_Type('Ko_Thread_Indices_t');

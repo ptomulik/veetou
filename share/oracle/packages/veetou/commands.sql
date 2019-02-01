@@ -15,7 +15,7 @@
 
 
 -- Wipe-out whole databse and create the emtpy schema from scratch.
-@@recreate_all.sql;
+@@drop_create_all.sql;
 
 
 
@@ -30,7 +30,7 @@
 
 
 -- Wipes-out primaries and creates them from scratch.
-@@recreate_primaries.sql;
+@@drop_create_primaries.sql;
 
 
 
@@ -44,8 +44,8 @@
 
 
 
--- Drops and then recreates views, packages, secondary tables and types.
-@@recreate_secondaries.sql;
+-- Drops and then drop_creates views, packages, secondary tables and types.
+@@drop_create_secondaries.sql;
 
 
 

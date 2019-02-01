@@ -54,8 +54,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Semester_t AS
         SELF.ects_total := ects_total;
         RETURN;
     END;
-    CONSTRUCTOR FUNCTION V2u_Ko_Subject_Semeser_t(
-              SELF IN OUT NOCOPY V2u_Ko_Subject_Semeser_t
+
+    CONSTRUCTOR FUNCTION V2u_Ko_Subject_Semester_t(
+              SELF IN OUT NOCOPY V2u_Ko_Subject_Semester_t
             , subject IN V2u_Ko_Subject_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
@@ -128,13 +129,13 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Semester_t AS
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.StrNI(semester_code, other.semester_code);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.NumNI(semester_number, other.semester_number);
+        ord := V2U_Cmp.NumN(semester_number, other.semester_number);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.NumNI(ects_mandatory, other.ects_mandatory);
+        ord := V2U_Cmp.NumN(ects_mandatory, other.ects_mandatory);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.NumNI(ects_other, other.ects_other);
+        ord := V2U_Cmp.NumN(ects_other, other.ects_other);
         IF ord <> 0 THEN RETURN ord; END IF;
-        RETURN V2U_Cmp.NumNI(ects_total, other.ects_total);
+        RETURN V2U_Cmp.NumN(ects_total, other.ects_total);
     END;
 END;
 
