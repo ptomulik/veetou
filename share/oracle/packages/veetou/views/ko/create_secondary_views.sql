@@ -6,6 +6,7 @@
 --
 @@ko_specialty_semesters_v.ddl;
 @@ko_student_semesters_v.ddl;
+@@ko_subject_semesters_v.ddl;
 ----@@ko_specialty_semesters_j.sql;
 --@@ko_student_specialties_h.ddl;
 --@@ko_student_specialties_v.ddl;

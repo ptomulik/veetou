@@ -8,6 +8,7 @@
 -- types for views
 @@ko_specialty_semester.tpb;
 @@ko_student_semester.tpb;
+@@ko_subject_semester.tpb;
 @@ko_mapped_subject.tpb;
 @@ko_specialty_map.tpb;
 
