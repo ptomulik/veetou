@@ -12,6 +12,8 @@
 @@ko_specialty_semesters_j.ddl;
 @@ko_student_semesters_j.ddl;
 @@ko_subject_semesters_j.ddl;
+@@ko_grades_j.ddl;
+
 --@@ko_specsem_sheets_j.ddl;
 @@ko_specialty_map_j.ddl;
 @@ko_subject_map_j.ddl;

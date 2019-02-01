@@ -281,6 +281,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_View('ko_specialty_semesters_v');
 
         --
+        Drop_Table('ko_grades_j', how => 'PURGE');
         Drop_Table('ko_student_sheets_j', how => 'PURGE');
         Drop_Table('ko_student_specialties_j', how => 'PURGE');
         Drop_Table('ko_student_semesters_j', how => 'PURGE');

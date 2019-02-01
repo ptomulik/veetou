@@ -10,6 +10,7 @@
 @@ko_specialty_semesters_j.sql;
 @@ko_student_semesters_j.sql;
 @@ko_subject_semesters_j.sql;
+@@ko_grades_j.sql;
 
 --@@ko_specsem_sheets_j.sql;
 @@ko_specialty_map_j.sql;
