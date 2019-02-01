@@ -266,7 +266,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_View('ko_specialty_map_v');
 --        Drop_View('ko_unmapped_subjects_v');
 --        Drop_View('ko_ambiguous_subjects_v');
---        Drop_View('ko_mapped_subjects_v');
+        Drop_View('ko_subject_map_v');
 --        Drop_View('ko_student_specialties_v');
 --        Drop_View('ko_student_specialties_h');
 --        Drop_Materialized_View('ko_sh_hdr_preamb_h');

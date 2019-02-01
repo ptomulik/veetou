@@ -5,12 +5,6 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_t AS
         , subj_code IN VARCHAR2 := NULL
         , mapped_subj_code IN VARCHAR2 := NULL
         , expr_subj_name IN VARCHAR2 := NULL
-        , expr_university IN VARCHAR2 := NULL
-        , expr_faculty IN VARCHAR2 := NULL
-        , expr_studies_modetier IN VARCHAR2 := NULL
-        , expr_studies_field IN VARCHAR2 := NULL
-        , expr_studies_specialty IN VARCHAR2 := NULL
-        , expr_semester_code IN VARCHAR2 := NULL
         , expr_subj_hours_w IN VARCHAR2 := NULL
         , expr_subj_hours_c IN VARCHAR2 := NULL
         , expr_subj_hours_l IN VARCHAR2 := NULL
@@ -19,6 +13,16 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_t AS
         , expr_subj_credit_kind IN VARCHAR2 := NULL
         , expr_subj_ects IN VARCHAR2 := NULL
         , expr_subj_tutor IN VARCHAR2 := NULL
+        , expr_university IN VARCHAR2 := NULL
+        , expr_faculty IN VARCHAR2 := NULL
+        , expr_studies_modetier IN VARCHAR2 := NULL
+        , expr_studies_field IN VARCHAR2 := NULL
+        , expr_studies_specialty IN VARCHAR2 := NULL
+        , expr_semester_code IN VARCHAR2 := NULL
+        , expr_semester_number IN VARCHAR2 := NULL
+        , expr_ects_mandatory IN VARCHAR2 := NULL
+        , expr_ects_other IN VARCHAR2 := NULL
+        , expr_ects_total IN VARCHAR2 := NULL
         ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -26,12 +30,6 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_t AS
         SELF.subj_code := subj_code;
         SELF.mapped_subj_code := mapped_subj_code;
         SELF.expr_subj_name := expr_subj_name;
-        SELF.expr_university := expr_university;
-        SELF.expr_faculty := expr_faculty;
-        SELF.expr_studies_modetier := expr_studies_modetier;
-        SELF.expr_studies_field := expr_studies_field;
-        SELF.expr_studies_specialty := expr_studies_specialty;
-        SELF.expr_semester_code := expr_semester_code;
         SELF.expr_subj_hours_w := expr_subj_hours_w;
         SELF.expr_subj_hours_c := expr_subj_hours_c;
         SELF.expr_subj_hours_l := expr_subj_hours_l;
@@ -40,6 +38,16 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_t AS
         SELF.expr_subj_credit_kind := expr_subj_credit_kind;
         SELF.expr_subj_ects := expr_subj_ects;
         SELF.expr_subj_tutor := expr_subj_tutor;
+        SELF.expr_university := expr_university;
+        SELF.expr_faculty := expr_faculty;
+        SELF.expr_studies_modetier := expr_studies_modetier;
+        SELF.expr_studies_field := expr_studies_field;
+        SELF.expr_studies_specialty := expr_studies_specialty;
+        SELF.expr_semester_code := expr_semester_code;
+        SELF.expr_semester_number := expr_semester_number;
+        SELF.expr_ects_mandatory := expr_ects_mandatory;
+        SELF.expr_ects_other := expr_ects_other;
+        SELF.expr_ects_total := expr_ects_total;
         RETURN;
     END;
 
@@ -61,18 +69,6 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_t AS
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.StrNI(expr_subj_name, other.expr_subj_name);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(expr_university, other.expr_university);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(expr_faculty, other.expr_faculty);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(expr_studies_modetier, other.expr_studies_modetier);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(expr_studies_field, other.expr_studies_field);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(expr_studies_specialty, other.expr_studies_specialty);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(expr_semester_code, other.expr_semester_code);
-        IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.StrNI(expr_subj_hours_w, other.expr_subj_hours_w);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.StrNI(expr_subj_hours_c, other.expr_subj_hours_c);
@@ -87,17 +83,25 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_t AS
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.StrNI(expr_subj_ects, other.expr_subj_ects);
         IF ord <> 0 THEN RETURN ord; END IF;
-        RETURN V2U_Cmp.StrNI(expr_subj_tutor, other.expr_subj_tutor);
+        ord := V2U_Cmp.StrNI(expr_subj_tutor, other.expr_subj_tutor);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(expr_university, other.expr_university);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(expr_faculty, other.expr_faculty);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(expr_studies_modetier, other.expr_studies_modetier);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(expr_studies_field, other.expr_studies_field);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(expr_studies_specialty, other.expr_studies_specialty);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(expr_semester_code, other.expr_semester_code);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        RETURN V2U_Cmp.StrNI(expr_semester_number, other.expr_semester_number);
     END;
 
     MEMBER FUNCTION match_expr_fields(
           subj_name IN VARCHAR2
-        , university IN VARCHAR2
-        , faculty IN VARCHAR2
-        , studies_modetier IN VARCHAR2
-        , studies_field IN VARCHAR2
-        , studies_specialty IN VARCHAR2
-        , semester_code IN VARCHAR2
         , subj_hours_w IN VARCHAR2
         , subj_hours_c IN VARCHAR2
         , subj_hours_l IN VARCHAR2
@@ -106,6 +110,16 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_t AS
         , subj_credit_kind IN VARCHAR2
         , subj_ects IN VARCHAR2
         , subj_tutor IN VARCHAR2
+        , university IN VARCHAR2
+        , faculty IN VARCHAR2
+        , studies_modetier IN VARCHAR2
+        , studies_field IN VARCHAR2
+        , studies_specialty IN VARCHAR2
+        , semester_code IN VARCHAR2
+        , semester_number IN VARCHAR2
+        , ects_mandatory IN VARCHAR2
+        , ects_other IN VARCHAR2
+        , ects_total IN VARCHAR2
         ) RETURN INTEGER
     IS
         total NUMBER;
@@ -114,54 +128,6 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_t AS
         total := 1;     -- if all expressions are NULL, then match is positive
         IF expr_subj_name IS NOT NULL THEN
             local := match_subj_name(subj_name);
-            IF local < 1 THEN
-                RETURN local;
-            ELSE
-                total := total + 1;
-            END IF;
-        END IF;
-        IF expr_university IS NOT NULL THEN
-            local := match_university(university);
-            IF local < 1 THEN
-                RETURN local;
-            ELSE
-                total := total + 1;
-            END IF;
-        END IF;
-        IF expr_faculty IS NOT NULL THEN
-            local := match_faculty(faculty);
-            IF local < 1 THEN
-                RETURN local;
-            ELSE
-                total := total + 1;
-            END IF;
-        END IF;
-        IF expr_studies_modetier IS NOT NULL THEN
-            local := match_studies_modetier(studies_modetier);
-            IF local < 1 THEN
-                RETURN local;
-            ELSE
-                total := total + 1;
-            END IF;
-        END IF;
-        IF expr_studies_field IS NOT NULL THEN
-            local := match_studies_field(studies_field);
-            IF local < 1 THEN
-                RETURN local;
-            ELSE
-                total := total + 1;
-            END IF;
-        END IF;
-        IF expr_studies_specialty IS NOT NULL THEN
-            local := match_studies_specialty(studies_specialty);
-            IF local < 1 THEN
-                RETURN local;
-            ELSE
-                total := total + 1;
-            END IF;
-        END IF;
-        IF expr_semester_code IS NOT NULL THEN
-            local := match_semester_code(semester_code);
             IF local < 1 THEN
                 RETURN local;
             ELSE
@@ -232,6 +198,86 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_t AS
                 total := total + 1;
             END IF;
         END IF;
+        IF expr_university IS NOT NULL THEN
+            local := match_university(university);
+            IF local < 1 THEN
+                RETURN local;
+            ELSE
+                total := total + 1;
+            END IF;
+        END IF;
+        IF expr_faculty IS NOT NULL THEN
+            local := match_faculty(faculty);
+            IF local < 1 THEN
+                RETURN local;
+            ELSE
+                total := total + 1;
+            END IF;
+        END IF;
+        IF expr_studies_modetier IS NOT NULL THEN
+            local := match_studies_modetier(studies_modetier);
+            IF local < 1 THEN
+                RETURN local;
+            ELSE
+                total := total + 1;
+            END IF;
+        END IF;
+        IF expr_studies_field IS NOT NULL THEN
+            local := match_studies_field(studies_field);
+            IF local < 1 THEN
+                RETURN local;
+            ELSE
+                total := total + 1;
+            END IF;
+        END IF;
+        IF expr_studies_specialty IS NOT NULL THEN
+            local := match_studies_specialty(studies_specialty);
+            IF local < 1 THEN
+                RETURN local;
+            ELSE
+                total := total + 1;
+            END IF;
+        END IF;
+        IF expr_semester_code IS NOT NULL THEN
+            local := match_semester_code(semester_code);
+            IF local < 1 THEN
+                RETURN local;
+            ELSE
+                total := total + 1;
+            END IF;
+        END IF;
+        IF expr_semester_number IS NOT NULL THEN
+            local := match_semester_number(semester_number);
+            IF local < 1 THEN
+                RETURN local;
+            ELSE
+                total := total + 1;
+            END IF;
+        END IF;
+        IF expr_ects_mandatory IS NOT NULL THEN
+            local := match_ects_mandatory(ects_mandatory);
+            IF local < 1 THEN
+                RETURN local;
+            ELSE
+                total := total + 1;
+            END IF;
+        END IF;
+        IF expr_ects_other IS NOT NULL THEN
+            local := match_ects_other(ects_other);
+            IF local < 1 THEN
+                RETURN local;
+            ELSE
+                total := total + 1;
+            END IF;
+        END IF;
+        IF expr_ects_total IS NOT NULL THEN
+            local := match_ects_total(ects_total);
+            IF local < 1 THEN
+                RETURN local;
+            ELSE
+                total := total + 1;
+            END IF;
+        END IF;
         -- bonus for mapped_subj_code being not NULL
         IF mapped_subj_code IS NOT NULL THEN
             total := total + 1;
@@ -245,54 +291,6 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_t AS
     IS
     BEGIN
         RETURN V2U_Match.String_Like(expr_subj_name, subj_name);
-    END;
-
-
-    MEMBER FUNCTION match_university(university IN VARCHAR2)
-        RETURN INTEGER
-    IS
-    BEGIN
-        RETURN V2U_Match.String_Like(expr_university, university);
-    END;
-
-
-    MEMBER FUNCTION match_faculty(faculty IN VARCHAR2)
-        RETURN INTEGER
-    IS
-    BEGIN
-        RETURN V2U_Match.String_Like(expr_faculty, faculty);
-    END;
-
-
-    MEMBER FUNCTION match_studies_modetier(studies_modetier IN VARCHAR2)
-        RETURN INTEGER
-    IS
-    BEGIN
-        RETURN V2U_Match.String_Like(expr_studies_modetier, studies_modetier);
-    END;
-
-
-    MEMBER FUNCTION match_studies_field(studies_field IN VARCHAR2)
-        RETURN INTEGER
-    IS
-    BEGIN
-        RETURN V2U_Match.String_Like(expr_studies_field, studies_field);
-    END;
-
-
-    MEMBER FUNCTION match_studies_specialty(studies_specialty IN VARCHAR2)
-        RETURN INTEGER
-    IS
-    BEGIN
-        RETURN V2U_Match.String_Like(expr_studies_specialty, studies_specialty);
-    END;
-
-
-    MEMBER FUNCTION match_semester_code(semester_code IN VARCHAR2)
-        RETURN INTEGER
-    IS
-    BEGIN
-        RETURN V2U_Match.String_Range(expr_semester_code, semester_code);
     END;
 
 
@@ -357,6 +355,86 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_t AS
     IS
     BEGIN
         RETURN V2U_Match.Person_Name(expr_subj_tutor, subj_tutor);
+    END;
+
+
+    MEMBER FUNCTION match_university(university IN VARCHAR2)
+        RETURN INTEGER
+    IS
+    BEGIN
+        RETURN V2U_Match.String_Like(expr_university, university);
+    END;
+
+
+    MEMBER FUNCTION match_faculty(faculty IN VARCHAR2)
+        RETURN INTEGER
+    IS
+    BEGIN
+        RETURN V2U_Match.String_Like(expr_faculty, faculty);
+    END;
+
+
+    MEMBER FUNCTION match_studies_modetier(studies_modetier IN VARCHAR2)
+        RETURN INTEGER
+    IS
+    BEGIN
+        RETURN V2U_Match.String_Like(expr_studies_modetier, studies_modetier);
+    END;
+
+
+    MEMBER FUNCTION match_studies_field(studies_field IN VARCHAR2)
+        RETURN INTEGER
+    IS
+    BEGIN
+        RETURN V2U_Match.String_Like(expr_studies_field, studies_field);
+    END;
+
+
+    MEMBER FUNCTION match_studies_specialty(studies_specialty IN VARCHAR2)
+        RETURN INTEGER
+    IS
+    BEGIN
+        RETURN V2U_Match.String_Like(expr_studies_specialty, studies_specialty);
+    END;
+
+
+    MEMBER FUNCTION match_semester_code(semester_code IN VARCHAR2)
+        RETURN INTEGER
+    IS
+    BEGIN
+        RETURN V2U_Match.String_Range(expr_semester_code, semester_code);
+    END;
+
+
+    MEMBER FUNCTION match_semester_number(semester_number IN INTEGER)
+        RETURN INTEGER
+    IS
+    BEGIN
+        RETURN V2U_Match.Number_Range(expr_semester_number, semester_number);
+    END;
+
+
+    MEMBER FUNCTION match_ects_mandatory(ects_mandatory IN INTEGER)
+        RETURN INTEGER
+    IS
+    BEGIN
+        RETURN V2U_Match.Number_Range(expr_ects_mandatory, ects_mandatory);
+    END;
+
+
+    MEMBER FUNCTION match_ects_other(ects_other IN INTEGER)
+        RETURN INTEGER
+    IS
+    BEGIN
+        RETURN V2U_Match.Number_Range(expr_ects_other, ects_other);
+    END;
+
+
+    MEMBER FUNCTION match_ects_total(ects_total IN INTEGER)
+        RETURN INTEGER
+    IS
+    BEGIN
+        RETURN V2U_Match.Number_Range(expr_ects_total, ects_total);
     END;
 END;
 
