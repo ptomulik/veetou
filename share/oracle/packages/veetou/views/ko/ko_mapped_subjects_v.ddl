@@ -7,7 +7,7 @@ AS SELECT
     , sm.id
     , j.matching_score
     , se.subj_code
-    , sm.mapped_subj_code
+    , sm.map_subj_code
     , se.subj_name
     , sm.expr_subj_name
     , se.university

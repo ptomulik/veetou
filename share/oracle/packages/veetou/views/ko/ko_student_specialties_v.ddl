@@ -14,9 +14,9 @@ AS SELECT
     , h.specialty_entity.studies_modetier studies_modetier
     , h.specialty_entity.studies_field studies_field
     , h.specialty_entity.studies_specialty studies_specialty
-    , h.specialty_map.mapped_program_code mapped_program_code
-    , h.specialty_map.mapped_modetier_code mapped_modetier_code
-    , h.specialty_map.mapped_field_code mapped_field_code
+    , h.specialty_map.map_program_code map_program_code
+    , h.specialty_map.map_modetier_code map_modetier_code
+    , h.specialty_map.map_field_code map_field_code
     , h.specialty_entity.semester_number semester_number
     , h.specialty_map.expr_semester_number expr_semester_number
     , h.specialty_entity.semester_code semester_code

@@ -35,10 +35,10 @@ SELECT
             ORDER BY t.id
       ) AS V2u_Ids_t) specmap_ids
 --    , CAST(MULTISET(
---            SELECT t.mapped_subj_code FROM TABLE(v.sm) t
+--            SELECT t.map_subj_code FROM TABLE(v.sm) t
 --            WHERE ROWNUM <= 20
 --            ORDER BY t.id
---      ) AS V2u_Subj_Codes_t) mapped_subj_codes
+--      ) AS V2u_Subj_Codes_t) map_subj_codes
     , v.matching_scores matching_scores
     -- entity
     , v.se.university university

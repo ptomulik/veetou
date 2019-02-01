@@ -3,7 +3,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_t AS
           SELF IN OUT NOCOPY V2u_Subject_Map_t
         , id IN NUMBER
         , subj_code IN VARCHAR2 := NULL
-        , mapped_subj_code IN VARCHAR2 := NULL
+        , map_subj_code IN VARCHAR2 := NULL
         , expr_subj_name IN VARCHAR2 := NULL
         , expr_subj_hours_w IN VARCHAR2 := NULL
         , expr_subj_hours_c IN VARCHAR2 := NULL
@@ -28,7 +28,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_t AS
     BEGIN
         SELF.id := id;
         SELF.subj_code := subj_code;
-        SELF.mapped_subj_code := mapped_subj_code;
+        SELF.map_subj_code := map_subj_code;
         SELF.expr_subj_name := expr_subj_name;
         SELF.expr_subj_hours_w := expr_subj_hours_w;
         SELF.expr_subj_hours_c := expr_subj_hours_c;
@@ -65,7 +65,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_t AS
     BEGIN
         ord := V2U_Cmp.StrNI(subj_code, other.subj_code);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(mapped_subj_code, other.mapped_subj_code);
+        ord := V2U_Cmp.StrNI(map_subj_code, other.map_subj_code);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.StrNI(expr_subj_name, other.expr_subj_name);
         IF ord <> 0 THEN RETURN ord; END IF;
@@ -278,8 +278,8 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_t AS
                 total := total + 1;
             END IF;
         END IF;
-        -- bonus for mapped_subj_code being not NULL
-        IF mapped_subj_code IS NOT NULL THEN
+        -- bonus for map_subj_code being not NULL
+        IF map_subj_code IS NOT NULL THEN
             total := total + 1;
         END IF;
         RETURN total;

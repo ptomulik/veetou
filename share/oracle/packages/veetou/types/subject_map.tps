@@ -1,7 +1,7 @@
 CREATE OR REPLACE TYPE V2u_Subject_Map_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Distinct_t
     ( subj_code VARCHAR2(32 CHAR)
-    , mapped_subj_code VARCHAR2(32 CHAR)
+    , map_subj_code VARCHAR2(32 CHAR)
     , expr_subj_name VARCHAR2(256 CHAR)
     , expr_subj_hours_w VARCHAR2(256 CHAR)
     , expr_subj_hours_c VARCHAR2(256 CHAR)
@@ -26,7 +26,7 @@ CREATE OR REPLACE TYPE V2u_Subject_Map_t
               SELF IN OUT NOCOPY V2u_Subject_Map_t
             , id IN NUMBER
             , subj_code IN VARCHAR2 := NULL
-            , mapped_subj_code IN VARCHAR2 := NULL
+            , map_subj_code IN VARCHAR2 := NULL
             , expr_subj_name IN VARCHAR2 := NULL
             , expr_subj_hours_w IN VARCHAR2 := NULL
             , expr_subj_hours_c IN VARCHAR2 := NULL

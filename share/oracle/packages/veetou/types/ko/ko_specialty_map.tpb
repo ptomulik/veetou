@@ -11,9 +11,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Map_t AS
         , studies_modetier VARCHAR2
         , studies_field VARCHAR2
         , studies_specialty VARCHAR2
-        , mapped_program_code VARCHAR2
-        , mapped_modetier_code VARCHAR2
-        , mapped_field_code VARCHAR2
+        , map_program_code VARCHAR2
+        , map_modetier_code VARCHAR2
+        , map_field_code VARCHAR2
         , semester_number NUMBER
         , expr_semester_number VARCHAR2
         , semester_code VARCHAR2
@@ -37,9 +37,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Map_t AS
         SELF.studies_modetier := studies_modetier;
         SELF.studies_field := studies_field;
         SELF.studies_specialty := studies_specialty;
-        SELF.mapped_program_code := mapped_program_code;
-        SELF.mapped_modetier_code := mapped_modetier_code;
-        SELF.mapped_field_code := mapped_field_code;
+        SELF.map_program_code := map_program_code;
+        SELF.map_modetier_code := map_modetier_code;
+        SELF.map_field_code := map_field_code;
         SELF.semester_number := semester_number;
         SELF.expr_semester_number := expr_semester_number;
         SELF.semester_code := semester_code;
@@ -72,9 +72,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Map_t AS
         SELF.studies_modetier := specialty.studies_modetier;
         SELF.studies_field := specialty.studies_field;
         SELF.studies_specialty := specialty.studies_specialty;
-        SELF.mapped_program_code := map.mapped_program_code;
-        SELF.mapped_modetier_code := map.mapped_modetier_code;
-        SELF.mapped_field_code := map.mapped_field_code;
+        SELF.map_program_code := map.map_program_code;
+        SELF.map_modetier_code := map.map_modetier_code;
+        SELF.map_field_code := map.map_field_code;
         SELF.semester_number := semester.semester_number;
         SELF.expr_semester_number := map.expr_semester_number;
         SELF.semester_code := semester.semester_code;
@@ -106,11 +106,11 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Map_t AS
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.NumN(matching_score, other.matching_score);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(mapped_program_code, other.mapped_program_code);
+        ord := V2U_Cmp.StrNI(map_program_code, other.map_program_code);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(mapped_modetier_code, other.mapped_modetier_code);
+        ord := V2U_Cmp.StrNI(map_modetier_code, other.map_modetier_code);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(mapped_field_code, other.mapped_field_code);
+        ord := V2U_Cmp.StrNI(map_field_code, other.map_field_code);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.NumN(semester_number, other.semester_number);
         IF ord <> 0 THEN RETURN ord; END IF;

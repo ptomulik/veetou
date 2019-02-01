@@ -4,7 +4,7 @@ OF V2u_Subject_Map_t
 
 COMMENT ON TABLE v2u_subject_map IS 'Odwzorowanie kodów przedmiotów (VEE->USOS)';
 COMMENT ON COLUMN v2u_subject_map.subj_code IS 'Kod przedmiotu (VEE)';
-COMMENT ON COLUMN v2u_subject_map.mapped_subj_code IS 'Kod przedmiotu (USOS)';
+COMMENT ON COLUMN v2u_subject_map.map_subj_code IS 'Kod przedmiotu (USOS)';
 COMMENT ON COLUMN v2u_subject_map.expr_subj_name IS 'Wyrażenie określające dopuszczalne nazwy przedmiotu';
 COMMENT ON COLUMN v2u_subject_map.expr_university IS 'Wyrażenie określające dopuszczalne nazwy uczelni';
 COMMENT ON COLUMN v2u_subject_map.expr_faculty IS 'Wyrażenie określające dopuszczalne nazwy wydziałów';
@@ -42,6 +42,6 @@ CREATE INDEX v2u_subject_map_idx1
      ON v2u_subject_map(subj_code);
 
 CREATE INDEX v2u_subject_map_idx2
-     ON v2u_subject_map(mapped_subj_code);
+     ON v2u_subject_map(map_subj_code);
 
 -- vim: set ft=sql ts=4 sw=4 et:

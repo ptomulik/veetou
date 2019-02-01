@@ -7,9 +7,9 @@ CREATE OR REPLACE TYPE BODY V2u_Specialty_Map_t AS
             , studies_modetier IN VARCHAR2 := NULL
             , studies_field IN VARCHAR2 := NULL
             , studies_specialty IN VARCHAR2 := NULL
-            , mapped_program_code IN VARCHAR2 := NULL
-            , mapped_modetier_code IN VARCHAR2 := NULL
-            , mapped_field_code IN VARCHAR2 := NULL
+            , map_program_code IN VARCHAR2 := NULL
+            , map_modetier_code IN VARCHAR2 := NULL
+            , map_field_code IN VARCHAR2 := NULL
             , expr_semester_number VARCHAR2 := NULL
             , expr_semester_code VARCHAR2 := NULL
             , expr_ects_mandatory VARCHAR2 := NULL
@@ -24,9 +24,9 @@ CREATE OR REPLACE TYPE BODY V2u_Specialty_Map_t AS
         SELF.studies_modetier := studies_modetier;
         SELF.studies_field := studies_field;
         SELF.studies_specialty := studies_specialty;
-        SELF.mapped_program_code := mapped_program_code;
-        SELF.mapped_modetier_code := mapped_modetier_code;
-        SELF.mapped_field_code := mapped_field_code;
+        SELF.map_program_code := map_program_code;
+        SELF.map_modetier_code := map_modetier_code;
+        SELF.map_field_code := map_field_code;
         SELF.expr_semester_number := expr_semester_number;
         SELF.expr_semester_code := expr_semester_code;
         SELF.expr_ects_mandatory := expr_ects_mandatory;
@@ -57,11 +57,11 @@ CREATE OR REPLACE TYPE BODY V2u_Specialty_Map_t AS
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.StrNI(studies_specialty, other.studies_specialty);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(mapped_program_code, other.mapped_program_code);
+        ord := V2U_Cmp.StrNI(map_program_code, other.map_program_code);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(mapped_modetier_code, other.mapped_modetier_code);
+        ord := V2U_Cmp.StrNI(map_modetier_code, other.map_modetier_code);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(mapped_field_code, other.mapped_field_code);
+        ord := V2U_Cmp.StrNI(map_field_code, other.map_field_code);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.StrNI(expr_semester_number, other.expr_semester_number);
         IF ord <> 0 THEN RETURN ord; END IF;
@@ -127,7 +127,7 @@ CREATE OR REPLACE TYPE BODY V2u_Specialty_Map_t AS
             END IF;
         END IF;
         -- bonus for mapped codes not being null
-        IF mapped_program_code IS NOT NULL THEN
+        IF map_program_code IS NOT NULL THEN
             total := total + 1;
         END IF;
         RETURN total;

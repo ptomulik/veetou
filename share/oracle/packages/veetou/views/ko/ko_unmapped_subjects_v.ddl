@@ -7,7 +7,7 @@ AS SELECT
     , v.subject_map_id
     , v.matching_score
     , v.subj_code
-    , v.mapped_subj_code
+    , v.map_subj_code
     , v.subj_name
     , v.expr_subj_name
     , v.university
@@ -40,7 +40,7 @@ AS SELECT
     , v.expr_subj_tutor
 FROM v2u_ko_mapped_subjects_v v
 WHERE v.subject_map_id IS NULL OR
-      v.mapped_subj_code IS NULL OR
+      v.map_subj_code IS NULL OR
       v.matching_score < 1;
 
 -- vim: set ft=sql ts=4 sw=4 et:

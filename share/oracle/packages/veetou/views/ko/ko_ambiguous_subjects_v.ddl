@@ -35,10 +35,10 @@ SELECT
             ORDER BY t.id
       ) AS V2u_Ids_t) subject_map_ids
     , CAST(MULTISET(
-            SELECT t.mapped_subj_code FROM TABLE(v.subject_map) t
+            SELECT t.map_subj_code FROM TABLE(v.subject_map) t
             WHERE ROWNUM <= 20
             ORDER BY t.id
-      ) AS V2u_Subj_Codes_t) mapped_subj_codes
+      ) AS V2u_Subj_Codes_t) map_subj_codes
     , v.matching_scores matching_scores
     -- entity
     , v.subject_entity.subj_code subj_code

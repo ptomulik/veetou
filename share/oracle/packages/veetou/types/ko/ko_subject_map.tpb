@@ -8,7 +8,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Map_t AS
         , map_id IN NUMBER
         , matching_score IN NUMBER
         , subj_code IN VARCHAR2
-        , mapped_subj_code IN VARCHAR2
+        , map_subj_code IN VARCHAR2
         , subj_name IN VARCHAR2
         , expr_subj_name IN VARCHAR2
         , subj_hours_w IN NUMBER
@@ -57,7 +57,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Map_t AS
         SELF.map_id := map_id;
         SELF.matching_score := matching_score;
         SELF.subj_code := subj_code;
-        SELF.mapped_subj_code := mapped_subj_code;
+        SELF.map_subj_code := map_subj_code;
         SELF.subj_name := subj_name;
         SELF.expr_subj_name := expr_subj_name;
         SELF.subj_hours_w := subj_hours_w;
@@ -117,7 +117,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Map_t AS
         SELF.map_id := map.id;
         SELF.matching_score := matching_score;
         SELF.subj_code := subject.subj_code;
-        SELF.mapped_subj_code := map.mapped_subj_code;
+        SELF.map_subj_code := map.map_subj_code;
         SELF.subj_name := subject.subj_name;
         SELF.expr_subj_name := map.expr_subj_name;
         SELF.subj_hours_w := subject.subj_hours_w;
@@ -167,7 +167,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Map_t AS
     BEGIN
         ord := V2U_Cmp.StrNI(subj_code, other.subj_code);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(mapped_subj_code, other.mapped_subj_code);
+        ord := V2U_Cmp.StrNI(map_subj_code, other.map_subj_code);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.NumN(matching_score, other.matching_score);
         IF ord <> 0 THEN RETURN ord; END IF;
@@ -189,7 +189,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Map_t AS
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.StrNI(subj_tutor, other.subj_tutor);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrN(mapped_subj_code, other.mapped_subj_code);
+        ord := V2U_Cmp.StrN(map_subj_code, other.map_subj_code);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.StrN(expr_subj_name, other.expr_subj_name);
         IF ord <> 0 THEN RETURN ord; END IF;

@@ -285,7 +285,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_To AS
 --            , subject_map_id => subject_map.id
 --            , matching_score => matching_score
 --            , subj_code => subject_entity.subj_code
---            , mapped_subj_code => subject_map.mapped_subj_code
+--            , map_subj_code => subject_map.map_subj_code
 --            , subj_name => subject_entity.subj_name
 --            , expr_subj_name => subject_map.expr_subj_name
 --            , university => subject_entity.university

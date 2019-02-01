@@ -11,9 +11,9 @@ AS SELECT
     , v.studies_modetier
     , v.studies_field
     , v.studies_specialty
-    , v.mapped_program_code
-    , v.mapped_modetier_code
-    , v.mapped_field_code
+    , v.map_program_code
+    , v.map_modetier_code
+    , v.map_field_code
     , v.semester_number
     , v.expr_semester_number
     , v.semester_code
