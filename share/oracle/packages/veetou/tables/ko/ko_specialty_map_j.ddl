@@ -5,14 +5,19 @@ CREATE TABLE v2u_ko_specialty_map_j
         , semester_id NUMBER(38)
         , map_id NUMBER(38)
         , matching_score NUMBER(38)
-        , CONSTRAINT v2u_ko_specialty_map_j_pk PRIMARY KEY (specialty_id, semester_id, map_id, job_uuid)
-        , CONSTRAINT v2u_ko_specialty_map_j_f0 FOREIGN KEY (job_uuid)
+        , CONSTRAINT v2u_ko_specialty_map_j_pk
+            PRIMARY KEY (specialty_id, semester_id, map_id, job_uuid)
+        , CONSTRAINT v2u_ko_specialty_map_j_f0
+            FOREIGN KEY (job_uuid)
             REFERENCES v2u_ko_jobs(job_uuid)
-        , CONSTRAINT v2u_ko_specialty_map_j_f1 FOREIGN KEY (specialty_id, job_uuid)
+        , CONSTRAINT v2u_ko_specialty_map_j_f1
+            FOREIGN KEY (specialty_id, job_uuid)
             REFERENCES v2u_ko_specialties(id, job_uuid)
-        , CONSTRAINT v2u_ko_specialty_map_j_f2 FOREIGN KEY (semester_id, job_uuid)
+        , CONSTRAINT v2u_ko_specialty_map_j_f2
+            FOREIGN KEY (semester_id, job_uuid)
             REFERENCES v2u_ko_semesters(id, job_uuid)
-        , CONSTRAINT v2u_ko_specialty_map_j_f3 FOREIGN KEY (map_id)
+        , CONSTRAINT v2u_ko_specialty_map_j_f3
+            FOREIGN KEY (map_id)
             REFERENCES v2u_specialty_map(id)
     );
 

@@ -14,6 +14,7 @@
 ----@@ko_threads.sql;
 --@@ko_mapped_subjects_v.ddl;
 @@ko_specialty_map_v.ddl;
+@@ko_subject_map_v.ddl;
 --@@ko_ambiguous_subjects_v.ddl;
 --@@ko_ambiguous_specialties_v.ddl;
 --@@ko_unmapped_subjects_v.ddl;

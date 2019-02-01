@@ -17,7 +17,7 @@ AS WITH u AS (
             specialties.job_uuid = subjects.job_uuid)
     INNER JOIN v2u_ko_semesters semesters
         ON (semesters.id = j.semester_id AND
-            semesters.job_uuid = specialties.job_uuid)
+            semesters.job_uuid = subjects.job_uuid)
 )
 SELECT * FROM u u
 WITH READ ONLY;

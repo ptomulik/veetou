@@ -1,32 +1,43 @@
 CREATE OR REPLACE PACKAGE BODY V2U_Fit AS
-    /* FUNCTION Attributes(
-              subject_map IN V2u_Subject_Map_t := NULL
-            , subject_entity IN V2u_Ko_Subject_Entity_t := NULL
+    FUNCTION Attributes(
+              subject_map IN V2u_Subject_Map_t
+            , subject IN V2u_Ko_Subject_t
+            , specialty IN V2u_Ko_Specialty_t
+            , semester IN V2u_Ko_Semester_t
             ) RETURN NUMBER
     IS
     BEGIN
-        IF subject_map IS NOT NULL AND subject_entity IS NOT NULL THEN
+        IF subject_map IS NOT NULL AND
+           subject IS NOT NULL AND
+           specialty IS NOT NULL AND
+           semester IS NOT NULL
+        THEN
             RETURN subject_map.match_expr_fields(
-                      subj_name => subject_entity.subj_name
-                    , university => subject_entity.university
-                    , faculty => subject_entity.faculty
-                    , studies_modetier => subject_entity.studies_modetier
-                    , studies_field => subject_entity.studies_field
-                    , studies_specialty => subject_entity.studies_specialty
-                    , semester_code => subject_entity.semester_code
-                    , subj_hours_w => subject_entity.subj_hours_w
-                    , subj_hours_c => subject_entity.subj_hours_c
-                    , subj_hours_l => subject_entity.subj_hours_l
-                    , subj_hours_p => subject_entity.subj_hours_p
-                    , subj_hours_s => subject_entity.subj_hours_s
-                    , subj_credit_kind => subject_entity.subj_credit_kind
-                    , subj_ects => subject_entity.subj_ects
-                    , subj_tutor => subject_entity.subj_tutor
+                      subj_name => subject.subj_name
+                    , subj_hours_w => subject.subj_hours_w
+                    , subj_hours_c => subject.subj_hours_c
+                    , subj_hours_l => subject.subj_hours_l
+                    , subj_hours_p => subject.subj_hours_p
+                    , subj_hours_s => subject.subj_hours_s
+                    , subj_credit_kind => subject.subj_credit_kind
+                    , subj_ects => subject.subj_ects
+                    , subj_tutor => subject.subj_tutor
+                    , university => specialty.university
+                    , faculty => specialty.faculty
+                    , studies_modetier => specialty.studies_modetier
+                    , studies_field => specialty.studies_field
+                    , studies_specialty => specialty.studies_specialty
+                    , semester_code => semester.semester_code
+                    , semester_number => semester.semester_number
+                    , ects_mandatory => semester.ects_mandatory
+                    , ects_other => semester.ects_other
+                    , ects_total => semester.ects_total
                     );
         ELSE
             RETURN 0;
         END IF;
-    END; */
+    END;
+
 
     FUNCTION Attributes(
                   specialty_map IN V2u_Specialty_Map_t
