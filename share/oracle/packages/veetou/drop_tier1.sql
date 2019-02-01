@@ -5,7 +5,7 @@
 @@packages/drop.pkg;
 
 BEGIN
-    V2U_Drop.Primaries();
+    V2U_Drop.Tier1();
 END;
 /
 DROP PACKAGE V2U_Drop;

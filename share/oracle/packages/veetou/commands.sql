@@ -19,37 +19,37 @@
 
 
 
--- Creates primary tables, types, packages, etc...
-@@create_primaries.sql;
+-- Creates tier1 tables, types, packages, etc...
+@@create_tier1.sql;
 
 
 
--- Wipes-out what was created by @@create_primaries.sql
-@@drop_primaries.sql;
+-- Wipes-out what was created by @@create_tier1.sql
+@@drop_tier1.sql;
 
 
 
--- Wipes-out primaries and creates them from scratch.
-@@drop_create_primaries.sql;
+-- Wipes-out tier1 and creates them from scratch.
+@@drop_create_tier1.sql;
 
 
 
--- Creates secondary types, tables, views, packages, etc.
-@@create_secondaries.sql;
+-- Creates tier2 types, tables, views, packages, etc.
+@@create_tier2.sql;
 
 
 
--- Drops what was created by @@create_secondaries.sql;
-@@drop_secondaries.sql;
+-- Drops what was created by @@create_tier2.sql;
+@@drop_tier2.sql;
 
 
 
--- Drops and then drop_creates views, packages, secondary tables and types.
-@@drop_create_secondaries.sql;
+-- Drops and then drop_creates views, packages, tier2 tables and types.
+@@drop_create_tier2.sql;
 
 
 
--- Merge data from primary tables into secondary tables.
-@reload_secondaries.sql;
+-- Merge data from tier1 tables into tier2 tables.
+@reload_tier2.sql;
 
 -- vim: set ft=sql ts=4 sw=4 et:

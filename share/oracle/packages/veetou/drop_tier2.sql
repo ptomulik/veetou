@@ -1,7 +1,7 @@
 @@packages/drop.pkg;
 
 BEGIN
-    V2U_Drop.Secondaries();
+    V2U_Drop.Tier2();
 END;
 /
 DROP PACKAGE V2U_Drop;

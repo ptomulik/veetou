@@ -1,4 +1,4 @@
-@@ko/create_primary_tables.sql
+@@ko/create_tier1_tables.sql
 
 @@universities.ddl;
 @@faculties.ddl;

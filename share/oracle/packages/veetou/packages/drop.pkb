@@ -172,7 +172,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_If_Exists('PACKAGE', 'V2U_' || package_name);
     END;
 
-    PROCEDURE Primaries
+    PROCEDURE Tier1
     IS
     BEGIN
         Drop_Index('specmap_idx1');
@@ -258,7 +258,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
 --        Drop_Type('5Ids_t');
     END;
 
-    PROCEDURE Secondaries
+    PROCEDURE Tier2
     IS
     BEGIN
 --        Drop_View('ko_unmapped_specialties_v');
