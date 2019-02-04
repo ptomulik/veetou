@@ -2,6 +2,7 @@ CREATE OR REPLACE TYPE V2u_Subject_Map_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Distinct_t
     ( subj_code VARCHAR2(32 CHAR)
     , map_subj_code VARCHAR2(32 CHAR)
+    , map_subj_lang VARCHAR2(3 CHAR)
     , expr_subj_name VARCHAR2(256 CHAR)
     , expr_subj_hours_w VARCHAR2(256 CHAR)
     , expr_subj_hours_c VARCHAR2(256 CHAR)
@@ -24,28 +25,29 @@ CREATE OR REPLACE TYPE V2u_Subject_Map_t
 
     , CONSTRUCTOR FUNCTION V2u_Subject_Map_t(
               SELF IN OUT NOCOPY V2u_Subject_Map_t
-            , id IN NUMBER
-            , subj_code IN VARCHAR2 := NULL
-            , map_subj_code IN VARCHAR2 := NULL
-            , expr_subj_name IN VARCHAR2 := NULL
-            , expr_subj_hours_w IN VARCHAR2 := NULL
-            , expr_subj_hours_c IN VARCHAR2 := NULL
-            , expr_subj_hours_l IN VARCHAR2 := NULL
-            , expr_subj_hours_p IN VARCHAR2 := NULL
-            , expr_subj_hours_s IN VARCHAR2 := NULL
-            , expr_subj_credit_kind IN VARCHAR2 := NULL
-            , expr_subj_ects IN VARCHAR2 := NULL
-            , expr_subj_tutor IN VARCHAR2 := NULL
-            , expr_university IN VARCHAR2 := NULL
-            , expr_faculty IN VARCHAR2 := NULL
-            , expr_studies_modetier IN VARCHAR2 := NULL
-            , expr_studies_field IN VARCHAR2 := NULL
-            , expr_studies_specialty IN VARCHAR2 := NULL
-            , expr_semester_code IN VARCHAR2 := NULL
-            , expr_semester_number IN VARCHAR2 := NULL
-            , expr_ects_mandatory IN VARCHAR2 := NULL
-            , expr_ects_other IN VARCHAR2 := NULL
-            , expr_ects_total IN VARCHAR2 := NULL
+            , id IN NUMBER := NULL
+            , subj_code IN VARCHAR2
+            , map_subj_code IN VARCHAR2
+            , map_subj_lang IN VARCHAR2
+            , expr_subj_name IN VARCHAR2
+            , expr_subj_hours_w IN VARCHAR2
+            , expr_subj_hours_c IN VARCHAR2
+            , expr_subj_hours_l IN VARCHAR2
+            , expr_subj_hours_p IN VARCHAR2
+            , expr_subj_hours_s IN VARCHAR2
+            , expr_subj_credit_kind IN VARCHAR2
+            , expr_subj_ects IN VARCHAR2
+            , expr_subj_tutor IN VARCHAR2
+            , expr_university IN VARCHAR2
+            , expr_faculty IN VARCHAR2
+            , expr_studies_modetier IN VARCHAR2
+            , expr_studies_field IN VARCHAR2
+            , expr_studies_specialty IN VARCHAR2
+            , expr_semester_code IN VARCHAR2
+            , expr_semester_number IN VARCHAR2
+            , expr_ects_mandatory IN VARCHAR2
+            , expr_ects_other IN VARCHAR2
+            , expr_ects_total IN VARCHAR2
             )
         RETURN SELF AS RESULT
 

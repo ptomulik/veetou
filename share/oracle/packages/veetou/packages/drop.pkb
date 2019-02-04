@@ -261,11 +261,11 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     PROCEDURE Tier2
     IS
     BEGIN
---        Drop_View('ko_unmapped_specialties_v');
---        Drop_View('ko_ambiguous_specialties_v');
+        Drop_View('ko_unmapped_specialties_v');
+        Drop_View('ko_ambig_specialty_map_v');
         Drop_View('ko_specialty_map_v');
---        Drop_View('ko_unmapped_subjects_v');
---        Drop_View('ko_ambiguous_subjects_v');
+        Drop_View('ko_unmapped_subjects_v');
+        Drop_View('ko_ambig_subject_map_v');
         Drop_View('ko_subject_map_v');
 --        Drop_View('ko_student_specialties_v');
 --        Drop_View('ko_student_specialties_h');
@@ -322,7 +322,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
 
         Drop_Collect_Types();
 
-        Drop_Type('Ko_Mapped_Subject_t', 'Ko_Mapped_Subjects_t');
+        Drop_Type('Ko_Ambig_Specialty_Map_t', 'Ko_Ambig_Specialty_Maps_t');
+        Drop_Type('Ko_Ambig_Subject_Map_t', 'Ko_Ambig_Subject_Maps_t');
+--        Drop_Type('Ko_Mapped_Subject_t', 'Ko_Mapped_Subjects_t');
         Drop_Type('Ko_Specialty_Map_t', 'Ko_Specialty_Maps_t');
         Drop_Type('Ko_Subject_Map_t', 'Ko_Subject_Maps_t');
         Drop_Type('Ko_Student_Specialty_H_t');

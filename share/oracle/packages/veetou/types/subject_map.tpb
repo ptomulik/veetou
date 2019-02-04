@@ -2,33 +2,35 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_t AS
     CONSTRUCTOR FUNCTION V2u_Subject_Map_t(
           SELF IN OUT NOCOPY V2u_Subject_Map_t
         , id IN NUMBER
-        , subj_code IN VARCHAR2 := NULL
-        , map_subj_code IN VARCHAR2 := NULL
-        , expr_subj_name IN VARCHAR2 := NULL
-        , expr_subj_hours_w IN VARCHAR2 := NULL
-        , expr_subj_hours_c IN VARCHAR2 := NULL
-        , expr_subj_hours_l IN VARCHAR2 := NULL
-        , expr_subj_hours_p IN VARCHAR2 := NULL
-        , expr_subj_hours_s IN VARCHAR2 := NULL
-        , expr_subj_credit_kind IN VARCHAR2 := NULL
-        , expr_subj_ects IN VARCHAR2 := NULL
-        , expr_subj_tutor IN VARCHAR2 := NULL
-        , expr_university IN VARCHAR2 := NULL
-        , expr_faculty IN VARCHAR2 := NULL
-        , expr_studies_modetier IN VARCHAR2 := NULL
-        , expr_studies_field IN VARCHAR2 := NULL
-        , expr_studies_specialty IN VARCHAR2 := NULL
-        , expr_semester_code IN VARCHAR2 := NULL
-        , expr_semester_number IN VARCHAR2 := NULL
-        , expr_ects_mandatory IN VARCHAR2 := NULL
-        , expr_ects_other IN VARCHAR2 := NULL
-        , expr_ects_total IN VARCHAR2 := NULL
+        , subj_code IN VARCHAR2
+        , map_subj_code IN VARCHAR2
+        , map_subj_lang IN VARCHAR2
+        , expr_subj_name IN VARCHAR2
+        , expr_subj_hours_w IN VARCHAR2
+        , expr_subj_hours_c IN VARCHAR2
+        , expr_subj_hours_l IN VARCHAR2
+        , expr_subj_hours_p IN VARCHAR2
+        , expr_subj_hours_s IN VARCHAR2
+        , expr_subj_credit_kind IN VARCHAR2
+        , expr_subj_ects IN VARCHAR2
+        , expr_subj_tutor IN VARCHAR2
+        , expr_university IN VARCHAR2
+        , expr_faculty IN VARCHAR2
+        , expr_studies_modetier IN VARCHAR2
+        , expr_studies_field IN VARCHAR2
+        , expr_studies_specialty IN VARCHAR2
+        , expr_semester_code IN VARCHAR2
+        , expr_semester_number IN VARCHAR2
+        , expr_ects_mandatory IN VARCHAR2
+        , expr_ects_other IN VARCHAR2
+        , expr_ects_total IN VARCHAR2
         ) RETURN SELF AS RESULT
     IS
     BEGIN
         SELF.id := id;
         SELF.subj_code := subj_code;
         SELF.map_subj_code := map_subj_code;
+        SELF.map_subj_lang := map_subj_lang;
         SELF.expr_subj_name := expr_subj_name;
         SELF.expr_subj_hours_w := expr_subj_hours_w;
         SELF.expr_subj_hours_c := expr_subj_hours_c;
@@ -66,6 +68,8 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_t AS
         ord := V2U_Cmp.StrNI(subj_code, other.subj_code);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.StrNI(map_subj_code, other.map_subj_code);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(map_subj_lang, other.map_subj_lang);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.StrNI(expr_subj_name, other.expr_subj_name);
         IF ord <> 0 THEN RETURN ord; END IF;

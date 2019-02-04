@@ -7,6 +7,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Map_t FORCE AUTHID CURRENT_USER AS OBJECT
     , matching_score NUMBER(38)
     , subj_code VARCHAR2(32 CHAR)
     , map_subj_code VARCHAR2(20 CHAR)
+    , map_subj_lang VARCHAR2(3 CHAR)
     , subj_name VARCHAR2(256 CHAR)
     , expr_subj_name VARCHAR2(256 CHAR)
     , subj_hours_w NUMBER(8)
@@ -56,6 +57,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Map_t FORCE AUTHID CURRENT_USER AS OBJECT
             , matching_score IN NUMBER
             , subj_code IN VARCHAR2
             , map_subj_code IN VARCHAR2
+            , map_subj_lang IN VARCHAR2
             , subj_name IN VARCHAR2
             , expr_subj_name IN VARCHAR2
             , subj_hours_w IN NUMBER
