@@ -261,25 +261,6 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     PROCEDURE Tier2
     IS
     BEGIN
-        Drop_View('ko_unmapped_specialties_v');
-        Drop_View('ko_ambig_specialty_map_v');
-        Drop_View('ko_specialty_map_v');
-        Drop_View('ko_unmapped_subjects_v');
-        Drop_View('ko_ambig_subject_map_v');
-        Drop_View('ko_subject_map_v');
---        Drop_View('ko_student_specialties_v');
---        Drop_View('ko_student_specialties_h');
---        Drop_Materialized_View('ko_sh_hdr_preamb_h');
---        Drop_Materialized_View('ko_tr_hdr_preamb_h');
---        Drop_View('ko_x_sheets_h');
---        Drop_View('ko_x_sheets_v');
---        Drop_View('ko_x_trs_h');
---        Drop_View('ko_x_trs_v');
-
-        Drop_View('ko_subject_semesters_v');
-        Drop_View('ko_student_semesters_v');
-        Drop_View('ko_specialty_semesters_v');
-
         --
         Drop_Table('ko_grades_j', how => 'PURGE');
         Drop_Table('ko_student_sheets_j', how => 'PURGE');
@@ -322,27 +303,12 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
 
         Drop_Collect_Types();
 
-        Drop_Type('Ko_Ambig_Specialty_Map_t', 'Ko_Ambig_Specialty_Maps_t');
-        Drop_Type('Ko_Ambig_Subject_Map_t', 'Ko_Ambig_Subject_Maps_t');
---        Drop_Type('Ko_Mapped_Subject_t', 'Ko_Mapped_Subjects_t');
-        Drop_Type('Ko_Specialty_Map_t', 'Ko_Specialty_Maps_t');
-        Drop_Type('Ko_Subject_Map_t', 'Ko_Subject_Maps_t');
-        Drop_Type('Ko_Student_Specialty_H_t');
-        Drop_Type('Ko_Specialty_Semester_t', 'Ko_Specialty_Semesters_t');
-        Drop_Type('Ko_Student_Semester_t', 'Ko_Student_Semesters_t');
-        Drop_Type('Ko_Subject_Semester_t', 'Ko_Subject_Semesters_t');
         Drop_Type('Ko_Specialty_t');
         Drop_Type('Ko_Subject_t');
         Drop_Type('Ko_Thread_Indices_t');
         Drop_Type('Ko_Semester_Threads_t');
         Drop_Type('Ko_Semester_t', 'Ko_Semesters_t');
         Drop_Type('Ko_Student_t');
-        Drop_Type('Ko_Sh_Hdr_Preamb_H_t', 'Ko_Sh_Hdr_Preambs_H_t');
-        Drop_Type('Ko_Tr_Hdr_Preamb_H_t', 'Ko_Tr_Hdr_Preambs_H_t');
-        Drop_Type('Ko_X_Sheet_H_t', 'Ko_X_Sheets_H_t');
-        Drop_TYpe('Ko_X_Sheet_Pages_t');
-        Drop_TYpe('Ko_X_Sheet_Footers_t');
-        Drop_Type('Ko_X_Tr_H_t', 'Ko_X_Trs_H_t');
         Drop_Type('Ko_Distinct_t');
 
         Drop_Type('Subj_Grades_t');
@@ -352,6 +318,30 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Subj_20Grades_t');
         Drop_Type('Subj_20Codes_t');
         Drop_Type('5Ids_t');
+    END;
+
+    PROCEDURE Tier3
+    IS
+    BEGIN
+        Drop_View('ko_ambig_specialty_map_v');
+        Drop_View('ko_ambig_subject_map_v');
+        Drop_View('ko_unmapped_specialties_v');
+        Drop_View('ko_unmapped_subjects_v');
+        Drop_View('ko_specialty_map_v');
+        Drop_View('ko_subject_map_v');
+        Drop_View('ko_specialty_semesters_v');
+        Drop_View('ko_subject_semesters_v');
+        Drop_View('ko_student_semesters_v');
+
+--        Drop_Collect_Types();
+
+        Drop_Type('Ko_Ambig_Specialty_Map_t', 'Ko_Ambig_Specialty_Maps_t');
+        Drop_Type('Ko_Ambig_Subject_Map_t', 'Ko_Ambig_Subject_Maps_t');
+        Drop_Type('Ko_Specialty_Map_t', 'Ko_Specialty_Maps_t');
+        Drop_Type('Ko_Subject_Map_t', 'Ko_Subject_Maps_t');
+        Drop_Type('Ko_Specialty_Semester_t', 'Ko_Specialty_Semesters_t');
+        Drop_Type('Ko_Subject_Semester_t', 'Ko_Subject_Semesters_t');
+        Drop_Type('Ko_Student_Semester_t', 'Ko_Student_Semesters_t');
     END;
 
 

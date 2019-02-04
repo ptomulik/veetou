@@ -52,4 +52,19 @@
 -- Merge data from tier1 tables into tier2 tables.
 @reload_tier2.sql;
 
+
+
+-- Creates tier3 types, tables, views, packages, etc.
+@@create_tier3.sql;
+
+
+
+-- Drops what was created by @@create_tier3.sql;
+@@drop_tier3.sql;
+
+
+
+-- Drops and then drop_creates views, packages, tier3 tables and types.
+@@drop_create_tier3.sql;
+
 -- vim: set ft=sql ts=4 sw=4 et:
