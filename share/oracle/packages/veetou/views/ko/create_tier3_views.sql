@@ -7,6 +7,7 @@
 ----@@ko_student_threads_h.ddl;
 ----@@ko_threads.sql;
 --@@ko_mapped_subjects_v.ddl;
+@@ko_grades_v.ddl;
 @@ko_specialty_map_v.ddl;
 @@ko_subject_map_v.ddl;
 @@ko_ambig_subject_map_v.ddl;

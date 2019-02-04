@@ -2,6 +2,7 @@
 @@ko_specialty_semester.tpb;
 @@ko_student_semester.tpb;
 @@ko_subject_semester.tpb;
+@@ko_grade.tpb;
 @@ko_subject_map.tpb;
 @@ko_specialty_map.tpb;
 @@ko_ambig_subject_map.tpb;
