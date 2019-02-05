@@ -262,6 +262,10 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     IS
     BEGIN
         --
+        Drop_Index('ko_student_threads_j_idx1');
+        Drop_Index('ko_student_threads_j_idx2');
+        Drop_Table('ko_student_threads_j', how => 'PURGE');
+        --
         Drop_Table('ko_grades_j', how => 'PURGE');
         Drop_Table('ko_student_sheets_j', how => 'PURGE');
         Drop_Table('ko_student_specialties_j', how => 'PURGE');
@@ -310,6 +314,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Student_t');
         Drop_Type('Ko_Distinct_t');
 
+        Drop_Type('Semester_Codes_t');
         Drop_Type('Subj_Grades_t');
         Drop_Type('Subj_Codes_t');
         Drop_Type('Ids_t');

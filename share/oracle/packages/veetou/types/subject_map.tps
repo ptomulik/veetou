@@ -3,6 +3,8 @@ CREATE OR REPLACE TYPE V2u_Subject_Map_t
     ( subj_code VARCHAR2(32 CHAR)
     , map_subj_code VARCHAR2(32 CHAR)
     , map_subj_lang VARCHAR2(3 CHAR)
+    , map_org_unit VARCHAR2(20 CHAR)
+    , map_org_unit_recipient VARCHAR2(20 CHAR)
     , expr_subj_name VARCHAR2(256 CHAR)
     , expr_subj_hours_w VARCHAR2(256 CHAR)
     , expr_subj_hours_c VARCHAR2(256 CHAR)
@@ -29,6 +31,8 @@ CREATE OR REPLACE TYPE V2u_Subject_Map_t
             , subj_code IN VARCHAR2
             , map_subj_code IN VARCHAR2
             , map_subj_lang IN VARCHAR2
+            , map_org_unit IN VARCHAR2
+            , map_org_unit_recipient IN VARCHAR2
             , expr_subj_name IN VARCHAR2
             , expr_subj_hours_w IN VARCHAR2
             , expr_subj_hours_c IN VARCHAR2

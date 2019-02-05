@@ -4,12 +4,14 @@ CREATE OR REPLACE TYPE BODY V2u_Faculty_t AS
             , id IN NUMBER := NULL
             , abbriev IN VARCHAR2
             , name IN VARCHAR2
+            , code IN VARCHAR2
             ) RETURN SELF AS RESULT
     IS
     BEGIN
         SELF.id := id;
         SELF.abbriev := abbriev;
         SELF.name := name;
+        SELF.code := code;
         RETURN;
     END;
 
@@ -27,7 +29,9 @@ CREATE OR REPLACE TYPE BODY V2u_Faculty_t AS
     BEGIN
         ord := V2U_Cmp.StrNI(abbriev, other.abbriev);
         IF ord <> 0 THEN RETURN ord; END IF;
-        RETURN V2U_Cmp.StrNI(name, other.name);
+        ord := V2U_Cmp.StrNI(name, other.name);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        RETURN V2U_Cmp.StrNI(code, other.code);
     END;
 END;
 

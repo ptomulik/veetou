@@ -1,24 +1,28 @@
 CREATE OR REPLACE VIEW v2u_ko_student_threads_v
-AS WITH specialties AS (
-    SELECT
-          job_uuid
-        , student
-        , specialty
-        , V2U_To.Threads(semester_instances) threads
-    FROM v2u_ko_student_specialties_v
-)
-SELECT
-      job_uuid
-    , student
-    , specialty
-    , ROW_NUMBER() OVER (PARTITION BY job_uuid, student, specialty ORDER BY 1) thread_index
-    , (SELECT MAX(ROWNUM) FROM TABLE(threads)) threads_count
-    , V2U_Util.Max_Admission_Semester(VALUE(t)) max_admission_semester
-    , CAST(MULTISET(SELECT sheet_id FROM TABLE(VALUE(t)) s ORDER BY VALUE(s))
-           AS V2u_Ids_t) sheet_ids
-    , VALUE(t) thread_semesters
-FROM specialties
-CROSS JOIN TABLE(threads) t;
-
+OF V2u_Ko_Student_Thread_t
+WITH OBJECT IDENTIFIER (job_uuid, student_id, specialty_id, specialty_map_id, thread_index)
+AS WITH u AS
+    (
+        SELECT
+              V2u_Ko_Student_Thread_t(
+                  VALUE(students)
+                , VALUE(specialties)
+                , VALUE(specialty_map)
+                , j.semester_ids
+                , j.thread_index
+                , j.max_admission_semester
+            )
+        FROM v2u_ko_student_threads_j j
+        INNER JOIN v2u_ko_students students
+            ON (students.id = j.student_id AND
+                students.job_uuid = j.job_uuid)
+        INNER JOIN v2u_ko_specialties specialties
+            ON (specialties.id = j.specialty_id AND
+                specialties.job_uuid = j.job_uuid)
+        INNER JOIN v2u_specialty_map specialty_map
+            ON (specialty_map.id = j.specialty_map_id)
+    )
+SELECT * FROM u u
+WITH READ ONLY;
 
 -- vim: set ft=sql ts=4 sw=4 et:
