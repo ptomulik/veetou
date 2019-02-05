@@ -18,5 +18,7 @@
 @@ko_specialty_map_j.ddl;
 @@ko_subject_map_j.ddl;
 --@@ko_student_specialties_j.ddl;
+@@ko_subject_map_grades_j.ddl;
+
 
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -27,9 +27,6 @@ CREATE OR REPLACE TYPE V2u_Ko_Semester_t
         RETURN V2u_Ko_Semester_t
     );
 /
-CREATE OR REPLACE TYPE V2u_Ko_Thread_Indices_t
-    AS TABLE OF NUMBER(2);
-/
 CREATE OR REPLACE TYPE V2u_Ko_Semesters_t
     AS TABLE OF V2u_Ko_Semester_t;
 /

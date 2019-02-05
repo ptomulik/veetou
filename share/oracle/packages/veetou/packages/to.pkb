@@ -15,9 +15,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_To AS
 
 
     FUNCTION Find_Threads(semesters IN V2u_Ko_Semesters_t)
-        RETURN V2u_Ko_Thread_Indices_t
+        RETURN V2u_Ints2_t
     IS
-        t V2u_Ko_Thread_Indices_t := V2u_Ko_Thread_Indices_t();
+        t V2u_Ints2_t := V2u_Ints2_t();
         n NUMBER := 0;
         i NUMBER := 1;
         j NUMBER;
@@ -57,7 +57,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_To AS
         n NUMBER := 0;
         i NUMBER := 1;
         j NUMBER;
-        tn V2u_Ko_Thread_Indices_t;
+        tn V2u_Ints2_t;
         tt V2u_Ko_Semester_Threads_t := V2u_Ko_Semester_Threads_t();
     BEGIN
         tn := Find_Threads(semesters);

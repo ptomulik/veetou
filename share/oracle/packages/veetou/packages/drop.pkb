@@ -262,6 +262,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     IS
     BEGIN
         --
+        Drop_Table('ko_subject_map_grades_j', how => 'PURGE');
         Drop_Table('ko_grades_j', how => 'PURGE');
         Drop_Table('ko_student_sheets_j', how => 'PURGE');
         Drop_Table('ko_student_specialties_j', how => 'PURGE');
@@ -305,7 +306,6 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
 
         Drop_Type('Ko_Specialty_t');
         Drop_Type('Ko_Subject_t');
-        Drop_Type('Ko_Thread_Indices_t');
         Drop_Type('Ko_Semester_Threads_t');
         Drop_Type('Ko_Semester_t', 'Ko_Semesters_t');
         Drop_Type('Ko_Student_t');
@@ -314,10 +314,11 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Subj_Grades_t');
         Drop_Type('Subj_Codes_t');
         Drop_Type('Ids_t');
+        Drop_Type('5Ids_t');
         Drop_Type('Integers_t');
+        Drop_Type('Ints2_t');
         Drop_Type('Subj_20Grades_t');
         Drop_Type('Subj_20Codes_t');
-        Drop_Type('5Ids_t');
     END;
 
     PROCEDURE Tier3
