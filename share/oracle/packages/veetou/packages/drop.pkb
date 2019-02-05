@@ -262,7 +262,6 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     IS
     BEGIN
         --
-        Drop_Table('ko_subject_map_grades_j', how => 'PURGE');
         Drop_Table('ko_grades_j', how => 'PURGE');
         Drop_Table('ko_student_sheets_j', how => 'PURGE');
         Drop_Table('ko_student_specialties_j', how => 'PURGE');

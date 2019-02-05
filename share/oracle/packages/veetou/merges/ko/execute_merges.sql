@@ -17,7 +17,6 @@
 --@@ko_subject_entities.sql;
 @@ko_subject_map_j.sql;
 --@@ko_student_specialties_j.sql;
-@@ko_subject_map_grades_j.sql;
 
 
 -- vim: set ft=sql ts=4 sw=4 et:
