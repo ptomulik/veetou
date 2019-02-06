@@ -17,6 +17,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Student_Thread_t
     , map_program_code VARCHAR2(32 CHAR)
     , map_modetier_code VARCHAR2(32 CHAR)
     , map_field_code VARCHAR2(32 CHAR)
+    , map_specialty_code VARCHAR2(32 CHAR)
     , semester_ids V2u_Ids_t
     , semester_numbers V2u_Ints2_t
     , semester_codes V2u_Semester_Codes_t
@@ -41,6 +42,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Student_Thread_t
             , map_program_code IN VARCHAR2
             , map_modetier_code IN VARCHAR2
             , map_field_code IN VARCHAR2
+            , map_specialty_code IN VARCHAR2
             , semester_ids IN V2u_Ids_t
             , semester_numbers IN V2u_Ints2_t
             , semester_codes IN V2u_Semester_Codes_t

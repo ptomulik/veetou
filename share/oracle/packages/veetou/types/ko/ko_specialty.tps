@@ -19,6 +19,15 @@ CREATE OR REPLACE TYPE V2u_Ko_Specialty_t
             , sheet_ids IN V2u_Ids_t := NULL
             ) RETURN SELF AS RESULT
 
+    , CONSTRUCTOR FUNCTION V2u_Ko_Specialty_t(
+              SELF IN OUT NOCOPY V2u_Ko_Specialty_t
+            , id IN NUMBER := NULL
+            , job_uuid IN RAW
+            , header IN V2u_Ko_Header_t
+            , preamble IN V2u_Ko_Preamble_t
+            , sheet_ids IN V2u_Ids_t := NULL
+            ) RETURN SELF AS RESULT
+
     , MEMBER FUNCTION dup(new_sheet_ids IN V2u_Ids_t := NULL)
             RETURN V2u_Ko_Specialty_t
 

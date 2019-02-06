@@ -21,6 +21,27 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Student_t AS
         RETURN;
     END;
 
+
+    CONSTRUCTOR FUNCTION V2u_Ko_Student_t(
+              SELF IN OUT NOCOPY V2u_Ko_Student_t
+            , id IN NUMBER := NULL
+            , job_uuid IN RAW
+            , preamble IN V2u_Ko_Preamble_t
+            , sheet_ids IN V2u_Ids_t := NULL
+            ) RETURN SELF AS RESULT
+    IS
+    BEGIN
+        SELF.job_uuid := job_uuid;
+        SELF.id := id;
+        SELF.student_index := preamble.student_index;
+        SELF.student_name := preamble.student_name;
+        SELF.first_name := preamble.first_name;
+        SELF.last_name := preamble.last_name;
+        SELF.sheet_ids := sheet_ids;
+        RETURN;
+    END;
+
+
     OVERRIDING MEMBER FUNCTION cmp_val(other IN V2u_Distinct_t)
             RETURN INTEGER
     IS
@@ -42,8 +63,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Student_t AS
     IS
     BEGIN
         RETURN V2u_Ko_Student_t(
-              job_uuid => job_uuid
-            , id => id
+              id => id
+            , job_uuid => job_uuid
             , student_index => student_index
             , student_name => student_name
             , first_name => first_name

@@ -28,7 +28,7 @@ USING
         v AS
         (
             SELECT
-                  V2u_To.Ko_Specialty(
+                  V2u_Ko_Specialty_t(
                           job_uuid => u.sheet.job_uuid
                         , header => u.header
                         , preamble => u.preamble

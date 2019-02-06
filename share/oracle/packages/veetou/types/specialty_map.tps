@@ -8,6 +8,7 @@ CREATE OR REPLACE TYPE V2u_Specialty_Map_t
     , map_program_code VARCHAR2(32 CHAR)
     , map_modetier_code VARCHAR2(32 CHAR)
     , map_field_code VARCHAR2(32 CHAR)
+    , map_specialty_code VARCHAR2(32 CHAR)
     , expr_semester_number VARCHAR2(256 CHAR)
     , expr_semester_code VARCHAR2(256 CHAR)
     , expr_ects_mandatory VARCHAR2(256 CHAR)
@@ -25,6 +26,7 @@ CREATE OR REPLACE TYPE V2u_Specialty_Map_t
             , map_program_code IN VARCHAR2 := NULL
             , map_modetier_code IN VARCHAR2 := NULL
             , map_field_code IN VARCHAR2 := NULL
+            , map_specialty_code IN VARCHAR2 := NULL
             , expr_semester_number VARCHAR2 := NULL
             , expr_semester_code VARCHAR2 := NULL
             , expr_ects_mandatory VARCHAR2 := NULL

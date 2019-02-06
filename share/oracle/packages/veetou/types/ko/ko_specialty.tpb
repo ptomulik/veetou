@@ -23,6 +23,28 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_t AS
         RETURN;
     END;
 
+    CONSTRUCTOR FUNCTION V2u_Ko_Specialty_t(
+              SELF IN OUT NOCOPY V2u_Ko_Specialty_t
+            , id IN NUMBER := NULL
+            , job_uuid IN RAW
+            , header IN V2u_Ko_Header_t
+            , preamble IN V2u_Ko_Preamble_t
+            , sheet_ids IN V2u_Ids_t := NULL
+            ) RETURN SELF AS RESULT
+    IS
+    BEGIN
+        SELF.id := id;
+        SELF.job_uuid := job_uuid;
+        SELF.university := V2U_Get.University(name => header.university).abbriev;
+        SELF.faculty := V2U_Get.Faculty(name => header.faculty).abbriev;
+        SELF.studies_modetier := preamble.studies_modetier;
+        SELF.studies_field := preamble.studies_field;
+        SELF.studies_specialty := preamble.studies_specialty;
+        SELF.sheet_ids := sheet_ids;
+        RETURN;
+    END;
+
+
     MEMBER FUNCTION dup(new_sheet_ids IN V2u_Ids_t := NULL)
             RETURN V2u_Ko_Specialty_t
     IS

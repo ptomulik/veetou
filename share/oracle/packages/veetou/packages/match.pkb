@@ -1,4 +1,21 @@
 CREATE OR REPLACE PACKAGE BODY V2U_Match AS
+    FUNCTION Split_Range(str IN VARCHAR2, left OUT VARCHAR2, right OUT VARCHAR2)
+        RETURN BOOLEAN
+    IS
+        sp NUMBER;  -- separator position
+    BEGIN
+        sp := INSTR(str, '..');
+        IF sp = 0 THEN
+            left := TRIM(str);
+            right := TRIM(str);
+            RETURN TRUE;
+        ELSE
+            left := TRIM(SUBSTR(str, 1, sp-1));
+            right := TRIM(SUBSTR(str, sp+2));
+            RETURN TRUE;
+        END IF;
+    END;
+
     FUNCTION To_Number_Or_Null(value IN VARCHAR2)
         RETURN INTEGER
     IS
@@ -55,7 +72,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Match AS
         smin VARCHAR2(1024);
         smax VARCHAR2(1024);
     BEGIN
-        IF NOT V2U_Util.Split_Range(expr, smin, smax) THEN
+        IF NOT Split_Range(expr, smin, smax) THEN
             RETURN -1;
         END IF;
 
@@ -86,7 +103,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Match AS
         nmin NUMBER;
         nmax NUMBER;
     BEGIN
-        IF NOT V2U_Util.Split_Range(expr, smin, smax) THEN
+        IF NOT Split_Range(expr, smin, smax) THEN
             RETURN -1;
         END IF;
         nmin := To_Number_Or_Null(smin);

@@ -66,6 +66,20 @@ CREATE OR REPLACE TYPE BODY V2u_Semester_t AS
         s := SUBSTR(semester_code, 5, 1);               -- season (L/Z)
         RETURN (2 * y + CASE UPPER(s) WHEN 'Z' THEN 1 ELSE 0 END);
     END;
+
+    STATIC FUNCTION sem_add(semester_code IN VARCHAR2, offset IN NUMBER)
+        RETURN VARCHAR2
+    IS
+    BEGIN
+        RETURN to_code(to_id(semester_code) + offset);
+    END;
+
+    STATIC FUNCTION sem_sub(semester_code IN VARCHAR2, offset IN NUMBER)
+        RETURN VARCHAR2
+    IS
+    BEGIN
+        RETURN to_code(to_id(semester_code) - offset);
+    END;
 END;
 
 -- vim: set ft=sql ts=4 sw=4 et:

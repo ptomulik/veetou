@@ -18,6 +18,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Student_Thread_t AS
             , map_program_code IN VARCHAR2
             , map_modetier_code IN VARCHAR2
             , map_field_code IN VARCHAR2
+            , map_specialty_code IN VARCHAR2
             , semester_ids IN V2u_Ids_t
             , semester_numbers IN V2u_Ints2_t
             , semester_codes IN V2u_Semester_Codes_t
@@ -42,6 +43,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Student_Thread_t AS
             SELF.map_program_code := map_program_code;
             SELF.map_modetier_code := map_modetier_code;
             SELF.map_field_code := map_field_code;
+            SELF.map_specialty_code := map_specialty_code;
             SELF.semester_ids := semester_ids;
             SELF.semester_numbers := semester_numbers;
             SELF.semester_codes := semester_codes;
@@ -77,6 +79,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Student_Thread_t AS
         SELF.map_program_code := specialty_map.map_program_code;
         SELF.map_modetier_code := specialty_map.map_modetier_code;
         SELF.map_field_code := specialty_map.map_field_code;
+        SELF.map_specialty_code := specialty_map.map_specialty_code;
         --
         SELF.semester_ids := semester_ids;
         SELF.semester_numbers := V2u_Ints2_t();
@@ -123,6 +126,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Student_Thread_t AS
         ord := V2U_Cmp.StrNI(map_modetier_code, other.map_modetier_code);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.StrNI(map_field_code, other.map_field_code);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(map_specialty_code, other.map_specialty_code);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.NumN(thread_index, other.thread_index);
         IF ord <> 0 THEN RETURN ord; END IF;

@@ -17,6 +17,14 @@ CREATE OR REPLACE TYPE V2u_Ko_Student_t
             , sheet_ids IN V2u_Ids_t := NULL
             ) RETURN SELF AS RESULT
 
+    , CONSTRUCTOR FUNCTION V2u_Ko_Student_t(
+              SELF IN OUT NOCOPY V2u_Ko_Student_t
+            , id IN NUMBER := NULL
+            , job_uuid IN RAW
+            , preamble IN V2u_Ko_Preamble_t
+            , sheet_ids IN V2u_Ids_t := NULL
+            ) RETURN SELF AS RESULT
+
     , OVERRIDING MEMBER FUNCTION cmp_val(other IN V2u_Distinct_t)
             RETURN INTEGER
 

@@ -21,7 +21,7 @@ USING
         v AS
         (
             SELECT
-                  V2u_To.Ko_Student(
+                  V2u_Ko_Student_t(
                         job_uuid => u.sheet.job_uuid,
                         preamble => u.preamble
                   ) student

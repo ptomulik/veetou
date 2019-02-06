@@ -225,7 +225,6 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Trigger('universities_tr1');
         Drop_Table('universities', how => 'PURGE');
 
-        Drop_Package('Util');
         Drop_Package('Match');
         Drop_Package('Get');
         Drop_Package('Cmp');
@@ -304,13 +303,14 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         --
         Drop_Package('Fit');
         Drop_Package('To');
+        Drop_Package('Util');
 
         Drop_Collect_Types();
 
+        Drop_Type('Ko_Student_Thread_t', 'Ko_Student_Threads_t');
         Drop_Type('Ko_Specialty_t');
         Drop_Type('Ko_Subject_t');
-        Drop_Type('Ko_Semester_Threads_t');
-        Drop_Type('Ko_Semester_t', 'Ko_Semesters_t');
+        Drop_Type('Ko_Semester_t', 'Ko_Semesters_t', 'Ko_Semester_Tables_t');
         Drop_Type('Ko_Student_t');
         Drop_Type('Ko_Distinct_t');
 
@@ -328,6 +328,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     PROCEDURE Tier3
     IS
     BEGIN
+        Drop_View('ko_student_threads_v');
         Drop_View('ko_ambig_specialty_map_v');
         Drop_View('ko_ambig_subject_map_v');
         Drop_View('ko_unmapped_specialties_v');

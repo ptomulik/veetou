@@ -21,7 +21,7 @@ USING
         v AS
         (
             SELECT
-                  V2u_To.Ko_Semester(
+                  V2u_Ko_Semester_t(
                           job_uuid => u.sheet.job_uuid
                         , sheet => u.sheet
                         , preamble => u.preamble

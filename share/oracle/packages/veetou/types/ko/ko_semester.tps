@@ -19,6 +19,15 @@ CREATE OR REPLACE TYPE V2u_Ko_Semester_t
             , sheet_ids IN V2u_Ids_t := NULL
             ) RETURN SELF AS RESULT
 
+    , CONSTRUCTOR FUNCTION V2u_Ko_Semester_t(
+              SELF IN OUT NOCOPY V2u_Ko_Semester_t
+            , id IN NUMBER := NULL
+            , job_uuid IN RAW
+            , sheet IN V2u_Ko_Sheet_t
+            , preamble IN V2u_Ko_Preamble_t
+            , sheet_ids IN V2u_Ids_t := NULL
+            ) RETURN SELF AS RESULT
+
     , OVERRIDING MEMBER FUNCTION cmp_val(other IN V2u_Distinct_t)
         RETURN INTEGER
     , MEMBER FUNCTION cmp_val(other IN V2u_Ko_Semester_t)
@@ -30,6 +39,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Semester_t
 CREATE OR REPLACE TYPE V2u_Ko_Semesters_t
     AS TABLE OF V2u_Ko_Semester_t;
 /
-CREATE OR REPLACE TYPE V2u_Ko_Semester_Threads_t
+CREATE OR REPLACE TYPE V2u_Ko_Semester_Tables_t
     AS TABLE OF V2u_Ko_Semesters_t;
+
 -- vim: set ft=sql ts=4 sw=4 et:

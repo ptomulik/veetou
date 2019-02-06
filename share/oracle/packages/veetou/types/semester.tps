@@ -20,6 +20,10 @@ CREATE OR REPLACE TYPE V2u_Semester_t
         RETURN VARCHAR2
     , STATIC FUNCTION to_id(semester_code IN VARCHAR2)
         RETURN NUMBER
+    , STATIC FUNCTION sem_add(semester_code IN VARCHAR2, offset IN NUMBER)
+        RETURN VARCHAR2
+    , STATIC FUNCTION sem_sub(semester_code IN VARCHAR2, offset IN NUMBER)
+        RETURN VARCHAR2
     );
 /
 CREATE OR REPLACE TYPE V2u_Semester_Codes_t

@@ -24,6 +24,27 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Semester_t AS
         RETURN;
     END;
 
+    CONSTRUCTOR FUNCTION V2u_Ko_Semester_t(
+              SELF IN OUT NOCOPY V2u_Ko_Semester_t
+            , id IN NUMBER := NULL
+            , job_uuid IN RAW
+            , sheet IN V2u_Ko_Sheet_t
+            , preamble IN V2u_Ko_Preamble_t
+            , sheet_ids IN V2u_Ids_t := NULL
+            ) RETURN SELF AS RESULT
+    IS
+    BEGIN
+        SELF.id := id;
+        SELF.job_uuid := job_uuid;
+        SELF.semester_code := preamble.semester_code;
+        SELF.semester_number := preamble.semester_number;
+        SELF.ects_mandatory := sheet.ects_mandatory;
+        SELF.ects_other := sheet.ects_other;
+        SELF.ects_total := sheet.ects_total;
+        SELF.sheet_ids := sheet_ids;
+        RETURN;
+    END;
+
     OVERRIDING MEMBER FUNCTION cmp_val(other IN V2u_Distinct_t)
         RETURN INTEGER
     IS

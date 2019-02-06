@@ -4,7 +4,7 @@ USING
         WITH u AS
         (
             SELECT
-                  V2u_To.Ko_Subject(
+                  V2u_Ko_Subject_t(
                       job_uuid =>  trs.job_uuid
                     , tr => VALUE(trs)
                   ) subject

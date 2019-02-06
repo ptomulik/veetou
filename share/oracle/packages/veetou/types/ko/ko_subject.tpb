@@ -13,7 +13,6 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_t AS
         , subj_credit_kind IN VARCHAR2
         , subj_ects IN NUMBER
         , subj_tutor IN VARCHAR2
-        /* , subj_grades IN V2u_Subj_20Grades_t */
         , tr_ids IN V2u_Ids_t
         ) RETURN SELF AS RESULT
     IS
@@ -30,10 +29,36 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_t AS
         SELF.subj_credit_kind := subj_credit_kind;
         SELF.subj_ects := subj_ects;
         SELF.subj_tutor := subj_tutor;
-        /* SELF.subj_grades := subj_grades; */
         SELF.tr_ids := tr_ids;
         RETURN;
     END;
+
+
+    CONSTRUCTOR FUNCTION V2u_Ko_Subject_t(
+              SELF IN OUT NOCOPY V2u_Ko_Subject_t
+            , id IN NUMBER := NULL
+            , job_uuid IN RAW
+            , tr IN V2u_Ko_Tr_t
+            , tr_ids IN V2u_Ids_t := NULL
+            ) RETURN SELF AS RESULT
+    IS
+    BEGIN
+        SELF.id := id;
+        SELF.job_uuid := job_uuid;
+        SELF.subj_code := tr.subj_code;
+        SELF.subj_name := tr.subj_name;
+        SELF.subj_hours_w := tr.subj_hours_w;
+        SELF.subj_hours_c := tr.subj_hours_c;
+        SELF.subj_hours_l := tr.subj_hours_l;
+        SELF.subj_hours_p := tr.subj_hours_p;
+        SELF.subj_hours_s := tr.subj_hours_s;
+        SELF.subj_credit_kind := tr.subj_credit_kind;
+        SELF.subj_ects := tr.subj_ects;
+        SELF.subj_tutor := tr.subj_tutor;
+        SELF.tr_ids := tr_ids;
+        RETURN;
+    END;
+
 
     OVERRIDING MEMBER FUNCTION cmp_val(other IN V2u_Distinct_t)
             RETURN INTEGER

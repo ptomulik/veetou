@@ -10,7 +10,6 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_t
     , subj_credit_kind VARCHAR2(16 CHAR)
     , subj_ects NUMBER(4)
     , subj_tutor VARCHAR2(256 CHAR)
-    /* , subj_grades V2u_Subj_20Grades_t */
     , tr_ids V2u_Ids_t
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Subject_t(
@@ -27,7 +26,14 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_t
             , subj_credit_kind IN VARCHAR2
             , subj_ects IN NUMBER
             , subj_tutor IN VARCHAR2
-            /* , subj_grades IN V2u_Subj_20Grades_t := NULL */
+            , tr_ids IN V2u_Ids_t := NULL
+            ) RETURN SELF AS RESULT
+
+    , CONSTRUCTOR FUNCTION V2u_Ko_Subject_t(
+              SELF IN OUT NOCOPY V2u_Ko_Subject_t
+            , id IN NUMBER := NULL
+            , job_uuid IN RAW
+            , tr IN V2u_Ko_Tr_t
             , tr_ids IN V2u_Ids_t := NULL
             ) RETURN SELF AS RESULT
 
