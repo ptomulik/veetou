@@ -1,29 +1,29 @@
 CREATE OR REPLACE TYPE BODY V2u_Ko_Dz_Program_Osoby_t AS
     CONSTRUCTOR FUNCTION V2u_Ko_Dz_Program_Osoby_t(
               SELF IN OUT NOCOPY V2u_Ko_Dz_Program_Osoby_t
-            , v2u_job_uuid IN RAW
-            , v2u_thread_id IN NUMBER
-            , v2u_student_id IN NUMBER
-            , v2u_specialty_id IN NUMBER
-            , v2u_specialty_map_id IN NUMBER
-            , v2u_thread_index IN NUMBER
-            , v2u_student_index IN VARCHAR2
-            , v2u_student_name IN VARCHAR2
-            , v2u_first_name IN VARCHAR2
-            , v2u_last_name IN VARCHAR2
-            , v2u_university IN VARCHAR2
-            , v2u_faculty IN VARCHAR2
-            , v2u_studies_modetier IN VARCHAR2
-            , v2u_studies_field IN VARCHAR2
-            , v2u_studies_specialty IN VARCHAR2
-            , v2u_map_program_code IN VARCHAR2
-            , v2u_map_modetier_code IN VARCHAR2
-            , v2u_map_field_code IN VARCHAR2
-            , v2u_map_specialty_code IN VARCHAR2
-            , v2u_semester_ids IN V2u_Ids_t
-            , v2u_semester_numbers IN V2u_Ints2_t
-            , v2u_semester_codes IN V2u_Semester_Codes_t
-            , v2u_max_admission_semester IN VARCHAR2
+            , ko_job_uuid IN RAW
+            , ko_thread_id IN NUMBER
+            , ko_student_id IN NUMBER
+            , ko_specialty_id IN NUMBER
+            , ko_specialty_map_id IN NUMBER
+            , ko_thread_index IN NUMBER
+            , ko_student_index IN VARCHAR2
+            , ko_student_name IN VARCHAR2
+            , ko_first_name IN VARCHAR2
+            , ko_last_name IN VARCHAR2
+            , ko_university IN VARCHAR2
+            , ko_faculty IN VARCHAR2
+            , ko_studies_modetier IN VARCHAR2
+            , ko_studies_field IN VARCHAR2
+            , ko_studies_specialty IN VARCHAR2
+            , ko_map_program_code IN VARCHAR2
+            , ko_map_modetier_code IN VARCHAR2
+            , ko_map_field_code IN VARCHAR2
+            , ko_map_specialty_code IN VARCHAR2
+            , ko_semester_ids IN V2u_Ids_t
+            , ko_semester_numbers IN V2u_Ints2_t
+            , ko_semester_codes IN V2u_Semester_Codes_t
+            , ko_max_admission_semester IN VARCHAR2
             , dz_os_id IN NUMBER
             , dz_prg_kod IN VARCHAR2
             --, dz_utw_id IN VARCHAR2
@@ -73,29 +73,29 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Dz_Program_Osoby_t AS
             ) RETURN SELF AS RESULT
     IS
     BEGIN
-        SELF.v2u_job_uuid := v2u_job_uuid;
-        SELF.v2u_thread_id := v2u_thread_id;
-        SELF.v2u_student_id := v2u_student_id;
-        SELF.v2u_specialty_id := v2u_specialty_id;
-        SELF.v2u_specialty_map_id := v2u_specialty_map_id;
-        SELF.v2u_thread_index := v2u_thread_index;
-        SELF.v2u_student_index := v2u_student_index;
-        SELF.v2u_student_name := v2u_student_name;
-        SELF.v2u_first_name := v2u_first_name;
-        SELF.v2u_last_name := v2u_last_name;
-        SELF.v2u_university := v2u_university;
-        SELF.v2u_faculty := v2u_faculty;
-        SELF.v2u_studies_modetier := v2u_studies_modetier;
-        SELF.v2u_studies_field := v2u_studies_field;
-        SELF.v2u_studies_specialty := v2u_studies_specialty;
-        SELF.v2u_map_program_code := v2u_map_program_code;
-        SELF.v2u_map_modetier_code := v2u_map_modetier_code;
-        SELF.v2u_map_field_code := v2u_map_field_code;
-        SELF.v2u_map_specialty_code := v2u_map_specialty_code;
-        SELF.v2u_semester_ids := v2u_semester_ids;
-        SELF.v2u_semester_numbers := v2u_semester_numbers;
-        SELF.v2u_semester_codes := v2u_semester_codes;
-        SELF.v2u_max_admission_semester := v2u_max_admission_semester;
+        SELF.ko_job_uuid := ko_job_uuid;
+        SELF.ko_thread_id := ko_thread_id;
+        SELF.ko_student_id := ko_student_id;
+        SELF.ko_specialty_id := ko_specialty_id;
+        SELF.ko_specialty_map_id := ko_specialty_map_id;
+        SELF.ko_thread_index := ko_thread_index;
+        SELF.ko_student_index := ko_student_index;
+        SELF.ko_student_name := ko_student_name;
+        SELF.ko_first_name := ko_first_name;
+        SELF.ko_last_name := ko_last_name;
+        SELF.ko_university := ko_university;
+        SELF.ko_faculty := ko_faculty;
+        SELF.ko_studies_modetier := ko_studies_modetier;
+        SELF.ko_studies_field := ko_studies_field;
+        SELF.ko_studies_specialty := ko_studies_specialty;
+        SELF.ko_map_program_code := ko_map_program_code;
+        SELF.ko_map_modetier_code := ko_map_modetier_code;
+        SELF.ko_map_field_code := ko_map_field_code;
+        SELF.ko_map_specialty_code := ko_map_specialty_code;
+        SELF.ko_semester_ids := ko_semester_ids;
+        SELF.ko_semester_numbers := ko_semester_numbers;
+        SELF.ko_semester_codes := ko_semester_codes;
+        SELF.ko_max_admission_semester := ko_max_admission_semester;
         SELF.dz_os_id := dz_os_id;
         SELF.dz_prg_kod := dz_prg_kod;
         --SELF.dz_utw_id := utw_id;
@@ -158,40 +158,40 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Dz_Program_Osoby_t AS
             ) RETURN SELF AS RESULT
     IS
     BEGIN
-        SELF.v2u_job_uuid := student.job_uuid;
-        SELF.v2u_thread_id := thread_id;
-        SELF.v2u_student_id := student.id;
-        SELF.v2u_specialty_id := specialty.id;
-        SELF.v2u_specialty_map_id := specialty_map.id;
-        SELF.v2u_thread_index := thread_index;
-        SELF.v2u_student_index := student.student_index;
-        SELF.v2u_student_name := student.student_name;
-        SELF.v2u_first_name := student.first_name;
-        SELF.v2u_last_name := student.last_name;
-        SELF.v2u_university := specialty.university;
-        SELF.v2u_faculty := specialty.faculty;
-        SELF.v2u_studies_modetier := specialty.studies_modetier;
-        SELF.v2u_studies_field := specialty.studies_field;
-        SELF.v2u_studies_specialty := specialty.studies_specialty;
-        SELF.v2u_map_program_code := specialty_map.map_program_code;
-        SELF.v2u_map_modetier_code := specialty_map.map_modetier_code;
-        SELF.v2u_map_field_code := specialty_map.map_field_code;
-        SELF.v2u_map_specialty_code := specialty_map.map_specialty_code;
+        SELF.ko_job_uuid := student.job_uuid;
+        SELF.ko_thread_id := thread_id;
+        SELF.ko_student_id := student.id;
+        SELF.ko_specialty_id := specialty.id;
+        SELF.ko_specialty_map_id := specialty_map.id;
+        SELF.ko_thread_index := thread_index;
+        SELF.ko_student_index := student.student_index;
+        SELF.ko_student_name := student.student_name;
+        SELF.ko_first_name := student.first_name;
+        SELF.ko_last_name := student.last_name;
+        SELF.ko_university := specialty.university;
+        SELF.ko_faculty := specialty.faculty;
+        SELF.ko_studies_modetier := specialty.studies_modetier;
+        SELF.ko_studies_field := specialty.studies_field;
+        SELF.ko_studies_specialty := specialty.studies_specialty;
+        SELF.ko_map_program_code := specialty_map.map_program_code;
+        SELF.ko_map_modetier_code := specialty_map.map_modetier_code;
+        SELF.ko_map_field_code := specialty_map.map_field_code;
+        SELF.ko_map_specialty_code := specialty_map.map_specialty_code;
         --
-        SELF.v2u_semester_ids := semester_ids;
-        SELF.v2u_semester_numbers := V2u_Ints2_t();
-        SELF.v2u_semester_codes := V2u_Semester_Codes_t();
+        SELF.ko_semester_ids := semester_ids;
+        SELF.ko_semester_numbers := V2u_Ints2_t();
+        SELF.ko_semester_codes := V2u_Semester_Codes_t();
         SELECT
               s.semester_number
             , s.semester_code
         BULK COLLECT INTO
-              SELF.v2u_semester_numbers
-            , SELF.v2u_semester_codes
+              SELF.ko_semester_numbers
+            , SELF.ko_semester_codes
         FROM v2u_ko_semesters s
         CROSS JOIN TABLE(semester_ids) s_ids
             WHERE (s.id  = VALUE(s_ids));
         --
-        SELF.v2u_max_admission_semester := max_admission_semester;
+        SELF.ko_max_admission_semester := max_admission_semester;
         SELF.dz_os_id := program_osoby.os_id;
         SELF.dz_prg_kod := program_osoby.prg_kod;
         --SELF.dz_utw_id := utw_id;
@@ -241,41 +241,41 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Dz_Program_Osoby_t AS
         RETURN;
     END;
 
-    ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Dz_Program_Osoby_t)
-            RETURN INTEGER
-    IS
-        ord INTEGER;
-    BEGIN
-        ord := V2U_Cmp.StrNI(v2u_student_index, other.v2u_student_index);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(v2u_student_name, other.v2u_student_name);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(v2u_first_name, other.v2u_first_name);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(v2u_last_name, other.v2u_last_name);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(v2u_university, other.v2u_university);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(v2u_faculty, other.v2u_faculty);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(v2u_studies_modetier, other.v2u_studies_modetier);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(v2u_studies_field, other.v2u_studies_field);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(v2u_studies_specialty, other.v2u_studies_specialty);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(v2u_map_program_code, other.v2u_map_program_code);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(v2u_map_modetier_code, other.v2u_map_modetier_code);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(v2u_map_field_code, other.v2u_map_field_code);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(v2u_map_specialty_code, other.v2u_map_specialty_code);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.NumN(v2u_thread_index, other.v2u_thread_index);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        RETURN V2U_Cmp.StrNI(v2u_max_admission_semester, other.v2u_max_admission_semester);
-    END;
+--    ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Dz_Program_Osoby_t)
+--            RETURN INTEGER
+--    IS
+--        ord INTEGER;
+--    BEGIN
+--        ord := V2U_Cmp.StrNI(ko_student_index, other.ko_student_index);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.StrNI(ko_student_name, other.ko_student_name);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.StrNI(ko_first_name, other.ko_first_name);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.StrNI(ko_last_name, other.ko_last_name);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.StrNI(ko_university, other.ko_university);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.StrNI(ko_faculty, other.ko_faculty);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.StrNI(ko_studies_modetier, other.ko_studies_modetier);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.StrNI(ko_studies_field, other.ko_studies_field);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.StrNI(ko_studies_specialty, other.ko_studies_specialty);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.StrNI(ko_map_program_code, other.ko_map_program_code);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.StrNI(ko_map_modetier_code, other.ko_map_modetier_code);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.StrNI(ko_map_field_code, other.ko_map_field_code);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.StrNI(ko_map_specialty_code, other.ko_map_specialty_code);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.NumN(ko_thread_index, other.ko_thread_index);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        RETURN V2U_Cmp.StrNI(ko_max_admission_semester, other.ko_max_admission_semester);
+--    END;
 END;
 
 -- vim: set ft=sql ts=4 sw=4 et:

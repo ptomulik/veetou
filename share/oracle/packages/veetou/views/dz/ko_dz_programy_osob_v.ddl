@@ -1,6 +1,6 @@
 CREATE OR REPLACE VIEW v2u_ko_dz_programy_osob_v
 OF V2u_Ko_Dz_Program_Osoby_t
-WITH OBJECT IDENTIFIER (v2u_job_uuid, v2u_student_id, v2u_specialty_id, v2u_specialty_map_id, v2u_thread_index)
+WITH OBJECT IDENTIFIER (ko_job_uuid, ko_student_id, ko_specialty_id, ko_specialty_map_id, ko_thread_index)
 AS WITH u AS
     (
         SELECT
@@ -16,8 +16,8 @@ AS WITH u AS
             )
         FROM v2u_ko_dz_programy_osob_j j
         INNER JOIN v2u_ko_student_threads_j threads
-            ON (threads.id = j.v2u_thread_id AND
-                threads.job_uuid = j.v2u_job_uuid)
+            ON (threads.id = j.ko_thread_id AND
+                threads.job_uuid = j.ko_job_uuid)
         INNER JOIN v2u_ko_students students
             ON (students.id = threads.student_id AND
                 students.job_uuid = threads.job_uuid)

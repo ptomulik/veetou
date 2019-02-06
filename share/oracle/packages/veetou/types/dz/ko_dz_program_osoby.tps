@@ -1,28 +1,28 @@
 CREATE OR REPLACE TYPE V2u_Ko_Dz_Program_Osoby_t
     FORCE AUTHID CURRENT_USER AS OBJECT
-    ( v2u_job_uuid RAW(16)
-    , v2u_thread_id NUMBER(38)
-    , v2u_student_id NUMBER(38)
-    , v2u_specialty_id NUMBER(38)
-    , v2u_specialty_map_id NUMBER(38)
-    , v2u_thread_index NUMBER(4)
-    , v2u_student_index VARCHAR2(32 CHAR)
-    , v2u_student_name VARCHAR2(128 CHAR)
-    , v2u_first_name VARCHAR2(48 CHAR)
-    , v2u_last_name VARCHAR2(48 CHAR)
-    , v2u_university VARCHAR2(8 CHAR)
-    , v2u_faculty VARCHAR2(8 CHAR)
-    , v2u_studies_modetier VARCHAR2(100 CHAR)
-    , v2u_studies_field VARCHAR2(100 CHAR)
-    , v2u_studies_specialty VARCHAR2(100 CHAR)
-    , v2u_map_program_code VARCHAR2(32 CHAR)
-    , v2u_map_modetier_code VARCHAR2(32 CHAR)
-    , v2u_map_field_code VARCHAR2(32 CHAR)
-    , v2u_map_specialty_code VARCHAR2(32 CHAR)
-    , v2u_semester_ids V2u_Ids_t
-    , v2u_semester_numbers V2u_Ints2_t
-    , v2u_semester_codes V2u_Semester_Codes_t
-    , v2u_max_admission_semester VARCHAR2(6 CHAR)
+    ( ko_job_uuid RAW(16)
+    , ko_thread_id NUMBER(38)
+    , ko_student_id NUMBER(38)
+    , ko_specialty_id NUMBER(38)
+    , ko_specialty_map_id NUMBER(38)
+    , ko_thread_index NUMBER(4)
+    , ko_student_index VARCHAR2(32 CHAR)
+    , ko_student_name VARCHAR2(128 CHAR)
+    , ko_first_name VARCHAR2(48 CHAR)
+    , ko_last_name VARCHAR2(48 CHAR)
+    , ko_university VARCHAR2(8 CHAR)
+    , ko_faculty VARCHAR2(8 CHAR)
+    , ko_studies_modetier VARCHAR2(100 CHAR)
+    , ko_studies_field VARCHAR2(100 CHAR)
+    , ko_studies_specialty VARCHAR2(100 CHAR)
+    , ko_map_program_code VARCHAR2(32 CHAR)
+    , ko_map_modetier_code VARCHAR2(32 CHAR)
+    , ko_map_field_code VARCHAR2(32 CHAR)
+    , ko_map_specialty_code VARCHAR2(32 CHAR)
+    , ko_semester_ids V2u_Ids_t
+    , ko_semester_numbers V2u_Ints2_t
+    , ko_semester_codes V2u_Semester_Codes_t
+    , ko_max_admission_semester VARCHAR2(6 CHAR)
     , dz_os_id NUMBER(10)
     , dz_prg_kod VARCHAR2(20 CHAR)
     --, dz_utw_id VARCHAR2(30 CHAR)
@@ -72,29 +72,29 @@ CREATE OR REPLACE TYPE V2u_Ko_Dz_Program_Osoby_t
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Dz_Program_Osoby_t(
               SELF IN OUT NOCOPY V2u_Ko_Dz_Program_Osoby_t
-            , v2u_job_uuid IN RAW
-            , v2u_thread_id IN NUMBER
-            , v2u_student_id IN NUMBER
-            , v2u_specialty_id IN NUMBER
-            , v2u_specialty_map_id IN NUMBER
-            , v2u_thread_index IN NUMBER
-            , v2u_student_index IN VARCHAR2
-            , v2u_student_name IN VARCHAR2
-            , v2u_first_name IN VARCHAR2
-            , v2u_last_name IN VARCHAR2
-            , v2u_university IN VARCHAR2
-            , v2u_faculty IN VARCHAR2
-            , v2u_studies_modetier IN VARCHAR2
-            , v2u_studies_field IN VARCHAR2
-            , v2u_studies_specialty IN VARCHAR2
-            , v2u_map_program_code IN VARCHAR2
-            , v2u_map_modetier_code IN VARCHAR2
-            , v2u_map_field_code IN VARCHAR2
-            , v2u_map_specialty_code IN VARCHAR2
-            , v2u_semester_ids IN V2u_Ids_t
-            , v2u_semester_numbers IN V2u_Ints2_t
-            , v2u_semester_codes IN V2u_Semester_Codes_t
-            , v2u_max_admission_semester IN VARCHAR2
+            , ko_job_uuid IN RAW
+            , ko_thread_id IN NUMBER
+            , ko_student_id IN NUMBER
+            , ko_specialty_id IN NUMBER
+            , ko_specialty_map_id IN NUMBER
+            , ko_thread_index IN NUMBER
+            , ko_student_index IN VARCHAR2
+            , ko_student_name IN VARCHAR2
+            , ko_first_name IN VARCHAR2
+            , ko_last_name IN VARCHAR2
+            , ko_university IN VARCHAR2
+            , ko_faculty IN VARCHAR2
+            , ko_studies_modetier IN VARCHAR2
+            , ko_studies_field IN VARCHAR2
+            , ko_studies_specialty IN VARCHAR2
+            , ko_map_program_code IN VARCHAR2
+            , ko_map_modetier_code IN VARCHAR2
+            , ko_map_field_code IN VARCHAR2
+            , ko_map_specialty_code IN VARCHAR2
+            , ko_semester_ids IN V2u_Ids_t
+            , ko_semester_numbers IN V2u_Ints2_t
+            , ko_semester_codes IN V2u_Semester_Codes_t
+            , ko_max_admission_semester IN VARCHAR2
             , dz_os_id IN NUMBER
             , dz_prg_kod IN VARCHAR2
             --, dz_utw_id IN VARCHAR2
@@ -155,8 +155,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Dz_Program_Osoby_t
             , max_admission_semester IN VARCHAR2
             ) RETURN SELF AS RESULT
 
-    , ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Dz_Program_Osoby_t)
-            RETURN INTEGER
+--    , ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Dz_Program_Osoby_t)
+--            RETURN INTEGER
     );
 /
 CREATE OR REPLACE TYPE V2u_Ko_Dz_Programy_Osob_t
