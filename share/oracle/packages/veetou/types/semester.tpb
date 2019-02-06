@@ -49,7 +49,7 @@ CREATE OR REPLACE TYPE BODY V2u_Semester_t AS
             RETURN NULL;
         END IF;
         s := CASE MOD(semester_id, 2) WHEN 1 THEN 'Z' ELSE 'L' END;
-        RETURN TO_CHAR(y, '0999') || s;
+        RETURN TO_CHAR(y, 'FM0999') || s;
     END;
 
     STATIC FUNCTION to_id(semester_code IN VARCHAR2)

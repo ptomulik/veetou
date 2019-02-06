@@ -36,7 +36,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Map_t FORCE AUTHID CURRENT_USER AS OBJECT
     , expr_studies_field VARCHAR2(256 CHAR)
     , studies_specialty VARCHAR2(100 CHAR)
     , expr_studies_specialty VARCHAR2(256 CHAR)
-    , semester_code VARCHAR2(32 CHAR)
+    , semester_code VARCHAR2(5 CHAR)
     , expr_semester_code VARCHAR2(256 CHAR)
     , semester_number NUMBER(2)
     , expr_semester_number VARCHAR2(256 CHAR)

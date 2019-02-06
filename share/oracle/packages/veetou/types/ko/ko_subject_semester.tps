@@ -19,7 +19,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Semester_t
     , studies_modetier VARCHAR2(100 CHAR)
     , studies_field VARCHAR2(100 CHAR)
     , studies_specialty VARCHAR2(100 CHAR)
-    , semester_code VARCHAR2(32 CHAR)
+    , semester_code VARCHAR2(5 CHAR)
     , semester_number NUMBER(2)
     , ects_mandatory NUMBER(4)
     , ects_other NUMBER(4)
