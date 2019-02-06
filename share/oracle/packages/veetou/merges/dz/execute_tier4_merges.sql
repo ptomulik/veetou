@@ -1,3 +1,4 @@
+@@dz_studenci.sql;
 @@dz_programy_osob.sql;
 @@ko_dz_programy_osob_j.sql;
 

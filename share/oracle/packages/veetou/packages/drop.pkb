@@ -362,9 +362,11 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
 
         Drop_Table('ko_dz_programy_osob_j', how => 'PURGE');
         Drop_Table('dz_programy_osob', how => 'PURGE');
+        Drop_Table('dz_studenci', how => 'PURGE');
 
         Drop_Type('Ko_Dz_Program_Osoby_t', 'Ko_Dz_Programy_Osob_t');
         Drop_Type('Dz_Program_Osoby_t', 'Dz_Programy_Osob_t');
+        Drop_Type('Dz_Student_t', 'Dz_Studenci_t');
     END;
 
 

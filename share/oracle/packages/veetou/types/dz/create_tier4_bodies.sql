@@ -1,3 +1,4 @@
+@@dz_student.tpb;
 @@dz_program_osoby.tpb;
 @@ko_dz_program_osoby.tpb;
 

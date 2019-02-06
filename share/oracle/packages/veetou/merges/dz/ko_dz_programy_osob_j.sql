@@ -11,11 +11,11 @@ USING
                 students.job_uuid = j.job_uuid)
         LEFT JOIN v2u_specialty_map specialty_map
             ON (specialty_map.id = j.specialty_map_id)
-        INNER JOIN dz_studenci
-            ON (dz_studenci.indeks = students.student_index)
+        INNER JOIN v2u_dz_studenci studenci
+            ON (studenci.indeks = students.student_index)
         INNER JOIN v2u_dz_programy_osob programy_osob
-            ON (programy_osob.os_id = dz_studenci.os_id AND
-                programy_osob.st_id = dz_studenci.id AND
+            ON (programy_osob.os_id = studenci.os_id AND
+                programy_osob.st_id = studenci.id AND
                 programy_osob.prg_kod = specialty_map.map_program_code AND
                 programy_osob.data_przyjecia = V2U_Get.Semester(j.max_admission_semester).start_date)
     ) src
