@@ -97,7 +97,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
 
     PROCEDURE Drop_Table(table_name IN VARCHAR2,
                          view_name IN VARCHAR2 := NULL,
-                         how IN VARCHAR2 := '')
+                         how IN VARCHAR2 := 'PURGE')
     IS
     BEGIN
         IF view_name IS NOT NULL THEN
@@ -353,6 +353,18 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Subject_Semester_t', 'Ko_Subject_Semesters_t');
         Drop_Type('Ko_Student_Semester_t', 'Ko_Student_Semesters_t');
         Drop_Type('Ko_Grade_t', 'Ko_Grades_t');
+    END;
+
+    PROCEDURE Tier4
+    IS
+    BEGIN
+        Drop_View('ko_dz_programy_osob_v');
+
+        Drop_Table('ko_dz_programy_osob_j', how => 'PURGE');
+        Drop_Table('dz_programy_osob', how => 'PURGE');
+
+        Drop_Type('Ko_Dz_Program_Osoby_t', 'Ko_Dz_Programy_Osob_t');
+        Drop_Type('Dz_Program_Osoby_t', 'Dz_Programy_Osob_t');
     END;
 
 
