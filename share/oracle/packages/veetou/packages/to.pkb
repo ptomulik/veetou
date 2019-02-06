@@ -67,20 +67,11 @@ CREATE OR REPLACE PACKAGE BODY V2U_To AS
             tt.EXTEND(1);
             tt(tt.COUNT) := V2u_Ko_Semesters_t();
             j := 1;
-            FOR s IN (SELECT * FROM TABLE(semesters) ORDER BY 1)
+            FOR s IN (SELECT VALUE(t) sem FROM TABLE(semesters) t ORDER BY 1)
             LOOP
                 IF tn(j) = i THEN
                     tt(i).EXTEND(1);
-                    tt(i)(tt(i).COUNT) := V2u_Ko_Semester_t(
-                          job_uuid => s.job_uuid
-                        , id => s.id
-                        , semester_code => s.semester_code
-                        , semester_number => s.semester_number
-                        , ects_mandatory => s.ects_mandatory
-                        , ects_other => s.ects_other
-                        , ects_total => s.ects_total
-                        , sheet_ids => s.sheet_ids
-                    );
+                    tt(i)(tt(i).COUNT) := s.sem.dup(new_sheet_ids => s.sem.sheet_ids);
                     n := n + 1;
                 END IF;
                 j := j + 1;

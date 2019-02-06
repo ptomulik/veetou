@@ -13,7 +13,7 @@ USING
             INNER JOIN v2u_ko_semesters semesters
                 ON (semesters.id = j1.semester_id AND
                     semesters.job_uuid = j1.job_uuid)
-            INNER JOIN v2u_ko_specialty_map_j j2
+            LEFT JOIN v2u_ko_specialty_map_j j2
                 ON (j2.specialty_id = j1.specialty_id AND
                     j2.semester_id = j1.semester_id AND
                     j2.job_uuid = j1.job_uuid)
@@ -45,7 +45,8 @@ USING
     ) src
 ON (tgt.student_id = src.student_id AND
     tgt.specialty_id = src.specialty_id AND
-    tgt.specialty_map_id = src.specialty_map_id AND
+    (tgt.specialty_map_id = src.specialty_map_id OR
+     tgt.specialty_map_id IS NULL AND src.specialty_map_id IS NULL) AND
     tgt.thread_index = src.thread_index AND
     tgt.job_uuid = src.job_uuid)
 WHEN NOT MATCHED THEN

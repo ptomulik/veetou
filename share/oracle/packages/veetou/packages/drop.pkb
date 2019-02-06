@@ -260,6 +260,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     IS
     BEGIN
         --
+        Drop_Trigger('ko_student_threads_j_tr1');
+        Drop_Sequence('ko_student_threads_j_sq1');
         Drop_Index('ko_student_threads_j_idx1');
         Drop_Index('ko_student_threads_j_idx2');
         Drop_Table('ko_student_threads_j', how => 'PURGE');
