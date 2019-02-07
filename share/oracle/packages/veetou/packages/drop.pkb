@@ -263,6 +263,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Sequence('ko_dz_etapy_osob_j_sq1');
         Drop_Table('ko_dz_etapy_osob_j', how => 'PURGE');
         --
+        Drop_Trigger('ko_dz_programy_osob_j_tr1');
+        Drop_Sequence('ko_dz_programy_osob_j_sq1');
         Drop_Table('ko_dz_programy_osob_j', how => 'PURGE');
         --
         Drop_Trigger('ko_student_threads_j_tr1');

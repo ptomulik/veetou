@@ -2,28 +2,27 @@ MERGE INTO v2u_ko_dz_programy_osob_j tgt
 USING
     (
         SELECT
-              j.job_uuid ko_job_uuid
-            , j.id ko_thread_id
-            , programy_osob.id dz_programy_osob_id
-        FROM v2u_ko_student_threads_j j
-        INNER JOIN v2u_ko_students students
-            ON (students.id = j.student_id AND
-                students.job_uuid = j.job_uuid)
-        LEFT JOIN v2u_specialty_map specialty_map
-            ON (specialty_map.id = j.specialty_map_id)
-        INNER JOIN v2u_dz_studenci studenci
-            ON (studenci.indeks = students.student_index)
-        INNER JOIN v2u_dz_programy_osob programy_osob
-            ON (programy_osob.os_id = studenci.os_id AND
-                programy_osob.st_id = studenci.id AND
-                programy_osob.prg_kod = specialty_map.map_program_code AND
-                programy_osob.data_przyjecia = V2U_Get.Semester(j.max_admission_semester).start_date)
+              j.job_uuid
+            , j.student_id student_id
+            , j.specialty_id specialty_id
+            , e.prgos_id prgos_id
+            , CAST(COLLECT(j.semester_id) AS V2u_Ids_t) semester_ids
+        FROM v2u_ko_dz_etapy_osob_j j
+        INNER JOIN v2u_dz_etapy_osob e
+            ON (e.id = j.etpos_id)
+        GROUP BY
+              j.job_uuid
+            , j.student_id
+            , j.specialty_id
+            , e.prgos_id
     ) src
-ON  (tgt.ko_job_uuid = src.ko_job_uuid AND
-     tgt.ko_thread_id = src.ko_thread_id AND
-     tgt.dz_programy_osob_id = src.dz_programy_osob_id)
+ON  (tgt.job_uuid = src.job_uuid AND
+     tgt.student_id = src.student_id AND
+     tgt.specialty_id = src.specialty_id AND
+     tgt.prgos_id = src.prgos_id)
 WHEN NOT MATCHED THEN
-    INSERT (    ko_job_uuid,     ko_thread_id,     dz_programy_osob_id)
-    VALUES (src.ko_job_uuid, src.ko_thread_id, src.dz_programy_osob_id);
+    INSERT (    job_uuid,     student_id,     specialty_id,     prgos_id,     semester_ids)
+    VALUES (src.job_uuid, src.student_id, src.specialty_id, src.prgos_id, src.semester_ids);
+WHEN MATCHED THEN UPDATE SET tgt.semester_ids = src.semester_ids;
 
 -- vim: set ft=sql ts=4 sw=4 et:

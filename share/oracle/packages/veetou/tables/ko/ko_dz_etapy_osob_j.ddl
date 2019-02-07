@@ -1,14 +1,14 @@
 CREATE TABLE v2u_ko_dz_etapy_osob_j
     (
-          job_uuid RAW(16)
-        , id NUMBER(38)
+          id NUMBER(38)
+        , job_uuid RAW(16)
         , student_id NUMBER(38)
         , specialty_id NUMBER(38)
         , semester_id NUMBER(38)
         , specialty_map_id NUMBER(38)
         , etpos_id NUMBER(10)
         , CONSTRAINT v2u_dz_etapy_osob_j_pk
-            PRIMARY KEY (id, job_uuid)
+            PRIMARY KEY (id)
         , CONSTRAINT v2u_dz_etapy_osob_j_f0
             FOREIGN KEY (job_uuid)
             REFERENCES v2u_ko_jobs(job_uuid)
