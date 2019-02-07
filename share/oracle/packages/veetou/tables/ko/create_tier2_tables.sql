@@ -17,7 +17,9 @@
 @@ko_subject_map_j.ddl;
 @@ko_student_threads_j.ddl;
 
-@@ko_dz_programy_osob_j.ddl;
-@@ko_dz_etapy_osob_j.ddl;
+@@ko_programy_osob_j.ddl;
+@@ko_missing_prgos_j.ddl;
+@@ko_etapy_osob_j.ddl;
+@@ko_missing_etpos_j.ddl;
 
 -- vim: set ft=sql ts=4 sw=4 et:

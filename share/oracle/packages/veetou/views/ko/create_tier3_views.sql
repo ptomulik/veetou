@@ -10,7 +10,9 @@
 @@ko_unmapped_specialties_v.ddl;
 @@ko_student_threads_v.ddl;
 --
-@@ko_dz_programy_osob_v.ddl;
-@@ko_dz_etapy_osob_v.ddl;
+@@ko_programy_osob_v.ddl;
+@@ko_etapy_osob_v.ddl;
+@@ko_missing_prgos_v.ddl;
+@@ko_missing_etpos_v.ddl;
 
 -- vim: set ft=sql ts=4 sw=4 et:

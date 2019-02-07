@@ -18,8 +18,10 @@
 @@ko_student_threads_j.sql;
 
 -- THE ORDER IS IMPORTANT!
-@@ko_dz_etapy_osob_j.sql;
-@@ko_dz_programy_osob_j.sql;
+@@ko_etapy_osob_j.sql;
+@@ko_programy_osob_j.sql;
+@@ko_missing_etpos_j.sql;
+@@ko_missing_prgos_j.sql;
 
 
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -56,6 +56,24 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Student_Semester_t AS
             ) RETURN SELF AS RESULT
     IS
     BEGIN
+        SELF.init(
+              student => student
+            , specialty => specialty
+            , semester => semester
+            , ects_attained => ects_attained
+            );
+        RETURN;
+    END;
+
+    MEMBER PROCEDURE init(
+              SELF IN OUT NOCOPY V2u_Ko_Student_Semester_t
+            , student IN V2u_Ko_Student_t
+            , specialty IN V2u_Ko_Specialty_t
+            , semester IN V2u_Ko_Semester_t
+            , ects_attained IN NUMBER
+            )
+    IS
+    BEGIN
         SELF.job_uuid := specialty.job_uuid;
         SELF.student_id := student.id;
         SELF.specialty_id := specialty.id;
@@ -76,10 +94,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Student_Semester_t AS
         SELF.ects_total := semester.ects_total;
         SELF.ects_attained := ects_attained;
  --       SELF.sheet_ids := semester.sheet_ids;
-        RETURN;
     END;
 
-      ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Student_Semester_t)
+    ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Student_Semester_t)
             RETURN INTEGER
     IS
         ord INTEGER;

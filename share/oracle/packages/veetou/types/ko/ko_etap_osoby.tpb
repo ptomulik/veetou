@@ -1,8 +1,8 @@
-CREATE OR REPLACE TYPE BODY V2u_Ko_Dz_Etap_Osoby_t AS
-    CONSTRUCTOR FUNCTION V2u_Ko_Dz_Etap_Osoby_t(
-              SELF IN OUT NOCOPY V2u_Ko_Dz_Etap_Osoby_t
-            , job_uuid IN RAW
+CREATE OR REPLACE TYPE BODY V2u_Ko_Etap_Osoby_t AS
+    CONSTRUCTOR FUNCTION V2u_Ko_Etap_Osoby_t(
+              SELF IN OUT NOCOPY V2u_Ko_Etap_Osoby_t
             , id IN NUMBER
+            , job_uuid IN RAW
             , student_id IN NUMBER
             , specialty_id IN NUMBER
             , semester_id IN NUMBER
@@ -48,8 +48,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Dz_Etap_Osoby_t AS
             ) RETURN SELF AS RESULT
     IS
     BEGIN
-        SELF.job_uuid := job_uuid;
         SELF.id := id;
+        SELF.job_uuid := job_uuid;
         SELF.student_id := student_id;
         SELF.specialty_id := specialty_id;
         SELF.semester_id := semester_id;
@@ -95,8 +95,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Dz_Etap_Osoby_t AS
         RETURN;
     END;
 
-    CONSTRUCTOR FUNCTION V2u_Ko_Dz_Etap_Osoby_t(
-              SELF IN OUT NOCOPY V2u_Ko_Dz_Etap_Osoby_t
+    CONSTRUCTOR FUNCTION V2u_Ko_Etap_Osoby_t(
+              SELF IN OUT NOCOPY V2u_Ko_Etap_Osoby_t
             , id IN NUMBER
             , student IN V2u_Ko_Student_t
             , specialty IN V2u_Ko_Specialty_t
@@ -153,7 +153,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Dz_Etap_Osoby_t AS
         RETURN;
     END;
 
---    ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Dz_Etap_Osoby_t)
+--    ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Etap_Osoby_t)
 --            RETURN INTEGER
 --    IS
 --        ord INTEGER;

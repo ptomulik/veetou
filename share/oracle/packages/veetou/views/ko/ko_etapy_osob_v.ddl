@@ -1,10 +1,10 @@
-CREATE OR REPLACE VIEW v2u_ko_dz_etapy_osob_v
-OF V2u_Ko_Dz_Etap_Osoby_t
-WITH OBJECT IDENTIFIER (job_uuid, id)
+CREATE OR REPLACE VIEW v2u_ko_etapy_osob_v
+OF V2u_Ko_Etap_Osoby_t
+WITH OBJECT IDENTIFIER (id)
 AS WITH u AS
     (
         SELECT
-              V2u_Ko_Dz_Etap_Osoby_t(
+              V2u_Ko_Etap_Osoby_t(
                   id => j.id
                 , student => VALUE(students)
                 , specialty => VALUE(specialties)
@@ -12,7 +12,7 @@ AS WITH u AS
                 , specialty_map => VALUE(specialty_map)
                 , etap_osoby => VALUE(etapy_osob)
             )
-        FROM v2u_ko_dz_etapy_osob_j j
+        FROM v2u_ko_etapy_osob_j j
         INNER JOIN v2u_ko_students students
             ON (students.id = j.student_id AND
                 students.job_uuid = j.job_uuid)

@@ -6,5 +6,7 @@ OF V2u_Dz_Etap_Osoby_t
     )
 OBJECT IDENTIFIER IS PRIMARY KEY;
 /
-CREATE INDEX v2u_dz_etapy_osob_idx1 ON v2u_dz_etapy_osob(prg_kod, cdyd_kod, kolejnosc, prgos_id);
+CREATE INDEX v2u_dz_etapy_osob_idx1 ON v2u_dz_etapy_osob(prgos_id, cdyd_kod);
+/
+CREATE INDEX v2u_dz_etapy_osob_idx2 ON v2u_dz_etapy_osob(prgos_id, cdyd_kod, etp_kod);
 -- vim: set ft=sql ts=4 sw=4 et:

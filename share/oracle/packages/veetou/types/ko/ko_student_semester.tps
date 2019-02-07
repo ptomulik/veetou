@@ -53,9 +53,18 @@ CREATE OR REPLACE TYPE V2u_Ko_Student_Semester_t
             , ects_attained IN NUMBER
             ) RETURN SELF AS RESULT
 
+    , MEMBER PROCEDURE init(
+              SELF IN OUT NOCOPY V2u_Ko_Student_Semester_t
+            , student IN V2u_Ko_Student_t
+            , specialty IN V2u_Ko_Specialty_t
+            , semester IN V2u_Ko_Semester_t
+            , ects_attained IN NUMBER
+            )
+
     , ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Student_Semester_t)
             RETURN INTEGER
-    );
+    )
+NOT FINAL;
 /
 CREATE OR REPLACE TYPE V2u_Ko_Student_Semesters_t
     AS TABLE OF V2u_Ko_Student_Semester_t;

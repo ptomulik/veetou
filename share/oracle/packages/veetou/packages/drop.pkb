@@ -214,8 +214,16 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Table('ko_trs', how => 'PURGE');
         Drop_Table('ko_jobs', how => 'PURGE');
 
+        Drop_Index('dz_programy_osob_idx1');
+        Drop_Index('dz_programy_osob_idx2');
+        Drop_Index('dz_programy_osob_idx3');
         Drop_Table('dz_programy_osob', how => 'PURGE');
+        --
+        Drop_Index('dz_etapy_osob_idx1');
+        Drop_Index('dz_etapy_osob_idx2');
         Drop_Table('dz_etapy_osob', how => 'PURGE');
+        --
+        Drop_Index('dz_studenci_idx1');
         Drop_Table('dz_studenci', how => 'PURGE');
 
         Drop_Trigger('semesters_tr1');
@@ -259,13 +267,21 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     PROCEDURE Tier2
     IS
     BEGIN
-        Drop_Trigger('ko_dz_etapy_osob_j_tr1');
-        Drop_Sequence('ko_dz_etapy_osob_j_sq1');
-        Drop_Table('ko_dz_etapy_osob_j', how => 'PURGE');
+        Drop_Trigger('ko_missing_prgos_j_tr1');
+        Drop_Sequence('ko_missing_prgos_j_sq1');
+        Drop_Table('ko_missing_prgos_j', how => 'PURGE');
         --
-        Drop_Trigger('ko_dz_programy_osob_j_tr1');
-        Drop_Sequence('ko_dz_programy_osob_j_sq1');
-        Drop_Table('ko_dz_programy_osob_j', how => 'PURGE');
+        Drop_Trigger('ko_missing_etpos_j_tr1');
+        Drop_Sequence('ko_missing_etpos_j_sq1');
+        Drop_Table('ko_missing_etpos_j', how => 'PURGE');
+        --
+        Drop_Trigger('ko_etapy_osob_j_tr1');
+        Drop_Sequence('ko_etapy_osob_j_sq1');
+        Drop_Table('ko_etapy_osob_j', how => 'PURGE');
+        --
+        Drop_Trigger('ko_programy_osob_j_tr1');
+        Drop_Sequence('ko_programy_osob_j_sq1');
+        Drop_Table('ko_programy_osob_j', how => 'PURGE');
         --
         Drop_Trigger('ko_student_threads_j_tr1');
         Drop_Sequence('ko_student_threads_j_sq1');
@@ -338,6 +354,10 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     PROCEDURE Tier3
     IS
     BEGIN
+        Drop_View('ko_missing_etpos_v');
+        Drop_View('ko_missing_prgos_v');
+        Drop_View('ko_programy_osob_v');
+        Drop_View('ko_etapy_osob_v');
         Drop_View('ko_student_threads_v');
         Drop_View('ko_ambig_specialty_map_v');
         Drop_View('ko_ambig_subject_map_v');
@@ -349,10 +369,11 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_View('ko_subject_semesters_v');
         Drop_View('ko_student_semesters_v');
         Drop_View('ko_grades_v');
-        Drop_View('ko_dz_programy_osob_v');
 
 --        Drop_Collect_Types();
 
+        Drop_Type('Ko_Missing_Etpos_t', 'Ko_Missing_Etposes_t');
+        Drop_Type('Ko_Missing_Prgos_t', 'Ko_Missing_Prgoses_t');
         Drop_Type('Ko_Ambig_Specialty_Map_t', 'Ko_Ambig_Specialty_Maps_t');
         Drop_Type('Ko_Ambig_Subject_Map_t', 'Ko_Ambig_Subject_Maps_t');
         Drop_Type('Ko_Specialty_Map_t', 'Ko_Specialty_Maps_t');
@@ -361,8 +382,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Subject_Semester_t', 'Ko_Subject_Semesters_t');
         Drop_Type('Ko_Student_Semester_t', 'Ko_Student_Semesters_t');
         Drop_Type('Ko_Grade_t', 'Ko_Grades_t');
-        Drop_Type('Ko_Dz_Etap_Osoby_t', 'Ko_Dz_Etapy_Osob_t');
-        Drop_Type('Ko_Dz_Program_Osoby_t', 'Ko_Dz_Programy_Osob_t');
+        Drop_Type('Ko_Etap_Osoby_t', 'Ko_Etapy_Osob_t');
+        Drop_Type('Ko_Program_Osoby_t', 'Ko_Programy_Osob_t');
     END;
 
 END V2U_Drop;
