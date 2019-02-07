@@ -214,6 +214,10 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Table('ko_trs', how => 'PURGE');
         Drop_Table('ko_jobs', how => 'PURGE');
 
+        Drop_Table('dz_programy_osob', how => 'PURGE');
+        Drop_Table('dz_etapy_osob', how => 'PURGE');
+        Drop_Table('dz_studenci', how => 'PURGE');
+
         Drop_Trigger('semesters_tr1');
         Drop_Table('semesters', how => 'PURGE');
 
@@ -247,18 +251,19 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('University_t', 'Universities_t', 'University_Codes_t');
         Drop_Type('Distinct_t');
 
---        Drop_Type('Subj_Grades_t');
---        Drop_Type('Subj_Codes_t');
---        Drop_Type('Ids_t');
---        Drop_Type('Integers_t');
---        Drop_Type('Subj_20Grades_t');
---        Drop_Type('Subj_20Codes_t');
---        Drop_Type('5Ids_t');
+        Drop_Type('Dz_Program_Osoby_t', 'Dz_Programy_Osob_t');
+        Drop_Type('Dz_Etap_Osoby_t', 'Dz_Etapy_Osob_t');
+        Drop_Type('Dz_Student_t', 'Dz_Studenci_t');
     END;
 
     PROCEDURE Tier2
     IS
     BEGIN
+        Drop_Trigger('ko_dz_etapy_osob_j_tr1');
+        Drop_Sequence('ko_dz_etapy_osob_j_sq1');
+        Drop_Table('ko_dz_etapy_osob_j', how => 'PURGE');
+        --
+        Drop_Table('ko_dz_programy_osob_j', how => 'PURGE');
         --
         Drop_Trigger('ko_student_threads_j_tr1');
         Drop_Sequence('ko_student_threads_j_sq1');
@@ -342,6 +347,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_View('ko_subject_semesters_v');
         Drop_View('ko_student_semesters_v');
         Drop_View('ko_grades_v');
+        Drop_View('ko_dz_programy_osob_v');
 
 --        Drop_Collect_Types();
 
@@ -353,22 +359,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Subject_Semester_t', 'Ko_Subject_Semesters_t');
         Drop_Type('Ko_Student_Semester_t', 'Ko_Student_Semesters_t');
         Drop_Type('Ko_Grade_t', 'Ko_Grades_t');
-    END;
-
-    PROCEDURE Tier4
-    IS
-    BEGIN
-        Drop_View('ko_dz_programy_osob_v');
-
-        Drop_Table('ko_dz_programy_osob_j', how => 'PURGE');
-        Drop_Table('dz_programy_osob', how => 'PURGE');
-        Drop_Table('dz_studenci', how => 'PURGE');
-
+        Drop_Type('Ko_Dz_Etap_Osoby_t', 'Ko_Dz_Etapy_Osob_t');
         Drop_Type('Ko_Dz_Program_Osoby_t', 'Ko_Dz_Programy_Osob_t');
-        Drop_Type('Dz_Program_Osoby_t', 'Dz_Programy_Osob_t');
-        Drop_Type('Dz_Student_t', 'Dz_Studenci_t');
     END;
-
 
 END V2U_Drop;
 

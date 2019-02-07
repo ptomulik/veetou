@@ -1,19 +1,19 @@
 CREATE OR REPLACE PACKAGE BODY V2U_To AS
-    FUNCTION Semester_Code(semester_id IN NUMBER)
-        RETURN VARCHAR2
-    IS
-    BEGIN
-        RETURN V2u_Semester_t.to_code(semester_id);
-    END;
-
-    FUNCTION Semester_Id(semester_code IN VARCHAR2)
-        RETURN NUMBER
-    IS
-    BEGIN
-        RETURN V2u_Semester_t.to_id(semester_code);
-    END;
-
-
+--    FUNCTION Semester_Code(semester_id IN NUMBER)
+--        RETURN VARCHAR2
+--    IS
+--    BEGIN
+--        RETURN V2u_Semester_t.to_code(semester_id);
+--    END;
+--
+--    FUNCTION Semester_Id(semester_code IN VARCHAR2)
+--        RETURN NUMBER
+--    IS
+--    BEGIN
+--        RETURN V2u_Semester_t.to_id(semester_code);
+--    END;
+--
+--
     FUNCTION Find_Threads(semesters IN V2u_Ko_Semesters_t)
         RETURN V2u_Ints2_t
     IS

@@ -1,6 +1,6 @@
 @@dz_studenci.sql;
 @@dz_programy_osob.sql;
-@@ko_dz_programy_osob_j.sql;
+@@dz_etapy_osob.sql;
 
 
 -- vim: set ft=sql ts=4 sw=4 et:
