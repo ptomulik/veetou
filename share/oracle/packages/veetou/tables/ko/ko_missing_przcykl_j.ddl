@@ -6,7 +6,8 @@ CREATE TABLE v2u_ko_missing_przcykl_j
         , specialty_id NUMBER(38)
         , semester_id NUMBER(38)
         , subject_map_ids V2u_5Ids_t
-        , prz_kody V2u_Subj_5Codes_t
+        , tried_map_subj_codes V2u_Subj_5Codes_t
+        , istniejace_przedmioty_kod V2u_Subj_5Codes_t
 
         , CONSTRAINT v2u_ko_missing_przcykl_j_pk
             PRIMARY KEY (id)

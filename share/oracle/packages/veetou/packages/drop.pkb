@@ -390,6 +390,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_View('ko_missing_prgos_v');
         Drop_View('ko_matched_prgos_v');
         Drop_View('ko_matched_etpos_v');
+        Drop_View('ko_matched_przcykl_v');
         Drop_View('ko_matched_przedm_v');
         Drop_View('ko_student_threads_v');
         Drop_View('ko_ambig_specialty_map_v');
@@ -420,6 +421,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Matched_Etpos_t', 'Ko_Matched_Etposes_t');
         Drop_Type('Ko_Matched_Prgos_t', 'Ko_Matched_Prgoses_t');
         Drop_Type('Ko_Matched_Przedm_t', 'Ko_Matched_Przedms_t');
+        Drop_Type('Ko_Matched_Przcykl_t', 'Ko_Matched_Przcykles_t');
     END;
 
 END V2U_Drop;

@@ -13,9 +13,13 @@ USING
                     AS V2u_5Ids_t
                   ) subject_map_ids
                 , CAST(
+                    COLLECT(subject_map.map_subj_code ORDER BY subject_map.map_subj_code)
+                    AS V2u_5Vchars1024_t
+                  ) tried_map_subj_codes
+                , CAST(
                     COLLECT(j3.prz_kod ORDER BY j3.prz_kod)
                     AS V2u_5Vchars1024_t
-                  ) prz_kody
+                  ) istniejace_przedmioty_kod
             FROM v2u_ko_subject_semesters_j j1
             LEFT JOIN v2u_ko_matched_przcykl_j j2
                 ON (j2.subject_id = j1.subject_id AND
@@ -32,6 +36,8 @@ USING
                     j4.specialty_id = j1.specialty_id AND
                     j4.semester_id = j1.semester_id AND
                     j4.job_uuid = j1.job_uuid)
+            LEFT JOIN v2u_subject_map subject_map
+                ON (subject_map.id = j4.map_id)
             WHERE j2.id IS NULL
             GROUP BY
                   j1.job_uuid
@@ -47,8 +53,12 @@ USING
             , u.subject_map_ids subject_map_ids
             , CAST(MULTISET(
                     SELECT DISTINCT SUBSTR(VALUE(t), 1, 32)
-                    FROM TABLE(u.prz_kody) t
-              ) AS V2u_Subj_5Codes_t) prz_kody
+                    FROM TABLE(u.tried_map_subj_codes) t
+              ) AS V2u_Subj_5Codes_t) tried_map_subj_codes
+            , CAST(MULTISET(
+                    SELECT DISTINCT SUBSTR(VALUE(t), 1, 32)
+                    FROM TABLE(u.istniejace_przedmioty_kod) t
+              ) AS V2u_Subj_5Codes_t) istniejace_przedmioty_kod
         FROM u u
     ) src
 ON  (tgt.job_uuid = src.job_uuid AND
@@ -56,10 +66,11 @@ ON  (tgt.job_uuid = src.job_uuid AND
      tgt.specialty_id = src.specialty_id AND
      tgt.semester_id = src.semester_id)
 WHEN NOT MATCHED THEN
-    INSERT (    job_uuid,     subject_id,     specialty_id,     semester_id,     subject_map_ids,     prz_kody)
-    VALUES (src.job_uuid, src.subject_id, src.specialty_id, src.semester_id, src.subject_map_ids, src.prz_kody)
+    INSERT (    job_uuid,     subject_id,     specialty_id,     semester_id,     subject_map_ids,     tried_map_subj_codes,     istniejace_przedmioty_kod)
+    VALUES (src.job_uuid, src.subject_id, src.specialty_id, src.semester_id, src.subject_map_ids, src.tried_map_subj_codes, src.istniejace_przedmioty_kod)
 WHEN MATCHED THEN UPDATE SET
       tgt.subject_map_ids = src.subject_map_ids
-    , tgt.prz_kody = src.prz_kody
+    , tgt.tried_map_subj_codes = src.tried_map_subj_codes
+    , tgt.istniejace_przedmioty_kod = src.istniejace_przedmioty_kod
 ;
 -- vim: set ft=sql ts=4 sw=4 et:

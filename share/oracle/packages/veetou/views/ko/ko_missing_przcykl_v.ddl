@@ -9,7 +9,8 @@ AS WITH u AS
                 , specialty => VALUE(specialties)
                 , semester => VALUE(semesters)
                 , subject_map_ids => j.subject_map_ids
-                , prz_kody => j.prz_kody
+                , tried_map_subj_codes => j.tried_map_subj_codes
+                , istniejace_przedmioty_kod => j.istniejace_przedmioty_kod
             )
         FROM v2u_ko_missing_przcykl_j j
         INNER JOIN v2u_ko_subjects subjects
