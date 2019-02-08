@@ -21,5 +21,6 @@
 @@ko_missing_prgos_j.ddl;
 @@ko_etapy_osob_j.ddl;
 @@ko_missing_etpos_j.ddl;
+@@ko_przedmioty_j.ddl;
 
 -- vim: set ft=sql ts=4 sw=4 et:

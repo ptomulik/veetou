@@ -4,7 +4,6 @@ OF V2u_Ko_Subject_t
           CONSTRAINT v2u_ko_subjects_pk PRIMARY KEY (id, job_uuid)
     )
 OBJECT IDENTIFIER IS PRIMARY KEY
---VARRAY subj_grades STORE AS LOB (ENABLE STORAGE IN ROW)
 NESTED TABLE tr_ids STORE AS v2u_ko_subject_trs_nt
     ((CONSTRAINT v2u_ko_subject_trs_nt_pk PRIMARY KEY (NESTED_TABLE_ID, COLUMN_VALUE)));
 /

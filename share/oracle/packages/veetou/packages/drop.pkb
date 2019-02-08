@@ -225,6 +225,12 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         --
         Drop_Index('dz_studenci_idx1');
         Drop_Table('dz_studenci', how => 'PURGE');
+        --
+        Drop_Table('dz_przedmioty', how => 'PURGE');
+        --
+        Drop_Index('dz_przedmioty_cykli_idx1');
+        Drop_Index('dz_przedmioty_cykli_idx2');
+        Drop_Table('dz_przedmioty_cykli', how => 'PURGE');
 
         Drop_Trigger('semesters_tr1');
         Drop_Table('semesters', how => 'PURGE');
@@ -262,6 +268,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Dz_Program_Osoby_t', 'Dz_Programy_Osob_t');
         Drop_Type('Dz_Etap_Osoby_t', 'Dz_Etapy_Osob_t');
         Drop_Type('Dz_Student_t', 'Dz_Studenci_t');
+        Drop_Type('Dz_Przedmiot_t', 'Dz_Przedmioty_t');
+        Drop_Type('Dz_Przedmiot_Cyklu_t', 'Dz_Przedmioty_Cykli_t');
     END;
 
     PROCEDURE Tier2
@@ -282,6 +290,10 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Trigger('ko_programy_osob_j_tr1');
         Drop_Sequence('ko_programy_osob_j_sq1');
         Drop_Table('ko_programy_osob_j', how => 'PURGE');
+        --
+        Drop_Trigger('ko_przedmioty_j_tr1');
+        Drop_Sequence('ko_przedmioty_j_sq1');
+        Drop_Table('ko_przedmioty_j', how => 'PURGE');
         --
         Drop_Trigger('ko_student_threads_j_tr1');
         Drop_Sequence('ko_student_threads_j_sq1');
@@ -343,7 +355,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Subj_Grades_t');
         Drop_Type('Subj_Codes_t');
         Drop_Type('Ids_t');
+        Drop_Type('Dz_Ids_t');
         Drop_Type('5Ids_t');
+        Drop_Type('Dz_5Ids_t');
         Drop_Type('Integers_t');
         Drop_Type('Ints2_t');
         Drop_Type('Ints4_t');
@@ -358,6 +372,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_View('ko_missing_prgos_v');
         Drop_View('ko_programy_osob_v');
         Drop_View('ko_etapy_osob_v');
+        Drop_View('ko_przedmioty_v');
         Drop_View('ko_student_threads_v');
         Drop_View('ko_ambig_specialty_map_v');
         Drop_View('ko_ambig_subject_map_v');
@@ -384,6 +399,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Grade_t', 'Ko_Grades_t');
         Drop_Type('Ko_Etap_Osoby_t', 'Ko_Etapy_Osob_t');
         Drop_Type('Ko_Program_Osoby_t', 'Ko_Programy_Osob_t');
+        Drop_Type('Ko_Przedmiot_t', 'Ko_Przedmioty_t');
     END;
 
 END V2U_Drop;

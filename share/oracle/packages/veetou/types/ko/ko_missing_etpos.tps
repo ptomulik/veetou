@@ -1,6 +1,6 @@
 CREATE OR REPLACE TYPE V2u_Ko_Missing_Etpos_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Missing_Prgos_t
-    ( prgos_ids V2u_Dz_Ids_t
+    ( prgos_ids V2u_Dz_5Ids_t
 
 --    , CONSTRUCTOR FUNCTION V2u_Ko_Missing_Etpos_t(
 --              SELF IN OUT NOCOPY V2u_Ko_Missing_Etpos_t
@@ -32,8 +32,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Etpos_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
             , ects_attained IN NUMBER
-            , specialty_map_ids IN V2u_Ids_t
-            , prgos_ids IN V2u_Dz_Ids_t
+            , specialty_map_ids IN V2u_5Ids_t
+            , prgos_ids IN V2u_Dz_5Ids_t
             ) RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
@@ -42,8 +42,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Etpos_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
             , ects_attained IN NUMBER
-            , specialty_map_ids IN V2u_Ids_t
-            , prgos_ids IN V2u_Dz_Ids_t
+            , specialty_map_ids IN V2u_5Ids_t
+            , prgos_ids IN V2u_Dz_5Ids_t
             )
     );
 /

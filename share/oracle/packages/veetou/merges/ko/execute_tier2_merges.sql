@@ -22,6 +22,7 @@
 @@ko_programy_osob_j.sql;
 @@ko_missing_etpos_j.sql;
 @@ko_missing_prgos_j.sql;
+@@ko_przedmioty_j.sql;
 
 
 -- vim: set ft=sql ts=4 sw=4 et:

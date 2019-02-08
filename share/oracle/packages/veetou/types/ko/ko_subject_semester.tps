@@ -62,8 +62,16 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Semester_t
             , semester IN V2u_Ko_Semester_t
             ) RETURN SELF AS RESULT
 
+    , MEMBER PROCEDURE init(
+              SELF IN OUT NOCOPY V2u_Ko_Subject_Semester_t
+            , subject IN V2u_Ko_Subject_t
+            , specialty IN V2u_Ko_Specialty_t
+            , semester IN V2u_Ko_Semester_t
+            )
+
     , ORDER MEMBER FUNCTION cmp(other V2u_Ko_Subject_Semester_t)
             RETURN INTEGER
-    );
+    )
+NOT FINAL;
 
 -- vim: set ft=sql ts=4 sw=4 et:

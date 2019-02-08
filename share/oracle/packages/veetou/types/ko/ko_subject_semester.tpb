@@ -63,6 +63,20 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Semester_t AS
             ) RETURN SELF AS RESULT
     IS
     BEGIN
+        SELF.init( subject => subject
+                 , specialty => specialty
+                 , semester => semester );
+        RETURN;
+    END;
+
+    MEMBER PROCEDURE init(
+              SELF IN OUT NOCOPY V2u_Ko_Subject_Semester_t
+            , subject IN V2u_Ko_Subject_t
+            , specialty IN V2u_Ko_Specialty_t
+            , semester IN V2u_Ko_Semester_t
+            )
+    IS
+    BEGIN
         SELF.job_uuid := subject.job_uuid;
         SELF.subject_id := subject.id;
         SELF.specialty_id := specialty.id;
@@ -87,7 +101,6 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Semester_t AS
         SELF.ects_mandatory := semester.ects_mandatory;
         SELF.ects_other := semester.ects_other;
         SELF.ects_total := semester.ects_total;
-        RETURN;
     END;
 
     ORDER MEMBER FUNCTION cmp(other V2u_Ko_Subject_Semester_t)

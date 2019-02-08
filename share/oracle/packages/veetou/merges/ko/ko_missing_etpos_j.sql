@@ -6,8 +6,8 @@ USING
             , j1.student_id student_id
             , j1.specialty_id specialty_id
             , j1.semester_id semester_id
-            , CAST(COLLECT(DISTINCT j4.map_id) AS V2u_Ids_t) specialty_map_ids
-            , CAST(COLLECT(DISTINCT j3.prgos_id) AS V2u_Dz_Ids_t) prgos_ids
+            , CAST(COLLECT(DISTINCT j4.map_id) AS V2u_5Ids_t) specialty_map_ids
+            , CAST(COLLECT(DISTINCT j3.prgos_id) AS V2u_Dz_5Ids_t) prgos_ids
         FROM v2u_ko_student_semesters_j j1
         LEFT JOIN v2u_ko_etapy_osob_j j2
             ON (j2.job_uuid = j1.job_uuid AND

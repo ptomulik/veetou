@@ -5,8 +5,8 @@ CREATE TABLE v2u_ko_missing_etpos_j
         , student_id NUMBER(38)
         , specialty_id NUMBER(38)
         , semester_id NUMBER(38)
-        , specialty_map_ids V2u_Ids_t
-        , prgos_ids V2u_Dz_Ids_t
+        , specialty_map_ids V2u_5Ids_t
+        , prgos_ids V2u_Dz_5Ids_t
 
         , CONSTRAINT v2u_ko_missing_etpos_j_pk
             PRIMARY KEY (id)
@@ -26,10 +26,6 @@ CREATE TABLE v2u_ko_missing_etpos_j
             FOREIGN KEY (student_id, specialty_id, semester_id, job_uuid)
             REFERENCES v2u_ko_student_semesters_j(student_id, specialty_id, semester_id, job_uuid)
     )
-NESTED TABLE specialty_map_ids STORE AS v2u_ko_mi_etpos_j_spmaps_nt
-    ((CONSTRAINT v2u_ko_mi_etpos_j_spmaps_nt_pk PRIMARY KEY (NESTED_TABLE_ID, COLUMN_VALUE)))
-NESTED TABLE prgos_ids STORE AS v2u_ko_mi_etpos_j_prgos_nt
-    ((CONSTRAINT v2u_ko_mi_etpos_j_prgos_nt_pk PRIMARY KEY (NESTED_TABLE_ID, COLUMN_VALUE)))
     ;
 /
 CREATE SEQUENCE v2u_ko_missing_etpos_j_sq1 START WITH 1;

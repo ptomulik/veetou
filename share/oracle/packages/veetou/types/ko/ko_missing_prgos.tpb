@@ -53,7 +53,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Prgos_t AS
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
             , ects_attained IN NUMBER
-            , specialty_map_ids IN V2u_Ids_t
+            , specialty_map_ids IN V2u_5Ids_t
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -73,7 +73,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Prgos_t AS
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
             , ects_attained IN NUMBER
-            , specialty_map_ids IN V2u_Ids_t
+            , specialty_map_ids IN V2u_5Ids_t
             )
     IS
     BEGIN
