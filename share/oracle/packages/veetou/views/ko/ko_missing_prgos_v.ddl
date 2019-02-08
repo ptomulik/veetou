@@ -9,7 +9,7 @@ AS WITH u AS
                 , specialty => VALUE(specialties)
                 , semester => VALUE(semesters)
                 , ects_attained => student_semesters.ects_attained
-                , specialty_map_ids => j.specialty_map_ids
+                , tried_specialty_map_ids => j.tried_specialty_map_ids
             )
         FROM v2u_ko_missing_prgos_j j
         INNER JOIN v2u_ko_students students

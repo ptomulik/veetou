@@ -5,8 +5,11 @@ CREATE TABLE v2u_ko_missing_etpos_j
         , student_id NUMBER(38)
         , specialty_id NUMBER(38)
         , semester_id NUMBER(38)
-        , specialty_map_ids V2u_5Ids_t
-        , prgos_ids V2u_Dz_5Ids_t
+        , tried_specialty_map_ids V2u_5Ids_t
+        , prgos_ids_all_semesters V2u_Dz_5Ids_t
+        , all_etpos_ids_for_semester V2u_Dz_5Ids_t
+        , tried_program_codes V2u_Program_5Codes_t
+        , all_etpos_progs_for_semester V2u_Program_5Codes_t
 
         , CONSTRAINT v2u_ko_missing_etpos_j_pk
             PRIMARY KEY (id)

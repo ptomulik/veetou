@@ -364,6 +364,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Distinct_t');
 
         Drop_Type('Semester_Codes_t');
+        Drop_Type('Program_Codes_t');
         Drop_Type('Subj_Grades_t');
         Drop_Type('Subj_Codes_t');
         Drop_Type('Ids_t');
@@ -377,6 +378,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ints4_t');
         Drop_Type('Subj_20Grades_t');
         Drop_Type('Subj_20Codes_t');
+        Drop_Type('Program_5Codes_t');
     END;
 
     PROCEDURE Tier3

@@ -5,7 +5,7 @@ CREATE TABLE v2u_ko_missing_prgos_j
         , student_id NUMBER(38)
         , specialty_id NUMBER(38)
         , semester_id NUMBER(38)
-        , specialty_map_ids V2u_5Ids_t
+        , tried_specialty_map_ids V2u_5Ids_t
 
         , CONSTRAINT v2u_ko_missing_prgos_j_pk
             PRIMARY KEY (id)
