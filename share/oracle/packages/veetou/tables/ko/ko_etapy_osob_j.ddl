@@ -7,6 +7,7 @@ CREATE TABLE v2u_ko_etapy_osob_j
         , semester_id NUMBER(38)
         , specialty_map_id NUMBER(38)
         , etpos_id NUMBER(10)
+
         , CONSTRAINT v2u_ko_etapy_osob_j_pk
             PRIMARY KEY (id)
         , CONSTRAINT v2u_ko_etapy_osob_j_f0

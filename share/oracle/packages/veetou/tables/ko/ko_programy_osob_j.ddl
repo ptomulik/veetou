@@ -6,6 +6,7 @@ CREATE TABLE v2u_ko_programy_osob_j
         , specialty_id NUMBER(38)
         , prgos_id NUMBER(10)
         , semester_ids V2u_Ids_t
+
         , CONSTRAINT v2u_ko_programy_osob_j_pk
             PRIMARY KEY (id)
         , CONSTRAINT v2u_ko_programy_osob_j_f0

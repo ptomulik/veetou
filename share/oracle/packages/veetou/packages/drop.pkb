@@ -283,6 +283,14 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Sequence('ko_missing_etpos_j_sq1');
         Drop_Table('ko_missing_etpos_j', how => 'PURGE');
         --
+        Drop_Trigger('ko_missing_przedm_j_tr1');
+        Drop_Sequence('ko_missing_przedm_j_sq1');
+        Drop_Table('ko_missing_przedm_j', how => 'PURGE');
+        --
+        Drop_Trigger('ko_missing_przcykl_j_tr1');
+        Drop_Sequence('ko_missing_przcykl_j_sq1');
+        Drop_Table('ko_missing_przcykl_j', how => 'PURGE');
+        --
         Drop_Trigger('ko_etapy_osob_j_tr1');
         Drop_Sequence('ko_etapy_osob_j_sq1');
         Drop_Table('ko_etapy_osob_j', how => 'PURGE');
@@ -294,6 +302,10 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Trigger('ko_przedmioty_j_tr1');
         Drop_Sequence('ko_przedmioty_j_sq1');
         Drop_Table('ko_przedmioty_j', how => 'PURGE');
+        --
+        Drop_Trigger('ko_przedmioty_cykli_j_tr1');
+        Drop_Sequence('ko_przedmioty_cykli_j_sq1');
+        Drop_Table('ko_przedmioty_cykli_j', how => 'PURGE');
         --
         Drop_Trigger('ko_student_threads_j_tr1');
         Drop_Sequence('ko_student_threads_j_sq1');
@@ -359,6 +371,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('5Ids_t');
         Drop_Type('Dz_5Ids_t');
         Drop_Type('Integers_t');
+        Drop_Type('Vchars1024_t');
+        Drop_Type('5Vchars1024_t');
         Drop_Type('Ints2_t');
         Drop_Type('Ints4_t');
         Drop_Type('Subj_20Grades_t');

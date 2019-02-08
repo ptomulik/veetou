@@ -22,5 +22,8 @@
 @@ko_etapy_osob_j.ddl;
 @@ko_missing_etpos_j.ddl;
 @@ko_przedmioty_j.ddl;
+@@ko_przedmioty_cykli_j.ddl;
+@@ko_missing_przcykl_j.ddl;
+@@ko_missing_przedm_j.ddl;
 
 -- vim: set ft=sql ts=4 sw=4 et:
