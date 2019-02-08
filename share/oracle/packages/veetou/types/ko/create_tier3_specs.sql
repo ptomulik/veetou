@@ -13,5 +13,7 @@
 @@ko_missing_prgos.tps;
 @@ko_missing_etpos.tps;
 @@ko_przedmiot.tps;
+@@ko_missing_przedm.tps;
+@@ko_missing_przcykl.tps;
 
 -- vim: set ft=sql ts=4 sw=4 et:
