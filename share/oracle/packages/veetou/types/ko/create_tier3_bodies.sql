@@ -12,7 +12,8 @@
 @@ko_matched_etpos.tpb;
 @@ko_missing_prgos.tpb;
 @@ko_missing_etpos.tpb;
-@@ko_przedmiot.tpb;
+@@ko_matched_przedm.tpb;
+@@ko_matched_przcykl.tpb;
 @@ko_missing_przedm.tpb;
 @@ko_missing_przcykl.tpb;
 

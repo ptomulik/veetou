@@ -12,7 +12,8 @@
 @@ko_matched_etpos.tps;
 @@ko_missing_prgos.tps;
 @@ko_missing_etpos.tps;
-@@ko_przedmiot.tps;
+@@ko_matched_przedm.tps;
+@@ko_matched_przcykl.tps;
 @@ko_missing_przedm.tps;
 @@ko_missing_przcykl.tps;
 

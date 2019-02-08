@@ -1,4 +1,4 @@
-CREATE OR REPLACE TYPE V2u_Ko_Przedmiot_t
+CREATE OR REPLACE TYPE V2u_Ko_Matched_Przedm_t
     FORCE AUTHID CURRENT_USER AS OBJECT
     ( id NUMBER(38)
     , job_uuid RAW(16)
@@ -59,8 +59,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Przedmiot_t
     , dz_pw_nazwa_supl VARCHAR2(200 CHAR)
     , dz_pw_nazwa_supl_ang VARCHAR2(200 CHAR)
 
-    , CONSTRUCTOR FUNCTION V2u_Ko_Przedmiot_t(
-              SELF IN OUT NOCOPY V2u_Ko_Przedmiot_t
+    , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Przedm_t(
+              SELF IN OUT NOCOPY V2u_Ko_Matched_Przedm_t
             , id IN NUMBER
             , job_uuid IN RAW
             , subject_id IN NUMBER
@@ -121,8 +121,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Przedmiot_t
             , dz_pw_nazwa_supl_ang IN VARCHAR2
             ) RETURN SELF AS RESULT
 
-    , CONSTRUCTOR FUNCTION V2u_Ko_Przedmiot_t(
-              SELF IN OUT NOCOPY V2u_Ko_Przedmiot_t
+    , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Przedm_t(
+              SELF IN OUT NOCOPY V2u_Ko_Matched_Przedm_t
             , id IN NUMBER
             , subject IN V2u_Ko_Subject_t
             , specialty IN V2u_Ko_Specialty_t
@@ -134,7 +134,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Przedmiot_t
 
     );
 /
-CREATE OR REPLACE TYPE V2u_Ko_Przedmioty_t
-    AS TABLE OF V2u_Ko_Przedmiot_t;
+CREATE OR REPLACE TYPE V2u_Ko_Matched_Przedms_t
+    AS TABLE OF V2u_Ko_Matched_Przedm_t;
 
 -- vim: set ft=sql ts=4 sw=4 et:

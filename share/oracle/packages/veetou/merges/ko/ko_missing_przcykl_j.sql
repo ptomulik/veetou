@@ -17,12 +17,12 @@ USING
                     AS V2u_5Vchars1024_t
                   ) prz_kody
             FROM v2u_ko_subject_semesters_j j1
-            LEFT JOIN v2u_ko_przedmioty_cykli_j j2
+            LEFT JOIN v2u_ko_matched_przcykl_j j2
                 ON (j2.subject_id = j1.subject_id AND
                     j2.specialty_id = j1.specialty_id AND
                     j2.semester_id = j1.semester_id AND
                     j2.job_uuid = j1.job_uuid)
-            LEFT JOIN v2u_ko_przedmioty_j j3
+            LEFT JOIN v2u_ko_matched_przedm_j j3
                 ON (j3.subject_id = j1.subject_id AND
                     j3.specialty_id = j1.specialty_id AND
                     j3.semester_id = j1.semester_id AND

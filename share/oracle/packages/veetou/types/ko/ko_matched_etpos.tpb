@@ -8,7 +8,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Etpos_t AS
             , semester_id IN NUMBER
             , specialty_map_id IN NUMBER
             , etpos_id IN NUMBER
-            , semester_number_missmatch IN VARCHAR2
+            , etp_kod_missmatch IN VARCHAR2
             , ko_student_index IN VARCHAR2
             , ko_student_name IN VARCHAR2
             , ko_first_name IN VARCHAR2
@@ -56,7 +56,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Etpos_t AS
         SELF.semester_id := semester_id;
         SELF.specialty_map_id := specialty_map_id;
         SELF.etpos_id := etpos_id;
-        SELF.semester_number_missmatch := semester_number_missmatch;
+        SELF.etp_kod_missmatch := etp_kod_missmatch;
         SELF.ko_student_index := ko_student_index;
         SELF.ko_student_name := ko_student_name;
         SELF.ko_first_name := ko_first_name;
@@ -105,7 +105,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Etpos_t AS
             , semester IN V2u_Ko_Semester_t
             , specialty_map IN V2u_Specialty_Map_t
             , etap_osoby IN V2u_Dz_Etap_Osoby_t
-            , semester_number_missmatch IN VARCHAR2
+            , etp_kod_missmatch IN VARCHAR2
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -116,7 +116,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Etpos_t AS
         SELF.semester_id := semester.id;
         SELF.specialty_map_id := specialty_map.id;
         SELF.etpos_id := etap_osoby.id;
-        SELF.semester_number_missmatch := semester_number_missmatch;
+        SELF.etp_kod_missmatch := etp_kod_missmatch;
         SELF.ko_student_index := student.student_index;
         SELF.ko_student_name := student.student_name;
         SELF.ko_first_name := student.first_name;

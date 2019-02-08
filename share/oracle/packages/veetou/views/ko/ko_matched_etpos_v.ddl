@@ -11,7 +11,7 @@ AS WITH u AS
                 , semester => VALUE(semesters)
                 , specialty_map => VALUE(specialty_map)
                 , etap_osoby => VALUE(etapy_osob)
-                , semester_number_missmatch => j.semester_number_missmatch
+                , etp_kod_missmatch => j.etp_kod_missmatch
             )
         FROM v2u_ko_matched_etpos_j j
         INNER JOIN v2u_ko_students students

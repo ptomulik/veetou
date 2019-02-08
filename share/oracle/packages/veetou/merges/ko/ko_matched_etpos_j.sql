@@ -13,8 +13,8 @@ USING
               THEN
                 NULL
               ELSE
-                etapy_osob.etp_kod || ' vs. ' || TO_CHAR(semesters.semester_number, 'FM9')
-              END semester_number_missmatch
+                '"' || etapy_osob.etp_kod || '" !~ ' || TO_CHAR(semesters.semester_number, 'FM9')
+              END etp_kod_missmatch
         FROM v2u_ko_student_semesters_j j1
         INNER JOIN v2u_ko_students students
             ON (students.id = j1.student_id AND
@@ -45,9 +45,9 @@ ON  (tgt.job_uuid = src.job_uuid AND
      tgt.specialty_map_id = src.specialty_map_id AND
      tgt.etpos_id = src.etpos_id)
 WHEN NOT MATCHED THEN
-    INSERT (    job_uuid,     student_id,     specialty_id,     semester_id,     specialty_map_id,     etpos_id,     semester_number_missmatch)
-    VALUES (src.job_uuid, src.student_id, src.specialty_id, src.semester_id, src.specialty_map_id, src.etpos_id, src.semester_number_missmatch)
+    INSERT (    job_uuid,     student_id,     specialty_id,     semester_id,     specialty_map_id,     etpos_id,     etp_kod_missmatch)
+    VALUES (src.job_uuid, src.student_id, src.specialty_id, src.semester_id, src.specialty_map_id, src.etpos_id, src.etp_kod_missmatch)
 WHEN MATCHED THEN UPDATE SET
-    tgt.semester_number_missmatch = src.semester_number_missmatch
+    tgt.etp_kod_missmatch = src.etp_kod_missmatch
 ;
 -- vim: set ft=sql ts=4 sw=4 et:

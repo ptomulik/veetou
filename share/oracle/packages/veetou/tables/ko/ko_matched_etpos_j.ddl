@@ -7,7 +7,7 @@ CREATE TABLE v2u_ko_matched_etpos_j
         , semester_id NUMBER(38)
         , specialty_map_id NUMBER(38)
         , etpos_id NUMBER(10)
-        , semester_number_missmatch VARCHAR2(32)
+        , etp_kod_missmatch VARCHAR2(32)
 
         , CONSTRAINT v2u_ko_matched_etpos_j_pk
             PRIMARY KEY (id)

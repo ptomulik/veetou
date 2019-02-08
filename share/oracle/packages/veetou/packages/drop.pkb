@@ -299,13 +299,13 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Sequence('ko_matched_prgos_j_sq1');
         Drop_Table('ko_matched_prgos_j', how => 'PURGE');
         --
-        Drop_Trigger('ko_przedmioty_j_tr1');
-        Drop_Sequence('ko_przedmioty_j_sq1');
-        Drop_Table('ko_przedmioty_j', how => 'PURGE');
+        Drop_Trigger('ko_matched_przedm_j_tr1');
+        Drop_Sequence('ko_matched_przedm_j_sq1');
+        Drop_Table('ko_matched_przedm_j', how => 'PURGE');
         --
-        Drop_Trigger('ko_przedmioty_cykli_j_tr1');
-        Drop_Sequence('ko_przedmioty_cykli_j_sq1');
-        Drop_Table('ko_przedmioty_cykli_j', how => 'PURGE');
+        Drop_Trigger('ko_matched_przcykl_j_tr1');
+        Drop_Sequence('ko_matched_przcykl_j_sq1');
+        Drop_Table('ko_matched_przcykl_j', how => 'PURGE');
         --
         Drop_Trigger('ko_student_threads_j_tr1');
         Drop_Sequence('ko_student_threads_j_sq1');
@@ -390,7 +390,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_View('ko_missing_prgos_v');
         Drop_View('ko_matched_prgos_v');
         Drop_View('ko_matched_etpos_v');
-        Drop_View('ko_przedmioty_v');
+        Drop_View('ko_matched_przedm_v');
         Drop_View('ko_student_threads_v');
         Drop_View('ko_ambig_specialty_map_v');
         Drop_View('ko_ambig_subject_map_v');
@@ -419,7 +419,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Grade_t', 'Ko_Grades_t');
         Drop_Type('Ko_Matched_Etpos_t', 'Ko_Matched_Etposes_t');
         Drop_Type('Ko_Matched_Prgos_t', 'Ko_Matched_Prgoses_t');
-        Drop_Type('Ko_Przedmiot_t', 'Ko_Przedmioty_t');
+        Drop_Type('Ko_Matched_Przedm_t', 'Ko_Matched_Przedms_t');
     END;
 
 END V2U_Drop;

@@ -7,7 +7,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Etpos_t
     , semester_id NUMBER(38)
     , specialty_map_id NUMBER(38)
     , etpos_id NUMBER(10)
-    , semester_number_missmatch VARCHAR2(32)
+    , etp_kod_missmatch VARCHAR2(32)
     , ko_student_index VARCHAR2(32 CHAR)
     , ko_student_name VARCHAR2(128 CHAR)
     , ko_first_name VARCHAR2(48 CHAR)
@@ -55,7 +55,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Etpos_t
             , semester_id IN NUMBER
             , specialty_map_id IN NUMBER
             , etpos_id IN NUMBER
-            , semester_number_missmatch IN VARCHAR2
+            , etp_kod_missmatch IN VARCHAR2
             , ko_student_index IN VARCHAR2
             , ko_student_name IN VARCHAR2
             , ko_first_name IN VARCHAR2
@@ -103,7 +103,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Etpos_t
             , semester IN V2u_Ko_Semester_t
             , specialty_map IN V2u_Specialty_Map_t
             , etap_osoby IN V2u_Dz_Etap_Osoby_t
-            , semester_number_missmatch IN VARCHAR2
+            , etp_kod_missmatch IN VARCHAR2
             ) RETURN SELF AS RESULT
 
 --    , ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Matched_Etpos_t)
