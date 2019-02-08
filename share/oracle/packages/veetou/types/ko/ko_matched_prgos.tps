@@ -1,4 +1,4 @@
-CREATE OR REPLACE TYPE V2u_Ko_Program_Osoby_t
+CREATE OR REPLACE TYPE V2u_Ko_Matched_Prgos_t
     FORCE AUTHID CURRENT_USER AS OBJECT
     ( id NUMBER(38)
     , job_uuid RAW(16)
@@ -63,8 +63,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Program_Osoby_t
     --, dz_umowa_sygnatura VARCHAR2(20 CHAR)
     --, dz_kod_isced VARCHAR2(5 CHAR)
 
-    , CONSTRUCTOR FUNCTION V2u_Ko_Program_Osoby_t(
-              SELF IN OUT NOCOPY V2u_Ko_Program_Osoby_t
+    , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Prgos_t(
+              SELF IN OUT NOCOPY V2u_Ko_Matched_Prgos_t
             , id IN NUMBER
             , job_uuid IN RAW
             , student_id IN NUMBER
@@ -129,8 +129,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Program_Osoby_t
             --, dz_kod_isced IN VARCHAR2
             ) RETURN SELF AS RESULT
 
-    , CONSTRUCTOR FUNCTION V2u_Ko_Program_Osoby_t(
-              SELF IN OUT NOCOPY V2u_Ko_Program_Osoby_t
+    , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Prgos_t(
+              SELF IN OUT NOCOPY V2u_Ko_Matched_Prgos_t
             , id IN NUMBER
             , student IN V2u_Ko_Student_t
             , specialty IN V2u_Ko_Specialty_t
@@ -139,7 +139,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Program_Osoby_t
             ) RETURN SELF AS RESULT
     );
 /
-CREATE OR REPLACE TYPE V2u_Ko_Programy_Osob_t
-    AS TABLE OF V2u_Ko_Program_Osoby_t;
+CREATE OR REPLACE TYPE V2u_Ko_Matched_Prgoses_t
+    AS TABLE OF V2u_Ko_Matched_Prgos_t;
 
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -1,4 +1,4 @@
-MERGE INTO v2u_ko_etapy_osob_j tgt
+MERGE INTO v2u_ko_matched_etpos_j tgt
 USING
     (
         SELECT

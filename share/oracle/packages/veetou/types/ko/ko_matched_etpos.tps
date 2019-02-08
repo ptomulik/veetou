@@ -1,4 +1,4 @@
-CREATE OR REPLACE TYPE V2u_Ko_Etap_Osoby_t
+CREATE OR REPLACE TYPE V2u_Ko_Matched_Etpos_t
     FORCE AUTHID CURRENT_USER AS OBJECT
     ( id NUMBER(38)
     , job_uuid RAW(16)
@@ -46,8 +46,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Etap_Osoby_t
     , dz_czy_erasmus VARCHAR2(1 CHAR)
     , dz_jedn_dyplomujaca VARCHAR2(20 CHAR)
 
-    , CONSTRUCTOR FUNCTION V2u_Ko_Etap_Osoby_t(
-              SELF IN OUT NOCOPY V2u_Ko_Etap_Osoby_t
+    , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Etpos_t(
+              SELF IN OUT NOCOPY V2u_Ko_Matched_Etpos_t
             , id IN NUMBER
             , job_uuid IN RAW
             , student_id IN NUMBER
@@ -95,8 +95,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Etap_Osoby_t
             , dz_jedn_dyplomujaca IN VARCHAR2
             ) RETURN SELF AS RESULT
 
-    , CONSTRUCTOR FUNCTION V2u_Ko_Etap_Osoby_t(
-              SELF IN OUT NOCOPY V2u_Ko_Etap_Osoby_t
+    , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Etpos_t(
+              SELF IN OUT NOCOPY V2u_Ko_Matched_Etpos_t
             , id IN NUMBER
             , student IN V2u_Ko_Student_t
             , specialty IN V2u_Ko_Specialty_t
@@ -106,11 +106,11 @@ CREATE OR REPLACE TYPE V2u_Ko_Etap_Osoby_t
             , semester_number_missmatch IN VARCHAR2
             ) RETURN SELF AS RESULT
 
---    , ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Etap_Osoby_t)
+--    , ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Matched_Etpos_t)
 --            RETURN INTEGER
     );
 /
-CREATE OR REPLACE TYPE V2u_Ko_Etapy_Osob_t
-    AS TABLE OF V2u_Ko_Etap_Osoby_t;
+CREATE OR REPLACE TYPE V2u_Ko_Matched_Etposes_t
+    AS TABLE OF V2u_Ko_Matched_Etpos_t;
 
 -- vim: set ft=sql ts=4 sw=4 et:

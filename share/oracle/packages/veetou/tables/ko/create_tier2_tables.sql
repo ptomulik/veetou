@@ -17,9 +17,9 @@
 @@ko_subject_map_j.ddl;
 @@ko_student_threads_j.ddl;
 
-@@ko_programy_osob_j.ddl;
+@@ko_matched_prgos_j.ddl;
 @@ko_missing_prgos_j.ddl;
-@@ko_etapy_osob_j.ddl;
+@@ko_matched_etpos_j.ddl;
 @@ko_missing_etpos_j.ddl;
 @@ko_przedmioty_j.ddl;
 @@ko_przedmioty_cykli_j.ddl;

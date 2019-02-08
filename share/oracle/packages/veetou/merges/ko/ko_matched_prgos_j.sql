@@ -1,4 +1,4 @@
-MERGE INTO v2u_ko_programy_osob_j tgt
+MERGE INTO v2u_ko_matched_prgos_j tgt
 USING
     (
         SELECT
@@ -7,7 +7,7 @@ USING
             , j.specialty_id specialty_id
             , e.prgos_id prgos_id
             , CAST(COLLECT(j.semester_id) AS V2u_Ids_t) semester_ids
-        FROM v2u_ko_etapy_osob_j j
+        FROM v2u_ko_matched_etpos_j j
         INNER JOIN v2u_dz_etapy_osob e
             ON (e.id = j.etpos_id)
         GROUP BY

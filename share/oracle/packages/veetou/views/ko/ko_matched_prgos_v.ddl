@@ -1,17 +1,17 @@
-CREATE OR REPLACE VIEW v2u_ko_programy_osob_v
-OF V2u_Ko_Program_Osoby_t
+CREATE OR REPLACE VIEW v2u_ko_matched_prgos_v
+OF V2u_Ko_Matched_Prgos_t
 WITH OBJECT IDENTIFIER (id)
 AS WITH u AS
     (
         SELECT
-              V2u_Ko_Program_Osoby_t(
+              V2u_Ko_Matched_Prgos_t(
                   id => j.id
                 , student => VALUE(students)
                 , specialty => VALUE(specialties)
                 , program_osoby => VALUE(programy_osob)
                 , semester_ids => j.semester_ids
             )
-        FROM v2u_ko_programy_osob_j j
+        FROM v2u_ko_matched_prgos_j j
         INNER JOIN v2u_ko_students students
             ON (students.id = j.student_id AND
                 students.job_uuid = j.job_uuid)

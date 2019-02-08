@@ -10,8 +10,8 @@
 @@ko_unmapped_specialties_v.ddl;
 @@ko_student_threads_v.ddl;
 --
-@@ko_programy_osob_v.ddl;
-@@ko_etapy_osob_v.ddl;
+@@ko_matched_prgos_v.ddl;
+@@ko_matched_etpos_v.ddl;
 @@ko_missing_prgos_v.ddl;
 @@ko_missing_etpos_v.ddl;
 @@ko_przedmioty_v.ddl;

@@ -8,8 +8,8 @@
 @@ko_ambig_subject_map.tpb;
 @@ko_ambig_specialty_map.tpb;
 @@ko_student_thread.tpb;
-@@ko_program_osoby.tpb;
-@@ko_etap_osoby.tpb;
+@@ko_matched_prgos.tpb;
+@@ko_matched_etpos.tpb;
 @@ko_missing_prgos.tpb;
 @@ko_missing_etpos.tpb;
 @@ko_przedmiot.tpb;

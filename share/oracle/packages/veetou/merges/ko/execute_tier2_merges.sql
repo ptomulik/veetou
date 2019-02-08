@@ -18,8 +18,8 @@
 @@ko_student_threads_j.sql;
 
 -- THE ORDER IS IMPORTANT!
-@@ko_etapy_osob_j.sql;
-@@ko_programy_osob_j.sql;
+@@ko_matched_etpos_j.sql;
+@@ko_matched_prgos_j.sql;
 @@ko_missing_etpos_j.sql;
 @@ko_missing_prgos_j.sql;
 @@ko_przedmioty_cykli_j.sql;

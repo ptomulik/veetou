@@ -11,12 +11,12 @@ USING
                 , CAST(COLLECT(DISTINCT j4.map_id) AS V2u_5Ids_t) tried_specialty_map_ids
                 , CAST(COLLECT(DISTINCT j3.prgos_id) AS V2u_Dz_5Ids_t) prgos_ids_all_semesters
             FROM v2u_ko_student_semesters_j j1
-            LEFT JOIN v2u_ko_etapy_osob_j j2
+            LEFT JOIN v2u_ko_matched_etpos_j j2
                 ON (j2.job_uuid = j1.job_uuid AND
                     j2.student_id = j1.student_id AND
                     j2.specialty_id = j1.specialty_id AND
                     j2.semester_id = j1.semester_id)
-            LEFT JOIN v2u_ko_programy_osob_j j3
+            LEFT JOIN v2u_ko_matched_prgos_j j3
                 ON (j3.job_uuid = j1.job_uuid AND
                     j3.student_id = j1.student_id AND
                     j3.specialty_id = j1.specialty_id)

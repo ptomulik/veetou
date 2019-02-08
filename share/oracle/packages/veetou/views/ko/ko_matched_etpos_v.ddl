@@ -1,10 +1,10 @@
-CREATE OR REPLACE VIEW v2u_ko_etapy_osob_v
-OF V2u_Ko_Etap_Osoby_t
+CREATE OR REPLACE VIEW v2u_ko_matched_etpos_v
+OF V2u_Ko_Matched_Etpos_t
 WITH OBJECT IDENTIFIER (id)
 AS WITH u AS
     (
         SELECT
-              V2u_Ko_Etap_Osoby_t(
+              V2u_Ko_Matched_Etpos_t(
                   id => j.id
                 , student => VALUE(students)
                 , specialty => VALUE(specialties)
@@ -13,7 +13,7 @@ AS WITH u AS
                 , etap_osoby => VALUE(etapy_osob)
                 , semester_number_missmatch => j.semester_number_missmatch
             )
-        FROM v2u_ko_etapy_osob_j j
+        FROM v2u_ko_matched_etpos_j j
         INNER JOIN v2u_ko_students students
             ON (students.id = j.student_id AND
                 students.job_uuid = j.job_uuid)
