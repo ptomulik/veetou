@@ -6,6 +6,7 @@ CREATE TABLE v2u_ko_missing_przedm_j
         , specialty_id NUMBER(38)
         , semester_id NUMBER(38)
         , subject_map_ids V2u_5Ids_t
+        , tried_map_subj_codes V2u_Subj_5Codes_t
 
         , CONSTRAINT v2u_ko_missing_przedm_j_pk
             PRIMARY KEY (id)
@@ -21,6 +22,8 @@ CREATE TABLE v2u_ko_missing_przedm_j
         , CONSTRAINT v2u_ko_missing_przedm_j_f3
             FOREIGN KEY (subject_id, specialty_id, semester_id, job_uuid)
             REFERENCES v2u_ko_subject_semesters_j(subject_id, specialty_id, semester_id, job_uuid)
+        , CONSTRAINT v2u_ko_missing_przedm_j_u0
+            UNIQUE (subject_id, specialty_id, semester_id, job_uuid)
     )
     ;
 /

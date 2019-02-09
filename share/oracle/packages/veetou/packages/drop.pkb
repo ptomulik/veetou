@@ -231,6 +231,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('dz_przedmioty_cykli_idx1');
         Drop_Index('dz_przedmioty_cykli_idx2');
         Drop_Table('dz_przedmioty_cykli', how => 'PURGE');
+        --
+        Drop_Index('dz_zajecia_cykli_idx1');
+        Drop_Table('dz_zajecia_cykli', how => 'PURGE');
 
         Drop_Trigger('semesters_tr1');
         Drop_Table('semesters', how => 'PURGE');
@@ -270,6 +273,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Dz_Student_t', 'Dz_Studenci_t');
         Drop_Type('Dz_Przedmiot_t', 'Dz_Przedmioty_t');
         Drop_Type('Dz_Przedmiot_Cyklu_t', 'Dz_Przedmioty_Cykli_t');
+        Drop_Type('Dz_Zajecia_Cyklu_t', 'Dz_Zajecia_Cykli_t');
     END;
 
     PROCEDURE Tier2

@@ -96,19 +96,6 @@ CREATE OR REPLACE TYPE V2u_Dz_Program_Osoby_t
             , umowa_sygnatura IN VARCHAR2
             , kod_isced IN VARCHAR2
             ) RETURN SELF AS RESULT
-
---    , CONSTRUCTOR FUNCTION V2u_Dz_Program_Osoby_t(
---              SELF IN OUT NOCOPY V2u_Dz_Program_Osoby_t
---            , student IN V2u_Ko_Student_t
---            , specialty IN V2u_Ko_Specialty_t
---            , specialty_map IN V2u_Specialty_Map_t
---            , semester_ids IN V2u_Ids_t
---            , thread_index IN NUMBER
---            , max_admission_semester IN VARCHAR2
---            ) RETURN SELF AS RESULT
-
---    , ORDER MEMBER FUNCTION cmp(other IN V2u_Dz_Program_Osoby_t)
---            RETURN INTEGER
     );
 /
 CREATE OR REPLACE TYPE V2u_Dz_Programy_Osob_t

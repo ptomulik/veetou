@@ -37,8 +37,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Przcykl_t AS
           , specialty => specialty
           , semester => semester
           , subject_map_ids => subject_map_ids
+          , tried_map_subj_codes => tried_map_subj_codes
         );
-        SELF.tried_map_subj_codes := tried_map_subj_codes;
         SELF.istniejace_przedmioty_kod := istniejace_przedmioty_kod;
     END;
 END;

@@ -1,6 +1,7 @@
 @@dz_studenci.sql;
 @@dz_przedmioty.sql;
 @@dz_przedmioty_cykli.sql;
+@@dz_zajecia_cykli.sql;
 @@dz_programy_osob.sql;
 @@dz_etapy_osob.sql;
 

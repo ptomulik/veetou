@@ -1,0 +1,34 @@
+--MERGE INTO v2u_ko_strict_subj_map_j tgt
+--USING
+--    (
+--        WITH u AS
+--        (
+--            SELECT
+--                  j.job_uuid job_uuid
+--                , j.subject_id subject_id
+--                , j.specialty_id specialty_id
+--                , j.semester_id semester_id
+--                , MIN(j.map_id) KEEP (
+--                    DENSE_RANK FIRST ORDER BY j.matching_score DESC, j.map_id ASC
+--                  ) map_id
+--                , MAX(j.matching_score) matching_score
+--            FROM v2u_ko_subject_map_j j
+--            GROUP BY
+--                  j.job_uuid
+--                , j.subject_id
+--                , j.specialty_id
+--                , j.semester_id
+--        )
+--    ) src
+--ON (tgt.subject_id = src.subject_id AND
+--    tgt.specialty_id = src.specialty_id AND
+--    tgt.semester_id = src.semester_id AND
+--    tgt.map_id = src.map_id AND
+--    tgt.job_uuid = src.job_uuid)
+--WHEN NOT MATCHED THEN
+--    INSERT (    job_uuid,     subject_id,     specialty_id,     semester_id,     map_id,     matching_score)
+--    VALUES (src.job_uuid, src.subject_id, src.specialty_id, src.semester_id, src.map_id, src.matching_score)
+--WHEN MATCHED THEN
+--    UPDATE SET tgt.matching_score = src.matching_score;
+
+-- vim: set ft=sql ts=4 sw=4 et:
