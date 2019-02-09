@@ -5,4 +5,9 @@
 @@ko_specialty.tpb;
 @@ko_student.tpb;
 
+@@ko_semester_j.tpb;
+@@ko_speclty_semester_j.tpb;
+@@ko_subject_semester_j.tpb;
+@@ko_student_semester_j.tpb;
+
 -- vim: set ft=sql ts=4 sw=4 et:

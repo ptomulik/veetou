@@ -1,12 +1,8 @@
 CREATE TABLE v2u_ko_specialty_semesters_j
+OF V2u_Ko_Speclty_Semester_J_t
     (
-          job_uuid RAW(16)
-        , specialty_id NUMBER(38)
-        , semester_id NUMBER(38)
-        , CONSTRAINT v2u_ko_spec_semesters_j_pk
-            PRIMARY KEY (specialty_id, semester_id, job_uuid)
-        /*, CONSTRAINT v2u_ko_spec_semesters_j_u1
-            UNIQUE (semester_id, job_uuid)*/
+          CONSTRAINT v2u_ko_spec_semesters_j_pk
+            PRIMARY KEY (job_uuid, semester_id, specialty_id)
         , CONSTRAINT v2u_ko_spec_semesters_j_f0
             FOREIGN KEY (job_uuid)
             REFERENCES v2u_ko_jobs(job_uuid)
@@ -16,6 +12,7 @@ CREATE TABLE v2u_ko_specialty_semesters_j
         , CONSTRAINT v2u_ko_spec_semesters_j_f2
             FOREIGN KEY (specialty_id, job_uuid)
             REFERENCES v2u_ko_specialties(id, job_uuid)
-    );
+    )
+OBJECT IDENTIFIER IS PRIMARY KEY;
 
 -- vim: set ft=sql ts=4 sw=4 et:

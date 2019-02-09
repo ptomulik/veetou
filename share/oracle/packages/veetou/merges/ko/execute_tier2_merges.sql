@@ -24,7 +24,7 @@
 @@ko_missing_etpos_j.sql;
 @@ko_missing_prgos_j.sql;
 @@ko_matched_przcykl_j.sql;
-@@ko_matched_zajcykl_j.sql;
+--@@ko_matched_zajcykl_j.sql;
 @@ko_matched_przedm_j.sql;
 @@ko_missing_przcykl_j.sql;
 @@ko_missing_przedm_j.sql;
