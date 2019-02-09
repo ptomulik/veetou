@@ -1,4 +1,4 @@
-CREATE OR REPLACE TYPE V2u_Ko_Subject_Map_V_t
+CREATE OR REPLACE TYPE V2u_Ko_Classes_Map_V_t
     FORCE AUTHID CURRENT_USER AS OBJECT
     ( job_uuid RAW(16)
     , subject_id NUMBER(38)
@@ -6,9 +6,14 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Map_V_t
     , semester_id NUMBER(38)
     , map_id NUMBER(38)
     , matching_score NUMBER(38)
+    , highest_score NUMBER(32)
+    , selected NUMBER(1)
+    , reason VARCHAR2(20)
+    , classes_type VARCHAR2(1 CHAR)
+    , map_classes_type VARCHAR2(3 CHAR)
+    , classes_hours NUMBER(8)
     , subj_code VARCHAR2(32 CHAR)
-    , map_subj_code VARCHAR2(20 CHAR)
-    , map_subj_lang VARCHAR2(3 CHAR)
+    , expr_subj_code VARCHAR2(256 CHAR)
     , subj_name VARCHAR2(256 CHAR)
     , expr_subj_name VARCHAR2(256 CHAR)
     , subj_hours_w NUMBER(8)
@@ -48,17 +53,22 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Map_V_t
     , ects_total NUMBER(4)
     , expr_ects_total VARCHAR2(256 CHAR)
 
-    , CONSTRUCTOR FUNCTION V2u_Ko_Subject_Map_V_t(
-              SELF IN OUT NOCOPY V2u_Ko_Subject_Map_V_t
+    , CONSTRUCTOR FUNCTION V2u_Ko_Classes_Map_V_t(
+              SELF IN OUT NOCOPY V2u_Ko_Classes_Map_V_t
             , job_uuid IN RAW
             , subject_id IN NUMBER
             , specialty_id IN NUMBER
             , semester_id IN NUMBER
             , map_id IN NUMBER
             , matching_score IN NUMBER
+            , highest_score NUMBER
+            , selected NUMBER
+            , reason VARCHAR2
+            , classes_type IN VARCHAR2
+            , map_classes_type IN VARCHAR2
+            , classes_hours IN NUMBER
             , subj_code IN VARCHAR2
-            , map_subj_code IN VARCHAR2
-            , map_subj_lang IN VARCHAR2
+            , expr_subj_code IN VARCHAR2
             , subj_name IN VARCHAR2
             , expr_subj_name IN VARCHAR2
             , subj_hours_w IN NUMBER
@@ -99,16 +109,21 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Map_V_t
             , expr_ects_total IN VARCHAR2
             ) RETURN SELF AS RESULT
 
-    , CONSTRUCTOR FUNCTION V2u_Ko_Subject_Map_V_t(
-              SELF IN OUT NOCOPY V2u_Ko_Subject_Map_V_t
+    , CONSTRUCTOR FUNCTION V2u_Ko_Classes_Map_V_t(
+              SELF IN OUT NOCOPY V2u_Ko_Classes_Map_V_t
             , subject IN V2u_Ko_Subject_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
-            , map IN V2u_Subject_Map_t
+            , map IN V2u_Classes_Map_t
             , matching_score IN NUMBER
+            , highest_score IN NUMBER
+            , selected IN NUMBER
+            , reason IN VARCHAR2
+            , classes_type IN VARCHAR2
+            , classes_hours IN NUMBER
             ) RETURN SELF AS RESULT
 
-    , ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Subject_Map_V_t)
+    , ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Classes_Map_V_t)
             RETURN INTEGER
     );
 

@@ -1,9 +1,11 @@
 @@ko_speclty_semesters_v.ddl;
 @@ko_student_semesters_v.ddl;
 @@ko_subject_semesters_v.ddl;
+@@ko_classes_semesters_v.ddl;
 @@ko_grades_v.ddl;
 @@ko_specialty_map_v.ddl;
 @@ko_subject_map_v.ddl;
+@@ko_classes_map_v.ddl;
 @@ko_ambig_subject_map_v.ddl;
 @@ko_ambig_speclty_map_v.ddl;
 @@ko_unmapped_subjects_v.ddl;

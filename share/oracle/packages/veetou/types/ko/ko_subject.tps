@@ -45,6 +45,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_t
 
     , MEMBER FUNCTION dup(new_tr_ids IN V2u_Ids_t := NULL)
             RETURN V2u_Ko_Subject_t
+
+    , MEMBER FUNCTION hours_of(class_type IN VARCHAR2) RETURN NUMBER
     );
 
 -- vim: set ft=sql ts=4 sw=4 et:

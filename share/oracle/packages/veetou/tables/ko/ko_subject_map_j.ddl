@@ -18,6 +18,9 @@ OF V2u_Ko_Subject_Map_J_t
         , CONSTRAINT v2u_ko_subject_map_j_f4
             FOREIGN KEY (map_id)
             REFERENCES v2u_subject_map(id)
+        , CONSTRAINT v2u_ko_subject_map_j_f5
+            FOREIGN KEY (job_uuid, subject_id, specialty_id, semester_id)
+            REFERENCES v2u_ko_subject_semesters_j(job_uuid, subject_id, specialty_id, semester_id)
     )
 OBJECT IDENTIFIER IS PRIMARY KEY;
 /

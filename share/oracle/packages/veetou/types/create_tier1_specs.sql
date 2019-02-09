@@ -4,6 +4,7 @@
 @@semester.tps;
 @@specialty_map.tps;
 @@subject_map.tps;
+@@classes_map.tps;
 
 @@ko/create_tier1_specs.sql;
 @@dz/create_tier1_specs.sql;

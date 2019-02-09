@@ -113,6 +113,20 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_t AS
             , tr_ids => new_tr_ids
             );
     END;
+
+    MEMBER FUNCTION hours_of(class_type IN VARCHAR2)
+        RETURN NUMBER
+    IS
+        h NUMBER(8);
+    BEGIN
+        CASE UPPER(class_type)
+            WHEN 'W' THEN h := subj_hours_w;
+            WHEN 'C' THEN h := subj_hours_c;
+            WHEN 'L' THEN h := subj_hours_l;
+            WHEN 'P' THEN h := subj_hours_p;
+            WHEN 'S' THEN h := subj_hours_s;
+        END CASE;
+    END;
 END;
 
 -- vim: set ft=sql ts=4 sw=4 et:

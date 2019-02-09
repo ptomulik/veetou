@@ -1,15 +1,20 @@
-CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Map_V_t AS
-      CONSTRUCTOR FUNCTION V2u_Ko_Subject_Map_V_t(
-              SELF IN OUT NOCOPY V2u_Ko_Subject_Map_V_t
+CREATE OR REPLACE TYPE BODY V2u_Ko_Classes_Map_V_t AS
+    CONSTRUCTOR FUNCTION V2u_Ko_Classes_Map_V_t(
+            SELF IN OUT NOCOPY V2u_Ko_Classes_Map_V_t
             , job_uuid IN RAW
             , subject_id IN NUMBER
             , specialty_id IN NUMBER
             , semester_id IN NUMBER
             , map_id IN NUMBER
             , matching_score IN NUMBER
+            , highest_score NUMBER
+            , selected NUMBER
+            , reason VARCHAR2
+            , classes_type IN VARCHAR2
+            , map_classes_type IN VARCHAR2
+            , classes_hours IN NUMBER
             , subj_code IN VARCHAR2
-            , map_subj_code IN VARCHAR2
-            , map_subj_lang IN VARCHAR2
+            , expr_subj_code IN VARCHAR2
             , subj_name IN VARCHAR2
             , expr_subj_name IN VARCHAR2
             , subj_hours_w IN NUMBER
@@ -57,9 +62,14 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Map_V_t AS
         SELF.semester_id := semester_id;
         SELF.map_id := map_id;
         SELF.matching_score := matching_score;
+        SELF.highest_score := highest_score;
+        SELF.selected := selected;
+        SELF.reason := reason;
+        SELF.classes_type := classes_type;
+        SELF.map_classes_type := map_classes_type;
+        SELF.classes_hours := classes_hours;
         SELF.subj_code := subj_code;
-        SELF.map_subj_code := map_subj_code;
-        SELF.map_subj_lang := map_subj_lang;
+        SELF.expr_subj_code := expr_subj_code;
         SELF.subj_name := subj_name;
         SELF.expr_subj_name := expr_subj_name;
         SELF.subj_hours_w := subj_hours_w;
@@ -102,13 +112,18 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Map_V_t AS
     END;
 
 
-    CONSTRUCTOR FUNCTION V2u_Ko_Subject_Map_V_t(
-              SELF IN OUT NOCOPY V2u_Ko_Subject_Map_V_t
+    CONSTRUCTOR FUNCTION V2u_Ko_Classes_Map_V_t(
+              SELF IN OUT NOCOPY V2u_Ko_Classes_Map_V_t
             , subject IN V2u_Ko_Subject_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
-            , map IN V2u_Subject_Map_t
+            , map IN V2u_Classes_Map_t
             , matching_score IN NUMBER
+            , highest_score IN NUMBER
+            , selected IN NUMBER
+            , reason IN VARCHAR2
+            , classes_type IN VARCHAR2
+            , classes_hours IN NUMBER
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -118,9 +133,14 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Map_V_t AS
         SELF.semester_id := semester.id;
         SELF.map_id := map.id;
         SELF.matching_score := matching_score;
+        SELF.highest_score := highest_score;
+        SELF.selected := selected;
+        SELF.reason := reason;
+        SELF.classes_type := classes_type;
+        SELF.map_classes_type := map.map_classes_type;
+        SELF.classes_hours := classes_hours;
         SELF.subj_code := subject.subj_code;
-        SELF.map_subj_code := map.map_subj_code;
-        SELF.map_subj_lang := map.map_subj_lang;
+        SELF.expr_subj_code := map.expr_subj_code;
         SELF.subj_name := subject.subj_name;
         SELF.expr_subj_name := map.expr_subj_name;
         SELF.subj_hours_w := subject.subj_hours_w;
@@ -163,16 +183,16 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Map_V_t AS
     END;
 
 
-    ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Subject_Map_V_t)
+    ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Classes_Map_V_t)
         RETURN INTEGER
     IS
         ord INTEGER;
     BEGIN
+        ord := V2U_Cmp.StrNI(map_classes_type, other.map_classes_type);
+        IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.StrNI(subj_code, other.subj_code);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(map_subj_code, other.map_subj_code);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(map_subj_lang, other.map_subj_lang);
+        ord := V2U_Cmp.StrNI(expr_subj_code, other.expr_subj_code);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.StrNI(subj_name, other.subj_name);
         IF ord <> 0 THEN RETURN ord; END IF;

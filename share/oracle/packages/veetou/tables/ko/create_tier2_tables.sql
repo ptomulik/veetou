@@ -11,10 +11,12 @@
 @@ko_specialty_semesters_j.ddl;
 @@ko_student_semesters_j.ddl;
 @@ko_subject_semesters_j.ddl;
+@@ko_classes_semesters_j.ddl;
 @@ko_grades_j.ddl;
 
 @@ko_specialty_map_j.ddl;
 @@ko_subject_map_j.ddl;
+@@ko_classes_map_j.ddl;
 
 @@ko_matched_prgos_j.ddl;
 @@ko_missing_prgos_j.ddl;

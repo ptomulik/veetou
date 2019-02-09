@@ -10,10 +10,12 @@
 @@ko_specialty_semesters_j.sql;
 @@ko_student_semesters_j.sql;
 @@ko_subject_semesters_j.sql;
+@@ko_classes_semesters_j.sql;
 @@ko_grades_j.sql;
 
 @@ko_specialty_map_j.sql;
 @@ko_subject_map_j.sql;
+@@ko_classes_map_j.sql;
 
 -- THE ORDER IS IMPORTANT!
 @@ko_matched_etpos_j.sql;
