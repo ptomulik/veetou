@@ -10,6 +10,9 @@ AS WITH u AS
                 , semester => VALUE(semesters)
                 , map => VALUE(subject_map)
                 , matching_score => j.matching_score
+                , highest_score => j.highest_score
+                , selected => j.selected
+                , reason => j.reason
             )
         FROM v2u_ko_subject_map_j j
         INNER JOIN v2u_ko_subjects subjects

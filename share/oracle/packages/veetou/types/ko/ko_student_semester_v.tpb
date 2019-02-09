@@ -96,39 +96,39 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Student_Semester_V_t AS
  --       SELF.sheet_ids := semester.sheet_ids;
     END;
 
-    ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Student_Semester_V_t)
-            RETURN INTEGER
-    IS
-        ord INTEGER;
-    BEGIN
-        ord := V2u_Cmp.StrNI(student_index, other.student_index);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2u_Cmp.StrNI(student_name, other.student_name);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2u_Cmp.StrNI(first_name, other.first_name);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2u_Cmp.StrNI(last_name, other.last_name);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(university, other.university);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(faculty, other.faculty);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(studies_modetier, other.studies_modetier);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(studies_field, other.studies_field);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(studies_specialty, other.studies_specialty);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.NumN(semester_number, other.semester_number);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(semester_code, other.semester_code);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.NumN(ects_mandatory, other.ects_mandatory);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.NumN(ects_other, other.ects_other);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        RETURN V2U_Cmp.NumN(ects_total, other.ects_total);
-    END;
+--    ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Student_Semester_V_t)
+--            RETURN INTEGER
+--    IS
+--        ord INTEGER;
+--    BEGIN
+--        ord := V2u_Cmp.StrNI(student_index, other.student_index);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2u_Cmp.StrNI(student_name, other.student_name);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2u_Cmp.StrNI(first_name, other.first_name);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2u_Cmp.StrNI(last_name, other.last_name);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.StrNI(university, other.university);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.StrNI(faculty, other.faculty);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.StrNI(studies_modetier, other.studies_modetier);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.StrNI(studies_field, other.studies_field);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.StrNI(studies_specialty, other.studies_specialty);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.NumN(semester_number, other.semester_number);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.StrNI(semester_code, other.semester_code);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.NumN(ects_mandatory, other.ects_mandatory);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.NumN(ects_other, other.ects_other);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        RETURN V2U_Cmp.NumN(ects_total, other.ects_total);
+--    END;
 END;
 
 -- vim: set ft=sql ts=4 sw=4 et:

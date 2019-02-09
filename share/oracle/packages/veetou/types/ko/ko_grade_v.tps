@@ -80,8 +80,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Grade_V_t
             , tr_id IN NUMBER
             ) RETURN SELF AS RESULT
 
-    , ORDER MEMBER FUNCTION cmp(other V2u_Ko_Grade_V_t)
-            RETURN INTEGER
+--    , ORDER MEMBER FUNCTION cmp(other V2u_Ko_Grade_V_t)
+--            RETURN INTEGER
     );
 
 -- vim: set ft=sql ts=4 sw=4 et:

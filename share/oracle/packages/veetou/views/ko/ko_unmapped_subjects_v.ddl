@@ -5,11 +5,14 @@ AS WITH u AS
     (
         SELECT
             V2u_Ko_Subject_Map_V_t(
-                  VALUE(subjects)
-                , VALUE(specialties)
-                , VALUE(semesters)
-                , VALUE(subject_map)
-                , j2.matching_score
+                  subject => VALUE(subjects)
+                , specialty => VALUE(specialties)
+                , semester => VALUE(semesters)
+                , map => VALUE(subject_map)
+                , matching_score => j2.matching_score
+                , highest_score => j2.highest_score
+                , selected => j2.selected
+                , reason => j2.reason
             )
         FROM v2u_ko_subjects subjects
         INNER JOIN v2u_ko_subject_semesters_j j1

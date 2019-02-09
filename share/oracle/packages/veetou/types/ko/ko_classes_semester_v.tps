@@ -81,11 +81,11 @@ CREATE OR REPLACE TYPE V2u_Ko_Classes_Semester_V_t
             , classes_hours NUMBER
             )
 
-    , OVERRIDING MEMBER FUNCTION cmp_impl(other IN V2u_Ko_Subject_Semester_V_t)
-            RETURN INTEGER
-
-    , MEMBER FUNCTION cmp_impl(other IN V2u_Ko_Classes_Semester_V_t)
-            RETURN INTEGER
+--    , OVERRIDING MEMBER FUNCTION cmp_impl(other IN V2u_Ko_Subject_Semester_V_t)
+--            RETURN INTEGER
+--
+--    , MEMBER FUNCTION cmp_impl(other IN V2u_Ko_Classes_Semester_V_t)
+--            RETURN INTEGER
     )
 NOT FINAL;
 

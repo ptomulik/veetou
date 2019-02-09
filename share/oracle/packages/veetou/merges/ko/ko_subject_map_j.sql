@@ -74,7 +74,7 @@ USING
                 ELSE 0
                 END selected
             , CASE
-                WHEN w.is_candidate IS NULL THEN 'ignored'
+                WHEN w.is_candidate IS NULL THEN 'score'
                 WHEN w.candidates_count <> 1 THEN 'ambiguous'
                 ELSE 'unique'
                 END reason

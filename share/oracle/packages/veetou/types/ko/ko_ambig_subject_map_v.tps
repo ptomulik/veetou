@@ -6,6 +6,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Ambig_Subject_Map_V_t FORCE AUTHID CURRENT_USER AS
     , map_count NUMBER(38)
     , map_ids V2u_Ids_t
     , matching_scores V2u_Integers_t
+    , map_subj_codes V2u_Subj_Codes_t
     , subj_code VARCHAR2(32 CHAR)
     , subj_name VARCHAR2(256 CHAR)
     , subj_hours_w NUMBER(8)
@@ -36,6 +37,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Ambig_Subject_Map_V_t FORCE AUTHID CURRENT_USER AS
             , map_count IN NUMBER
             , map_ids IN V2u_Ids_t
             , matching_scores IN V2u_Integers_t
+            , map_subj_codes IN V2u_Subj_Codes_t
             , subj_code IN VARCHAR2
             , subj_name IN VARCHAR2
             , subj_hours_w IN NUMBER
@@ -66,10 +68,11 @@ CREATE OR REPLACE TYPE V2u_Ko_Ambig_Subject_Map_V_t FORCE AUTHID CURRENT_USER AS
             , map_count IN NUMBER
             , map_ids IN V2u_Ids_t
             , matching_scores IN V2u_Integers_t
+            , map_subj_codes IN V2u_Subj_Codes_t
             ) RETURN SELF AS RESULT
 
-    , ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Ambig_Subject_Map_V_t)
-            RETURN INTEGER
+--    , ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Ambig_Subject_Map_V_t)
+--            RETURN INTEGER
     );
 
 -- vim: set ft=sql ts=4 sw=4 et:

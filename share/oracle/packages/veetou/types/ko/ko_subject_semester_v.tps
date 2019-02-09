@@ -97,11 +97,11 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Semester_V_t
             , semester IN V2u_Ko_Semester_t
             )
 
-    , ORDER MEMBER FUNCTION cmp(other V2u_Ko_Subject_Semester_V_t)
-            RETURN INTEGER
-
-    , MEMBER FUNCTION cmp_impl(other V2u_Ko_Subject_Semester_V_t)
-            RETURN INTEGER
+--    , ORDER MEMBER FUNCTION cmp(other V2u_Ko_Subject_Semester_V_t)
+--            RETURN INTEGER
+--
+--    , MEMBER FUNCTION cmp_impl(other V2u_Ko_Subject_Semester_V_t)
+--            RETURN INTEGER
     )
 NOT FINAL;
 

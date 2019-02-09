@@ -61,8 +61,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Student_Semester_V_t
             , ects_attained IN NUMBER
             )
 
-    , ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Student_Semester_V_t)
-            RETURN INTEGER
+--    , ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Student_Semester_V_t)
+--            RETURN INTEGER
     )
 NOT FINAL;
 /

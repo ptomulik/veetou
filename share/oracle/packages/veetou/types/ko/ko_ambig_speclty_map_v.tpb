@@ -69,34 +69,34 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Ambig_Speclty_Map_V_t AS
         RETURN;
     END;
 
-    ORDER MEMBER FUNCTION cmp_with(
-              other V2u_Ko_Ambig_Speclty_Map_V_t
-            ) RETURN INTEGER
-    IS
-        ord INTEGER;
-    BEGIN
-        ord := V2U_Cmp.StrNI(university, other.university);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(faculty, other.faculty);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(studies_modetier, other.studies_modetier);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(studies_field, other.studies_field);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(studies_specialty, other.studies_specialty);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.NumN(semester_number, other.semester_number);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(semester_code, other.semester_code);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.NumN(ects_mandatory, other.ects_mandatory);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.NumN(ects_other, other.ects_other);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.NumN(ects_total, other.ects_total);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        RETURN V2U_Cmp.RawN(job_uuid, other.job_uuid);
-    END;
+--    ORDER MEMBER FUNCTION cmp_with(
+--              other V2u_Ko_Ambig_Speclty_Map_V_t
+--            ) RETURN INTEGER
+--    IS
+--        ord INTEGER;
+--    BEGIN
+--        ord := V2U_Cmp.StrNI(university, other.university);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.StrNI(faculty, other.faculty);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.StrNI(studies_modetier, other.studies_modetier);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.StrNI(studies_field, other.studies_field);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.StrNI(studies_specialty, other.studies_specialty);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.NumN(semester_number, other.semester_number);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.StrNI(semester_code, other.semester_code);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.NumN(ects_mandatory, other.ects_mandatory);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.NumN(ects_other, other.ects_other);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.NumN(ects_total, other.ects_total);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        RETURN V2U_Cmp.RawN(job_uuid, other.job_uuid);
+--    END;
 END;
 
 -- vim: set ft=sql ts=4 sw=4 et:

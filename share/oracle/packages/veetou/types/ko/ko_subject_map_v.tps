@@ -6,6 +6,9 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Map_V_t
     , semester_id NUMBER(38)
     , map_id NUMBER(38)
     , matching_score NUMBER(38)
+    , highest_score NUMBER(38)
+    , selected NUMBER(1)
+    , reason VARCHAR2(20)
     , subj_code VARCHAR2(32 CHAR)
     , map_subj_code VARCHAR2(20 CHAR)
     , map_subj_lang VARCHAR2(3 CHAR)
@@ -56,6 +59,9 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Map_V_t
             , semester_id IN NUMBER
             , map_id IN NUMBER
             , matching_score IN NUMBER
+            , highest_score NUMBER
+            , selected NUMBER
+            , reason VARCHAR2
             , subj_code IN VARCHAR2
             , map_subj_code IN VARCHAR2
             , map_subj_lang IN VARCHAR2
@@ -106,10 +112,13 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Map_V_t
             , semester IN V2u_Ko_Semester_t
             , map IN V2u_Subject_Map_t
             , matching_score IN NUMBER
+            , highest_score NUMBER
+            , selected NUMBER
+            , reason VARCHAR2
             ) RETURN SELF AS RESULT
 
-    , ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Subject_Map_V_t)
-            RETURN INTEGER
+--    , ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Subject_Map_V_t)
+--            RETURN INTEGER
     );
 
 -- vim: set ft=sql ts=4 sw=4 et:

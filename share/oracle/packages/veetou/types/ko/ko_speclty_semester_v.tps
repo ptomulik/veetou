@@ -39,8 +39,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Speclty_Semester_V_t
             , semester IN V2u_Ko_Semester_t
             ) RETURN SELF AS RESULT
 
-    , ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Speclty_Semester_V_t)
-            RETURN INTEGER
+--    , ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Speclty_Semester_V_t)
+--            RETURN INTEGER
     );
 /
 CREATE OR REPLACE TYPE V2u_Ko_Speclty_Semesters_V_t

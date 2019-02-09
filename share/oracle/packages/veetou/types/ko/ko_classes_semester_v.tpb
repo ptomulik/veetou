@@ -162,24 +162,24 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Classes_Semester_V_t AS
         SELF.classes_hours := classes_hours;
     END;
 
-    OVERRIDING MEMBER FUNCTION cmp_impl(other IN V2u_Ko_Subject_Semester_V_t)
-            RETURN INTEGER
-    IS
-    BEGIN
-        RETURN cmp_impl(TREAT(other AS V2u_Ko_Classes_Semester_V_t));
-    END;
-
-    MEMBER FUNCTION cmp_impl(other IN V2u_Ko_Classes_Semester_V_t)
-            RETURN INTEGER
-    IS
-        ord INTEGER;
-    BEGIN
-        ord := (SELF AS V2u_Ko_Subject_Semester_V_t).cmp_impl(other);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(classes_type, other.classes_type);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        RETURN V2U_Cmp.NumN(classes_hours, other.classes_hours);
-    END;
+--    OVERRIDING MEMBER FUNCTION cmp_impl(other IN V2u_Ko_Subject_Semester_V_t)
+--            RETURN INTEGER
+--    IS
+--    BEGIN
+--        RETURN cmp_impl(TREAT(other AS V2u_Ko_Classes_Semester_V_t));
+--    END;
+--
+--    MEMBER FUNCTION cmp_impl(other IN V2u_Ko_Classes_Semester_V_t)
+--            RETURN INTEGER
+--    IS
+--        ord INTEGER;
+--    BEGIN
+--        ord := (SELF AS V2u_Ko_Subject_Semester_V_t).cmp_impl(other);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        ord := V2U_Cmp.StrNI(classes_type, other.classes_type);
+--        IF ord <> 0 THEN RETURN ord; END IF;
+--        RETURN V2U_Cmp.NumN(classes_hours, other.classes_hours);
+--    END;
 END;
 
 -- vim: set ft=sql ts=4 sw=4 et:
