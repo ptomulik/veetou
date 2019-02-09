@@ -8,7 +8,7 @@ CREATE OR REPLACE PACKAGE V2U_Fit AUTHID CURRENT_USER AS
 
 --    FUNCTION Attributes(
 --              specialty_map IN V2u_Specialty_Map_t
---            , specialty_entity IN V2u_Ko_Specialty_Semester_V_t
+--            , specialty_entity IN V2u_Ko_Speclty_Semester_V_t
 --            ) RETURN NUMBER;
       FUNCTION Attributes(
                 specialty_map IN V2u_Specialty_Map_t

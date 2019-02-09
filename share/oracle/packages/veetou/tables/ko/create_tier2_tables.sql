@@ -15,7 +15,6 @@
 
 @@ko_specialty_map_j.ddl;
 @@ko_subject_map_j.ddl;
-@@ko_strict_subj_map_j.ddl;
 
 @@ko_matched_prgos_j.ddl;
 @@ko_missing_prgos_j.ddl;

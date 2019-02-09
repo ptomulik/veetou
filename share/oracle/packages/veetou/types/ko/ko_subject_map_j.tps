@@ -2,6 +2,9 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Map_J_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Subject_Semester_J_t
     ( map_id NUMBER(38)
     , matching_score NUMBER(38)
+    , highest_score NUMBER(38)
+    , selected NUMBER(1)
+    , reason VARCHAR2(80 CHAR)
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Subject_Map_J_t(
               SELF IN OUT NOCOPY V2u_Ko_Subject_Map_J_t
@@ -11,6 +14,9 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Map_J_t
             , subject_id IN NUMBER
             , map_id IN NUMBER
             , matching_score IN NUMBER
+            , highest_score IN NUMBER
+            , selected IN NUMBER
+            , reason IN VARCHAR2
             ) RETURN SELF AS RESULT
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Subject_Map_J_t(
@@ -20,6 +26,9 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Map_J_t
             , subject IN V2u_Ko_Subject_t
             , map IN V2u_Subject_Map_t
             , matching_score IN NUMBER
+            , highest_score IN NUMBER
+            , selected IN NUMBER
+            , reason IN VARCHAR2
             ) RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
@@ -30,6 +39,9 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Map_J_t
             , subject_id IN NUMBER
             , map_id IN NUMBER
             , matching_score IN NUMBER
+            , highest_score IN NUMBER
+            , selected IN NUMBER
+            , reason IN VARCHAR2
             )
 
     , MEMBER PROCEDURE init(
@@ -39,6 +51,9 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Map_J_t
             , subject IN V2u_Ko_Subject_t
             , map IN V2u_Subject_Map_t
             , matching_score IN NUMBER
+            , highest_score IN NUMBER
+            , selected IN NUMBER
+            , reason IN VARCHAR2
             )
     )
 NOT FINAL;

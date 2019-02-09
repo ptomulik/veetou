@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Semester_V_t AS
-    CONSTRUCTOR FUNCTION V2u_Ko_Specialty_Semester_V_t(
-              SELF IN OUT NOCOPY V2u_Ko_Specialty_Semester_V_t
+CREATE OR REPLACE TYPE BODY V2u_Ko_Speclty_Semester_V_t AS
+    CONSTRUCTOR FUNCTION V2u_Ko_Speclty_Semester_V_t(
+              SELF IN OUT NOCOPY V2u_Ko_Speclty_Semester_V_t
             , job_uuid IN RAW
             , specialty_id IN NUMBER
             , semester_id IN NUMBER
@@ -35,8 +35,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Semester_V_t AS
         RETURN;
     END;
 
-    CONSTRUCTOR FUNCTION V2u_Ko_Specialty_Semester_V_t(
-              SELF IN OUT NOCOPY V2u_Ko_Specialty_Semester_V_t
+    CONSTRUCTOR FUNCTION V2u_Ko_Speclty_Semester_V_t(
+              SELF IN OUT NOCOPY V2u_Ko_Speclty_Semester_V_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
             ) RETURN SELF AS RESULT
@@ -59,7 +59,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Semester_V_t AS
         RETURN;
     END;
 
-      ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Specialty_Semester_V_t)
+      ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Speclty_Semester_V_t)
             RETURN INTEGER
     IS
         ord INTEGER;

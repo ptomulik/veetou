@@ -1,5 +1,5 @@
 -- types for views
-@@ko_specialty_semester_v.tpb;
+@@ko_speclty_semester_v.tpb;
 @@ko_student_semester_v.tpb;
 @@ko_subject_semester_v.tpb;
 @@ko_grade_v.tpb;

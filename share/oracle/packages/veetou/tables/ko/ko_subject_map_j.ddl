@@ -20,6 +20,14 @@ OF V2u_Ko_Subject_Map_J_t
             REFERENCES v2u_subject_map(id)
     )
 OBJECT IDENTIFIER IS PRIMARY KEY;
-
+/
+CREATE INDEX v2u_ko_subject_map_j_idx1
+       ON v2u_ko_subject_map_j(selected)
+/
+CREATE INDEX v2u_ko_subject_map_j_idx2
+       ON v2u_ko_subject_map_j(reason)
+/
+CREATE INDEX v2u_ko_subject_map_j_idx3
+       ON v2u_ko_subject_map_j(selected, reason)
 
 -- vim: set ft=sql ts=4 sw=4 et:

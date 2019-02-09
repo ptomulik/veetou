@@ -11,6 +11,5 @@
 @@ko_subject_semester_j.tpb;
 @@ko_student_semester_j.tpb;
 @@ko_subject_map_j.tpb;
-@@ko_strict_subj_map_j.tpb;
 
 -- vim: set ft=sql ts=4 sw=4 et:

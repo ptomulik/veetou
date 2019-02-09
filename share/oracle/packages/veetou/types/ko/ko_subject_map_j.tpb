@@ -7,6 +7,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Map_J_t AS
             , subject_id IN NUMBER
             , map_id IN NUMBER
             , matching_score IN NUMBER
+            , highest_score IN NUMBER
+            , selected IN NUMBER
+            , reason IN VARCHAR2
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -17,6 +20,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Map_J_t AS
             , subject_id => subject_id
             , map_id => map_id
             , matching_score => matching_score
+            , highest_score => highest_score
+            , selected => selected
+            , reason => reason
             );
         RETURN;
     END;
@@ -28,6 +34,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Map_J_t AS
             , subject IN V2u_Ko_Subject_t
             , map IN V2u_Subject_Map_t
             , matching_score IN NUMBER
+            , highest_score IN NUMBER
+            , selected IN NUMBER
+            , reason IN VARCHAR2
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -37,6 +46,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Map_J_t AS
             , subject => subject
             , map => map
             , matching_score => matching_score
+            , highest_score => highest_score
+            , selected => selected
+            , reason => reason
             );
         RETURN;
     END;
@@ -49,6 +61,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Map_J_t AS
             , subject_id IN NUMBER
             , map_id IN NUMBER
             , matching_score IN NUMBER
+            , highest_score IN NUMBER
+            , selected IN NUMBER
+            , reason IN VARCHAR2
             )
     IS
     BEGIN
@@ -60,6 +75,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Map_J_t AS
             );
         SELF.map_id := map_id;
         SELF.matching_score := matching_score;
+        SELF.highest_score := highest_score;
+        SELF.selected := selected;
+        SELF.reason := reason;
     END;
 
     MEMBER PROCEDURE init(
@@ -69,6 +87,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Map_J_t AS
             , subject IN V2u_Ko_Subject_t
             , map IN V2u_Subject_Map_t
             , matching_score IN NUMBER
+            , highest_score IN NUMBER
+            , selected IN NUMBER
+            , reason IN VARCHAR2
             )
     IS
     BEGIN
@@ -79,6 +100,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Map_J_t AS
             );
         SELF.map_id := map.id;
         SELF.matching_score := matching_score;
+        SELF.highest_score := highest_score;
+        SELF.selected := selected;
+        SELF.reason := reason;
     END;
 END;
 
