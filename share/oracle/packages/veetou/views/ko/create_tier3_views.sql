@@ -8,7 +8,6 @@
 @@ko_ambig_speclty_map_v.ddl;
 @@ko_unmapped_subjects_v.ddl;
 @@ko_unmapped_specialties_v.ddl;
-@@ko_student_threads_v.ddl;
 --
 @@ko_matched_prgos_v.ddl;
 @@ko_matched_etpos_v.ddl;

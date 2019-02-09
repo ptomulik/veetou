@@ -7,7 +7,6 @@
 @@ko_specialty_map_v.tps;
 @@ko_ambig_subject_map_v.tps;
 @@ko_ambig_speclty_map_v.tps;
-@@ko_student_thread_v.tps;
 @@ko_matched_prgos_v.tps;
 @@ko_matched_etpos_v.tps;
 @@ko_missing_prgos_v.tps;

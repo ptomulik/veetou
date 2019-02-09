@@ -311,12 +311,6 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Sequence('ko_matched_przcykl_j_sq1');
         Drop_Table('ko_matched_przcykl_j', how => 'PURGE');
         --
-        Drop_Trigger('ko_student_threads_j_tr1');
-        Drop_Sequence('ko_student_threads_j_sq1');
-        Drop_Index('ko_student_threads_j_idx1');
-        Drop_Index('ko_student_threads_j_idx2');
-        Drop_Table('ko_student_threads_j', how => 'PURGE');
-        --
         Drop_Table('ko_grades_j', how => 'PURGE');
         Drop_Table('ko_student_sheets_j', how => 'PURGE');
         Drop_Table('ko_student_specialties_j', how => 'PURGE');
@@ -360,12 +354,14 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
 
         Drop_Collect_Types();
 
+        Drop_Type('Ko_Strict_Subj_Map_J_t', 'Ko_Strict_Subj_Maps_J_t');
+        Drop_Type('Ko_Subject_Map_J_t', 'Ko_Subject_Maps_J_t');
         Drop_Type('Ko_Student_Semester_J_t', 'Ko_Student_Semesters_J_t');
         Drop_Type('Ko_Subject_Semester_J_t', 'Ko_Subject_Semesters_J_t');
         Drop_Type('Ko_Speclty_Semester_J_t', 'Ko_Speclty_Semesters_J_t');
         Drop_Type('Ko_Semester_J_t', 'Ko_Semesters_J_t');
 
-        Drop_Type('Ko_Student_Thread_V_t', 'Ko_Student_Threads_V_t');
+        Drop_Type('Ko_Rejected_Map_t', 'Ko_Rejected_Maps_t');
         Drop_Type('Ko_Specialty_t');
         Drop_Type('Ko_Subject_t');
         Drop_Type('Ko_Semester_t', 'Ko_Semesters_t', 'Ko_Semester_Tables_t');
@@ -401,7 +397,6 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_View('ko_matched_etpos_v');
         Drop_View('ko_matched_przcykl_v');
         Drop_View('ko_matched_przedm_v');
-        Drop_View('ko_student_threads_v');
         Drop_View('ko_ambig_speclty_map_v');
         Drop_View('ko_ambig_subject_map_v');
         Drop_View('ko_unmapped_specialties_v');

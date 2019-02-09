@@ -156,42 +156,6 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Etpos_V_t AS
         SELF.dz_jedn_dyplomujaca := etap_osoby.jedn_dyplomujaca;
         RETURN;
     END;
-
---    ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Matched_Etpos_V_t)
---            RETURN INTEGER
---    IS
---        ord INTEGER;
---    BEGIN
---        ord := V2U_Cmp.StrNI(ko_student_index, other.ko_student_index);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.StrNI(ko_student_name, other.ko_student_name);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.StrNI(ko_first_name, other.ko_first_name);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.StrNI(ko_last_name, other.ko_last_name);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.StrNI(ko_university, other.ko_university);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.StrNI(ko_faculty, other.ko_faculty);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.StrNI(ko_studies_modetier, other.ko_studies_modetier);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.StrNI(ko_studies_field, other.ko_studies_field);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.StrNI(ko_studies_specialty, other.ko_studies_specialty);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.StrNI(ko_map_program_code, other.ko_map_program_code);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.StrNI(ko_map_modetier_code, other.ko_map_modetier_code);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.StrNI(ko_map_field_code, other.ko_map_field_code);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.StrNI(ko_map_specialty_code, other.ko_map_specialty_code);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.NumN(ko_thread_index, other.ko_thread_index);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        RETURN V2U_Cmp.StrNI(ko_max_admission_semester, other.ko_max_admission_semester);
---    END;
 END;
 
 -- vim: set ft=sql ts=4 sw=4 et:

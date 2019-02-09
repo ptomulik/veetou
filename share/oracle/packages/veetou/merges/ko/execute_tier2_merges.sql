@@ -16,8 +16,6 @@
 @@ko_subject_map_j.sql;
 @@ko_strict_subj_map_j.sql;
 
-@@ko_student_threads_j.sql;
-
 -- THE ORDER IS IMPORTANT!
 @@ko_matched_etpos_j.sql;
 @@ko_matched_prgos_j.sql;

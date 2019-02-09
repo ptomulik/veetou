@@ -1,14 +1,8 @@
 CREATE TABLE v2u_ko_subject_map_j
+OF V2u_Ko_Subject_Map_J_t
     (
-          job_uuid RAW(16)
-        , subject_id NUMBER(38)
-        , specialty_id NUMBER(38)
-        , semester_id NUMBER(38)
-        , map_id NUMBER(38)
-        , matching_score NUMBER(38)
-
-        , CONSTRAINT v2u_ko_subject_map_j_pk
-            PRIMARY KEY (subject_id, specialty_id, semester_id, map_id, job_uuid)
+          CONSTRAINT v2u_ko_subject_map_j_pk
+            PRIMARY KEY (job_uuid, subject_id, specialty_id, semester_id, map_id)
         , CONSTRAINT v2u_ko_subject_map_j_f0
             FOREIGN KEY (job_uuid)
             REFERENCES v2u_ko_jobs(job_uuid)
@@ -24,7 +18,8 @@ CREATE TABLE v2u_ko_subject_map_j
         , CONSTRAINT v2u_ko_subject_map_j_f4
             FOREIGN KEY (map_id)
             REFERENCES v2u_subject_map(id)
-    );
+    )
+OBJECT IDENTIFIER IS PRIMARY KEY;
 
 
 -- vim: set ft=sql ts=4 sw=4 et:
