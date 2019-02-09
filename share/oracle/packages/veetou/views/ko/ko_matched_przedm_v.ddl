@@ -1,10 +1,10 @@
 CREATE OR REPLACE VIEW v2u_ko_matched_przedm_v
-OF V2u_Ko_Matched_Przedm_t
+OF V2u_Ko_Matched_Przedm_V_t
 WITH OBJECT IDENTIFIER (id)
 AS WITH u AS
     (
         SELECT
-              V2u_Ko_Matched_Przedm_t(
+              V2u_Ko_Matched_Przedm_V_t(
                   id => j.id
                 , subject => VALUE(subjects)
                 , specialty => VALUE(specialties)

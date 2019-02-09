@@ -1,10 +1,10 @@
 CREATE OR REPLACE VIEW v2u_ko_specialty_map_v
-OF V2u_Ko_Specialty_Map_t
+OF V2u_Ko_Specialty_Map_V_t
 WITH OBJECT IDENTIFIER (job_uuid, specialty_id, semester_id, map_id)
 AS WITH u AS
     (
         SELECT
-            V2u_Ko_Specialty_Map_t(
+            V2u_Ko_Specialty_Map_V_t(
                   VALUE(specialties)
                 , VALUE(semesters)
                 , VALUE(specialty_map)

@@ -360,7 +360,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
 
         Drop_Collect_Types();
 
-        Drop_Type('Ko_Student_Thread_t', 'Ko_Student_Threads_t');
+        Drop_Type('Ko_Student_Thread_V_t', 'Ko_Student_Threads_V_t');
         Drop_Type('Ko_Specialty_t');
         Drop_Type('Ko_Subject_t');
         Drop_Type('Ko_Semester_t', 'Ko_Semesters_t', 'Ko_Semester_Tables_t');
@@ -397,7 +397,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_View('ko_matched_przcykl_v');
         Drop_View('ko_matched_przedm_v');
         Drop_View('ko_student_threads_v');
-        Drop_View('ko_ambig_specialty_map_v');
+        Drop_View('ko_ambig_speclty_map_v');
         Drop_View('ko_ambig_subject_map_v');
         Drop_View('ko_unmapped_specialties_v');
         Drop_View('ko_unmapped_subjects_v');
@@ -410,22 +410,22 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
 
 --        Drop_Collect_Types();
 
-        Drop_Type('Ko_Missing_Przcykl_t', 'Ko_Missing_Przcykles_t');
-        Drop_Type('Ko_Missing_Przedm_t', 'Ko_Missing_Przedms_t');
-        Drop_Type('Ko_Missing_Etpos_t', 'Ko_Missing_Etposes_t');
-        Drop_Type('Ko_Missing_Prgos_t', 'Ko_Missing_Prgoses_t');
-        Drop_Type('Ko_Ambig_Specialty_Map_t', 'Ko_Ambig_Specialty_Maps_t');
-        Drop_Type('Ko_Ambig_Subject_Map_t', 'Ko_Ambig_Subject_Maps_t');
-        Drop_Type('Ko_Specialty_Map_t', 'Ko_Specialty_Maps_t');
-        Drop_Type('Ko_Subject_Map_t', 'Ko_Subject_Maps_t');
-        Drop_Type('Ko_Specialty_Semester_t', 'Ko_Specialty_Semesters_t');
-        Drop_Type('Ko_Subject_Semester_t', 'Ko_Subject_Semesters_t');
-        Drop_Type('Ko_Student_Semester_t', 'Ko_Student_Semesters_t');
-        Drop_Type('Ko_Grade_t', 'Ko_Grades_t');
-        Drop_Type('Ko_Matched_Etpos_t', 'Ko_Matched_Etposes_t');
-        Drop_Type('Ko_Matched_Prgos_t', 'Ko_Matched_Prgoses_t');
-        Drop_Type('Ko_Matched_Przedm_t', 'Ko_Matched_Przedms_t');
-        Drop_Type('Ko_Matched_Przcykl_t', 'Ko_Matched_Przcykles_t');
+        Drop_Type('Ko_Missing_Przcykl_V_t', 'Ko_Missing_Przcykles_V_t');
+        Drop_Type('Ko_Missing_Przedm_V_t', 'Ko_Missing_Przedms_V_t');
+        Drop_Type('Ko_Missing_Etpos_V_t', 'Ko_Missing_Etposes_V_t');
+        Drop_Type('Ko_Missing_Prgos_V_t', 'Ko_Missing_Prgoses_V_t');
+        Drop_Type('Ko_Ambig_Speclty_Map_V_t', 'Ko_Ambig_Speclty_Maps_V_t');
+        Drop_Type('Ko_Ambig_Subject_Map_V_t', 'Ko_Ambig_Subject_Maps_V_t');
+        Drop_Type('Ko_Specialty_Map_V_t', 'Ko_Specialty_Maps_V_t');
+        Drop_Type('Ko_Subject_Map_V_t', 'Ko_Subject_Maps_V_t');
+        Drop_Type('Ko_Specialty_Semester_V_t', 'Ko_Specialty_Semesters_V_t');
+        Drop_Type('Ko_Subject_Semester_V_t', 'Ko_Subject_Semesters_V_t');
+        Drop_Type('Ko_Student_Semester_V_t', 'Ko_Student_Semesters_V_t');
+        Drop_Type('Ko_Grade_V_t', 'Ko_Grades_V_t');
+        Drop_Type('Ko_Matched_Etpos_V_t', 'Ko_Matched_Etposes_V_t');
+        Drop_Type('Ko_Matched_Prgos_V_t', 'Ko_Matched_Prgoses_V_t');
+        Drop_Type('Ko_Matched_Przedm_V_t', 'Ko_Matched_Przedms_V_t');
+        Drop_Type('Ko_Matched_Przcykl_V_t', 'Ko_Matched_Przcykles_V_t');
     END;
 
 END V2U_Drop;

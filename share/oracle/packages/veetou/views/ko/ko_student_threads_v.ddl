@@ -1,10 +1,10 @@
 CREATE OR REPLACE VIEW v2u_ko_student_threads_v
-OF V2u_Ko_Student_Thread_t
+OF V2u_Ko_Student_Thread_V_t
 WITH OBJECT IDENTIFIER (job_uuid, student_id, specialty_id, specialty_map_id, thread_index)
 AS WITH u AS
     (
         SELECT
-              V2u_Ko_Student_Thread_t(
+              V2u_Ko_Student_Thread_V_t(
                   VALUE(students)
                 , VALUE(specialties)
                 , VALUE(specialty_map)

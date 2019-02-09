@@ -1,10 +1,10 @@
 CREATE OR REPLACE VIEW v2u_ko_missing_przcykl_v
-OF V2u_Ko_Missing_Przcykl_t
+OF V2u_Ko_Missing_Przcykl_V_t
 WITH OBJECT IDENTIFIER (job_uuid, subject_id, specialty_id, semester_id)
 AS WITH u AS
     (
         SELECT
-              V2u_Ko_Missing_Przcykl_t(
+              V2u_Ko_Missing_Przcykl_V_t(
                   subject => VALUE(subjects)
                 , specialty => VALUE(specialties)
                 , semester => VALUE(semesters)

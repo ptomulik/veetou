@@ -5,7 +5,7 @@
 @@ko_specialty_map_v.ddl;
 @@ko_subject_map_v.ddl;
 @@ko_ambig_subject_map_v.ddl;
-@@ko_ambig_specialty_map_v.ddl;
+@@ko_ambig_speclty_map_v.ddl;
 @@ko_unmapped_subjects_v.ddl;
 @@ko_unmapped_specialties_v.ddl;
 @@ko_student_threads_v.ddl;

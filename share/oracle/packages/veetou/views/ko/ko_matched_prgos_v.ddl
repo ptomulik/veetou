@@ -1,10 +1,10 @@
 CREATE OR REPLACE VIEW v2u_ko_matched_prgos_v
-OF V2u_Ko_Matched_Prgos_t
+OF V2u_Ko_Matched_Prgos_V_t
 WITH OBJECT IDENTIFIER (id)
 AS WITH u AS
     (
         SELECT
-              V2u_Ko_Matched_Prgos_t(
+              V2u_Ko_Matched_Prgos_V_t(
                   id => j.id
                 , student => VALUE(students)
                 , specialty => VALUE(specialties)
