@@ -32,5 +32,8 @@ CREATE INDEX v2u_ko_subject_map_j_idx2
 /
 CREATE INDEX v2u_ko_subject_map_j_idx3
        ON v2u_ko_subject_map_j(selected, reason)
+/
+CREATE INDEX v2u_ko_subject_map_j_idx4
+       ON v2u_ko_subject_map_j(job_uuid, subject_id, specialty_id, semester_id)
 
 -- vim: set ft=sql ts=4 sw=4 et:

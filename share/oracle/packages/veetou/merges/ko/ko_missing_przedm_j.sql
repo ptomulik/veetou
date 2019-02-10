@@ -9,7 +9,7 @@ USING
             , j.subject_map_ids subject_map_ids
             , j.tried_map_subj_codes tried_map_subj_codes
         FROM v2u_ko_missing_przcykl_j j
-        WHERE (SELECT COUNT(*) FROM TABLE(j.istniejace_przedmioty_kod)) = 0
+        WHERE (SELECT COUNT(*) FROM TABLE(j.istniejace_prz_kody)) = 0
     ) src
 ON  (tgt.job_uuid = src.job_uuid AND
      tgt.subject_id = src.subject_id AND

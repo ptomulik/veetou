@@ -10,7 +10,7 @@ AS WITH u AS
                 , semester => VALUE(semesters)
                 , subject_map_ids => j.subject_map_ids
                 , tried_map_subj_codes => j.tried_map_subj_codes
-                , istniejace_przedmioty_kod => j.istniejace_przedmioty_kod
+                , istniejace_prz_kody => j.istniejace_prz_kody
             )
         FROM v2u_ko_missing_przcykl_j j
         INNER JOIN v2u_ko_subjects subjects

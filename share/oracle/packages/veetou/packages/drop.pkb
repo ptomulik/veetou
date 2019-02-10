@@ -295,6 +295,10 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Sequence('ko_missing_przcykl_j_sq1');
         Drop_Table('ko_missing_przcykl_j', how => 'PURGE');
         --
+        Drop_Trigger('ko_missing_zajcykl_j_tr1');
+        Drop_Sequence('ko_missing_zajcykl_j_sq1');
+        Drop_Table('ko_missing_zajcykl_j', how => 'PURGE');
+        --
         Drop_Trigger('ko_matched_etpos_j_tr1');
         Drop_Sequence('ko_matched_etpos_j_sq1');
         Drop_Table('ko_matched_etpos_j', how => 'PURGE');
@@ -311,6 +315,11 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Sequence('ko_matched_przcykl_j_sq1');
         Drop_Table('ko_matched_przcykl_j', how => 'PURGE');
         --
+        Drop_Index('ko_matched_zajcykl_j_idx1');
+        Drop_Trigger('ko_matched_zajcykl_j_tr1');
+        Drop_Sequence('ko_matched_zajcykl_j_sq1');
+        Drop_Table('ko_matched_zajcykl_j', how => 'PURGE');
+        --
         Drop_Table('ko_grades_j', how => 'PURGE');
         Drop_Table('ko_student_sheets_j', how => 'PURGE');
         Drop_Table('ko_student_specialties_j', how => 'PURGE');
@@ -324,6 +333,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('ko_classes_map_j_idx1');
         Drop_Index('ko_classes_map_j_idx2');
         Drop_Index('ko_classes_map_j_idx3');
+        Drop_Index('ko_classes_map_j_idx4');
+        Drop_Index('ko_classes_map_j_idx5');
         Drop_Table('ko_classes_map_j', how => 'PURGE');
         --
         Drop_Table('ko_classes_semesters_j', how => 'PURGE');
@@ -331,6 +342,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('ko_subject_map_j_idx1');
         Drop_Index('ko_subject_map_j_idx2');
         Drop_Index('ko_subject_map_j_idx3');
+        Drop_Index('ko_subject_map_j_idx4');
         Drop_Table('ko_subject_map_j', how => 'PURGE');
         --
         Drop_Table('ko_subject_semesters_j', how => 'PURGE');
@@ -391,6 +403,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Integers_t');
         Drop_Type('Chars1_t');
         Drop_Type('5Chars1_t');
+        Drop_Type('Chars3_t');
+        Drop_Type('5Chars3_t');
         Drop_Type('Vchars1024_t');
         Drop_Type('5Vchars1024_t');
         Drop_Type('Ints2_t');
@@ -426,6 +440,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
 
 --        Drop_Collect_Types();
 
+        Drop_Type('Ko_Missing_Zajcykl_V_t', 'Ko_Missing_Zajcykles_V_t');
         Drop_Type('Ko_Missing_Przcykl_V_t', 'Ko_Missing_Przcykles_V_t');
         Drop_Type('Ko_Missing_Przedm_V_t', 'Ko_Missing_Przedms_V_t');
         Drop_Type('Ko_Missing_Etpos_V_t', 'Ko_Missing_Etposes_V_t');

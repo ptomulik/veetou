@@ -32,6 +32,7 @@ CREATE TABLE v2u_ko_matched_przedm_j
         , CONSTRAINT v2u_ko_matched_przedm_j_f6
             FOREIGN KEY (prz_kod)
             REFERENCES v2u_dz_przedmioty(kod)
+        --
         , CONSTRAINT v2u_ko_matched_przedm_j_u0
             UNIQUE (subject_id, specialty_id, semester_id, job_uuid)
     );

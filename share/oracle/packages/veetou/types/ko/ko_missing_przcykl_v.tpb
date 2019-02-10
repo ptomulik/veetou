@@ -6,7 +6,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Przcykl_V_t AS
             , semester IN V2u_Ko_Semester_t
             , subject_map_ids IN V2u_5Ids_t
             , tried_map_subj_codes IN V2u_Subj_5Codes_t
-            , istniejace_przedmioty_kod IN V2u_Subj_5Codes_t
+            , istniejace_prz_kody IN V2u_Subj_5Codes_t
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -16,7 +16,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Przcykl_V_t AS
           , semester => semester
           , subject_map_ids => subject_map_ids
           , tried_map_subj_codes => tried_map_subj_codes
-          , istniejace_przedmioty_kod => istniejace_przedmioty_kod
+          , istniejace_prz_kody => istniejace_prz_kody
         );
         RETURN;
     END;
@@ -28,7 +28,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Przcykl_V_t AS
             , semester IN V2u_Ko_Semester_t
             , subject_map_ids IN V2u_5Ids_t
             , tried_map_subj_codes IN V2u_Subj_5Codes_t
-            , istniejace_przedmioty_kod IN V2u_Subj_5Codes_t
+            , istniejace_prz_kody IN V2u_Subj_5Codes_t
             )
     IS
     BEGIN
@@ -39,7 +39,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Przcykl_V_t AS
           , subject_map_ids => subject_map_ids
           , tried_map_subj_codes => tried_map_subj_codes
         );
-        SELF.istniejace_przedmioty_kod := istniejace_przedmioty_kod;
+        SELF.istniejace_prz_kody := istniejace_prz_kody;
     END;
 END;
 
