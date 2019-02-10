@@ -417,12 +417,14 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     PROCEDURE Tier3
     IS
     BEGIN
+        Drop_View('ko_missing_zajcykl_v');
         Drop_View('ko_missing_przcykl_v');
         Drop_View('ko_missing_przedm_v');
         Drop_View('ko_missing_etpos_v');
         Drop_View('ko_missing_prgos_v');
         Drop_View('ko_matched_prgos_v');
         Drop_View('ko_matched_etpos_v');
+        Drop_View('ko_matched_zajcykl_v');
         Drop_View('ko_matched_przcykl_v');
         Drop_View('ko_matched_przedm_v');
         Drop_View('ko_ambig_speclty_map_v');
@@ -459,6 +461,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Matched_Prgos_V_t', 'Ko_Matched_Prgoses_V_t');
         Drop_Type('Ko_Matched_Przedm_V_t', 'Ko_Matched_Przedms_V_t');
         Drop_Type('Ko_Matched_Przcykl_V_t', 'Ko_Matched_Przcykles_V_t');
+        Drop_Type('Ko_Matched_Zajcykl_V_t', 'Ko_Matched_Zajcykles_V_t');
     END;
 
 END V2U_Drop;

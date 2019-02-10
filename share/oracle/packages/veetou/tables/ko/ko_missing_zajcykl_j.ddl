@@ -6,8 +6,9 @@ CREATE TABLE v2u_ko_missing_zajcykl_j
         , specialty_id NUMBER(38)
         , semester_id NUMBER(38)
         , classes_type VARCHAR2(1 CHAR)
+        , reason VARCHAR2(80 CHAR)
+        , tried_map_subj_code VARCHAR2(32 CHAR)
         , tried_map_classes_type VARCHAR2(3 CHAR)
-        , reason VARCHAR2(40 CHAR)
         , istniejace_tzaj_kody V2u_5Chars3_t
 
         , CONSTRAINT v2u_ko_missing_zajcykl_j_pk

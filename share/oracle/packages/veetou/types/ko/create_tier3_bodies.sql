@@ -13,9 +13,14 @@
 @@ko_matched_etpos_v.tpb;
 @@ko_missing_prgos_v.tpb;
 @@ko_missing_etpos_v.tpb;
+
 @@ko_matched_przedm_v.tpb;
-@@ko_matched_przcykl_v.tpb;
 @@ko_missing_przedm_v.tpb;
+
+@@ko_matched_przcykl_v.tpb;
 @@ko_missing_przcykl_v.tpb;
+
+@@ko_matched_zajcykl_v.tpb;
+@@ko_missing_zajcykl_v.tpb;
 
 -- vim: set ft=sql ts=4 sw=4 et:

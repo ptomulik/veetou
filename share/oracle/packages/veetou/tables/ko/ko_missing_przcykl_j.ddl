@@ -5,9 +5,9 @@ CREATE TABLE v2u_ko_missing_przcykl_j
         , subject_id NUMBER(38)
         , specialty_id NUMBER(38)
         , semester_id NUMBER(38)
-        , subject_map_ids V2u_5Ids_t
-        , tried_map_subj_codes V2u_Subj_5Codes_t
-        , istniejace_prz_kody V2u_Subj_5Codes_t
+        , reason VARCHAR2(80 CHAR)
+        , tried_map_subj_code VARCHAR2(32 CHAR)
+        , istniejace_cdyd_kody V2u_Semester_Codes_t
 
         , CONSTRAINT v2u_ko_missing_przcykl_j_pk
             PRIMARY KEY (id)
@@ -27,7 +27,9 @@ CREATE TABLE v2u_ko_missing_przcykl_j
             FOREIGN KEY (subject_id, specialty_id, semester_id, job_uuid)
             REFERENCES v2u_ko_subject_semesters_j(subject_id, specialty_id, semester_id, job_uuid)
     )
-    ;
+NESTED TABLE istniejace_cdyd_kody STORE AS v2u_ko_mprzcykl_j_cdyds_nt
+    ((CONSTRAINT v2u_ko_mprzcykl_j_cdyds_nt_pk PRIMARY KEY (NESTED_TABLE_ID, COLUMN_VALUE)))
+;
 /
 CREATE SEQUENCE v2u_ko_missing_przcykl_j_sq1 START WITH 1;
 /

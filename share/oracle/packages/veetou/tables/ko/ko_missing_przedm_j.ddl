@@ -5,8 +5,8 @@ CREATE TABLE v2u_ko_missing_przedm_j
         , subject_id NUMBER(38)
         , specialty_id NUMBER(38)
         , semester_id NUMBER(38)
-        , subject_map_ids V2u_5Ids_t
-        , tried_map_subj_codes V2u_Subj_5Codes_t
+        , reason VARCHAR2(80 CHAR)
+        , tried_map_subj_code VARCHAR2(32 CHAR)
 
         , CONSTRAINT v2u_ko_missing_przedm_j_pk
             PRIMARY KEY (id)

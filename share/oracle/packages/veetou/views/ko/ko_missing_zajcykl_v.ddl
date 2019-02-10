@@ -1,17 +1,19 @@
-CREATE OR REPLACE VIEW v2u_ko_missing_przedm_v
-OF V2u_Ko_Missing_Przedm_V_t
+CREATE OR REPLACE VIEW v2u_ko_missing_zajcykl_v
+OF V2u_Ko_Missing_Zajcykl_V_t
 WITH OBJECT IDENTIFIER (job_uuid, subject_id, specialty_id, semester_id)
 AS WITH u AS
     (
         SELECT
-              V2u_Ko_Missing_Przedm_V_t(
+              V2u_Ko_Missing_Zajcykl_V_t(
                   subject => VALUE(subjects)
                 , specialty => VALUE(specialties)
                 , semester => VALUE(semesters)
                 , reason => j.reason
                 , tried_map_subj_code => j.tried_map_subj_code
+                , tried_map_classes_type => j.tried_map_classes_type
+                , istniejace_tzaj_kody => j.istniejace_tzaj_kody
             )
-        FROM v2u_ko_missing_przedm_j j
+        FROM v2u_ko_missing_zajcykl_j j
         INNER JOIN v2u_ko_subjects subjects
             ON (subjects.id = j.subject_id AND
                 subjects.job_uuid = j.job_uuid)

@@ -55,6 +55,35 @@ CREATE OR REPLACE TYPE V2u_Subject_Map_t
             )
         RETURN SELF AS RESULT
 
+    , MEMBER PROCEDURE init(
+              SELF IN OUT NOCOPY V2u_Subject_Map_t
+            , id IN NUMBER := NULL
+            , subj_code IN VARCHAR2
+            , map_subj_code IN VARCHAR2
+            , map_subj_lang IN VARCHAR2
+            , map_org_unit IN VARCHAR2
+            , map_org_unit_recipient IN VARCHAR2
+            , expr_subj_name IN VARCHAR2
+            , expr_subj_hours_w IN VARCHAR2
+            , expr_subj_hours_c IN VARCHAR2
+            , expr_subj_hours_l IN VARCHAR2
+            , expr_subj_hours_p IN VARCHAR2
+            , expr_subj_hours_s IN VARCHAR2
+            , expr_subj_credit_kind IN VARCHAR2
+            , expr_subj_ects IN VARCHAR2
+            , expr_subj_tutor IN VARCHAR2
+            , expr_university IN VARCHAR2
+            , expr_faculty IN VARCHAR2
+            , expr_studies_modetier IN VARCHAR2
+            , expr_studies_field IN VARCHAR2
+            , expr_studies_specialty IN VARCHAR2
+            , expr_semester_code IN VARCHAR2
+            , expr_semester_number IN VARCHAR2
+            , expr_ects_mandatory IN VARCHAR2
+            , expr_ects_other IN VARCHAR2
+            , expr_ects_total IN VARCHAR2
+            )
+
     , OVERRIDING MEMBER FUNCTION cmp_val(other IN V2u_Distinct_t)
         RETURN INTEGER
 
@@ -103,7 +132,8 @@ CREATE OR REPLACE TYPE V2u_Subject_Map_t
     , MEMBER FUNCTION match_ects_mandatory(ects_mandatory IN INTEGER) RETURN INTEGER
     , MEMBER FUNCTION match_ects_other(ects_other IN INTEGER) RETURN INTEGER
     , MEMBER FUNCTION match_ects_total(ects_total IN INTEGER) RETURN INTEGER
-    );
+    )
+NOT FINAL;
 /
 CREATE OR REPLACE TYPE V2u_Subject_Maps_t
     AS TABLE OF V2u_Subject_Map_t;
