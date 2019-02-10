@@ -10,10 +10,10 @@ USING
                 , j.semester_id semester_id
                 , subject_map.id map_id
                 , V2U_Fit.Attributes(
-                          VALUE(subject_map)
-                        , VALUE(subjects)
-                        , VALUE(specialties)
-                        , VALUE(semesters)
+                          subject_map => VALUE(subject_map)
+                        , subject => VALUE(subjects)
+                        , specialty => VALUE(specialties)
+                        , semester => VALUE(semesters)
                   ) matching_score
             FROM v2u_ko_subject_semesters_j j
             INNER JOIN v2u_ko_subjects subjects

@@ -364,7 +364,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('ko_subjects_idx1');
         Drop_Table('ko_subjects', how => 'PURGE');
         --
+        Drop_Index('ko_specialty_map_j_idx1');
         Drop_Table('ko_specialty_map_j', how=>'PURGE');
+        --
         Drop_Table('ko_specialty_sheets_j', how => 'PURGE');
         Drop_Table('ko_semester_sheets_j', how => 'PURGE');
         Drop_Table('ko_specialty_semesters_j', how => 'PURGE');
@@ -389,6 +391,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
 
         Drop_Type('Ko_Classes_Map_J_t', 'Ko_Classes_Maps_J_t');
         Drop_Type('Ko_Subject_Map_J_t', 'Ko_Subject_Maps_J_t');
+        Drop_Type('Ko_Specialty_Map_J_t', 'Ko_Specialty_Maps_J_t');
         Drop_Type('Ko_Student_Semester_J_t', 'Ko_Student_Semesters_J_t');
         Drop_Type('Ko_Classes_Semester_J_t', 'Ko_Classes_Semesters_J_t');
         Drop_Type('Ko_Subject_Semester_J_t', 'Ko_Subject_Semesters_J_t');

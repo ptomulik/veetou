@@ -10,6 +10,7 @@
 @@ko_subject_semester_j.tps;
 @@ko_classes_semester_j.tps;
 @@ko_student_semester_j.tps;
+@@ko_specialty_map_j.tps;
 @@ko_subject_map_j.tps;
 @@ko_classes_map_j.tps;
 
