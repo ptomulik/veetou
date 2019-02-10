@@ -1,12 +1,13 @@
-CREATE OR REPLACE TYPE V2u_Ko_Missing_Subject_Map_V_t
-    FORCE AUTHID CURRENT_USER UNDER V2u_Subject_Map_t
-    ( job_uuid RAW(16)
-    , subject_id NUMBER(38)
-    , specialty_id NUMBER(38)
-    , semester_id NUMBER(38)
+CREATE OR REPLACE TYPE V2u_Subject_Map_Base_t
+    FORCE AUTHID CURRENT_USER UNDER V2u_Map_Base_t
+    ( subj_code VARCHAR2(32 CHAR)
+    , map_subj_code VARCHAR2(32 CHAR)
+    , map_subj_lang VARCHAR2(3 CHAR)
+    , map_org_unit VARCHAR2(20 CHAR)
+    , map_org_unit_recipient VARCHAR2(20 CHAR)
 
-    , CONSTRUCTOR FUNCTION V2u_Ko_Missing_Subject_Map_V_t(
-              SELF IN OUT NOCOPY V2u_Ko_Missing_Subject_Map_V_t
+    , CONSTRUCTOR FUNCTION V2u_Subject_Map_Base_t(
+              SELF IN OUT NOCOPY V2u_Subject_Map_Base_t
             , id IN NUMBER := NULL
             , subj_code IN VARCHAR2
             , map_subj_code IN VARCHAR2
@@ -32,21 +33,11 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Subject_Map_V_t
             , expr_ects_mandatory IN VARCHAR2
             , expr_ects_other IN VARCHAR2
             , expr_ects_total IN VARCHAR2
-            , job_uuid IN RAW
-            , subject_id IN NUMBER
-            , specialty_id IN NUMBER
-            , semester_id IN NUMBER
-            ) RETURN SELF AS RESULT
-
-    , CONSTRUCTOR FUNCTION V2u_Ko_Missing_Subject_Map_V_t(
-              SELF IN OUT NOCOPY V2u_Ko_Missing_Subject_Map_V_t
-            , subject IN V2u_Ko_Subject_t
-            , specialty IN V2u_Ko_Specialty_t
-            , semester IN V2u_Ko_Semester_t
-            ) RETURN SELF AS RESULT
+            )
+        RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
-              SELF IN OUT NOCOPY V2u_Ko_Missing_Subject_Map_V_t
+              SELF IN OUT NOCOPY V2u_Subject_Map_Base_t
             , id IN NUMBER := NULL
             , subj_code IN VARCHAR2
             , map_subj_code IN VARCHAR2
@@ -72,23 +63,37 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Subject_Map_V_t
             , expr_ects_mandatory IN VARCHAR2
             , expr_ects_other IN VARCHAR2
             , expr_ects_total IN VARCHAR2
-            , job_uuid IN RAW
-            , subject_id IN NUMBER
-            , specialty_id IN NUMBER
-            , semester_id IN NUMBER
             )
 
-    , MEMBER PROCEDURE init(
-              SELF IN OUT NOCOPY V2u_Ko_Missing_Subject_Map_V_t
-            , id IN NUMBER := NULL
-            , subject IN V2u_Ko_Subject_t
-            , specialty IN V2u_Ko_Specialty_t
-            , semester IN V2u_Ko_Semester_t
-            )
+    , OVERRIDING MEMBER FUNCTION cmp_val(other IN V2u_Distinct_t)
+        RETURN INTEGER
 
-    );
-/
-CREATE OR REPLACE TYPE V2u_Ko_Missing_Subject_Mapes_V_t
-    AS TABLE OF V2u_Ko_Missing_Subject_Map_V_t;
+    , MEMBER FUNCTION cmp_val(other IN V2u_Subject_Map_Base_t)
+        RETURN INTEGER
+
+    , OVERRIDING MEMBER FUNCTION match_expr_fields(
+              subj_name IN VARCHAR2
+            , subj_hours_w IN VARCHAR2
+            , subj_hours_c IN VARCHAR2
+            , subj_hours_l IN VARCHAR2
+            , subj_hours_p IN VARCHAR2
+            , subj_hours_s IN VARCHAR2
+            , subj_credit_kind IN VARCHAR2
+            , subj_ects IN VARCHAR2
+            , subj_tutor IN VARCHAR2
+            , university IN VARCHAR2
+            , faculty IN VARCHAR2
+            , studies_modetier IN VARCHAR2
+            , studies_field IN VARCHAR2
+            , studies_specialty IN VARCHAR2
+            , semester_code IN VARCHAR2
+            , semester_number IN VARCHAR2
+            , ects_mandatory IN VARCHAR2
+            , ects_other IN VARCHAR2
+            , ects_total IN VARCHAR2
+            )
+        RETURN INTEGER
+    )
+NOT INSTANTIABLE NOT FINAL;
 
 -- vim: set ft=sql ts=4 sw=4 et:

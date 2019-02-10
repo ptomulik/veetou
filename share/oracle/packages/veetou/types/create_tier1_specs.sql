@@ -3,6 +3,9 @@
 @@faculty.tps;
 @@semester.tps;
 @@specialty_map.tps;
+@@map_base.tps;
+@@subject_map_base.tps;
+@@classes_map_base.tps;
 @@subject_map.tps;
 @@classes_map.tps;
 

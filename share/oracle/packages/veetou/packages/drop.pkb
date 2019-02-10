@@ -175,9 +175,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     PROCEDURE Tier1
     IS
     BEGIN
-        Drop_Index('specmap_idx1');
-        Drop_Index('specmap_idx2');
-        Drop_Index('specmap_idx3');
+        Drop_Index('specialty_map_idx1');
+        Drop_Index('specialty_map_idx2');
+        Drop_Index('specialty_map_idx3');
         Drop_Trigger('specialty_map_tr1');
         Drop_Sequence('specialty_map_sq1');
         Drop_Table('specialty_map', how => 'PURGE');
@@ -187,6 +187,12 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Trigger('subject_map_tr1');
         Drop_Sequence('subject_map_sq1');
         Drop_Table('subject_map', how => 'PURGE');
+
+        Drop_Index('classes_map_idx1');
+        Drop_Index('classes_map_idx2');
+        Drop_Trigger('classes_map_tr1');
+        Drop_Sequence('classes_map_sq1');
+        Drop_Table('classes_map', how => 'PURGE');
 
         Drop_Index('ko_headers_idx1');
         Drop_Index('ko_preambles_idx1');
@@ -214,26 +220,27 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Table('ko_trs', how => 'PURGE');
         Drop_Table('ko_jobs', how => 'PURGE');
 
-        Drop_Index('dz_programy_osob_idx1');
-        Drop_Index('dz_programy_osob_idx2');
-        Drop_Index('dz_programy_osob_idx3');
-        Drop_Table('dz_programy_osob', how => 'PURGE');
-        --
         Drop_Index('dz_etapy_osob_idx1');
         Drop_Index('dz_etapy_osob_idx2');
         Drop_Table('dz_etapy_osob', how => 'PURGE');
         --
+        Drop_Index('dz_programy_osob_idx1');
+        Drop_Index('dz_programy_osob_idx2');
+        Drop_Index('dz_programy_osob_idx3');
+        Drop_Index('dz_programy_osob_idx4');
+        Drop_Table('dz_programy_osob', how => 'PURGE');
+        --
         Drop_Index('dz_studenci_idx1');
         Drop_Table('dz_studenci', how => 'PURGE');
         --
-        Drop_Table('dz_przedmioty', how => 'PURGE');
+        Drop_Index('dz_zajecia_cykli_idx1');
+        Drop_Table('dz_zajecia_cykli', how => 'PURGE');
         --
         Drop_Index('dz_przedmioty_cykli_idx1');
         Drop_Index('dz_przedmioty_cykli_idx2');
         Drop_Table('dz_przedmioty_cykli', how => 'PURGE');
         --
-        Drop_Index('dz_zajecia_cykli_idx1');
-        Drop_Table('dz_zajecia_cykli', how => 'PURGE');
+        Drop_Table('dz_przedmioty', how => 'PURGE');
 
         Drop_Trigger('semesters_tr1');
         Drop_Table('semesters', how => 'PURGE');
@@ -250,7 +257,11 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Package('Cmp');
 
         Drop_Type('Specialty_Map_t', 'Specialty_Maps_t');
+        Drop_Type('Classes_Map_t', 'Classes_Maps_t');
+        Drop_Type('Classes_Map_Base_t');
         Drop_Type('Subject_Map_t', 'Subject_Maps_t');
+        Drop_Type('Subject_Map_Base_t');
+        Drop_Type('Map_Base_t');
         Drop_Type('Ko_Footer_t', 'Ko_Footers_t');
         Drop_Type('Ko_Header_t', 'Ko_Headers_t');
         Drop_Type('Ko_Page_t', 'Ko_Pages_t');
@@ -260,7 +271,6 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Tbody_t', 'Ko_Tbodies_t');
         Drop_Type('Ko_Tr_t', 'Ko_Trs_t');
         Drop_Type('Ko_Job_t', 'Ko_Jobs_t');
-        Drop_Type('Ko_Obj_t');
 
         Drop_Type('Semester_Codes_t');
         Drop_Type('Semester_t', 'Semesters_t');
@@ -385,7 +395,6 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Speclty_Semester_J_t', 'Ko_Speclty_Semesters_J_t');
         Drop_Type('Ko_Semester_J_t', 'Ko_Semesters_J_t');
 
-        Drop_Type('Ko_Rejected_Map_t', 'Ko_Rejected_Maps_t');
         Drop_Type('Ko_Specialty_t');
         Drop_Type('Ko_Subject_t');
         Drop_Type('Ko_Semester_t', 'Ko_Semesters_t', 'Ko_Semester_Tables_t');
@@ -396,6 +405,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Program_Codes_t');
         Drop_Type('Subj_Grades_t');
         Drop_Type('Subj_Codes_t');
+        Drop_Type('Subj_5Grades_t');
+        Drop_Type('Subj_5Codes_t');
         Drop_Type('Ids_t');
         Drop_Type('Dz_Ids_t');
         Drop_Type('5Ids_t');
@@ -429,6 +440,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_View('ko_matched_przedm_v');
         Drop_View('ko_ambig_speclty_map_v');
         Drop_View('ko_ambig_subject_map_v');
+        Drop_View('ko_missing_subj_maps_v');
         Drop_View('ko_unmapped_specialties_v');
         Drop_View('ko_unmapped_subjects_v');
         Drop_View('ko_specialty_map_v');
@@ -447,6 +459,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Missing_Przedm_V_t', 'Ko_Missing_Przedms_V_t');
         Drop_Type('Ko_Missing_Etpos_V_t', 'Ko_Missing_Etposes_V_t');
         Drop_Type('Ko_Missing_Prgos_V_t', 'Ko_Missing_Prgoses_V_t');
+        Drop_Type('Ko_Missing_Subj_Map_V_t', 'Ko_Missing_Subj_Maps_V_t');
         Drop_Type('Ko_Ambig_Speclty_Map_V_t', 'Ko_Ambig_Speclty_Maps_V_t');
         Drop_Type('Ko_Ambig_Subject_Map_V_t', 'Ko_Ambig_Subject_Maps_V_t');
         Drop_Type('Ko_Specialty_Map_V_t', 'Ko_Specialty_Maps_V_t');

@@ -1,6 +1,7 @@
 CREATE TABLE v2u_classes_map
 OF V2u_Classes_Map_t
-    ( CONSTRAINT v2u_classes_map_pk PRIMARY KEY(id) );
+    ( CONSTRAINT v2u_classes_map_pk PRIMARY KEY(id) )
+OBJECT IDENTIFIER IS PRIMARY KEY;
 
 COMMENT ON TABLE v2u_classes_map IS 'Odwzorowanie typow zajec (VEE->USOS)';
 COMMENT ON COLUMN v2u_classes_map.id IS 'Klucz główny tabeli';
@@ -29,6 +30,7 @@ CREATE SEQUENCE v2u_classes_map_sq1 START WITH 1;
 CREATE OR REPLACE TRIGGER v2u_classes_map_tr1
     BEFORE INSERT ON v2u_classes_map
 FOR EACH ROW
+WHEN (new.id IS NULL)
 BEGIN
     SELECT v2u_classes_map_sq1.NEXTVAL
         INTO :new.id

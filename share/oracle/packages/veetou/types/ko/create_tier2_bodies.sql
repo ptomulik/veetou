@@ -4,7 +4,6 @@
 @@ko_subject.tpb;
 @@ko_specialty.tpb;
 @@ko_student.tpb;
-@@ko_rejected_map.tpb;
 
 @@ko_semester_j.tpb;
 @@ko_speclty_semester_j.tpb;

@@ -12,10 +12,10 @@ USING
                 , j.classes_hours classes_hours
                 , classes_map.id map_id
                 , V2U_Fit.Attributes(
-                          VALUE(classes_map)
-                        , VALUE(subjects)
-                        , VALUE(specialties)
-                        , VALUE(semesters)
+                          classes_map => VALUE(classes_map)
+                        , subject => VALUE(subjects)
+                        , specialty => VALUE(specialties)
+                        , semester => VALUE(semesters)
                   ) matching_score
             FROM v2u_ko_classes_semesters_j j
             INNER JOIN v2u_ko_subjects subjects
@@ -91,8 +91,32 @@ ON (tgt.subject_id = src.subject_id AND
     tgt.map_id = src.map_id AND
     tgt.job_uuid = src.job_uuid)
 WHEN NOT MATCHED THEN
-    INSERT (    job_uuid,     subject_id,     specialty_id,     semester_id,     classes_type,     classes_hours,     map_id,     matching_score,     highest_score,     selected,     reason)
-    VALUES (src.job_uuid, src.subject_id, src.specialty_id, src.semester_id, src.classes_type, src.classes_hours, src.map_id, src.matching_score, src.highest_score, src.selected, src.reason)
+    INSERT
+        ( job_uuid
+        , subject_id
+        , specialty_id
+        , semester_id
+        , classes_type
+        , classes_hours
+        , map_id
+        , matching_score
+        , highest_score
+        , selected
+        , reason
+        )
+    VALUES
+        ( src.job_uuid
+        , src.subject_id
+        , src.specialty_id
+        , src.semester_id
+        , src.classes_type
+        , src.classes_hours
+        , src.map_id
+        , src.matching_score
+        , src.highest_score
+        , src.selected
+        , src.reason
+        )
 WHEN MATCHED THEN
     UPDATE SET
           tgt.classes_hours = src.classes_hours

@@ -9,6 +9,9 @@
 @@ko_specialty_map_v.tpb;
 @@ko_ambig_subject_map_v.tpb;
 @@ko_ambig_speclty_map_v.tpb;
+--
+@@ko_missing_subj_map_v.tpb;
+
 @@ko_matched_prgos_v.tpb;
 @@ko_matched_etpos_v.tpb;
 @@ko_missing_prgos_v.tpb;
