@@ -4,8 +4,8 @@ WITH OBJECT IDENTIFIER (job_uuid, specialty_id, semester_id)
 AS WITH u AS (
     SELECT
         V2u_Ko_Speclty_Semester_V_t(
-              VALUE(specialties)
-            , VALUE(semesters)
+              specialty => VALUE(specialties)
+            , semester => VALUE(semesters)
         ) spec_sem
     FROM v2u_ko_specialties specialties
     INNER JOIN v2u_ko_specialty_semesters_j j1

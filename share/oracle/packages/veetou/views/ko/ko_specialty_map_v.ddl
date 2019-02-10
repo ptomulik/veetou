@@ -5,10 +5,13 @@ AS WITH u AS
     (
         SELECT
             V2u_Ko_Specialty_Map_V_t(
-                  VALUE(specialties)
-                , VALUE(semesters)
-                , VALUE(specialty_map)
-                , j.matching_score
+                  specialty => VALUE(specialties)
+                , semester => VALUE(semesters)
+                , map => VALUE(specialty_map)
+                , matching_score => j.matching_score
+                , highest_score => j.highest_score
+                , selected => j.selected
+                , reason => j.reason
             )
         FROM v2u_ko_specialty_map_j j
         INNER JOIN v2u_ko_specialties specialties

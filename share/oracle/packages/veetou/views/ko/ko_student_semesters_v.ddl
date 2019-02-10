@@ -4,10 +4,10 @@ WITH OBJECT IDENTIFIER (job_uuid, student_id, specialty_id, semester_id)
 AS WITH u AS (
     SELECT
         V2u_Ko_Student_Semester_V_t(
-              VALUE(students)
-            , VALUE(specialties)
-            , VALUE(semesters)
-            , j.ects_attained
+              student => VALUE(students)
+            , specialty => VALUE(specialties)
+            , semester => VALUE(semesters)
+            , ects_attained => j.ects_attained
         ) spec_sem
     FROM v2u_ko_students students
     INNER JOIN v2u_ko_student_semesters_j j
