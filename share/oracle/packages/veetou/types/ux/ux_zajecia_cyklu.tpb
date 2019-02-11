@@ -26,6 +26,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Zajecia_Cyklu_t AS
             , literatura_ang IN CLOB
             , czy_pokazywac_termin IN VARCHAR2
             , job_uuid IN RAW
+            , is_missing INTEGER
             , safe_to_add INTEGER
             ) RETURN SELF AS RESULT
     IS
@@ -55,6 +56,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Zajecia_Cyklu_t AS
             , literatura => literatura
             , literatura_ang => literatura_ang
             , czy_pokazywac_termin => czy_pokazywac_termin
+            , job_uuid => job_uuid
+            , is_missing => is_missing
+            , safe_to_add => safe_to_add
             );
         RETURN;
     END;
@@ -86,6 +90,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Zajecia_Cyklu_t AS
             , literatura_ang IN CLOB
             , czy_pokazywac_termin IN VARCHAR2
             , job_uuid IN RAW
+            , is_missing INTEGER
             , safe_to_add INTEGER
             )
     IS
@@ -117,6 +122,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Zajecia_Cyklu_t AS
             , czy_pokazywac_termin => czy_pokazywac_termin
             );
         SELF.job_uuid := job_uuid;
+        SELF.is_missing := is_missing;
         SELF.safe_to_add := safe_to_add;
     END;
 END;

@@ -48,6 +48,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Program_Osoby_t AS
             , umowa_sygnatura IN VARCHAR2
             , kod_isced IN VARCHAR2
             , job_uuid IN RAW
+            , is_missing INTEGER
             , safe_to_add INTEGER
             ) RETURN SELF AS RESULT
     IS
@@ -100,6 +101,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Program_Osoby_t AS
             , umowa_sygnatura => umowa_sygnatura
             , kod_isced => kod_isced
             , job_uuid => job_uuid
+            , is_missing => is_missing
             , safe_to_add => safe_to_add
             );
         RETURN;
@@ -154,6 +156,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Program_Osoby_t AS
             , umowa_sygnatura IN VARCHAR2
             , kod_isced IN VARCHAR2
             , job_uuid IN RAW
+            , is_missing INTEGER
             , safe_to_add INTEGER
             )
     IS
@@ -207,6 +210,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Program_Osoby_t AS
             , kod_isced => kod_isced
             );
         SELF.job_uuid := job_uuid;
+        SELF.is_missing := is_missing;
         SELF.safe_to_add := safe_to_add;
     END;
 END;

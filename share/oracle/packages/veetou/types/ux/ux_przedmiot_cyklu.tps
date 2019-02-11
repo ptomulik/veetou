@@ -1,6 +1,7 @@
 CREATE OR REPLACE TYPE V2u_Ux_Przedmiot_Cyklu_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Dz_Przedmiot_Cyklu_B_t
     ( job_uuid RAW(16)
+    , is_missing INTEGER
     , safe_to_add INTEGER
 
 
@@ -26,6 +27,7 @@ CREATE OR REPLACE TYPE V2u_Ux_Przedmiot_Cyklu_t
             , status_sylabusu IN VARCHAR2
             , guid IN VARCHAR2
             , job_uuid IN RAW
+            , is_missing INTEGER
             , safe_to_add INTEGER
             ) RETURN SELF AS RESULT
 
@@ -51,6 +53,7 @@ CREATE OR REPLACE TYPE V2u_Ux_Przedmiot_Cyklu_t
             , status_sylabusu IN VARCHAR2
             , guid IN VARCHAR2
             , job_uuid IN RAW
+            , is_missing INTEGER
             , safe_to_add INTEGER
             )
     )

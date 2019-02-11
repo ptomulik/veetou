@@ -1,6 +1,7 @@
 CREATE OR REPLACE TYPE V2u_Ux_Etap_Osoby_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Dz_Etap_Osoby_B_t
     ( job_uuid RAW(16)
+    , is_missing INTEGER
     , safe_to_add INTEGER
 
 
@@ -30,6 +31,7 @@ CREATE OR REPLACE TYPE V2u_Ux_Etap_Osoby_t
             , czy_erasmus VARCHAR2
             , jedn_dyplomujaca VARCHAR2
             , job_uuid IN RAW
+            , is_missing INTEGER
             , safe_to_add INTEGER
             ) RETURN SELF AS RESULT
 
@@ -59,6 +61,7 @@ CREATE OR REPLACE TYPE V2u_Ux_Etap_Osoby_t
             , czy_erasmus VARCHAR2
             , jedn_dyplomujaca VARCHAR2
             , job_uuid IN RAW
+            , is_missing INTEGER
             , safe_to_add INTEGER
             )
     )

@@ -33,6 +33,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_t AS
             , pw_nazwa_supl IN VARCHAR2
             , pw_nazwa_supl_ang IN VARCHAR2
             , job_uuid IN RAW
+            , is_missing INTEGER
             , safe_to_add INTEGER
             ) RETURN SELF AS RESULT
     IS
@@ -70,6 +71,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_t AS
             , pw_nazwa_supl => pw_nazwa_supl
             , pw_nazwa_supl_ang => pw_nazwa_supl_ang
             , job_uuid => job_uuid
+            , is_missing => is_missing
             , safe_to_add => safe_to_add
             );
         RETURN;
@@ -109,6 +111,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_t AS
             , pw_nazwa_supl IN VARCHAR2
             , pw_nazwa_supl_ang IN VARCHAR2
             , job_uuid IN RAW
+            , is_missing INTEGER
             , safe_to_add INTEGER
             )
     IS
@@ -147,6 +150,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_t AS
             , pw_nazwa_supl_ang => pw_nazwa_supl_ang
             );
         SELF.job_uuid := job_uuid;
+        SELF.is_missing := is_missing;
         SELF.safe_to_add := safe_to_add;
     END;
 END;
