@@ -1,7 +1,17 @@
 CREATE OR REPLACE TYPE V2u_Ux_Przedmiot_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Dz_Przedmiot_B_t
     ( job_uuid RAW(16)
-    , is_missing INTEGER
+    , dbg_subj_codes INTEGER
+    , dbg_map_subj_codes INTEGER
+    , dbg_languages INTEGER
+    , dbg_org_units INTEGER
+    , dbg_org_unit_recipients INTEGER
+    , dbg_faculty_codes INTEGER
+    , dbg_subj_names INTEGER
+    , dbg_subj_credit_kinds INTEGER
+    , dbg_missing INTEGER
+    , dbg_matched INTEGER
+    , dbg_mapped INTEGER
     , safe_to_add INTEGER
 
     , CONSTRUCTOR FUNCTION V2u_Ux_Przedmiot_t(
@@ -38,7 +48,17 @@ CREATE OR REPLACE TYPE V2u_Ux_Przedmiot_t
             , pw_nazwa_supl IN VARCHAR2
             , pw_nazwa_supl_ang IN VARCHAR2
             , job_uuid IN RAW
-            , is_missing INTEGER
+            , dbg_subj_codes INTEGER
+            , dbg_map_subj_codes INTEGER
+            , dbg_languages INTEGER
+            , dbg_org_units INTEGER
+            , dbg_org_unit_recipients INTEGER
+            , dbg_faculty_codes INTEGER
+            , dbg_subj_names INTEGER
+            , dbg_subj_credit_kinds INTEGER
+            , dbg_missing INTEGER
+            , dbg_matched INTEGER
+            , dbg_mapped INTEGER
             , safe_to_add INTEGER
             ) RETURN SELF AS RESULT
 
@@ -76,7 +96,17 @@ CREATE OR REPLACE TYPE V2u_Ux_Przedmiot_t
             , pw_nazwa_supl IN VARCHAR2
             , pw_nazwa_supl_ang IN VARCHAR2
             , job_uuid IN RAW
-            , is_missing INTEGER
+            , dbg_subj_codes INTEGER
+            , dbg_map_subj_codes INTEGER
+            , dbg_languages INTEGER
+            , dbg_org_units INTEGER
+            , dbg_org_unit_recipients INTEGER
+            , dbg_faculty_codes INTEGER
+            , dbg_subj_names INTEGER
+            , dbg_subj_credit_kinds INTEGER
+            , dbg_missing INTEGER
+            , dbg_matched INTEGER
+            , dbg_mapped INTEGER
             , safe_to_add INTEGER
             )
     )

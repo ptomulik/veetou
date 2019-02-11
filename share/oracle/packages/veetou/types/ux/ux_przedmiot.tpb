@@ -33,7 +33,17 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_t AS
             , pw_nazwa_supl IN VARCHAR2
             , pw_nazwa_supl_ang IN VARCHAR2
             , job_uuid IN RAW
-            , is_missing INTEGER
+            , dbg_subj_codes INTEGER
+            , dbg_map_subj_codes INTEGER
+            , dbg_languages INTEGER
+            , dbg_org_units INTEGER
+            , dbg_org_unit_recipients INTEGER
+            , dbg_faculty_codes INTEGER
+            , dbg_subj_names INTEGER
+            , dbg_subj_credit_kinds INTEGER
+            , dbg_missing INTEGER
+            , dbg_matched INTEGER
+            , dbg_mapped INTEGER
             , safe_to_add INTEGER
             ) RETURN SELF AS RESULT
     IS
@@ -71,7 +81,17 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_t AS
             , pw_nazwa_supl => pw_nazwa_supl
             , pw_nazwa_supl_ang => pw_nazwa_supl_ang
             , job_uuid => job_uuid
-            , is_missing => is_missing
+            , dbg_subj_codes => dbg_subj_codes
+            , dbg_map_subj_codes => dbg_map_subj_codes
+            , dbg_languages => dbg_languages
+            , dbg_org_units => dbg_org_units
+            , dbg_org_unit_recipients => dbg_org_unit_recipients
+            , dbg_faculty_codes => dbg_faculty_codes
+            , dbg_subj_names => dbg_subj_names
+            , dbg_subj_credit_kinds => dbg_subj_credit_kinds
+            , dbg_missing => dbg_missing
+            , dbg_matched => dbg_matched
+            , dbg_mapped => dbg_mapped
             , safe_to_add => safe_to_add
             );
         RETURN;
@@ -111,7 +131,17 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_t AS
             , pw_nazwa_supl IN VARCHAR2
             , pw_nazwa_supl_ang IN VARCHAR2
             , job_uuid IN RAW
-            , is_missing INTEGER
+            , dbg_subj_codes INTEGER
+            , dbg_map_subj_codes INTEGER
+            , dbg_languages INTEGER
+            , dbg_org_units INTEGER
+            , dbg_org_unit_recipients INTEGER
+            , dbg_faculty_codes INTEGER
+            , dbg_subj_names INTEGER
+            , dbg_subj_credit_kinds INTEGER
+            , dbg_missing INTEGER
+            , dbg_matched INTEGER
+            , dbg_mapped INTEGER
             , safe_to_add INTEGER
             )
     IS
@@ -150,7 +180,17 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_t AS
             , pw_nazwa_supl_ang => pw_nazwa_supl_ang
             );
         SELF.job_uuid := job_uuid;
-        SELF.is_missing := is_missing;
+        SELF.dbg_subj_codes := dbg_subj_codes;
+        SELF.dbg_map_subj_codes := dbg_map_subj_codes;
+        SELF.dbg_languages := dbg_languages;
+        SELF.dbg_org_units := dbg_org_units;
+        SELF.dbg_org_unit_recipients := dbg_org_unit_recipients;
+        SELF.dbg_faculty_codes := dbg_faculty_codes;
+        SELF.dbg_subj_names := dbg_subj_names;
+        SELF.dbg_subj_credit_kinds := dbg_subj_credit_kinds;
+        SELF.dbg_missing := dbg_missing;
+        SELF.dbg_matched := dbg_matched;
+        SELF.dbg_mapped := dbg_mapped;
         SELF.safe_to_add := safe_to_add;
     END;
 END;
