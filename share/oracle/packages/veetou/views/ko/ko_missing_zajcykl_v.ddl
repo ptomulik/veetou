@@ -9,8 +9,8 @@ AS WITH u AS
                 , specialty => VALUE(specialties)
                 , semester => VALUE(semesters)
                 , reason => j.reason
-                , tried_map_subj_code => j.tried_map_subj_code
-                , tried_map_classes_type => j.tried_map_classes_type
+                , tried_map_subj_code => j.map_subj_code
+                , tried_map_classes_type => j.map_classes_type
                 , istniejace_tzaj_kody => j.istniejace_tzaj_kody
             )
         FROM v2u_ko_missing_zajcykl_j j

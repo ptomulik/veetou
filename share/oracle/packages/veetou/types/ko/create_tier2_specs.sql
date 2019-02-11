@@ -13,5 +13,6 @@
 @@ko_specialty_map_j.tps;
 @@ko_subject_map_j.tps;
 @@ko_classes_map_j.tps;
+@@ko_missing_zajcykl_j.tps;
 
 -- vim: set ft=sql ts=4 sw=4 et:
