@@ -26,7 +26,14 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Zajecia_Cyklu_t AS
             , literatura_ang IN CLOB
             , czy_pokazywac_termin IN VARCHAR2
             , job_uuid IN RAW
-            , is_missing INTEGER
+            , dbg_subj_codes IN INTEGER
+            , dbg_map_subj_codes IN INTEGER
+            , dbg_classes_hours IN INTEGER
+            , dbg_subj_credit_kinds IN INTEGER
+            , dbg_matched IN INTEGER
+            , dbg_missing IN INTEGER
+            , dbg_subject_mapped IN INTEGER
+            , dbg_classes_mapped IN INTEGER
             , safe_to_add INTEGER
             ) RETURN SELF AS RESULT
     IS
@@ -57,7 +64,14 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Zajecia_Cyklu_t AS
             , literatura_ang => literatura_ang
             , czy_pokazywac_termin => czy_pokazywac_termin
             , job_uuid => job_uuid
-            , is_missing => is_missing
+            , dbg_subj_codes => dbg_subj_codes
+            , dbg_map_subj_codes => dbg_map_subj_codes
+            , dbg_classes_hours => dbg_classes_hours
+            , dbg_subj_credit_kinds => dbg_subj_credit_kinds
+            , dbg_matched => dbg_matched
+            , dbg_missing => dbg_missing
+            , dbg_subject_mapped => dbg_subject_mapped
+            , dbg_classes_mapped => dbg_classes_mapped
             , safe_to_add => safe_to_add
             );
         RETURN;
@@ -90,7 +104,14 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Zajecia_Cyklu_t AS
             , literatura_ang IN CLOB
             , czy_pokazywac_termin IN VARCHAR2
             , job_uuid IN RAW
-            , is_missing INTEGER
+            , dbg_subj_codes IN INTEGER
+            , dbg_map_subj_codes IN INTEGER
+            , dbg_classes_hours IN INTEGER
+            , dbg_subj_credit_kinds IN INTEGER
+            , dbg_matched IN INTEGER
+            , dbg_missing IN INTEGER
+            , dbg_subject_mapped IN INTEGER
+            , dbg_classes_mapped IN INTEGER
             , safe_to_add INTEGER
             )
     IS
@@ -122,7 +143,14 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Zajecia_Cyklu_t AS
             , czy_pokazywac_termin => czy_pokazywac_termin
             );
         SELF.job_uuid := job_uuid;
-        SELF.is_missing := is_missing;
+        SELF.dbg_subj_codes := dbg_subj_codes;
+        SELF.dbg_map_subj_codes := dbg_map_subj_codes;
+        SELF.dbg_classes_hours := dbg_classes_hours;
+        SELF.dbg_subj_credit_kinds := dbg_subj_credit_kinds;
+        SELF.dbg_matched := dbg_matched;
+        SELF.dbg_missing := dbg_missing;
+        SELF.dbg_subject_mapped := dbg_subject_mapped;
+        SELF.dbg_classes_mapped := dbg_classes_mapped;
         SELF.safe_to_add := safe_to_add;
     END;
 END;

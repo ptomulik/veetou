@@ -21,7 +21,11 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_Cyklu_t AS
             , status_sylabusu IN VARCHAR2
             , guid IN VARCHAR2
             , job_uuid IN RAW
-            , is_missing INTEGER
+            , dbg_map_subj_codes IN INTEGER
+            , dbg_subj_credit_kinds IN INTEGER
+            , dbg_matched IN INTEGER
+            , dbg_missing IN INTEGER
+            , dbg_mapped IN INTEGER
             , safe_to_add INTEGER
             ) RETURN SELF AS RESULT
     IS
@@ -47,7 +51,11 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_Cyklu_t AS
             , status_sylabusu => status_sylabusu
             , guid => guid
             , job_uuid => job_uuid
-            , is_missing => is_missing
+            , dbg_map_subj_codes => dbg_map_subj_codes
+            , dbg_subj_credit_kinds => dbg_subj_credit_kinds
+            , dbg_matched => dbg_matched
+            , dbg_missing => dbg_missing
+            , dbg_mapped => dbg_mapped
             , safe_to_add => safe_to_add
             );
         RETURN;
@@ -75,7 +83,11 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_Cyklu_t AS
             , status_sylabusu IN VARCHAR2
             , guid IN VARCHAR2
             , job_uuid IN RAW
-            , is_missing INTEGER
+            , dbg_map_subj_codes IN INTEGER
+            , dbg_subj_credit_kinds IN INTEGER
+            , dbg_matched IN INTEGER
+            , dbg_missing IN INTEGER
+            , dbg_mapped IN INTEGER
             , safe_to_add INTEGER
             )
     IS
@@ -102,7 +114,11 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_Cyklu_t AS
             , guid => guid
             );
         SELF.job_uuid := job_uuid;
-        SELF.is_missing := is_missing;
+        SELF.dbg_map_subj_codes := dbg_map_subj_codes;
+        SELF.dbg_subj_credit_kinds := dbg_subj_credit_kinds;
+        SELF.dbg_matched := dbg_matched;
+        SELF.dbg_missing := dbg_missing;
+        SELF.dbg_mapped := dbg_mapped;
         SELF.safe_to_add := safe_to_add;
     END;
 END;

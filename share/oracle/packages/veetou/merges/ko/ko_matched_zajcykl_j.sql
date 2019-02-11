@@ -7,6 +7,7 @@ USING
             , j1.specialty_id specialty_id
             , j1.semester_id semester_id
             , j2.classes_type classes_type
+            , j2.classes_hours classes_hours
             , j1.map_id subject_map_id
             , j1.matching_score subject_matching_score
             , j2.map_id classes_map_id
@@ -49,6 +50,7 @@ WHEN NOT MATCHED THEN
         , specialty_id
         , semester_id
         , classes_type
+        , classes_hours
         , subject_map_id
         , subject_matching_score
         , classes_map_id
@@ -64,6 +66,7 @@ WHEN NOT MATCHED THEN
         , src.specialty_id
         , src.semester_id
         , src.classes_type
+        , src.classes_hours
         , src.subject_map_id
         , src.subject_matching_score
         , src.classes_map_id
@@ -74,7 +77,8 @@ WHEN NOT MATCHED THEN
         , src.zajcykl_id
         )
 WHEN MATCHED THEN UPDATE SET
-      tgt.subject_map_id = src.subject_map_id
+      tgt.classes_hours = src.classes_hours
+    , tgt.subject_map_id = src.subject_map_id
     , tgt.subject_matching_score = src.subject_matching_score
     , tgt.classes_map_id = src.classes_map_id
     , tgt.classes_matching_score = src.classes_matching_score

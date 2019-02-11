@@ -1,7 +1,14 @@
 CREATE OR REPLACE TYPE V2u_Ux_Zajecia_Cyklu_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Dz_Zajecia_Cyklu_B_t
     ( job_uuid RAW(16)
-    , is_missing INTEGER
+    , dbg_subj_codes INTEGER
+    , dbg_map_subj_codes INTEGER
+    , dbg_classes_hours INTEGER
+    , dbg_subj_credit_kinds INTEGER
+    , dbg_matched INTEGER
+    , dbg_missing INTEGER
+    , dbg_subject_mapped INTEGER
+    , dbg_classes_mapped INTEGER
     , safe_to_add INTEGER
 
     , CONSTRUCTOR FUNCTION V2u_Ux_Zajecia_Cyklu_t(
@@ -31,7 +38,14 @@ CREATE OR REPLACE TYPE V2u_Ux_Zajecia_Cyklu_t
             , literatura_ang IN CLOB
             , czy_pokazywac_termin IN VARCHAR2
             , job_uuid IN RAW
-            , is_missing INTEGER
+            , dbg_subj_codes IN INTEGER
+            , dbg_map_subj_codes IN INTEGER
+            , dbg_classes_hours IN INTEGER
+            , dbg_subj_credit_kinds IN INTEGER
+            , dbg_matched IN INTEGER
+            , dbg_missing IN INTEGER
+            , dbg_subject_mapped IN INTEGER
+            , dbg_classes_mapped IN INTEGER
             , safe_to_add INTEGER
             ) RETURN SELF AS RESULT
 
@@ -62,7 +76,14 @@ CREATE OR REPLACE TYPE V2u_Ux_Zajecia_Cyklu_t
             , literatura_ang IN CLOB
             , czy_pokazywac_termin IN VARCHAR2
             , job_uuid IN RAW
-            , is_missing INTEGER
+            , dbg_subj_codes IN INTEGER
+            , dbg_map_subj_codes IN INTEGER
+            , dbg_classes_hours IN INTEGER
+            , dbg_subj_credit_kinds IN INTEGER
+            , dbg_matched IN INTEGER
+            , dbg_missing IN INTEGER
+            , dbg_subject_mapped IN INTEGER
+            , dbg_classes_mapped IN INTEGER
             , safe_to_add INTEGER
             )
     )

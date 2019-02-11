@@ -1,7 +1,12 @@
 CREATE OR REPLACE TYPE V2u_Ux_Przedmiot_Cyklu_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Dz_Przedmiot_Cyklu_B_t
     ( job_uuid RAW(16)
-    , is_missing INTEGER
+    , dbg_subj_codes INTEGER
+    , dbg_map_subj_codes INTEGER
+    , dbg_subj_credit_kinds INTEGER
+    , dbg_matched INTEGER
+    , dbg_missing INTEGER
+    , dbg_mapped INTEGER
     , safe_to_add INTEGER
 
 
@@ -27,8 +32,12 @@ CREATE OR REPLACE TYPE V2u_Ux_Przedmiot_Cyklu_t
             , status_sylabusu IN VARCHAR2
             , guid IN VARCHAR2
             , job_uuid IN RAW
-            , is_missing INTEGER
-            , safe_to_add INTEGER
+            , dbg_map_subj_codes IN INTEGER
+            , dbg_subj_credit_kinds IN INTEGER
+            , dbg_matched IN INTEGER
+            , dbg_missing IN INTEGER
+            , dbg_mapped IN INTEGER
+            , safe_to_add IN INTEGER
             ) RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
@@ -53,7 +62,11 @@ CREATE OR REPLACE TYPE V2u_Ux_Przedmiot_Cyklu_t
             , status_sylabusu IN VARCHAR2
             , guid IN VARCHAR2
             , job_uuid IN RAW
-            , is_missing INTEGER
+            , dbg_map_subj_codes IN INTEGER
+            , dbg_subj_credit_kinds IN INTEGER
+            , dbg_matched IN INTEGER
+            , dbg_missing IN INTEGER
+            , dbg_mapped IN INTEGER
             , safe_to_add INTEGER
             )
     )

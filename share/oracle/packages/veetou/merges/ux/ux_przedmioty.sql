@@ -4,7 +4,7 @@ USING
         WITH u AS
         (
             SELECT
-                  j1.job_uuid
+                  ss_j.job_uuid
                 , COALESCE(subject_map.map_subj_code, subjects.subj_code) kod
                 , SET(CAST(
                         COLLECT(subjects.subj_code)
@@ -42,44 +42,44 @@ USING
                         COLLECT(grades.subj_grade)
                         AS V2u_Vchars1024_t
                   )) subj_grades
-                , COUNT(j2.id) dbg_matched
-                , COUNT(j3.id) dbg_missing
-                , COUNT(j4.map_id) dbg_mapped
+                , COUNT(ma_j.id) dbg_matched
+                , COUNT(mi_j.id) dbg_missing
+                , COUNT(sm_j.map_id) dbg_mapped
 
-            FROM v2u_ko_subject_semesters_j j1
+            FROM v2u_ko_subject_semesters_j ss_j
             INNER JOIN v2u_ko_subjects subjects
-                ON (subjects.id = j1.subject_id AND
-                    subjects.job_uuid = j1.job_uuid)
+                ON (subjects.id = ss_j.subject_id AND
+                    subjects.job_uuid = ss_j.job_uuid)
             INNER JOIN v2u_ko_specialties specialties
-                ON (specialties.id = j1.specialty_id AND
-                    specialties.job_uuid = j1.job_uuid)
-            LEFT JOIN v2u_ko_matched_przedm_j j2
-                ON (j2.subject_id = j1.subject_id AND
-                    j2.specialty_id = j1.specialty_id AND
-                    j2.semester_id = j1.semester_id AND
-                    j2.job_uuid = j1.job_uuid)
-            LEFT JOIN v2u_ko_missing_przedm_j j3
-                ON (j3.subject_id = j1.subject_id AND
-                    j3.specialty_id = j1.specialty_id AND
-                    j3.semester_id = j1.semester_id AND
-                    j3.job_uuid = j1.job_uuid)
-            LEFT JOIN v2u_ko_subject_map_j j4
-                ON (j4.subject_id = j1.subject_id AND
-                    j4.specialty_id = j1.specialty_id AND
-                    j4.semester_id = j1.semester_id AND
-                    j4.job_uuid = j1.job_uuid AND
-                    j4.selected = 1)
+                ON (specialties.id = ss_j.specialty_id AND
+                    specialties.job_uuid = ss_j.job_uuid)
+            LEFT JOIN v2u_ko_matched_przedm_j ma_j
+                ON (ma_j.subject_id = ss_j.subject_id AND
+                    ma_j.specialty_id = ss_j.specialty_id AND
+                    ma_j.semester_id = ss_j.semester_id AND
+                    ma_j.job_uuid = ss_j.job_uuid)
+            LEFT JOIN v2u_ko_missing_przedm_j mi_j
+                ON (mi_j.subject_id = ss_j.subject_id AND
+                    mi_j.specialty_id = ss_j.specialty_id AND
+                    mi_j.semester_id = ss_j.semester_id AND
+                    mi_j.job_uuid = ss_j.job_uuid)
+            LEFT JOIN v2u_ko_subject_map_j sm_j
+                ON (sm_j.subject_id = ss_j.subject_id AND
+                    sm_j.specialty_id = ss_j.specialty_id AND
+                    sm_j.semester_id = ss_j.semester_id AND
+                    sm_j.job_uuid = ss_j.job_uuid AND
+                    sm_j.selected = 1)
             LEFT JOIN v2u_subject_map subject_map
-                ON (subject_map.id = j4.map_id)
+                ON (subject_map.id = sm_j.map_id)
             LEFT JOIN v2u_ko_grades_j grades
-                ON (grades.subject_id = j1.subject_id AND
-                    grades.specialty_id = j1.specialty_id AND
-                    grades.semester_id = j1.semester_id AND
-                    grades.job_uuid = j1.job_uuid)
+                ON (grades.subject_id = ss_j.subject_id AND
+                    grades.specialty_id = ss_j.specialty_id AND
+                    grades.semester_id = ss_j.semester_id AND
+                    grades.job_uuid = ss_j.job_uuid)
             LEFT JOIN v2u_faculties faculties
                 ON (faculties.abbriev = specialties.faculty)
             GROUP BY
-                  j1.job_uuid
+                  ss_j.job_uuid
                 , COALESCE(subject_map.map_subj_code, subjects.subj_code)
         ),
         v AS

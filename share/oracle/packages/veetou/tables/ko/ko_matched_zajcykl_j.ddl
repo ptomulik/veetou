@@ -6,6 +6,7 @@ CREATE TABLE v2u_ko_matched_zajcykl_j
         , specialty_id NUMBER(38)
         , semester_id NUMBER(38)
         , classes_type VARCHAR2(1 CHAR)
+        , classes_hours NUMBER(8)
         , subject_map_id NUMBER(38)
         , subject_matching_score NUMBER(38)
         , classes_map_id NUMBER(38)
