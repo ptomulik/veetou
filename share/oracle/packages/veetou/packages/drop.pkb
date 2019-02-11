@@ -284,6 +284,13 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Dz_Przedmiot_t', 'Dz_Przedmioty_t');
         Drop_Type('Dz_Przedmiot_Cyklu_t', 'Dz_Przedmioty_Cykli_t');
         Drop_Type('Dz_Zajecia_Cyklu_t', 'Dz_Zajecia_Cykli_t');
+
+        Drop_Type('Dz_Program_Osoby_B_t');
+        Drop_Type('Dz_Etap_Osoby_B_t');
+        Drop_Type('Dz_Student_B_t');
+        Drop_Type('Dz_Przedmiot_B_t');
+        Drop_Type('Dz_Przedmiot_Cyklu_B_t');
+        Drop_Type('Dz_Zajecia_Cyklu_B_t');
     END;
 
     PROCEDURE Tier2
@@ -330,7 +337,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Sequence('ko_matched_zajcykl_j_sq1');
         Drop_Table('ko_matched_zajcykl_j', how => 'PURGE');
         --
+        Drop_Index('ko_grades_j_idx1');
         Drop_Table('ko_grades_j', how => 'PURGE');
+        --
         Drop_Table('ko_student_sheets_j', how => 'PURGE');
         Drop_Table('ko_student_specialties_j', how => 'PURGE');
         Drop_Table('ko_student_semesters_j', how => 'PURGE');
@@ -381,6 +390,29 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Table('ko_specialties', how => 'PURGE');
         --
 
+        Drop_Index('ux_etapy_osob_idx1');
+        Drop_Index('ux_etapy_osob_idx2');
+        Drop_Table('ux_etapy_osob', how => 'PURGE');
+        --
+        Drop_Index('ux_programy_osob_idx1');
+        Drop_Index('ux_programy_osob_idx2');
+        Drop_Index('ux_programy_osob_idx3');
+        Drop_Index('ux_programy_osob_idx4');
+        Drop_Table('ux_programy_osob', how => 'PURGE');
+        --
+        Drop_Index('ux_studenci_idx1');
+        Drop_Table('ux_studenci', how => 'PURGE');
+        --
+        Drop_Index('ux_zajecia_cykli_idx1');
+        Drop_Table('ux_zajecia_cykli', how => 'PURGE');
+        --
+        Drop_Index('ux_przedmioty_cykli_idx1');
+        Drop_Index('ux_przedmioty_cykli_idx2');
+        Drop_Table('ux_przedmioty_cykli', how => 'PURGE');
+        --
+        Drop_Table('ux_przedmioty', how => 'PURGE');
+        --
+
         --
         Drop_Package('Fit');
         Drop_Package('Get');
@@ -403,6 +435,13 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Semester_t', 'Ko_Semesters_t', 'Ko_Semester_Tables_t');
         Drop_Type('Ko_Student_t');
         Drop_Type('Ko_Distinct_t');
+
+        Drop_Type('Ux_Program_Osoby_t', 'Ux_Programy_Osob_t');
+        Drop_Type('Ux_Etap_Osoby_t', 'Ux_Etapy_Osob_t');
+        Drop_Type('Ux_Student_t', 'Ux_Studenci_t');
+        Drop_Type('Ux_Przedmiot_t', 'Ux_Przedmioty_t');
+        Drop_Type('Ux_Przedmiot_Cyklu_t', 'Ux_Przedmioty_Cykli_t');
+        Drop_Type('Ux_Zajecia_Cyklu_t', 'Ux_Zajecia_Cykli_t');
 
         Drop_Type('Semester_Codes_t');
         Drop_Type('Program_Codes_t');

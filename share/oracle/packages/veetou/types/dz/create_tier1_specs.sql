@@ -1,3 +1,10 @@
+@@dz_student_b.tps;
+@@dz_przedmiot_b.tps;
+@@dz_przedmiot_cyklu_b.tps;
+@@dz_zajecia_cyklu_b.tps;
+@@dz_program_osoby_b.tps;
+@@dz_etap_osoby_b.tps;
+
 @@dz_student.tps;
 @@dz_przedmiot.tps;
 @@dz_przedmiot_cyklu.tps;

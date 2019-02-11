@@ -86,6 +86,55 @@ CREATE OR REPLACE PACKAGE BODY V2U_Get AS
             DBMS_OUTPUT.Put_Line('Semester not found for id="' || id || '"');
             RAISE;
     END;
+
+    FUNCTION Tpro_Kod(
+              subj_credit_kind IN VARCHAR2
+            , subj_grades IN V2u_Subj_Grades_t
+            ) RETURN VARCHAR2
+    IS
+        code VARCHAR2(1 CHAR);
+        cred VARCHAR2(3 CHAR);
+        num_grades V2u_Subj_Grades_t := V2u_Subj_Grades_t(
+              '2,0'
+            , '2,5'
+            , '3,0'
+            , '3,5'
+            , '4,0'
+            , '4,5'
+            , '5,0'
+        );
+        sym_grades V2u_Subj_Grades_t := V2u_Subj_Grades_t(
+              'Zal'
+            , 'Nzal'
+            , 'Zw'
+        );
+        num_grades_i V2u_Subj_Grades_t := V2u_Subj_Grades_t();
+        sym_grades_i V2u_Subj_Grades_t := V2u_Subj_Grades_t();
+        num_cnt INTEGER;
+        sym_cnt INTEGER;
+    BEGIN
+        cred := UPPER(SUBSTR(subj_credit_kind, 1, 3));
+        num_grades_i := (subj_grades MULTISET INTERSECT num_grades);
+        sym_grades_i := (subj_grades MULTISET INTERSECT sym_grades);
+        num_cnt := num_grades_i.COUNT;
+        sym_cnt := sym_grades_i.COUNT;
+        IF num_cnt > 0 AND sym_cnt = 0 THEN
+            CASE cred
+                WHEN 'EGZ' THEN code := 'E';
+                WHEN 'ZAL' THEN code := 'S';
+                ELSE code := '?';
+            END CASE;
+        ELSIF num_cnt = 0 AND sym_cnt > 0 THEN
+            CASE cred
+                WHEN 'EGZ' THEN code := '?';
+                WHEN 'ZAL' THEN code := 'Z';
+                ELSE code := '?';
+            END CASE;
+        ELSE
+            code := '?';
+        END IF;
+        RETURN code;
+    END;
 END V2U_Get;
 
 -- vim: set ft=sql ts=4 sw=4 et:

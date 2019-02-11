@@ -10,6 +10,7 @@ CREATE TABLE v2u_ko_missing_przedm_j
 
         , CONSTRAINT v2u_ko_missing_przedm_j_pk
             PRIMARY KEY (id)
+        --
         , CONSTRAINT v2u_ko_missing_przedm_j_f0
             FOREIGN KEY (job_uuid)
             REFERENCES v2u_ko_jobs(job_uuid)
@@ -22,6 +23,7 @@ CREATE TABLE v2u_ko_missing_przedm_j
         , CONSTRAINT v2u_ko_missing_przedm_j_f3
             FOREIGN KEY (subject_id, specialty_id, semester_id, job_uuid)
             REFERENCES v2u_ko_subject_semesters_j(subject_id, specialty_id, semester_id, job_uuid)
+        --
         , CONSTRAINT v2u_ko_missing_przedm_j_u0
             UNIQUE (subject_id, specialty_id, semester_id, job_uuid)
     )
