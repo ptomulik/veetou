@@ -404,6 +404,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Table('ux_studenci', how => 'PURGE');
         --
         Drop_Index('ux_zajecia_cykli_idx1');
+        Drop_Trigger('ux_zajecia_cykli_tr1');
+        Drop_Sequence('ux_zajecia_cykli_sq1');
         Drop_Table('ux_zajecia_cykli', how => 'PURGE');
         --
         Drop_Index('ux_przedmioty_cykli_idx1');

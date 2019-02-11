@@ -9,6 +9,7 @@ USING
                 , j1.specialty_id specialty_id
                 , j1.semester_id semester_id
                 , j1.classes_type classes_type
+                , j1.classes_hours classes_hours
                 , COUNT(DISTINCT j3.map_id) subject_maps_count
                 , COUNT(DISTINCT subject_map.map_subj_code) map_subj_codes_count
                 , COUNT(DISTINCT j4.map_id) classes_maps_count
@@ -68,6 +69,7 @@ USING
                 , j1.specialty_id
                 , j1.semester_id
                 , j1.classes_type
+                , j1.classes_hours
         )
         SELECT
               u.job_uuid job_uuid
@@ -75,6 +77,7 @@ USING
             , u.specialty_id specialty_id
             , u.semester_id semester_id
             , u.classes_type classes_type
+            , u.classes_hours classes_hours
             , CASE
                 WHEN u.subject_maps_count <> 1
                 THEN TO_CHAR(u.subject_maps_count)
@@ -152,6 +155,7 @@ WHEN NOT MATCHED THEN
         , specialty_id
         , semester_id
         , classes_type
+        , classes_hours
         , reason
         , tried_map_subj_code
         , tried_map_classes_type
@@ -163,13 +167,15 @@ WHEN NOT MATCHED THEN
         , src.specialty_id
         , src.semester_id
         , src.classes_type
+        , src.classes_hours
         , src.reason
         , src.tried_map_subj_code
         , src.tried_map_classes_type
         , src.istniejace_tzaj_kody
         )
 WHEN MATCHED THEN UPDATE SET
-      tgt.reason = src.reason
+      tgt.classes_hours = src.classes_hours
+    , tgt.reason = src.reason
     , tgt.tried_map_subj_code = src.tried_map_subj_code
     , tgt.tried_map_classes_type = src.tried_map_classes_type
     , tgt.istniejace_tzaj_kody = src.istniejace_tzaj_kody
