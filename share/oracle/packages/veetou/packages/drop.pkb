@@ -220,6 +220,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Table('ko_trs', how => 'PURGE');
         Drop_Table('ko_jobs', how => 'PURGE');
 
+        Drop_Table('dz_zaliczenia_przedmiotow', how => 'PURGE');
+
         Drop_Index('dz_etapy_osob_idx1');
         Drop_Index('dz_etapy_osob_idx2');
         Drop_Table('dz_etapy_osob', how => 'PURGE');
@@ -278,6 +280,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('University_t', 'Universities_t', 'University_Codes_t');
         Drop_Type('Distinct_t');
 
+        Drop_Type('Dz_Zalicz_Przedmiotu_t', 'Dz_Zalicz_Przedmiotow_t');
         Drop_Type('Dz_Program_Osoby_t', 'Dz_Programy_Osob_t');
         Drop_Type('Dz_Etap_Osoby_t', 'Dz_Etapy_Osob_t');
         Drop_Type('Dz_Student_t', 'Dz_Studenci_t');
@@ -316,8 +319,6 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Sequence('ko_missing_zajcykl_j_sq1');
         Drop_Table('ko_missing_zajcykl_j', how => 'PURGE');
         --
-        Drop_Trigger('ko_matched_etpos_j_tr1');
-        Drop_Sequence('ko_matched_etpos_j_sq1');
         Drop_Table('ko_matched_etpos_j', how => 'PURGE');
         --
         Drop_Trigger('ko_matched_prgos_j_tr1');
@@ -388,8 +389,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Trigger('ko_specialties_tr1');
         Drop_Sequence('ko_specialties_sq1');
         Drop_Table('ko_specialties', how => 'PURGE');
-        --
 
+        Drop_Table('ux_zaliczenia_przedmiotow', how => 'PURGE');
+        --
         Drop_Index('ux_etapy_osob_idx1');
         Drop_Index('ux_etapy_osob_idx2');
         Drop_Table('ux_etapy_osob', how => 'PURGE');
@@ -423,6 +425,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
 
         Drop_Collect_Types();
 
+        Drop_Type('Ko_Matched_Etpos_J_t', 'Ko_Matched_Etposes_J_t');
         Drop_Type('Ko_Missing_Zajcykl_J_t', 'Ko_Missing_Zajcykles_J_t');
         Drop_Type('Ko_Classes_Map_J_t', 'Ko_Classes_Maps_J_t');
         Drop_Type('Ko_Subject_Map_J_t', 'Ko_Subject_Maps_J_t');

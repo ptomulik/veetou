@@ -4,32 +4,38 @@ USING
         WITH u AS
         (
             SELECT
-                  j1.job_uuid job_uuid
-                , j1.student_id student_id
-                , j1.specialty_id specialty_id
-                , j1.semester_id semester_id
-                , CAST(COLLECT(DISTINCT j4.map_id) AS V2u_5Ids_t) tried_specialty_map_ids
-                , CAST(COLLECT(DISTINCT j3.prgos_id) AS V2u_Dz_5Ids_t) prgos_ids_all_semesters
-            FROM v2u_ko_student_semesters_j j1
-            LEFT JOIN v2u_ko_matched_etpos_j j2
-                ON (j2.job_uuid = j1.job_uuid AND
-                    j2.student_id = j1.student_id AND
-                    j2.specialty_id = j1.specialty_id AND
-                    j2.semester_id = j1.semester_id)
-            LEFT JOIN v2u_ko_matched_prgos_j j3
-                ON (j3.job_uuid = j1.job_uuid AND
-                    j3.student_id = j1.student_id AND
-                    j3.specialty_id = j1.specialty_id)
-            LEFT JOIN v2u_ko_specialty_map_j j4
-                ON (j4.specialty_id = j1.specialty_id AND
-                    j4.semester_id = j1.semester_id AND
-                    j4.job_uuid = j1.job_uuid)
-            WHERE j2.id IS NULL
+                  ss_j.job_uuid job_uuid
+                , ss_j.student_id student_id
+                , ss_j.specialty_id specialty_id
+                , ss_j.semester_id semester_id
+                , CAST(
+                    COLLECT(DISTINCT sm_j.map_id)
+                    AS V2u_5Ids_t
+                  ) tried_specialty_map_ids
+                , CAST(
+                    COLLECT(DISTINCT mp_j.prgos_id)
+                    AS V2u_Dz_5Ids_t
+                  ) prgos_ids_all_semesters
+            FROM v2u_ko_student_semesters_j ss_j
+            LEFT JOIN v2u_ko_matched_etpos_j me_j
+                ON (me_j.job_uuid = ss_j.job_uuid AND
+                    me_j.student_id = ss_j.student_id AND
+                    me_j.specialty_id = ss_j.specialty_id AND
+                    me_j.semester_id = ss_j.semester_id)
+            LEFT JOIN v2u_ko_matched_prgos_j mp_j
+                ON (mp_j.job_uuid = ss_j.job_uuid AND
+                    mp_j.student_id = ss_j.student_id AND
+                    mp_j.specialty_id = ss_j.specialty_id)
+            LEFT JOIN v2u_ko_specialty_map_j sm_j
+                ON (sm_j.specialty_id = ss_j.specialty_id AND
+                    sm_j.semester_id = ss_j.semester_id AND
+                    sm_j.job_uuid = ss_j.job_uuid)
+            WHERE me_j.job_uuid IS NULL
             GROUP BY
-                  j1.job_uuid
-                , j1.student_id
-                , j1.specialty_id
-                , j1.semester_id
+                  ss_j.job_uuid
+                , ss_j.student_id
+                , ss_j.specialty_id
+                , ss_j.semester_id
         ),
         v AS
         (
@@ -89,13 +95,32 @@ ON  (tgt.job_uuid = src.job_uuid AND
      tgt.specialty_id = src.specialty_id AND
      tgt.semester_id = src.semester_id)
 WHEN NOT MATCHED THEN
-    INSERT (    job_uuid,     student_id,     specialty_id,     semester_id,     tried_specialty_map_ids,     prgos_ids_all_semesters,     all_etpos_ids_for_semester,     tried_program_codes,     all_etpos_progs_for_semester)
-    VALUES (src.job_uuid, src.student_id, src.specialty_id, src.semester_id, src.tried_specialty_map_ids, src.prgos_ids_all_semesters, src.all_etpos_ids_for_semester, src.tried_program_codes, src.all_etpos_progs_for_semester)
-WHEN MATCHED THEN UPDATE SET
-      tgt.tried_specialty_map_ids = src.tried_specialty_map_ids
-    , tgt.prgos_ids_all_semesters = src.prgos_ids_all_semesters
-    , tgt.all_etpos_ids_for_semester = src.all_etpos_ids_for_semester
-    , tgt.tried_program_codes = src.tried_program_codes
-    , tgt.all_etpos_progs_for_semester = src.all_etpos_progs_for_semester
+    INSERT
+        ( job_uuid
+        , student_id
+        , specialty_id
+        , semester_id
+        , tried_specialty_map_ids
+        , prgos_ids_all_semesters
+        , all_etpos_ids_for_semester
+        , tried_program_codes
+        , all_etpos_progs_for_semester)
+    VALUES
+        ( src.job_uuid
+        , src.student_id
+        , src.specialty_id
+        , src.semester_id
+        , src.tried_specialty_map_ids
+        , src.prgos_ids_all_semesters
+        , src.all_etpos_ids_for_semester
+        , src.tried_program_codes
+        , src.all_etpos_progs_for_semester)
+WHEN MATCHED THEN
+    UPDATE SET
+          tgt.tried_specialty_map_ids = src.tried_specialty_map_ids
+        , tgt.prgos_ids_all_semesters = src.prgos_ids_all_semesters
+        , tgt.all_etpos_ids_for_semester = src.all_etpos_ids_for_semester
+        , tgt.tried_program_codes = src.tried_program_codes
+        , tgt.all_etpos_progs_for_semester = src.all_etpos_progs_for_semester
 ;
 -- vim: set ft=sql ts=4 sw=4 et:

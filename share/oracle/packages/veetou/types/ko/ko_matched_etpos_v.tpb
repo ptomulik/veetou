@@ -1,14 +1,16 @@
 CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Etpos_V_t AS
     CONSTRUCTOR FUNCTION V2u_Ko_Matched_Etpos_V_t(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Etpos_V_t
-            , id IN NUMBER
             , job_uuid IN RAW
             , student_id IN NUMBER
             , specialty_id IN NUMBER
             , semester_id IN NUMBER
             , specialty_map_id IN NUMBER
             , etpos_id IN NUMBER
+            , prgos_id IN NUMBER
             , etp_kod_missmatch IN VARCHAR2
+            , st_id IN NUMBER
+            , os_id IN NUMBER
             , ko_student_index IN VARCHAR2
             , ko_student_name IN VARCHAR2
             , ko_first_name IN VARCHAR2
@@ -49,14 +51,16 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Etpos_V_t AS
             ) RETURN SELF AS RESULT
     IS
     BEGIN
-        SELF.id := id;
         SELF.job_uuid := job_uuid;
         SELF.student_id := student_id;
         SELF.specialty_id := specialty_id;
         SELF.semester_id := semester_id;
         SELF.specialty_map_id := specialty_map_id;
         SELF.etpos_id := etpos_id;
+        SELF.prgos_id := prgos_id;
         SELF.etp_kod_missmatch := etp_kod_missmatch;
+        SELF.st_id := st_id;
+        SELF.os_id := os_id;
         SELF.ko_student_index := ko_student_index;
         SELF.ko_student_name := ko_student_name;
         SELF.ko_first_name := ko_first_name;
@@ -99,24 +103,28 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Etpos_V_t AS
 
     CONSTRUCTOR FUNCTION V2u_Ko_Matched_Etpos_V_t(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Etpos_V_t
-            , id IN NUMBER
             , student IN V2u_Ko_Student_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
             , specialty_map IN V2u_Specialty_Map_t
             , etap_osoby IN V2u_Dz_Etap_Osoby_t
+            , program_osoby IN V2u_Dz_Program_Osoby_t
             , etp_kod_missmatch IN VARCHAR2
+            , st_id IN NUMBER
+            , os_id IN NUMBER
             ) RETURN SELF AS RESULT
     IS
     BEGIN
-        SELF.id := id;
         SELF.job_uuid := student.job_uuid;
         SELF.student_id := student.id;
         SELF.specialty_id := specialty.id;
         SELF.semester_id := semester.id;
         SELF.specialty_map_id := specialty_map.id;
         SELF.etpos_id := etap_osoby.id;
+        SELF.prgos_id := program_osoby.id;
         SELF.etp_kod_missmatch := etp_kod_missmatch;
+        SELF.st_id := st_id;
+        SELF.os_id := os_id;
         SELF.ko_student_index := student.student_index;
         SELF.ko_student_name := student.student_name;
         SELF.ko_first_name := student.first_name;

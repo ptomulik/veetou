@@ -4,5 +4,6 @@
 @@ux_zajecia_cyklu.tps;
 @@ux_program_osoby.tps;
 @@ux_etap_osoby.tps;
+@@ux_zalicz_przedmiotu.tps;
 
 -- vim: set ft=sql ts=4 sw=4 et:

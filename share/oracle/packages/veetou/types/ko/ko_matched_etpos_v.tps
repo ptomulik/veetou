@@ -1,13 +1,15 @@
 CREATE OR REPLACE TYPE V2u_Ko_Matched_Etpos_V_t
     FORCE AUTHID CURRENT_USER AS OBJECT
-    ( id NUMBER(38)
-    , job_uuid RAW(16)
+    ( job_uuid RAW(16)
     , student_id NUMBER(38)
     , specialty_id NUMBER(38)
     , semester_id NUMBER(38)
     , specialty_map_id NUMBER(38)
     , etpos_id NUMBER(10)
+    , prgos_id NUMBER(10)
     , etp_kod_missmatch VARCHAR2(32)
+    , st_id NUMBER(10)
+    , os_id NUMBER(10)
     , ko_student_index VARCHAR2(32 CHAR)
     , ko_student_name VARCHAR2(128 CHAR)
     , ko_first_name VARCHAR2(48 CHAR)
@@ -48,14 +50,16 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Etpos_V_t
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Etpos_V_t(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Etpos_V_t
-            , id IN NUMBER
             , job_uuid IN RAW
             , student_id IN NUMBER
             , specialty_id IN NUMBER
             , semester_id IN NUMBER
             , specialty_map_id IN NUMBER
             , etpos_id IN NUMBER
+            , prgos_id IN NUMBER
             , etp_kod_missmatch IN VARCHAR2
+            , st_id IN NUMBER
+            , os_id IN NUMBER
             , ko_student_index IN VARCHAR2
             , ko_student_name IN VARCHAR2
             , ko_first_name IN VARCHAR2
@@ -97,13 +101,15 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Etpos_V_t
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Etpos_V_t(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Etpos_V_t
-            , id IN NUMBER
             , student IN V2u_Ko_Student_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
             , specialty_map IN V2u_Specialty_Map_t
             , etap_osoby IN V2u_Dz_Etap_Osoby_t
+            , program_osoby IN V2u_Dz_Program_Osoby_t
             , etp_kod_missmatch IN VARCHAR2
+            , st_id IN NUMBER
+            , os_id IN NUMBER
             ) RETURN SELF AS RESULT
 
 --    , ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Matched_Etpos_V_t)

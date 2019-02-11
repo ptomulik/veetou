@@ -1,16 +1,10 @@
 CREATE TABLE v2u_ko_matched_etpos_j
+OF V2u_Ko_Matched_Etpos_J_t
     (
-          id NUMBER(38)
-        , job_uuid RAW(16)
-        , student_id NUMBER(38)
-        , specialty_id NUMBER(38)
-        , semester_id NUMBER(38)
-        , specialty_map_id NUMBER(38)
-        , etpos_id NUMBER(10)
-        , etp_kod_missmatch VARCHAR2(32)
 
-        , CONSTRAINT v2u_ko_matched_etpos_j_pk
-            PRIMARY KEY (id)
+          CONSTRAINT v2u_ko_matched_etpos_j_pk
+            PRIMARY KEY (student_id, specialty_id, semester_id, job_uuid)
+        --
         , CONSTRAINT v2u_ko_matched_etpos_j_f0
             FOREIGN KEY (job_uuid)
             REFERENCES v2u_ko_jobs(job_uuid)
@@ -32,16 +26,8 @@ CREATE TABLE v2u_ko_matched_etpos_j
         , CONSTRAINT v2u_ko_matched_etpos_j_f6
             FOREIGN KEY (etpos_id)
             REFERENCES v2u_dz_etapy_osob(id)
-    );
-/
-CREATE SEQUENCE v2u_ko_matched_etpos_j_sq1 START WITH 1;
-/
-CREATE OR REPLACE TRIGGER v2u_ko_matched_etpos_j_tr1
-    BEFORE INSERT ON v2u_ko_matched_etpos_j
-    FOR EACH ROW
-    WHEN (new.id IS NULL)
-    BEGIN
-        SELECT v2u_ko_matched_etpos_j_sq1.NEXTVAL INTO :new.id FROM dual;
-    END;
+    )
+OBJECT IDENTIFIER IS PRIMARY KEY
+;
 
 -- vim: set ft=sql ts=4 sw=4 et:

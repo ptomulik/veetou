@@ -28,8 +28,8 @@ USING
                         COLLECT(grades.subj_grade)
                         AS V2u_Vchars1024_t
                   )) subj_grades
-                , COUNT(ma_j.id) dbg_matched
-                , COUNT(mi_j.id) dbg_missing
+                , COUNT(ma_j.job_uuid) dbg_matched -- count non-null mappings
+                , COUNT(mi_j.job_uuid) dbg_missing -- count non-null mappings
                 , COUNT(sm_j.map_id) dbg_subject_mapped
                 , COUNT(cm_j.map_id) dbg_classes_mapped
 
