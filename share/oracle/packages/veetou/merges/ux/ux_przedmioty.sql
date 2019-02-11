@@ -87,12 +87,11 @@ USING
             SELECT
                   u.job_uuid
                 , u.kod
-                -- , u.subj_code
-                -- , u.map_subj_code
-                --, u.map_subj_lang
-                --, u.map_org_unit
-                --, u.map_org_unit_recipient
-                --, u.faculty_code
+                , ( SELECT
+                        LISTAGG(VALUE(t), ', ')
+                        WITHIN GROUP (ORDER BY VALUE(t))
+                    FROM TABLE(u.subj_codes) t
+                  ) opis
 
                 -- select first element from each collection
 
@@ -159,6 +158,7 @@ USING
         SELECT
               v.job_uuid
             , v.kod
+            , v.opis
             --, COALESCE(v.map_subj_code, v.subj_code) kod
             , v.subj_name nazwa
             , COALESCE(v.map_org_unit, v.faculty_code) jed_org_kod
@@ -219,6 +219,8 @@ WHEN NOT MATCHED THEN
         , jed_org_kod
         , tpro_kod
         , jed_org_kod_biorca
+        , jzk_kod
+        , opis
         , dbg_subj_codes
         , dbg_map_subj_codes
         , dbg_languages
@@ -239,6 +241,8 @@ WHEN NOT MATCHED THEN
         , src.jed_org_kod
         , src.tpro_kod
         , src.jed_org_kod_biorca
+        , src.jzk_kod
+        , src.opis
         , src.dbg_subj_codes
         , src.dbg_map_subj_codes
         , src.dbg_languages
@@ -257,6 +261,8 @@ WHEN MATCHED THEN UPDATE SET
         , tgt.jed_org_kod = src.jed_org_kod
         , tgt.tpro_kod = src.tpro_kod
         , tgt.jed_org_kod_biorca = src.jed_org_kod_biorca
+        , tgt.jzk_kod = src.jzk_kod
+        , tgt.opis = src.opis
         , tgt.dbg_subj_codes = src.dbg_subj_codes
         , tgt.dbg_map_subj_codes = src.dbg_map_subj_codes
         , tgt.dbg_languages = src.dbg_languages
@@ -270,4 +276,5 @@ WHEN MATCHED THEN UPDATE SET
         , tgt.dbg_mapped = src.dbg_mapped
         , tgt.safe_to_add = src.safe_to_add
 ;
+
 -- vim: set ft=sql ts=4 sw=4 et:
