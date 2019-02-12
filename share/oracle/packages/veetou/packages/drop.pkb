@@ -390,6 +390,18 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Sequence('ko_specialties_sq1');
         Drop_Table('ko_specialties', how => 'PURGE');
 
+        --
+        Drop_Index('ux_grades_flat_idx1');
+        Drop_Index('ux_grades_flat_idx2');
+        Drop_Index('ux_grades_flat_idx3');
+        Drop_Index('ux_grades_flat_idx4');
+        Drop_Index('ux_grades_flat_idx5');
+        Drop_Index('ux_grades_flat_idx6');
+        Drop_Index('ux_grades_flat_idx7');
+        Drop_Index('ux_grades_flat_idx8');
+        Drop_Index('ux_grades_flat_idx9');
+        Drop_Table('ux_grades_flat', how => 'PURGE');
+        --
         Drop_Table('ux_zaliczenia_przedmiotow', how => 'PURGE');
         --
         Drop_Index('ux_etapy_osob_idx1');
@@ -415,7 +427,6 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Table('ux_przedmioty_cykli', how => 'PURGE');
         --
         Drop_Table('ux_przedmioty', how => 'PURGE');
-        --
 
         --
         Drop_Package('Fit');
@@ -442,8 +453,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Student_t');
         Drop_Type('Ko_Distinct_t');
 
-        Drop_Type('Ux_Program_Osoby_t', 'Ux_Programy_Osob_t');
+        Drop_Type('Ux_Grade_Flat_t', 'Ux_Grades_Flat_t');
         Drop_Type('Ux_Etap_Osoby_t', 'Ux_Etapy_Osob_t');
+        Drop_Type('Ux_Program_Osoby_t', 'Ux_Programy_Osob_t');
         Drop_Type('Ux_Student_t', 'Ux_Studenci_t');
         Drop_Type('Ux_Przedmiot_t', 'Ux_Przedmioty_t');
         Drop_Type('Ux_Przedmiot_Cyklu_t', 'Ux_Przedmioty_Cykli_t');
@@ -476,6 +488,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     PROCEDURE Tier3
     IS
     BEGIN
+        Drop_View('ux_grades_flat_grpd_v');
+
         Drop_View('ko_missing_zajcykl_v');
         Drop_View('ko_missing_przcykl_v');
         Drop_View('ko_missing_przedm_v');
@@ -501,7 +515,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_View('ko_grades_v');
 
 --        Drop_Collect_Types();
+--
 
+        Drop_Type('Ux_Grade_Flat_Grpd_V_t');
         Drop_Type('Ko_Missing_Zajcykl_V_t', 'Ko_Missing_Zajcykles_V_t');
         Drop_Type('Ko_Missing_Przcykl_V_t', 'Ko_Missing_Przcykles_V_t');
         Drop_Type('Ko_Missing_Przedm_V_t', 'Ko_Missing_Przedms_V_t');

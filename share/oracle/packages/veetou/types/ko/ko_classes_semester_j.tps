@@ -1,6 +1,6 @@
 CREATE OR REPLACE TYPE V2u_Ko_Classes_Semester_J_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Subject_Semester_J_t
-    ( classes_type VARCHAR(1)
+    ( classes_type VARCHAR(1 CHAR)
     , classes_hours NUMBER(8)
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Classes_Semester_J_t(

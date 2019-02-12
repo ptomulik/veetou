@@ -1,8 +1,8 @@
 CREATE OR REPLACE TYPE V2u_Classes_Map_Base_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Map_Base_t
     ( expr_subj_code VARCHAR(256 CHAR)
-    , classes_type VARCHAR2(32 CHAR)
-    , map_classes_type VARCHAR2(32 CHAR)
+    , classes_type VARCHAR2(1 CHAR)
+    , map_classes_type VARCHAR2(3 CHAR)
 
     , CONSTRUCTOR FUNCTION V2u_Classes_Map_Base_t(
               SELF IN OUT NOCOPY V2u_Classes_Map_Base_t
