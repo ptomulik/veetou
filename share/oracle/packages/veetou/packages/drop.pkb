@@ -298,9 +298,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Subject_Map_Base_t');
         Drop_Type('Map_Base_t');
         Drop_Type('Specialty_Map_B_t');
-        Drop_Type('Subject_Expr_B_t');
-        Drop_Type('Specialty_Expr_B_t');
-        Drop_Type('Semester_Expr_B_t');
+        Drop_Type('Subject_Xpr_B_t');
+        Drop_Type('Specialty_Xpr_B_t');
+        Drop_Type('Semester_Xpr_B_t');
 
         Drop_Type('Semester_Codes_t');
         Drop_Type('Semester_t', 'Semesters_t');

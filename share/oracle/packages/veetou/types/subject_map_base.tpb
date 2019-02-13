@@ -143,7 +143,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_Base_t AS
         RETURN (SELF AS V2u_Map_Base_t).cmp_val(other);
     END;
 
-    OVERRIDING MEMBER FUNCTION match_expr_fields(
+    OVERRIDING MEMBER FUNCTION match_xpr_attrs(
               subj_name IN VARCHAR2
             , subj_hours_w IN VARCHAR2
             , subj_hours_c IN VARCHAR2
@@ -168,7 +168,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_Base_t AS
     IS
         total INTEGER;
     BEGIN
-        total := (SELF AS V2u_Map_Base_t).match_expr_fields(
+        total := (SELF AS V2u_Map_Base_t).match_xpr_attrs(
               subj_name => subj_name
             , subj_hours_w => subj_hours_w
             , subj_hours_c => subj_hours_c

@@ -129,7 +129,7 @@ CREATE OR REPLACE TYPE BODY V2u_Classes_Map_Base_t AS
         RETURN (SELF AS V2u_Map_Base_t).cmp_val(other);
     END;
 
-    MEMBER FUNCTION match_expr_fields(
+    MEMBER FUNCTION match_xpr_attrs(
           subj_code IN VARCHAR2
         , subj_name IN VARCHAR2
         , subj_hours_w IN VARCHAR2
@@ -155,7 +155,7 @@ CREATE OR REPLACE TYPE BODY V2u_Classes_Map_Base_t AS
         total INTEGER;
         local INTEGER;
     BEGIN
-        total := SELF.match_expr_fields(
+        total := SELF.match_xpr_attrs(
               subj_name => subj_name
             , subj_hours_w => subj_hours_w
             , subj_hours_c => subj_hours_c

@@ -3,9 +3,9 @@
 @@faculty.tps;
 @@semester.tps;
 @@map_base.tps;
-@@semester_expr_b.tps;
-@@specialty_expr_b.tps;
-@@subject_expr_b.tps;
+@@semester_xpr_b.tps;
+@@specialty_xpr_b.tps;
+@@subject_xpr_b.tps;
 
 @@specialty_map_b.tps;
 @@specialty_map.tps;

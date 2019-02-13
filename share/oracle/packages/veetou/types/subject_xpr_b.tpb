@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY V2u_Subject_Expr_B_t AS
-    CONSTRUCTOR FUNCTION V2u_Subject_Expr_B_t(
-              SELF IN OUT NOCOPY V2u_Subject_Expr_B_t
+CREATE OR REPLACE TYPE BODY V2u_Subject_Xpr_B_t AS
+    CONSTRUCTOR FUNCTION V2u_Subject_Xpr_B_t(
+              SELF IN OUT NOCOPY V2u_Subject_Xpr_B_t
             , id IN NUMBER
             , expr_subj_name IN VARCHAR2
             , expr_subj_hours_w IN VARCHAR2
@@ -50,7 +50,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Expr_B_t AS
     END;
 
     MEMBER PROCEDURE init(
-              SELF IN OUT NOCOPY V2u_Subject_Expr_B_t
+              SELF IN OUT NOCOPY V2u_Subject_Xpr_B_t
             , id IN NUMBER := NULL
             , expr_subj_name IN VARCHAR2
             , expr_subj_hours_w IN VARCHAR2
@@ -102,10 +102,10 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Expr_B_t AS
         RETURN INTEGER
     IS
     BEGIN
-        RETURN cmp_val(TREAT(other AS V2u_Subject_Expr_B_t));
+        RETURN cmp_val(TREAT(other AS V2u_Subject_Xpr_B_t));
     END;
 
-    MEMBER FUNCTION cmp_val(other IN V2u_Subject_Expr_B_t)
+    MEMBER FUNCTION cmp_val(other IN V2u_Subject_Xpr_B_t)
         RETURN INTEGER
     IS
         ord INTEGER;
@@ -129,10 +129,10 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Expr_B_t AS
         ord := V2U_Cmp.StrNI(expr_subj_tutor, other.expr_subj_tutor);
         IF ord <> 0 THEN RETURN ord; END IF;
         -- delegate rest of the work to the supertype
-        RETURN (SELF AS V2u_Specialty_Expr_B_t).cmp_val(other);
+        RETURN (SELF AS V2u_Specialty_Xpr_B_t).cmp_val(other);
     END;
 
-    MEMBER FUNCTION match_expr_fields(
+    MEMBER FUNCTION match_xpr_attrs(
               subj_name IN VARCHAR2
             , subj_hours_w IN VARCHAR2
             , subj_hours_c IN VARCHAR2
@@ -231,7 +231,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Expr_B_t AS
             END IF;
         END IF;
 
-        local := SELF.match_expr_fields(
+        local := SELF.match_xpr_attrs(
                       university => university
                     , faculty => faculty
                     , studies_modetier => studies_modetier

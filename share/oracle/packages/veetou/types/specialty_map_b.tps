@@ -1,5 +1,5 @@
 CREATE OR REPLACE TYPE V2u_Specialty_Map_B_t
-    FORCE AUTHID CURRENT_USER UNDER V2u_Semester_Expr_B_t
+    FORCE AUTHID CURRENT_USER UNDER V2u_Semester_Xpr_B_t
     ( university VARCHAR2(8 CHAR)
     , faculty VARCHAR2(8 CHAR)
     , studies_modetier VARCHAR2(100 CHAR)

@@ -75,7 +75,7 @@ CREATE OR REPLACE TYPE V2u_Map_Base_t
     , MEMBER FUNCTION cmp_val(other IN V2u_Map_Base_t)
         RETURN INTEGER
 
-    , MEMBER FUNCTION match_expr_fields(
+    , MEMBER FUNCTION match_xpr_attrs(
               subj_name IN VARCHAR2
             , subj_hours_w IN VARCHAR2
             , subj_hours_c IN VARCHAR2

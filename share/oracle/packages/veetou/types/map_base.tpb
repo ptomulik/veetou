@@ -141,7 +141,7 @@ CREATE OR REPLACE TYPE BODY V2u_Map_Base_t AS
         RETURN V2U_Cmp.StrNI(expr_semester_number, other.expr_semester_number);
     END;
 
-    MEMBER FUNCTION match_expr_fields(
+    MEMBER FUNCTION match_xpr_attrs(
           subj_name IN VARCHAR2
         , subj_hours_w IN VARCHAR2
         , subj_hours_c IN VARCHAR2

@@ -12,7 +12,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Fit AS
            specialty IS NOT NULL AND
            semester IS NOT NULL
         THEN
-            RETURN classes_map.match_expr_fields(
+            RETURN classes_map.match_xpr_attrs(
                       subj_code => subject.subj_code
                     , subj_name => subject.subj_name
                     , subj_hours_w => subject.subj_hours_w
@@ -52,7 +52,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Fit AS
            specialty IS NOT NULL AND
            semester IS NOT NULL
         THEN
-            RETURN subject_map.match_expr_fields(
+            RETURN subject_map.match_xpr_attrs(
                       subj_name => subject.subj_name
                     , subj_hours_w => subject.subj_hours_w
                     , subj_hours_c => subject.subj_hours_c
@@ -86,7 +86,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Fit AS
     IS
     BEGIN
         IF specialty_map IS NOT NULL AND semester IS NOT NULL THEN
-            RETURN specialty_map.match_expr_fields(
+            RETURN specialty_map.match_xpr_attrs(
               semester_number => semester.semester_number
             , semester_code => semester.semester_code
             , ects_mandatory => semester.ects_mandatory

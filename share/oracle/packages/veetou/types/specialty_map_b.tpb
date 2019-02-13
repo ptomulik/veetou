@@ -109,7 +109,7 @@ CREATE OR REPLACE TYPE BODY V2u_Specialty_Map_B_t AS
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.StrNI(map_specialty_code, other.map_specialty_code);
         IF ord <> 0 THEN RETURN ord; END IF;
-        RETURN (SELF AS V2u_Semester_Expr_B_t).cmp_val(other);
+        RETURN (SELF AS V2u_Semester_Xpr_B_t).cmp_val(other);
     END;
 END;
 
