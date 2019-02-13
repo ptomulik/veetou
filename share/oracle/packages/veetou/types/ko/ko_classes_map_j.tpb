@@ -5,7 +5,10 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Classes_Map_J_t AS
             , semester_id IN NUMBER
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
+            , classes_type IN VARCHAR2
+            , classes_hours IN VARCHAR2
             , map_id IN NUMBER
+            , map_classes_type IN VARCHAR2
             , matching_score IN NUMBER
             , highest_score IN NUMBER
             , selected IN NUMBER
@@ -18,6 +21,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Classes_Map_J_t AS
             , semester_id => semester_id
             , specialty_id => specialty_id
             , subject_id => subject_id
+            , classes_type => classes_type
+            , classes_hours => classes_hours
+            , map_classes_type => map_classes_type
             , map_id => map_id
             , matching_score => matching_score
             , highest_score => highest_score
@@ -32,6 +38,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Classes_Map_J_t AS
             , semester IN V2u_Ko_Semester_t
             , specialty IN V2u_Ko_Specialty_t
             , subject IN V2u_Ko_Subject_t
+            , classes_hours NUMBER
             , map IN V2u_Classes_Map_t
             , matching_score IN NUMBER
             , highest_score IN NUMBER
@@ -44,6 +51,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Classes_Map_J_t AS
               semester => semester
             , specialty => specialty
             , subject => subject
+            , classes_hours => classes_hours
             , map => map
             , matching_score => matching_score
             , highest_score => highest_score
@@ -59,7 +67,10 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Classes_Map_J_t AS
             , semester_id IN NUMBER
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
+            , classes_type IN VARCHAR2
+            , classes_hours IN NUMBER
             , map_id IN NUMBER
+            , map_classes_type IN VARCHAR2
             , matching_score IN NUMBER
             , highest_score IN NUMBER
             , selected IN NUMBER
@@ -72,8 +83,11 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Classes_Map_J_t AS
             , semester_id => semester_id
             , specialty_id => specialty_id
             , subject_id => subject_id
+            , classes_type => classes_type
+            , classes_hours => classes_hours
             );
         SELF.map_id := map_id;
+        SELF.map_classes_type := map_classes_type;
         SELF.matching_score := matching_score;
         SELF.highest_score := highest_score;
         SELF.selected := selected;
@@ -85,6 +99,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Classes_Map_J_t AS
             , semester IN V2u_Ko_Semester_t
             , specialty IN V2u_Ko_Specialty_t
             , subject IN V2u_Ko_Subject_t
+            , classes_hours IN NUMBER
             , map IN V2u_Classes_Map_t
             , matching_score IN NUMBER
             , highest_score IN NUMBER
@@ -97,8 +112,11 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Classes_Map_J_t AS
               semester => semester
             , specialty => specialty
             , subject => subject
+            , classes_type => map.classes_type
+            , classes_hours => classes_hours
             );
         SELF.map_id := map.id;
+        SELF.map_classes_type := map.map_classes_type;
         SELF.matching_score := matching_score;
         SELF.highest_score := highest_score;
         SELF.selected := selected;

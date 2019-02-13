@@ -11,6 +11,7 @@ USING
                 , j.classes_type classes_type
                 , j.classes_hours classes_hours
                 , classes_map.id map_id
+                , classes_map.map_classes_type map_classes_type
                 , V2U_Fit.Attributes(
                           classes_map => VALUE(classes_map)
                         , subject => VALUE(subjects)
@@ -99,6 +100,7 @@ WHEN NOT MATCHED THEN
         , classes_type
         , classes_hours
         , map_id
+        , map_classes_type
         , matching_score
         , highest_score
         , selected
@@ -112,6 +114,7 @@ WHEN NOT MATCHED THEN
         , src.classes_type
         , src.classes_hours
         , src.map_id
+        , src.map_classes_type
         , src.matching_score
         , src.highest_score
         , src.selected
@@ -120,6 +123,7 @@ WHEN NOT MATCHED THEN
 WHEN MATCHED THEN
     UPDATE SET
           tgt.classes_hours = src.classes_hours
+        , tgt.map_classes_type = src.map_classes_type
         , tgt.matching_score = src.matching_score
         , tgt.highest_score = src.highest_score
         , tgt.selected = src.selected

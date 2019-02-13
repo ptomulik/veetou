@@ -1,6 +1,7 @@
 CREATE OR REPLACE TYPE V2u_Ko_Classes_Map_J_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Classes_Semester_J_t
     ( map_id NUMBER(38)
+    , map_classes_type VARCHAR(3 CHAR)
     , matching_score NUMBER(38)
     , highest_score NUMBER(38)
     , selected NUMBER(1)
@@ -12,7 +13,10 @@ CREATE OR REPLACE TYPE V2u_Ko_Classes_Map_J_t
             , semester_id IN NUMBER
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
+            , classes_type IN VARCHAR2
+            , classes_hours IN VARCHAR2
             , map_id IN NUMBER
+            , map_classes_type IN VARCHAR2
             , matching_score IN NUMBER
             , highest_score IN NUMBER
             , selected IN NUMBER
@@ -24,6 +28,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Classes_Map_J_t
             , semester IN V2u_Ko_Semester_t
             , specialty IN V2u_Ko_Specialty_t
             , subject IN V2u_Ko_Subject_t
+            , classes_hours IN NUMBER
             , map IN V2u_Classes_Map_t
             , matching_score IN NUMBER
             , highest_score IN NUMBER
@@ -37,7 +42,10 @@ CREATE OR REPLACE TYPE V2u_Ko_Classes_Map_J_t
             , semester_id IN NUMBER
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
+            , classes_type IN VARCHAR2
+            , classes_hours IN NUMBER
             , map_id IN NUMBER
+            , map_classes_type IN VARCHAR2
             , matching_score IN NUMBER
             , highest_score IN NUMBER
             , selected IN NUMBER
@@ -49,6 +57,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Classes_Map_J_t
             , semester IN V2u_Ko_Semester_t
             , specialty IN V2u_Ko_Specialty_t
             , subject IN V2u_Ko_Subject_t
+            , classes_hours NUMBER
             , map IN V2u_Classes_Map_t
             , matching_score IN NUMBER
             , highest_score IN NUMBER
