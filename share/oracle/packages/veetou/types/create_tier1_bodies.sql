@@ -1,14 +1,4 @@
-@@distinct.tpb;
-@@university.tpb;
-@@faculty.tpb;
-@@semester.tpb;
-@@map_base.tpb;
-@@specialty_map.tpb;
-@@subject_map_base.tpb;
-@@subject_map.tpb;
-@@classes_map_base.tpb;
-@@classes_map.tpb;
-
+@@create_tier1_bodies_local.sql;
 @@ko/create_tier1_bodies.sql;
 @@dz/create_tier1_bodies.sql;
 
