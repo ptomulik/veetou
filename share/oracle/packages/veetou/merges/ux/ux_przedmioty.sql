@@ -277,4 +277,6 @@ WHEN MATCHED THEN UPDATE SET
         , tgt.safe_to_add = src.safe_to_add
 ;
 
+COMMIT;
+
 -- vim: set ft=sql ts=4 sw=4 et:

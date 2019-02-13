@@ -404,4 +404,7 @@ WHEN MATCHED THEN UPDATE SET
         , tgt.dbg_prz_kod = src.dbg_prz_kod
         , tgt.dbg_tzaj_kod = src.dbg_tzaj_kod
 ;
+
+COMMIT;
+
 -- vim: set ft=sql ts=4 sw=4 et:

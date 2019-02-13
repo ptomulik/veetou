@@ -70,4 +70,7 @@
 -- --        , tgt.mod_data = src.mod_data
 -- --        , tgt.nr_wyb = src.nr_wyb
 -- ;
+
+COMMIT;
+
 -- vim: set ft=sql ts=4 sw=4 et:
