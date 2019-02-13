@@ -41,4 +41,6 @@ WHEN NOT MATCHED THEN
     VALUES (src.job_uuid, src.student_id, src.specialty_id, src.semester_id, src.ects_attained)
 WHEN MATCHED THEN UPDATE SET tgt.ects_attained = src.ects_attained;
 
+COMMIT;
+
 -- vim: set ft=sql ts=4 sw=4 et:

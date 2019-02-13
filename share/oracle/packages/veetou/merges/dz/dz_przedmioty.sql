@@ -99,4 +99,7 @@ WHEN MATCHED THEN UPDATE SET
     , tgt.pw_nazwa_supl = src.pw_nazwa_supl
     , tgt.pw_nazwa_supl_ang = src.pw_nazwa_supl_ang
 ;
+
+COMMIT;
+
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -32,4 +32,6 @@ INSERT INTO v2u_faculties (abbriev, name, code)
 INSERT INTO v2u_faculties (abbriev, name, code)
     VALUES ('GiK','WYDZIAŁ GEODEZJI I KARTOGRAFII', '106000');
 
+COMMIT;
+
 -- vim: set ft=sql ts=4 sw=4 et:

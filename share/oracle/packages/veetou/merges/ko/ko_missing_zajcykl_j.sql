@@ -243,4 +243,7 @@ WHEN MATCHED THEN UPDATE SET
     , tgt.dbg_map_class_types = src.dbg_map_class_types
     , tgt.dbg_semester_codes = src.dbg_semester_codes
 ;
+
+COMMIT;
+
 -- vim: set ft=sql ts=4 sw=4 et:

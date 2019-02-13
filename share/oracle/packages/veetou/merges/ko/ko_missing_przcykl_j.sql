@@ -123,4 +123,7 @@ WHEN MATCHED THEN UPDATE SET
     , tgt.tried_map_subj_code = src.tried_map_subj_code
     , tgt.istniejace_cdyd_kody = src.istniejace_cdyd_kody
 ;
+
+COMMIT;
+
 -- vim: set ft=sql ts=4 sw=4 et:

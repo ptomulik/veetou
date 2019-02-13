@@ -36,4 +36,7 @@ WHEN MATCHED THEN UPDATE SET
     , tgt.os_id = src.os_id
     , tgt.indeks_glowny = src.indeks_glowny
 ;
+
+COMMIT;
+
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -28,4 +28,6 @@ WHEN MATCHED THEN UPDATE SET
     , tgt.matching_score = src.matching_score
     , tgt.prz_kod = src.prz_kod
 ;
+
+COMMIT;
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -33,6 +33,25 @@
 @@drop_create_tier1.sql;
 
 
+-- Creates tier1 dz_* tables and related stuff.
+@@create_tier1_dz.sql
+
+
+
+-- Wipes-out tier1 part related to dz_* tables.
+@@drop_tier1_dz.sql
+
+
+
+-- Creates tier1 ko_* tables and related stuff.
+@@create_tier1_ko.sql
+
+
+
+-- Wipes-out tier1 part related to ko_* tables.
+@@drop_tier1_ko.sql
+
+
 
 -- Creates tier2 types, tables, views, packages, etc.
 @@create_tier2.sql;

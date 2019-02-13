@@ -105,4 +105,6 @@ INSERT INTO v2u_semesters (code, start_date, end_date) VALUES ('2019L',TO_DATE('
 INSERT INTO v2u_semesters (code, start_date, end_date) VALUES ('2019Z',TO_DATE('2019-10-01','YYYY-MM-DD'),TO_DATE('2020-02-16','YYYY-MM-DD'));
 INSERT INTO v2u_semesters (code, start_date, end_date) VALUES ('2020L',TO_DATE('2020-02-17','YYYY-MM-DD'),TO_DATE('2020-09-30','YYYY-MM-DD'));
 
+COMMIT;
+
 -- vim: set ft=sql ts=4 sw=4 et:

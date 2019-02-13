@@ -82,4 +82,7 @@ WHEN MATCHED THEN UPDATE SET
     , tgt.st_id = src.st_id
     , tgt.os_id = src.os_id
 ;
+
+COMMIT;
+
 -- vim: set ft=sql ts=4 sw=4 et:

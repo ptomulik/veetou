@@ -12,4 +12,6 @@
 @@ko/create_tier1_specs.sql;
 @@dz/create_tier1_specs.sql;
 
+COMMIT;
+
 -- vim: set ft=sql ts=4 sw=4 et:

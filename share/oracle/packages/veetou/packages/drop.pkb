@@ -172,28 +172,52 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_If_Exists('PACKAGE', 'V2U_' || package_name);
     END;
 
-    PROCEDURE Tier1
+    PROCEDURE Tier1_Dz
     IS
     BEGIN
-        Drop_Index('specialty_map_idx1');
-        Drop_Index('specialty_map_idx2');
-        Drop_Index('specialty_map_idx3');
-        Drop_Trigger('specialty_map_tr1');
-        Drop_Sequence('specialty_map_sq1');
-        Drop_Table('specialty_map', how => 'PURGE');
+        Drop_Table('dz_zaliczenia_przedmiotow', how => 'PURGE');
 
-        Drop_Index('subject_map_idx1');
-        Drop_Index('subject_map_idx2');
-        Drop_Trigger('subject_map_tr1');
-        Drop_Sequence('subject_map_sq1');
-        Drop_Table('subject_map', how => 'PURGE');
+        Drop_Index('dz_etapy_osob_idx1');
+        Drop_Index('dz_etapy_osob_idx2');
+        Drop_Table('dz_etapy_osob', how => 'PURGE');
+        --
+        Drop_Index('dz_programy_osob_idx1');
+        Drop_Index('dz_programy_osob_idx2');
+        Drop_Index('dz_programy_osob_idx3');
+        Drop_Index('dz_programy_osob_idx4');
+        Drop_Table('dz_programy_osob', how => 'PURGE');
+        --
+        Drop_Index('dz_studenci_idx1');
+        Drop_Table('dz_studenci', how => 'PURGE');
+        --
+        Drop_Index('dz_zajecia_cykli_idx1');
+        Drop_Table('dz_zajecia_cykli', how => 'PURGE');
+        --
+        Drop_Index('dz_przedmioty_cykli_idx1');
+        Drop_Index('dz_przedmioty_cykli_idx2');
+        Drop_Table('dz_przedmioty_cykli', how => 'PURGE');
+        --
+        Drop_Table('dz_przedmioty', how => 'PURGE');
 
-        Drop_Index('classes_map_idx1');
-        Drop_Index('classes_map_idx2');
-        Drop_Trigger('classes_map_tr1');
-        Drop_Sequence('classes_map_sq1');
-        Drop_Table('classes_map', how => 'PURGE');
+        Drop_Type('Dz_Zalicz_Przedmiotu_t', 'Dz_Zalicz_Przedmiotow_t');
+        Drop_Type('Dz_Program_Osoby_t', 'Dz_Programy_Osob_t');
+        Drop_Type('Dz_Etap_Osoby_t', 'Dz_Etapy_Osob_t');
+        Drop_Type('Dz_Student_t', 'Dz_Studenci_t');
+        Drop_Type('Dz_Przedmiot_t', 'Dz_Przedmioty_t');
+        Drop_Type('Dz_Przedmiot_Cyklu_t', 'Dz_Przedmioty_Cykli_t');
+        Drop_Type('Dz_Zajecia_Cyklu_t', 'Dz_Zajecia_Cykli_t');
 
+        Drop_Type('Dz_Program_Osoby_B_t');
+        Drop_Type('Dz_Etap_Osoby_B_t');
+        Drop_Type('Dz_Student_B_t');
+        Drop_Type('Dz_Przedmiot_B_t');
+        Drop_Type('Dz_Przedmiot_Cyklu_B_t');
+        Drop_Type('Dz_Zajecia_Cyklu_B_t');
+    END;
+
+    PROCEDURE Tier1_Ko
+    IS
+    BEGIN
         Drop_Index('ko_headers_idx1');
         Drop_Index('ko_preambles_idx1');
         Drop_Index('ko_preambles_idx2');
@@ -220,29 +244,38 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Table('ko_trs', how => 'PURGE');
         Drop_Table('ko_jobs', how => 'PURGE');
 
-        Drop_Table('dz_zaliczenia_przedmiotow', how => 'PURGE');
+        Drop_Type('Ko_Footer_t', 'Ko_Footers_t');
+        Drop_Type('Ko_Header_t', 'Ko_Headers_t');
+        Drop_Type('Ko_Page_t', 'Ko_Pages_t');
+        Drop_Type('Ko_Preamble_t', 'Ko_Preambles_t');
+        Drop_Type('Ko_Report_t', 'Ko_Reports_t');
+        Drop_Type('Ko_Sheet_t', 'Ko_Sheets_t');
+        Drop_Type('Ko_Tbody_t', 'Ko_Tbodies_t');
+        Drop_Type('Ko_Tr_t', 'Ko_Trs_t');
+        Drop_Type('Ko_Job_t', 'Ko_Jobs_t');
+    END;
 
-        Drop_Index('dz_etapy_osob_idx1');
-        Drop_Index('dz_etapy_osob_idx2');
-        Drop_Table('dz_etapy_osob', how => 'PURGE');
-        --
-        Drop_Index('dz_programy_osob_idx1');
-        Drop_Index('dz_programy_osob_idx2');
-        Drop_Index('dz_programy_osob_idx3');
-        Drop_Index('dz_programy_osob_idx4');
-        Drop_Table('dz_programy_osob', how => 'PURGE');
-        --
-        Drop_Index('dz_studenci_idx1');
-        Drop_Table('dz_studenci', how => 'PURGE');
-        --
-        Drop_Index('dz_zajecia_cykli_idx1');
-        Drop_Table('dz_zajecia_cykli', how => 'PURGE');
-        --
-        Drop_Index('dz_przedmioty_cykli_idx1');
-        Drop_Index('dz_przedmioty_cykli_idx2');
-        Drop_Table('dz_przedmioty_cykli', how => 'PURGE');
-        --
-        Drop_Table('dz_przedmioty', how => 'PURGE');
+    PROCEDURE Tier1_Basis
+    IS
+    BEGIN
+        Drop_Index('specialty_map_idx1');
+        Drop_Index('specialty_map_idx2');
+        Drop_Index('specialty_map_idx3');
+        Drop_Trigger('specialty_map_tr1');
+        Drop_Sequence('specialty_map_sq1');
+        Drop_Table('specialty_map', how => 'PURGE');
+
+        Drop_Index('subject_map_idx1');
+        Drop_Index('subject_map_idx2');
+        Drop_Trigger('subject_map_tr1');
+        Drop_Sequence('subject_map_sq1');
+        Drop_Table('subject_map', how => 'PURGE');
+
+        Drop_Index('classes_map_idx1');
+        Drop_Index('classes_map_idx2');
+        Drop_Trigger('classes_map_tr1');
+        Drop_Sequence('classes_map_sq1');
+        Drop_Table('classes_map', how => 'PURGE');
 
         Drop_Trigger('semesters_tr1');
         Drop_Table('semesters', how => 'PURGE');
@@ -264,36 +297,20 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Subject_Map_t', 'Subject_Maps_t');
         Drop_Type('Subject_Map_Base_t');
         Drop_Type('Map_Base_t');
-        Drop_Type('Ko_Footer_t', 'Ko_Footers_t');
-        Drop_Type('Ko_Header_t', 'Ko_Headers_t');
-        Drop_Type('Ko_Page_t', 'Ko_Pages_t');
-        Drop_Type('Ko_Preamble_t', 'Ko_Preambles_t');
-        Drop_Type('Ko_Report_t', 'Ko_Reports_t');
-        Drop_Type('Ko_Sheet_t', 'Ko_Sheets_t');
-        Drop_Type('Ko_Tbody_t', 'Ko_Tbodies_t');
-        Drop_Type('Ko_Tr_t', 'Ko_Trs_t');
-        Drop_Type('Ko_Job_t', 'Ko_Jobs_t');
 
         Drop_Type('Semester_Codes_t');
         Drop_Type('Semester_t', 'Semesters_t');
         Drop_Type('Faculty_t', 'Faculties_t', 'Faculty_Codes_t');
         Drop_Type('University_t', 'Universities_t', 'University_Codes_t');
         Drop_Type('Distinct_t');
+    END;
 
-        Drop_Type('Dz_Zalicz_Przedmiotu_t', 'Dz_Zalicz_Przedmiotow_t');
-        Drop_Type('Dz_Program_Osoby_t', 'Dz_Programy_Osob_t');
-        Drop_Type('Dz_Etap_Osoby_t', 'Dz_Etapy_Osob_t');
-        Drop_Type('Dz_Student_t', 'Dz_Studenci_t');
-        Drop_Type('Dz_Przedmiot_t', 'Dz_Przedmioty_t');
-        Drop_Type('Dz_Przedmiot_Cyklu_t', 'Dz_Przedmioty_Cykli_t');
-        Drop_Type('Dz_Zajecia_Cyklu_t', 'Dz_Zajecia_Cykli_t');
-
-        Drop_Type('Dz_Program_Osoby_B_t');
-        Drop_Type('Dz_Etap_Osoby_B_t');
-        Drop_Type('Dz_Student_B_t');
-        Drop_Type('Dz_Przedmiot_B_t');
-        Drop_Type('Dz_Przedmiot_Cyklu_B_t');
-        Drop_Type('Dz_Zajecia_Cyklu_B_t');
+    PROCEDURE Tier1
+    IS
+    BEGIN
+        Tier1_Ko();
+        Tier1_Dz();
+        Tier1_Basis();
     END;
 
     PROCEDURE Tier2

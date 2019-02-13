@@ -62,4 +62,7 @@ WHEN MATCHED THEN UPDATE SET
     , tgt.status_sylabusu = src.status_sylabusu
     , tgt.guid = src.guid
 ;
+
+COMMIT;
+
 -- vim: set ft=sql ts=4 sw=4 et:

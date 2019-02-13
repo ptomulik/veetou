@@ -123,4 +123,6 @@ WHEN MATCHED THEN
         , tgt.tried_program_codes = src.tried_program_codes
         , tgt.all_etpos_progs_for_semester = src.all_etpos_progs_for_semester
 ;
+
+COMMIT;
 -- vim: set ft=sql ts=4 sw=4 et:

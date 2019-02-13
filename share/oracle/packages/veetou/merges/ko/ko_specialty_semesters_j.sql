@@ -20,4 +20,6 @@ ON  (src.specialty_id = tgt.specialty_id AND
 WHEN NOT MATCHED THEN INSERT  (    job_uuid,     specialty_id,     semester_id)
                         VALUES(src.job_uuid, src.specialty_id, src.semester_id);
 
+COMMIT;
+
 -- vim: set ft=sql ts=4 sw=4 et:

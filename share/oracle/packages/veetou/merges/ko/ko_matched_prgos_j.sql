@@ -23,6 +23,9 @@ ON  (tgt.job_uuid = src.job_uuid AND
 WHEN NOT MATCHED THEN
     INSERT (    job_uuid,     student_id,     specialty_id,     prgos_id,     semester_ids)
     VALUES (src.job_uuid, src.student_id, src.specialty_id, src.prgos_id, src.semester_ids)
-WHEN MATCHED THEN UPDATE SET tgt.semester_ids = src.semester_ids;
+WHEN MATCHED THEN UPDATE SET tgt.semester_ids = src.semester_ids
+;
+
+COMMIT;
 
 -- vim: set ft=sql ts=4 sw=4 et:

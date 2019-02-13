@@ -8,4 +8,6 @@
 @@classes_map.ddl;
 @@specialty_map.ddl;
 
+COMMIT;
+
 -- vim: set ft=sql ts=4 sw=4 et:

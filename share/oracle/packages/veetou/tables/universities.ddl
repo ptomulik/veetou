@@ -28,4 +28,6 @@ CREATE OR REPLACE TRIGGER v2u_universities_tr1
 
 INSERT INTO v2u_universities (abbriev, name) VALUES ('PW','POLITECHNIKA WARSZAWSKA');
 
+COMMIT;
+
 -- vim: set ft=sql ts=4 sw=4 et:

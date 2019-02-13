@@ -6,6 +6,4 @@
 @@dz_etapy_osob.sql;
 @@dz_zaliczenia_przedmiotow.sql;
 
-COMMIT;
-
 -- vim: set ft=sql ts=4 sw=4 et:

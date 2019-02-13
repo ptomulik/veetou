@@ -35,4 +35,7 @@ WHEN MATCHED THEN UPDATE SET
     , tgt.prz_kod = src.prz_kod
     , tgt.cdyd_kod = src.cdyd_kod
 ;
+
+COMMIT;
+
 -- vim: set ft=sql ts=4 sw=4 et:

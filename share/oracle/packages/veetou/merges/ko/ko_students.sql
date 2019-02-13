@@ -45,4 +45,6 @@ ON
 WHEN NOT MATCHED THEN INSERT VALUES(src.student)
 WHEN MATCHED THEN UPDATE SET tgt.sheet_ids = src.student.sheet_ids;
 
+COMMIT;
+
 -- vim: set ft=sql ts=4 sw=4 et:

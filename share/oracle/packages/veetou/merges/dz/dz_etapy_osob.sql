@@ -75,4 +75,7 @@ WHEN MATCHED THEN UPDATE SET
     , tgt.czy_erasmus = src.czy_erasmus
     , tgt.jedn_dyplomujaca = src.jedn_dyplomujaca
 ;
+
+COMMIT;
+
 -- vim: set ft=sql ts=4 sw=4 et:

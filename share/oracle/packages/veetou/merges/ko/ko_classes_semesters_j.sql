@@ -40,4 +40,5 @@ WHEN MATCHED THEN UPDATE SET
       tgt.classes_hours = src.classes_hours
 ;
 
+COMMIT;
 -- vim: set ft=sql ts=4 sw=4 et:

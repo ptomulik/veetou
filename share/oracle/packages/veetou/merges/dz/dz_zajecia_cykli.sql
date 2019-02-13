@@ -78,4 +78,7 @@ WHEN MATCHED THEN UPDATE SET
     , tgt.literatura_ang = src.literatura_ang
     , tgt.czy_pokazywac_termin = src.czy_pokazywac_termin
 ;
+
+COMMIT;
+
 -- vim: set ft=sql ts=4 sw=4 et:

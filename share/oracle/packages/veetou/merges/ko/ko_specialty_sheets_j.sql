@@ -20,4 +20,6 @@ WHEN NOT MATCHED THEN
     INSERT (    job_uuid,     specialty_id,     sheet_id)
     VALUES (src.job_uuid, src.specialty_id, src.sheet_id);
 
+COMMIT;
+
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -29,6 +29,4 @@
 @@ko_missing_przcykl_j.sql;
 @@ko_missing_przedm_j.sql;
 
-COMMIT;
-
 -- vim: set ft=sql ts=4 sw=4 et:

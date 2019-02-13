@@ -146,4 +146,8 @@ WHEN MATCHED THEN UPDATE SET
         , tgt.umowa_data_podpisania = src.umowa_data_podpisania
         , tgt.umowa_sygnatura = src.umowa_sygnatura
         , tgt.kod_isced = src.kod_isced
+;
+
+COMMIT;
+
 -- vim: set ft=sql ts=4 sw=4 et:

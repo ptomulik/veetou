@@ -87,4 +87,6 @@ WHEN MATCHED THEN UPDATE SET
     , tgt.tzaj_kod = src.tzaj_kod
     , tgt.zajcykl_id = src.zajcykl_id
 ;
+
+COMMIT;
 -- vim: set ft=sql ts=4 sw=4 et:

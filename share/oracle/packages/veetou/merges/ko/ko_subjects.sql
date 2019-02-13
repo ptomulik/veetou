@@ -33,4 +33,6 @@ ON
 WHEN NOT MATCHED THEN INSERT VALUES(src.subject)
 WHEN MATCHED THEN UPDATE SET tgt.tr_ids = src.subject.tr_ids;
 
+COMMIT;
+
 -- vim: set ft=sql ts=4 sw=4 et:

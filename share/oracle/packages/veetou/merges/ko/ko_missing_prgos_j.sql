@@ -20,4 +20,7 @@ WHEN NOT MATCHED THEN
 WHEN MATCHED THEN UPDATE SET
     tgt.tried_specialty_map_ids = src.tried_specialty_map_ids
 ;
+
+COMMIT;
+
 -- vim: set ft=sql ts=4 sw=4 et:

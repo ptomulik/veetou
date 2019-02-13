@@ -107,4 +107,7 @@ WHEN MATCHED THEN UPDATE SET
       tgt.reason = src.reason
     , tgt.tried_map_subj_code = src.tried_map_subj_code
 ;
+
+COMMIT;
+
 -- vim: set ft=sql ts=4 sw=4 et:
