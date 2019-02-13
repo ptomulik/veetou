@@ -1,4 +1,4 @@
-CREATE OR REPLACE TYPE V2u_Ux_Grade_Flat_t
+CREATE OR REPLACE TYPE V2u_Ux_Classes_Grade_t
     FORCE AUTHID CURRENT_USER AS OBJECT
     ( v2u_job_uuid RAW(16)
     , v2u_student_id NUMBER(38)
@@ -59,8 +59,8 @@ CREATE OR REPLACE TYPE V2u_Ux_Grade_Flat_t
     , dbg_prz_kod NUMBER(38)
     , dbg_tzaj_kod NUMBER(38)
 
-    , CONSTRUCTOR FUNCTION V2u_Ux_Grade_Flat_t(
-              SELF IN OUT NOCOPY V2u_Ux_Grade_Flat_t
+    , CONSTRUCTOR FUNCTION V2u_Ux_Classes_Grade_t(
+              SELF IN OUT NOCOPY V2u_Ux_Classes_Grade_t
             , v2u_job_uuid IN RAW
             , v2u_student_id IN NUMBER
             , v2u_subject_id IN NUMBER
@@ -122,7 +122,7 @@ CREATE OR REPLACE TYPE V2u_Ux_Grade_Flat_t
             ) RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
-              SELF IN OUT NOCOPY V2u_Ux_Grade_Flat_t
+              SELF IN OUT NOCOPY V2u_Ux_Classes_Grade_t
             , v2u_job_uuid IN RAW
             , v2u_student_id IN NUMBER
             , v2u_subject_id IN NUMBER
@@ -185,7 +185,7 @@ CREATE OR REPLACE TYPE V2u_Ux_Grade_Flat_t
     )
 ;
 /
-CREATE OR REPLACE TYPE V2u_Ux_Grades_Flat_t
-    AS TABLE OF V2u_Ux_Grade_Flat_t;
+CREATE OR REPLACE TYPE V2u_Ux_Classes_Grades_t
+    AS TABLE OF V2u_Ux_Classes_Grade_t;
 
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY V2u_Ux_Grade_Flat_Grpd_V_t AS
-    CONSTRUCTOR FUNCTION V2u_Ux_Grade_Flat_Grpd_V_t(
-              SELF IN OUT NOCOPY V2u_Ux_Grade_Flat_Grpd_V_t
+CREATE OR REPLACE TYPE BODY V2u_Ux_Subject_Grade_V_t AS
+    CONSTRUCTOR FUNCTION V2u_Ux_Subject_Grade_V_t(
+              SELF IN OUT NOCOPY V2u_Ux_Subject_Grade_V_t
             , v2u_job_uuid IN RAW
             , v2u_student_id IN NUMBER
             , v2u_subject_id IN NUMBER
@@ -112,71 +112,71 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Grade_Flat_Grpd_V_t AS
             );
     END;
 
-    CONSTRUCTOR FUNCTION V2u_Ux_Grade_Flat_Grpd_V_t(
-              SELF IN OUT NOCOPY V2u_Ux_Grade_Flat_Grpd_V_t
-            , grade_flat IN V2u_Ux_Grade_Flat_t
+    CONSTRUCTOR FUNCTION V2u_Ux_Subject_Grade_V_t(
+              SELF IN OUT NOCOPY V2u_Ux_Subject_Grade_V_t
+            , classes_grade IN V2u_Ux_Classes_Grade_t
     ) RETURN SELF AS RESULT
     IS
     BEGIN
         SELF.init(
-              v2u_job_uuid => grade_flat.v2u_job_uuid
-            , v2u_student_id => grade_flat.v2u_student_id
-            , v2u_subject_id => grade_flat.v2u_subject_id
-            , v2u_specialty_id => grade_flat.v2u_specialty_id
-            , v2u_semester_id => grade_flat.v2u_semester_id
-            , v2u_student_index => grade_flat.v2u_student_index
-            , v2u_student_name => grade_flat.v2u_student_name
-            , v2u_first_name => grade_flat.v2u_first_name
-            , v2u_last_name => grade_flat.v2u_last_name
-            , v2u_subj_code => grade_flat.v2u_subj_code
-            , v2u_map_subj_code => grade_flat.v2u_map_subj_code
-            , v2u_subj_name => grade_flat.v2u_subj_name
-            , v2u_subj_hours_w => grade_flat.v2u_subj_hours_w
-            , v2u_subj_hours_c => grade_flat.v2u_subj_hours_c
-            , v2u_subj_hours_l => grade_flat.v2u_subj_hours_l
-            , v2u_subj_hours_p => grade_flat.v2u_subj_hours_p
-            , v2u_subj_hours_s => grade_flat.v2u_subj_hours_s
-            , v2u_subj_credit_kind => grade_flat.v2u_subj_credit_kind
-            , v2u_subj_ects => grade_flat.v2u_subj_ects
-            , v2u_subj_tutor => grade_flat.v2u_subj_tutor
-            , v2u_subj_grade => grade_flat.v2u_subj_grade
-            , v2u_subj_grade_date => grade_flat.v2u_subj_grade_date
-            , v2u_university => grade_flat.v2u_university
-            , v2u_faculty => grade_flat.v2u_faculty
-            , v2u_studies_modetier => grade_flat.v2u_studies_modetier
-            , v2u_studies_field => grade_flat.v2u_studies_field
-            , v2u_studies_specialty => grade_flat.v2u_studies_specialty
-            , v2u_semester_code => grade_flat.v2u_semester_code
-            , v2u_semester_number => grade_flat.v2u_semester_number
-            , v2u_ects_mandatory => grade_flat.v2u_ects_mandatory
-            , v2u_ects_other => grade_flat.v2u_ects_other
-            , v2u_ects_total => grade_flat.v2u_ects_total
-            , v2u_tpro_kod => grade_flat.v2u_tpro_kod
+              v2u_job_uuid => classes_grade.v2u_job_uuid
+            , v2u_student_id => classes_grade.v2u_student_id
+            , v2u_subject_id => classes_grade.v2u_subject_id
+            , v2u_specialty_id => classes_grade.v2u_specialty_id
+            , v2u_semester_id => classes_grade.v2u_semester_id
+            , v2u_student_index => classes_grade.v2u_student_index
+            , v2u_student_name => classes_grade.v2u_student_name
+            , v2u_first_name => classes_grade.v2u_first_name
+            , v2u_last_name => classes_grade.v2u_last_name
+            , v2u_subj_code => classes_grade.v2u_subj_code
+            , v2u_map_subj_code => classes_grade.v2u_map_subj_code
+            , v2u_subj_name => classes_grade.v2u_subj_name
+            , v2u_subj_hours_w => classes_grade.v2u_subj_hours_w
+            , v2u_subj_hours_c => classes_grade.v2u_subj_hours_c
+            , v2u_subj_hours_l => classes_grade.v2u_subj_hours_l
+            , v2u_subj_hours_p => classes_grade.v2u_subj_hours_p
+            , v2u_subj_hours_s => classes_grade.v2u_subj_hours_s
+            , v2u_subj_credit_kind => classes_grade.v2u_subj_credit_kind
+            , v2u_subj_ects => classes_grade.v2u_subj_ects
+            , v2u_subj_tutor => classes_grade.v2u_subj_tutor
+            , v2u_subj_grade => classes_grade.v2u_subj_grade
+            , v2u_subj_grade_date => classes_grade.v2u_subj_grade_date
+            , v2u_university => classes_grade.v2u_university
+            , v2u_faculty => classes_grade.v2u_faculty
+            , v2u_studies_modetier => classes_grade.v2u_studies_modetier
+            , v2u_studies_field => classes_grade.v2u_studies_field
+            , v2u_studies_specialty => classes_grade.v2u_studies_specialty
+            , v2u_semester_code => classes_grade.v2u_semester_code
+            , v2u_semester_number => classes_grade.v2u_semester_number
+            , v2u_ects_mandatory => classes_grade.v2u_ects_mandatory
+            , v2u_ects_other => classes_grade.v2u_ects_other
+            , v2u_ects_total => classes_grade.v2u_ects_total
+            , v2u_tpro_kod => classes_grade.v2u_tpro_kod
             -- USOS
-            , os_id => grade_flat.os_id
-            , st_id => grade_flat.st_id
-            , etpos_id => grade_flat.etpos_id
-            , prgos_id => grade_flat.prgos_id
-            , prg_kod => grade_flat.prg_kod
-            , etp_kod => grade_flat.etp_kod
-            , cdyd_kod => grade_flat.cdyd_kod
-            , tpro_kod => grade_flat.tpro_kod
-            , prz_kod => grade_flat.prz_kod
+            , os_id => classes_grade.os_id
+            , st_id => classes_grade.st_id
+            , etpos_id => classes_grade.etpos_id
+            , prgos_id => classes_grade.prgos_id
+            , prg_kod => classes_grade.prg_kod
+            , etp_kod => classes_grade.etp_kod
+            , cdyd_kod => classes_grade.cdyd_kod
+            , tpro_kod => classes_grade.tpro_kod
+            , prz_kod => classes_grade.prz_kod
             -- DBG
-            , dbg_os_id => grade_flat.dbg_os_id
-            , dbg_st_id => grade_flat.dbg_st_id
-            , dbg_etpos_id => grade_flat.dbg_etpos_id
-            , dbg_prgos_id => grade_flat.dbg_prgos_id
-            , dbg_prg_kod => grade_flat.dbg_prg_kod
-            , dbg_etp_kod => grade_flat.dbg_etp_kod
-            , dbg_cdyd_kod => grade_flat.dbg_etp_kod
-            , dbg_prz_kod => grade_flat.dbg_prz_kod
+            , dbg_os_id => classes_grade.dbg_os_id
+            , dbg_st_id => classes_grade.dbg_st_id
+            , dbg_etpos_id => classes_grade.dbg_etpos_id
+            , dbg_prgos_id => classes_grade.dbg_prgos_id
+            , dbg_prg_kod => classes_grade.dbg_prg_kod
+            , dbg_etp_kod => classes_grade.dbg_etp_kod
+            , dbg_cdyd_kod => classes_grade.dbg_etp_kod
+            , dbg_prz_kod => classes_grade.dbg_prz_kod
             );
         RETURN;
     END;
 
     MEMBER PROCEDURE init(
-              SELF IN OUT NOCOPY V2u_Ux_Grade_Flat_Grpd_V_t
+              SELF IN OUT NOCOPY V2u_Ux_Subject_Grade_V_t
             , v2u_job_uuid IN RAW
             , v2u_student_id IN NUMBER
             , v2u_subject_id IN NUMBER

@@ -1,4 +1,4 @@
-CREATE OR REPLACE TYPE V2u_Ux_Grade_Flat_Grpd_V_t
+CREATE OR REPLACE TYPE V2u_Ux_Subject_Grade_V_t
     FORCE AUTHID CURRENT_USER AS OBJECT
     ( v2u_job_uuid RAW(16)
     , v2u_student_id NUMBER(38)
@@ -53,8 +53,8 @@ CREATE OR REPLACE TYPE V2u_Ux_Grade_Flat_Grpd_V_t
     , dbg_cdyd_kod NUMBER(38)
     , dbg_prz_kod NUMBER(38)
 
-    , CONSTRUCTOR FUNCTION V2u_Ux_Grade_Flat_Grpd_V_t(
-              SELF IN OUT NOCOPY V2u_Ux_Grade_Flat_Grpd_V_t
+    , CONSTRUCTOR FUNCTION V2u_Ux_Subject_Grade_V_t(
+              SELF IN OUT NOCOPY V2u_Ux_Subject_Grade_V_t
             , v2u_job_uuid IN RAW
             , v2u_student_id IN NUMBER
             , v2u_subject_id IN NUMBER
@@ -109,13 +109,13 @@ CREATE OR REPLACE TYPE V2u_Ux_Grade_Flat_Grpd_V_t
             , dbg_prz_kod IN NUMBER
             ) RETURN SELF AS RESULT
 
-    , CONSTRUCTOR FUNCTION V2u_Ux_Grade_Flat_Grpd_V_t(
-              SELF IN OUT NOCOPY V2u_Ux_Grade_Flat_Grpd_V_t
-            , grade_flat IN V2u_Ux_Grade_Flat_t
+    , CONSTRUCTOR FUNCTION V2u_Ux_Subject_Grade_V_t(
+              SELF IN OUT NOCOPY V2u_Ux_Subject_Grade_V_t
+            , classes_grade IN V2u_Ux_Classes_Grade_t
     ) RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
-              SELF IN OUT NOCOPY V2u_Ux_Grade_Flat_Grpd_V_t
+              SELF IN OUT NOCOPY V2u_Ux_Subject_Grade_V_t
             , v2u_job_uuid IN RAW
             , v2u_student_id IN NUMBER
             , v2u_subject_id IN NUMBER

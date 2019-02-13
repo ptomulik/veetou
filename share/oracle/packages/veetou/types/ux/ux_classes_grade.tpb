@@ -1,6 +1,6 @@
-create or replace TYPE BODY V2u_Ux_Grade_Flat_t AS
-    CONSTRUCTOR FUNCTION V2u_Ux_Grade_Flat_t(
-              SELF IN OUT NOCOPY V2u_Ux_Grade_Flat_t
+create or replace TYPE BODY V2u_Ux_Classes_Grade_t AS
+    CONSTRUCTOR FUNCTION V2u_Ux_Classes_Grade_t(
+              SELF IN OUT NOCOPY V2u_Ux_Classes_Grade_t
             , v2u_job_uuid IN RAW
             , v2u_student_id IN NUMBER
             , v2u_subject_id IN NUMBER
@@ -125,7 +125,7 @@ create or replace TYPE BODY V2u_Ux_Grade_Flat_t AS
     END;
 
     MEMBER PROCEDURE init(
-              SELF IN OUT NOCOPY V2u_Ux_Grade_Flat_t
+              SELF IN OUT NOCOPY V2u_Ux_Classes_Grade_t
             , v2u_job_uuid IN RAW
             , v2u_student_id IN NUMBER
             , v2u_subject_id IN NUMBER

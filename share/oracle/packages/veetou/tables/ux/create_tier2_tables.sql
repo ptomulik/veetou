@@ -6,6 +6,6 @@
 @@ux_etapy_osob.ddl;
 @@ux_zaliczenia_przedmiotow.ddl;
 
-@@ux_grades_flat.ddl;
+@@ux_classes_grades.ddl;
 
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -1,4 +1,4 @@
-MERGE INTO v2u_ux_grades_flat tgt
+MERGE INTO v2u_ux_classes_grades tgt
 USING
     (
         SELECT
