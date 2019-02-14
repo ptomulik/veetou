@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY V2u_Subject_Map_B_t AS
-    CONSTRUCTOR FUNCTION V2u_Subject_Map_B_t(
-          SELF IN OUT NOCOPY V2u_Subject_Map_B_t
+CREATE OR REPLACE TYPE BODY V2u_Subject_Map_Pattern_t AS
+    CONSTRUCTOR FUNCTION V2u_Subject_Map_Pattern_t(
+          SELF IN OUT NOCOPY V2u_Subject_Map_Pattern_t
         , id IN NUMBER
         , subj_code IN VARCHAR2
         , map_subj_code IN VARCHAR2
@@ -60,7 +60,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_B_t AS
     END;
 
     MEMBER PROCEDURE init(
-              SELF IN OUT NOCOPY V2u_Subject_Map_B_t
+              SELF IN OUT NOCOPY V2u_Subject_Map_Pattern_t
             , id IN NUMBER := NULL
             , subj_code IN VARCHAR2
             , map_subj_code IN VARCHAR2
@@ -89,27 +89,28 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_B_t AS
             )
     IS
     BEGIN
-        SELF.init(id => id);
-        --
-        SELF.expr_subj_name := expr_subj_name;
-        SELF.expr_subj_hours_w := expr_subj_hours_w;
-        SELF.expr_subj_hours_c := expr_subj_hours_c;
-        SELF.expr_subj_hours_l := expr_subj_hours_l;
-        SELF.expr_subj_hours_p := expr_subj_hours_p;
-        SELF.expr_subj_hours_s := expr_subj_hours_s;
-        SELF.expr_subj_credit_kind := expr_subj_credit_kind;
-        SELF.expr_subj_ects := expr_subj_ects;
-        SELF.expr_subj_tutor := expr_subj_tutor;
-        SELF.expr_university := expr_university;
-        SELF.expr_faculty := expr_faculty;
-        SELF.expr_studies_modetier := expr_studies_modetier;
-        SELF.expr_studies_field := expr_studies_field;
-        SELF.expr_studies_specialty := expr_studies_specialty;
-        SELF.expr_semester_code := expr_semester_code;
-        SELF.expr_semester_number := expr_semester_number;
-        SELF.expr_ects_mandatory := expr_ects_mandatory;
-        SELF.expr_ects_other := expr_ects_other;
-        SELF.expr_ects_total := expr_ects_total;
+        SELF.init(
+          id => id
+        , expr_subj_name => expr_subj_name
+        , expr_subj_hours_w => expr_subj_hours_w
+        , expr_subj_hours_c => expr_subj_hours_c
+        , expr_subj_hours_l => expr_subj_hours_l
+        , expr_subj_hours_p => expr_subj_hours_p
+        , expr_subj_hours_s => expr_subj_hours_s
+        , expr_subj_credit_kind => expr_subj_credit_kind
+        , expr_subj_ects => expr_subj_ects
+        , expr_subj_tutor => expr_subj_tutor
+        , expr_university => expr_university
+        , expr_faculty => expr_faculty
+        , expr_studies_modetier => expr_studies_modetier
+        , expr_studies_field => expr_studies_field
+        , expr_studies_specialty => expr_studies_specialty
+        , expr_semester_code => expr_semester_code
+        , expr_semester_number => expr_semester_number
+        , expr_ects_mandatory => expr_ects_mandatory
+        , expr_ects_other => expr_ects_other
+        , expr_ects_total => expr_ects_total
+        );
         SELF.subj_code := subj_code;
         SELF.map_subj_code := map_subj_code;
         SELF.map_subj_lang := map_subj_lang;
@@ -121,10 +122,10 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_B_t AS
         RETURN INTEGER
     IS
     BEGIN
-        RETURN cmp_val(TREAT(other AS V2u_Subject_Map_B_t));
+        RETURN cmp_val(TREAT(other AS V2u_Subject_Map_Pattern_t));
     END;
 
-    MEMBER FUNCTION cmp_val(other IN V2u_Subject_Map_B_t)
+    MEMBER FUNCTION cmp_val(other IN V2u_Subject_Map_Pattern_t)
         RETURN INTEGER
     IS
         ord INTEGER;
@@ -139,43 +140,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_B_t AS
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.StrNI(map_org_unit_recipient, other.map_org_unit_recipient);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(expr_subj_name, other.expr_subj_name);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(expr_subj_hours_w, other.expr_subj_hours_w);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(expr_subj_hours_c, other.expr_subj_hours_c);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(expr_subj_hours_l, other.expr_subj_hours_l);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(expr_subj_hours_p, other.expr_subj_hours_p);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(expr_subj_hours_s, other.expr_subj_hours_s);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(expr_subj_credit_kind, other.expr_subj_credit_kind);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(expr_subj_ects, other.expr_subj_ects);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(expr_subj_tutor, other.expr_subj_tutor);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(expr_university, other.expr_university);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(expr_faculty, other.expr_faculty);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(expr_studies_modetier, other.expr_studies_modetier);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(expr_studies_field, other.expr_studies_field);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(expr_studies_specialty, other.expr_studies_specialty);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(expr_semester_code, other.expr_semester_code);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(expr_semester_number, other.expr_semester_number);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2u_Cmp.NumN(expr_ects_mandatory, other.expr_ects_mandatory);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2u_Cmp.NumN(expr_ects_total, other.expr_ects_total);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        RETURN V2u_Cmp.NumN(expr_ects_total, other.expr_ects_total);
+        RETURN (SELF AS V2u_Subject_Xpr_B_t).cmp_val(other);
     END;
 END;
 

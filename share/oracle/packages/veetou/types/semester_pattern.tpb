@@ -1,7 +1,6 @@
-CREATE OR REPLACE TYPE BODY V2u_Semester_Xpr_B_t AS
-    CONSTRUCTOR FUNCTION V2u_Semester_Xpr_B_t(
-          SELF IN OUT NOCOPY V2u_Semester_Xpr_B_t
-        , id IN NUMBER
+CREATE OR REPLACE TYPE BODY V2u_Semester_Pattern_t AS
+    CONSTRUCTOR FUNCTION V2u_Semester_Pattern_t(
+          SELF IN OUT NOCOPY V2u_Semester_Pattern_t
         , expr_semester_code IN VARCHAR2
         , expr_semester_number IN VARCHAR2
         , expr_ects_mandatory IN VARCHAR2
@@ -11,8 +10,7 @@ CREATE OR REPLACE TYPE BODY V2u_Semester_Xpr_B_t AS
     IS
     BEGIN
         SELF.init(
-          id => id
-        , expr_semester_code => expr_semester_code
+          expr_semester_code => expr_semester_code
         , expr_semester_number => expr_semester_number
         , expr_ects_mandatory => expr_ects_mandatory
         , expr_ects_other => expr_ects_other
@@ -21,9 +19,9 @@ CREATE OR REPLACE TYPE BODY V2u_Semester_Xpr_B_t AS
         RETURN;
     END;
 
+
     MEMBER PROCEDURE init(
-              SELF IN OUT NOCOPY V2u_Semester_Xpr_B_t
-            , id IN NUMBER := NULL
+              SELF IN OUT NOCOPY V2u_Semester_Pattern_t
             , expr_semester_code IN VARCHAR2
             , expr_semester_number IN VARCHAR2
             , expr_ects_mandatory IN VARCHAR2
@@ -32,7 +30,6 @@ CREATE OR REPLACE TYPE BODY V2u_Semester_Xpr_B_t AS
             )
     IS
     BEGIN
-        SELF.id := id;
         SELF.expr_semester_code := expr_semester_code;
         SELF.expr_semester_number := expr_semester_number;
         SELF.expr_ects_mandatory := expr_ects_mandatory;
@@ -40,41 +37,22 @@ CREATE OR REPLACE TYPE BODY V2u_Semester_Xpr_B_t AS
         SELF.expr_ects_total := expr_ects_total;
     END;
 
-    OVERRIDING MEMBER FUNCTION cmp_val(other IN V2u_Distinct_t)
-        RETURN INTEGER
-    IS
-    BEGIN
-        RETURN cmp_val(TREAT(other AS V2u_Semester_Xpr_B_t));
-    END;
 
-    MEMBER FUNCTION cmp_val(other IN V2u_Semester_Xpr_B_t)
-        RETURN INTEGER
-    IS
-        ord INTEGER;
-    BEGIN
-        ord := V2U_Cmp.StrNI(expr_semester_code, other.expr_semester_code);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.StrNI(expr_semester_number, other.expr_semester_number);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2u_Cmp.NumN(expr_ects_mandatory, other.expr_ects_mandatory);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2u_Cmp.NumN(expr_ects_total, other.expr_ects_total);
-        IF ord <> 0 THEN RETURN ord; END IF;
-        RETURN V2u_Cmp.NumN(expr_ects_total, other.expr_ects_total);
-    END;
-
-    MEMBER FUNCTION match_xpr_attrs(
+    MEMBER FUNCTION match_attributes(
               semester_code IN VARCHAR2
-            , semester_number IN VARCHAR2
-            , ects_mandatory IN VARCHAR2
-            , ects_other IN VARCHAR2
-            , ects_total IN VARCHAR2
+            , semester_number IN INTEGER
+            , ects_mandatory IN INTEGER
+            , ects_other IN INTEGER
+            , ects_total IN INTEGER
             ) RETURN INTEGER
     IS
         total INTEGER;
         local INTEGER;
     BEGIN
-        total := 1;     -- if all expressions are NULL, then match is positive
+        -- < 0 - expression error,
+        --   0 - not matched,
+        -- > 0 - matched (match_score)
+        total := 1;
         IF expr_semester_code IS NOT NULL THEN
             local := match_semester_code(semester_code);
             IF local < 1 THEN

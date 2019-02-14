@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY V2u_Classes_Map_B_t AS
-    CONSTRUCTOR FUNCTION V2u_Classes_Map_B_t(
-              SELF IN OUT NOCOPY V2u_Classes_Map_B_t
+CREATE OR REPLACE TYPE BODY V2u_Classes_Map_Pattern_t AS
+    CONSTRUCTOR FUNCTION V2u_Classes_Map_Pattern_t(
+              SELF IN OUT NOCOPY V2u_Classes_Map_Pattern_t
             , id IN NUMBER
             , classes_type IN VARCHAR2
             , map_classes_type IN VARCHAR2
@@ -56,7 +56,7 @@ CREATE OR REPLACE TYPE BODY V2u_Classes_Map_B_t AS
     END;
 
     MEMBER PROCEDURE init(
-              SELF IN OUT NOCOPY V2u_Classes_Map_B_t
+              SELF IN OUT NOCOPY V2u_Classes_Map_Pattern_t
             , id IN NUMBER := NULL
             , classes_type IN VARCHAR2
             , map_classes_type IN VARCHAR2
@@ -115,10 +115,10 @@ CREATE OR REPLACE TYPE BODY V2u_Classes_Map_B_t AS
         RETURN INTEGER
     IS
     BEGIN
-        RETURN cmp_val(TREAT(other AS V2u_Classes_Map_B_t));
+        RETURN cmp_val(TREAT(other AS V2u_Classes_Map_Pattern_t));
     END;
 
-    MEMBER FUNCTION cmp_val(other IN V2u_Classes_Map_B_t)
+    MEMBER FUNCTION cmp_val(other IN V2u_Classes_Map_Pattern_t)
         RETURN INTEGER
     IS
         ord INTEGER;

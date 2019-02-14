@@ -5,8 +5,17 @@ CREATE OR REPLACE TYPE BODY V2u_Distinct_t AS
             ) RETURN SELF AS RESULT
     IS
     BEGIN
-        SELF.id := id;
+        SELF.init(id => id);
         RETURN;
+    END;
+
+    MEMBER PROCEDURE init(
+              SELF IN OUT NOCOPY V2u_Distinct_t
+            , id IN NUMBER := NULL
+            )
+    IS
+    BEGIN
+        SELF.id := id;
     END;
 
     ORDER MEMBER FUNCTION cmp(other IN V2u_Distinct_t)

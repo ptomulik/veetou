@@ -1,11 +1,11 @@
-CREATE OR REPLACE TYPE V2u_Classes_Map_B_t
-    FORCE AUTHID CURRENT_USER UNDER V2u_Subject_Xpr_B_t
+CREATE OR REPLACE TYPE V2u_Classes_Map_Pattern_t
+    FORCE AUTHID CURRENT_USER UNDER V2u_Classes_Xpr_B_t
     ( expr_subj_code VARCHAR(256 CHAR)
     , classes_type VARCHAR2(1 CHAR)
     , map_classes_type VARCHAR2(3 CHAR)
 
-    , CONSTRUCTOR FUNCTION V2u_Classes_Map_B_t(
-              SELF IN OUT NOCOPY V2u_Classes_Map_B_t
+    , CONSTRUCTOR FUNCTION V2u_Classes_Map_Pattern_t(
+              SELF IN OUT NOCOPY V2u_Classes_Map_Pattern_t
             , id IN NUMBER := NULL
             , classes_type IN VARCHAR2
             , map_classes_type IN VARCHAR2
@@ -33,7 +33,7 @@ CREATE OR REPLACE TYPE V2u_Classes_Map_B_t
         RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
-              SELF IN OUT NOCOPY V2u_Classes_Map_B_t
+              SELF IN OUT NOCOPY V2u_Classes_Map_Pattern_t
             , id IN NUMBER := NULL
             , classes_type IN VARCHAR2
             , map_classes_type IN VARCHAR2
@@ -62,7 +62,7 @@ CREATE OR REPLACE TYPE V2u_Classes_Map_B_t
     , OVERRIDING MEMBER FUNCTION cmp_val(other IN V2u_Distinct_t)
         RETURN INTEGER
 
-    , MEMBER FUNCTION cmp_val(other IN V2u_Classes_Map_B_t)
+    , MEMBER FUNCTION cmp_val(other IN V2u_Classes_Map_Pattern_t)
         RETURN INTEGER
 
     , MEMBER FUNCTION match_xpr_attrs(

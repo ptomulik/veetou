@@ -21,17 +21,22 @@ CREATE OR REPLACE TYPE V2u_Distinct_t FORCE AUTHID CURRENT_USER AS OBJECT
             , id IN NUMBER := NULL
             ) RETURN SELF AS RESULT
 
+    , MEMBER PROCEDURE init(
+              SELF IN OUT NOCOPY V2u_Distinct_t
+            , id IN NUMBER := NULL
+            )
+
     , ORDER MEMBER FUNCTION cmp(other IN V2u_Distinct_t)
-        RETURN INTEGER
+            RETURN INTEGER
 
     , MEMBER FUNCTION cmp_impl(other IN V2u_Distinct_t)
-        RETURN INTEGER
+            RETURN INTEGER
 
     , MEMBER FUNCTION cmp_id(other IN V2u_Distinct_t)
-        RETURN INTEGER
+            RETURN INTEGER
 
     , MEMBER FUNCTION cmp_val(other IN V2u_Distinct_t)
-        RETURN INTEGER
+            RETURN INTEGER
     )
 NOT FINAL;
 
