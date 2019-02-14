@@ -5,9 +5,7 @@ CREATE OR REPLACE TYPE BODY V2u_Classes_Pattern_t AS
             ) RETURN SELF AS RESULT
     IS
     BEGIN
-        SELF.init(
-              expr_subj_code => expr_subj_code
-            );
+        SELF.init(expr_subj_code => expr_subj_code);
         RETURN;
     END;
 

@@ -1,21 +1,21 @@
 CREATE OR REPLACE TYPE BODY V2u_Semester_Pattern_t AS
     CONSTRUCTOR FUNCTION V2u_Semester_Pattern_t(
-          SELF IN OUT NOCOPY V2u_Semester_Pattern_t
-        , expr_semester_code IN VARCHAR2
-        , expr_semester_number IN VARCHAR2
-        , expr_ects_mandatory IN VARCHAR2
-        , expr_ects_other IN VARCHAR2
-        , expr_ects_total IN VARCHAR2
-        ) RETURN SELF AS RESULT
+              SELF IN OUT NOCOPY V2u_Semester_Pattern_t
+            , expr_semester_code IN VARCHAR2
+            , expr_semester_number IN VARCHAR2
+            , expr_ects_mandatory IN VARCHAR2
+            , expr_ects_other IN VARCHAR2
+            , expr_ects_total IN VARCHAR2
+            ) RETURN SELF AS RESULT
     IS
     BEGIN
         SELF.init(
-          expr_semester_code => expr_semester_code
-        , expr_semester_number => expr_semester_number
-        , expr_ects_mandatory => expr_ects_mandatory
-        , expr_ects_other => expr_ects_other
-        , expr_ects_total => expr_ects_total
-        );
+              expr_semester_code => expr_semester_code
+            , expr_semester_number => expr_semester_number
+            , expr_ects_mandatory => expr_ects_mandatory
+            , expr_ects_other => expr_ects_other
+            , expr_ects_total => expr_ects_total
+            );
         RETURN;
     END;
 
@@ -40,10 +40,10 @@ CREATE OR REPLACE TYPE BODY V2u_Semester_Pattern_t AS
 
     MEMBER FUNCTION match_attributes(
               semester_code IN VARCHAR2
-            , semester_number IN INTEGER
-            , ects_mandatory IN INTEGER
-            , ects_other IN INTEGER
-            , ects_total IN INTEGER
+            , semester_number IN NUMBER
+            , ects_mandatory IN NUMBER
+            , ects_other IN NUMBER
+            , ects_total IN NUMBER
             ) RETURN INTEGER
     IS
         total INTEGER;

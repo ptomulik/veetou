@@ -26,10 +26,10 @@ CREATE OR REPLACE TYPE V2u_Semester_Pattern_t
 
     , MEMBER FUNCTION match_attributes(
               semester_code IN VARCHAR2
-            , semester_number IN INTEGER
-            , ects_mandatory IN INTEGER
-            , ects_other IN INTEGER
-            , ects_total IN INTEGER
+            , semester_number IN NUMBER
+            , ects_mandatory IN NUMBER
+            , ects_other IN NUMBER
+            , ects_total IN NUMBER
             ) RETURN INTEGER
 
     , MEMBER FUNCTION match_semester_code(semester_code IN VARCHAR2) RETURN INTEGER

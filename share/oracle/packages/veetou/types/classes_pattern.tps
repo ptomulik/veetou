@@ -19,6 +19,6 @@ CREATE OR REPLACE TYPE V2u_Classes_Pattern_t
 
     , MEMBER FUNCTION match_subj_code(subj_code IN VARCHAR2) RETURN INTEGER
     )
-NOT INSTANTIABLE NOT FINAL;
+NOT FINAL;
 
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -291,10 +291,12 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Package('Match');
         Drop_Package('Cmp');
 
+        Drop_Type('Classes_Map_Pattern_t');
         Drop_Type('Subject_Map_Pattern_t');
         Drop_Type('Specialty_Map_Pattern_t');
         Drop_Type('Semester_Map_Pattern_t');
 
+        Drop_Type('Classes_Pattern_t');
         Drop_Type('Subject_Pattern_t');
         Drop_Type('Specialty_Pattern_t');
         Drop_Type('Semester_Pattern_t');

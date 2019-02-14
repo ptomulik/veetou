@@ -39,13 +39,13 @@ CREATE OR REPLACE TYPE V2u_Subject_Pattern_t
 
     , MEMBER FUNCTION match_attributes(
               subj_name IN VARCHAR2
-            , subj_hours_w IN VARCHAR2
-            , subj_hours_c IN VARCHAR2
-            , subj_hours_l IN VARCHAR2
-            , subj_hours_p IN VARCHAR2
-            , subj_hours_s IN VARCHAR2
+            , subj_hours_w IN NUMBER
+            , subj_hours_c IN NUMBER
+            , subj_hours_l IN NUMBER
+            , subj_hours_p IN NUMBER
+            , subj_hours_s IN NUMBER
             , subj_credit_kind IN VARCHAR2
-            , subj_ects IN VARCHAR2
+            , subj_ects IN NUMBER
             , subj_tutor IN VARCHAR2
             )
         RETURN INTEGER
