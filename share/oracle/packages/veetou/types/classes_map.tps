@@ -1,5 +1,5 @@
 CREATE OR REPLACE TYPE V2u_Classes_Map_t
-    FORCE AUTHID CURRENT_USER UNDER V2u_Classes_Map_Base_t
+    FORCE AUTHID CURRENT_USER UNDER V2u_Classes_Map_B_t
     (
     )
 ;
