@@ -18,7 +18,6 @@
 @@subject_pattern.tps;
 @@classes_pattern.tps;
 --
-
 @@specialty_map_pattern.tps;
 @@subject_map_pattern.tps;
 @@classes_map_pattern.tps;

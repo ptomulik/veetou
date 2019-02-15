@@ -1,5 +1,5 @@
 CREATE OR REPLACE TYPE V2u_Ko_Missing_Subj_Map_V_t
-    FORCE AUTHID CURRENT_USER UNDER V2u_Subject_Map_Base_t
+    FORCE AUTHID CURRENT_USER UNDER V2u_Subject_Map_B_t
     ( job_uuid RAW(16)
     , subject_id NUMBER(38)
     , specialty_id NUMBER(38)

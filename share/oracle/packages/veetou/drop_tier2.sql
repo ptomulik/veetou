@@ -9,5 +9,4 @@ DROP PACKAGE V2U_Drop;
 /
 COMMIT;
 
-
 -- vim: set ft=sql ts=4 sw=4 et:

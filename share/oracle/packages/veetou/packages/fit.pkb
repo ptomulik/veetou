@@ -1,18 +1,20 @@
 CREATE OR REPLACE PACKAGE BODY V2U_Fit AS
     FUNCTION Attributes(
-              classes_map IN V2u_Classes_Map_t
+              classes_map IN V2u_Classes_Map_B_t
             , subject IN V2u_Ko_Subject_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
-            ) RETURN NUMBER
+            ) RETURN INTEGER
     IS
+        pattern V2u_Classes_Map_Pattern_t;
     BEGIN
         IF classes_map IS NOT NULL AND
            subject IS NOT NULL AND
            specialty IS NOT NULL AND
            semester IS NOT NULL
         THEN
-            RETURN classes_map.match_xpr_attrs(
+            pattern := V2u_Classes_Map_Pattern_t(classes_map);
+            RETURN pattern.match_attributes(
                       subj_code => subject.subj_code
                     , subj_name => subject.subj_name
                     , subj_hours_w => subject.subj_hours_w
@@ -40,19 +42,21 @@ CREATE OR REPLACE PACKAGE BODY V2U_Fit AS
     END;
 
     FUNCTION Attributes(
-              subject_map IN V2u_Subject_Map_t
+              subject_map IN V2u_Subject_Map_B_t
             , subject IN V2u_Ko_Subject_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
-            ) RETURN NUMBER
+            ) RETURN INTEGER
     IS
+        pattern V2u_Subject_Map_Pattern_t;
     BEGIN
         IF subject_map IS NOT NULL AND
            subject IS NOT NULL AND
            specialty IS NOT NULL AND
            semester IS NOT NULL
         THEN
-            RETURN subject_map.match_xpr_attrs(
+            pattern := V2u_Subject_Map_Pattern_t(subject_map);
+            RETURN pattern.match_attributes(
                       subj_name => subject.subj_name
                     , subj_hours_w => subject.subj_hours_w
                     , subj_hours_c => subject.subj_hours_c
@@ -80,13 +84,17 @@ CREATE OR REPLACE PACKAGE BODY V2U_Fit AS
 
 
     FUNCTION Attributes(
-                  specialty_map IN V2u_Specialty_Map_t
+                  specialty_map IN V2u_Specialty_Map_B_t
                 , semester IN V2u_Ko_Semester_t
-                ) RETURN NUMBER
+                ) RETURN INTEGER
     IS
+        pattern V2u_Specialty_Map_Pattern_t;
     BEGIN
-        IF specialty_map IS NOT NULL AND semester IS NOT NULL THEN
-            RETURN specialty_map.match_xpr_attrs(
+        IF specialty_map IS NOT NULL AND
+           semester IS NOT NULL
+        THEN
+            pattern := V2u_Specialty_Map_Pattern_t(specialty_map);
+            RETURN pattern.match_attributes(
               semester_number => semester.semester_number
             , semester_code => semester.semester_code
             , ects_mandatory => semester.ects_mandatory

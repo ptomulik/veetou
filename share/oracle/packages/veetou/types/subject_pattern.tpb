@@ -69,7 +69,10 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Pattern_t AS
         total INTEGER;
         local INTEGER;
     BEGIN
-        total := 0;
+        -- < 0 - expression error,
+        --   0 - not matched,
+        -- > 0 - matched (match_score)
+        total := 1;
         IF expr_subj_name IS NOT NULL THEN
             local := match_subj_name(subj_name);
             IF local < 1 THEN
