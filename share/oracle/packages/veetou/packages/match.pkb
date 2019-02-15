@@ -59,12 +59,14 @@ CREATE OR REPLACE PACKAGE BODY V2U_Match AS
         RETURN s;
     END;
 
+
     FUNCTION String_Like(expr IN VARCHAR2, value IN VARCHAR2)
         RETURN INTEGER
     IS
     BEGIN
         RETURN CASE (value LIKE expr) WHEN TRUE THEN 1 ELSE 0 END;
     END;
+
 
     FUNCTION String_Range(expr IN VARCHAR2, value IN VARCHAR2)
         RETURN INTEGER
@@ -95,6 +97,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Match AS
         RETURN String_Range(UPPER(expr), UPPER(value));
     END;
 
+
     FUNCTION Number_Range(expr IN VARCHAR2, value IN NUMBER)
         RETURN INTEGER
     IS
@@ -117,6 +120,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Match AS
         END IF;
     END;
 
+
     FUNCTION Number_Range(expr IN VARCHAR2, value IN VARCHAR2)
         RETURN INTEGER
     IS
@@ -131,6 +135,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Match AS
             RETURN Number_Range(expr, nval);
         END IF;
     END;
+
 
     FUNCTION Person_Name(expr IN VARCHAR2, value IN VARCHAR2)
         RETURN INTEGER
