@@ -4,11 +4,11 @@ USING
         WITH u AS
         (
             SELECT
-                  j1.job_uuid job_uuid
-                , j1.subject_id subject_id
-                , j1.specialty_id specialty_id
-                , j1.semester_id semester_id
-                , COUNT(DISTINCT j3.map_id) subject_maps_count
+                  ss_j.job_uuid job_uuid
+                , ss_j.subject_id subject_id
+                , ss_j.specialty_id specialty_id
+                , ss_j.semester_id semester_id
+                , COUNT(DISTINCT sm_j.map_id) subject_maps_count
                 , COUNT(DISTINCT subject_map.map_subj_code) map_subj_codes_count
                 , MIN(subjects.subj_code) KEEP (
                         DENSE_RANK FIRST ORDER BY subjects.subj_code
@@ -20,36 +20,48 @@ USING
                         DENSE_RANK FIRST ORDER BY subject_map.map_subj_code
                   ) tried_map_subj_code
                 , COUNT(DISTINCT przedmioty.kod) istniejacy_prz_kod_count
-            FROM v2u_ko_subject_semesters_j j1
+            FROM v2u_ko_subject_semesters_j ss_j
             INNER JOIN v2u_ko_subjects subjects
-                ON (subjects.id = j1.subject_id AND
-                    subjects.job_uuid = j1.job_uuid)
+                ON  (
+                            subjects.id = ss_j.subject_id
+                        AND subjects.job_uuid = ss_j.job_uuid
+                    )
             INNER JOIN v2u_ko_semesters semesters
-                ON (semesters.id = j1.subject_id AND
-                    semesters.job_uuid = j1.job_uuid)
-            LEFT JOIN v2u_ko_matched_przedm_j j2
-                ON (j2.subject_id = j1.subject_id AND
-                    j2.specialty_id = j1.specialty_id AND
-                    j2.semester_id = j1.semester_id AND
-                    j2.job_uuid = j1.job_uuid)
-            LEFT JOIN v2u_ko_subject_map_j j3
-                ON (j3.subject_id = j1.subject_id AND
-                    j3.specialty_id = j1.specialty_id AND
-                    j3.semester_id = j1.semester_id AND
-                    j3.job_uuid = j1.job_uuid AND
-                    j3.selected = 1)
+                ON  (
+                            semesters.id = ss_j.subject_id
+                        AND semesters.job_uuid = ss_j.job_uuid
+                    )
+            LEFT JOIN v2u_ko_matched_przedm_j ma_przedm_j
+                ON  (
+                            ma_przedm_j.subject_id = ss_j.subject_id
+                        AND ma_przedm_j.specialty_id = ss_j.specialty_id
+                        AND ma_przedm_j.semester_id = ss_j.semester_id
+                        AND ma_przedm_j.job_uuid = ss_j.job_uuid
+                    )
+            LEFT JOIN v2u_ko_subject_map_j sm_j
+                ON  (
+                            sm_j.subject_id = ss_j.subject_id
+                        AND sm_j.specialty_id = ss_j.specialty_id
+                        AND sm_j.semester_id = ss_j.semester_id
+                        AND sm_j.job_uuid = ss_j.job_uuid
+                        AND sm_j.selected = 1
+                    )
             LEFT JOIN v2u_subject_map subject_map
-                ON (subject_map.id = j3.map_id)
+                ON  (
+                            subject_map.id = sm_j.map_id
+                    )
             -- join dz_przedmioty again to find whether we really can't find
             -- such a przedmiot
             LEFT JOIN v2u_dz_przedmioty przedmioty
-                ON (przedmioty.kod = subject_map.map_subj_code)
-            WHERE j2.id IS NULL
+                ON  (
+                            przedmioty.kod = subject_map.map_subj_code
+                    )
+            WHERE ma_przedm_j.id IS NULL
             GROUP BY
-                  j1.job_uuid
-                , j1.subject_id
-                , j1.specialty_id
-                , j1.semester_id
+                  ss_j.job_uuid
+                , ss_j.subject_id
+                , ss_j.specialty_id
+                , ss_j.semester_id
         )
         SELECT
               u.job_uuid job_uuid
@@ -103,9 +115,10 @@ WHEN NOT MATCHED THEN
         , src.reason
         , src.tried_map_subj_code
         )
-WHEN MATCHED THEN UPDATE SET
-      tgt.reason = src.reason
-    , tgt.tried_map_subj_code = src.tried_map_subj_code
+WHEN MATCHED THEN
+    UPDATE SET
+          tgt.reason = src.reason
+        , tgt.tried_map_subj_code = src.tried_map_subj_code
 ;
 
 COMMIT;

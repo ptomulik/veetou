@@ -13,12 +13,15 @@ USING
         FROM u u
         CROSS JOIN TABLE(u.tr_ids) t
     ) src
-ON (tgt.tr_id = src.tr_id AND
-    tgt.subject_id = src.subject_id AND
-    tgt.job_uuid = src.job_uuid)
+ON  (
+            tgt.tr_id = src.tr_id
+        AND tgt.subject_id = src.subject_id
+        AND tgt.job_uuid = src.job_uuid
+    )
 WHEN NOT MATCHED THEN
     INSERT (    job_uuid,     subject_id,     tr_id)
-    VALUES (src.job_uuid, src.subject_id, src.tr_id);
+    VALUES (src.job_uuid, src.subject_id, src.tr_id)
+;
 
 COMMIT;
 

@@ -13,7 +13,7 @@ COMMENT ON COLUMN v2u_classes_map.expr_university IS 'Wyrażenie określające d
 COMMENT ON COLUMN v2u_classes_map.expr_faculty IS 'Wyrażenie określające dopuszczalne nazwy wydziałów';
 COMMENT ON COLUMN v2u_classes_map.expr_studies_modetier IS 'Wyrażenie określające dopuszczalne tryby/poziomy studiów';
 COMMENT ON COLUMN v2u_classes_map.expr_studies_field IS 'Wyrażenie określające dopuszczalne kierunki studiów';
-COMMENT ON COLUMN v2u_classes_map.expr_studies_specialty IS 'Wyrażenie zawężajace dopuszczalne specjalności';
+COMMENT ON COLUMN v2u_classes_map.expr_studies_specialty IS 'Wyrażenie określające dopuszczalne specjalności';
 COMMENT ON COLUMN v2u_classes_map.expr_semester_code IS 'Wyrażenie określające dopusczalne semestry prowadzenia przedmiotów';
 COMMENT ON COLUMN v2u_classes_map.expr_subj_hours_w IS 'Wyrażenie określające dopuszczalny zakres godzin wykładu';
 COMMENT ON COLUMN v2u_classes_map.expr_subj_hours_c IS 'Wyrażenie określające dopuszczalny zakres godzin ćwiczeń';

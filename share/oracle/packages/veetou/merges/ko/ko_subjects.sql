@@ -30,8 +30,13 @@ ON
         AND ((src.subject.subj_name = tgt.subj_name) OR (src.subject.subj_name IS NULL AND tgt.subj_name IS NULL))
         AND ((src.subject.job_uuid = tgt.job_uuid) OR (src.subject.job_uuid IS NULL AND tgt.job_uuid IS NULL))
     )
-WHEN NOT MATCHED THEN INSERT VALUES(src.subject)
-WHEN MATCHED THEN UPDATE SET tgt.tr_ids = src.subject.tr_ids;
+WHEN NOT MATCHED THEN
+    INSERT
+          VALUES(src.subject)
+WHEN MATCHED THEN
+    UPDATE SET
+          tgt.tr_ids = src.subject.tr_ids
+;
 
 COMMIT;
 

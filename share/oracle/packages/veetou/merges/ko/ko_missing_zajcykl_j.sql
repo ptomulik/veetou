@@ -53,39 +53,51 @@ USING
 
             FROM v2u_ko_classes_semesters_j cs_j
             INNER JOIN v2u_ko_subjects subjects
-                ON (subjects.id = cs_j.subject_id AND
-                    subjects.job_uuid = cs_j.job_uuid)
+                ON  (
+                            subjects.id = cs_j.subject_id
+                        AND subjects.job_uuid = cs_j.job_uuid
+                    )
             INNER JOIN v2u_ko_semesters semesters
-                ON (semesters.id = cs_j.subject_id AND
-                    semesters.job_uuid = cs_j.job_uuid)
+                ON  (
+                            semesters.id = cs_j.subject_id
+                        AND semesters.job_uuid = cs_j.job_uuid
+                    )
             LEFT JOIN v2u_ko_matched_zajcykl_j ma_j
-                ON (ma_j.subject_id = cs_j.subject_id AND
-                    ma_j.specialty_id = cs_j.specialty_id AND
-                    ma_j.semester_id = cs_j.semester_id AND
-                    ma_j.classes_type = cs_j.classes_type AND
-                    ma_j.job_uuid = cs_j.job_uuid)
+                ON  (
+                            ma_j.subject_id = cs_j.subject_id
+                        AND ma_j.specialty_id = cs_j.specialty_id
+                        AND ma_j.semester_id = cs_j.semester_id
+                        AND ma_j.classes_type = cs_j.classes_type
+                        AND ma_j.job_uuid = cs_j.job_uuid
+                    )
             LEFT JOIN v2u_ko_subject_map_j sm_j
-                ON (sm_j.subject_id = cs_j.subject_id AND
-                    sm_j.specialty_id = cs_j.specialty_id AND
-                    sm_j.semester_id = cs_j.semester_id AND
-                    sm_j.job_uuid = cs_j.job_uuid AND
-                    sm_j.selected = 1)
+                ON  (
+                                sm_j.subject_id = cs_j.subject_id
+                        AND sm_j.specialty_id = cs_j.specialty_id
+                        AND sm_j.semester_id = cs_j.semester_id
+                        AND sm_j.job_uuid = cs_j.job_uuid
+                        AND sm_j.selected = 1
+                    )
             LEFT JOIN v2u_subject_map subject_map
                 ON (subject_map.id = sm_j.map_id)
             LEFT JOIN v2u_ko_classes_map_j cm_j
-                ON (cm_j.subject_id = cs_j.subject_id AND
-                    cm_j.specialty_id = cs_j.specialty_id AND
-                    cm_j.semester_id = cs_j.semester_id AND
-                    cm_j.classes_type = cs_j.classes_type AND
-                    cm_j.job_uuid = cs_j.job_uuid AND
-                    cm_j.selected = 1)
+                ON  (
+                            cm_j.subject_id = cs_j.subject_id
+                        AND cm_j.specialty_id = cs_j.specialty_id
+                        AND cm_j.semester_id = cs_j.semester_id
+                        AND cm_j.classes_type = cs_j.classes_type
+                        AND cm_j.job_uuid = cs_j.job_uuid
+                        AND cm_j.selected = 1
+                    )
             LEFT JOIN v2u_classes_map classes_map
-                ON (classes_map.id = cm_j.map_id)
+                ON  (classes_map.id = cm_j.map_id)
             -- join dz_zajecia_cykli without classes_type to find what other
             -- classes types we have at the destination
             LEFT JOIN v2u_dz_zajecia_cykli zajecia_cykli
-                ON (zajecia_cykli.prz_kod = subject_map.map_subj_code AND
-                    zajecia_cykli.cdyd_kod = semesters.semester_code)
+                ON  (
+                            zajecia_cykli.prz_kod = subject_map.map_subj_code
+                        AND zajecia_cykli.cdyd_kod = semesters.semester_code
+                    )
             WHERE ma_j.id IS NULL
             GROUP BY
                   cs_j.job_uuid
@@ -176,11 +188,13 @@ USING
               ) AS V2u_5Chars3_t) istniejace_tzaj_kody
         FROM u u
     ) src
-ON  (tgt.job_uuid = src.job_uuid AND
-     tgt.subject_id = src.subject_id AND
-     tgt.specialty_id = src.specialty_id AND
-     tgt.semester_id = src.semester_id AND
-     tgt.classes_type = src.classes_type)
+ON  (
+            tgt.job_uuid = src.job_uuid
+        AND tgt.subject_id = src.subject_id
+        AND tgt.specialty_id = src.specialty_id
+        AND tgt.semester_id = src.semester_id
+        AND tgt.classes_type = src.classes_type
+    )
 WHEN NOT MATCHED THEN
     INSERT
         ( job_uuid
@@ -226,22 +240,23 @@ WHEN NOT MATCHED THEN
         , src.dbg_map_class_types
         , src.dbg_semester_codes
         )
-WHEN MATCHED THEN UPDATE SET
-      tgt.classes_hours = src.classes_hours
-    , tgt.subject_map_id = src.subject_map_id
-    , tgt.subject_matching_score = src.subject_matching_score
-    , tgt.map_subj_code = src.map_subj_code
-    , tgt.classes_map_id = src.classes_map_id
-    , tgt.classes_matching_score = src.classes_matching_score
-    , tgt.map_classes_type = src.map_classes_type
-    , tgt.istniejace_tzaj_kody = src.istniejace_tzaj_kody
-    , tgt.reason = src.reason
-    , tgt.dbg_classes_hours = src.dbg_classes_hours
-    , tgt.dbg_subject_maps = src.dbg_subject_maps
-    , tgt.dbg_map_subj_codes = src.dbg_map_subj_codes
-    , tgt.dbg_classes_maps = src.dbg_classes_maps
-    , tgt.dbg_map_class_types = src.dbg_map_class_types
-    , tgt.dbg_semester_codes = src.dbg_semester_codes
+WHEN MATCHED THEN
+    UPDATE SET
+          tgt.classes_hours = src.classes_hours
+        , tgt.subject_map_id = src.subject_map_id
+        , tgt.subject_matching_score = src.subject_matching_score
+        , tgt.map_subj_code = src.map_subj_code
+        , tgt.classes_map_id = src.classes_map_id
+        , tgt.classes_matching_score = src.classes_matching_score
+        , tgt.map_classes_type = src.map_classes_type
+        , tgt.istniejace_tzaj_kody = src.istniejace_tzaj_kody
+        , tgt.reason = src.reason
+        , tgt.dbg_classes_hours = src.dbg_classes_hours
+        , tgt.dbg_subject_maps = src.dbg_subject_maps
+        , tgt.dbg_map_subj_codes = src.dbg_map_subj_codes
+        , tgt.dbg_classes_maps = src.dbg_classes_maps
+        , tgt.dbg_map_class_types = src.dbg_map_class_types
+        , tgt.dbg_semester_codes = src.dbg_semester_codes
 ;
 
 COMMIT;

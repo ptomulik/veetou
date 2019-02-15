@@ -35,45 +35,63 @@ USING
 
             FROM v2u_ko_classes_semesters_j cs_j
             INNER JOIN v2u_ko_subjects subjects
-                ON (subjects.id = cs_j.subject_id AND
-                    subjects.job_uuid = cs_j.job_uuid)
+                ON  (
+                            subjects.id = cs_j.subject_id
+                        AND subjects.job_uuid = cs_j.job_uuid
+                    )
             INNER JOIN v2u_ko_semesters semesters
-                ON (semesters.id = cs_j.semester_id AND
-                    semesters.job_uuid = cs_j.job_uuid)
+                ON  (
+                            semesters.id = cs_j.semester_id
+                        AND semesters.job_uuid = cs_j.job_uuid
+                    )
             LEFT JOIN v2u_ko_matched_zajcykl_j ma_j
-                ON (ma_j.subject_id = cs_j.subject_id AND
-                    ma_j.specialty_id = cs_j.specialty_id AND
-                    ma_j.semester_id = cs_j.semester_id AND
-                    ma_j.job_uuid = cs_j.job_uuid AND
-                    ma_j.classes_type = cs_j.classes_type)
+                ON  (
+                            ma_j.subject_id = cs_j.subject_id
+                        AND ma_j.specialty_id = cs_j.specialty_id
+                        AND ma_j.semester_id = cs_j.semester_id
+                        AND ma_j.job_uuid = cs_j.job_uuid
+                        AND ma_j.classes_type = cs_j.classes_type
+                    )
             LEFT JOIN v2u_ko_missing_zajcykl_j mi_j
-                ON (mi_j.subject_id = cs_j.subject_id AND
-                    mi_j.specialty_id = cs_j.specialty_id AND
-                    mi_j.semester_id = cs_j.semester_id AND
-                    mi_j.job_uuid = cs_j.job_uuid AND
-                    mi_j.classes_type = cs_j.classes_type)
+                ON  (
+                            mi_j.subject_id = cs_j.subject_id
+                        AND mi_j.specialty_id = cs_j.specialty_id
+                        AND mi_j.semester_id = cs_j.semester_id
+                        AND mi_j.job_uuid = cs_j.job_uuid
+                        AND mi_j.classes_type = cs_j.classes_type
+                    )
             LEFT JOIN v2u_ko_classes_map_j cm_j
-                ON (cm_j.subject_id = cs_j.subject_id AND
-                    cm_j.specialty_id = cs_j.specialty_id AND
-                    cm_j.semester_id = cs_j.semester_id AND
-                    cm_j.job_uuid = cs_j.job_uuid AND
-                    cm_j.classes_type = cs_j.classes_type AND
-                    cm_j.selected = 1)
+                ON  (
+                            cm_j.subject_id = cs_j.subject_id
+                        AND cm_j.specialty_id = cs_j.specialty_id
+                        AND cm_j.semester_id = cs_j.semester_id
+                        AND cm_j.job_uuid = cs_j.job_uuid
+                        AND cm_j.classes_type = cs_j.classes_type
+                        AND cm_j.selected = 1
+                    )
             LEFT JOIN v2u_classes_map classes_map
-                ON (classes_map.id = cm_j.map_id)
+                ON  (
+                            classes_map.id = cm_j.map_id
+                    )
             LEFT JOIN v2u_ko_subject_map_j sm_j
-                ON (sm_j.subject_id = cs_j.subject_id AND
-                    sm_j.specialty_id = cs_j.specialty_id AND
-                    sm_j.semester_id = cs_j.semester_id AND
-                    sm_j.job_uuid = cs_j.job_uuid AND
-                    sm_j.selected = 1)
+                ON  (
+                            sm_j.subject_id = cs_j.subject_id
+                        AND sm_j.specialty_id = cs_j.specialty_id
+                        AND sm_j.semester_id = cs_j.semester_id
+                        AND sm_j.job_uuid = cs_j.job_uuid
+                        AND sm_j.selected = 1
+                    )
             LEFT JOIN v2u_subject_map subject_map
-                ON (subject_map.id = sm_j.map_id)
+                ON  (
+                            subject_map.id = sm_j.map_id
+                    )
             LEFT JOIN v2u_ko_grades_j grades
-                ON (grades.subject_id = cs_j.subject_id AND
-                    grades.specialty_id = cs_j.specialty_id AND
-                    grades.semester_id = cs_j.semester_id AND
-                    grades.job_uuid = cs_j.job_uuid)
+                ON  (
+                            grades.subject_id = cs_j.subject_id
+                        AND grades.specialty_id = cs_j.specialty_id
+                        AND grades.semester_id = cs_j.semester_id
+                        AND grades.job_uuid = cs_j.job_uuid
+                    )
             GROUP BY
                   cs_j.job_uuid
                 , COALESCE(subject_map.map_subj_code, subjects.subj_code)
@@ -165,10 +183,12 @@ USING
             , v.dbg_classes_mapped
         FROM v v
     ) src
-ON  (tgt.prz_kod = src.prz_kod AND
-     tgt.cdyd_kod = src.cdyd_kod AND
-     tgt.tzaj_kod = src.tzaj_kod AND
-     tgt.job_uuid = src.job_uuid)
+ON  (
+            tgt.prz_kod = src.prz_kod
+        AND tgt.cdyd_kod = src.cdyd_kod
+        AND tgt.tzaj_kod = src.tzaj_kod
+        AND tgt.job_uuid = src.job_uuid
+    )
 WHEN NOT MATCHED THEN
     INSERT
         ( prz_kod
@@ -204,7 +224,8 @@ WHEN NOT MATCHED THEN
         , src.dbg_classes_mapped
         , src.safe_to_add
         )
-WHEN MATCHED THEN UPDATE SET
+WHEN MATCHED THEN
+    UPDATE SET
           tgt.liczba_godz = src.liczba_godz
         , tgt.tpro_kod = src.tpro_kod
         , tgt.dbg_subj_codes = src.dbg_subj_codes

@@ -21,22 +21,41 @@ USING
             FROM v2u_ko_subject_semesters_j j
             CROSS JOIN classes_types c
             INNER JOIN v2u_ko_subjects subjects
-                ON (subjects.id = j.subject_id AND
-                    subjects.job_uuid = j.job_uuid)
+                ON  (
+                            subjects.id = j.subject_id
+                        AND subjects.job_uuid = j.job_uuid
+                    )
         )
         SELECT u.*
         FROM u u
         WHERE u.classes_hours > 0
     ) src
-ON (tgt.subject_id = src.subject_id AND
-    tgt.specialty_id = src.specialty_id AND
-    tgt.semester_id = src.semester_id AND
-    tgt.classes_type = src.classes_type AND
-    tgt.job_uuid = src.job_uuid)
+ON  (
+            tgt.subject_id = src.subject_id
+        AND tgt.specialty_id = src.specialty_id
+        AND tgt.semester_id = src.semester_id
+        AND tgt.classes_type = src.classes_type
+        AND tgt.job_uuid = src.job_uuid
+    )
 WHEN NOT MATCHED THEN
-    INSERT (    job_uuid,     subject_id,     specialty_id,     semester_id,     classes_type,     classes_hours)
-    VALUES (src.job_uuid, src.subject_id, src.specialty_id, src.semester_id, src.classes_type, src.classes_hours)
-WHEN MATCHED THEN UPDATE SET
+    INSERT
+        ( job_uuid
+        , subject_id
+        , specialty_id
+        , semester_id
+        , classes_type
+        , classes_hours
+        )
+    VALUES
+        ( src.job_uuid
+        , src.subject_id
+        , src.specialty_id
+        , src.semester_id
+        , src.classes_type
+        , src.classes_hours
+        )
+WHEN MATCHED THEN
+    UPDATE SET
       tgt.classes_hours = src.classes_hours
 ;
 

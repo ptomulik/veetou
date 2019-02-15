@@ -20,16 +20,24 @@ USING
                   ) matching_score
             FROM v2u_ko_classes_semesters_j j
             INNER JOIN v2u_ko_subjects subjects
-                ON (subjects.id = j.subject_id AND
-                    subjects.job_uuid = j.job_uuid)
+                ON  (
+                            subjects.id = j.subject_id
+                        AND subjects.job_uuid = j.job_uuid
+                    )
             INNER JOIN v2u_ko_specialties specialties
-                ON (specialties.id = j.specialty_id AND
-                    specialties.job_uuid = j.job_uuid)
+                ON  (
+                            specialties.id = j.specialty_id
+                        AND specialties.job_uuid = j.job_uuid
+                    )
             INNER JOIN v2u_ko_semesters semesters
-                ON (semesters.id = j.semester_id AND
-                    semesters.job_uuid = j.job_uuid)
+                ON  (
+                            semesters.id = j.semester_id
+                        AND semesters.job_uuid = j.job_uuid
+                    )
             LEFT JOIN v2u_classes_map classes_map
-                ON (classes_map.classes_type = j.classes_type)
+                ON  (
+                            classes_map.classes_type = j.classes_type
+                    )
         ),
         u AS
         (
@@ -85,12 +93,14 @@ USING
                 END reason
         FROM w w
     ) src
-ON (tgt.subject_id = src.subject_id AND
-    tgt.specialty_id = src.specialty_id AND
-    tgt.semester_id = src.semester_id AND
-    tgt.classes_type = src.classes_type AND
-    tgt.map_id = src.map_id AND
-    tgt.job_uuid = src.job_uuid)
+ON  (
+            tgt.subject_id = src.subject_id
+        AND tgt.specialty_id = src.specialty_id
+        AND tgt.semester_id = src.semester_id
+        AND tgt.classes_type = src.classes_type
+        AND tgt.map_id = src.map_id
+        AND tgt.job_uuid = src.job_uuid
+    )
 WHEN NOT MATCHED THEN
     INSERT
         ( job_uuid

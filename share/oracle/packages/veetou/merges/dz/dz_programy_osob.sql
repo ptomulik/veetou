@@ -99,7 +99,8 @@ VALUES
         , src.umowa_sygnatura
         , src.kod_isced
     )
-WHEN MATCHED THEN UPDATE SET
+WHEN MATCHED
+    THEN UPDATE SET
           tgt.os_id = src.os_id
         , tgt.prg_kod = src.prg_kod
         , tgt.utw_id = src.utw_id

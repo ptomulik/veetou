@@ -151,84 +151,120 @@ USING
               dbg_tzaj_kod
         FROM v2u_ko_grades_j g_j
         INNER JOIN v2u_ko_students students
-            ON (g_j.student_id = students.id AND
-                g_j.job_uuid = students.job_uuid)
+            ON  (
+                        g_j.student_id = students.id
+                    AND g_j.job_uuid = students.job_uuid
+                )
         INNER JOIN v2u_ko_subjects subjects
-            ON (g_j.subject_id = subjects.id AND
-                g_j.job_uuid = subjects.job_uuid)
+            ON  (
+                        g_j.subject_id = subjects.id
+                    AND g_j.job_uuid = subjects.job_uuid
+                )
         INNER JOIN v2u_ko_specialties specialties
-            ON (g_j.specialty_id = specialties.id AND
-                g_j.job_uuid = specialties.job_uuid)
+            ON  (
+                        g_j.specialty_id = specialties.id
+                    AND g_j.job_uuid = specialties.job_uuid
+                )
         INNER JOIN v2u_ko_semesters semesters
-            ON (g_j.semester_id = semesters.id AND
-                g_j.job_uuid = semesters.job_uuid)
+            ON  (
+                        g_j.semester_id = semesters.id
+                    AND g_j.job_uuid = semesters.job_uuid
+                )
         LEFT JOIN v2u_ko_classes_map_j cm_j
-            ON (cm_j.semester_id = g_j.semester_id AND
-                cm_j.specialty_id = g_j.specialty_id AND
-                cm_j.subject_id = g_j.subject_id AND
-                cm_j.job_uuid = g_j.job_uuid AND
-                cm_j.selected = 1)
+            ON  (
+                        cm_j.semester_id = g_j.semester_id
+                    AND cm_j.specialty_id = g_j.specialty_id
+                    AND cm_j.subject_id = g_j.subject_id
+                    AND cm_j.job_uuid = g_j.job_uuid
+                    AND cm_j.selected = 1
+                )
         -- FIXME: add 'map_classes_type' attribute to v2u_classes_map_j and get
         --        rid of this join
         LEFT JOIN v2u_classes_map classes_map
-            ON (classes_map.id = cm_j.map_id)
+            ON  (
+                        classes_map.id = cm_j.map_id
+                )
         LEFT JOIN v2u_ko_subject_map_j sm_j
-            ON (sm_j.subject_id = g_j.subject_id AND
-                sm_j.specialty_id = g_j.specialty_id AND
-                sm_j.semester_id = g_j.semester_id AND
-                sm_j.job_uuid = g_j.job_uuid AND
-                sm_j.selected = 1)
+            ON  (
+                        sm_j.subject_id = g_j.subject_id
+                    AND sm_j.specialty_id = g_j.specialty_id
+                    AND sm_j.semester_id = g_j.semester_id
+                    AND sm_j.job_uuid = g_j.job_uuid
+                    AND sm_j.selected = 1
+                )
         -- FIXME: add 'map_subj_code' attribute to v2u_subject_map_j and get
         --        rid of this join
         LEFT JOIN v2u_subject_map subject_map
-            ON (subject_map.id = sm_j.map_id)
+            ON  (
+                        subject_map.id = sm_j.map_id
+                )
         LEFT JOIN v2u_ko_matched_etpos_j ma_etpos_j
-            ON (ma_etpos_j.semester_id = g_j.semester_id AND
-                ma_etpos_j.specialty_id = g_j.specialty_id AND
-                ma_etpos_j.student_id = g_j.student_id AND
-                ma_etpos_j.job_uuid = g_j.job_uuid)
+            ON  (
+                        ma_etpos_j.semester_id = g_j.semester_id
+                    AND ma_etpos_j.specialty_id = g_j.specialty_id
+                    AND ma_etpos_j.student_id = g_j.student_id
+                    AND ma_etpos_j.job_uuid = g_j.job_uuid
+                )
         -- FIXME: add 'prg_kod' attribute to v2u_matched_etpos_j and get
         --        rid of this join
         LEFT JOIN v2u_dz_etapy_osob etapy_osob
-            ON (etapy_osob.id = ma_etpos_j.etpos_id)
+            ON  (
+                        etapy_osob.id = ma_etpos_j.etpos_id
+                )
 --        LEFT JOIN v2u_ko_matched_prgos_j ma_prgos_j
---            ON (ma_prgos_j.student_id = g_j.student_id AND
---                ma_prgos_j.specialty_id = g_j.specialty_id AND
---                ma_prgos_j.semester_id = g_j.semester_id AND
---                ma_prgos_j.job_uuid = g_j.job_uuid )
+--            ON  (
+--                        ma_prgos_j.student_id = g_j.student_id
+--                    AND ma_prgos_j.specialty_id = g_j.specialty_id
+--                    AND ma_prgos_j.semester_id = g_j.semester_id
+--                    AND ma_prgos_j.job_uuid = g_j.job_uuid
+--                )
 --        -- FIXME: add 'prg_kod' attribute to v2u_matched_prgos_j and get
 --        --        rid of this join
 --        LEFT JOIN v2u_dz_programy_osob programy_osob
---            ON (programy_osob.id = ma_prgos_j.prgos_id)
+--            ON  (programy_osob.id = ma_prgos_j.prgos_id)
         LEFT JOIN v2u_ko_matched_przedm_j ma_przedm_j
-            ON (ma_przedm_j.subject_id = g_j.subject_id AND
-                ma_przedm_j.specialty_id = g_j.specialty_id AND
-                ma_przedm_j.semester_id = g_j.semester_id AND
-                ma_przedm_j.job_uuid = g_j.job_uuid)
+            ON  (
+                        ma_przedm_j.subject_id = g_j.subject_id
+                    AND ma_przedm_j.specialty_id = g_j.specialty_id
+                    AND ma_przedm_j.semester_id = g_j.semester_id
+                    AND ma_przedm_j.job_uuid = g_j.job_uuid
+                )
         LEFT JOIN v2u_dz_przedmioty przedmioty
-            ON (ma_przedm_j.prz_kod = przedmioty.kod)
+            ON  (
+                        ma_przedm_j.prz_kod = przedmioty.kod
+                )
         LEFT JOIN v2u_ko_matched_przcykl_j ma_przcykl_j
-            ON (ma_przcykl_j.subject_id = g_j.subject_id AND
-                ma_przcykl_j.specialty_id = g_j.specialty_id AND
-                ma_przcykl_j.semester_id = g_j.semester_id AND
-                ma_przcykl_j.job_uuid = g_j.job_uuid)
+            ON  (
+                        ma_przcykl_j.subject_id = g_j.subject_id
+                    AND ma_przcykl_j.specialty_id = g_j.specialty_id
+                    AND ma_przcykl_j.semester_id = g_j.semester_id
+                    AND ma_przcykl_j.job_uuid = g_j.job_uuid
+                )
         LEFT JOIN v2u_dz_przedmioty_cykli przedmioty_cykli
-            ON (ma_przcykl_j.prz_kod = przedmioty_cykli.prz_kod AND
-                ma_przcykl_j.cdyd_kod = przedmioty_cykli.cdyd_kod)
+            ON  (
+                        ma_przcykl_j.prz_kod = przedmioty_cykli.prz_kod
+                    AND ma_przcykl_j.cdyd_kod = przedmioty_cykli.cdyd_kod
+                )
         LEFT JOIN v2u_ko_matched_zajcykl_j ma_zajcykl_j
-            ON (ma_zajcykl_j.subject_id = g_j.subject_id AND
-                ma_zajcykl_j.specialty_id = g_j.specialty_id AND
-                ma_zajcykl_j.semester_id = g_j.semester_id AND
-                ma_zajcykl_j.classes_type = cm_j.classes_type)
+            ON  (
+                        ma_zajcykl_j.subject_id = g_j.subject_id
+                    AND ma_zajcykl_j.specialty_id = g_j.specialty_id
+                    AND ma_zajcykl_j.semester_id = g_j.semester_id
+                    AND ma_zajcykl_j.classes_type = cm_j.classes_type
+                )
         LEFT JOIN v2u_dz_zajecia_cykli zajecia_cykli
-            ON (ma_zajcykl_j.zajcykl_id = zajecia_cykli.id)
+            ON  (
+                        ma_zajcykl_j.zajcykl_id = zajecia_cykli.id
+                )
     ) src
-ON  ( tgt.v2u_job_uuid = src.v2u_job_uuid AND
-      tgt.v2u_student_id = src.v2u_student_id AND
-      tgt.v2u_subject_id = src.v2u_subject_id AND
-      tgt.v2u_specialty_id = src.v2u_specialty_id AND
-      tgt.v2u_semester_id = src.v2u_semester_id AND
-      tgt.v2u_classes_type = src.v2u_classes_type )
+ON  (
+            tgt.v2u_job_uuid = src.v2u_job_uuid
+        AND tgt.v2u_student_id = src.v2u_student_id
+        AND tgt.v2u_subject_id = src.v2u_subject_id
+        AND tgt.v2u_specialty_id = src.v2u_specialty_id
+        AND tgt.v2u_semester_id = src.v2u_semester_id
+        AND tgt.v2u_classes_type = src.v2u_classes_type
+    )
 WHEN NOT MATCHED THEN
     INSERT
         ( v2u_job_uuid
@@ -350,7 +386,8 @@ WHEN NOT MATCHED THEN
         , src.dbg_prz_kod
         , src.dbg_tzaj_kod
         )
-WHEN MATCHED THEN UPDATE SET
+WHEN MATCHED THEN
+    UPDATE SET
           tgt.v2u_map_classes_type = src.v2u_map_classes_type
         , tgt.v2u_classes_hours = src.v2u_classes_hours
         , tgt.v2u_student_index = src.v2u_student_index
