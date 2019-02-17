@@ -1,14 +1,28 @@
 CREATE OR REPLACE PACKAGE BODY V2U_Util AS
-    FUNCTION Max_Admission_Semester(semesters IN V2u_Ko_Semesters_t)
-        RETURN VARCHAR2
+    PROCEDURE Give_Grants(to_user IN VARCHAR2)
     IS
-        lowest V2u_Ko_Semester_t;
     BEGIN
-        SELECT VALUE(s) INTO lowest
-            FROM TABLE(semesters) s
-            WHERE ROWNUM <= 1
-            ORDER BY 1;
-        RETURN V2u_Semester_t.sem_sub(lowest.semester_code, (lowest.semester_number-1));
+        FOR i IN (SELECT view_name FROM user_views)
+        LOOP
+            EXECUTE IMMEDIATE 'GRANT SELECT ON ' || i.view_name || ' TO ' || to_user;
+        END LOOP;
+        FOR i IN (
+                    SELECT table_name FROM user_tables
+                        WHERE table_name NOT IN
+                        (
+                            SELECT table_name FROM user_nested_tables
+                        )
+                 )
+        LOOP
+            EXECUTE IMMEDIATE 'GRANT SELECT ON ' || i.table_name || ' TO ' || to_user;
+        END LOOP;
+        FOR i IN (
+                    SELECT object_name FROM user_procedures
+                        WHERE object_type IN ('PACKAGE', 'TYPE')
+                 )
+        LOOP
+            EXECUTE IMMEDIATE 'GRANT EXECUTE ON ' || i.object_name || ' TO ' || to_user;
+        END LOOP;
     END;
 END V2U_Util;
 
