@@ -52,7 +52,7 @@ USING
                     )
             -- join dz_przedmioty cykli without semester to find out what other
             -- semesters we have reached at the destination
-            LEFT JOIN v2u_dz_przedmioty_cykli przedmioty_cykli
+            LEFT JOIN dz_przedmioty_cykli przedmioty_cykli
                 ON  (
                             przedmioty_cykli.prz_kod = subject_map.map_subj_code
                     )
@@ -88,7 +88,7 @@ USING
                 WHEN (SELECT COUNT(*) FROM TABLE(u.istniejace_cdyd_kody)) < 1
                 THEN u.tried_map_subj_code
                      || ':*' ||
-                    ' not in v2u_dz_przedmioty_cykli'
+                    ' not in dz_przedmioty_cykli'
                 WHEN (SELECT COUNT(*)
                       FROM TABLE(u.istniejace_cdyd_kody) t
                       WHERE VALUE(t) = u.semester_code) < 1
@@ -97,7 +97,7 @@ USING
                      || ':' ||
                      u.semester_code
                      ||
-                     ' not in v2u_dz_przedmioty_cykli'
+                     ' not in dz_przedmioty_cykli'
                 ELSE 'error (v2u_ko_matched_przcykl_j out of sync?)'
                 END reason
             , u.tried_map_subj_code tried_map_subj_code

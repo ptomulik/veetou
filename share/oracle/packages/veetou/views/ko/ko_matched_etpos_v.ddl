@@ -27,9 +27,9 @@ AS WITH u AS
                 semesters.job_uuid = me_j.job_uuid)
         INNER JOIN v2u_specialty_map specialty_map
             ON (specialty_map.id = me_j.specialty_map_id)
-        INNER JOIN v2u_dz_etapy_osob etapy_osob
+        INNER JOIN dz_etapy_osob etapy_osob
             ON (etapy_osob.id = me_j.etpos_id)
-        INNER JOIN v2u_dz_programy_osob programy_osob
+        INNER JOIN dz_programy_osob programy_osob
             ON (programy_osob.id = me_j.prgos_id)
     )
 SELECT * FROM u u

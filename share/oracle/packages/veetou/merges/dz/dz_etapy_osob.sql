@@ -1,4 +1,4 @@
-MERGE INTO v2u_dz_etapy_osob tgt
+MERGE INTO dz_etapy_osob tgt
 USING dz_etapy_osob src
 ON  (tgt.id = src.id)
 WHEN NOT MATCHED THEN

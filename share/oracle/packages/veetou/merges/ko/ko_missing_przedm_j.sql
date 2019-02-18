@@ -52,7 +52,7 @@ USING
                     )
             -- join dz_przedmioty again to find whether we really can't find
             -- such a przedmiot
-            LEFT JOIN v2u_dz_przedmioty przedmioty
+            LEFT JOIN dz_przedmioty przedmioty
                 ON  (
                             przedmioty.kod = subject_map.map_subj_code
                     )
@@ -88,16 +88,17 @@ USING
                 WHEN u.istniejacy_prz_kod_count < 1
                 THEN u.tried_map_subj_code
                      ||
-                     ' not in v2u_dz_przedmioty'
+                     ' not in dz_przedmioty'
                 ELSE 'error (v2u_ko_matched_przedm_j out of sync?)'
                 END reason
             , u.tried_map_subj_code tried_map_subj_code
         FROM u u
     ) src
-ON  (tgt.job_uuid = src.job_uuid AND
-     tgt.subject_id = src.subject_id AND
-     tgt.specialty_id = src.specialty_id AND
-     tgt.semester_id = src.semester_id)
+ON  (       tgt.job_uuid = src.job_uuid
+        AND tgt.subject_id = src.subject_id
+        AND tgt.specialty_id = src.specialty_id
+        AND tgt.semester_id = src.semester_id
+    )
 WHEN NOT MATCHED THEN
     INSERT
         ( job_uuid

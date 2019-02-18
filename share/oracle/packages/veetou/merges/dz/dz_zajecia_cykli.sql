@@ -1,4 +1,4 @@
-MERGE INTO v2u_dz_zajecia_cykli tgt
+MERGE INTO dz_zajecia_cykli tgt
 USING dz_zajecia_cykli src
 ON  (tgt.id = src.id)
 WHEN NOT MATCHED THEN

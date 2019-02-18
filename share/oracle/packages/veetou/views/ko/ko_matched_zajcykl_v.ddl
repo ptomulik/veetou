@@ -29,7 +29,7 @@ AS WITH u AS
             ON (subject_map.id = j.subject_map_id)
         INNER JOIN v2u_classes_map classes_map
             ON (classes_map.id = j.classes_map_id)
-        INNER JOIN v2u_dz_zajecia_cykli zajecia_cykli
+        INNER JOIN dz_zajecia_cykli zajecia_cykli
             ON (zajecia_cykli.prz_kod = j.prz_kod AND
                 zajecia_cykli.cdyd_kod = j.cdyd_kod AND
                 zajecia_cykli.tzaj_kod = j.tzaj_kod)

@@ -39,9 +39,9 @@ CREATE TABLE v2u_ko_matched_zajcykl_j
         , CONSTRAINT v2u_ko_matched_zajcykl_j_f6
             FOREIGN KEY (subject_id, specialty_id, semester_id, subject_map_id, job_uuid)
             REFERENCES v2u_ko_subject_map_j(subject_id, specialty_id, semester_id, map_id, job_uuid)
-        , CONSTRAINT v2u_ko_matched_zajcykl_j_f7
-            FOREIGN KEY (zajcykl_id)
-            REFERENCES v2u_dz_zajecia_cykli(id)
+--        , CONSTRAINT v2u_ko_matched_zajcykl_j_f7
+--            FOREIGN KEY (zajcykl_id)
+--            REFERENCES dz_zajecia_cykli(id)
         --
         , CONSTRAINT v2u_ko_matched_zajcykl_j_u0
             UNIQUE (job_uuid, subject_id, specialty_id, semester_id, classes_type)

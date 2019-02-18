@@ -28,7 +28,7 @@ _re_tutsuffix = r'(?:prof\. PW)'
 
 # patterns with some groups predefined
 _rg_subj_name = r'(?P<subj_name>\S+(?: {1,2}\S+)*)'
-_rg_subj_code = r'(?P<subj_code>(?:ML|GK|GP)\.\w+)'
+_rg_subj_code = r'(?P<subj_code>(?:CH|GK|GP|IM|ML|TR)\.\w+)'
 _rg_subj_grade = r'(?P<subj_grade>%s)' % _re_subj_grade
 _rg_subj_grade_date = r'(?P<subj_grade_date>\d{2}\.\d{2}\.\d{4})'
 _rg_sheet_number = r'(?P<sheet_number>\d{1,4})'

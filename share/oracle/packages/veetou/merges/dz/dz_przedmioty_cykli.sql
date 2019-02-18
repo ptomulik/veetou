@@ -1,4 +1,4 @@
-MERGE INTO v2u_dz_przedmioty_cykli tgt
+MERGE INTO dz_przedmioty_cykli tgt
 USING dz_przedmioty_cykli src
 ON  (tgt.prz_kod = src.prz_kod AND tgt.cdyd_kod = src.cdyd_kod)
 WHEN NOT MATCHED THEN

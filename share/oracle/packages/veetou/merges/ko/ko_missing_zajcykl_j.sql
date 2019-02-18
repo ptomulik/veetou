@@ -93,7 +93,7 @@ USING
                 ON  (classes_map.id = cm_j.map_id)
             -- join dz_zajecia_cykli without classes_type to find what other
             -- classes types we have at the destination
-            LEFT JOIN v2u_dz_zajecia_cykli zajecia_cykli
+            LEFT JOIN dz_zajecia_cykli zajecia_cykli
                 ON  (
                             zajecia_cykli.prz_kod = subject_map.map_subj_code
                         AND zajecia_cykli.cdyd_kod = semesters.semester_code
@@ -159,7 +159,7 @@ USING
                      || ':' ||
                      u.semester_code
                      || ':*' ||
-                    ' not in v2u_dz_zajecia_cykli'
+                    ' not in dz_zajecia_cykli'
                 WHEN (SELECT COUNT(*)
                       FROM TABLE(u.istniejace_tzaj_kody) t
                       WHERE VALUE(t) = u.map_classes_type) < 1
@@ -170,7 +170,7 @@ USING
                      || ':' ||
                      u.map_classes_type
                      ||
-                     ' not in v2u_dz_zajecia_cykli'
+                     ' not in dz_zajecia_cykli'
                 ELSE 'error (v2u_ko_matched_zajcykl_j out of sync?)'
               END reason
             , u.dbg_classes_hours

@@ -36,6 +36,7 @@ CREATE OR REPLACE TYPE BODY V2u_Dz_Zalicz_Przedmiotu_B_t AS
             );
     END;
 
+
     MEMBER PROCEDURE init(
               SELF IN OUT NOCOPY V2u_Dz_Zalicz_Przedmiotu_B_t
             , status_rej IN VARCHAR2

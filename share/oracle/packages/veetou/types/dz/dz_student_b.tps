@@ -25,6 +25,7 @@ CREATE OR REPLACE TYPE V2u_Dz_Student_B_t
         , indeks_glowny VARCHAR2
         ) RETURN SELF AS RESULT
 
+
     , MEMBER PROCEDURE init(
           SELF IN OUT NOCOPY V2u_Dz_Student_B_t
         , id NUMBER

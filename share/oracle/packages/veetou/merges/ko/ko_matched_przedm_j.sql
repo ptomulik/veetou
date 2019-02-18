@@ -15,7 +15,7 @@ USING
                         m.id = u.map_id
                     AND m.map_subj_code IS NOT NULL
                 )
-        INNER JOIN v2u_dz_przedmioty p
+        INNER JOIN dz_przedmioty p
             ON  (
                         p.kod = m.map_subj_code
                 )

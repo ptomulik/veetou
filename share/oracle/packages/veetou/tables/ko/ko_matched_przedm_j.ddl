@@ -29,9 +29,9 @@ CREATE TABLE v2u_ko_matched_przedm_j
         , CONSTRAINT v2u_ko_matched_przedm_j_f5
             FOREIGN KEY (subject_id, specialty_id, semester_id, subject_map_id, job_uuid)
             REFERENCES v2u_ko_subject_map_j(subject_id, specialty_id, semester_id, map_id, job_uuid)
-        , CONSTRAINT v2u_ko_matched_przedm_j_f6
-            FOREIGN KEY (prz_kod)
-            REFERENCES v2u_dz_przedmioty(kod)
+--        , CONSTRAINT v2u_ko_matched_przedm_j_f6
+--            FOREIGN KEY (prz_kod)
+--            REFERENCES dz_przedmioty(kod)
         --
         , CONSTRAINT v2u_ko_matched_przedm_j_u0
             UNIQUE (subject_id, specialty_id, semester_id, job_uuid)

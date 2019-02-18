@@ -1,142 +1,207 @@
 CREATE OR REPLACE TYPE V2u_Ko_Matched_Prgos_V_t
-    FORCE AUTHID CURRENT_USER AS OBJECT
-    ( id NUMBER(38)
-    , job_uuid RAW(16)
-    , student_id NUMBER(38)
-    , specialty_id NUMBER(38)
-    , prgos_id NUMBER(10)
-    , ko_student_index VARCHAR2(32 CHAR)
-    , ko_student_name VARCHAR2(128 CHAR)
-    , ko_first_name VARCHAR2(48 CHAR)
-    , ko_last_name VARCHAR2(48 CHAR)
-    , ko_university VARCHAR2(8 CHAR)
-    , ko_faculty VARCHAR2(8 CHAR)
-    , ko_studies_modetier VARCHAR2(100 CHAR)
-    , ko_studies_field VARCHAR2(100 CHAR)
-    , ko_studies_specialty VARCHAR2(100 CHAR)
-    , ko_semester_ids V2u_Ids_t
-    , ko_semester_numbers V2u_Ints2_t
-    , ko_semester_codes V2u_Semester_Codes_t
-    , dz_os_id NUMBER(10)
-    , dz_prg_kod VARCHAR2(20 CHAR)
-    --, dz_utw_id VARCHAR2(30 CHAR)
-    --, dz_utw_data DATE
-    --, dz_mod_id VARCHAR2(30 CHAR)
-    --, dz_mod_data DATE
-    , dz_st_id NUMBER(10)
-    , dz_czy_glowny VARCHAR2(1 CHAR)
-    --, dz_data_nast_zal DATE
-    --, dz_uprawnienia_zawodowe VARCHAR2(4000 CHAR)
-    --, dz_uprawnienia_zawodowe_ang VARCHAR2(4000 CHAR)
-    , dz_jed_org_kod VARCHAR2(20 CHAR)
-    --, dz_dok_upr_id NUMBER(10)
-    , dz_data_przyjecia DATE
-    --, dz_plan_data_ukon DATE
-    --, dz_czy_zgloszony VARCHAR2(1 CHAR)
-    , dz_status VARCHAR2(6 CHAR)
-    , dz_data_rozpoczecia DATE
-    --, dz_numer_s NUMBER(10)
-    --, dz_numer_swiadectwa VARCHAR2(25 CHAR)
-    --, dz_tecz_id NUMBER(10)
-    --, dz_data_arch DATE
-    --, dz_warunki_przyjec_na_prog VARCHAR2(2000 CHAR)
-    --, dz_warunki_przyjec_na_prog_ang VARCHAR2(2000 CHAR)
-    --, dz_numer_do_banku NUMBER(10)
-    --, dz_numer_do_banku_sygn VARCHAR2(50 CHAR)
-    --, dz_numer_5_proc NUMBER(10)
-    --, dz_numer_5_proc_sygn VARCHAR2(50 CHAR)
-    --, dz_status_arch VARCHAR2(1 CHAR)
-    --, dz_osiagniecia CLOB
-    --, dz_osiagniecia_ang CLOB
-    --, dz_nr_kierunku_ustawa VARCHAR2(1 CHAR)
-    --, dz_limit_ects NUMBER(15,2)
-    --, dz_dodatkowe_ects_uczelnia NUMBER(15,2)
-    --, dz_wykorzystane_ects_obce NUMBER(15,2)
-    --, dz_limit_ects_podpiecia NUMBER(15,2)
-    , dz_prgos_id NUMBER(10)
-    --, dz_osiagniecia_programu VARCHAR2(4000 CHAR)
-    --, dz_osiagniecia_programu_ang VARCHAR2(4000 CHAR)
-    --, dz_wynik_studiow VARCHAR2(100 CHAR)
-    --, dz_wynik_studiow_ang VARCHAR2(100 CHAR)
-    --, dz_umowa_data_przeczytania DATE
-    --, dz_umowa_data_podpisania DATE
-    --, dz_umowa_sygnatura VARCHAR2(20 CHAR)
-    --, dz_kod_isced VARCHAR2(5 CHAR)
+    FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Student_Semester_V_t
+    ( prgos_id NUMBER(10)
+    , os_id NUMBER(10)
+    , prg_kod VARCHAR2(20 CHAR)
+    , utw_id VARCHAR2(30 CHAR)
+    , utw_data DATE
+    , mod_id VARCHAR2(30 CHAR)
+    , mod_data DATE
+    , st_id NUMBER(10)
+    , czy_glowny VARCHAR2(1 CHAR)
+    , data_nast_zal DATE
+    , uprawnienia_zawodowe VARCHAR2(4000 CHAR)
+    , uprawnienia_zawodowe_ang VARCHAR2(4000 CHAR)
+    , jed_org_kod VARCHAR2(20 CHAR)
+    , dok_upr_id NUMBER(10)
+    , data_przyjecia DATE
+    , plan_data_ukon DATE
+    , czy_zgloszony VARCHAR2(1 CHAR)
+    , status VARCHAR2(6 CHAR)
+    , data_rozpoczecia DATE
+    , numer_s NUMBER(10)
+    , numer_swiadectwa VARCHAR2(25 CHAR)
+    , tecz_id NUMBER(10)
+    , data_arch DATE
+    , warunki_przyjec_na_prog VARCHAR2(2000 CHAR)
+    , warunki_przyjec_na_prog_ang VARCHAR2(2000 CHAR)
+    , numer_do_banku NUMBER(10)
+    , numer_do_banku_sygn VARCHAR2(50 CHAR)
+    , numer_5_proc NUMBER(10)
+    , numer_5_proc_sygn VARCHAR2(50 CHAR)
+    , status_arch VARCHAR2(1 CHAR)
+    , osiagniecia CLOB
+    , osiagniecia_ang CLOB
+    , nr_kierunku_ustawa VARCHAR2(1 CHAR)
+    , limit_ects NUMBER(15,2)
+    , dodatkowe_ects_uczelnia NUMBER(15,2)
+    , wykorzystane_ects_obce NUMBER(15,2)
+    , limit_ects_podpiecia NUMBER(15,2)
+    , prgos_prgos_id NUMBER(10)
+    , osiagniecia_programu VARCHAR2(4000 CHAR)
+    , osiagniecia_programu_ang VARCHAR2(4000 CHAR)
+    , wynik_studiow VARCHAR2(100 CHAR)
+    , wynik_studiow_ang VARCHAR2(100 CHAR)
+    , umowa_data_przeczytania DATE
+    , umowa_data_podpisania DATE
+    , umowa_sygnatura VARCHAR2(20 CHAR)
+    , kod_isced VARCHAR2(5 CHAR)
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Prgos_V_t(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Prgos_V_t
-            , id IN NUMBER
             , job_uuid IN RAW
             , student_id IN NUMBER
             , specialty_id IN NUMBER
+            , semester_id IN NUMBER
+            , student_index VARCHAR2
+            , student_name VARCHAR2
+            , first_name VARCHAR2
+            , last_name VARCHAR2
+            , university IN VARCHAR2
+            , faculty IN VARCHAR2
+            , studies_modetier IN VARCHAR2
+            , studies_field IN VARCHAR2
+            , studies_specialty IN VARCHAR2
+            , semester_number IN NUMBER
+            , semester_code IN VARCHAR2
+            , ects_mandatory IN NUMBER
+            , ects_other IN NUMBER
+            , ects_total IN NUMBER
+            , ects_attained IN NUMBER
             , prgos_id IN NUMBER
-            , ko_student_index IN VARCHAR2
-            , ko_student_name IN VARCHAR2
-            , ko_first_name IN VARCHAR2
-            , ko_last_name IN VARCHAR2
-            , ko_university IN VARCHAR2
-            , ko_faculty IN VARCHAR2
-            , ko_studies_modetier IN VARCHAR2
-            , ko_studies_field IN VARCHAR2
-            , ko_studies_specialty IN VARCHAR2
-            , ko_semester_ids IN V2u_Ids_t
-            , ko_semester_numbers IN V2u_Ints2_t
-            , ko_semester_codes IN V2u_Semester_Codes_t
-            , dz_os_id IN NUMBER
-            , dz_prg_kod IN VARCHAR2
-            --, dz_utw_id IN VARCHAR2
-            --, dz_utw_data IN DATE
-            --, dz_mod_id IN VARCHAR2
-            --, dz_mod_data IN DATE
-            , dz_st_id IN NUMBER
-            , dz_czy_glowny IN VARCHAR2
-            --, dz_data_nast_zal IN DATE
-            --, dz_uprawnienia_zawodowe IN VARCHAR2
-            --, dz_uprawnienia_zawodowe_ang IN VARCHAR2
-            , dz_jed_org_kod IN VARCHAR2
-            --, dz_dok_upr_id IN NUMBER
-            , dz_data_przyjecia IN DATE
-            --, dz_plan_data_ukon IN DATE
-            --, dz_czy_zgloszony IN VARCHAR2
-            , dz_status IN VARCHAR2
-            , dz_data_rozpoczecia IN DATE
-            --, dz_numer_s IN NUMBER
-            --, dz_numer_swiadectwa IN VARCHAR2
-            --, dz_tecz_id IN NUMBER
-            --, dz_data_arch IN DATE
-            --, dz_warunki_przyjec_na_prog IN VARCHAR2
-            --, dz_warunki_przyjec_na_prog_ang IN VARCHAR2
-            --, dz_numer_do_banku IN NUMBER
-            --, dz_numer_do_banku_sygn IN VARCHAR2
-            --, dz_numer_5_proc IN NUMBER
-            --, dz_numer_5_proc_sygn IN VARCHAR2
-            --, dz_status_arch IN VARCHAR2
-            --, dz_osiagniecia IN CLOB
-            --, dz_osiagniecia_ang IN CLOB
-            --, dz_nr_kierunku_ustawa IN VARCHAR2
-            --, dz_limit_ects IN NUMBER
-            --, dz_dodatkowe_ects_uczelnia IN NUMBER
-            --, dz_wykorzystane_ects_obce IN NUMBER
-            --, dz_limit_ects_podpiecia IN NUMBER
-            , dz_prgos_id IN NUMBER
-            --, dz_osiagniecia_programu IN VARCHAR2
-            --, dz_osiagniecia_programu_ang IN VARCHAR2
-            --, dz_wynik_studiow IN VARCHAR2
-            --, dz_wynik_studiow_ang IN VARCHAR2
-            --, dz_umowa_data_przeczytania IN DATE
-            --, dz_umowa_data_podpisania IN DATE
-            --, dz_umowa_sygnatura IN VARCHAR2
-            --, dz_kod_isced IN VARCHAR2
+            , os_id IN NUMBER
+            , prg_kod IN VARCHAR2
+            , utw_id IN VARCHAR2
+            , utw_data IN DATE
+            , mod_id IN VARCHAR2
+            , mod_data IN DATE
+            , st_id IN NUMBER
+            , czy_glowny IN VARCHAR2
+            , data_nast_zal IN DATE
+            , uprawnienia_zawodowe IN VARCHAR2
+            , uprawnienia_zawodowe_ang IN VARCHAR2
+            , jed_org_kod IN VARCHAR2
+            , dok_upr_id IN NUMBER
+            , data_przyjecia IN DATE
+            , plan_data_ukon IN DATE
+            , czy_zgloszony IN VARCHAR2
+            , status IN VARCHAR2
+            , data_rozpoczecia IN DATE
+            , numer_s IN NUMBER
+            , numer_swiadectwa IN VARCHAR2
+            , tecz_id IN NUMBER
+            , data_arch IN DATE
+            , warunki_przyjec_na_prog IN VARCHAR2
+            , warunki_przyjec_na_prog_ang IN VARCHAR2
+            , numer_do_banku IN NUMBER
+            , numer_do_banku_sygn IN VARCHAR2
+            , numer_5_proc IN NUMBER
+            , numer_5_proc_sygn IN VARCHAR2
+            , status_arch IN VARCHAR2
+            , osiagniecia IN CLOB
+            , osiagniecia_ang IN CLOB
+            , nr_kierunku_ustawa IN VARCHAR2
+            , limit_ects IN NUMBER
+            , dodatkowe_ects_uczelnia IN NUMBER
+            , wykorzystane_ects_obce IN NUMBER
+            , limit_ects_podpiecia IN NUMBER
+            , prgos_prgos_id IN NUMBER
+            , osiagniecia_programu IN VARCHAR2
+            , osiagniecia_programu_ang IN VARCHAR2
+            , wynik_studiow IN VARCHAR2
+            , wynik_studiow_ang IN VARCHAR2
+            , umowa_data_przeczytania IN DATE
+            , umowa_data_podpisania IN DATE
+            , umowa_sygnatura IN VARCHAR2
+            , kod_isced IN VARCHAR2
             ) RETURN SELF AS RESULT
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Prgos_V_t(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Prgos_V_t
-            , id IN NUMBER
             , student IN V2u_Ko_Student_t
             , specialty IN V2u_Ko_Specialty_t
+            , semester IN V2u_Ko_Semester_t
+            , ects_attained IN NUMBER
             , program_osoby IN V2u_Dz_Program_Osoby_t
-            , semester_ids IN V2u_Ids_t
             ) RETURN SELF AS RESULT
+
+    , MEMBER PROCEDURE init(
+              SELF IN OUT NOCOPY V2u_Ko_Matched_Prgos_V_t
+            , job_uuid IN RAW
+            , student_id IN NUMBER
+            , specialty_id IN NUMBER
+            , semester_id IN NUMBER
+            , student_index VARCHAR2
+            , student_name VARCHAR2
+            , first_name VARCHAR2
+            , last_name VARCHAR2
+            , university IN VARCHAR2
+            , faculty IN VARCHAR2
+            , studies_modetier IN VARCHAR2
+            , studies_field IN VARCHAR2
+            , studies_specialty IN VARCHAR2
+            , semester_number IN NUMBER
+            , semester_code IN VARCHAR2
+            , ects_mandatory IN NUMBER
+            , ects_other IN NUMBER
+            , ects_total IN NUMBER
+            , ects_attained IN NUMBER
+            , prgos_id IN NUMBER
+            , os_id IN NUMBER
+            , prg_kod IN VARCHAR2
+            , utw_id IN VARCHAR2
+            , utw_data IN DATE
+            , mod_id IN VARCHAR2
+            , mod_data IN DATE
+            , st_id IN NUMBER
+            , czy_glowny IN VARCHAR2
+            , data_nast_zal IN DATE
+            , uprawnienia_zawodowe IN VARCHAR2
+            , uprawnienia_zawodowe_ang IN VARCHAR2
+            , jed_org_kod IN VARCHAR2
+            , dok_upr_id IN NUMBER
+            , data_przyjecia IN DATE
+            , plan_data_ukon IN DATE
+            , czy_zgloszony IN VARCHAR2
+            , status IN VARCHAR2
+            , data_rozpoczecia IN DATE
+            , numer_s IN NUMBER
+            , numer_swiadectwa IN VARCHAR2
+            , tecz_id IN NUMBER
+            , data_arch IN DATE
+            , warunki_przyjec_na_prog IN VARCHAR2
+            , warunki_przyjec_na_prog_ang IN VARCHAR2
+            , numer_do_banku IN NUMBER
+            , numer_do_banku_sygn IN VARCHAR2
+            , numer_5_proc IN NUMBER
+            , numer_5_proc_sygn IN VARCHAR2
+            , status_arch IN VARCHAR2
+            , osiagniecia IN CLOB
+            , osiagniecia_ang IN CLOB
+            , nr_kierunku_ustawa IN VARCHAR2
+            , limit_ects IN NUMBER
+            , dodatkowe_ects_uczelnia IN NUMBER
+            , wykorzystane_ects_obce IN NUMBER
+            , limit_ects_podpiecia IN NUMBER
+            , prgos_prgos_id IN NUMBER
+            , osiagniecia_programu IN VARCHAR2
+            , osiagniecia_programu_ang IN VARCHAR2
+            , wynik_studiow IN VARCHAR2
+            , wynik_studiow_ang IN VARCHAR2
+            , umowa_data_przeczytania IN DATE
+            , umowa_data_podpisania IN DATE
+            , umowa_sygnatura IN VARCHAR2
+            , kod_isced IN VARCHAR2
+            )
+
+    , MEMBER PROCEDURE init(
+              SELF IN OUT NOCOPY V2u_Ko_Matched_Prgos_V_t
+            , student IN V2u_Ko_Student_t
+            , specialty IN V2u_Ko_Specialty_t
+            , semester IN V2u_Ko_Semester_t
+            , ects_attained IN NUMBER
+            , program_osoby IN V2u_Dz_Program_Osoby_t
+            )
     );
 /
 CREATE OR REPLACE TYPE V2u_Ko_Matched_Prgoses_V_t

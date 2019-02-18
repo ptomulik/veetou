@@ -47,6 +47,7 @@ CREATE OR REPLACE TYPE BODY V2u_Dz_Przedmiot_Cyklu_B_t AS
         RETURN;
     END;
 
+
     MEMBER PROCEDURE init(
               SELF IN OUT NOCOPY V2u_Dz_Przedmiot_Cyklu_B_t
             , prz_kod IN VARCHAR2

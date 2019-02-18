@@ -25,7 +25,7 @@ AS WITH u AS
                 semesters.job_uuid = j.job_uuid)
         INNER JOIN v2u_subject_map subject_map
             ON (subject_map.id = j.subject_map_id)
-        INNER JOIN v2u_dz_przedmioty przedmioty
+        INNER JOIN dz_przedmioty przedmioty
             ON (przedmioty.kod = j.prz_kod)
     )
 SELECT * FROM u u

@@ -71,6 +71,7 @@ CREATE OR REPLACE TYPE BODY V2u_Dz_Przedmiot_B_t AS
         RETURN;
     END;
 
+
     MEMBER PROCEDURE init(
           SELF IN OUT NOCOPY V2u_Dz_Przedmiot_B_t
         , kod IN VARCHAR2

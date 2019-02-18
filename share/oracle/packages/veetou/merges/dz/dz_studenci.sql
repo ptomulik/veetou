@@ -1,4 +1,4 @@
-MERGE INTO v2u_dz_studenci tgt
+MERGE INTO dz_studenci tgt
 USING dz_studenci src
 ON  (tgt.id = src.id)
 WHEN NOT MATCHED THEN

@@ -1,14 +1,10 @@
 CREATE TABLE v2u_ko_missing_prgos_j
+OF V2u_Ko_Missing_Prgos_J_t
     (
-          id NUMBER(38)
-        , job_uuid RAW(16)
-        , student_id NUMBER(38)
-        , specialty_id NUMBER(38)
-        , semester_id NUMBER(38)
-        , tried_specialty_map_ids V2u_5Ids_t
-
-        , CONSTRAINT v2u_ko_missing_prgos_j_pk
-            PRIMARY KEY (id)
+        -- PK
+          CONSTRAINT v2u_ko_missing_prgos_j_pk
+            PRIMARY KEY (student_id, specialty_id, semester_id, job_uuid)
+         -- FK
         , CONSTRAINT v2u_ko_missing_prgos_j_f0
             FOREIGN KEY (job_uuid)
             REFERENCES v2u_ko_jobs(job_uuid)
@@ -19,19 +15,13 @@ CREATE TABLE v2u_ko_missing_prgos_j
             FOREIGN KEY (specialty_id, job_uuid)
             REFERENCES v2u_ko_specialties(id, job_uuid)
         , CONSTRAINT v2u_ko_missing_prgos_j_f3
+            FOREIGN KEY (semester_id, job_uuid)
+            REFERENCES v2u_ko_semesters(id, job_uuid)
+        , CONSTRAINT v2u_ko_missing_prgos_j_f4
             FOREIGN KEY (student_id, specialty_id, semester_id, job_uuid)
             REFERENCES v2u_ko_student_semesters_j(student_id, specialty_id, semester_id, job_uuid)
     )
-    ;
-/
-CREATE SEQUENCE v2u_ko_missing_prgos_j_sq1 START WITH 1;
-/
-CREATE OR REPLACE TRIGGER v2u_ko_missing_prgos_j_tr1
-    BEFORE INSERT ON v2u_ko_missing_prgos_j
-    FOR EACH ROW
-    WHEN (new.id IS NULL)
-    BEGIN
-        SELECT v2u_ko_missing_prgos_j_sq1.NEXTVAL INTO :new.id FROM dual;
-    END;
+OBJECT IDENTIFIER IS PRIMARY KEY
+;
 
 -- vim: set ft=sql ts=4 sw=4 et:

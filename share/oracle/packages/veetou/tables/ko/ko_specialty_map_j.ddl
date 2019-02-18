@@ -1,8 +1,10 @@
 CREATE TABLE v2u_ko_specialty_map_j
 OF V2u_Ko_Specialty_Map_J_t
     (
+        -- PK
           CONSTRAINT v2u_ko_specialty_map_j_pk
             PRIMARY KEY (specialty_id, semester_id, map_id, job_uuid)
+        -- FK
         , CONSTRAINT v2u_ko_specialty_map_j_f0
             FOREIGN KEY (job_uuid)
             REFERENCES v2u_ko_jobs(job_uuid)

@@ -101,6 +101,7 @@ CREATE OR REPLACE TYPE BODY V2u_Dz_Program_Osoby_B_t AS
         RETURN;
     END;
 
+
     MEMBER PROCEDURE init(
               SELF IN OUT NOCOPY V2u_Dz_Program_Osoby_B_t
             , os_id IN NUMBER

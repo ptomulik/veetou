@@ -1,4 +1,4 @@
-MERGE INTO v2u_dz_zaliczenia_przedmiotow tgt
+MERGE INTO dz_zaliczenia_przedmiotow tgt
 USING dz_zaliczenia_przedmiotow src
 ON  (
             tgt.os_id = src.os_id

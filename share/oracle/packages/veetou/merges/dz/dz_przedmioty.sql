@@ -1,4 +1,4 @@
-MERGE INTO v2u_dz_przedmioty tgt
+MERGE INTO dz_przedmioty tgt
 USING dz_przedmioty src
 ON  (tgt.kod = src.kod)
 WHEN NOT MATCHED THEN

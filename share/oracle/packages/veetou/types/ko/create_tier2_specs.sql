@@ -14,6 +14,9 @@
 @@ko_subject_map_j.tps;
 @@ko_classes_map_j.tps;
 @@ko_missing_zajcykl_j.tps;
+@@ko_matched_prgos_j.tps;
 @@ko_matched_etpos_j.tps;
+@@ko_missing_prgos_j.tps;
+@@ko_missing_etpos_j.tps;
 
 -- vim: set ft=sql ts=4 sw=4 et:

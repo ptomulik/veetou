@@ -3,14 +3,14 @@ USING
     (
         SELECT
               ss_j.job_uuid
-            , ss_j.student_id
-            , ss_j.specialty_id
             , ss_j.semester_id
+            , ss_j.specialty_id
+            , ss_j.student_id
             , sm_j.map_id specialty_map_id
-            , etapy_osob.id etpos_id
-            , studenci.id st_id
-            , studenci.os_id os_id
             , programy_osob.id prgos_id
+            , programy_osob.prg_kod
+            , etapy_osob.id etpos_id
+            , etapy_osob.etp_kod
             , CASE
                 WHEN
                     (SUBSTR(etapy_osob.etp_kod, 8, 1)
@@ -22,6 +22,8 @@ USING
                     || '" !~ ' ||
                     TO_CHAR(semesters.semester_number, 'FM9')
               END etp_kod_missmatch
+            , studenci.id st_id
+            , studenci.os_id
         FROM v2u_ko_student_semesters_j ss_j
         INNER JOIN v2u_ko_students students
             ON  (
@@ -43,17 +45,17 @@ USING
             ON  (
                         specialty_map.id = sm_j.map_id
                 )
-        INNER JOIN v2u_dz_studenci studenci
+        INNER JOIN dz_studenci studenci
             ON  (
                         studenci.indeks = students.student_index
                 )
-        INNER JOIN v2u_dz_programy_osob programy_osob
+        INNER JOIN dz_programy_osob programy_osob
             ON  (
-                        programy_osob.st_id = studenci.id AND
-                        programy_osob.os_id = studenci.os_id AND
-                        programy_osob.prg_kod = specialty_map.map_program_code
+                        programy_osob.st_id = studenci.id
+                    AND programy_osob.os_id = studenci.os_id
+                    AND programy_osob.prg_kod = specialty_map.map_program_code
                 )
-        INNER JOIN v2u_dz_etapy_osob etapy_osob
+        INNER JOIN dz_etapy_osob etapy_osob
             ON  (
                         etapy_osob.prgos_id = programy_osob.id
                     AND etapy_osob.cdyd_kod = semesters.semester_code
@@ -64,6 +66,7 @@ ON  (
         AND tgt.student_id = src.student_id
         AND tgt.specialty_id = src.specialty_id
         AND tgt.semester_id = src.semester_id
+        AND tgt.etpos_id = src.etpos_id
     )
 WHEN NOT MATCHED THEN
     INSERT
@@ -71,9 +74,11 @@ WHEN NOT MATCHED THEN
         , student_id
         , specialty_id
         , semester_id
-        , etpos_id
-        , prgos_id
         , specialty_map_id
+        , prgos_id
+        , prg_kod
+        , etpos_id
+        , etp_kod
         , etp_kod_missmatch
         , st_id
         , os_id
@@ -83,18 +88,21 @@ WHEN NOT MATCHED THEN
         , src.student_id
         , src.specialty_id
         , src.semester_id
-        , src.etpos_id
-        , src.prgos_id
         , src.specialty_map_id
+        , src.prgos_id
+        , src.prg_kod
+        , src.etpos_id
+        , src.etp_kod
         , src.etp_kod_missmatch
         , src.st_id
         , src.os_id
         )
 WHEN MATCHED THEN
     UPDATE SET
-          tgt.etpos_id = src.etpos_id
+          tgt.specialty_map_id = src.specialty_map_id
         , tgt.prgos_id = src.prgos_id
-        , tgt.specialty_map_id = src.specialty_map_id
+        , tgt.prg_kod = src.prg_kod
+        , tgt.etp_kod = src.etp_kod
         , tgt.etp_kod_missmatch = src.etp_kod_missmatch
         , tgt.st_id = src.st_id
         , tgt.os_id = src.os_id

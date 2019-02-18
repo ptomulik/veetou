@@ -30,9 +30,9 @@ CREATE TABLE v2u_ko_matched_przcykl_j
         , CONSTRAINT v2u_ko_matched_przcykl_j_f5
             FOREIGN KEY (subject_id, specialty_id, semester_id, subject_map_id, job_uuid)
             REFERENCES v2u_ko_subject_map_j(subject_id, specialty_id, semester_id, map_id, job_uuid)
-        , CONSTRAINT v2u_ko_matched_przcykl_j_f6
-            FOREIGN KEY (prz_kod, cdyd_kod)
-            REFERENCES v2u_dz_przedmioty_cykli(prz_kod, cdyd_kod)
+--        , CONSTRAINT v2u_ko_matched_przcykl_j_f6
+--            FOREIGN KEY (prz_kod, cdyd_kod)
+--            REFERENCES dz_przedmioty_cykli(prz_kod, cdyd_kod)
     );
 /
 CREATE SEQUENCE v2u_ko_matched_przcykl_j_sq1 START WITH 1;
