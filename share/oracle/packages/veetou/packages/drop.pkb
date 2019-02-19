@@ -197,12 +197,17 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('dz_przedmioty_cykli_idx2');
         Drop_Table('dz_przedmioty_cykli', how => 'PURGE');
         --
+        Drop_Index('dz_atrybuty_przedm_idx1');
+        Drop_Index('dz_atrybuty_przedm_idx2');
+        Drop_Table('dz_atrybuty_przedmiotow', how => 'PURGE');
+        --
         Drop_Table('dz_przedmioty', how => 'PURGE');
 
         Drop_Type('Dz_Zalicz_Przedmiotu_t', 'Dz_Zalicz_Przedmiotow_t');
         Drop_Type('Dz_Program_Osoby_t', 'Dz_Programy_Osob_t');
         Drop_Type('Dz_Etap_Osoby_t', 'Dz_Etapy_Osob_t');
         Drop_Type('Dz_Student_t', 'Dz_Studenci_t');
+        Drop_Type('Dz_Atrybut_Przedmiotu_t', 'Dz_Atrybuty_Przedmiotow_t');
         Drop_Type('Dz_Przedmiot_t', 'Dz_Przedmioty_t');
         Drop_Type('Dz_Przedmiot_Cyklu_t', 'Dz_Przedmioty_Cykli_t');
         Drop_Type('Dz_Zajecia_Cyklu_t', 'Dz_Zajecia_Cykli_t');
@@ -449,6 +454,12 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('ux_przedmioty_cykli_idx2');
         Drop_Table('ux_przedmioty_cykli', how => 'PURGE');
         --
+        Drop_Trigger('ux_atrybuty_przedm_tr1');
+        Drop_Index('ux_atrybuty_przedm_idx1');
+        Drop_Index('ux_atrybuty_przedm_idx2');
+        Drop_Table('ux_atrybuty_przedmiotow', how => 'PURGE');
+        --
+        Drop_Index('ux_przedmioty_idx1');
         Drop_Table('ux_przedmioty', how => 'PURGE');
 
         --
@@ -483,6 +494,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ux_Etap_Osoby_t', 'Ux_Etapy_Osob_t');
         Drop_Type('Ux_Program_Osoby_t', 'Ux_Programy_Osob_t');
         Drop_Type('Ux_Student_t', 'Ux_Studenci_t');
+        Drop_Type('Ux_Atrybut_Przedmiotu_t', 'Ux_Atrybuty_Przedmiotow_t');
         Drop_Type('Ux_Przedmiot_t', 'Ux_Przedmioty_t');
         Drop_Type('Ux_Przedmiot_Cyklu_t', 'Ux_Przedmioty_Cykli_t');
         Drop_Type('Ux_Zajecia_Cyklu_t', 'Ux_Zajecia_Cykli_t');

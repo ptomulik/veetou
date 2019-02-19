@@ -1,5 +1,6 @@
 @@dz_studenci.ddl;
 @@dz_przedmioty.ddl;
+@@dz_atrybuty_przedmiotow.ddl;
 @@dz_przedmioty_cykli.ddl;
 @@dz_zajecia_cykli.ddl;
 @@dz_programy_osob.ddl;

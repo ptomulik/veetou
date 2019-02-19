@@ -1,5 +1,6 @@
 @@dz_student_b.tpb;
 @@dz_przedmiot_b.tpb;
+@@dz_atrybut_przedmiotu_b.tpb;
 @@dz_przedmiot_cyklu_b.tpb;
 @@dz_zajecia_cyklu_b.tpb;
 @@dz_program_osoby_b.tpb;
@@ -7,6 +8,7 @@
 @@dz_zalicz_przedmiotu_b.tpb;
 
 @@dz_student.tpb;
+@@dz_atrybut_przedmiotu.tpb;
 @@dz_przedmiot.tpb;
 @@dz_przedmiot_cyklu.tpb;
 @@dz_zajecia_cyklu.tpb;

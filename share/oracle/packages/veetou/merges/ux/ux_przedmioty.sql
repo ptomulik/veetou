@@ -5,7 +5,10 @@ USING
         (
             SELECT
                   ss_j.job_uuid
-                , COALESCE(subject_map.map_subj_code, subjects.subj_code) kod
+                , COALESCE(
+                          subject_map.map_subj_code
+                        , subjects.subj_code
+                  ) coalesced_subj_code
                 , SET(CAST(
                         COLLECT(subjects.subj_code)
                         AS V2u_Vchars1024_t
@@ -100,7 +103,7 @@ USING
         (
             SELECT
                   u.job_uuid
-                , u.kod
+                , u.coalesced_subj_code
                 , ( SELECT
                         LISTAGG(VALUE(t), ', ')
                         WITHIN GROUP (ORDER BY VALUE(t))
@@ -108,7 +111,10 @@ USING
                   ) opis
 
                 -- select first element from each collection
-
+                , ( SELECT SUBSTR(VALUE(t), 1, 20)
+                    FROM TABLE(u.map_subj_codes) t
+                    WHERE ROWNUM <= 1
+                  ) map_subj_code
                 , ( SELECT SUBSTR(VALUE(t), 1, 3)
                     FROM TABLE(u.map_subj_languages) t
                     WHERE ROWNUM <= 1
@@ -171,9 +177,9 @@ USING
         )
         SELECT
               v.job_uuid
-            , v.kod
+            , v.coalesced_subj_code
             , v.opis
-            --, COALESCE(v.map_subj_code, v.subj_code) kod
+            , v.map_subj_code kod
             , v.subj_name nazwa
             , COALESCE(v.map_org_unit, v.faculty_code) jed_org_kod
             , V2u_Get.Tpro_Kod(
@@ -187,7 +193,8 @@ USING
                 WHEN
                     -- ensure that
                     -- we have target subject code
-                        v.dbg_map_subj_codes = 1
+                        v.map_subj_code IS NOT NULL
+                    AND v.dbg_map_subj_codes = 1
                     AND v.dbg_subj_codes > 0
                     -- maps for all instances existed but there were no
                     -- corresponding subject in target system
@@ -224,13 +231,14 @@ USING
         FROM v v
     ) src
 ON  (
-            tgt.kod = src.kod
+            tgt.coalesced_subj_code = src.coalesced_subj_code
         AND tgt.job_uuid = src.job_uuid
     )
 WHEN NOT MATCHED THEN
     INSERT
         ( kod
         , job_uuid
+        , coalesced_subj_code
         , nazwa
         , jed_org_kod
         , tpro_kod
@@ -253,6 +261,7 @@ WHEN NOT MATCHED THEN
     VALUES
         ( src.kod
         , src.job_uuid
+        , src.coalesced_subj_code
         , src.nazwa
         , src.jed_org_kod
         , src.tpro_kod
@@ -274,7 +283,8 @@ WHEN NOT MATCHED THEN
         )
 WHEN MATCHED THEN
     UPDATE SET
-          tgt.nazwa = src.nazwa
+          tgt.kod = src.kod
+        , tgt.nazwa = src.nazwa
         , tgt.jed_org_kod = src.jed_org_kod
         , tgt.tpro_kod = src.tpro_kod
         , tgt.jed_org_kod_biorca = src.jed_org_kod_biorca

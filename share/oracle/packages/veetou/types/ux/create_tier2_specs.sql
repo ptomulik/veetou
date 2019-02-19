@@ -1,5 +1,6 @@
 @@ux_student.tps;
 @@ux_przedmiot.tps;
+@@ux_atrybut_przedmiotu.tps;
 @@ux_przedmiot_cyklu.tps;
 @@ux_zajecia_cyklu.tps;
 @@ux_program_osoby.tps;
