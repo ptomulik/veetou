@@ -50,16 +50,16 @@ ON  (
 WHEN NOT MATCHED THEN
     INSERT
         ( job_uuid
-        , student_id
-        , specialty_id
         , semester_id
+        , specialty_id
+        , student_id
         , ects_attained
         )
     VALUES
         ( src.job_uuid
-        , src.student_id
-        , src.specialty_id
         , src.semester_id
+        , src.specialty_id
+        , src.student_id
         , src.ects_attained
         )
 WHEN MATCHED THEN

@@ -40,7 +40,7 @@ USING
                         semesters.id = sm_j.semester_id
                     AND semesters.job_uuid = sm_j.job_uuid
                 )
-        INNER JOIN dz_zajecia_cykli zajecia_cykli
+        INNER JOIN v2u_dz_zajecia_cykli zajecia_cykli
             ON  (
                         zajecia_cykli.prz_kod = subject_map.map_subj_code
                     AND zajecia_cykli.cdyd_kod = semesters.semester_code

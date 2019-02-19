@@ -5,6 +5,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Etpos_J_t AS
             , semester_id IN NUMBER
             , specialty_id IN NUMBER
             , student_id IN NUMBER
+            , ects_attained IN NUMBER
             , specialty_map_id IN NUMBER
             , prgos_id IN NUMBER
             , prg_kod IN VARCHAR2
@@ -21,6 +22,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Etpos_J_t AS
             , semester_id => semester_id
             , specialty_id => specialty_id
             , student_id => student_id
+            , ects_attained => ects_attained
             , specialty_map_id => specialty_map_id
             , prgos_id => prgos_id
             , prg_kod => prg_kod
@@ -38,6 +40,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Etpos_J_t AS
             , semester IN V2u_Ko_Semester_t
             , specialty IN V2u_Ko_Specialty_t
             , student IN V2u_Ko_Student_t
+            , ects_attained IN NUMBER
             , specialty_map IN V2u_Ko_Specialty_Map_J_t
             , prgos IN V2u_Dz_Program_Osoby_t
             , etpos IN V2u_Dz_Etap_Osoby_t
@@ -49,6 +52,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Etpos_J_t AS
               semester => semester
             , specialty => specialty
             , student => student
+            , ects_attained => ects_attained
             , specialty_map => specialty_map
             , prgos => prgos
             , etpos => etpos
@@ -63,6 +67,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Etpos_J_t AS
             , semester_id IN NUMBER
             , specialty_id IN NUMBER
             , student_id IN NUMBER
+            , ects_attained IN NUMBER
             , specialty_map_id IN NUMBER
             , prgos_id IN NUMBER
             , prg_kod IN VARCHAR2
@@ -79,6 +84,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Etpos_J_t AS
             , semester_id => semester_id
             , specialty_id => specialty_id
             , student_id => student_id
+            , ects_attained => ects_attained
             );
         SELF.specialty_map_id := specialty_map_id;
         SELF.prgos_id := prgos_id;
@@ -95,6 +101,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Etpos_J_t AS
             , semester IN V2u_Ko_Semester_t
             , specialty IN V2u_Ko_Specialty_t
             , student IN V2u_Ko_Student_t
+            , ects_attained IN NUMBER
             , specialty_map IN V2u_Ko_Specialty_Map_J_t
             , prgos IN V2u_Dz_Program_Osoby_t
             , etpos IN V2u_Dz_Etap_Osoby_t
@@ -106,6 +113,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Etpos_J_t AS
               semester => semester
             , specialty => specialty
             , student => student
+            , ects_attained => ects_attained
             );
         SELF.specialty_map_id := specialty_map.map_id;
         SELF.prgos_id := prgos.id;

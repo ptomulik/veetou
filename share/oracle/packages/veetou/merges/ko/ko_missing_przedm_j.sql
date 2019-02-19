@@ -50,9 +50,9 @@ USING
                 ON  (
                             subject_map.id = sm_j.map_id
                     )
-            -- join dz_przedmioty again to find whether we really can't find
+            -- join v2u_dz_przedmioty again to find whether we really can't find
             -- such a przedmiot
-            LEFT JOIN dz_przedmioty przedmioty
+            LEFT JOIN v2u_dz_przedmioty przedmioty
                 ON  (
                             przedmioty.kod = subject_map.map_subj_code
                     )

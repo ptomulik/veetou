@@ -50,9 +50,9 @@ USING
                 ON  (
                             subject_map.id = sm_j.map_id
                     )
-            -- join dz_przedmioty cykli without semester to find out what other
+            -- join v2u_dz_przedmioty cykli without semester to find out what other
             -- semesters we have reached at the destination
-            LEFT JOIN dz_przedmioty_cykli przedmioty_cykli
+            LEFT JOIN v2u_dz_przedmioty_cykli przedmioty_cykli
                 ON  (
                             przedmioty_cykli.prz_kod = subject_map.map_subj_code
                     )

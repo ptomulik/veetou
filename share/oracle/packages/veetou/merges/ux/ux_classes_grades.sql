@@ -51,9 +51,9 @@ USING
               ) v2u_tpro_kod
             --, 'FIX' v2u_tpro_kod
             -- USOS
-            -- FIXME: os_id should come from dz_studenci
+            -- FIXME: os_id should come from v2u_dz_studenci
             , ma_etpos_j.os_id os_id
-            -- FIXME: st_id should come from dz_studenci
+            -- FIXME: st_id should come from v2u_dz_studenci
             , ma_etpos_j.st_id st_id
             , ma_etpos_j.etpos_id
             , ma_etpos_j.prgos_id
@@ -207,7 +207,7 @@ USING
                 )
         -- FIXME: add 'prg_kod' attribute to v2u_matched_etpos_j and get
         --        rid of this join
-        LEFT JOIN dz_etapy_osob etapy_osob
+        LEFT JOIN v2u_dz_etapy_osob etapy_osob
             ON  (
                         etapy_osob.id = ma_etpos_j.etpos_id
                 )
@@ -220,7 +220,7 @@ USING
 --                )
 --        -- FIXME: add 'prg_kod' attribute to v2u_matched_prgos_j and get
 --        --        rid of this join
---        LEFT JOIN dz_programy_osob programy_osob
+--        LEFT JOIN v2u_dz_programy_osob programy_osob
 --            ON  (programy_osob.id = ma_prgos_j.prgos_id)
         LEFT JOIN v2u_ko_matched_przedm_j ma_przedm_j
             ON  (
@@ -229,7 +229,7 @@ USING
                     AND ma_przedm_j.semester_id = g_j.semester_id
                     AND ma_przedm_j.job_uuid = g_j.job_uuid
                 )
-        LEFT JOIN dz_przedmioty przedmioty
+        LEFT JOIN v2u_dz_przedmioty przedmioty
             ON  (
                         ma_przedm_j.prz_kod = przedmioty.kod
                 )
@@ -240,7 +240,7 @@ USING
                     AND ma_przcykl_j.semester_id = g_j.semester_id
                     AND ma_przcykl_j.job_uuid = g_j.job_uuid
                 )
-        LEFT JOIN dz_przedmioty_cykli przedmioty_cykli
+        LEFT JOIN v2u_dz_przedmioty_cykli przedmioty_cykli
             ON  (
                         ma_przcykl_j.prz_kod = przedmioty_cykli.prz_kod
                     AND ma_przcykl_j.cdyd_kod = przedmioty_cykli.cdyd_kod
@@ -252,7 +252,7 @@ USING
                     AND ma_zajcykl_j.semester_id = g_j.semester_id
                     AND ma_zajcykl_j.classes_type = cm_j.classes_type
                 )
-        LEFT JOIN dz_zajecia_cykli zajecia_cykli
+        LEFT JOIN v2u_dz_zajecia_cykli zajecia_cykli
             ON  (
                         ma_zajcykl_j.zajcykl_id = zajecia_cykli.id
                 )

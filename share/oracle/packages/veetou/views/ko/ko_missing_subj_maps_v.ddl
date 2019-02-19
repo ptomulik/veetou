@@ -9,23 +9,31 @@ AS WITH u AS
                 , specialty => VALUE(specialties)
                 , semester => VALUE(semesters)
               ) m
-        FROM v2u_ko_subject_semesters_j j1
+        FROM v2u_ko_subject_semesters_j ss_j
         INNER JOIN v2u_ko_subjects subjects
-            ON (subjects.id = j1.subject_id AND
-                subjects.job_uuid = j1.job_uuid)
+            ON  (
+                        subjects.id = ss_j.subject_id
+                    AND subjects.job_uuid = ss_j.job_uuid
+                )
         INNER JOIN v2u_ko_specialties specialties
-            ON (specialties.id = j1.specialty_id AND
-                specialties.job_uuid = j1.job_uuid)
+            ON  (
+                        specialties.id = ss_j.specialty_id
+                    AND specialties.job_uuid = ss_j.job_uuid
+                )
         INNER JOIN v2u_ko_semesters semesters
-            ON (semesters.id = j1.semester_id AND
-                semesters.job_uuid = j1.job_uuid)
-        LEFT JOIN v2u_ko_subject_map_j j2
-            ON (j2.subject_id = j1.subject_id AND
-                j2.specialty_id = j1.specialty_id AND
-                j2.semester_id = j1.semester_id AND
-                j2.job_uuid = j1.job_uuid AND
-                j2.selected = 1)
-        WHERE j2.map_id IS NULL
+            ON  (
+                        semesters.id = ss_j.semester_id
+                    AND semesters.job_uuid = ss_j.job_uuid
+                )
+        LEFT JOIN v2u_ko_subject_map_j sm_j
+            ON  (
+                        sm_j.subject_id = ss_j.subject_id
+                    AND sm_j.specialty_id = ss_j.specialty_id
+                    AND sm_j.semester_id = ss_j.semester_id
+                    AND sm_j.job_uuid = ss_j.job_uuid
+                    AND sm_j.selected = 1
+                )
+        WHERE sm_j.map_id IS NULL
     )
 SELECT
       u.m.subj_code subj_code

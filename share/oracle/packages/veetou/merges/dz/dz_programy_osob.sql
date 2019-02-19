@@ -1,4 +1,4 @@
-MERGE INTO dz_programy_osob tgt
+MERGE INTO v2u_dz_programy_osob tgt
 USING dz_programy_osob src
 ON  (tgt.id = src.id)
 WHEN NOT MATCHED THEN INSERT

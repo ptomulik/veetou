@@ -5,99 +5,95 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Etpos_V_t AS
             , student_id IN NUMBER
             , specialty_id IN NUMBER
             , semester_id IN NUMBER
+            , student_index VARCHAR2
+            , student_name VARCHAR2
+            , first_name VARCHAR2
+            , last_name VARCHAR2
+            , university IN VARCHAR2
+            , faculty IN VARCHAR2
+            , studies_modetier IN VARCHAR2
+            , studies_field IN VARCHAR2
+            , studies_specialty IN VARCHAR2
+            , semester_number IN NUMBER
+            , semester_code IN VARCHAR2
+            , ects_mandatory IN NUMBER
+            , ects_other IN NUMBER
+            , ects_total IN NUMBER
+            , ects_attained IN NUMBER
             , specialty_map_id IN NUMBER
             , etpos_id IN NUMBER
+            , data_zakon IN DATE
+            , utw_id IN VARCHAR2
+            , utw_data IN DATE
+            , mod_id IN VARCHAR2
+            , mod_data IN DATE
+            , status_zaliczenia IN VARCHAR2
+            , etp_kod IN VARCHAR2
+            , prg_kod IN VARCHAR2
             , prgos_id IN NUMBER
+            , cdyd_kod IN VARCHAR2
+            , status_zal_komentarz IN VARCHAR2
+            , liczba_war IN NUMBER
+            , wym_cdyd_kod IN VARCHAR2
+            , czy_platny_na_2_kier IN VARCHAR2
+            , ects_uzyskane IN NUMBER
+            , czy_przedluzenie IN VARCHAR2
+            , urlop_kod IN VARCHAR2
+            , ects_efekty_uczenia IN NUMBER
+            , ects_przepisane IN NUMBER
+            , kolejnosc IN NUMBER
+            , czy_erasmus IN VARCHAR2
+            , jedn_dyplomujaca IN VARCHAR2
             , etp_kod_missmatch IN VARCHAR2
-            , st_id IN NUMBER
-            , os_id IN NUMBER
-            , ko_student_index IN VARCHAR2
-            , ko_student_name IN VARCHAR2
-            , ko_first_name IN VARCHAR2
-            , ko_last_name IN VARCHAR2
-            , ko_university IN VARCHAR2
-            , ko_faculty IN VARCHAR2
-            , ko_studies_modetier IN VARCHAR2
-            , ko_studies_field IN VARCHAR2
-            , ko_studies_specialty IN VARCHAR2
-            , ko_map_program_code IN VARCHAR2
-            , ko_map_modetier_code IN VARCHAR2
-            , ko_map_field_code IN VARCHAR2
-            , ko_map_specialty_code IN VARCHAR2
-            , ko_semester_number IN NUMBER
-            , ko_semester_code IN VARCHAR2
-            , dz_data_zakon IN DATE
-            , dz_utw_id IN VARCHAR2
-            , dz_utw_data IN DATE
-            , dz_mod_id IN VARCHAR2
-            , dz_mod_data IN DATE
-            , dz_status_zaliczenia IN VARCHAR2
-            , dz_etp_kod IN VARCHAR2
-            , dz_prg_kod IN VARCHAR2
-            , dz_prgos_id IN NUMBER
-            , dz_cdyd_kod IN VARCHAR2
-            , dz_status_zal_komentarz IN VARCHAR2
-            , dz_liczba_war IN NUMBER
-            , dz_wym_cdyd_kod IN VARCHAR2
-            , dz_czy_platny_na_2_kier IN VARCHAR2
-            , dz_ects_uzyskane IN NUMBER
-            , dz_czy_przedluzenie IN VARCHAR2
-            , dz_urlop_kod IN VARCHAR2
-            , dz_ects_efekty_uczenia IN NUMBER
-            , dz_ects_przepisane IN NUMBER
-            , dz_kolejnosc IN NUMBER
-            , dz_czy_erasmus IN VARCHAR2
-            , dz_jedn_dyplomujaca IN VARCHAR2
             ) RETURN SELF AS RESULT
     IS
     BEGIN
-        SELF.job_uuid := job_uuid;
-        SELF.student_id := student_id;
-        SELF.specialty_id := specialty_id;
-        SELF.semester_id := semester_id;
-        SELF.specialty_map_id := specialty_map_id;
-        SELF.etpos_id := etpos_id;
-        SELF.prgos_id := prgos_id;
-        SELF.etp_kod_missmatch := etp_kod_missmatch;
-        SELF.st_id := st_id;
-        SELF.os_id := os_id;
-        SELF.ko_student_index := ko_student_index;
-        SELF.ko_student_name := ko_student_name;
-        SELF.ko_first_name := ko_first_name;
-        SELF.ko_last_name := ko_last_name;
-        SELF.ko_university := ko_university;
-        SELF.ko_faculty := ko_faculty;
-        SELF.ko_studies_modetier := ko_studies_modetier;
-        SELF.ko_studies_field := ko_studies_field;
-        SELF.ko_studies_specialty := ko_studies_specialty;
-        SELF.ko_map_program_code := ko_map_program_code;
-        SELF.ko_map_modetier_code := ko_map_modetier_code;
-        SELF.ko_map_field_code := ko_map_field_code;
-        SELF.ko_map_specialty_code := ko_map_specialty_code;
-        SELF.ko_semester_number := ko_semester_number;
-        SELF.ko_semester_code := ko_semester_code;
-        SELF.dz_data_zakon := dz_data_zakon;
-        SELF.dz_utw_id := dz_utw_id;
-        SELF.dz_utw_data := dz_utw_data;
-        SELF.dz_mod_id := dz_mod_id;
-        SELF.dz_mod_data := dz_mod_data;
-        SELF.dz_status_zaliczenia := dz_status_zaliczenia;
-        SELF.dz_etp_kod := dz_etp_kod;
-        SELF.dz_prg_kod := dz_prg_kod;
-        SELF.dz_prgos_id := dz_prgos_id;
-        SELF.dz_cdyd_kod := dz_cdyd_kod;
-        SELF.dz_status_zal_komentarz := dz_status_zal_komentarz;
-        SELF.dz_liczba_war := dz_liczba_war;
-        SELF.dz_wym_cdyd_kod := dz_wym_cdyd_kod;
-        SELF.dz_czy_platny_na_2_kier := dz_czy_platny_na_2_kier;
-        SELF.dz_ects_uzyskane := dz_ects_uzyskane;
-        SELF.dz_czy_przedluzenie := dz_czy_przedluzenie;
-        SELF.dz_urlop_kod := dz_urlop_kod;
-        SELF.dz_ects_efekty_uczenia := dz_ects_efekty_uczenia;
-        SELF.dz_ects_przepisane := dz_ects_przepisane;
-        SELF.dz_kolejnosc := dz_kolejnosc;
-        SELF.dz_czy_erasmus := dz_czy_erasmus;
-        SELF.dz_jedn_dyplomujaca := dz_jedn_dyplomujaca;
+        SELF.init(
+              job_uuid => job_uuid
+            , student_id => student_id
+            , specialty_id => specialty_id
+            , semester_id => semester_id
+            , student_index => student_index
+            , student_name => student_name
+            , first_name => first_name
+            , last_name => last_name
+            , university => university
+            , faculty => faculty
+            , studies_modetier => studies_modetier
+            , studies_field => studies_field
+            , studies_specialty => studies_specialty
+            , semester_number => semester_number
+            , semester_code => semester_code
+            , ects_mandatory => ects_mandatory
+            , ects_other => ects_other
+            , ects_total => ects_total
+            , ects_attained => ects_attained
+            , specialty_map_id => specialty_map_id
+            , etpos_id => etpos_id
+            , data_zakon => data_zakon
+            , utw_id => utw_id
+            , utw_data => utw_data
+            , mod_id => mod_id
+            , mod_data => mod_data
+            , status_zaliczenia => status_zaliczenia
+            , etp_kod => etp_kod
+            , prg_kod => prg_kod
+            , prgos_id => prgos_id
+            , cdyd_kod => cdyd_kod
+            , status_zal_komentarz => status_zal_komentarz
+            , liczba_war => liczba_war
+            , wym_cdyd_kod => wym_cdyd_kod
+            , czy_platny_na_2_kier => czy_platny_na_2_kier
+            , ects_uzyskane => ects_uzyskane
+            , czy_przedluzenie => czy_przedluzenie
+            , urlop_kod => urlop_kod
+            , ects_efekty_uczenia => ects_efekty_uczenia
+            , ects_przepisane => ects_przepisane
+            , kolejnosc => kolejnosc
+            , czy_erasmus => czy_erasmus
+            , jedn_dyplomujaca => jedn_dyplomujaca
+            , etp_kod_missmatch => etp_kod_missmatch
+            );
         RETURN;
     END;
 
@@ -106,63 +102,165 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Etpos_V_t AS
             , student IN V2u_Ko_Student_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
-            , specialty_map IN V2u_Specialty_Map_t
+            , ects_attained IN NUMBER
+            , specialty_map_id IN NUMBER
             , etap_osoby IN V2u_Dz_Etap_Osoby_t
-            , program_osoby IN V2u_Dz_Program_Osoby_t
             , etp_kod_missmatch IN VARCHAR2
-            , st_id IN NUMBER
-            , os_id IN NUMBER
             ) RETURN SELF AS RESULT
     IS
     BEGIN
-        SELF.job_uuid := student.job_uuid;
-        SELF.student_id := student.id;
-        SELF.specialty_id := specialty.id;
-        SELF.semester_id := semester.id;
-        SELF.specialty_map_id := specialty_map.id;
-        SELF.etpos_id := etap_osoby.id;
-        SELF.prgos_id := program_osoby.id;
-        SELF.etp_kod_missmatch := etp_kod_missmatch;
-        SELF.st_id := st_id;
-        SELF.os_id := os_id;
-        SELF.ko_student_index := student.student_index;
-        SELF.ko_student_name := student.student_name;
-        SELF.ko_first_name := student.first_name;
-        SELF.ko_last_name := student.last_name;
-        SELF.ko_university := specialty.university;
-        SELF.ko_faculty := specialty.faculty;
-        SELF.ko_studies_modetier := specialty.studies_modetier;
-        SELF.ko_studies_field := specialty.studies_field;
-        SELF.ko_studies_specialty := specialty.studies_specialty;
-        SELF.ko_map_program_code := specialty_map.map_program_code;
-        SELF.ko_map_modetier_code := specialty_map.map_modetier_code;
-        SELF.ko_map_field_code := specialty_map.map_field_code;
-        SELF.ko_map_specialty_code := specialty_map.map_specialty_code;
-        SELF.ko_semester_number := semester.semester_number;
-        SELF.ko_semester_code := semester.semester_code;
-        SELF.dz_data_zakon := etap_osoby.data_zakon;
-        SELF.dz_utw_id := etap_osoby.utw_id;
-        SELF.dz_utw_data := etap_osoby.utw_data;
-        SELF.dz_mod_id := etap_osoby.mod_id;
-        SELF.dz_mod_data := etap_osoby.mod_data;
-        SELF.dz_status_zaliczenia := etap_osoby.status_zaliczenia;
-        SELF.dz_etp_kod := etap_osoby.etp_kod;
-        SELF.dz_prg_kod := etap_osoby.prg_kod;
-        SELF.dz_prgos_id := etap_osoby.prgos_id;
-        SELF.dz_cdyd_kod := etap_osoby.cdyd_kod;
-        SELF.dz_status_zal_komentarz := etap_osoby.status_zal_komentarz;
-        SELF.dz_liczba_war := etap_osoby.liczba_war;
-        SELF.dz_wym_cdyd_kod := etap_osoby.wym_cdyd_kod;
-        SELF.dz_czy_platny_na_2_kier := etap_osoby.czy_platny_na_2_kier;
-        SELF.dz_ects_uzyskane := etap_osoby.ects_uzyskane;
-        SELF.dz_czy_przedluzenie := etap_osoby.czy_przedluzenie;
-        SELF.dz_urlop_kod := etap_osoby.urlop_kod;
-        SELF.dz_ects_efekty_uczenia := etap_osoby.ects_efekty_uczenia;
-        SELF.dz_ects_przepisane := etap_osoby.ects_przepisane;
-        SELF.dz_kolejnosc := etap_osoby.kolejnosc;
-        SELF.dz_czy_erasmus := etap_osoby.czy_erasmus;
-        SELF.dz_jedn_dyplomujaca := etap_osoby.jedn_dyplomujaca;
+        SELF.init(
+              student => student
+            , specialty => specialty
+            , semester => semester
+            , ects_attained => ects_attained
+            , specialty_map_id => specialty_map_id
+            , etap_osoby => etap_osoby
+            , etp_kod_missmatch => etp_kod_missmatch
+            );
         RETURN;
+    END;
+
+    MEMBER PROCEDURE init(
+              SELF IN OUT NOCOPY V2u_Ko_Matched_Etpos_V_t
+            , job_uuid IN RAW
+            , student_id IN NUMBER
+            , specialty_id IN NUMBER
+            , semester_id IN NUMBER
+            , student_index VARCHAR2
+            , student_name VARCHAR2
+            , first_name VARCHAR2
+            , last_name VARCHAR2
+            , university IN VARCHAR2
+            , faculty IN VARCHAR2
+            , studies_modetier IN VARCHAR2
+            , studies_field IN VARCHAR2
+            , studies_specialty IN VARCHAR2
+            , semester_number IN NUMBER
+            , semester_code IN VARCHAR2
+            , ects_mandatory IN NUMBER
+            , ects_other IN NUMBER
+            , ects_total IN NUMBER
+            , ects_attained IN NUMBER
+            , specialty_map_id IN NUMBER
+            , etpos_id IN NUMBER
+            , data_zakon IN DATE
+            , utw_id IN VARCHAR2
+            , utw_data IN DATE
+            , mod_id IN VARCHAR2
+            , mod_data IN DATE
+            , status_zaliczenia IN VARCHAR2
+            , etp_kod IN VARCHAR2
+            , prg_kod IN VARCHAR2
+            , prgos_id IN NUMBER
+            , cdyd_kod IN VARCHAR2
+            , status_zal_komentarz IN VARCHAR2
+            , liczba_war IN NUMBER
+            , wym_cdyd_kod IN VARCHAR2
+            , czy_platny_na_2_kier IN VARCHAR2
+            , ects_uzyskane IN NUMBER
+            , czy_przedluzenie IN VARCHAR2
+            , urlop_kod IN VARCHAR2
+            , ects_efekty_uczenia IN NUMBER
+            , ects_przepisane IN NUMBER
+            , kolejnosc IN NUMBER
+            , czy_erasmus IN VARCHAR2
+            , jedn_dyplomujaca IN VARCHAR2
+            , etp_kod_missmatch IN VARCHAR2
+            )
+    IS
+    BEGIN
+        SELF.init(
+              job_uuid => job_uuid
+            , student_id => student_id
+            , specialty_id => specialty_id
+            , semester_id => semester_id
+            , student_index => student_index
+            , student_name => student_name
+            , first_name => first_name
+            , last_name => last_name
+            , university => university
+            , faculty => faculty
+            , studies_modetier => studies_modetier
+            , studies_field => studies_field
+            , studies_specialty => studies_specialty
+            , semester_number => semester_number
+            , semester_code => semester_code
+            , ects_mandatory => ects_mandatory
+            , ects_other => ects_other
+            , ects_total => ects_total
+            , ects_attained => ects_attained
+            );
+        SELF.specialty_map_id := specialty_map_id;
+        SELF.etpos_id := etpos_id;
+        SELF.data_zakon := data_zakon;
+        SELF.utw_id := utw_id;
+        SELF.utw_data := utw_data;
+        SELF.mod_id := mod_id;
+        SELF.mod_data := mod_data;
+        SELF.status_zaliczenia := status_zaliczenia;
+        SELF.etp_kod := etp_kod;
+        SELF.prg_kod := prg_kod;
+        SELF.prgos_id := prgos_id;
+        SELF.cdyd_kod := cdyd_kod;
+        SELF.status_zal_komentarz := status_zal_komentarz;
+        SELF.liczba_war := liczba_war;
+        SELF.wym_cdyd_kod := wym_cdyd_kod;
+        SELF.czy_platny_na_2_kier := czy_platny_na_2_kier;
+        SELF.ects_uzyskane := ects_uzyskane;
+        SELF.czy_przedluzenie := czy_przedluzenie;
+        SELF.urlop_kod := urlop_kod;
+        SELF.ects_efekty_uczenia := ects_efekty_uczenia;
+        SELF.ects_przepisane := ects_przepisane;
+        SELF.kolejnosc := kolejnosc;
+        SELF.czy_erasmus := czy_erasmus;
+        SELF.jedn_dyplomujaca := jedn_dyplomujaca;
+        SELF.etp_kod_missmatch := etp_kod_missmatch;
+    END;
+
+    MEMBER PROCEDURE init(
+              SELF IN OUT NOCOPY V2u_Ko_Matched_Etpos_V_t
+            , student IN V2u_Ko_Student_t
+            , specialty IN V2u_Ko_Specialty_t
+            , semester IN V2u_Ko_Semester_t
+            , ects_attained IN NUMBER
+            , specialty_map_id IN NUMBER
+            , etap_osoby IN V2u_Dz_Etap_Osoby_t
+            , etp_kod_missmatch IN VARCHAR2
+            )
+    IS
+    BEGIN
+        SELF.init(
+              student => student
+            , specialty => specialty
+            , semester => semester
+            , ects_attained => ects_attained
+            );
+        SELF.specialty_map_id := specialty_map_id;
+        SELF.etpos_id := etap_osoby.id;
+        SELF.data_zakon := etap_osoby.data_zakon;
+        SELF.utw_id := etap_osoby.utw_id;
+        SELF.utw_data := etap_osoby.utw_data;
+        SELF.mod_id := etap_osoby.mod_id;
+        SELF.mod_data := etap_osoby.mod_data;
+        SELF.status_zaliczenia := etap_osoby.status_zaliczenia;
+        SELF.etp_kod := etap_osoby.etp_kod;
+        SELF.prg_kod := etap_osoby.prg_kod;
+        SELF.prgos_id := etap_osoby.prgos_id;
+        SELF.cdyd_kod := etap_osoby.cdyd_kod;
+        SELF.status_zal_komentarz := etap_osoby.status_zal_komentarz;
+        SELF.liczba_war := etap_osoby.liczba_war;
+        SELF.wym_cdyd_kod := etap_osoby.wym_cdyd_kod;
+        SELF.czy_platny_na_2_kier := etap_osoby.czy_platny_na_2_kier;
+        SELF.ects_uzyskane := etap_osoby.ects_uzyskane;
+        SELF.czy_przedluzenie := etap_osoby.czy_przedluzenie;
+        SELF.urlop_kod := etap_osoby.urlop_kod;
+        SELF.ects_efekty_uczenia := etap_osoby.ects_efekty_uczenia;
+        SELF.ects_przepisane := etap_osoby.ects_przepisane;
+        SELF.kolejnosc := etap_osoby.kolejnosc;
+        SELF.czy_erasmus := etap_osoby.czy_erasmus;
+        SELF.jedn_dyplomujaca := etap_osoby.jedn_dyplomujaca;
+        SELF.etp_kod_missmatch := etp_kod_missmatch;
     END;
 END;
 

@@ -14,7 +14,7 @@
 @@ko_missing_subj_maps_v.ddl;
 --
 @@ko_matched_prgos_v.ddl;
---@@ko_matched_etpos_v.ddl;
+@@ko_matched_etpos_v.ddl;
 @@ko_missing_prgos_v.ddl;
 @@ko_missing_etpos_v.ddl;
 

@@ -34,6 +34,7 @@ CREATE OR REPLACE TYPE BODY V2u_Dz_Zalicz_Przedmiotu_B_t AS
             , mod_data => mod_data
             , nr_wyb => nr_wyb
             );
+        RETURN;
     END;
 
 

@@ -2,31 +2,31 @@ MERGE INTO v2u_ko_matched_przcykl_j tgt
 USING
     (
         SELECT
-              j.job_uuid job_uuid
-            , j.subject_id subject_id
-            , j.specialty_id specialty_id
-            , j.semester_id semester_id
-            , j.map_id subject_map_id
-            , j.matching_score matching_score
+              sm_j.job_uuid job_uuid
+            , sm_j.subject_id subject_id
+            , sm_j.specialty_id specialty_id
+            , sm_j.semester_id semester_id
+            , sm_j.map_id subject_map_id
+            , sm_j.matching_score matching_score
             , przedmioty_cykli.prz_kod prz_kod
             , przedmioty_cykli.cdyd_kod cdyd_kod
-        FROM v2u_ko_subject_map_j j
+        FROM v2u_ko_subject_map_j sm_j
         INNER JOIN v2u_subject_map subject_map
             ON  (
-                        subject_map.id = j.map_id
+                        subject_map.id = sm_j.map_id
                     AND subject_map.map_subj_code IS NOT NULL
                 )
         INNER JOIN v2u_ko_semesters semesters
             ON  (
-                        semesters.id = j.semester_id
-                    AND semesters.job_uuid = j.job_uuid
+                        semesters.id = sm_j.semester_id
+                    AND semesters.job_uuid = sm_j.job_uuid
                 )
-        INNER JOIN dz_przedmioty_cykli przedmioty_cykli
+        INNER JOIN v2u_dz_przedmioty_cykli przedmioty_cykli
             ON  (
                         przedmioty_cykli.prz_kod = subject_map.map_subj_code
                     AND przedmioty_cykli.cdyd_kod = semesters.semester_code
                 )
-        WHERE j.selected = 1
+        WHERE sm_j.selected = 1
     ) src
 ON  (
             tgt.job_uuid = src.job_uuid

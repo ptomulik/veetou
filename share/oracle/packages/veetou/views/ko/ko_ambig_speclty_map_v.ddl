@@ -15,20 +15,18 @@ AS WITH u AS
               j.job_uuid
             , j.specialty_id
             , j.semester_id
-    ),
-    v AS
-    (
-        SELECT
-            V2u_Ko_Ambig_Speclty_Map_V_t(
-                  (SELECT VALUE(s) FROM v2u_ko_specialties s WHERE s.id = u.specialty_id AND s.job_uuid = u.job_uuid)
-                , (SELECT VALUE(s) FROM v2u_ko_semesters s WHERE s.id = u.semester_id AND s.job_uuid = u.job_uuid)
-                , u.map_count
-                , u.map_ids
-                , u.matching_scores
-            )
-        FROM u u
-        WHERE u.map_count > 1
     )
-SELECT * FROM v
-WITH READ ONLY;
+    SELECT
+        V2u_Ko_Ambig_Speclty_Map_V_t(
+              (SELECT VALUE(s) FROM v2u_ko_specialties s WHERE s.id = u.specialty_id AND s.job_uuid = u.job_uuid)
+            , (SELECT VALUE(s) FROM v2u_ko_semesters s WHERE s.id = u.semester_id AND s.job_uuid = u.job_uuid)
+            , u.map_count
+            , u.map_ids
+            , u.matching_scores
+        )
+    FROM u u
+    WHERE u.map_count > 1
+WITH READ ONLY
+;
+
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -2,24 +2,24 @@ MERGE INTO v2u_ko_matched_przedm_j tgt
 USING
     (
         SELECT
-              u.job_uuid job_uuid
-            , u.subject_id subject_id
-            , u.specialty_id specialty_id
-            , u.semester_id semester_id
-            , u.map_id subject_map_id
-            , u.matching_score matching_score
-            , m.map_subj_code prz_kod
-        FROM v2u_ko_subject_map_j u
-        INNER JOIN v2u_subject_map m
+              sm_j.job_uuid job_uuid
+            , sm_j.subject_id subject_id
+            , sm_j.specialty_id specialty_id
+            , sm_j.semester_id semester_id
+            , sm_j.map_id subject_map_id
+            , sm_j.matching_score matching_score
+            , subject_map.map_subj_code prz_kod
+        FROM v2u_ko_subject_map_j sm_j
+        INNER JOIN v2u_subject_map subject_map
             ON  (
-                        m.id = u.map_id
-                    AND m.map_subj_code IS NOT NULL
+                        subject_map.id = sm_j.map_id
+                    AND subject_map.map_subj_code IS NOT NULL
                 )
-        INNER JOIN dz_przedmioty p
+        INNER JOIN v2u_dz_przedmioty przedmioty
             ON  (
-                        p.kod = m.map_subj_code
+                        przedmioty.kod = subject_map.map_subj_code
                 )
-        WHERE u.selected = 1
+        WHERE sm_j.selected = 1
     ) src
 ON  (
             tgt.job_uuid = src.job_uuid

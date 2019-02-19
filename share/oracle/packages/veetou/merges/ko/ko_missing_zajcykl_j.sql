@@ -91,9 +91,9 @@ USING
                     )
             LEFT JOIN v2u_classes_map classes_map
                 ON  (classes_map.id = cm_j.map_id)
-            -- join dz_zajecia_cykli without classes_type to find what other
+            -- join v2u_dz_zajecia_cykli without classes_type to find what other
             -- classes types we have at the destination
-            LEFT JOIN dz_zajecia_cykli zajecia_cykli
+            LEFT JOIN v2u_dz_zajecia_cykli zajecia_cykli
                 ON  (
                             zajecia_cykli.prz_kod = subject_map.map_subj_code
                         AND zajecia_cykli.cdyd_kod = semesters.semester_code
