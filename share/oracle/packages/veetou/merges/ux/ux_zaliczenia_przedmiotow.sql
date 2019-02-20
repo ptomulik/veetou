@@ -71,6 +71,6 @@
 -- --        , tgt.nr_wyb = src.nr_wyb
 -- ;
 
-COMMIT;
+-- COMMIT;
 
 -- vim: set ft=sql ts=4 sw=4 et:

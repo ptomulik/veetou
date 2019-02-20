@@ -454,7 +454,6 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('ux_przedmioty_cykli_idx2');
         Drop_Table('ux_przedmioty_cykli', how => 'PURGE');
         --
-        Drop_Trigger('ux_atrybuty_przedm_tr1');
         Drop_Index('ux_atrybuty_przedm_idx1');
         Drop_Index('ux_atrybuty_przedm_idx2');
         Drop_Table('ux_atrybuty_przedmiotow', how => 'PURGE');

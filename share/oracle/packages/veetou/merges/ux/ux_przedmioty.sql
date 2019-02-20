@@ -83,7 +83,9 @@ USING
                         AND sm_j.selected = 1
                     )
             LEFT JOIN v2u_subject_map subject_map
-                ON  (subject_map.id = sm_j.map_id)
+                ON  (
+                            subject_map.id = sm_j.map_id
+                    )
             LEFT JOIN v2u_ko_grades_j grades
                 ON  (
                             grades.subject_id = ss_j.subject_id
@@ -104,11 +106,6 @@ USING
             SELECT
                   u.job_uuid
                 , u.coalesced_subj_code
-                , ( SELECT
-                        LISTAGG(VALUE(t), ', ')
-                        WITHIN GROUP (ORDER BY VALUE(t))
-                    FROM TABLE(u.subj_codes) t
-                  ) opis
 
                 -- select first element from each collection
                 , ( SELECT SUBSTR(VALUE(t), 1, 20)
@@ -178,10 +175,10 @@ USING
         SELECT
               v.job_uuid
             , v.coalesced_subj_code
-            , v.opis
             , v.map_subj_code kod
             , v.subj_name nazwa
             , COALESCE(v.map_org_unit, v.faculty_code) jed_org_kod
+            , V2u_Get.Mod_Id(v.job_uuid) mod_id
             , V2u_Get.Tpro_Kod(
                       subj_credit_kind => v.subj_credit_kind
                     , subj_grades => v.subj_grades
@@ -241,10 +238,10 @@ WHEN NOT MATCHED THEN
         , coalesced_subj_code
         , nazwa
         , jed_org_kod
+        , mod_id
         , tpro_kod
         , jed_org_kod_biorca
         , jzk_kod
-        , opis
         , dbg_subj_codes
         , dbg_map_subj_codes
         , dbg_languages
@@ -264,10 +261,10 @@ WHEN NOT MATCHED THEN
         , src.coalesced_subj_code
         , src.nazwa
         , src.jed_org_kod
+        , src.mod_id
         , src.tpro_kod
         , src.jed_org_kod_biorca
         , src.jzk_kod
-        , src.opis
         , src.dbg_subj_codes
         , src.dbg_map_subj_codes
         , src.dbg_languages
@@ -286,10 +283,10 @@ WHEN MATCHED THEN
           tgt.kod = src.kod
         , tgt.nazwa = src.nazwa
         , tgt.jed_org_kod = src.jed_org_kod
+        , tgt.mod_id = src.mod_id
         , tgt.tpro_kod = src.tpro_kod
         , tgt.jed_org_kod_biorca = src.jed_org_kod_biorca
         , tgt.jzk_kod = src.jzk_kod
-        , tgt.opis = src.opis
         , tgt.dbg_subj_codes = src.dbg_subj_codes
         , tgt.dbg_map_subj_codes = src.dbg_map_subj_codes
         , tgt.dbg_languages = src.dbg_languages

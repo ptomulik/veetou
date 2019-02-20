@@ -141,6 +141,13 @@ CREATE OR REPLACE PACKAGE BODY V2U_Get AS
     END;
 
 
+    FUNCTION Mod_Id(job_uuid IN RAW)
+            RETURN VARCHAR2
+    IS
+    BEGIN
+        RETURN SUBSTR(('V2U:' || RAWTOHEX(job_uuid)), 1, 30);
+    END;
+
     FUNCTION Max_Admission_Semester(semesters IN V2u_Ko_Semesters_t)
         RETURN VARCHAR2
     IS

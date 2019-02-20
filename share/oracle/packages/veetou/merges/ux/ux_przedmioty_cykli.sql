@@ -111,6 +111,7 @@ USING
               v.job_uuid
             , v.prz_kod
             , v.semester_code cdyd_kod
+            , V2u_Get.Mod_Id(v.job_uuid) mod_id
             , V2u_Get.Tpro_Kod(
                       subj_credit_kind => v.subj_credit_kind
                     , subj_grades => v.subj_grades
@@ -155,6 +156,7 @@ WHEN NOT MATCHED THEN
     INSERT
         ( prz_kod
         , cdyd_kod
+        , mod_id
         , job_uuid
         , tpro_kod
         , dbg_subj_codes
@@ -168,6 +170,7 @@ WHEN NOT MATCHED THEN
     VALUES
         ( src.prz_kod
         , src.cdyd_kod
+        , src.mod_id
         , src.job_uuid
         , src.tpro_kod
         , src.dbg_subj_codes
@@ -180,7 +183,8 @@ WHEN NOT MATCHED THEN
         )
 WHEN MATCHED THEN
     UPDATE SET
-          tgt.tpro_kod = src.tpro_kod
+          tgt.mod_id = src.mod_id
+        , tgt.tpro_kod = src.tpro_kod
         , tgt.dbg_subj_codes = src.dbg_subj_codes
         , tgt.dbg_map_subj_codes = src.dbg_map_subj_codes
         , tgt.dbg_subj_credit_kinds = src.dbg_subj_credit_kinds

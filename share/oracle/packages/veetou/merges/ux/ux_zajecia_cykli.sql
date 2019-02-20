@@ -144,6 +144,7 @@ USING
             , v.cdyd_kod
             , v.tzaj_kod
             , v.classes_hours liczba_godz
+            , V2u_Get.Mod_Id(v.job_uuid) mod_id
             , V2u_Get.Tpro_Kod(
                       subj_credit_kind => v.subj_credit_kind
                     , subj_grades => v.subj_grades
@@ -196,6 +197,7 @@ WHEN NOT MATCHED THEN
         , tzaj_kod
         , job_uuid
         , liczba_godz
+        , mod_id
         , tpro_kod
         , dbg_subj_codes
         , dbg_map_subj_codes
@@ -213,6 +215,7 @@ WHEN NOT MATCHED THEN
         , src.tzaj_kod
         , src.job_uuid
         , src.liczba_godz
+        , src.mod_id
         , src.tpro_kod
         , src.dbg_subj_codes
         , src.dbg_map_subj_codes
@@ -227,6 +230,7 @@ WHEN NOT MATCHED THEN
 WHEN MATCHED THEN
     UPDATE SET
           tgt.liczba_godz = src.liczba_godz
+        , tgt.mod_id = src.mod_id
         , tgt.tpro_kod = src.tpro_kod
         , tgt.dbg_subj_codes = src.dbg_subj_codes
         , tgt.dbg_map_subj_codes = src.dbg_map_subj_codes

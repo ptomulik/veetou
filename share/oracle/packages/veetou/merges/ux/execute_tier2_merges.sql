@@ -1,5 +1,5 @@
 @@ux_przedmioty.sql;
---@@ux_atrybuty_przedmiotow.sql;
+@@ux_atrybuty_przedmiotow.sql;
 @@ux_przedmioty_cykli.sql;
 @@ux_zajecia_cykli.sql;
 @@ux_zaliczenia_przedmiotow.sql;
