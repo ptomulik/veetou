@@ -107,6 +107,7 @@ USING
         )
         SELECT
               v.*
+            , V2u_Get.Utw_Id(v.job_uuid) utw_id
             , V2u_Get.Mod_Id(v.job_uuid) mod_id
             , 'KOD_WYDZ' tatr_kod
             , v.map_subj_code prz_kod
@@ -148,6 +149,7 @@ WHEN NOT MATCHED THEN
         (
           tatr_kod
         , prz_kod
+        , utw_id
         , mod_id
         , wartosc
         , id
@@ -166,6 +168,7 @@ WHEN NOT MATCHED THEN
         (
           src.tatr_kod
         , src.prz_kod
+        , src.utw_id
         , src.mod_id
         , src.wartosc
         , src.id
@@ -183,6 +186,7 @@ WHEN NOT MATCHED THEN
 WHEN MATCHED THEN
     UPDATE SET
           tgt.prz_kod = src.prz_kod
+        , tgt.utw_id = src.utw_id
         , tgt.mod_id = src.mod_id
         , tgt.wartosc = src.wartosc
         , tgt.id = src.id

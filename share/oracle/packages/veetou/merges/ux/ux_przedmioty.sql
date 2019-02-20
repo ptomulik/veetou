@@ -178,6 +178,7 @@ USING
             , v.map_subj_code kod
             , v.subj_name nazwa
             , COALESCE(v.map_org_unit, v.faculty_code) jed_org_kod
+            , V2u_Get.Utw_Id(v.job_uuid) utw_id
             , V2u_Get.Mod_Id(v.job_uuid) mod_id
             , V2u_Get.Tpro_Kod(
                       subj_credit_kind => v.subj_credit_kind
@@ -238,6 +239,7 @@ WHEN NOT MATCHED THEN
         , coalesced_subj_code
         , nazwa
         , jed_org_kod
+        , utw_id
         , mod_id
         , tpro_kod
         , jed_org_kod_biorca
@@ -261,6 +263,7 @@ WHEN NOT MATCHED THEN
         , src.coalesced_subj_code
         , src.nazwa
         , src.jed_org_kod
+        , src.utw_id
         , src.mod_id
         , src.tpro_kod
         , src.jed_org_kod_biorca
@@ -283,6 +286,7 @@ WHEN MATCHED THEN
           tgt.kod = src.kod
         , tgt.nazwa = src.nazwa
         , tgt.jed_org_kod = src.jed_org_kod
+        , tgt.utw_id = src.utw_id
         , tgt.mod_id = src.mod_id
         , tgt.tpro_kod = src.tpro_kod
         , tgt.jed_org_kod_biorca = src.jed_org_kod_biorca

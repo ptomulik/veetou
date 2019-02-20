@@ -1,7 +1,11 @@
 CREATE OR REPLACE TYPE V2u_Ux_Program_Osoby_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Dz_Program_Osoby_B_t
     ( job_uuid RAW(16)
-    , is_missing INTEGER
+    , student_index VARCHAR2(32 CHAR)
+    , coalesced_program_code VARCHAR2(1000 CHAR)
+    , dbg_matched INTEGER
+    , dbg_missing INTEGER
+    , dbg_mapped INTEGER
     , safe_to_add INTEGER
 
     , CONSTRUCTOR FUNCTION V2u_Ux_Program_Osoby_t(
@@ -53,8 +57,12 @@ CREATE OR REPLACE TYPE V2u_Ux_Program_Osoby_t
             , umowa_sygnatura IN VARCHAR2
             , kod_isced IN VARCHAR2
             , job_uuid IN RAW
-            , is_missing INTEGER
-            , safe_to_add INTEGER
+            , student_index IN VARCHAR2
+            , coalesced_program_code IN VARCHAR2
+            , dbg_matched IN INTEGER
+            , dbg_missing IN INTEGER
+            , dbg_mapped IN INTEGER
+            , safe_to_add IN INTEGER
             ) RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
@@ -106,8 +114,12 @@ CREATE OR REPLACE TYPE V2u_Ux_Program_Osoby_t
             , umowa_sygnatura IN VARCHAR2
             , kod_isced IN VARCHAR2
             , job_uuid IN RAW
-            , is_missing INTEGER
-            , safe_to_add INTEGER
+            , student_index IN VARCHAR2
+            , coalesced_program_code IN VARCHAR2
+            , dbg_matched IN INTEGER
+            , dbg_missing IN INTEGER
+            , dbg_mapped IN INTEGER
+            , safe_to_add IN INTEGER
             )
     )
 ;

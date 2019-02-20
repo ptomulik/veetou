@@ -48,7 +48,11 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Program_Osoby_t AS
             , umowa_sygnatura IN VARCHAR2
             , kod_isced IN VARCHAR2
             , job_uuid IN RAW
-            , is_missing INTEGER
+            , student_index IN VARCHAR2
+            , coalesced_program_code IN VARCHAR2
+            , dbg_matched IN INTEGER
+            , dbg_missing IN INTEGER
+            , dbg_mapped IN INTEGER
             , safe_to_add INTEGER
             ) RETURN SELF AS RESULT
     IS
@@ -101,7 +105,11 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Program_Osoby_t AS
             , umowa_sygnatura => umowa_sygnatura
             , kod_isced => kod_isced
             , job_uuid => job_uuid
-            , is_missing => is_missing
+            , student_index => student_index
+            , coalesced_program_code => coalesced_program_code
+            , dbg_matched => dbg_matched
+            , dbg_missing => dbg_missing
+            , dbg_mapped => dbg_mapped
             , safe_to_add => safe_to_add
             );
         RETURN;
@@ -156,7 +164,11 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Program_Osoby_t AS
             , umowa_sygnatura IN VARCHAR2
             , kod_isced IN VARCHAR2
             , job_uuid IN RAW
-            , is_missing INTEGER
+            , student_index IN VARCHAR2
+            , coalesced_program_code IN VARCHAR2
+            , dbg_matched IN INTEGER
+            , dbg_missing IN INTEGER
+            , dbg_mapped IN INTEGER
             , safe_to_add INTEGER
             )
     IS
@@ -210,7 +222,11 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Program_Osoby_t AS
             , kod_isced => kod_isced
             );
         SELF.job_uuid := job_uuid;
-        SELF.is_missing := is_missing;
+        SELF.student_index := student_index;
+        SELF.coalesced_program_code := coalesced_program_code;
+        SELF.dbg_matched := dbg_matched;
+        SELF.dbg_missing := dbg_missing;
+        SELF.dbg_mapped := dbg_mapped;
         SELF.safe_to_add := safe_to_add;
     END;
 END;

@@ -141,12 +141,50 @@ CREATE OR REPLACE PACKAGE BODY V2U_Get AS
     END;
 
 
+    FUNCTION Utw_Id(job_uuid IN RAW)
+            RETURN VARCHAR2
+    IS
+    BEGIN
+        RETURN Mod_Id(job_uuid => job_uuid);
+    END;
+
+
     FUNCTION Mod_Id(job_uuid IN RAW)
             RETURN VARCHAR2
     IS
     BEGIN
         RETURN SUBSTR(('V2U:' || RAWTOHEX(job_uuid)), 1, 30);
     END;
+
+    FUNCTION Stringized(
+              specialty IN V2u_Ko_Specialty_t
+            , semester IN V2u_Ko_Semester_t
+            ) RETURN VARCHAR2
+    IS
+    BEGIN
+        RETURN
+            specialty.university
+            || ':' ||
+            specialty.faculty
+            || ':' ||
+            specialty.studies_modetier
+            || ':' ||
+            specialty.studies_field
+            || ':' ||
+            specialty.studies_specialty
+            || ':' ||
+            semester.semester_code
+            || ':' ||
+            semester.semester_number
+            || ':' ||
+            semester.ects_mandatory
+            || ':' ||
+            semester.ects_other
+            || ':' ||
+            semester.ects_total
+            ;
+    END;
+
 
     FUNCTION Max_Admission_Semester(semesters IN V2u_Ko_Semesters_t)
         RETURN VARCHAR2

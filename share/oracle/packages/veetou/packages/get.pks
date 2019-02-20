@@ -11,8 +11,14 @@ CREATE OR REPLACE PACKAGE V2U_Get AUTHID CURRENT_USER AS
               subj_credit_kind IN VARCHAR2
             , subj_grades IN V2u_Subj_Grades_t
             ) RETURN VARCHAR2;
+    FUNCTION Utw_Id(job_uuid IN RAW)
+            RETURN VARCHAR2;
     FUNCTION Mod_Id(job_uuid IN RAW)
             RETURN VARCHAR2;
+    FUNCTION Stringized(
+              specialty IN V2u_Ko_Specialty_t
+            , semester IN V2u_Ko_Semester_t
+            ) RETURN VARCHAR2;
     FUNCTION Max_Admission_Semester(semesters IN V2u_Ko_Semesters_t)
             RETURN VARCHAR2;
 END V2U_Get;
