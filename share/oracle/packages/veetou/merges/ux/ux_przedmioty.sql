@@ -45,8 +45,8 @@ USING
                         COLLECT(grades.subj_grade)
                         AS V2u_Vchars1024_t
                   )) subj_grades
-                , COUNT(ma_j.id) dbg_matched
-                , COUNT(mi_j.id) dbg_missing
+                , COUNT(ma_przedm_j.id) dbg_matched
+                , COUNT(mi_przedm_j.id) dbg_missing
                 , COUNT(sm_j.map_id) dbg_mapped
 
             FROM v2u_ko_subject_semesters_j ss_j
@@ -60,19 +60,19 @@ USING
                             specialties.id = ss_j.specialty_id
                         AND specialties.job_uuid = ss_j.job_uuid
                     )
-            LEFT JOIN v2u_ko_matched_przedm_j ma_j
+            LEFT JOIN v2u_ko_matched_przedm_j ma_przedm_j
                 ON  (
-                            ma_j.subject_id = ss_j.subject_id
-                        AND ma_j.specialty_id = ss_j.specialty_id
-                        AND ma_j.semester_id = ss_j.semester_id
-                        AND ma_j.job_uuid = ss_j.job_uuid
+                            ma_przedm_j.subject_id = ss_j.subject_id
+                        AND ma_przedm_j.specialty_id = ss_j.specialty_id
+                        AND ma_przedm_j.semester_id = ss_j.semester_id
+                        AND ma_przedm_j.job_uuid = ss_j.job_uuid
                     )
-            LEFT JOIN v2u_ko_missing_przedm_j mi_j
+            LEFT JOIN v2u_ko_missing_przedm_j mi_przedm_j
                 ON  (
-                            mi_j.subject_id = ss_j.subject_id
-                        AND mi_j.specialty_id = ss_j.specialty_id
-                        AND mi_j.semester_id = ss_j.semester_id
-                        AND mi_j.job_uuid = ss_j.job_uuid
+                            mi_przedm_j.subject_id = ss_j.subject_id
+                        AND mi_przedm_j.specialty_id = ss_j.specialty_id
+                        AND mi_przedm_j.semester_id = ss_j.semester_id
+                        AND mi_przedm_j.job_uuid = ss_j.job_uuid
                     )
             LEFT JOIN v2u_ko_subject_map_j sm_j
                 ON  (
