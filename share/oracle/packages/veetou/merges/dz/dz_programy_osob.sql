@@ -1,9 +1,9 @@
 MERGE INTO v2u_dz_programy_osob tgt
 USING dz_programy_osob src
 ON  (tgt.id = src.id)
-WHEN NOT MATCHED THEN INSERT
-    (
-          os_id
+WHEN NOT MATCHED THEN
+    INSERT
+        ( os_id
         , prg_kod
         , utw_id
         , utw_data
@@ -49,10 +49,9 @@ WHEN NOT MATCHED THEN INSERT
         , umowa_data_podpisania
         , umowa_sygnatura
         , kod_isced
-    )
-VALUES
-    (
-          src.os_id
+        )
+    VALUES
+        ( src.os_id
         , src.prg_kod
         , src.utw_id
         , src.utw_data
@@ -98,9 +97,9 @@ VALUES
         , src.umowa_data_podpisania
         , src.umowa_sygnatura
         , src.kod_isced
-    )
-WHEN MATCHED
-    THEN UPDATE SET
+        )
+WHEN MATCHED THEN
+    UPDATE SET
           tgt.os_id = src.os_id
         , tgt.prg_kod = src.prg_kod
         , tgt.utw_id = src.utw_id

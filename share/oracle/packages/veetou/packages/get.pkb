@@ -156,10 +156,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Get AS
         RETURN SUBSTR(('V2U:' || RAWTOHEX(job_uuid)), 1, 30);
     END;
 
-    FUNCTION Stringized(
-              specialty IN V2u_Ko_Specialty_t
-            , semester IN V2u_Ko_Semester_t
-            ) RETURN VARCHAR2
+    FUNCTION Alt_Prg_Code(specialty IN V2u_Ko_Specialty_t)
+            RETURN VARCHAR2
     IS
     BEGIN
         RETURN
@@ -172,17 +170,88 @@ CREATE OR REPLACE PACKAGE BODY V2U_Get AS
             specialty.studies_field
             || ':' ||
             specialty.studies_specialty
-            || ':' ||
-            semester.semester_code
-            || ':' ||
-            semester.semester_number
-            || ':' ||
-            semester.ects_mandatory
-            || ':' ||
-            semester.ects_other
-            || ':' ||
-            semester.ects_total
             ;
+    END;
+
+
+    FUNCTION Studies_Mode(studies_modetier IN VARCHAR2)
+            RETURN VARCHAR2
+    IS
+        l_mode VARCHAR2(256 CHAR);
+        r1 CONSTANT VARCHAR2(100 CHAR) := 'studia +((stacjonarne)|(niestacjonarne( +(zaoczne|wieczorowe))?))';
+        r2 CONSTANT VARCHAR2(100 CHAR) := '\w+( +\w+)*';
+    BEGIN
+        l_mode := REGEXP_REPLACE(
+                  studies_modetier
+                , r1 || ' +' || r2
+                , '\1', 1, 0, 'i'
+            );
+        IF l_mode <> studies_modetier THEN
+            l_mode := LOWER(l_mode);
+            l_mode := REGEXP_REPLACE(l_mode, ' +', ' ');
+            RETURN l_mode;
+        END IF;
+        RETURN '?';
+    END;
+
+
+    FUNCTION Studies_Tier(studies_modetier IN VARCHAR2)
+            RETURN VARCHAR2
+    IS
+        l_tier VARCHAR2(256 CHAR);
+        r1 CONSTANT VARCHAR2(100 CHAR) := 'studia +\w+( +\w+)*';
+        r2 CONSTANT VARCHAR2(100 CHAR) := '((\w+ +stopnia)|(\w+ +jednolite)|podyplomowe)';
+    BEGIN
+        l_tier := REGEXP_REPLACE(
+              studies_modetier
+            , r1 || ' +' || r2
+            , '\2' , 1, 0, 'i'
+        );
+        IF l_tier <> studies_modetier THEN
+            l_tier := LOWER(l_tier);
+            l_tier := REGEXP_REPLACE(l_tier, ' +', ' ');
+            l_tier := REGEXP_REPLACE(l_tier, '(\w+) +jednolite', 'jednolite \1');
+            RETURN l_tier;
+        END IF;
+        RETURN '?';
+    END;
+
+
+    FUNCTION Studies_Program_Description(
+              studies_modetier IN VARCHAR2
+            , studies_field IN VARCHAR2
+            , studies_specialty IN VARCHAR2
+            ) RETURN VARCHAR2
+    IS
+        l_mode VARCHAR2(256 CHAR);
+        l_tier VARCHAR2(256 CHAR);
+        l_desc VARCHAR2(1000 CHAR);
+    BEGIN
+        l_mode := Studies_Mode(studies_modetier);
+        IF l_mode = '?' THEN
+            RETURN '?';
+        END IF;
+        l_tier := Studies_Tier(studies_modetier);
+        IF l_tier = '?' THEN
+            RETURN '?';
+        END IF;
+        l_desc := studies_field;
+        IF l_tier <> 'podyplomowe' THEN
+            l_desc := l_desc || ', studia ' || l_mode || ' ' || l_tier;
+        END IF;
+        RETURN l_desc;
+    END;
+
+
+    FUNCTION Studies_Program_Description(specialty IN V2u_Ko_Specialty_t)
+            RETURN VARCHAR2
+    IS
+    BEGIN
+        RETURN Studies_Program_Description(
+                  studies_modetier => specialty.studies_modetier
+                , studies_field => specialty.studies_field
+                , studies_specialty => specialty.studies_specialty
+                );
     END;
 
 

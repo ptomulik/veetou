@@ -96,17 +96,14 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
 
 
     PROCEDURE Drop_Table(table_name IN VARCHAR2,
-                         view_name IN VARCHAR2 := NULL,
-                         how IN VARCHAR2 := 'PURGE')
+                         view_name IN VARCHAR2 := NULL)
     IS
     BEGIN
         IF view_name IS NOT NULL THEN
             Drop_If_Exists('VIEW', 'v2u_' || view_name);
         END IF;
         Drop_If_Exists('MATERIALIZED VIEW LOG ON', 'v2u_' || table_name);
-        IF how <> 'KEEP' THEN
-            Drop_If_Exists('TABLE', 'v2u_' || table_name, how=>how);
-        END IF;
+        Drop_If_Exists('TABLE', 'v2u_' || table_name, how => 'PURGE');
     END;
 
 
@@ -175,38 +172,44 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     PROCEDURE Tier1_Dz
     IS
     BEGIN
-        Drop_Table('dz_zaliczenia_przedmiotow', how => 'PURGE');
+        Drop_Table('dz_zaliczenia_przedmiotow');
 
         Drop_Index('dz_etapy_osob_idx1');
         Drop_Index('dz_etapy_osob_idx2');
-        Drop_Table('dz_etapy_osob', how => 'PURGE');
+        Drop_Table('dz_etapy_osob');
         --
         Drop_Index('dz_programy_osob_idx1');
         Drop_Index('dz_programy_osob_idx2');
         Drop_Index('dz_programy_osob_idx3');
         Drop_Index('dz_programy_osob_idx4');
-        Drop_Table('dz_programy_osob', how => 'PURGE');
+        Drop_Table('dz_programy_osob');
+        --
+        Drop_Index('dz_programy_idx1');
+        Drop_Index('dz_programy_idx2');
+        Drop_Index('dz_programy_idx3');
+        Drop_Table('dz_programy');
         --
         Drop_Index('dz_studenci_idx1');
-        Drop_Table('dz_studenci', how => 'PURGE');
+        Drop_Table('dz_studenci');
         --
         Drop_Index('dz_zajecia_cykli_idx1');
-        Drop_Table('dz_zajecia_cykli', how => 'PURGE');
+        Drop_Table('dz_zajecia_cykli');
         --
         Drop_Index('dz_przedmioty_cykli_idx1');
         Drop_Index('dz_przedmioty_cykli_idx2');
-        Drop_Table('dz_przedmioty_cykli', how => 'PURGE');
+        Drop_Table('dz_przedmioty_cykli');
         --
         Drop_Index('dz_atrybuty_przedm_idx1');
         Drop_Index('dz_atrybuty_przedm_idx2');
-        Drop_Table('dz_atrybuty_przedmiotow', how => 'PURGE');
+        Drop_Table('dz_atrybuty_przedmiotow');
         --
-        Drop_Table('dz_przedmioty', how => 'PURGE');
+        Drop_Table('dz_przedmioty');
 
         Drop_Type('Dz_Zalicz_Przedmiotu_t', 'Dz_Zalicz_Przedmiotow_t');
         Drop_Type('Dz_Program_Osoby_t', 'Dz_Programy_Osob_t');
         Drop_Type('Dz_Etap_Osoby_t', 'Dz_Etapy_Osob_t');
         Drop_Type('Dz_Student_t', 'Dz_Studenci_t');
+        Drop_Type('Dz_Program_t', 'Dz_Programy_t');
         Drop_Type('Dz_Atrybut_Przedmiotu_t', 'Dz_Atrybuty_Przedmiotow_t');
         Drop_Type('Dz_Przedmiot_t', 'Dz_Przedmioty_t');
         Drop_Type('Dz_Przedmiot_Cyklu_t', 'Dz_Przedmioty_Cykli_t');
@@ -232,22 +235,22 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('ko_trs_idx1');
         Drop_Index('ko_trs_idx2');
 
-        Drop_Table('ko_page_footer_j', how => 'PURGE');
-        Drop_Table('ko_page_header_j', how => 'PURGE');
-        Drop_Table('ko_page_preamble_j', how => 'PURGE');
-        Drop_Table('ko_page_tbody_j', how => 'PURGE');
-        Drop_Table('ko_report_sheets_j', how => 'PURGE');
-        Drop_Table('ko_sheet_pages_j', how => 'PURGE');
-        Drop_Table('ko_tbody_trs_j', how => 'PURGE');
-        Drop_Table('ko_footers', how => 'PURGE');
-        Drop_Table('ko_headers', how => 'PURGE');
-        Drop_Table('ko_pages', how => 'PURGE');
-        Drop_Table('ko_preambles', how => 'PURGE');
-        Drop_Table('ko_reports', how => 'PURGE');
-        Drop_Table('ko_sheets', how => 'PURGE');
-        Drop_Table('ko_tbodies', how => 'PURGE');
-        Drop_Table('ko_trs', how => 'PURGE');
-        Drop_Table('ko_jobs', how => 'PURGE');
+        Drop_Table('ko_page_footer_j');
+        Drop_Table('ko_page_header_j');
+        Drop_Table('ko_page_preamble_j');
+        Drop_Table('ko_page_tbody_j');
+        Drop_Table('ko_report_sheets_j');
+        Drop_Table('ko_sheet_pages_j');
+        Drop_Table('ko_tbody_trs_j');
+        Drop_Table('ko_footers');
+        Drop_Table('ko_headers');
+        Drop_Table('ko_pages');
+        Drop_Table('ko_preambles');
+        Drop_Table('ko_reports');
+        Drop_Table('ko_sheets');
+        Drop_Table('ko_tbodies');
+        Drop_Table('ko_trs');
+        Drop_Table('ko_jobs');
 
         Drop_Type('Ko_Footer_t', 'Ko_Footers_t');
         Drop_Type('Ko_Header_t', 'Ko_Headers_t');
@@ -268,30 +271,30 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('specialty_map_idx3');
         Drop_Trigger('specialty_map_tr1');
         Drop_Sequence('specialty_map_sq1');
-        Drop_Table('specialty_map', how => 'PURGE');
+        Drop_Table('specialty_map');
 
         Drop_Index('subject_map_idx1');
         Drop_Index('subject_map_idx2');
         Drop_Trigger('subject_map_tr1');
         Drop_Sequence('subject_map_sq1');
-        Drop_Table('subject_map', how => 'PURGE');
+        Drop_Table('subject_map');
 
         Drop_Index('classes_map_idx1');
         Drop_Index('classes_map_idx2');
         Drop_Trigger('classes_map_tr1');
         Drop_Sequence('classes_map_sq1');
-        Drop_Table('classes_map', how => 'PURGE');
+        Drop_Table('classes_map');
 
         Drop_Trigger('semesters_tr1');
-        Drop_Table('semesters', how => 'PURGE');
+        Drop_Table('semesters');
 
         Drop_Sequence('faculties_sq1');
         Drop_Trigger('faculties_tr1');
-        Drop_Table('faculties', how => 'PURGE');
+        Drop_Table('faculties');
 
         Drop_Sequence('universities_sq1');
         Drop_Trigger('universities_tr1');
-        Drop_Table('universities', how => 'PURGE');
+        Drop_Table('universities');
 
         Drop_Package('Match');
         Drop_Package('Cmp');
@@ -331,92 +334,92 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     PROCEDURE Tier2
     IS
     BEGIN
-        Drop_Table('ko_missing_prgos_j', how => 'PURGE');
+        Drop_Table('ko_missing_prgos_j');
         --
-        Drop_Table('ko_missing_etpos_j', how => 'PURGE');
+        Drop_Table('ko_missing_etpos_j');
         --
         Drop_Trigger('ko_missing_przedm_j_tr1');
         Drop_Sequence('ko_missing_przedm_j_sq1');
-        Drop_Table('ko_missing_przedm_j', how => 'PURGE');
+        Drop_Table('ko_missing_przedm_j');
         --
         Drop_Trigger('ko_missing_przcykl_j_tr1');
         Drop_Sequence('ko_missing_przcykl_j_sq1');
-        Drop_Table('ko_missing_przcykl_j', how => 'PURGE');
+        Drop_Table('ko_missing_przcykl_j');
         --
         Drop_Trigger('ko_missing_zajcykl_j_tr1');
         Drop_Sequence('ko_missing_zajcykl_j_sq1');
-        Drop_Table('ko_missing_zajcykl_j', how => 'PURGE');
+        Drop_Table('ko_missing_zajcykl_j');
         --
         Drop_Index('ko_matched_etpos_j_idx1');
-        Drop_Table('ko_matched_etpos_j', how => 'PURGE');
+        Drop_Table('ko_matched_etpos_j');
         --
         Drop_Index('ko_matched_prgos_j_idx1');
-        Drop_Table('ko_matched_prgos_j', how => 'PURGE');
+        Drop_Table('ko_matched_prgos_j');
         --
         Drop_Trigger('ko_matched_przedm_j_tr1');
         Drop_Sequence('ko_matched_przedm_j_sq1');
-        Drop_Table('ko_matched_przedm_j', how => 'PURGE');
+        Drop_Table('ko_matched_przedm_j');
         --
         Drop_Trigger('ko_matched_przcykl_j_tr1');
         Drop_Sequence('ko_matched_przcykl_j_sq1');
-        Drop_Table('ko_matched_przcykl_j', how => 'PURGE');
+        Drop_Table('ko_matched_przcykl_j');
         --
         Drop_Index('ko_matched_zajcykl_j_idx1');
         Drop_Trigger('ko_matched_zajcykl_j_tr1');
         Drop_Sequence('ko_matched_zajcykl_j_sq1');
-        Drop_Table('ko_matched_zajcykl_j', how => 'PURGE');
+        Drop_Table('ko_matched_zajcykl_j');
         --
         Drop_Index('ko_grades_j_idx1');
-        Drop_Table('ko_grades_j', how => 'PURGE');
+        Drop_Table('ko_grades_j');
         --
-        Drop_Table('ko_student_sheets_j', how => 'PURGE');
-        Drop_Table('ko_student_specialties_j', how => 'PURGE');
-        Drop_Table('ko_student_semesters_j', how => 'PURGE');
+        Drop_Table('ko_student_sheets_j');
+        Drop_Table('ko_student_specialties_j');
+        Drop_Table('ko_student_semesters_j');
         --
         Drop_Trigger('ko_students_tr1');
         Drop_Sequence('ko_students_sq1');
         Drop_Index('ko_students_idx1');
-        Drop_Table('ko_students', how => 'PURGE');
+        Drop_Table('ko_students');
         --
         Drop_Index('ko_classes_map_j_idx1');
         Drop_Index('ko_classes_map_j_idx2');
         Drop_Index('ko_classes_map_j_idx3');
         Drop_Index('ko_classes_map_j_idx4');
         Drop_Index('ko_classes_map_j_idx5');
-        Drop_Table('ko_classes_map_j', how => 'PURGE');
+        Drop_Table('ko_classes_map_j');
         --
-        Drop_Table('ko_classes_semesters_j', how => 'PURGE');
+        Drop_Table('ko_classes_semesters_j');
         --
         Drop_Index('ko_subject_map_j_idx1');
         Drop_Index('ko_subject_map_j_idx2');
         Drop_Index('ko_subject_map_j_idx3');
         Drop_Index('ko_subject_map_j_idx4');
-        Drop_Table('ko_subject_map_j', how => 'PURGE');
+        Drop_Table('ko_subject_map_j');
         --
-        Drop_Table('ko_subject_semesters_j', how => 'PURGE');
+        Drop_Table('ko_subject_semesters_j');
         --
-        Drop_Table('ko_subject_trs_j', how => 'PURGE');
+        Drop_Table('ko_subject_trs_j');
         --
         Drop_Trigger('ko_subjects_tr1');
         Drop_Sequence('ko_subjects_sq1');
         Drop_Index('ko_subjects_idx1');
-        Drop_Table('ko_subjects', how => 'PURGE');
+        Drop_Table('ko_subjects');
         --
         Drop_Index('ko_specialty_map_j_idx1');
-        Drop_Table('ko_specialty_map_j', how=>'PURGE');
+        Drop_Table('ko_specialty_map_j');
         --
-        Drop_Table('ko_specialty_sheets_j', how => 'PURGE');
-        Drop_Table('ko_semester_sheets_j', how => 'PURGE');
-        Drop_Table('ko_specialty_semesters_j', how => 'PURGE');
+        Drop_Table('ko_specialty_sheets_j');
+        Drop_Table('ko_semester_sheets_j');
+        Drop_Table('ko_specialty_semesters_j');
         --
         Drop_Trigger('ko_semesters_tr1');
         Drop_Sequence('ko_semesters_sq1');
         Drop_Index('ko_semesters_idx1');
-        Drop_Table('ko_semesters', how => 'PURGE');
+        Drop_Table('ko_semesters');
         --
         Drop_Trigger('ko_specialties_tr1');
         Drop_Sequence('ko_specialties_sq1');
-        Drop_Table('ko_specialties', how => 'PURGE');
+        Drop_Table('ko_specialties');
 
         --
         Drop_Index('ux_classes_grades_idx1');
@@ -428,38 +431,38 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('ux_classes_grades_idx7');
         Drop_Index('ux_classes_grades_idx8');
         Drop_Index('ux_classes_grades_idx9');
-        Drop_Table('ux_classes_grades', how => 'PURGE');
+        Drop_Table('ux_classes_grades');
         --
-        Drop_Table('ux_zaliczenia_przedmiotow', how => 'PURGE');
+        Drop_Table('ux_zaliczenia_przedmiotow');
         --
         Drop_Index('ux_etapy_osob_idx1');
         Drop_Index('ux_etapy_osob_idx2');
-        Drop_Table('ux_etapy_osob', how => 'PURGE');
+        Drop_Table('ux_etapy_osob');
         --
         Drop_Index('ux_programy_osob_idx1');
         Drop_Index('ux_programy_osob_idx2');
         Drop_Index('ux_programy_osob_idx3');
         Drop_Index('ux_programy_osob_idx4');
-        Drop_Table('ux_programy_osob', how => 'PURGE');
+        Drop_Table('ux_programy_osob');
         --
         Drop_Index('ux_studenci_idx1');
-        Drop_Table('ux_studenci', how => 'PURGE');
+        Drop_Table('ux_studenci');
         --
         Drop_Index('ux_zajecia_cykli_idx1');
         Drop_Trigger('ux_zajecia_cykli_tr1');
         Drop_Sequence('ux_zajecia_cykli_sq1');
-        Drop_Table('ux_zajecia_cykli', how => 'PURGE');
+        Drop_Table('ux_zajecia_cykli');
         --
         Drop_Index('ux_przedmioty_cykli_idx1');
         Drop_Index('ux_przedmioty_cykli_idx2');
-        Drop_Table('ux_przedmioty_cykli', how => 'PURGE');
+        Drop_Table('ux_przedmioty_cykli');
         --
         Drop_Index('ux_atrybuty_przedm_idx1');
         Drop_Index('ux_atrybuty_przedm_idx2');
-        Drop_Table('ux_atrybuty_przedmiotow', how => 'PURGE');
+        Drop_Table('ux_atrybuty_przedmiotow');
         --
         Drop_Index('ux_przedmioty_idx1');
-        Drop_Table('ux_przedmioty', how => 'PURGE');
+        Drop_Table('ux_przedmioty');
 
         --
         Drop_Package('Fit');

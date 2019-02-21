@@ -2,7 +2,7 @@ CREATE OR REPLACE TYPE V2u_Ux_Program_Osoby_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Dz_Program_Osoby_B_t
     ( job_uuid RAW(16)
     , student_index VARCHAR2(32 CHAR)
-    , coalesced_program_code VARCHAR2(1000 CHAR)
+    , coalesced_program_code VARCHAR2(1024 CHAR)
     , dbg_matched INTEGER
     , dbg_missing INTEGER
     , dbg_mapped INTEGER

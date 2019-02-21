@@ -126,8 +126,10 @@ USING
                 WHEN
                         v.map_subj_code IS NOT NULL
                     AND v.dbg_map_subj_codes = 1
-                    AND v.dbg_subj_codes > 0 AND v.dbg_subj_codes <= 20
-                    AND w.dbg_all_subj_codes > 0 AND w.dbg_all_subj_codes <= 20
+                    AND v.dbg_subj_codes > 0
+                    AND v.dbg_subj_codes = (SELECT COUNT(1) FROM TABLE(v.subj_codes))
+                    AND w.dbg_all_subj_codes > 0
+                    AND w.dbg_all_subj_codes = (SELECT COUNT(1) FROM TABLE(w.all_subj_codes))
                     AND v.dbg_mapped > 0
                     AND v.dbg_ids = 0
                 THEN 1

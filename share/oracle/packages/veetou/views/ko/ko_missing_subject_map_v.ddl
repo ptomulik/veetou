@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW v2u_ko_missing_subj_maps_v
+CREATE OR REPLACE VIEW v2u_ko_missing_subject_map_v
 --OF V2u_Ko_Missing_Subj_Map_V_t
 --WITH OBJECT IDENTIFIER (job_uuid, subject_id, specialty_id, semester_id)
 AS WITH u AS

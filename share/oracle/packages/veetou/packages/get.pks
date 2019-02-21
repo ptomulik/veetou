@@ -15,10 +15,19 @@ CREATE OR REPLACE PACKAGE V2U_Get AUTHID CURRENT_USER AS
             RETURN VARCHAR2;
     FUNCTION Mod_Id(job_uuid IN RAW)
             RETURN VARCHAR2;
-    FUNCTION Stringized(
-              specialty IN V2u_Ko_Specialty_t
-            , semester IN V2u_Ko_Semester_t
+    FUNCTION Alt_Prg_Code(specialty IN V2u_Ko_Specialty_t)
+            RETURN VARCHAR2;
+    FUNCTION Studies_Mode(studies_modetier IN VARCHAR2)
+            RETURN VARCHAR2;
+    FUNCTION Studies_Tier(studies_modetier IN VARCHAR2)
+            RETURN VARCHAR2;
+    FUNCTION Studies_Program_Description(
+              studies_modetier IN VARCHAR2
+            , studies_field IN VARCHAR2
+            , studies_specialty IN VARCHAR2
             ) RETURN VARCHAR2;
+    FUNCTION Studies_Program_Description(specialty IN V2u_Ko_Specialty_t)
+            RETURN VARCHAR2;
     FUNCTION Max_Admission_Semester(semesters IN V2u_Ko_Semesters_t)
             RETURN VARCHAR2;
 END V2U_Get;

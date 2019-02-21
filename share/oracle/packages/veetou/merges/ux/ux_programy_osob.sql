@@ -8,8 +8,12 @@ USING
                 , students.student_index
                 , COALESCE(
                       ma_prgos_j.prg_kod
-                    , V2u_Get.Stringized(VALUE(specialties), VALUE(semesters))
+                    , V2u_Get.Alt_Prg_Code(VALUE(specialties))
                   ) coalesced_program_code
+                , SET(CAST(
+                    COLLECT(specialty_map.map_program_code)
+                    AS V2u_Vchars1024_t
+                  )) map_program_codes
                 , COUNT(ma_prgos_j.job_uuid) dbg_matched
                 , COUNT(mi_prgos_j.job_uuid) dbg_missing
                 , COUNT(sm_j.job_uuid) dbg_mapped
@@ -58,8 +62,19 @@ USING
                 , students.student_index
                 , COALESCE(
                       ma_prgos_j.prg_kod
-                    , V2u_Get.Stringized(VALUE(specialties), VALUE(semesters))
+                    , V2u_Get.Alt_Prg_Code(VALUE(specialties))
                   )
+        ),
+        v AS
+        (
+            SELECT
+                  u.job_uuid
+                , u.student_index
+                , u.coalesced_program_code
+                , CAST(MULTISET(
+                    SELECT SUBSTR(VALUE(t), 1, 20)
+                    FROM TABLE(u.map_
+            FROM u u
         )
     )
 ON  (
