@@ -216,8 +216,11 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Dz_Zajecia_Cyklu_t', 'Dz_Zajecia_Cykli_t');
 
         Drop_Type('Dz_Program_Osoby_B_t');
+        Drop_Type('Dz_Program_B_t');
         Drop_Type('Dz_Etap_Osoby_B_t');
         Drop_Type('Dz_Student_B_t');
+        Drop_Type('Dz_Atrybut_Przedmiotu_B_t');
+        Drop_Type('Dz_Zalicz_Przedmiotu_B_t');
         Drop_Type('Dz_Przedmiot_B_t');
         Drop_Type('Dz_Przedmiot_Cyklu_B_t');
         Drop_Type('Dz_Zajecia_Cyklu_B_t');
@@ -497,6 +500,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ux_Program_Osoby_t', 'Ux_Programy_Osob_t');
         Drop_Type('Ux_Student_t', 'Ux_Studenci_t');
         Drop_Type('Ux_Atrybut_Przedmiotu_t', 'Ux_Atrybuty_Przedmiotow_t');
+        Drop_Type('Ux_Zalicz_Przedmiotu_t', 'Ux_Zalicz_Przedmiotow_t');
         Drop_Type('Ux_Przedmiot_t', 'Ux_Przedmioty_t');
         Drop_Type('Ux_Przedmiot_Cyklu_t', 'Ux_Przedmioty_Cykli_t');
         Drop_Type('Ux_Zajecia_Cyklu_t', 'Ux_Zajecia_Cykli_t');
@@ -568,7 +572,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Missing_Przedm_V_t', 'Ko_Missing_Przedms_V_t');
         Drop_Type('Ko_Missing_Etpos_V_t', 'Ko_Missing_Etposes_V_t');
         Drop_Type('Ko_Missing_Prgos_V_t', 'Ko_Missing_Prgoses_V_t');
-        Drop_Type('Ko_Missing_Subj_Map_V_t', 'Ko_Missing_Subj_Maps_V_t');
+        Drop_Type('Ko_Missing_Subject_Map_V_t');
+--        Drop_Type('Ko_Missing_Subj_Map_V_t', 'Ko_Missing_Subj_Maps_V_t');
         Drop_Type('Ko_Ambig_Speclty_Map_V_t', 'Ko_Ambig_Speclty_Maps_V_t');
         Drop_Type('Ko_Ambig_Subject_Map_V_t', 'Ko_Ambig_Subject_Maps_V_t');
         Drop_Type('Ko_Specialty_Map_V_t', 'Ko_Specialty_Maps_V_t');

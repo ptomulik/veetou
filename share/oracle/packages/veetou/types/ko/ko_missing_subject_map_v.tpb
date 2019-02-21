@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Subj_Map_V_t AS
-    CONSTRUCTOR FUNCTION V2u_Ko_Missing_Subj_Map_V_t(
-              SELF IN OUT NOCOPY V2u_Ko_Missing_Subj_Map_V_t
+CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Subject_Map_V_t AS
+    CONSTRUCTOR FUNCTION V2u_Ko_Missing_Subject_Map_V_t(
+              SELF IN OUT NOCOPY V2u_Ko_Missing_Subject_Map_V_t
             , id IN NUMBER := NULL
             , subj_code IN VARCHAR2
             , map_subj_code IN VARCHAR2
@@ -67,8 +67,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Subj_Map_V_t AS
         RETURN;
     END;
 
-    CONSTRUCTOR FUNCTION V2u_Ko_Missing_Subj_Map_V_t(
-              SELF IN OUT NOCOPY V2u_Ko_Missing_Subj_Map_V_t
+    CONSTRUCTOR FUNCTION V2u_Ko_Missing_Subject_Map_V_t(
+              SELF IN OUT NOCOPY V2u_Ko_Missing_Subject_Map_V_t
             , subject IN V2u_Ko_Subject_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
@@ -84,7 +84,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Subj_Map_V_t AS
     END;
 
     MEMBER PROCEDURE init(
-              SELF IN OUT NOCOPY V2u_Ko_Missing_Subj_Map_V_t
+              SELF IN OUT NOCOPY V2u_Ko_Missing_Subject_Map_V_t
             , id IN NUMBER := NULL
             , subj_code IN VARCHAR2
             , map_subj_code IN VARCHAR2
@@ -151,7 +151,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Subj_Map_V_t AS
     END;
 
     MEMBER PROCEDURE init(
-              SELF IN OUT NOCOPY V2u_Ko_Missing_Subj_Map_V_t
+              SELF IN OUT NOCOPY V2u_Ko_Missing_Subject_Map_V_t
             , id IN NUMBER := NULL
             , subject IN V2u_Ko_Subject_t
             , specialty IN V2u_Ko_Specialty_t
@@ -162,7 +162,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Subj_Map_V_t AS
         IF semester.job_uuid <> subject.job_uuid THEN
             RAISE_APPLICATION_ERROR(
                   -20101
-                , 'job_uuid missmatch in V2u_Ko_Missing_Subj_Map_V_t.init:' ||
+                , 'job_uuid missmatch in V2u_Ko_Missing_Subject_Map_V_t.init:' ||
                   ' semester.job_uuid='  || RAWTOHEX(semester.job_uuid) ||
                   ' subject.job_uuid=' || RAWTOHEX(subject.job_uuid)
                 );
@@ -170,7 +170,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Subj_Map_V_t AS
         IF specialty.job_uuid <> subject.job_uuid THEN
             RAISE_APPLICATION_ERROR(
                   -20101
-                , 'job_uuid missmatch in V2u_Ko_Missing_Subj_Map_V_t.init:' ||
+                , 'job_uuid missmatch in V2u_Ko_Missing_Subject_Map_V_t.init:' ||
                   ' specialty.job_uuid='  || RAWTOHEX(specialty.job_uuid) ||
                   ' subject.job_uuid=' || RAWTOHEX(subject.job_uuid)
                 );
