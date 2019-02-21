@@ -47,7 +47,7 @@ USING
 --                                        , g_j.specialty_id
 --                                        , g_j.semester_id
 --                                        , g_j.job_uuid)
---                            AS V2u_Vchars1024_t)
+--                            AS V2u_Vchars1K_t)
               ) v2u_tpro_kod
             --, 'FIX' v2u_tpro_kod
             -- USOS

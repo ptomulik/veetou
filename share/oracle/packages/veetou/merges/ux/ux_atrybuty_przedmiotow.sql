@@ -11,15 +11,15 @@ USING
                   ) coalesced_subj_code
                 , SET(CAST(
                         COLLECT(subjects.subj_code)
-                        AS V2u_Vchars1024_t
+                        AS V2u_Vchars1K_t
                   )) subj_codes
                 , SET(CAST(
                         COLLECT(subject_map.map_subj_code)
-                        AS V2u_Vchars1024_t
+                        AS V2u_Vchars1K_t
                   )) map_subj_codes
                 , SET(CAST(
                         COLLECT(atrybuty_przedmiotow.id)
-                        AS V2u_Vchars1024_t
+                        AS V2u_Vchars1K_t
                   )) ids
                 , COUNT(sm_j.map_id) dbg_mapped
             FROM v2u_ko_subject_semesters_j ss_j
@@ -94,7 +94,7 @@ USING
                   v.map_subj_code
                 , SET(CAST(
                     COLLECT(subject_map.subj_code)
-                    AS V2u_Vchars1024_t
+                    AS V2u_Vchars1K_t
                   )) all_subj_codes
                 , COUNT(DISTINCT subject_map.subj_code) dbg_all_subj_codes
             FROM v v

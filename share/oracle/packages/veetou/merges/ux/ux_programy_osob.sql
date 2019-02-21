@@ -12,7 +12,7 @@ USING
                   ) coalesced_program_code
                 , SET(CAST(
                     COLLECT(specialty_map.map_program_code)
-                    AS V2u_Vchars1024_t
+                    AS V2u_Vchars1K_t
                   )) map_program_codes
                 , COUNT(ma_prgos_j.job_uuid) dbg_matched
                 , COUNT(mi_prgos_j.job_uuid) dbg_missing

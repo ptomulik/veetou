@@ -9,19 +9,19 @@ USING
                 , semesters.semester_code
                 , SET(CAST(
                         COLLECT(subjects.subj_code)
-                        AS V2u_Vchars1024_t
+                        AS V2u_Vchars1K_t
                   )) subj_codes
                 , SET(CAST(
                         COLLECT(subject_map.map_subj_code)
-                        AS V2u_Vchars1024_t
+                        AS V2u_Vchars1K_t
                   )) map_subj_codes
                 , SET(CAST(
                         COLLECT(subjects.subj_credit_kind)
-                        AS V2u_Vchars1024_t
+                        AS V2u_Vchars1K_t
                   )) subj_credit_kinds
                 , SET(CAST(
                         COLLECT(grades.subj_grade)
-                        AS V2u_Vchars1024_t
+                        AS V2u_Vchars1K_t
                   )) subj_grades
                 , COUNT(ma_j.id) dbg_matched
                 , COUNT(mi_j.id) dbg_missing

@@ -19,7 +19,7 @@ USING
                 , MIN(subject_map.map_subj_code) KEEP (
                         DENSE_RANK FIRST ORDER BY subject_map.map_subj_code
                   ) tried_map_subj_code
-                , CAST(COLLECT(przedmioty_cykli.cdyd_kod) AS V2u_Vchars1024_t) istniejace_cdyd_kody
+                , CAST(COLLECT(przedmioty_cykli.cdyd_kod) AS V2u_Vchars1K_t) istniejace_cdyd_kody
             FROM v2u_ko_subject_semesters_j ss_j
             INNER JOIN v2u_ko_subjects subjects
                 ON  (

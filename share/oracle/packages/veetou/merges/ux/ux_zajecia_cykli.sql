@@ -14,19 +14,19 @@ USING
                   )) classes_hours_set
                 , SET(CAST(
                         COLLECT(subjects.subj_code)
-                        AS V2u_Vchars1024_t
+                        AS V2u_Vchars1K_t
                   )) subj_codes
                 , SET(CAST(
                         COLLECT(subject_map.map_subj_code)
-                        AS V2u_Vchars1024_t
+                        AS V2u_Vchars1K_t
                   )) map_subj_codes
                 , SET(CAST(
                         COLLECT(subjects.subj_credit_kind)
-                        AS V2u_Vchars1024_t
+                        AS V2u_Vchars1K_t
                   )) subj_credit_kinds
                 , SET(CAST(
                         COLLECT(grades.subj_grade)
-                        AS V2u_Vchars1024_t
+                        AS V2u_Vchars1K_t
                   )) subj_grades
                 , COUNT(ma_j.job_uuid) dbg_matched -- count non-null mappings
                 , COUNT(mi_j.job_uuid) dbg_missing -- count non-null mappings

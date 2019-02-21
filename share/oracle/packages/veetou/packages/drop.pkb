@@ -516,8 +516,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('5Chars1_t');
         Drop_Type('Chars3_t');
         Drop_Type('5Chars3_t');
-        Drop_Type('Vchars1024_t');
-        Drop_Type('5Vchars1024_t');
+        Drop_Type('Vchars1K_t');
+        Drop_Type('5Vchars1K_t');
         Drop_Type('Ints2_t');
         Drop_Type('Ints4_t');
         Drop_Type('Subj_20Grades_t');
@@ -542,7 +542,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_View('ko_matched_przedm_v');
         Drop_View('ko_ambig_speclty_map_v');
         Drop_View('ko_ambig_subject_map_v');
-        Drop_View('ko_missing_subj_maps_v');
+        Drop_View('ko_missing_subject_map_v');
         Drop_View('ko_unmapped_specialties_v');
         Drop_View('ko_unmapped_subjects_v');
         Drop_View('ko_specialty_map_v');

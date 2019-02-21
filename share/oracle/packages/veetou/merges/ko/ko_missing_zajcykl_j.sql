@@ -39,7 +39,7 @@ USING
                   ) semester_code
                 , CAST(
                     COLLECT(zajecia_cykli.tzaj_kod)
-                    AS V2u_Vchars1024_t
+                    AS V2u_Vchars1K_t
                   ) istniejace_tzaj_kody
 
                 -- debugging info
