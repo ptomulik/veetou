@@ -1,9 +1,9 @@
 CREATE OR REPLACE VIEW v2u_ko_specialty_semesters_v
-OF V2u_Ko_Speclty_Semester_V_t
+OF V2u_Ko_Specialty_Semester_V_t
 WITH OBJECT IDENTIFIER (job_uuid, specialty_id, semester_id)
 AS
     SELECT
-        V2u_Ko_Speclty_Semester_V_t(
+        V2u_Ko_Specialty_Semester_V_t(
               specialty => VALUE(specialties)
             , semester => VALUE(semesters)
         ) spec_sem

@@ -587,7 +587,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Specialty_Map_V_t', 'Ko_Specialty_Maps_V_t');
         Drop_Type('Ko_Classes_Map_V_t', 'Ko_Classes_Maps_V_t');
         Drop_Type('Ko_Subject_Map_V_t', 'Ko_Subject_Maps_V_t');
-        Drop_Type('Ko_Speclty_Semester_V_t', 'Ko_Speclty_Semesters_V_t');
+        Drop_Type('Ko_Specialty_Semester_V_t', 'Ko_Specialty_Semesters_V_t');
         Drop_Type('Ko_Classes_Semester_V_t', 'Ko_Classes_Semesters_V_t');
         Drop_Type('Ko_Subject_Semester_V_t', 'Ko_Subject_Semesters_V_t');
         Drop_Type('Ko_Student_Semester_V_t', 'Ko_Student_Semesters_V_t');
