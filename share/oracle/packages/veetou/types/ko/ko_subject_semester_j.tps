@@ -1,5 +1,5 @@
 CREATE OR REPLACE TYPE V2u_Ko_Subject_Semester_J_t
-    FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Speclty_Semester_J_t
+    FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Specialty_Semester_J_t
     ( subject_id NUMBER(38)
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Subject_Semester_J_t(

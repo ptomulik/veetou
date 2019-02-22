@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY V2u_Ko_Speclty_Semester_J_t AS
-    CONSTRUCTOR FUNCTION V2u_Ko_Speclty_Semester_J_t(
-              SELF IN OUT NOCOPY V2u_Ko_Speclty_Semester_J_t
+CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Semester_J_t AS
+    CONSTRUCTOR FUNCTION V2u_Ko_Specialty_Semester_J_t(
+              SELF IN OUT NOCOPY V2u_Ko_Specialty_Semester_J_t
             , job_uuid RAW
             , semester_id IN NUMBER
             , specialty_id IN NUMBER
@@ -15,8 +15,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Speclty_Semester_J_t AS
         RETURN;
     END;
 
-    CONSTRUCTOR FUNCTION V2u_Ko_Speclty_Semester_J_t(
-              SELF IN OUT NOCOPY V2u_Ko_Speclty_Semester_J_t
+    CONSTRUCTOR FUNCTION V2u_Ko_Specialty_Semester_J_t(
+              SELF IN OUT NOCOPY V2u_Ko_Specialty_Semester_J_t
             , semester IN V2u_Ko_Semester_t
             , specialty IN V2u_Ko_Specialty_t
             ) RETURN SELF AS RESULT
@@ -30,7 +30,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Speclty_Semester_J_t AS
     END;
 
     MEMBER PROCEDURE init(
-              SELF IN OUT NOCOPY V2u_Ko_Speclty_Semester_J_t
+              SELF IN OUT NOCOPY V2u_Ko_Specialty_Semester_J_t
             , job_uuid RAW
             , semester_id IN NUMBER
             , specialty_id IN NUMBER
@@ -45,7 +45,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Speclty_Semester_J_t AS
     END;
 
     MEMBER PROCEDURE init(
-              SELF IN OUT NOCOPY V2u_Ko_Speclty_Semester_J_t
+              SELF IN OUT NOCOPY V2u_Ko_Specialty_Semester_J_t
             , semester IN V2u_Ko_Semester_t
             , specialty IN V2u_Ko_Specialty_t
             )
@@ -54,7 +54,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Speclty_Semester_J_t AS
         IF semester.job_uuid <> specialty.job_uuid THEN
             RAISE_APPLICATION_ERROR(
                   -20101
-                , 'job_uuid missmatch in V2u_Ko_Speclty_Semester_J_t.init:' ||
+                , 'job_uuid missmatch in V2u_Ko_Specialty_Semester_J_t.init:' ||
                   ' semester.job_uuid='  || RAWTOHEX(semester.job_uuid) ||
                   ' specialty.job_uuid=' || RAWTOHEX(specialty.job_uuid)
                 );

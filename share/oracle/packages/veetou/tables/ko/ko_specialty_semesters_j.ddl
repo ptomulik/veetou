@@ -1,5 +1,5 @@
 CREATE TABLE v2u_ko_specialty_semesters_j
-OF V2u_Ko_Speclty_Semester_J_t
+OF V2u_Ko_Specialty_Semester_J_t
     (
           CONSTRAINT v2u_ko_spec_semesters_j_pk
             PRIMARY KEY (job_uuid, semester_id, specialty_id)

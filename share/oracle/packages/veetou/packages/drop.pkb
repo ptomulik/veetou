@@ -490,7 +490,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Student_Semester_J_t', 'Ko_Student_Semesters_J_t');
         Drop_Type('Ko_Classes_Semester_J_t', 'Ko_Classes_Semesters_J_t');
         Drop_Type('Ko_Subject_Semester_J_t', 'Ko_Subject_Semesters_J_t');
-        Drop_Type('Ko_Speclty_Semester_J_t', 'Ko_Speclty_Semesters_J_t');
+        Drop_Type('Ko_Specialty_Semester_J_t', 'Ko_Specialty_Semesters_J_t');
         Drop_Type('Ko_Semester_J_t', 'Ko_Semesters_J_t');
 
         Drop_Type('Ko_Specialty_t');

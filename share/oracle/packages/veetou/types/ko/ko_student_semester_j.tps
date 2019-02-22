@@ -1,5 +1,5 @@
 CREATE OR REPLACE TYPE V2u_Ko_Student_Semester_J_t
-    FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Speclty_Semester_J_t
+    FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Specialty_Semester_J_t
     ( student_id NUMBER(38)
     , ects_attained NUMBER(4)
 

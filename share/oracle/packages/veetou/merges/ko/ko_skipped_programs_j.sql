@@ -9,8 +9,8 @@ USING
                 , ss_j.semester_id
                 , V2u_Get.Studies_Mode(specialties.studies_modetier) where_tryb_studiow
                 , V2u_Get.Studies_Tier(specialties.studies_modetier) where_rodzaj_studiow
-                , V2u_Get.Faculty(specialties.faculty).code faculty_code
-                , LOWER(specialties.studies_field) || '%') where_opis_like
+                , V2u_Get.Faculty(specialties.faculty).code where_jed_org_kod_podst
+                , (LOWER(specialties.studies_field) || '%') where_opis_like
             FROM v2u_ko_specialty_semesters_j ss_j
             INNER JOIN v2u_ko_specialties specialties
                 ON  (
@@ -51,9 +51,9 @@ USING
             , u.specialty_id
             , u.semester_id
             , programy.kod
-            , u.studies_mode
-            , u.studies_tier
-            , u.faculty_code
+            , u.where_tryb_studiow
+            , u.where_rodzaj_studiow
+            , u.where_jed_org_kod_podst
             , u.where_opis_like
         HAVING COUNT(specialty_map.id) = 0
     ) src

@@ -1,5 +1,5 @@
 CREATE OR REPLACE TYPE V2u_Ko_Specialty_Map_J_t
-    FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Speclty_Semester_J_t
+    FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Specialty_Semester_J_t
     ( map_id NUMBER(38)
     , matching_score NUMBER(38)
     , highest_score NUMBER(38)

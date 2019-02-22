@@ -1,5 +1,5 @@
 CREATE OR REPLACE TYPE V2u_Ko_Skipped_Program_J_t
-    FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Speclty_Semester_J_t
+    FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Specialty_Semester_J_t
     ( prg_kod VARCHAR2(20 CHAR)
     , where_tryb_studiow VARCHAR2(100 CHAR)
     , where_rodzaj_studiow VARCHAR2(100 CHAR)
