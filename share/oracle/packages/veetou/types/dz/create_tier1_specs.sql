@@ -2,6 +2,7 @@
 @@dz_przedmiot_b.tps;
 @@dz_atrybut_przedmiotu_b.tps;
 @@dz_przedmiot_cyklu_b.tps;
+@@dz_punkty_przedmiotu_b.tps;
 @@dz_zajecia_cyklu_b.tps;
 @@dz_program_b.tps;
 @@dz_program_osoby_b.tps;
@@ -12,6 +13,7 @@
 @@dz_atrybut_przedmiotu.tps;
 @@dz_przedmiot.tps;
 @@dz_przedmiot_cyklu.tps;
+@@dz_punkty_przedmiotu.tps;
 @@dz_zajecia_cyklu.tps;
 @@dz_program.tps;
 @@dz_program_osoby.tps;

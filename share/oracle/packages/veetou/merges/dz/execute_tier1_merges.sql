@@ -2,6 +2,7 @@
 @@dz_atrybuty_przedmiotow.sql;
 @@dz_przedmioty.sql;
 @@dz_przedmioty_cykli.sql;
+@@dz_punkty_przedmiotow.sql;
 @@dz_zajecia_cykli.sql;
 @@dz_programy.sql;
 @@dz_programy_osob.sql;

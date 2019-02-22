@@ -199,6 +199,14 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('dz_przedmioty_cykli_idx2');
         Drop_Table('dz_przedmioty_cykli');
         --
+        Drop_Index('dz_punkty_przedmiotow_idx1');
+        Drop_Index('dz_punkty_przedmiotow_idx2');
+        Drop_Index('dz_punkty_przedmiotow_idx3');
+        Drop_Index('dz_punkty_przedmiotow_idx4');
+        Drop_Index('dz_punkty_przedmiotow_idx5');
+        Drop_Index('dz_punkty_przedmiotow_idx6');
+        Drop_Table('dz_punkty_przedmiotow');
+        --
         Drop_Index('dz_atrybuty_przedm_idx1');
         Drop_Index('dz_atrybuty_przedm_idx2');
         Drop_Table('dz_atrybuty_przedmiotow');
@@ -212,6 +220,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Dz_Program_t', 'Dz_Programy_t');
         Drop_Type('Dz_Atrybut_Przedmiotu_t', 'Dz_Atrybuty_Przedmiotow_t');
         Drop_Type('Dz_Przedmiot_t', 'Dz_Przedmioty_t');
+        Drop_Type('Dz_Punkty_Przedmiotu_t', 'Dz_Punkty_Przedmiotow_t');
         Drop_Type('Dz_Przedmiot_Cyklu_t', 'Dz_Przedmioty_Cykli_t');
         Drop_Type('Dz_Zajecia_Cyklu_t', 'Dz_Zajecia_Cykli_t');
 
@@ -223,6 +232,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Dz_Zalicz_Przedmiotu_B_t');
         Drop_Type('Dz_Przedmiot_B_t');
         Drop_Type('Dz_Przedmiot_Cyklu_B_t');
+        Drop_Type('Dz_Punkty_Przedmiotu_B_t');
         Drop_Type('Dz_Zajecia_Cyklu_B_t');
     END;
 
