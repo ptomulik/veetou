@@ -10,6 +10,7 @@
 @@ko_ambig_subject_map_v.tps;
 @@ko_ambig_speclty_map_v.tps;
 --
+@@ko_missing_speclty_map_v.tps;
 @@ko_missing_subject_map_v.tps;
 
 @@ko_matched_prgos_v.tps;
@@ -25,5 +26,7 @@
 
 @@ko_matched_zajcykl_v.tps;
 @@ko_missing_zajcykl_v.tps;
+
+@@ko_skipped_program_v.tps;
 
 -- vim: set ft=sql ts=4 sw=4 et:

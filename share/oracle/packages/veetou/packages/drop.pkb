@@ -337,6 +337,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     PROCEDURE Tier2
     IS
     BEGIN
+        Drop_Index('ko_skipped_programs_j_idx1');
+        Drop_Table('ko_skipped_programs_j');
+        --
         Drop_Table('ko_missing_prgos_j');
         --
         Drop_Table('ko_missing_etpos_j');
@@ -475,6 +478,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
 
         Drop_Collect_Types();
 
+        Drop_Type('Ko_Skipped_Program_J_t', 'Ko_Skipped_Programs_J_t');
         Drop_Type('Ko_Missing_Prgos_J_t', 'Ko_Missing_Prgoses_J_t');
         Drop_Type('Ko_Missing_Etpos_J_t', 'Ko_Missing_Etposes_J_t');
         Drop_Type('Ko_Matched_Prgos_J_t', 'Ko_Matched_Prgoses_J_t');
@@ -534,6 +538,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     BEGIN
         Drop_View('ux_subject_grades_v');
 
+        Drop_View('ko_skipped_programs_v');
         Drop_View('ko_missing_zajcykl_v');
         Drop_View('ko_missing_przcykl_v');
         Drop_View('ko_missing_przedm_v');
@@ -547,6 +552,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_View('ko_ambig_speclty_map_v');
         Drop_View('ko_ambig_subject_map_v');
         Drop_View('ko_missing_subject_map_v');
+        Drop_View('ko_missing_speclty_map_v');
         Drop_View('ko_unmapped_specialties_v');
         Drop_View('ko_unmapped_subjects_v');
         Drop_View('ko_specialty_map_v');
@@ -562,6 +568,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
 --
 
         Drop_Type('Ux_Subject_Grade_V_t');
+        Drop_Type('Ko_Skipped_Program_V_t', 'Ko_Skipped_Programs_V_t');
         Drop_Type('Ko_Matched_Etpos_V_t', 'Ko_Matched_Etposes_V_t');
         Drop_Type('Ko_Matched_Prgos_V_t', 'Ko_Matched_Prgoses_V_t');
         Drop_Type('Ko_Matched_Przedm_V_t', 'Ko_Matched_Przedms_V_t');
@@ -573,6 +580,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Missing_Etpos_V_t', 'Ko_Missing_Etposes_V_t');
         Drop_Type('Ko_Missing_Prgos_V_t', 'Ko_Missing_Prgoses_V_t');
         Drop_Type('Ko_Missing_Subject_Map_V_t');
+        Drop_Type('Ko_Missing_Speclty_Map_V_t');
 --        Drop_Type('Ko_Missing_Subj_Map_V_t', 'Ko_Missing_Subj_Maps_V_t');
         Drop_Type('Ko_Ambig_Speclty_Map_V_t', 'Ko_Ambig_Speclty_Maps_V_t');
         Drop_Type('Ko_Ambig_Subject_Map_V_t', 'Ko_Ambig_Subject_Maps_V_t');

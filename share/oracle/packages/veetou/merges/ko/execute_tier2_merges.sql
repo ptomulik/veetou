@@ -28,5 +28,6 @@
 @@ko_missing_zajcykl_j.sql;
 @@ko_missing_przcykl_j.sql;
 @@ko_missing_przedm_j.sql;
+@@ko_skipped_programs_j.sql;
 
 -- vim: set ft=sql ts=4 sw=4 et:

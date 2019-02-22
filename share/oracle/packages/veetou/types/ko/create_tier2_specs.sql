@@ -18,5 +18,6 @@
 @@ko_matched_etpos_j.tps;
 @@ko_missing_prgos_j.tps;
 @@ko_missing_etpos_j.tps;
+@@ko_skipped_program_j.tps;
 
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -13,7 +13,6 @@ CREATE OR REPLACE TYPE V2u_Ko_Speclty_Semester_V_t
     , ects_mandatory NUMBER(4)
     , ects_other NUMBER(4)
     , ects_total NUMBER(4)
---    , sheet_ids V2u_Ids_t
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Speclty_Semester_V_t(
               SELF IN OUT NOCOPY V2u_Ko_Speclty_Semester_V_t
@@ -30,7 +29,6 @@ CREATE OR REPLACE TYPE V2u_Ko_Speclty_Semester_V_t
             , ects_mandatory IN NUMBER
             , ects_other IN NUMBER
             , ects_total IN NUMBER
---            , sheet_ids IN V2u_Ids_t := NULL
             ) RETURN SELF AS RESULT
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Speclty_Semester_V_t(
@@ -39,9 +37,31 @@ CREATE OR REPLACE TYPE V2u_Ko_Speclty_Semester_V_t
             , semester IN V2u_Ko_Semester_t
             ) RETURN SELF AS RESULT
 
---    , ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Speclty_Semester_V_t)
---            RETURN INTEGER
-    );
+    , MEMBER PROCEDURE init(
+              SELF IN OUT NOCOPY V2u_Ko_Speclty_Semester_V_t
+            , job_uuid IN RAW
+            , specialty_id IN NUMBER
+            , semester_id IN NUMBER
+            , university IN VARCHAR2
+            , faculty IN VARCHAR2
+            , studies_modetier IN VARCHAR2
+            , studies_field IN VARCHAR2
+            , studies_specialty IN VARCHAR2
+            , semester_number IN NUMBER
+            , semester_code IN VARCHAR2
+            , ects_mandatory IN NUMBER
+            , ects_other IN NUMBER
+            , ects_total IN NUMBER
+            )
+
+    , MEMBER PROCEDURE init(
+              SELF IN OUT NOCOPY V2u_Ko_Speclty_Semester_V_t
+            , specialty IN V2u_Ko_Specialty_t
+            , semester IN V2u_Ko_Semester_t
+            )
+    )
+NOT FINAL
+;
 /
 CREATE OR REPLACE TYPE V2u_Ko_Speclty_Semesters_V_t
     AS TABLE OF V2u_Ko_Speclty_Semester_V_t;

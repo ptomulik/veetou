@@ -11,6 +11,7 @@
 @@ko_unmapped_subjects_v.ddl;
 @@ko_unmapped_specialties_v.ddl;
 --
+@@ko_missing_speclty_map_v.ddl;
 @@ko_missing_subject_map_v.ddl;
 --
 @@ko_matched_prgos_v.ddl;
@@ -26,5 +27,7 @@
 
 @@ko_matched_zajcykl_v.ddl;
 @@ko_missing_zajcykl_v.ddl;
+
+@@ko_skipped_programs_v.ddl;
 
 -- vim: set ft=sql ts=4 sw=4 et:
