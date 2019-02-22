@@ -56,7 +56,7 @@ USING
                 ON  (
                             przedmioty_cykli.prz_kod = subject_map.map_subj_code
                     )
-            WHERE ma_przcykl_j.id IS NULL
+            WHERE ma_przcykl_j.prz_kod IS NULL
             GROUP BY
                   ss_j.job_uuid
                 , ss_j.subject_id

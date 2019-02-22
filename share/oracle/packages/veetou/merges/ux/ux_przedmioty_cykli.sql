@@ -23,8 +23,8 @@ USING
                         COLLECT(grades.subj_grade)
                         AS V2u_Vchars1K_t
                   )) subj_grades
-                , COUNT(ma_j.id) dbg_matched
-                , COUNT(mi_j.id) dbg_missing
+                , COUNT(ma_j.prz_kod) dbg_matched
+                , COUNT(mi_j.job_uuid) dbg_missing
                 , COUNT(sm_j.map_id) dbg_mapped
 
             FROM v2u_ko_subject_semesters_j ss_j

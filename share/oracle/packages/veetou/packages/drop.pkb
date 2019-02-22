@@ -491,8 +491,10 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Skipped_Program_J_t', 'Ko_Skipped_Programs_J_t');
         Drop_Type('Ko_Missing_Prgos_J_t', 'Ko_Missing_Prgoses_J_t');
         Drop_Type('Ko_Missing_Etpos_J_t', 'Ko_Missing_Etposes_J_t');
+        Drop_Type('Ko_Missing_Przcykl_J_t', 'Ko_Missing_Przcykli_J_t');
         Drop_Type('Ko_Matched_Prgos_J_t', 'Ko_Matched_Prgoses_J_t');
         Drop_Type('Ko_Matched_Etpos_J_t', 'Ko_Matched_Etposes_J_t');
+        Drop_Type('Ko_Matched_Przcykl_J_t', 'Ko_Matched_Przcykli_J_t');
         Drop_Type('Ko_Missing_Zajcykl_J_t', 'Ko_Missing_Zajcykles_J_t');
         Drop_Type('Ko_Classes_Map_J_t', 'Ko_Classes_Maps_J_t');
         Drop_Type('Ko_Subject_Map_J_t', 'Ko_Subject_Maps_J_t');

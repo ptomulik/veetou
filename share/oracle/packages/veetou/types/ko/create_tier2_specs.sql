@@ -16,6 +16,7 @@
 @@ko_missing_zajcykl_j.tps;
 @@ko_matched_prgos_j.tps;
 @@ko_matched_etpos_j.tps;
+@@ko_matched_przcykl_j.tps;
 @@ko_missing_prgos_j.tps;
 @@ko_missing_etpos_j.tps;
 @@ko_skipped_program_j.tps;

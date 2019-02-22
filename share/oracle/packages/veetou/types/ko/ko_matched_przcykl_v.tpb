@@ -1,7 +1,6 @@
 CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Przcykl_V_t AS
     CONSTRUCTOR FUNCTION V2u_Ko_Matched_Przcykl_V_t(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Przcykl_V_t
-            , id IN NUMBER
             , job_uuid IN RAW
             , subject_id IN NUMBER
             , specialty_id IN NUMBER
@@ -50,7 +49,6 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Przcykl_V_t AS
             ) RETURN SELF AS RESULT
     IS
     BEGIN
-        SELF.id := id;
         SELF.job_uuid := job_uuid;
         SELF.subject_id := subject_id;
         SELF.specialty_id := specialty_id;
@@ -101,7 +99,6 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Przcykl_V_t AS
 
     CONSTRUCTOR FUNCTION V2u_Ko_Matched_Przcykl_V_t(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Przcykl_V_t
-            , id IN NUMBER
             , subject IN V2u_Ko_Subject_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
@@ -111,7 +108,6 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Przcykl_V_t AS
             ) RETURN SELF AS RESULT
     IS
     BEGIN
-        SELF.id := id;
         SELF.job_uuid := subject.job_uuid;
         SELF.subject_id := subject.id;
         SELF.specialty_id := specialty.id;
