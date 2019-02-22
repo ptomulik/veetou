@@ -1,4 +1,4 @@
-@@ko_speclty_semesters_v.ddl;
+@@ko_specialty_semesters_v.ddl;
 @@ko_student_semesters_v.ddl;
 @@ko_subject_semesters_v.ddl;
 @@ko_classes_semesters_v.ddl;

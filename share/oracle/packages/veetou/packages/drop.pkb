@@ -558,7 +558,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_View('ko_specialty_map_v');
         Drop_View('ko_classes_map_v');
         Drop_View('ko_subject_map_v');
-        Drop_View('ko_speclty_semesters_v');
+        Drop_View('ko_specialty_semesters_v');
         Drop_View('ko_classes_semesters_v');
         Drop_View('ko_subject_semesters_v');
         Drop_View('ko_student_semesters_v');

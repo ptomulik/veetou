@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW v2u_ko_speclty_semesters_v
+CREATE OR REPLACE VIEW v2u_ko_specialty_semesters_v
 OF V2u_Ko_Speclty_Semester_V_t
 WITH OBJECT IDENTIFIER (job_uuid, specialty_id, semester_id)
 AS
