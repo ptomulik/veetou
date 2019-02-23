@@ -1,7 +1,7 @@
 CREATE OR REPLACE TYPE V2u_Ko_Matched_Zajcykl_V_t
     FORCE AUTHID CURRENT_USER AS OBJECT
-    ( id NUMBER(38)
-    , job_uuid RAW(16)
+    ( job_uuid RAW(16)
+    , classes_type VARCHAR2(1 CHAR)
     , subject_id NUMBER(38)
     , specialty_id NUMBER(38)
     , semester_id NUMBER(38)
@@ -57,8 +57,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Zajcykl_V_t
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Zajcykl_V_t(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Zajcykl_V_t
-            , id IN NUMBER
             , job_uuid IN RAW
+            , classes_type IN VARCHAR2
             , subject_id IN NUMBER
             , specialty_id IN NUMBER
             , semester_id IN NUMBER
@@ -113,7 +113,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Zajcykl_V_t
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Zajcykl_V_t(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Zajcykl_V_t
-            , id IN NUMBER
+            , classes_type IN VARCHAR2
             , subject IN V2u_Ko_Subject_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t

@@ -1,16 +1,10 @@
 CREATE TABLE v2u_ko_matched_przedm_j
+OF V2u_Ko_Matched_Przedm_J_t
     (
-          id NUMBER(38)
-        , job_uuid RAW(16)
-        , subject_id NUMBER(38)
-        , specialty_id NUMBER(38)
-        , semester_id NUMBER(38)
-        , subject_map_id NUMBER(38)
-        , matching_score NUMBER(38)
-        , prz_kod VARCHAR2(20 CHAR)
-
-        , CONSTRAINT v2u_ko_matched_przedm_j_pk
-            PRIMARY KEY (id)
+        -- PK
+          CONSTRAINT v2u_ko_matched_przedm_j_pk
+            PRIMARY KEY (subject_id, specialty_id, semester_id, job_uuid)
+        -- FK
         , CONSTRAINT v2u_ko_matched_przedm_j_f0
             FOREIGN KEY (job_uuid)
             REFERENCES v2u_ko_jobs(job_uuid)
@@ -29,22 +23,8 @@ CREATE TABLE v2u_ko_matched_przedm_j
         , CONSTRAINT v2u_ko_matched_przedm_j_f5
             FOREIGN KEY (subject_id, specialty_id, semester_id, subject_map_id, job_uuid)
             REFERENCES v2u_ko_subject_map_j(subject_id, specialty_id, semester_id, map_id, job_uuid)
---        , CONSTRAINT v2u_ko_matched_przedm_j_f6
---            FOREIGN KEY (prz_kod)
---            REFERENCES dz_przedmioty(kod)
-        --
-        , CONSTRAINT v2u_ko_matched_przedm_j_u0
-            UNIQUE (subject_id, specialty_id, semester_id, job_uuid)
-    );
-/
-CREATE SEQUENCE v2u_ko_matched_przedm_j_sq1 START WITH 1;
-/
-CREATE OR REPLACE TRIGGER v2u_ko_matched_przedm_j_tr1
-    BEFORE INSERT ON v2u_ko_matched_przedm_j
-    FOR EACH ROW
-    WHEN (new.id IS NULL)
-    BEGIN
-        SELECT v2u_ko_matched_przedm_j_sq1.NEXTVAL INTO :new.id FROM dual;
-    END;
+    )
+OBJECT IDENTIFIER IS PRIMARY KEY
+;
 
 -- vim: set ft=sql ts=4 sw=4 et:

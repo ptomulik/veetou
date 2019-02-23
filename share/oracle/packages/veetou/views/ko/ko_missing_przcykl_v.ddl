@@ -7,8 +7,10 @@ AS
               subject => VALUE(subjects)
             , specialty => VALUE(specialties)
             , semester => VALUE(semesters)
+            , subject_map_id => j.subject_map_id
+            , subject_matching_score => j.subject_matching_score
+            , map_subj_code => j.map_subj_code
             , reason => j.reason
-            , tried_map_subj_code => j.tried_map_subj_code
             , istniejace_cdyd_kody => j.istniejace_cdyd_kody
         )
     FROM v2u_ko_missing_przcykl_j j

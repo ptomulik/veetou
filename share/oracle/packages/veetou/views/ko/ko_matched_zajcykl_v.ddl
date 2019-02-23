@@ -1,10 +1,10 @@
 CREATE OR REPLACE VIEW v2u_ko_matched_zajcykl_v
 OF V2u_Ko_Matched_Zajcykl_V_t
-WITH OBJECT IDENTIFIER (id)
+WITH OBJECT IDENTIFIER (classes_type, subject_id, specialty_id, semester_id, job_uuid)
 AS
     SELECT
           V2u_Ko_Matched_Zajcykl_V_t(
-              id => j.id
+              classes_type => j.classes_type
             , subject => VALUE(subjects)
             , specialty => VALUE(specialties)
             , semester => VALUE(semesters)

@@ -6,7 +6,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Prgos_V_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
             , ects_attained IN NUMBER
-            --, tried_specialty_map_ids IN V2u_5Ids_t
+            --, specialty_map_ids IN V2u_5Ids_t
             ) RETURN SELF AS RESULT
     )
 NOT FINAL;

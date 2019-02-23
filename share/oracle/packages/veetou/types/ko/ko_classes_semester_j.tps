@@ -13,14 +13,14 @@ CREATE OR REPLACE TYPE V2u_Ko_Classes_Semester_J_t
             , classes_hours IN NUMBER
             ) RETURN SELF AS RESULT
 
-    , CONSTRUCTOR FUNCTION V2u_Ko_Classes_Semester_J_t(
-              SELF IN OUT NOCOPY V2u_Ko_Classes_Semester_J_t
-            , semester IN V2u_Ko_Semester_t
-            , specialty IN V2u_Ko_Specialty_t
-            , subject IN V2u_Ko_Subject_t
-            , classes_type IN VARCHAR2
-            , classes_hours IN NUMBER := NULL
-            ) RETURN SELF AS RESULT
+--    , CONSTRUCTOR FUNCTION V2u_Ko_Classes_Semester_J_t(
+--              SELF IN OUT NOCOPY V2u_Ko_Classes_Semester_J_t
+--            , semester IN V2u_Ko_Semester_t
+--            , specialty IN V2u_Ko_Specialty_t
+--            , subject IN V2u_Ko_Subject_t
+--            , classes_type IN VARCHAR2
+--            , classes_hours IN NUMBER := NULL
+--            ) RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
               SELF IN OUT NOCOPY V2u_Ko_Classes_Semester_J_t
@@ -32,14 +32,14 @@ CREATE OR REPLACE TYPE V2u_Ko_Classes_Semester_J_t
             , classes_hours IN NUMBER
             )
 
-    , MEMBER PROCEDURE init(
-              SELF IN OUT NOCOPY V2u_Ko_Classes_Semester_J_t
-            , semester IN V2u_Ko_Semester_t
-            , specialty IN V2u_Ko_Specialty_t
-            , subject IN V2u_Ko_Subject_t
-            , classes_type IN VARCHAR2
-            , classes_hours IN NUMBER := NULL
-            )
+--    , MEMBER PROCEDURE init(
+--              SELF IN OUT NOCOPY V2u_Ko_Classes_Semester_J_t
+--            , semester IN V2u_Ko_Semester_t
+--            , specialty IN V2u_Ko_Specialty_t
+--            , subject IN V2u_Ko_Subject_t
+--            , classes_type IN VARCHAR2
+--            , classes_hours IN NUMBER := NULL
+--            )
     )
 NOT FINAL;
 /

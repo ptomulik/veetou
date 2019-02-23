@@ -9,43 +9,43 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Przcykl_V_t AS
             , matching_score IN NUMBER
             , prz_kod IN VARCHAR2
             , cdyd_kod IN VARCHAR2
-            , ko_subj_code IN VARCHAR2
-            , ko_subj_name IN VARCHAR2
-            , ko_subj_hours_w IN NUMBER
-            , ko_subj_hours_c IN NUMBER
-            , ko_subj_hours_l IN NUMBER
-            , ko_subj_hours_p IN NUMBER
-            , ko_subj_hours_s IN NUMBER
-            , ko_subj_credit_kind IN VARCHAR2
-            , ko_subj_ects IN NUMBER
-            , ko_subj_tutor IN VARCHAR2
-            , ko_university IN VARCHAR2
-            , ko_faculty IN VARCHAR2
-            , ko_studies_modetier IN VARCHAR2
-            , ko_studies_field IN VARCHAR2
-            , ko_studies_specialty IN VARCHAR2
-            , ko_semester_code IN VARCHAR2
-            , ko_semester_number IN NUMBER
-            , ko_ects_mandatory IN NUMBER
-            , ko_ects_other IN NUMBER
-            , ko_ects_total IN NUMBER
-            , dz_utw_id IN VARCHAR2
-            , dz_utw_data IN DATE
-            , dz_mod_id IN VARCHAR2
-            , dz_mod_data IN DATE
-            , dz_tpro_kod IN VARCHAR2
-            , dz_uczestnicy IN VARCHAR2
-            , dz_url IN VARCHAR2
-            , dz_uwagi IN CLOB
-            , dz_notes IN CLOB
-            , dz_literatura IN CLOB
-            , dz_literatura_ang IN CLOB
-            , dz_opis IN CLOB
-            , dz_opis_ang IN CLOB
-            , dz_skrocony_opis IN VARCHAR2
-            , dz_skrocony_opis_ang IN VARCHAR2
-            , dz_status_sylabusu IN VARCHAR2
-            , dz_guid IN VARCHAR2
+            , subj_code IN VARCHAR2
+            , subj_name IN VARCHAR2
+            , subj_hours_w IN NUMBER
+            , subj_hours_c IN NUMBER
+            , subj_hours_l IN NUMBER
+            , subj_hours_p IN NUMBER
+            , subj_hours_s IN NUMBER
+            , subj_credit_kind IN VARCHAR2
+            , subj_ects IN NUMBER
+            , subj_tutor IN VARCHAR2
+            , university IN VARCHAR2
+            , faculty IN VARCHAR2
+            , studies_modetier IN VARCHAR2
+            , studies_field IN VARCHAR2
+            , studies_specialty IN VARCHAR2
+            , semester_code IN VARCHAR2
+            , semester_number IN NUMBER
+            , ects_mandatory IN NUMBER
+            , ects_other IN NUMBER
+            , ects_total IN NUMBER
+            , utw_id IN VARCHAR2
+            , utw_data IN DATE
+            , mod_id IN VARCHAR2
+            , mod_data IN DATE
+            , tpro_kod IN VARCHAR2
+            , uczestnicy IN VARCHAR2
+            , url IN VARCHAR2
+            , uwagi IN CLOB
+            , notes IN CLOB
+            , literatura IN CLOB
+            , literatura_ang IN CLOB
+            , opis IN CLOB
+            , opis_ang IN CLOB
+            , skrocony_opis IN VARCHAR2
+            , skrocony_opis_ang IN VARCHAR2
+            , status_sylabusu IN VARCHAR2
+            , guid IN VARCHAR2
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -57,43 +57,43 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Przcykl_V_t AS
         SELF.matching_score := matching_score;
         SELF.prz_kod := prz_kod;
         SELF.cdyd_kod := cdyd_kod;
-        SELF.ko_subj_code := ko_subj_code;
-        SELF.ko_subj_name := ko_subj_name;
-        SELF.ko_subj_hours_w := ko_subj_hours_w;
-        SELF.ko_subj_hours_c := ko_subj_hours_c;
-        SELF.ko_subj_hours_l := ko_subj_hours_l;
-        SELF.ko_subj_hours_p := ko_subj_hours_p;
-        SELF.ko_subj_hours_s := ko_subj_hours_s;
-        SELF.ko_subj_credit_kind := ko_subj_credit_kind;
-        SELF.ko_subj_ects := ko_subj_ects;
-        SELF.ko_subj_tutor := ko_subj_tutor;
-        SELF.ko_university := ko_university;
-        SELF.ko_faculty := ko_faculty;
-        SELF.ko_studies_modetier := ko_studies_modetier;
-        SELF.ko_studies_field := ko_studies_field;
-        SELF.ko_studies_specialty := ko_studies_specialty;
-        SELF.ko_semester_code := ko_semester_code;
-        SELF.ko_semester_number := ko_semester_number;
-        SELF.ko_ects_mandatory := ko_ects_mandatory;
-        SELF.ko_ects_other := ko_ects_other;
-        SELF.ko_ects_total := ko_ects_total;
-        SELF.dz_utw_id := dz_utw_id;
-        SELF.dz_utw_data := dz_utw_data;
-        SELF.dz_mod_id := dz_mod_id;
-        SELF.dz_mod_data := dz_mod_data;
-        SELF.dz_tpro_kod := dz_tpro_kod;
-        SELF.dz_uczestnicy := dz_uczestnicy;
-        SELF.dz_url := dz_url;
-        SELF.dz_uwagi := dz_uwagi;
-        SELF.dz_notes := dz_notes;
-        SELF.dz_literatura := dz_literatura;
-        SELF.dz_literatura_ang := dz_literatura_ang;
-        SELF.dz_opis := dz_opis;
-        SELF.dz_opis_ang := dz_opis_ang;
-        SELF.dz_skrocony_opis := dz_skrocony_opis;
-        SELF.dz_skrocony_opis_ang := dz_skrocony_opis_ang;
-        SELF.dz_status_sylabusu := dz_status_sylabusu;
-        SELF.dz_guid := dz_guid;
+        SELF.subj_code := subj_code;
+        SELF.subj_name := subj_name;
+        SELF.subj_hours_w := subj_hours_w;
+        SELF.subj_hours_c := subj_hours_c;
+        SELF.subj_hours_l := subj_hours_l;
+        SELF.subj_hours_p := subj_hours_p;
+        SELF.subj_hours_s := subj_hours_s;
+        SELF.subj_credit_kind := subj_credit_kind;
+        SELF.subj_ects := subj_ects;
+        SELF.subj_tutor := subj_tutor;
+        SELF.university := university;
+        SELF.faculty := faculty;
+        SELF.studies_modetier := studies_modetier;
+        SELF.studies_field := studies_field;
+        SELF.studies_specialty := studies_specialty;
+        SELF.semester_code := semester_code;
+        SELF.semester_number := semester_number;
+        SELF.ects_mandatory := ects_mandatory;
+        SELF.ects_other := ects_other;
+        SELF.ects_total := ects_total;
+        SELF.utw_id := utw_id;
+        SELF.utw_data := utw_data;
+        SELF.mod_id := mod_id;
+        SELF.mod_data := mod_data;
+        SELF.tpro_kod := tpro_kod;
+        SELF.uczestnicy := uczestnicy;
+        SELF.url := url;
+        SELF.uwagi := uwagi;
+        SELF.notes := notes;
+        SELF.literatura := literatura;
+        SELF.literatura_ang := literatura_ang;
+        SELF.opis := opis;
+        SELF.opis_ang := opis_ang;
+        SELF.skrocony_opis := skrocony_opis;
+        SELF.skrocony_opis_ang := skrocony_opis_ang;
+        SELF.status_sylabusu := status_sylabusu;
+        SELF.guid := guid;
         RETURN;
     END;
 
@@ -116,43 +116,43 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Przcykl_V_t AS
         SELF.matching_score := matching_score;
         SELF.prz_kod := przedmiot_cyklu.prz_kod;
         SELF.cdyd_kod := przedmiot_cyklu.cdyd_kod;
-        SELF.ko_subj_code := subject.subj_code;
-        SELF.ko_subj_name := subject.subj_name;
-        SELF.ko_subj_hours_w := subject.subj_hours_w;
-        SELF.ko_subj_hours_c := subject.subj_hours_c;
-        SELF.ko_subj_hours_l := subject.subj_hours_l;
-        SELF.ko_subj_hours_p := subject.subj_hours_p;
-        SELF.ko_subj_hours_s := subject.subj_hours_s;
-        SELF.ko_subj_credit_kind := subject.subj_credit_kind;
-        SELF.ko_subj_ects := subject.subj_ects;
-        SELF.ko_subj_tutor := subject.subj_tutor;
-        SELF.ko_university := specialty.university;
-        SELF.ko_faculty := specialty.faculty;
-        SELF.ko_studies_modetier := specialty.studies_modetier;
-        SELF.ko_studies_field := specialty.studies_field;
-        SELF.ko_studies_specialty := specialty.studies_specialty;
-        SELF.ko_semester_code := semester.semester_code;
-        SELF.ko_semester_number := semester.semester_number;
-        SELF.ko_ects_mandatory := semester.ects_mandatory;
-        SELF.ko_ects_other := semester.ects_other;
-        SELF.ko_ects_total := semester.ects_total;
-        SELF.dz_utw_id := przedmiot_cyklu.utw_id;
-        SELF.dz_utw_data := przedmiot_cyklu.utw_data;
-        SELF.dz_mod_id := przedmiot_cyklu.mod_id;
-        SELF.dz_mod_data := przedmiot_cyklu.mod_data;
-        SELF.dz_tpro_kod := przedmiot_cyklu.tpro_kod;
-        SELF.dz_uczestnicy := przedmiot_cyklu.uczestnicy;
-        SELF.dz_url := przedmiot_cyklu.url;
-        SELF.dz_uwagi := przedmiot_cyklu.uwagi;
-        SELF.dz_notes := przedmiot_cyklu.notes;
-        SELF.dz_literatura := przedmiot_cyklu.literatura;
-        SELF.dz_literatura_ang := przedmiot_cyklu.literatura_ang;
-        SELF.dz_opis := przedmiot_cyklu.opis;
-        SELF.dz_opis_ang := przedmiot_cyklu.opis_ang;
-        SELF.dz_skrocony_opis := przedmiot_cyklu.skrocony_opis;
-        SELF.dz_skrocony_opis_ang := przedmiot_cyklu.skrocony_opis_ang;
-        SELF.dz_status_sylabusu := przedmiot_cyklu.status_sylabusu;
-        SELF.dz_guid := przedmiot_cyklu.guid;
+        SELF.subj_code := subject.subj_code;
+        SELF.subj_name := subject.subj_name;
+        SELF.subj_hours_w := subject.subj_hours_w;
+        SELF.subj_hours_c := subject.subj_hours_c;
+        SELF.subj_hours_l := subject.subj_hours_l;
+        SELF.subj_hours_p := subject.subj_hours_p;
+        SELF.subj_hours_s := subject.subj_hours_s;
+        SELF.subj_credit_kind := subject.subj_credit_kind;
+        SELF.subj_ects := subject.subj_ects;
+        SELF.subj_tutor := subject.subj_tutor;
+        SELF.university := specialty.university;
+        SELF.faculty := specialty.faculty;
+        SELF.studies_modetier := specialty.studies_modetier;
+        SELF.studies_field := specialty.studies_field;
+        SELF.studies_specialty := specialty.studies_specialty;
+        SELF.semester_code := semester.semester_code;
+        SELF.semester_number := semester.semester_number;
+        SELF.ects_mandatory := semester.ects_mandatory;
+        SELF.ects_other := semester.ects_other;
+        SELF.ects_total := semester.ects_total;
+        SELF.utw_id := przedmiot_cyklu.utw_id;
+        SELF.utw_data := przedmiot_cyklu.utw_data;
+        SELF.mod_id := przedmiot_cyklu.mod_id;
+        SELF.mod_data := przedmiot_cyklu.mod_data;
+        SELF.tpro_kod := przedmiot_cyklu.tpro_kod;
+        SELF.uczestnicy := przedmiot_cyklu.uczestnicy;
+        SELF.url := przedmiot_cyklu.url;
+        SELF.uwagi := przedmiot_cyklu.uwagi;
+        SELF.notes := przedmiot_cyklu.notes;
+        SELF.literatura := przedmiot_cyklu.literatura;
+        SELF.literatura_ang := przedmiot_cyklu.literatura_ang;
+        SELF.opis := przedmiot_cyklu.opis;
+        SELF.opis_ang := przedmiot_cyklu.opis_ang;
+        SELF.skrocony_opis := przedmiot_cyklu.skrocony_opis;
+        SELF.skrocony_opis_ang := przedmiot_cyklu.skrocony_opis_ang;
+        SELF.status_sylabusu := przedmiot_cyklu.status_sylabusu;
+        SELF.guid := przedmiot_cyklu.guid;
         RETURN;
     END;
 END;

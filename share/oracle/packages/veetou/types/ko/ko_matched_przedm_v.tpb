@@ -1,7 +1,6 @@
 CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Przedm_V_t AS
     CONSTRUCTOR FUNCTION V2u_Ko_Matched_Przedm_V_t(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Przedm_V_t
-            , id IN NUMBER
             , job_uuid IN RAW
             , subject_id IN NUMBER
             , specialty_id IN NUMBER
@@ -9,60 +8,59 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Przedm_V_t AS
             , subject_map_id IN NUMBER
             , matching_score IN NUMBER
             , prz_kod IN VARCHAR2
-            , ko_subj_code IN VARCHAR2
-            , ko_subj_name IN VARCHAR2
-            , ko_subj_hours_w IN NUMBER
-            , ko_subj_hours_c IN NUMBER
-            , ko_subj_hours_l IN NUMBER
-            , ko_subj_hours_p IN NUMBER
-            , ko_subj_hours_s IN NUMBER
-            , ko_subj_credit_kind IN VARCHAR2
-            , ko_subj_ects IN NUMBER
-            , ko_subj_tutor IN VARCHAR2
-            , ko_university IN VARCHAR2
-            , ko_faculty IN VARCHAR2
-            , ko_studies_modetier IN VARCHAR2
-            , ko_studies_field IN VARCHAR2
-            , ko_studies_specialty IN VARCHAR2
-            , ko_semester_code IN VARCHAR2
-            , ko_semester_number IN NUMBER
-            , ko_ects_mandatory IN NUMBER
-            , ko_ects_other IN NUMBER
-            , ko_ects_total IN NUMBER
-            , dz_nazwa IN VARCHAR2
-            , dz_jed_org_kod IN VARCHAR2
-            , dz_utw_id IN VARCHAR2
-            , dz_utw_data IN DATE
-            , dz_mod_id IN VARCHAR2
-            , dz_mod_data IN DATE
-            , dz_tpro_kod IN VARCHAR2
-            , dz_czy_wielokrotne IN NUMBER
-            , dz_name IN VARCHAR2
-            , dz_skrocony_opis IN VARCHAR2
-            , dz_short_description IN VARCHAR2
-            , dz_jed_org_kod_biorca IN VARCHAR2
-            , dz_jzk_kod IN VARCHAR2
-            , dz_kod_sok IN VARCHAR2
-            , dz_opis IN CLOB
-            , dz_description IN CLOB
-            , dz_literatura IN CLOB
-            , dz_bibliography IN CLOB
-            , dz_efekty_uczenia IN CLOB
-            , dz_efekty_uczenia_ang IN CLOB
-            , dz_kryteria_oceniania IN CLOB
-            , dz_kryteria_oceniania_ang IN CLOB
-            , dz_praktyki_zawodowe IN VARCHAR2
-            , dz_praktyki_zawodowe_ang IN VARCHAR2
-            , dz_url IN VARCHAR2
-            , dz_kod_isced IN VARCHAR2
-            , dz_nazwa_pol IN VARCHAR2
-            , dz_guid IN VARCHAR2
-            , dz_pw_nazwa_supl IN VARCHAR2
-            , dz_pw_nazwa_supl_ang IN VARCHAR2
+            , subj_code IN VARCHAR2
+            , subj_name IN VARCHAR2
+            , subj_hours_w IN NUMBER
+            , subj_hours_c IN NUMBER
+            , subj_hours_l IN NUMBER
+            , subj_hours_p IN NUMBER
+            , subj_hours_s IN NUMBER
+            , subj_credit_kind IN VARCHAR2
+            , subj_ects IN NUMBER
+            , subj_tutor IN VARCHAR2
+            , university IN VARCHAR2
+            , faculty IN VARCHAR2
+            , studies_modetier IN VARCHAR2
+            , studies_field IN VARCHAR2
+            , studies_specialty IN VARCHAR2
+            , semester_code IN VARCHAR2
+            , semester_number IN NUMBER
+            , ects_mandatory IN NUMBER
+            , ects_other IN NUMBER
+            , ects_total IN NUMBER
+            , nazwa IN VARCHAR2
+            , jed_org_kod IN VARCHAR2
+            , utw_id IN VARCHAR2
+            , utw_data IN DATE
+            , mod_id IN VARCHAR2
+            , mod_data IN DATE
+            , tpro_kod IN VARCHAR2
+            , czy_wielokrotne IN NUMBER
+            , name IN VARCHAR2
+            , skrocony_opis IN VARCHAR2
+            , short_description IN VARCHAR2
+            , jed_org_kod_biorca IN VARCHAR2
+            , jzk_kod IN VARCHAR2
+            , kod_sok IN VARCHAR2
+            , opis IN CLOB
+            , description IN CLOB
+            , literatura IN CLOB
+            , bibliography IN CLOB
+            , efekty_uczenia IN CLOB
+            , efekty_uczenia_ang IN CLOB
+            , kryteria_oceniania IN CLOB
+            , kryteria_oceniania_ang IN CLOB
+            , praktyki_zawodowe IN VARCHAR2
+            , praktyki_zawodowe_ang IN VARCHAR2
+            , url IN VARCHAR2
+            , kod_isced IN VARCHAR2
+            , nazwa_pol IN VARCHAR2
+            , guid IN VARCHAR2
+            , pw_nazwa_supl IN VARCHAR2
+            , pw_nazwa_supl_ang IN VARCHAR2
             ) RETURN SELF AS RESULT
     IS
     BEGIN
-        SELF.id := id;
         SELF.job_uuid := job_uuid;
         SELF.subject_id := subject_id;
         SELF.specialty_id := specialty_id;
@@ -70,62 +68,61 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Przedm_V_t AS
         SELF.subject_map_id := subject_map_id;
         SELF.matching_score := matching_score;
         SELF.prz_kod := prz_kod;
-        SELF.ko_subj_code := ko_subj_code;
-        SELF.ko_subj_name := ko_subj_name;
-        SELF.ko_subj_hours_w := ko_subj_hours_w;
-        SELF.ko_subj_hours_c := ko_subj_hours_c;
-        SELF.ko_subj_hours_l := ko_subj_hours_l;
-        SELF.ko_subj_hours_p := ko_subj_hours_p;
-        SELF.ko_subj_hours_s := ko_subj_hours_s;
-        SELF.ko_subj_credit_kind := ko_subj_credit_kind;
-        SELF.ko_subj_ects := ko_subj_ects;
-        SELF.ko_subj_tutor := ko_subj_tutor;
-        SELF.ko_university := ko_university;
-        SELF.ko_faculty := ko_faculty;
-        SELF.ko_studies_modetier := ko_studies_modetier;
-        SELF.ko_studies_field := ko_studies_field;
-        SELF.ko_studies_specialty := ko_studies_specialty;
-        SELF.ko_semester_code := ko_semester_code;
-        SELF.ko_semester_number := ko_semester_number;
-        SELF.ko_ects_mandatory := ko_ects_mandatory;
-        SELF.ko_ects_other := ko_ects_other;
-        SELF.ko_ects_total := ko_ects_total;
-        SELF.dz_nazwa := dz_nazwa;
-        SELF.dz_jed_org_kod := dz_jed_org_kod;
-        SELF.dz_utw_id := dz_utw_id;
-        SELF.dz_utw_data := dz_utw_data;
-        SELF.dz_mod_id := dz_mod_id;
-        SELF.dz_mod_data := dz_mod_data;
-        SELF.dz_tpro_kod := dz_tpro_kod;
-        SELF.dz_czy_wielokrotne := dz_czy_wielokrotne;
-        SELF.dz_name := dz_name;
-        SELF.dz_skrocony_opis := dz_skrocony_opis;
-        SELF.dz_short_description := dz_short_description;
-        SELF.dz_jed_org_kod_biorca := dz_jed_org_kod_biorca;
-        SELF.dz_jzk_kod := dz_jzk_kod;
-        SELF.dz_kod_sok := dz_kod_sok;
-        SELF.dz_opis := dz_opis;
-        SELF.dz_description := dz_description;
-        SELF.dz_literatura := dz_literatura;
-        SELF.dz_bibliography := dz_bibliography;
-        SELF.dz_efekty_uczenia := dz_efekty_uczenia;
-        SELF.dz_efekty_uczenia_ang := dz_efekty_uczenia_ang;
-        SELF.dz_kryteria_oceniania := dz_kryteria_oceniania;
-        SELF.dz_kryteria_oceniania_ang := dz_kryteria_oceniania_ang;
-        SELF.dz_praktyki_zawodowe := dz_praktyki_zawodowe;
-        SELF.dz_praktyki_zawodowe_ang := dz_praktyki_zawodowe_ang;
-        SELF.dz_url := dz_url;
-        SELF.dz_kod_isced := dz_kod_isced;
-        SELF.dz_nazwa_pol := dz_nazwa_pol;
-        SELF.dz_guid := dz_guid;
-        SELF.dz_pw_nazwa_supl := dz_pw_nazwa_supl;
-        SELF.dz_pw_nazwa_supl_ang := dz_pw_nazwa_supl_ang;
+        SELF.subj_code := subj_code;
+        SELF.subj_name := subj_name;
+        SELF.subj_hours_w := subj_hours_w;
+        SELF.subj_hours_c := subj_hours_c;
+        SELF.subj_hours_l := subj_hours_l;
+        SELF.subj_hours_p := subj_hours_p;
+        SELF.subj_hours_s := subj_hours_s;
+        SELF.subj_credit_kind := subj_credit_kind;
+        SELF.subj_ects := subj_ects;
+        SELF.subj_tutor := subj_tutor;
+        SELF.university := university;
+        SELF.faculty := faculty;
+        SELF.studies_modetier := studies_modetier;
+        SELF.studies_field := studies_field;
+        SELF.studies_specialty := studies_specialty;
+        SELF.semester_code := semester_code;
+        SELF.semester_number := semester_number;
+        SELF.ects_mandatory := ects_mandatory;
+        SELF.ects_other := ects_other;
+        SELF.ects_total := ects_total;
+        SELF.nazwa := nazwa;
+        SELF.jed_org_kod := jed_org_kod;
+        SELF.utw_id := utw_id;
+        SELF.utw_data := utw_data;
+        SELF.mod_id := mod_id;
+        SELF.mod_data := mod_data;
+        SELF.tpro_kod := tpro_kod;
+        SELF.czy_wielokrotne := czy_wielokrotne;
+        SELF.name := name;
+        SELF.skrocony_opis := skrocony_opis;
+        SELF.short_description := short_description;
+        SELF.jed_org_kod_biorca := jed_org_kod_biorca;
+        SELF.jzk_kod := jzk_kod;
+        SELF.kod_sok := kod_sok;
+        SELF.opis := opis;
+        SELF.description := description;
+        SELF.literatura := literatura;
+        SELF.bibliography := bibliography;
+        SELF.efekty_uczenia := efekty_uczenia;
+        SELF.efekty_uczenia_ang := efekty_uczenia_ang;
+        SELF.kryteria_oceniania := kryteria_oceniania;
+        SELF.kryteria_oceniania_ang := kryteria_oceniania_ang;
+        SELF.praktyki_zawodowe := praktyki_zawodowe;
+        SELF.praktyki_zawodowe_ang := praktyki_zawodowe_ang;
+        SELF.url := url;
+        SELF.kod_isced := kod_isced;
+        SELF.nazwa_pol := nazwa_pol;
+        SELF.guid := guid;
+        SELF.pw_nazwa_supl := pw_nazwa_supl;
+        SELF.pw_nazwa_supl_ang := pw_nazwa_supl_ang;
         RETURN;
     END;
 
     CONSTRUCTOR FUNCTION V2u_Ko_Matched_Przedm_V_t(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Przedm_V_t
-            , id IN NUMBER
             , subject IN V2u_Ko_Subject_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
@@ -135,7 +132,6 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Przedm_V_t AS
             ) RETURN SELF AS RESULT
     IS
     BEGIN
-        SELF.id := id;
         SELF.job_uuid := subject.job_uuid;
         SELF.subject_id := subject.id;
         SELF.specialty_id := specialty.id;
@@ -143,56 +139,56 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Przedm_V_t AS
         SELF.subject_map_id := subject_map.id;
         SELF.matching_score := matching_score;
         SELF.prz_kod := przedmiot.kod;
-        SELF.ko_subj_code := subject.subj_code;
-        SELF.ko_subj_name := subject.subj_name;
-        SELF.ko_subj_hours_w := subject.subj_hours_w;
-        SELF.ko_subj_hours_c := subject.subj_hours_c;
-        SELF.ko_subj_hours_l := subject.subj_hours_l;
-        SELF.ko_subj_hours_p := subject.subj_hours_p;
-        SELF.ko_subj_hours_s := subject.subj_hours_s;
-        SELF.ko_subj_credit_kind := subject.subj_credit_kind;
-        SELF.ko_subj_ects := subject.subj_ects;
-        SELF.ko_subj_tutor := subject.subj_tutor;
-        SELF.ko_university := specialty.university;
-        SELF.ko_faculty := specialty.faculty;
-        SELF.ko_studies_modetier := specialty.studies_modetier;
-        SELF.ko_studies_field := specialty.studies_field;
-        SELF.ko_studies_specialty := specialty.studies_specialty;
-        SELF.ko_semester_code := semester.semester_code;
-        SELF.ko_semester_number := semester.semester_number;
-        SELF.ko_ects_mandatory := semester.ects_mandatory;
-        SELF.ko_ects_other := semester.ects_other;
-        SELF.ko_ects_total := semester.ects_total;
-        SELF.dz_nazwa := przedmiot.nazwa;
-        SELF.dz_jed_org_kod := przedmiot.jed_org_kod;
-        SELF.dz_utw_id := przedmiot.utw_id;
-        SELF.dz_utw_data := przedmiot.utw_data;
-        SELF.dz_mod_id := przedmiot.mod_id;
-        SELF.dz_mod_data := przedmiot.mod_data;
-        SELF.dz_tpro_kod := przedmiot.tpro_kod;
-        SELF.dz_czy_wielokrotne := przedmiot.czy_wielokrotne;
-        SELF.dz_name := przedmiot.name;
-        SELF.dz_skrocony_opis := przedmiot.skrocony_opis;
-        SELF.dz_short_description := przedmiot.short_description;
-        SELF.dz_jed_org_kod_biorca := przedmiot.jed_org_kod_biorca;
-        SELF.dz_jzk_kod := przedmiot.jzk_kod;
-        SELF.dz_kod_sok := przedmiot.kod_sok;
-        SELF.dz_opis := przedmiot.opis;
-        SELF.dz_description := przedmiot.description;
-        SELF.dz_literatura := przedmiot.literatura;
-        SELF.dz_bibliography := przedmiot.bibliography;
-        SELF.dz_efekty_uczenia := przedmiot.efekty_uczenia;
-        SELF.dz_efekty_uczenia_ang := przedmiot.efekty_uczenia_ang;
-        SELF.dz_kryteria_oceniania := przedmiot.kryteria_oceniania;
-        SELF.dz_kryteria_oceniania_ang := przedmiot.kryteria_oceniania_ang;
-        SELF.dz_praktyki_zawodowe := przedmiot.praktyki_zawodowe;
-        SELF.dz_praktyki_zawodowe_ang := przedmiot.praktyki_zawodowe_ang;
-        SELF.dz_url := przedmiot.url;
-        SELF.dz_kod_isced := przedmiot.kod_isced;
-        SELF.dz_nazwa_pol := przedmiot.nazwa_pol;
-        SELF.dz_guid := przedmiot.guid;
-        SELF.dz_pw_nazwa_supl := przedmiot.pw_nazwa_supl;
-        SELF.dz_pw_nazwa_supl_ang := przedmiot.pw_nazwa_supl_ang;
+        SELF.subj_code := subject.subj_code;
+        SELF.subj_name := subject.subj_name;
+        SELF.subj_hours_w := subject.subj_hours_w;
+        SELF.subj_hours_c := subject.subj_hours_c;
+        SELF.subj_hours_l := subject.subj_hours_l;
+        SELF.subj_hours_p := subject.subj_hours_p;
+        SELF.subj_hours_s := subject.subj_hours_s;
+        SELF.subj_credit_kind := subject.subj_credit_kind;
+        SELF.subj_ects := subject.subj_ects;
+        SELF.subj_tutor := subject.subj_tutor;
+        SELF.university := specialty.university;
+        SELF.faculty := specialty.faculty;
+        SELF.studies_modetier := specialty.studies_modetier;
+        SELF.studies_field := specialty.studies_field;
+        SELF.studies_specialty := specialty.studies_specialty;
+        SELF.semester_code := semester.semester_code;
+        SELF.semester_number := semester.semester_number;
+        SELF.ects_mandatory := semester.ects_mandatory;
+        SELF.ects_other := semester.ects_other;
+        SELF.ects_total := semester.ects_total;
+        SELF.nazwa := przedmiot.nazwa;
+        SELF.jed_org_kod := przedmiot.jed_org_kod;
+        SELF.utw_id := przedmiot.utw_id;
+        SELF.utw_data := przedmiot.utw_data;
+        SELF.mod_id := przedmiot.mod_id;
+        SELF.mod_data := przedmiot.mod_data;
+        SELF.tpro_kod := przedmiot.tpro_kod;
+        SELF.czy_wielokrotne := przedmiot.czy_wielokrotne;
+        SELF.name := przedmiot.name;
+        SELF.skrocony_opis := przedmiot.skrocony_opis;
+        SELF.short_description := przedmiot.short_description;
+        SELF.jed_org_kod_biorca := przedmiot.jed_org_kod_biorca;
+        SELF.jzk_kod := przedmiot.jzk_kod;
+        SELF.kod_sok := przedmiot.kod_sok;
+        SELF.opis := przedmiot.opis;
+        SELF.description := przedmiot.description;
+        SELF.literatura := przedmiot.literatura;
+        SELF.bibliography := przedmiot.bibliography;
+        SELF.efekty_uczenia := przedmiot.efekty_uczenia;
+        SELF.efekty_uczenia_ang := przedmiot.efekty_uczenia_ang;
+        SELF.kryteria_oceniania := przedmiot.kryteria_oceniania;
+        SELF.kryteria_oceniania_ang := przedmiot.kryteria_oceniania_ang;
+        SELF.praktyki_zawodowe := przedmiot.praktyki_zawodowe;
+        SELF.praktyki_zawodowe_ang := przedmiot.praktyki_zawodowe_ang;
+        SELF.url := przedmiot.url;
+        SELF.kod_isced := przedmiot.kod_isced;
+        SELF.nazwa_pol := przedmiot.nazwa_pol;
+        SELF.guid := przedmiot.guid;
+        SELF.pw_nazwa_supl := przedmiot.pw_nazwa_supl;
+        SELF.pw_nazwa_supl_ang := przedmiot.pw_nazwa_supl_ang;
         RETURN;
     END;
 END;

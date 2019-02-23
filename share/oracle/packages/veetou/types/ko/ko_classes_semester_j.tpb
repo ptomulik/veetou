@@ -21,25 +21,25 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Classes_Semester_J_t AS
         RETURN;
     END;
 
-    CONSTRUCTOR FUNCTION V2u_Ko_Classes_Semester_J_t(
-              SELF IN OUT NOCOPY V2u_Ko_Classes_Semester_J_t
-            , semester IN V2u_Ko_Semester_t
-            , specialty IN V2u_Ko_Specialty_t
-            , subject IN V2u_Ko_Subject_t
-            , classes_type IN VARCHAR2
-            , classes_hours IN NUMBER := NULL
-            ) RETURN SELF AS RESULT
-    IS
-    BEGIN
-        SELF.init(
-              semester => semester
-            , specialty => specialty
-            , subject => subject
-            , classes_type => classes_type
-            , classes_hours => classes_hours
-            );
-        RETURN;
-    END;
+--    CONSTRUCTOR FUNCTION V2u_Ko_Classes_Semester_J_t(
+--              SELF IN OUT NOCOPY V2u_Ko_Classes_Semester_J_t
+--            , semester IN V2u_Ko_Semester_t
+--            , specialty IN V2u_Ko_Specialty_t
+--            , subject IN V2u_Ko_Subject_t
+--            , classes_type IN VARCHAR2
+--            , classes_hours IN NUMBER := NULL
+--            ) RETURN SELF AS RESULT
+--    IS
+--    BEGIN
+--        SELF.init(
+--              semester => semester
+--            , specialty => specialty
+--            , subject => subject
+--            , classes_type => classes_type
+--            , classes_hours => classes_hours
+--            );
+--        RETURN;
+--    END;
 
     MEMBER PROCEDURE init(
               SELF IN OUT NOCOPY V2u_Ko_Classes_Semester_J_t
@@ -62,24 +62,24 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Classes_Semester_J_t AS
         SELF.classes_hours := classes_hours;
     END;
 
-    MEMBER PROCEDURE init(
-              SELF IN OUT NOCOPY V2u_Ko_Classes_Semester_J_t
-            , semester IN V2u_Ko_Semester_t
-            , specialty IN V2u_Ko_Specialty_t
-            , subject IN V2u_Ko_Subject_t
-            , classes_type IN VARCHAR2
-            , classes_hours IN NUMBER := NULL
-            )
-    IS
-    BEGIN
-        SELF.init(
-              semester => semester
-            , specialty => specialty
-            , subject => subject
-            );
-        SELF.classes_type := classes_type;
-        SELF.classes_hours := classes_hours;
-    END;
+--    MEMBER PROCEDURE init(
+--              SELF IN OUT NOCOPY V2u_Ko_Classes_Semester_J_t
+--            , semester IN V2u_Ko_Semester_t
+--            , specialty IN V2u_Ko_Specialty_t
+--            , subject IN V2u_Ko_Subject_t
+--            , classes_type IN VARCHAR2
+--            , classes_hours IN NUMBER := NULL
+--            )
+--    IS
+--    BEGIN
+--        SELF.init(
+--              semester => semester
+--            , specialty => specialty
+--            , subject => subject
+--            );
+--        SELF.classes_type := classes_type;
+--        SELF.classes_hours := classes_hours;
+--    END;
 END;
 
 -- vim: set ft=sql ts=4 sw=4 et:

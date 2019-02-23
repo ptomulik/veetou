@@ -26,17 +26,17 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Etpos_J_t
             , os_id IN NUMBER
             ) RETURN SELF AS RESULT
 
-    , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Etpos_J_t(
-              SELF IN OUT NOCOPY V2u_Ko_Matched_Etpos_J_t
-            , semester IN V2u_Ko_Semester_t
-            , specialty IN V2u_Ko_Specialty_t
-            , student IN V2u_Ko_Student_t
-            , ects_attained IN NUMBER
-            , specialty_map IN V2u_Ko_Specialty_Map_J_t
-            , prgos IN V2u_Dz_Program_Osoby_t
-            , etpos IN V2u_Dz_Etap_Osoby_t
-            , etp_kod_missmatch IN VARCHAR2
-            ) RETURN SELF AS RESULT
+--    , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Etpos_J_t(
+--              SELF IN OUT NOCOPY V2u_Ko_Matched_Etpos_J_t
+--            , semester IN V2u_Ko_Semester_t
+--            , specialty IN V2u_Ko_Specialty_t
+--            , student IN V2u_Ko_Student_t
+--            , ects_attained IN NUMBER
+--            , specialty_map IN V2u_Ko_Specialty_Map_J_t
+--            , prgos IN V2u_Dz_Program_Osoby_t
+--            , etpos IN V2u_Dz_Etap_Osoby_t
+--            , etp_kod_missmatch IN VARCHAR2
+--            ) RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Etpos_J_t
@@ -55,17 +55,17 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Etpos_J_t
             , os_id IN NUMBER
             )
 
-    , MEMBER PROCEDURE init(
-              SELF IN OUT NOCOPY V2u_Ko_Matched_Etpos_J_t
-            , semester IN V2u_Ko_Semester_t
-            , specialty IN V2u_Ko_Specialty_t
-            , student IN V2u_Ko_Student_t
-            , ects_attained IN NUMBER
-            , specialty_map IN V2u_Ko_Specialty_Map_J_t
-            , prgos IN V2u_Dz_Program_Osoby_t
-            , etpos IN V2u_Dz_Etap_Osoby_t
-            , etp_kod_missmatch IN VARCHAR2
-            )
+--    , MEMBER PROCEDURE init(
+--              SELF IN OUT NOCOPY V2u_Ko_Matched_Etpos_J_t
+--            , semester IN V2u_Ko_Semester_t
+--            , specialty IN V2u_Ko_Specialty_t
+--            , student IN V2u_Ko_Student_t
+--            , ects_attained IN NUMBER
+--            , specialty_map IN V2u_Ko_Specialty_Map_J_t
+--            , prgos IN V2u_Dz_Program_Osoby_t
+--            , etpos IN V2u_Dz_Etap_Osoby_t
+--            , etp_kod_missmatch IN VARCHAR2
+--            )
     )
 NOT FINAL;
 /

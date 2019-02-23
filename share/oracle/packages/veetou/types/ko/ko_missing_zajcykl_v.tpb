@@ -4,9 +4,15 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Zajcykl_V_t AS
             , subject IN V2u_Ko_Subject_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
+            , classes_type IN VARCHAR2
+            , classes_hours IN NUMBER
+            , subject_map_id IN NUMBER
+            , subject_matching_score IN NUMBER
+            , map_subj_code IN VARCHAR2
+            , classes_map_id IN NUMBER
+            , classes_matching_score IN NUMBER
+            , map_classes_type IN VARCHAR2
             , reason IN VARCHAR2
-            , tried_map_subj_code IN VARCHAR2
-            , tried_map_classes_type IN VARCHAR2
             , istniejace_tzaj_kody IN V2u_5Chars3_t
             ) RETURN SELF AS RESULT
     IS
@@ -15,9 +21,15 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Zajcykl_V_t AS
               subject => subject
             , specialty => specialty
             , semester => semester
+            , classes_type => classes_type
+            , classes_hours => classes_hours
+            , subject_map_id => subject_map_id
+            , subject_matching_score => subject_matching_score
+            , map_subj_code => map_subj_code
+            , classes_map_id => classes_map_id
+            , classes_matching_score => classes_matching_score
+            , map_classes_type => map_classes_type
             , reason => reason
-            , tried_map_subj_code => tried_map_subj_code
-            , tried_map_classes_type => tried_map_classes_type
             , istniejace_tzaj_kody => istniejace_tzaj_kody
         );
         RETURN;
@@ -28,21 +40,33 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Zajcykl_V_t AS
             , subject IN V2u_Ko_Subject_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
+            , classes_type IN VARCHAR2
+            , classes_hours IN NUMBER
+            , subject_map_id IN NUMBER
+            , subject_matching_score IN NUMBER
+            , map_subj_code IN VARCHAR2
+            , classes_map_id IN NUMBER
+            , classes_matching_score IN NUMBER
+            , map_classes_type IN VARCHAR2
             , reason IN VARCHAR2
-            , tried_map_subj_code IN VARCHAR2
-            , tried_map_classes_type IN VARCHAR2
             , istniejace_tzaj_kody IN V2u_5Chars3_t
             )
     IS
     BEGIN
         SELF.init(
-            subject => subject
-          , specialty => specialty
-          , semester => semester
-          , reason => reason
-          , tried_map_subj_code => tried_map_subj_code
-        );
-        SELF.tried_map_classes_type := tried_map_classes_type;
+              subject => subject
+            , specialty => specialty
+            , semester => semester
+            , classes_type => classes_type
+            , classes_hours => classes_hours
+            );
+        SELF.subject_map_id := subject_map_id;
+        SELF.subject_matching_score := subject_matching_score;
+        SELF.map_subj_code := map_subj_code;
+        SELF.classes_map_id := classes_map_id;
+        SELF.classes_matching_score := classes_matching_score;
+        SELF.map_classes_type := map_classes_type;
+        SELF.reason := reason;
         SELF.istniejace_tzaj_kody := istniejace_tzaj_kody;
     END;
 END;

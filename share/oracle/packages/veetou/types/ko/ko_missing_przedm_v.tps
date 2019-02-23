@@ -1,7 +1,9 @@
 CREATE OR REPLACE TYPE V2u_Ko_Missing_Przedm_V_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Subject_Semester_V_t
-    ( reason VARCHAR2(80 CHAR)
-    , tried_map_subj_code VARCHAR2(32 CHAR)
+    ( subject_map_id NUMBER(38)
+    , subject_matching_score NUMBER(38)
+    , map_subj_code VARCHAR2(32 CHAR)
+    , reason VARCHAR2(80 CHAR)
 
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Missing_Przedm_V_t(
@@ -9,8 +11,10 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Przedm_V_t
             , subject IN V2u_Ko_Subject_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
+            , subject_map_id IN NUMBER
+            , subject_matching_score IN NUMBER
+            , map_subj_code IN VARCHAR2
             , reason IN VARCHAR2
-            , tried_map_subj_code IN VARCHAR2
             ) RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
@@ -18,8 +22,10 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Przedm_V_t
             , subject IN V2u_Ko_Subject_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
+            , subject_map_id IN NUMBER
+            , subject_matching_score IN NUMBER
+            , map_subj_code IN VARCHAR2
             , reason IN VARCHAR2
-            , tried_map_subj_code IN VARCHAR2
             )
     )
 NOT FINAL;

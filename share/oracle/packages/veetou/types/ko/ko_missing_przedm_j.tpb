@@ -1,14 +1,13 @@
-CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Map_J_t AS
-    CONSTRUCTOR FUNCTION V2u_Ko_Subject_Map_J_t(
-              SELF IN OUT NOCOPY V2u_Ko_Subject_Map_J_t
-            , job_uuid RAW
+CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Przedm_J_t AS
+    CONSTRUCTOR FUNCTION V2u_Ko_Missing_Przedm_J_t(
+              SELF IN OUT NOCOPY V2u_Ko_Missing_Przedm_J_t
+            , job_uuid IN RAW
             , semester_id IN NUMBER
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
-            , map_id IN NUMBER
-            , matching_score IN NUMBER
-            , highest_score IN NUMBER
-            , selected IN NUMBER
+            , subject_map_id IN NUMBER
+            , subject_matching_score IN NUMBER
+            , map_subj_code IN VARCHAR2
             , reason IN VARCHAR2
             ) RETURN SELF AS RESULT
     IS
@@ -18,24 +17,22 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Map_J_t AS
             , semester_id => semester_id
             , specialty_id => specialty_id
             , subject_id => subject_id
-            , map_id => map_id
-            , matching_score => matching_score
-            , highest_score => highest_score
-            , selected => selected
+            , subject_map_id => subject_map_id
+            , subject_matching_score => subject_matching_score
+            , map_subj_code => map_subj_code
             , reason => reason
             );
         RETURN;
     END;
 
---    CONSTRUCTOR FUNCTION V2u_Ko_Subject_Map_J_t(
---              SELF IN OUT NOCOPY V2u_Ko_Subject_Map_J_t
+--    CONSTRUCTOR FUNCTION V2u_Ko_Missing_Przedm_J_t(
+--              SELF IN OUT NOCOPY V2u_Ko_Missing_Przedm_J_t
 --            , semester IN V2u_Ko_Semester_t
 --            , specialty IN V2u_Ko_Specialty_t
 --            , subject IN V2u_Ko_Subject_t
---            , map IN V2u_Subject_Map_t
---            , matching_score IN NUMBER
---            , highest_score IN NUMBER
---            , selected IN NUMBER
+--            , subject_map_id IN NUMBER
+--            , subject_matching_score IN NUMBER
+--            , map_subj_code IN VARCHAR2
 --            , reason IN VARCHAR2
 --            ) RETURN SELF AS RESULT
 --    IS
@@ -44,25 +41,23 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Map_J_t AS
 --              semester => semester
 --            , specialty => specialty
 --            , subject => subject
---            , map => map
---            , matching_score => matching_score
---            , highest_score => highest_score
---            , selected => selected
+--            , subject_map_id => subject_map_id
+--            , subject_matching_score => subject_matching_score
+--            , map_subj_code => map_subj_code
 --            , reason => reason
 --            );
 --        RETURN;
 --    END;
 
     MEMBER PROCEDURE init(
-              SELF IN OUT NOCOPY V2u_Ko_Subject_Map_J_t
-            , job_uuid RAW
+              SELF IN OUT NOCOPY V2u_Ko_Missing_Przedm_J_t
+            , job_uuid IN RAW
             , semester_id IN NUMBER
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
-            , map_id IN NUMBER
-            , matching_score IN NUMBER
-            , highest_score IN NUMBER
-            , selected IN NUMBER
+            , subject_map_id IN NUMBER
+            , subject_matching_score IN NUMBER
+            , map_subj_code IN VARCHAR2
             , reason IN VARCHAR2
             )
     IS
@@ -73,22 +68,20 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Map_J_t AS
             , specialty_id => specialty_id
             , subject_id => subject_id
             );
-        SELF.map_id := map_id;
-        SELF.matching_score := matching_score;
-        SELF.highest_score := highest_score;
-        SELF.selected := selected;
+        SELF.subject_map_id := subject_map_id;
+        SELF.subject_matching_score := subject_matching_score;
+        SELF.map_subj_code := map_subj_code;
         SELF.reason := reason;
     END;
 
 --    MEMBER PROCEDURE init(
---              SELF IN OUT NOCOPY V2u_Ko_Subject_Map_J_t
+--              SELF IN OUT NOCOPY V2u_Ko_Missing_Przedm_J_t
 --            , semester IN V2u_Ko_Semester_t
 --            , specialty IN V2u_Ko_Specialty_t
 --            , subject IN V2u_Ko_Subject_t
---            , map IN V2u_Subject_Map_t
---            , matching_score IN NUMBER
---            , highest_score IN NUMBER
---            , selected IN NUMBER
+--            , subject_map_id IN NUMBER
+--            , subject_matching_score IN NUMBER
+--            , map_subj_code IN VARCHAR2
 --            , reason IN VARCHAR2
 --            )
 --    IS
@@ -98,10 +91,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Map_J_t AS
 --            , specialty => specialty
 --            , subject => subject
 --            );
---        SELF.map_id := map.id;
---        SELF.matching_score := matching_score;
---        SELF.highest_score := highest_score;
---        SELF.selected := selected;
+--        SELF.subject_map_id := subject_map_id;
+--        SELF.subject_matching_score := subject_matching_score;
+--        SELF.map_subj_code := map_subj_code;
 --        SELF.reason := reason;
 --    END;
 END;

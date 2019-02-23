@@ -18,16 +18,16 @@ CREATE OR REPLACE TYPE V2u_Ko_Skipped_Program_J_t
             , where_opis_like IN VARCHAR2
             ) RETURN SELF AS RESULT
 
-    , CONSTRUCTOR FUNCTION V2u_Ko_Skipped_Program_J_t(
-              SELF IN OUT NOCOPY V2u_Ko_Skipped_Program_J_t
-            , semester IN V2u_Ko_Semester_t
-            , specialty IN V2u_Ko_Specialty_t
-            , prg_kod IN VARCHAR2
-            , where_tryb_studiow IN VARCHAR2
-            , where_rodzaj_studiow IN VARCHAR2
-            , where_jed_org_kod_podst IN VARCHAR2
-            , where_opis_like IN VARCHAR2
-            ) RETURN SELF AS RESULT
+--    , CONSTRUCTOR FUNCTION V2u_Ko_Skipped_Program_J_t(
+--              SELF IN OUT NOCOPY V2u_Ko_Skipped_Program_J_t
+--            , semester IN V2u_Ko_Semester_t
+--            , specialty IN V2u_Ko_Specialty_t
+--            , prg_kod IN VARCHAR2
+--            , where_tryb_studiow IN VARCHAR2
+--            , where_rodzaj_studiow IN VARCHAR2
+--            , where_jed_org_kod_podst IN VARCHAR2
+--            , where_opis_like IN VARCHAR2
+--            ) RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
               SELF IN OUT NOCOPY V2u_Ko_Skipped_Program_J_t
@@ -41,16 +41,16 @@ CREATE OR REPLACE TYPE V2u_Ko_Skipped_Program_J_t
             , where_opis_like IN VARCHAR2
             )
 
-    , MEMBER PROCEDURE init(
-              SELF IN OUT NOCOPY V2u_Ko_Skipped_Program_J_t
-            , semester IN V2u_Ko_Semester_t
-            , specialty IN V2u_Ko_Specialty_t
-            , prg_kod IN VARCHAR2
-            , where_tryb_studiow IN VARCHAR2
-            , where_rodzaj_studiow IN VARCHAR2
-            , where_jed_org_kod_podst IN VARCHAR2
-            , where_opis_like IN VARCHAR2
-            )
+--    , MEMBER PROCEDURE init(
+--              SELF IN OUT NOCOPY V2u_Ko_Skipped_Program_J_t
+--            , semester IN V2u_Ko_Semester_t
+--            , specialty IN V2u_Ko_Specialty_t
+--            , prg_kod IN VARCHAR2
+--            , where_tryb_studiow IN VARCHAR2
+--            , where_rodzaj_studiow IN VARCHAR2
+--            , where_jed_org_kod_podst IN VARCHAR2
+--            , where_opis_like IN VARCHAR2
+--            )
     )
 NOT FINAL;
 /

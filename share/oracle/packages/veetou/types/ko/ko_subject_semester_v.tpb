@@ -1,61 +1,61 @@
 CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Semester_V_t AS
-    CONSTRUCTOR FUNCTION V2u_Ko_Subject_Semester_V_t(
-              SELF IN OUT NOCOPY V2u_Ko_Subject_Semester_V_t
-            , job_uuid IN RAW
-            , subject_id IN NUMBER
-            , specialty_id IN NUMBER
-            , semester_id IN NUMBER
-            , subj_code IN VARCHAR2
-            , subj_name IN VARCHAR2
-            , subj_hours_w IN NUMBER
-            , subj_hours_c IN NUMBER
-            , subj_hours_l IN NUMBER
-            , subj_hours_p IN NUMBER
-            , subj_hours_s IN NUMBER
-            , subj_credit_kind IN VARCHAR2
-            , subj_ects IN NUMBER
-            , subj_tutor IN VARCHAR2
-            , university IN VARCHAR2
-            , faculty IN VARCHAR2
-            , studies_modetier IN VARCHAR2
-            , studies_field IN VARCHAR2
-            , studies_specialty IN VARCHAR2
-            , semester_code IN VARCHAR2
-            , semester_number IN NUMBER
-            , ects_mandatory IN NUMBER
-            , ects_other IN NUMBER
-            , ects_total IN NUMBER
-            ) RETURN SELF AS RESULT
-    IS
-    BEGIN
-        SELF.init(
-              job_uuid => job_uuid
-            , subject_id => subject_id
-            , specialty_id => specialty_id
-            , semester_id => semester_id
-            , subj_code => subj_code
-            , subj_name => subj_name
-            , subj_hours_w => subj_hours_w
-            , subj_hours_c => subj_hours_c
-            , subj_hours_l => subj_hours_l
-            , subj_hours_p => subj_hours_p
-            , subj_hours_s => subj_hours_s
-            , subj_credit_kind => subj_credit_kind
-            , subj_ects => subj_ects
-            , subj_tutor => subj_tutor
-            , university => university
-            , faculty => faculty
-            , studies_modetier => studies_modetier
-            , studies_field => studies_field
-            , studies_specialty => studies_specialty
-            , semester_code => semester_code
-            , semester_number => semester_number
-            , ects_mandatory => ects_mandatory
-            , ects_other => ects_other
-            , ects_total => ects_total
-            );
-        RETURN;
-    END;
+--    CONSTRUCTOR FUNCTION V2u_Ko_Subject_Semester_V_t(
+--              SELF IN OUT NOCOPY V2u_Ko_Subject_Semester_V_t
+--            , job_uuid IN RAW
+--            , subject_id IN NUMBER
+--            , specialty_id IN NUMBER
+--            , semester_id IN NUMBER
+--            , subj_code IN VARCHAR2
+--            , subj_name IN VARCHAR2
+--            , subj_hours_w IN NUMBER
+--            , subj_hours_c IN NUMBER
+--            , subj_hours_l IN NUMBER
+--            , subj_hours_p IN NUMBER
+--            , subj_hours_s IN NUMBER
+--            , subj_credit_kind IN VARCHAR2
+--            , subj_ects IN NUMBER
+--            , subj_tutor IN VARCHAR2
+--            , university IN VARCHAR2
+--            , faculty IN VARCHAR2
+--            , studies_modetier IN VARCHAR2
+--            , studies_field IN VARCHAR2
+--            , studies_specialty IN VARCHAR2
+--            , semester_code IN VARCHAR2
+--            , semester_number IN NUMBER
+--            , ects_mandatory IN NUMBER
+--            , ects_other IN NUMBER
+--            , ects_total IN NUMBER
+--            ) RETURN SELF AS RESULT
+--    IS
+--    BEGIN
+--        SELF.init(
+--              job_uuid => job_uuid
+--            , subject_id => subject_id
+--            , specialty_id => specialty_id
+--            , semester_id => semester_id
+--            , subj_code => subj_code
+--            , subj_name => subj_name
+--            , subj_hours_w => subj_hours_w
+--            , subj_hours_c => subj_hours_c
+--            , subj_hours_l => subj_hours_l
+--            , subj_hours_p => subj_hours_p
+--            , subj_hours_s => subj_hours_s
+--            , subj_credit_kind => subj_credit_kind
+--            , subj_ects => subj_ects
+--            , subj_tutor => subj_tutor
+--            , university => university
+--            , faculty => faculty
+--            , studies_modetier => studies_modetier
+--            , studies_field => studies_field
+--            , studies_specialty => studies_specialty
+--            , semester_code => semester_code
+--            , semester_number => semester_number
+--            , ects_mandatory => ects_mandatory
+--            , ects_other => ects_other
+--            , ects_total => ects_total
+--            );
+--        RETURN;
+--    END;
 
     CONSTRUCTOR FUNCTION V2u_Ko_Subject_Semester_V_t(
               SELF IN OUT NOCOPY V2u_Ko_Subject_Semester_V_t
@@ -71,60 +71,60 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Semester_V_t AS
         RETURN;
     END;
 
-    MEMBER PROCEDURE init(
-              SELF IN OUT NOCOPY V2u_Ko_Subject_Semester_V_t
-            , job_uuid IN RAW
-            , subject_id IN NUMBER
-            , specialty_id IN NUMBER
-            , semester_id IN NUMBER
-            , subj_code IN VARCHAR2
-            , subj_name IN VARCHAR2
-            , subj_hours_w IN NUMBER
-            , subj_hours_c IN NUMBER
-            , subj_hours_l IN NUMBER
-            , subj_hours_p IN NUMBER
-            , subj_hours_s IN NUMBER
-            , subj_credit_kind IN VARCHAR2
-            , subj_ects IN NUMBER
-            , subj_tutor IN VARCHAR2
-            , university IN VARCHAR2
-            , faculty IN VARCHAR2
-            , studies_modetier IN VARCHAR2
-            , studies_field IN VARCHAR2
-            , studies_specialty IN VARCHAR2
-            , semester_code IN VARCHAR2
-            , semester_number IN NUMBER
-            , ects_mandatory IN NUMBER
-            , ects_other IN NUMBER
-            , ects_total IN NUMBER
-            )
-    IS
-    BEGIN
-        SELF.job_uuid := job_uuid;
-        SELF.subject_id := subject_id;
-        SELF.specialty_id := specialty_id;
-        SELF.semester_id := semester_id;
-        SELF.subj_code := subj_code;
-        SELF.subj_name := subj_name;
-        SELF.subj_hours_w := subj_hours_w;
-        SELF.subj_hours_c := subj_hours_c;
-        SELF.subj_hours_l := subj_hours_l;
-        SELF.subj_hours_p := subj_hours_p;
-        SELF.subj_hours_s := subj_hours_s;
-        SELF.subj_credit_kind := subj_credit_kind;
-        SELF.subj_ects := subj_ects;
-        SELF.subj_tutor := subj_tutor;
-        SELF.university := university;
-        SELF.faculty := faculty;
-        SELF.studies_modetier := studies_modetier;
-        SELF.studies_field := studies_field;
-        SELF.studies_specialty := studies_specialty;
-        SELF.semester_code := semester_code;
-        SELF.semester_number := semester_number;
-        SELF.ects_mandatory := ects_mandatory;
-        SELF.ects_other := ects_other;
-        SELF.ects_total := ects_total;
-    END;
+--    MEMBER PROCEDURE init(
+--              SELF IN OUT NOCOPY V2u_Ko_Subject_Semester_V_t
+--            , job_uuid IN RAW
+--            , subject_id IN NUMBER
+--            , specialty_id IN NUMBER
+--            , semester_id IN NUMBER
+--            , subj_code IN VARCHAR2
+--            , subj_name IN VARCHAR2
+--            , subj_hours_w IN NUMBER
+--            , subj_hours_c IN NUMBER
+--            , subj_hours_l IN NUMBER
+--            , subj_hours_p IN NUMBER
+--            , subj_hours_s IN NUMBER
+--            , subj_credit_kind IN VARCHAR2
+--            , subj_ects IN NUMBER
+--            , subj_tutor IN VARCHAR2
+--            , university IN VARCHAR2
+--            , faculty IN VARCHAR2
+--            , studies_modetier IN VARCHAR2
+--            , studies_field IN VARCHAR2
+--            , studies_specialty IN VARCHAR2
+--            , semester_code IN VARCHAR2
+--            , semester_number IN NUMBER
+--            , ects_mandatory IN NUMBER
+--            , ects_other IN NUMBER
+--            , ects_total IN NUMBER
+--            )
+--    IS
+--    BEGIN
+--        SELF.job_uuid := job_uuid;
+--        SELF.subject_id := subject_id;
+--        SELF.specialty_id := specialty_id;
+--        SELF.semester_id := semester_id;
+--        SELF.subj_code := subj_code;
+--        SELF.subj_name := subj_name;
+--        SELF.subj_hours_w := subj_hours_w;
+--        SELF.subj_hours_c := subj_hours_c;
+--        SELF.subj_hours_l := subj_hours_l;
+--        SELF.subj_hours_p := subj_hours_p;
+--        SELF.subj_hours_s := subj_hours_s;
+--        SELF.subj_credit_kind := subj_credit_kind;
+--        SELF.subj_ects := subj_ects;
+--        SELF.subj_tutor := subj_tutor;
+--        SELF.university := university;
+--        SELF.faculty := faculty;
+--        SELF.studies_modetier := studies_modetier;
+--        SELF.studies_field := studies_field;
+--        SELF.studies_specialty := studies_specialty;
+--        SELF.semester_code := semester_code;
+--        SELF.semester_number := semester_number;
+--        SELF.ects_mandatory := ects_mandatory;
+--        SELF.ects_other := ects_other;
+--        SELF.ects_total := ects_total;
+--    END;
 
     MEMBER PROCEDURE init(
               SELF IN OUT NOCOPY V2u_Ko_Subject_Semester_V_t
@@ -159,61 +159,6 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Semester_V_t AS
         SELF.ects_other := semester.ects_other;
         SELF.ects_total := semester.ects_total;
     END;
-
---    ORDER MEMBER FUNCTION cmp(other V2u_Ko_Subject_Semester_V_t)
---        RETURN INTEGER
---    IS
---    BEGIN
---        RETURN cmp_impl(other);
---    END;
---
---    MEMBER FUNCTION cmp_impl(other V2u_Ko_Subject_Semester_V_t)
---        RETURN INTEGER
---    IS
---        ord INTEGER;
---    BEGIN
---        ord := V2U_Cmp.RawN(job_uuid, other.job_uuid);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.StrNI(subj_code, other.subj_code);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.StrNI(subj_name, other.subj_name);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.NumN(subj_hours_w, other.subj_hours_w);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.NumN(subj_hours_c, other.subj_hours_c);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.NumN(subj_hours_l, other.subj_hours_l);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.NumN(subj_hours_p, other.subj_hours_p);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.NumN(subj_hours_s, other.subj_hours_s);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.StrNI(subj_credit_kind, other.subj_credit_kind);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.NumN(subj_ects, other.subj_ects);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.StrNI(subj_tutor, other.subj_tutor);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.StrNI(university, other.university);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.StrNI(faculty, other.faculty);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.StrNI(studies_modetier, other.studies_modetier);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.StrNI(studies_field, other.studies_field);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.StrNI(studies_specialty, other.studies_specialty);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.StrNI(semester_code, other.semester_code);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.NumN(semester_number, other.semester_number);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.NumN(ects_mandatory, other.ects_mandatory);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        ord := V2U_Cmp.NumN(ects_other, other.ects_other);
---        IF ord <> 0 THEN RETURN ord; END IF;
---        RETURN V2U_Cmp.NumN(ects_total, other.ects_total);
---    END;
 END;
 
 -- vim: set ft=sql ts=4 sw=4 et:

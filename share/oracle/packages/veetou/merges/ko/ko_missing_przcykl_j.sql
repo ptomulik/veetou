@@ -2,110 +2,94 @@ MERGE INTO v2u_ko_missing_przcykl_j tgt
 USING
     (
         WITH u AS
-        (
+        ( -- select all unmatched entries
             SELECT
-                  ss_j.job_uuid job_uuid
-                , ss_j.subject_id subject_id
-                , ss_j.specialty_id specialty_id
-                , ss_j.semester_id semester_id
-                , COUNT(DISTINCT sm_j.map_id) subject_maps_count
-                , COUNT(DISTINCT subject_map.map_subj_code) map_subj_codes_count
-                , MIN(subjects.subj_code) KEEP (
-                        DENSE_RANK FIRST ORDER BY subjects.subj_code
-                  ) subj_code
-                , MIN(semesters.semester_code) KEEP (
-                        DENSE_RANK FIRST ORDER BY semesters.semester_code
-                  ) semester_code
-                , MIN(subject_map.map_subj_code) KEEP (
-                        DENSE_RANK FIRST ORDER BY subject_map.map_subj_code
-                  ) tried_map_subj_code
-                , CAST(COLLECT(przedmioty_cykli.cdyd_kod) AS V2u_Vchars1K_t) istniejace_cdyd_kody
+                  ss_j.job_uuid
+                , ss_j.subject_id
+                , ss_j.specialty_id
+                , ss_j.semester_id
             FROM v2u_ko_subject_semesters_j ss_j
+            MINUS
+            SELECT
+                  ma_j.job_uuid
+                , ma_j.subject_id
+                , ma_j.specialty_id
+                , ma_j.semester_id
+            FROM v2u_ko_matched_przcykl_j ma_j
+        ),
+        v AS
+        ( -- add extra fields
+            SELECT
+                  u.job_uuid
+                , u.subject_id
+                , u.specialty_id
+                , u.semester_id
+                , sm_j.map_id subject_map_id
+                , sm_j.matching_score subject_matching_score
+                , subject_map.map_subj_code map_subj_code
+                , CAST(MULTISET(
+                    SELECT SUBSTR(t.cdyd_kod, 1, 6)
+                    FROM v2u_dz_przedmioty_cykli t
+                    WHERE t.prz_kod = subject_map.map_subj_code
+                  ) AS V2u_Semester_Codes_t) istniejace_cdyd_kody
+                , subjects.subj_code
+                , semesters.semester_code
+            FROM u u
             INNER JOIN v2u_ko_subjects subjects
                 ON  (
-                            subjects.id = ss_j.subject_id
-                        AND subjects.job_uuid = ss_j.job_uuid
+                            subjects.id = u.subject_id
+                        AND subjects.job_uuid = u.job_uuid
                     )
             INNER JOIN v2u_ko_semesters semesters
                 ON  (
-                            semesters.id = ss_j.subject_id
-                        AND semesters.job_uuid = ss_j.job_uuid
-                    )
-            LEFT JOIN v2u_ko_matched_przcykl_j ma_przcykl_j
-                ON  (
-                            ma_przcykl_j.subject_id = ss_j.subject_id
-                        AND ma_przcykl_j.specialty_id = ss_j.specialty_id
-                        AND ma_przcykl_j.semester_id = ss_j.semester_id
-                        AND ma_przcykl_j.job_uuid = ss_j.job_uuid
+                            semesters.id = u.subject_id
+                        AND semesters.job_uuid = u.job_uuid
                     )
             LEFT JOIN v2u_ko_subject_map_j sm_j
                 ON  (
-                            sm_j.subject_id = ss_j.subject_id
-                        AND sm_j.specialty_id = ss_j.specialty_id
-                        AND sm_j.semester_id = ss_j.semester_id
-                        AND sm_j.job_uuid = ss_j.job_uuid
+                            sm_j.subject_id = u.subject_id
+                        AND sm_j.specialty_id = u.specialty_id
+                        AND sm_j.semester_id = u.semester_id
+                        AND sm_j.job_uuid = u.job_uuid
                         AND sm_j.selected = 1
                     )
             LEFT JOIN v2u_subject_map subject_map
                 ON  (
                             subject_map.id = sm_j.map_id
                     )
-            -- join v2u_dz_przedmioty cykli without semester to find out what other
-            -- semesters we have reached at the destination
-            LEFT JOIN v2u_dz_przedmioty_cykli przedmioty_cykli
-                ON  (
-                            przedmioty_cykli.prz_kod = subject_map.map_subj_code
-                    )
-            WHERE ma_przcykl_j.prz_kod IS NULL
-            GROUP BY
-                  ss_j.job_uuid
-                , ss_j.subject_id
-                , ss_j.specialty_id
-                , ss_j.semester_id
         )
         SELECT
-              u.job_uuid job_uuid
-            , u.subject_id subject_id
-            , u.specialty_id specialty_id
-            , u.semester_id semester_id
+              v.*
             , CASE
-                WHEN u.subject_maps_count <> 1
-                THEN TO_CHAR(u.subject_maps_count)
+                WHEN v.subject_map_id IS NULL
+                THEN 'no subject map for '
                      ||
-                     ' suitable subject map(s) for '
-                     ||
-                     u.subj_code
+                     v.subj_code
                      || ':' ||
-                     u.semester_code
-                WHEN u.map_subj_codes_count <> 1
-                THEN TO_CHAR(u.map_subj_codes_count)
+                     v.semester_code
+                WHEN v.map_subj_code IS NULL
+                THEN 'map_subj_code IS NULL for '
                      ||
-                     ' non-null map_subj_code(s) for '
-                     ||
-                     u.subj_code
+                     v.subj_code
                      || ':' ||
-                     u.semester_code
-                WHEN (SELECT COUNT(*) FROM TABLE(u.istniejace_cdyd_kody)) < 1
-                THEN u.tried_map_subj_code
-                     || ':*' ||
+                     v.semester_code
+                WHEN (SELECT COUNT(*)
+                      FROM TABLE(v.istniejace_cdyd_kody)) < 1
+                THEN v.map_subj_code
+                     ||
                     ' not in dz_przedmioty_cykli'
                 WHEN (SELECT COUNT(*)
-                      FROM TABLE(u.istniejace_cdyd_kody) t
-                      WHERE VALUE(t) = u.semester_code) < 1
+                      FROM TABLE(v.istniejace_cdyd_kody) t
+                      WHERE VALUE(t) = v.semester_code) < 1
                 THEN
-                     u.tried_map_subj_code
+                     v.map_subj_code
                      || ':' ||
-                     u.semester_code
+                     v.semester_code
                      ||
                      ' not in dz_przedmioty_cykli'
                 ELSE 'error (v2u_ko_matched_przcykl_j out of sync?)'
                 END reason
-            , u.tried_map_subj_code tried_map_subj_code
-            , CAST(MULTISET(
-                    SELECT DISTINCT SUBSTR(VALUE(t), 1, 5)
-                    FROM TABLE(u.istniejace_cdyd_kody) t
-              ) AS V2u_Semester_Codes_t) istniejace_cdyd_kody
-        FROM u u
+        FROM v v
     ) src
 ON  (
             tgt.job_uuid = src.job_uuid
@@ -119,8 +103,10 @@ WHEN NOT MATCHED THEN
         , subject_id
         , specialty_id
         , semester_id
+        , subject_map_id
+        , subject_matching_score
+        , map_subj_code
         , reason
-        , tried_map_subj_code
         , istniejace_cdyd_kody
         )
     VALUES
@@ -128,14 +114,18 @@ WHEN NOT MATCHED THEN
         , src.subject_id
         , src.specialty_id
         , src.semester_id
+        , src.subject_map_id
+        , src.subject_matching_score
+        , src.map_subj_code
         , src.reason
-        , src.tried_map_subj_code
         , src.istniejace_cdyd_kody
         )
 WHEN MATCHED THEN
     UPDATE SET
-          tgt.reason = src.reason
-        , tgt.tried_map_subj_code = src.tried_map_subj_code
+          tgt.subject_map_id = src.subject_map_id
+        , tgt.subject_matching_score = src.subject_matching_score
+        , tgt.map_subj_code = src.map_subj_code
+        , tgt.reason = src.reason
         , tgt.istniejace_cdyd_kody = src.istniejace_cdyd_kody
 ;
 

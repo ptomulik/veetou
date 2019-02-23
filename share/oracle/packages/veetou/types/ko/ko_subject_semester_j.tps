@@ -10,12 +10,12 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Semester_J_t
             , subject_id IN NUMBER
             ) RETURN SELF AS RESULT
 
-    , CONSTRUCTOR FUNCTION V2u_Ko_Subject_Semester_J_t(
-              SELF IN OUT NOCOPY V2u_Ko_Subject_Semester_J_t
-            , semester IN V2u_Ko_Semester_t
-            , specialty IN V2u_Ko_Specialty_t
-            , subject IN V2u_Ko_Subject_t
-            ) RETURN SELF AS RESULT
+--    , CONSTRUCTOR FUNCTION V2u_Ko_Subject_Semester_J_t(
+--              SELF IN OUT NOCOPY V2u_Ko_Subject_Semester_J_t
+--            , semester IN V2u_Ko_Semester_t
+--            , specialty IN V2u_Ko_Specialty_t
+--            , subject IN V2u_Ko_Subject_t
+--            ) RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
               SELF IN OUT NOCOPY V2u_Ko_Subject_Semester_J_t
@@ -25,12 +25,12 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Semester_J_t
             , subject_id IN NUMBER
             )
 
-    , MEMBER PROCEDURE init(
-              SELF IN OUT NOCOPY V2u_Ko_Subject_Semester_J_t
-            , semester IN V2u_Ko_Semester_t
-            , specialty IN V2u_Ko_Specialty_t
-            , subject IN V2u_Ko_Subject_t
-            )
+--    , MEMBER PROCEDURE init(
+--              SELF IN OUT NOCOPY V2u_Ko_Subject_Semester_J_t
+--            , semester IN V2u_Ko_Semester_t
+--            , specialty IN V2u_Ko_Specialty_t
+--            , subject IN V2u_Ko_Subject_t
+--            )
     )
 NOT FINAL;
 /

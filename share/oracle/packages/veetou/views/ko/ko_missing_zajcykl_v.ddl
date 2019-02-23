@@ -7,9 +7,15 @@ AS
               subject => VALUE(subjects)
             , specialty => VALUE(specialties)
             , semester => VALUE(semesters)
+            , classes_type => j.classes_type
+            , classes_hours => j.classes_hours
+            , subject_map_id => j.subject_map_id
+            , subject_matching_score => j.subject_matching_score
+            , map_subj_code => j.map_subj_code
+            , classes_map_id => j.classes_map_id
+            , classes_matching_score => j.classes_matching_score
+            , map_classes_type => j.map_classes_type
             , reason => j.reason
-            , tried_map_subj_code => j.map_subj_code
-            , tried_map_classes_type => j.map_classes_type
             , istniejace_tzaj_kody => j.istniejace_tzaj_kody
         )
     FROM v2u_ko_missing_zajcykl_j j
