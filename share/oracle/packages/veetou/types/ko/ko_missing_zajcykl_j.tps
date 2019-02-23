@@ -27,19 +27,6 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Zajcykl_J_t
             , istniejace_tzaj_kody V2u_5Chars3_t
             ) RETURN SELF AS RESULT
 
---    , CONSTRUCTOR FUNCTION V2u_Ko_Missing_Zajcykl_J_t(
---              SELF IN OUT NOCOPY V2u_Ko_Missing_Zajcykl_J_t
---            , semester IN V2u_Ko_Semester_t
---            , specialty IN V2u_Ko_Specialty_t
---            , subject IN V2u_Ko_Subject_t
---            , classes_type IN VARCHAR2
---            , classes_hours IN NUMBER
---            , subject_map IN V2u_Ko_Subject_Map_J_t
---            , classes_map IN V2u_Ko_Classes_Map_J_t
---            , reason IN VARCHAR2
---            , istniejace_tzaj_kody V2u_5Chars3_t
---            ) RETURN SELF AS RESULT
-
     , MEMBER PROCEDURE init(
               SELF IN OUT NOCOPY V2u_Ko_Missing_Zajcykl_J_t
             , job_uuid RAW
@@ -57,19 +44,6 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Zajcykl_J_t
             , reason IN VARCHAR2
             , istniejace_tzaj_kody V2u_5Chars3_t
             )
-
---    , MEMBER PROCEDURE init(
---              SELF IN OUT NOCOPY V2u_Ko_Missing_Zajcykl_J_t
---            , semester IN V2u_Ko_Semester_t
---            , specialty IN V2u_Ko_Specialty_t
---            , subject IN V2u_Ko_Subject_t
---            , classes_type IN VARCHAR2
---            , classes_hours IN NUMBER
---            , subject_map IN V2u_Ko_Subject_Map_J_t
---            , classes_map IN V2u_Ko_Classes_Map_J_t
---            , reason IN VARCHAR2
---            , istniejace_tzaj_kody V2u_5Chars3_t
---            )
     )
 NOT FINAL;
 /
