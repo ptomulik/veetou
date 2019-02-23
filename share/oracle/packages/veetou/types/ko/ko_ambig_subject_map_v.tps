@@ -70,9 +70,6 @@ CREATE OR REPLACE TYPE V2u_Ko_Ambig_Subject_Map_V_t FORCE AUTHID CURRENT_USER AS
             , matching_scores IN V2u_Integers_t
             , map_subj_codes IN V2u_Subj_Codes_t
             ) RETURN SELF AS RESULT
-
---    , ORDER MEMBER FUNCTION cmp(other IN V2u_Ko_Ambig_Subject_Map_V_t)
---            RETURN INTEGER
     );
 
 -- vim: set ft=sql ts=4 sw=4 et:

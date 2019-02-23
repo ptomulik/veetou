@@ -53,62 +53,6 @@ CREATE OR REPLACE TYPE V2u_Ko_Classes_Map_V_t
     , ects_total NUMBER(4)
     , expr_ects_total VARCHAR2(256 CHAR)
 
---    , CONSTRUCTOR FUNCTION V2u_Ko_Classes_Map_V_t(
---              SELF IN OUT NOCOPY V2u_Ko_Classes_Map_V_t
---            , job_uuid IN RAW
---            , subject_id IN NUMBER
---            , specialty_id IN NUMBER
---            , semester_id IN NUMBER
---            , map_id IN NUMBER
---            , matching_score IN NUMBER
---            , highest_score NUMBER
---            , selected NUMBER
---            , reason VARCHAR2
---            , classes_type IN VARCHAR2
---            , map_classes_type IN VARCHAR2
---            , classes_hours IN NUMBER
---            , subj_code IN VARCHAR2
---            , expr_subj_code IN VARCHAR2
---            , subj_name IN VARCHAR2
---            , expr_subj_name IN VARCHAR2
---            , subj_hours_w IN NUMBER
---            , expr_subj_hours_w IN VARCHAR2
---            , subj_hours_c IN NUMBER
---            , expr_subj_hours_c IN VARCHAR2
---            , subj_hours_l IN NUMBER
---            , expr_subj_hours_l IN VARCHAR2
---            , subj_hours_p IN NUMBER
---            , expr_subj_hours_p IN VARCHAR2
---            , subj_hours_s IN NUMBER
---            , expr_subj_hours_s IN VARCHAR2
---            , subj_credit_kind IN VARCHAR2
---            , expr_subj_credit_kind IN VARCHAR2
---            , subj_ects IN NUMBER
---            , expr_subj_ects IN VARCHAR2
---            , subj_tutor IN VARCHAR2
---            , expr_subj_tutor IN VARCHAR2
---            , university IN VARCHAR2
---            , expr_university IN VARCHAR2
---            , faculty IN VARCHAR2
---            , expr_faculty IN VARCHAR2
---            , studies_modetier IN VARCHAR2
---            , expr_studies_modetier IN VARCHAR2
---            , studies_field IN VARCHAR2
---            , expr_studies_field IN VARCHAR2
---            , studies_specialty IN VARCHAR2
---            , expr_studies_specialty IN VARCHAR2
---            , semester_code IN VARCHAR2
---            , expr_semester_code IN VARCHAR2
---            , semester_number IN NUMBER
---            , expr_semester_number IN VARCHAR2
---            , ects_mandatory IN NUMBER
---            , expr_ects_mandatory IN VARCHAR2
---            , ects_other IN NUMBER
---            , expr_ects_other IN VARCHAR2
---            , ects_total IN NUMBER
---            , expr_ects_total IN VARCHAR2
---            ) RETURN SELF AS RESULT
-
     , CONSTRUCTOR FUNCTION V2u_Ko_Classes_Map_V_t(
               SELF IN OUT NOCOPY V2u_Ko_Classes_Map_V_t
             , subject IN V2u_Ko_Subject_t

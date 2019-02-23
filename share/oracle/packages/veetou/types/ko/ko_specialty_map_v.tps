@@ -28,37 +28,6 @@ CREATE OR REPLACE TYPE V2u_Ko_Specialty_Map_V_t
     , ects_total NUMBER(4)
     , expr_ects_total VARCHAR2(256)
 
---    , CONSTRUCTOR FUNCTION V2u_Ko_Specialty_Map_V_t(
---              SELF IN OUT NOCOPY V2u_Ko_Specialty_Map_V_t
---            , job_uuid IN RAW
---            , specialty_id IN NUMBER
---            , semester_id IN NUMBER
---            , map_id IN NUMBER
---            , matching_score IN NUMBER
---            , highest_score NUMBER
---            , selected NUMBER
---            , reason VARCHAR2
---            , university VARCHAR2
---            , faculty VARCHAR2
---            , studies_modetier VARCHAR2
---            , studies_field VARCHAR2
---            , studies_specialty VARCHAR2
---            , map_program_code VARCHAR2
---            , map_modetier_code VARCHAR2
---            , map_field_code VARCHAR2
---            , map_specialty_code VARCHAR2
---            , semester_number NUMBER
---            , expr_semester_number VARCHAR2
---            , semester_code VARCHAR2
---            , expr_semester_code VARCHAR2
---            , ects_mandatory NUMBER
---            , expr_ects_mandatory VARCHAR2
---            , ects_other NUMBER
---            , expr_ects_other VARCHAR2
---            , ects_total NUMBER
---            , expr_ects_total VARCHAR2
---            ) RETURN SELF AS RESULT
-
     , CONSTRUCTOR FUNCTION V2u_Ko_Specialty_Map_V_t(
               SELF IN OUT NOCOPY V2u_Ko_Specialty_Map_V_t
             , specialty IN V2u_Ko_Specialty_t

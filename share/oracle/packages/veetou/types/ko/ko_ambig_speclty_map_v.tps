@@ -45,10 +45,6 @@ CREATE OR REPLACE TYPE V2u_Ko_Ambig_Speclty_Map_V_t
             , map_ids IN V2u_Ids_t
             , matching_scores IN V2u_Integers_t
             ) RETURN SELF AS RESULT
-
---    , ORDER MEMBER FUNCTION cmp_with (
---              other V2u_Ko_Ambig_Speclty_Map_V_t
---            ) RETURN INTEGER
     );
 
 -- vim: set ft=sql ts=4 sw=4 et:
