@@ -33,7 +33,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_t AS
             , pw_nazwa_supl IN VARCHAR2
             , pw_nazwa_supl_ang IN VARCHAR2
             , job_uuid IN RAW
-            , coalesced_subj_code IN VARCHAR2
+            , pk_subj_code IN VARCHAR2
             , dbg_subj_codes INTEGER
             , dbg_map_subj_codes INTEGER
             , dbg_languages INTEGER
@@ -82,7 +82,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_t AS
             , pw_nazwa_supl => pw_nazwa_supl
             , pw_nazwa_supl_ang => pw_nazwa_supl_ang
             , job_uuid => job_uuid
-            , coalesced_subj_code => coalesced_subj_code
+            , pk_subj_code => pk_subj_code
             , dbg_subj_codes => dbg_subj_codes
             , dbg_map_subj_codes => dbg_map_subj_codes
             , dbg_languages => dbg_languages
@@ -133,7 +133,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_t AS
             , pw_nazwa_supl IN VARCHAR2
             , pw_nazwa_supl_ang IN VARCHAR2
             , job_uuid IN RAW
-            , coalesced_subj_code IN VARCHAR2
+            , pk_subj_code IN VARCHAR2
             , dbg_subj_codes INTEGER
             , dbg_map_subj_codes INTEGER
             , dbg_languages INTEGER
@@ -183,7 +183,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_t AS
             , pw_nazwa_supl_ang => pw_nazwa_supl_ang
             );
         SELF.job_uuid := job_uuid;
-        SELF.coalesced_subj_code := coalesced_subj_code;
+        SELF.pk_subj_code := pk_subj_code;
         SELF.dbg_subj_codes := dbg_subj_codes;
         SELF.dbg_map_subj_codes := dbg_map_subj_codes;
         SELF.dbg_languages := dbg_languages;

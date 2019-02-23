@@ -15,7 +15,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Atrybut_Przedmiotu_t AS
             , job_uuid IN RAW
             , subj_codes IN V2u_Subj_20Codes_t
             , all_subj_codes IN V2u_Subj_20Codes_t
-            , coalesced_subj_code IN VARCHAR2
+            , pk_subj_code IN VARCHAR2
             -- DBG
             , dbg_map_subj_codes IN INTEGER
             , dbg_subj_codes IN INTEGER
@@ -40,7 +40,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Atrybut_Przedmiotu_t AS
             , job_uuid => job_uuid
             , subj_codes => subj_codes
             , all_subj_codes => all_subj_codes
-            , coalesced_subj_code => coalesced_subj_code
+            , pk_subj_code => pk_subj_code
             , dbg_map_subj_codes => dbg_map_subj_codes
             , dbg_subj_codes => dbg_subj_codes
             , dbg_all_subj_codes => dbg_all_subj_codes
@@ -66,7 +66,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Atrybut_Przedmiotu_t AS
             , job_uuid IN RAW
             , subj_codes IN V2u_Subj_20Codes_t
             , all_subj_codes IN V2u_Subj_20Codes_t
-            , coalesced_subj_code IN VARCHAR2
+            , pk_subj_code IN VARCHAR2
             -- DBG
             , dbg_map_subj_codes IN INTEGER
             , dbg_subj_codes IN INTEGER
@@ -92,7 +92,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Atrybut_Przedmiotu_t AS
         SELF.job_uuid := job_uuid;
         SELF.subj_codes := subj_codes;
         SELF.all_subj_codes := all_subj_codes;
-        SELF.coalesced_subj_code := coalesced_subj_code;
+        SELF.pk_subj_code := pk_subj_code;
         SELF.dbg_map_subj_codes := dbg_map_subj_codes;
         SELF.dbg_subj_codes := dbg_subj_codes;
         SELF.dbg_all_subj_codes := dbg_all_subj_codes;

@@ -1,6 +1,8 @@
 CREATE OR REPLACE TYPE V2u_Ux_Przedmiot_Cyklu_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Dz_Przedmiot_Cyklu_B_t
     ( job_uuid RAW(16)
+    , pk_subj_code VARCHAR2(32 CHAR)
+    , pk_semester_code VARCHAR2(32 CHAR)
     , dbg_subj_codes INTEGER
     , dbg_map_subj_codes INTEGER
     , dbg_subj_credit_kinds INTEGER
@@ -32,6 +34,8 @@ CREATE OR REPLACE TYPE V2u_Ux_Przedmiot_Cyklu_t
             , status_sylabusu IN VARCHAR2
             , guid IN VARCHAR2
             , job_uuid IN RAW
+            , pk_subj_code IN VARCHAR2
+            , pk_semester_code IN VARCHAR2
             , dbg_map_subj_codes IN INTEGER
             , dbg_subj_credit_kinds IN INTEGER
             , dbg_matched IN INTEGER
@@ -62,6 +66,8 @@ CREATE OR REPLACE TYPE V2u_Ux_Przedmiot_Cyklu_t
             , status_sylabusu IN VARCHAR2
             , guid IN VARCHAR2
             , job_uuid IN RAW
+            , pk_subj_code IN VARCHAR2
+            , pk_semester_code IN VARCHAR2
             , dbg_map_subj_codes IN INTEGER
             , dbg_subj_credit_kinds IN INTEGER
             , dbg_matched IN INTEGER

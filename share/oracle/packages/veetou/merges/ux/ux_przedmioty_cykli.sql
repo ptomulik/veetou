@@ -5,7 +5,10 @@ USING
         (
             SELECT
                   ss_j.job_uuid
-                , COALESCE(subject_map.map_subj_code, subjects.subj_code) prz_kod
+                , COALESCE(
+                      subject_map.map_subj_code
+                    , subjects.subj_code
+                ) coalesced_subj_code
                 , semesters.semester_code
                 , SET(CAST(
                         COLLECT(subjects.subj_code)
@@ -80,12 +83,16 @@ USING
         (
             SELECT
                   u.job_uuid
-                , u.prz_kod
+                , u.coalesced_subj_code
                 , u.semester_code
                 , ( SELECT SUBSTR(VALUE(t), 1, 16)
                     FROM TABLE(u.subj_credit_kinds) t
                     WHERE ROWNUM <= 1
                   ) subj_credit_kind
+                , ( SELECT SUBSTR(VALUE(t), 1, 32)
+                    FROM TABLE(u.map_subj_codes) t
+                    WHERE ROWNUM <= 1
+                  ) map_subj_code
                 , CAST(MULTISET(
                     SELECT SUBSTR(VALUE(t), 1, 10)
                     FROM TABLE(u.subj_grades) t
@@ -109,7 +116,9 @@ USING
         )
         SELECT
               v.job_uuid
-            , v.prz_kod
+            , v.coalesced_subj_code pk_subj_code
+            , v.semester_code pk_semester_code
+            , v.map_subj_code prz_kod
             , v.semester_code cdyd_kod
             , V2u_Get.Utw_Id(v.job_uuid) utw_id
             , V2u_Get.Mod_Id(v.job_uuid) mod_id
@@ -120,9 +129,10 @@ USING
 
             , CASE
                 WHEN
-                    -- ensure that
-                    -- we have target subject code
-                        v.dbg_map_subj_codes = 1
+                    -- ensure that we have single target subject code
+                        v.map_subj_code IS NOT NULL
+                    AND v.dbg_map_subj_codes = 1
+                    -- and that the code haven't appeared from nowhere
                     AND v.dbg_subj_codes > 0
                     -- maps for all instances existed but there were no
                     -- corresponding subject in target system
@@ -149,8 +159,8 @@ USING
         FROM v v
     ) src
 ON  (
-            tgt.prz_kod = src.prz_kod
-        AND tgt.cdyd_kod = src.cdyd_kod
+            tgt.pk_subj_code = src.pk_subj_code
+        AND tgt.pk_semester_code = src.pk_semester_code
         AND tgt.job_uuid = src.job_uuid
     )
 WHEN NOT MATCHED THEN
@@ -160,6 +170,8 @@ WHEN NOT MATCHED THEN
         , utw_id
         , mod_id
         , job_uuid
+        , pk_subj_code
+        , pk_semester_code
         , tpro_kod
         , dbg_subj_codes
         , dbg_map_subj_codes
@@ -175,6 +187,8 @@ WHEN NOT MATCHED THEN
         , src.utw_id
         , src.mod_id
         , src.job_uuid
+        , src.pk_subj_code
+        , src.pk_semester_code
         , src.tpro_kod
         , src.dbg_subj_codes
         , src.dbg_map_subj_codes
@@ -186,7 +200,9 @@ WHEN NOT MATCHED THEN
         )
 WHEN MATCHED THEN
     UPDATE SET
-          tgt.utw_id = src.utw_id
+          tgt.prz_kod = src.prz_kod
+        , tgt.cdyd_kod = src.cdyd_kod
+        , tgt.utw_id = src.utw_id
         , tgt.mod_id = src.mod_id
         , tgt.tpro_kod = src.tpro_kod
         , tgt.dbg_subj_codes = src.dbg_subj_codes

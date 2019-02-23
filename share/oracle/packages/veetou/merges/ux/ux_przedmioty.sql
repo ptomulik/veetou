@@ -174,7 +174,7 @@ USING
         )
         SELECT
               v.job_uuid
-            , v.coalesced_subj_code
+            , v.coalesced_subj_code pk_subj_code
             , v.map_subj_code kod
             , v.subj_name nazwa
             , COALESCE(v.map_org_unit, v.faculty_code) jed_org_kod
@@ -229,14 +229,14 @@ USING
         FROM v v
     ) src
 ON  (
-            tgt.coalesced_subj_code = src.coalesced_subj_code
+            tgt.pk_subj_code = src.pk_subj_code
         AND tgt.job_uuid = src.job_uuid
     )
 WHEN NOT MATCHED THEN
     INSERT
         ( kod
         , job_uuid
-        , coalesced_subj_code
+        , pk_subj_code
         , nazwa
         , jed_org_kod
         , utw_id
@@ -260,7 +260,7 @@ WHEN NOT MATCHED THEN
     VALUES
         ( src.kod
         , src.job_uuid
-        , src.coalesced_subj_code
+        , src.pk_subj_code
         , src.nazwa
         , src.jed_org_kod
         , src.utw_id

@@ -1,7 +1,7 @@
 CREATE OR REPLACE TYPE V2u_Ux_Przedmiot_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Dz_Przedmiot_B_t
     ( job_uuid RAW(16)
-    , coalesced_subj_code VARCHAR2(32 CHAR)
+    , pk_subj_code VARCHAR2(32 CHAR)
     , dbg_subj_codes INTEGER
     , dbg_map_subj_codes INTEGER
     , dbg_languages INTEGER
@@ -49,7 +49,7 @@ CREATE OR REPLACE TYPE V2u_Ux_Przedmiot_t
             , pw_nazwa_supl IN VARCHAR2
             , pw_nazwa_supl_ang IN VARCHAR2
             , job_uuid IN RAW
-            , coalesced_subj_code IN VARCHAR2
+            , pk_subj_code IN VARCHAR2
             , dbg_subj_codes INTEGER
             , dbg_map_subj_codes INTEGER
             , dbg_languages INTEGER
@@ -98,7 +98,7 @@ CREATE OR REPLACE TYPE V2u_Ux_Przedmiot_t
             , pw_nazwa_supl IN VARCHAR2
             , pw_nazwa_supl_ang IN VARCHAR2
             , job_uuid IN RAW
-            , coalesced_subj_code IN VARCHAR2
+            , pk_subj_code IN VARCHAR2
             , dbg_subj_codes INTEGER
             , dbg_map_subj_codes INTEGER
             , dbg_languages INTEGER

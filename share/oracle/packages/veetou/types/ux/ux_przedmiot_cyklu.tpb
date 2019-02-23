@@ -21,6 +21,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_Cyklu_t AS
             , status_sylabusu IN VARCHAR2
             , guid IN VARCHAR2
             , job_uuid IN RAW
+            , pk_subj_code IN VARCHAR2
+            , pk_semester_code IN VARCHAR2
             , dbg_map_subj_codes IN INTEGER
             , dbg_subj_credit_kinds IN INTEGER
             , dbg_matched IN INTEGER
@@ -51,6 +53,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_Cyklu_t AS
             , status_sylabusu => status_sylabusu
             , guid => guid
             , job_uuid => job_uuid
+            , pk_subj_code => pk_subj_code
+            , pk_semester_code => pk_semester_code
             , dbg_map_subj_codes => dbg_map_subj_codes
             , dbg_subj_credit_kinds => dbg_subj_credit_kinds
             , dbg_matched => dbg_matched
@@ -83,6 +87,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_Cyklu_t AS
             , status_sylabusu IN VARCHAR2
             , guid IN VARCHAR2
             , job_uuid IN RAW
+            , pk_subj_code IN VARCHAR2
+            , pk_semester_code IN VARCHAR2
             , dbg_map_subj_codes IN INTEGER
             , dbg_subj_credit_kinds IN INTEGER
             , dbg_matched IN INTEGER
@@ -114,6 +120,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_Cyklu_t AS
             , guid => guid
             );
         SELF.job_uuid := job_uuid;
+        SELF.pk_subj_code := pk_subj_code;
+        SELF.pk_semester_code := pk_semester_code;
         SELF.dbg_map_subj_codes := dbg_map_subj_codes;
         SELF.dbg_subj_credit_kinds := dbg_subj_credit_kinds;
         SELF.dbg_matched := dbg_matched;

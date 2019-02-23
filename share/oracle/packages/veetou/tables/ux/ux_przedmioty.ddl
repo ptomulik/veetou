@@ -1,7 +1,7 @@
 CREATE TABLE v2u_ux_przedmioty
 OF V2u_Ux_Przedmiot_t
     (
-          CONSTRAINT v2u_ux_przedmioty_pk PRIMARY KEY (coalesced_subj_code)
+          CONSTRAINT v2u_ux_przedmioty_pk PRIMARY KEY (pk_subj_code, job_uuid)
     )
 OBJECT IDENTIFIER IS PRIMARY KEY;
 /
