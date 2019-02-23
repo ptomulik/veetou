@@ -60,68 +60,68 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Przedm_V_t
     , pw_nazwa_supl VARCHAR2(200 CHAR)
     , pw_nazwa_supl_ang VARCHAR2(200 CHAR)
 
-    , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Przedm_V_t(
-              SELF IN OUT NOCOPY V2u_Ko_Matched_Przedm_V_t
-            , job_uuid IN RAW
-            , subject_id IN NUMBER
-            , specialty_id IN NUMBER
-            , semester_id IN NUMBER
-            , subject_map_id IN NUMBER
-            , matching_score IN NUMBER
-            , prz_kod IN VARCHAR2
-            -- KO
-            , subj_code IN VARCHAR2
-            , subj_name IN VARCHAR2
-            , subj_hours_w IN NUMBER
-            , subj_hours_c IN NUMBER
-            , subj_hours_l IN NUMBER
-            , subj_hours_p IN NUMBER
-            , subj_hours_s IN NUMBER
-            , subj_credit_kind IN VARCHAR2
-            , subj_ects IN NUMBER
-            , subj_tutor IN VARCHAR2
-            , university IN VARCHAR2
-            , faculty IN VARCHAR2
-            , studies_modetier IN VARCHAR2
-            , studies_field IN VARCHAR2
-            , studies_specialty IN VARCHAR2
-            , semester_code IN VARCHAR2
-            , semester_number IN NUMBER
-            , ects_mandatory IN NUMBER
-            , ects_other IN NUMBER
-            , ects_total IN NUMBER
-            -- DZ
-            , nazwa IN VARCHAR2
-            , jed_org_kod IN VARCHAR2
-            , utw_id IN VARCHAR2
-            , utw_data IN DATE
-            , mod_id IN VARCHAR2
-            , mod_data IN DATE
-            , tpro_kod IN VARCHAR2
-            , czy_wielokrotne IN NUMBER
-            , name IN VARCHAR2
-            , skrocony_opis IN VARCHAR2
-            , short_description IN VARCHAR2
-            , jed_org_kod_biorca IN VARCHAR2
-            , jzk_kod IN VARCHAR2
-            , kod_sok IN VARCHAR2
-            , opis IN CLOB
-            , description IN CLOB
-            , literatura IN CLOB
-            , bibliography IN CLOB
-            , efekty_uczenia IN CLOB
-            , efekty_uczenia_ang IN CLOB
-            , kryteria_oceniania IN CLOB
-            , kryteria_oceniania_ang IN CLOB
-            , praktyki_zawodowe IN VARCHAR2
-            , praktyki_zawodowe_ang IN VARCHAR2
-            , url IN VARCHAR2
-            , kod_isced IN VARCHAR2
-            , nazwa_pol IN VARCHAR2
-            , guid IN VARCHAR2
-            , pw_nazwa_supl IN VARCHAR2
-            , pw_nazwa_supl_ang IN VARCHAR2
-            ) RETURN SELF AS RESULT
+--    , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Przedm_V_t(
+--              SELF IN OUT NOCOPY V2u_Ko_Matched_Przedm_V_t
+--            , job_uuid IN RAW
+--            , subject_id IN NUMBER
+--            , specialty_id IN NUMBER
+--            , semester_id IN NUMBER
+--            , subject_map_id IN NUMBER
+--            , matching_score IN NUMBER
+--            , prz_kod IN VARCHAR2
+--            -- KO
+--            , subj_code IN VARCHAR2
+--            , subj_name IN VARCHAR2
+--            , subj_hours_w IN NUMBER
+--            , subj_hours_c IN NUMBER
+--            , subj_hours_l IN NUMBER
+--            , subj_hours_p IN NUMBER
+--            , subj_hours_s IN NUMBER
+--            , subj_credit_kind IN VARCHAR2
+--            , subj_ects IN NUMBER
+--            , subj_tutor IN VARCHAR2
+--            , university IN VARCHAR2
+--            , faculty IN VARCHAR2
+--            , studies_modetier IN VARCHAR2
+--            , studies_field IN VARCHAR2
+--            , studies_specialty IN VARCHAR2
+--            , semester_code IN VARCHAR2
+--            , semester_number IN NUMBER
+--            , ects_mandatory IN NUMBER
+--            , ects_other IN NUMBER
+--            , ects_total IN NUMBER
+--            -- DZ
+--            , nazwa IN VARCHAR2
+--            , jed_org_kod IN VARCHAR2
+--            , utw_id IN VARCHAR2
+--            , utw_data IN DATE
+--            , mod_id IN VARCHAR2
+--            , mod_data IN DATE
+--            , tpro_kod IN VARCHAR2
+--            , czy_wielokrotne IN NUMBER
+--            , name IN VARCHAR2
+--            , skrocony_opis IN VARCHAR2
+--            , short_description IN VARCHAR2
+--            , jed_org_kod_biorca IN VARCHAR2
+--            , jzk_kod IN VARCHAR2
+--            , kod_sok IN VARCHAR2
+--            , opis IN CLOB
+--            , description IN CLOB
+--            , literatura IN CLOB
+--            , bibliography IN CLOB
+--            , efekty_uczenia IN CLOB
+--            , efekty_uczenia_ang IN CLOB
+--            , kryteria_oceniania IN CLOB
+--            , kryteria_oceniania_ang IN CLOB
+--            , praktyki_zawodowe IN VARCHAR2
+--            , praktyki_zawodowe_ang IN VARCHAR2
+--            , url IN VARCHAR2
+--            , kod_isced IN VARCHAR2
+--            , nazwa_pol IN VARCHAR2
+--            , guid IN VARCHAR2
+--            , pw_nazwa_supl IN VARCHAR2
+--            , pw_nazwa_supl_ang IN VARCHAR2
+--            ) RETURN SELF AS RESULT
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Przedm_V_t(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Przedm_V_t

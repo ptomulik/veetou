@@ -48,56 +48,56 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Przcykl_V_t
     , status_sylabusu VARCHAR2(1 CHAR)
     , guid VARCHAR2(32 CHAR)
 
-    , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Przcykl_V_t(
-              SELF IN OUT NOCOPY V2u_Ko_Matched_Przcykl_V_t
-            , job_uuid IN RAW
-            , subject_id IN NUMBER
-            , specialty_id IN NUMBER
-            , semester_id IN NUMBER
-            , subject_map_id IN NUMBER
-            , matching_score IN NUMBER
-            , prz_kod IN VARCHAR2
-            , cdyd_kod IN VARCHAR2
-            -- KO
-            , subj_code IN VARCHAR2
-            , subj_name IN VARCHAR2
-            , subj_hours_w IN NUMBER
-            , subj_hours_c IN NUMBER
-            , subj_hours_l IN NUMBER
-            , subj_hours_p IN NUMBER
-            , subj_hours_s IN NUMBER
-            , subj_credit_kind IN VARCHAR2
-            , subj_ects IN NUMBER
-            , subj_tutor IN VARCHAR2
-            , university IN VARCHAR2
-            , faculty IN VARCHAR2
-            , studies_modetier IN VARCHAR2
-            , studies_field IN VARCHAR2
-            , studies_specialty IN VARCHAR2
-            , semester_code IN VARCHAR2
-            , semester_number IN NUMBER
-            , ects_mandatory IN NUMBER
-            , ects_other IN NUMBER
-            , ects_total IN NUMBER
-            -- DZ
-            , utw_id IN VARCHAR2
-            , utw_data IN DATE
-            , mod_id IN VARCHAR2
-            , mod_data IN DATE
-            , tpro_kod IN VARCHAR2
-            , uczestnicy IN VARCHAR2
-            , url IN VARCHAR2
-            , uwagi IN CLOB
-            , notes IN CLOB
-            , literatura IN CLOB
-            , literatura_ang IN CLOB
-            , opis IN CLOB
-            , opis_ang IN CLOB
-            , skrocony_opis IN VARCHAR2
-            , skrocony_opis_ang IN VARCHAR2
-            , status_sylabusu IN VARCHAR2
-            , guid IN VARCHAR2
-            ) RETURN SELF AS RESULT
+--    , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Przcykl_V_t(
+--              SELF IN OUT NOCOPY V2u_Ko_Matched_Przcykl_V_t
+--            , job_uuid IN RAW
+--            , subject_id IN NUMBER
+--            , specialty_id IN NUMBER
+--            , semester_id IN NUMBER
+--            , subject_map_id IN NUMBER
+--            , matching_score IN NUMBER
+--            , prz_kod IN VARCHAR2
+--            , cdyd_kod IN VARCHAR2
+--            -- KO
+--            , subj_code IN VARCHAR2
+--            , subj_name IN VARCHAR2
+--            , subj_hours_w IN NUMBER
+--            , subj_hours_c IN NUMBER
+--            , subj_hours_l IN NUMBER
+--            , subj_hours_p IN NUMBER
+--            , subj_hours_s IN NUMBER
+--            , subj_credit_kind IN VARCHAR2
+--            , subj_ects IN NUMBER
+--            , subj_tutor IN VARCHAR2
+--            , university IN VARCHAR2
+--            , faculty IN VARCHAR2
+--            , studies_modetier IN VARCHAR2
+--            , studies_field IN VARCHAR2
+--            , studies_specialty IN VARCHAR2
+--            , semester_code IN VARCHAR2
+--            , semester_number IN NUMBER
+--            , ects_mandatory IN NUMBER
+--            , ects_other IN NUMBER
+--            , ects_total IN NUMBER
+--            -- DZ
+--            , utw_id IN VARCHAR2
+--            , utw_data IN DATE
+--            , mod_id IN VARCHAR2
+--            , mod_data IN DATE
+--            , tpro_kod IN VARCHAR2
+--            , uczestnicy IN VARCHAR2
+--            , url IN VARCHAR2
+--            , uwagi IN CLOB
+--            , notes IN CLOB
+--            , literatura IN CLOB
+--            , literatura_ang IN CLOB
+--            , opis IN CLOB
+--            , opis_ang IN CLOB
+--            , skrocony_opis IN VARCHAR2
+--            , skrocony_opis_ang IN VARCHAR2
+--            , status_sylabusu IN VARCHAR2
+--            , guid IN VARCHAR2
+--            ) RETURN SELF AS RESULT
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Przcykl_V_t(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Przcykl_V_t
