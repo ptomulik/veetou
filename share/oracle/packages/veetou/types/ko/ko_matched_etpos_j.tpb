@@ -59,8 +59,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Etpos_J_t AS
             , semester_id => semester_id
             , specialty_id => specialty_id
             , student_id => student_id
-            , ects_attained => ects_attained
             );
+        SELF.ects_attained := ects_attained;
         SELF.specialty_map_id := specialty_map_id;
         SELF.prgos_id := prgos_id;
         SELF.prg_kod := prg_kod;

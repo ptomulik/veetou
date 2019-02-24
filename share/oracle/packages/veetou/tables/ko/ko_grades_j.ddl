@@ -1,16 +1,10 @@
 CREATE TABLE v2u_ko_grades_j
+OF V2u_Ko_Grade_J_t
     (
-          job_uuid RAW(16)
-        , student_id NUMBER(38)
-        , subject_id NUMBER(38)
-        , specialty_id NUMBER(38)
-        , semester_id NUMBER(38)
-        , subj_grade VARCHAR2(10 CHAR)
-        , subj_grade_date DATE
-        , tr_id NUMBER(38)
-
-        , CONSTRAINT v2u_ko_grades_j_pk
+        -- PK
+          CONSTRAINT v2u_ko_grades_j_pk
             PRIMARY KEY (student_id, subject_id, specialty_id, semester_id, job_uuid)
+        -- FK
         , CONSTRAINT v2u_ko_grades_j_f0 FOREIGN KEY (job_uuid)
             REFERENCES v2u_ko_jobs(job_uuid)
         , CONSTRAINT v2u_ko_grades_j_f1
@@ -34,7 +28,9 @@ CREATE TABLE v2u_ko_grades_j
         , CONSTRAINT v2u_ko_grades_j_f7
             FOREIGN KEY (subject_id, specialty_id, semester_id, job_uuid)
             REFERENCES v2u_ko_subject_semesters_j(subject_id, specialty_id, semester_id, job_uuid)
-    );
+    )
+OBJECT IDENTIFIER IS PRIMARY KEY
+;
 /
 CREATE INDEX v2u_ko_grades_j_idx1
     ON v2u_ko_grades_j(subject_id, specialty_id, semester_id, job_uuid);

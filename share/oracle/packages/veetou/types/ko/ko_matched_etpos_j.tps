@@ -1,6 +1,7 @@
 CREATE OR REPLACE TYPE V2u_Ko_Matched_Etpos_J_t
-    FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Student_Semester_J_t
-    ( specialty_map_id NUMBER(38)
+    FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Student_Semester_I_t
+    ( ects_attained NUMBER(4)
+    , specialty_map_id NUMBER(38)
     , prgos_id NUMBER(10)
     , prg_kod VARCHAR2(20 CHAR)
     , etpos_id NUMBER(10)

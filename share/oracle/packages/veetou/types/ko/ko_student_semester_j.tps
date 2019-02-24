@@ -1,7 +1,6 @@
 CREATE OR REPLACE TYPE V2u_Ko_Student_Semester_J_t
-    FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Specialty_Semester_J_t
-    ( student_id NUMBER(38)
-    , ects_attained NUMBER(4)
+    FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Student_Semester_I_t
+    ( ects_attained NUMBER(4)
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Student_Semester_J_t(
               SELF IN OUT NOCOPY V2u_Ko_Student_Semester_J_t
@@ -20,8 +19,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Student_Semester_J_t
             , student_id IN NUMBER
             , ects_attained IN NUMBER
             )
-    )
-NOT FINAL;
+    );
 /
 CREATE OR REPLACE TYPE V2u_Ko_Student_Semesters_J_t
     AS TABLE OF V2u_Ko_Student_Semester_J_t;

@@ -496,11 +496,20 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Classes_Map_J_t', 'Ko_Classes_Maps_J_t');
         Drop_Type('Ko_Subject_Map_J_t', 'Ko_Subject_Maps_J_t');
         Drop_Type('Ko_Specialty_Map_J_t', 'Ko_Specialty_Maps_J_t');
+        Drop_Type('Ko_Grade_J_t', 'Ko_Grades_J_t');
         Drop_Type('Ko_Student_Semester_J_t', 'Ko_Student_Semesters_J_t');
         Drop_Type('Ko_Classes_Semester_J_t', 'Ko_Classes_Semesters_J_t');
         Drop_Type('Ko_Subject_Semester_J_t', 'Ko_Subject_Semesters_J_t');
         Drop_Type('Ko_Specialty_Semester_J_t', 'Ko_Specialty_Semesters_J_t');
         Drop_Type('Ko_Semester_J_t', 'Ko_Semesters_J_t');
+
+        Drop_Type('Ko_Matched_Przedm_I_t');
+        Drop_Type('Ko_Missing_Przedm_I_t');
+        Drop_Type('Ko_Classes_Semester_I_t');
+        Drop_Type('Ko_Student_Semester_I_t');
+        Drop_Type('Ko_Subject_Semester_I_t');
+        Drop_Type('Ko_Specialty_Semester_I_t');
+        Drop_Type('Ko_Semester_I_t');
 
         Drop_Type('Ko_Specialty_t');
         Drop_Type('Ko_Subject_t');
@@ -601,6 +610,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Subject_Semester_V_t', 'Ko_Subject_Semesters_V_t');
         Drop_Type('Ko_Student_Semester_V_t', 'Ko_Student_Semesters_V_t');
         Drop_Type('Ko_Grade_V_t', 'Ko_Grades_V_t');
+
+        Drop_Type('Ko_Subject_Semester_U_t');
     END;
 
 END V2U_Drop;

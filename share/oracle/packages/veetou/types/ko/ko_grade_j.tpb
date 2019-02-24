@@ -1,11 +1,14 @@
-CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Semester_J_t AS
-    CONSTRUCTOR FUNCTION V2u_Ko_Subject_Semester_J_t(
-              SELF IN OUT NOCOPY V2u_Ko_Subject_Semester_J_t
+CREATE OR REPLACE TYPE BODY V2u_Ko_Grade_J_t AS
+    CONSTRUCTOR FUNCTION V2u_Ko_Grade_J_t(
+              SELF IN OUT NOCOPY V2u_Ko_Grade_J_t
             , job_uuid RAW
             , semester_id IN NUMBER
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
-            , subj_grades IN V2u_Subj_20Grades_t
+            , student_id IN NUMBER
+            , subj_grade IN VARCHAR2
+            , subj_grade_date IN DATE
+            , tr_id IN NUMBER
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -14,18 +17,25 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Semester_J_t AS
             , semester_id => semester_id
             , specialty_id => specialty_id
             , subject_id => subject_id
-            , subj_grades => subj_grades
+            , student_id => student_id
+            , subj_grade => subj_grade
+            , subj_grade_date => subj_grade_date
+            , tr_id => tr_id
             );
         RETURN;
     END;
 
+
     MEMBER PROCEDURE init(
-              SELF IN OUT NOCOPY V2u_Ko_Subject_Semester_J_t
+              SELF IN OUT NOCOPY V2u_Ko_Grade_J_t
             , job_uuid RAW
             , semester_id IN NUMBER
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
-            , subj_grades IN V2u_Subj_20Grades_t
+            , student_id IN NUMBER
+            , subj_grade IN VARCHAR2
+            , subj_grade_date IN DATE
+            , tr_id IN NUMBER
             )
     IS
     BEGIN
@@ -35,7 +45,10 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Semester_J_t AS
             , specialty_id => specialty_id
             , subject_id => subject_id
             );
-        SELF.subj_grades := subj_grades;
+        SELF.student_id := student_id;
+        SELF.subj_grade := subj_grade;
+        SELF.subj_grade_date := subj_grade_date;
+        SELF.tr_id := tr_id;
     END;
 END;
 

@@ -7,6 +7,7 @@ AS
               subject => VALUE(subjects)
             , specialty => VALUE(specialties)
             , semester => VALUE(semesters)
+            , subj_grades => j.subj_grades
         )
     FROM v2u_ko_subjects subjects
     INNER JOIN v2u_ko_subject_semesters_j j

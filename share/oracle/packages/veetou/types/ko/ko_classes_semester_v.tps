@@ -1,5 +1,5 @@
 CREATE OR REPLACE TYPE V2u_Ko_Classes_Semester_V_t
-    FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Subject_Semester_V_t
+    FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Subject_Semester_U_t
     ( classes_type VARCHAR2(1 CHAR)
     , classes_hours NUMBER(8)
 

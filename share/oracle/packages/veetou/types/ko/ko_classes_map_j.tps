@@ -1,5 +1,5 @@
 CREATE OR REPLACE TYPE V2u_Ko_Classes_Map_J_t
-    FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Classes_Semester_J_t
+    FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Classes_Semester_I_t
     ( map_id NUMBER(38)
     , map_classes_type VARCHAR(3 CHAR)
     , matching_score NUMBER(38)

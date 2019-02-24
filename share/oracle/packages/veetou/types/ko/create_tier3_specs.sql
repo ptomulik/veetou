@@ -1,3 +1,6 @@
+-- base types
+@@ko_subject_semester_u.tps;
+
 -- types for views
 @@ko_specialty_semester_v.tps;
 @@ko_student_semester_v.tps;

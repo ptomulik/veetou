@@ -5,11 +5,20 @@
 @@ko_specialty.tpb;
 @@ko_student.tpb;
 
+@@ko_semester_i.tpb;
+@@ko_specialty_semester_i.tpb;
+@@ko_student_semester_i.tpb;
+@@ko_subject_semester_i.tpb;
+@@ko_classes_semester_i.tpb;
+@@ko_matched_przedm_i.tpb;
+@@ko_missing_przedm_i.tpb;
+
 @@ko_semester_j.tpb;
 @@ko_specialty_semester_j.tpb;
 @@ko_subject_semester_j.tpb;
 @@ko_classes_semester_j.tpb;
 @@ko_student_semester_j.tpb;
+@@ko_grade_j.tpb;
 @@ko_specialty_map_j.tpb;
 @@ko_subject_map_j.tpb;
 @@ko_classes_map_j.tpb;

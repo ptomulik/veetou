@@ -1,5 +1,5 @@
 CREATE OR REPLACE TYPE V2u_Ko_Missing_Zajcykl_J_t
-    FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Classes_Semester_J_t
+    FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Classes_Semester_I_t
     ( subject_map_id NUMBER(38)
     , subject_matching_score NUMBER(38)
     , map_subj_code VARCHAR2(32 CHAR)
