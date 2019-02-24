@@ -16,7 +16,7 @@ CREATE OR REPLACE PACKAGE V2U_Get AUTHID CURRENT_USER AS
     FUNCTION Mod_Id(job_uuid IN RAW)
             RETURN VARCHAR2;
     FUNCTION Alt_Prg_Code(specialty IN V2u_Ko_Specialty_t)
-            RETURN VARCHAR2;
+            RETURN VARCHAR2 DETERMINISTIC;
     FUNCTION Studies_Mode(studies_modetier IN VARCHAR2)
             RETURN VARCHAR2;
     FUNCTION Studies_Tier(studies_modetier IN VARCHAR2)

@@ -549,6 +549,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Subj_20Grades_t');
         Drop_Type('Subj_20Codes_t');
         Drop_Type('Program_5Codes_t');
+        Drop_Type('Program_20Codes_t');
     END;
 
     PROCEDURE Tier3

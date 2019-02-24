@@ -157,7 +157,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Get AS
     END;
 
     FUNCTION Alt_Prg_Code(specialty IN V2u_Ko_Specialty_t)
-            RETURN VARCHAR2
+            RETURN VARCHAR2 DETERMINISTIC
     IS
     BEGIN
         RETURN

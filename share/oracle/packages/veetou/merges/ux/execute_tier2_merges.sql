@@ -2,7 +2,7 @@
 @@ux_atrybuty_przedmiotow.sql;
 @@ux_przedmioty_cykli.sql;
 @@ux_zajecia_cykli.sql;
---@@ux_programy_osob.sql;
+@@ux_programy_osob.sql;
 --@@ux_etapy_osob.sql;
 @@ux_zaliczenia_przedmiotow.sql;
 

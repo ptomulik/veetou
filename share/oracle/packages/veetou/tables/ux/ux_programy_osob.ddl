@@ -1,7 +1,8 @@
 CREATE TABLE v2u_ux_programy_osob
 OF V2u_Ux_Program_Osoby_t
     (
-          CONSTRAINT v2u_ux_programy_osob_pk PRIMARY KEY (id)
+          CONSTRAINT v2u_ux_programy_osob_pk
+            PRIMARY KEY (pk_student_index, pk_program_code, job_uuid)
     )
 OBJECT IDENTIFIER IS PRIMARY KEY;
 /

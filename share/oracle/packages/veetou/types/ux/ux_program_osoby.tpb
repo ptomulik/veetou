@@ -48,8 +48,16 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Program_Osoby_t AS
             , umowa_sygnatura IN VARCHAR2
             , kod_isced IN VARCHAR2
             , job_uuid IN RAW
-            , student_index IN VARCHAR2
-            , coalesced_program_code IN VARCHAR2
+            , pk_student_index IN VARCHAR2
+            , pk_program_code IN VARCHAR2
+            , dbg_unique_match IN INTEGER
+            , dbg_map_program_codes IN INTEGER
+            , dbg_faculty_codes IN INTEGER
+            , dbg_matched_ids IN INTEGER
+            , dbg_matched_prg_kody IN INTEGER
+            , dbg_matched_st_ids IN INTEGER
+            , dbg_matched_os_ids IN INTEGER
+            , dbg_skipped_prg_kody IN INTEGER
             , dbg_matched IN INTEGER
             , dbg_missing IN INTEGER
             , dbg_mapped IN INTEGER
@@ -105,8 +113,16 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Program_Osoby_t AS
             , umowa_sygnatura => umowa_sygnatura
             , kod_isced => kod_isced
             , job_uuid => job_uuid
-            , student_index => student_index
-            , coalesced_program_code => coalesced_program_code
+            , pk_student_index => pk_student_index
+            , pk_program_code => pk_program_code
+            , dbg_unique_match => dbg_unique_match
+            , dbg_map_program_codes => dbg_map_program_codes
+            , dbg_faculty_codes => dbg_faculty_codes
+            , dbg_matched_ids => dbg_matched_ids
+            , dbg_matched_prg_kody => dbg_matched_prg_kody
+            , dbg_matched_st_ids => dbg_matched_st_ids
+            , dbg_matched_os_ids => dbg_matched_os_ids
+            , dbg_skipped_prg_kody => dbg_skipped_prg_kody
             , dbg_matched => dbg_matched
             , dbg_missing => dbg_missing
             , dbg_mapped => dbg_mapped
@@ -164,8 +180,16 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Program_Osoby_t AS
             , umowa_sygnatura IN VARCHAR2
             , kod_isced IN VARCHAR2
             , job_uuid IN RAW
-            , student_index IN VARCHAR2
-            , coalesced_program_code IN VARCHAR2
+            , pk_student_index IN VARCHAR2
+            , pk_program_code IN VARCHAR2
+            , dbg_unique_match IN INTEGER
+            , dbg_map_program_codes IN INTEGER
+            , dbg_faculty_codes IN INTEGER
+            , dbg_matched_ids IN INTEGER
+            , dbg_matched_prg_kody IN INTEGER
+            , dbg_matched_st_ids IN INTEGER
+            , dbg_matched_os_ids IN INTEGER
+            , dbg_skipped_prg_kody IN INTEGER
             , dbg_matched IN INTEGER
             , dbg_missing IN INTEGER
             , dbg_mapped IN INTEGER
@@ -222,8 +246,16 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Program_Osoby_t AS
             , kod_isced => kod_isced
             );
         SELF.job_uuid := job_uuid;
-        SELF.student_index := student_index;
-        SELF.coalesced_program_code := coalesced_program_code;
+        SELF.pk_student_index := pk_student_index;
+        SELF.pk_program_code := pk_program_code;
+        SELF.dbg_unique_match := dbg_unique_match;
+        SELF.dbg_map_program_codes := dbg_map_program_codes;
+        SELF.dbg_faculty_codes := dbg_faculty_codes;
+        SELF.dbg_matched_ids := dbg_matched_ids;
+        SELF.dbg_matched_prg_kody := dbg_matched_prg_kody;
+        SELF.dbg_matched_st_ids := dbg_matched_st_ids;
+        SELF.dbg_matched_os_ids := dbg_matched_os_ids;
+        SELF.dbg_skipped_prg_kody := dbg_skipped_prg_kody;
         SELF.dbg_matched := dbg_matched;
         SELF.dbg_missing := dbg_missing;
         SELF.dbg_mapped := dbg_mapped;
