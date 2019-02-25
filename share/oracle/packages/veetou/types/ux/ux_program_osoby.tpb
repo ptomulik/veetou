@@ -49,7 +49,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Program_Osoby_t AS
             , kod_isced IN VARCHAR2
             , job_uuid IN RAW
             , pk_student_index IN VARCHAR2
-            , pk_program_code IN VARCHAR2
+            , pk_program_osoby IN VARCHAR2
             , dbg_unique_match IN INTEGER
             , dbg_map_program_codes IN INTEGER
             , dbg_faculty_codes IN INTEGER
@@ -114,7 +114,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Program_Osoby_t AS
             , kod_isced => kod_isced
             , job_uuid => job_uuid
             , pk_student_index => pk_student_index
-            , pk_program_code => pk_program_code
+            , pk_program_osoby => pk_program_osoby
             , dbg_unique_match => dbg_unique_match
             , dbg_map_program_codes => dbg_map_program_codes
             , dbg_faculty_codes => dbg_faculty_codes
@@ -181,7 +181,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Program_Osoby_t AS
             , kod_isced IN VARCHAR2
             , job_uuid IN RAW
             , pk_student_index IN VARCHAR2
-            , pk_program_code IN VARCHAR2
+            , pk_program_osoby IN VARCHAR2
             , dbg_unique_match IN INTEGER
             , dbg_map_program_codes IN INTEGER
             , dbg_faculty_codes IN INTEGER
@@ -247,7 +247,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Program_Osoby_t AS
             );
         SELF.job_uuid := job_uuid;
         SELF.pk_student_index := pk_student_index;
-        SELF.pk_program_code := pk_program_code;
+        SELF.pk_program_osoby := pk_program_osoby;
         SELF.dbg_unique_match := dbg_unique_match;
         SELF.dbg_map_program_codes := dbg_map_program_codes;
         SELF.dbg_faculty_codes := dbg_faculty_codes;

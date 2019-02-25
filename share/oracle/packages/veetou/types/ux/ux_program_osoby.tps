@@ -2,7 +2,7 @@ CREATE OR REPLACE TYPE V2u_Ux_Program_Osoby_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Dz_Program_Osoby_B_t
     ( job_uuid RAW(16)
     , pk_student_index VARCHAR2(32 CHAR)
-    , pk_program_code VARCHAR2(128 CHAR)
+    , pk_program_osoby VARCHAR2(128 CHAR)
     , dbg_unique_match INTEGER
     , dbg_map_program_codes INTEGER
     , dbg_faculty_codes INTEGER
@@ -66,7 +66,7 @@ CREATE OR REPLACE TYPE V2u_Ux_Program_Osoby_t
             , kod_isced IN VARCHAR2
             , job_uuid IN RAW
             , pk_student_index IN VARCHAR2
-            , pk_program_code IN VARCHAR2
+            , pk_program_osoby IN VARCHAR2
             , dbg_unique_match IN INTEGER
             , dbg_map_program_codes IN INTEGER
             , dbg_faculty_codes IN INTEGER
@@ -131,7 +131,7 @@ CREATE OR REPLACE TYPE V2u_Ux_Program_Osoby_t
             , kod_isced IN VARCHAR2
             , job_uuid IN RAW
             , pk_student_index IN VARCHAR2
-            , pk_program_code IN VARCHAR2
+            , pk_program_osoby IN VARCHAR2
             , dbg_unique_match IN INTEGER
             , dbg_map_program_codes IN INTEGER
             , dbg_faculty_codes IN INTEGER

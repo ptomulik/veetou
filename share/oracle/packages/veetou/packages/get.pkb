@@ -255,6 +255,14 @@ CREATE OR REPLACE PACKAGE BODY V2U_Get AS
     END;
 
 
+    FUNCTION Acronym(sentence IN VARCHAR2)
+            RETURN VARCHAR2 DETERMINISTIC
+    IS
+    BEGIN
+        RETURN REGEXP_REPLACE(REGEXP_REPLACE(sentence, '(\w)\w*', '\1'), '\W+', '');
+    END;
+
+
     FUNCTION Max_Admission_Semester(semesters IN V2u_Ko_Semesters_t)
         RETURN VARCHAR2
     IS
