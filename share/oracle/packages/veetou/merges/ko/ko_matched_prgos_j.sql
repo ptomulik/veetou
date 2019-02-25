@@ -18,6 +18,15 @@ USING
                         students.id = ss_j.student_id
                     AND students.job_uuid = ss_j.job_uuid
                 )
+        INNER JOIN v2u_ko_semesters semesters
+            ON  (
+                        semesters.id = ss_j.semester_id
+                    AND semesters.job_uuid = ss_j.job_uuid
+                )
+        LEFT JOIN v2u_semesters semesters2
+            ON  (
+                        semesters2.code = semesters.semester_code
+                )
         INNER JOIN v2u_ko_specialty_map_j sm_j
             ON  (
                         sm_j.specialty_id = ss_j.specialty_id
@@ -37,6 +46,16 @@ USING
                         programy_osob.st_id = studenci.id
                     AND programy_osob.os_id = studenci.os_id
                     AND programy_osob.prg_kod = specialty_map.map_program_code
+                )
+        WHERE
+                (semesters2.end_date > programy_osob.data_rozpoczecia)
+            AND (semesters2.start_date < (
+                        CASE
+                        WHEN programy_osob.status IN ('DYP', 'SKR')
+                        THEN programy_osob.plan_data_ukon
+                        ELSE GREATEST(CURRENT_DATE, programy_osob.plan_data_ukon, programy_osob.mod_data)
+                        END
+                    )
                 )
     ) src
 ON  (

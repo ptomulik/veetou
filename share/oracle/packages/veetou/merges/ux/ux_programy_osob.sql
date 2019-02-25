@@ -10,6 +10,7 @@ USING
                 , ss_j.semester_id
                 , students.student_index
                 , V2U_Get.Faculty(specialties.faculty).code faculty_code
+                , semesters.semester_code
                 , SUBSTR(
                     specialties.university
                     || ':' ||
@@ -22,6 +23,8 @@ USING
                     V2U_Get.Acronym(specialties.studies_field)
                     || ':' ||
                     V2U_Get.Acronym(specialties.studies_specialty)
+                    || '|' ||
+                    semesters.semester_code
                   , 1, 128
                   ) specialty_string
             FROM v2u_ko_student_semesters_j ss_j
@@ -35,6 +38,11 @@ USING
                             specialties.id = ss_j.specialty_id
                         AND specialties.job_uuid = ss_j.job_uuid
                     )
+            INNER JOIN v2u_ko_semesters semesters
+                ON  (
+                            semesters.id = ss_j.semester_id
+                        AND semesters.job_uuid = ss_j.job_uuid
+                    )
         ),
         v AS
         (
@@ -43,7 +51,13 @@ USING
                 , u.student_index student_index
                 , COALESCE(
                       TO_CHAR(ma_prgos_j.prgos_id)
-                    , specialty_map.map_program_code
+                    , CASE
+                        WHEN specialty_map.map_program_code IS NULL
+                        THEN NULL
+                        ELSE specialty_map.map_program_code
+                             || '|' ||
+                             u.semester_code
+                        END
                     , u.specialty_string
                   ) coalesced_prgos_id
                 , SET(CAST(
@@ -120,7 +134,13 @@ USING
                 , u.student_index
                 , COALESCE(
                       TO_CHAR(ma_prgos_j.prgos_id)
-                    , specialty_map.map_program_code
+                    , CASE
+                        WHEN specialty_map.map_program_code IS NULL
+                        THEN NULL
+                        ELSE specialty_map.map_program_code
+                             || '|' ||
+                             u.semester_code
+                        END
                     , u.specialty_string
                   )
         ),
@@ -232,27 +252,33 @@ USING
             --
             , w.student_index pk_student_index
             , w.coalesced_prgos_id pk_program_osoby
-            , CASE
-                WHEN
-                        w.map_program_code IS NOT NULL
-                    AND w.dbg_map_program_codes = 1
-                    -- maps for all instances existed but there were no
-                    -- corresponding prgoses in target system
-                    AND w.dbg_matched = 0
-                    AND w.dbg_missing > 0
-                    AND w.dbg_mapped = w.dbg_missing
-                    -- ensure that there are no other propositions
-                    AND w.dbg_matched_prg_kody <= 1
-                    AND w.dbg_skipped_prg_kody = 0
-                    -- ensure we found target entry for the student
-                    AND w.new_os_id IS NOT NULL
-                    AND w.new_st_id IS NOT NULL
-                    --
-                    AND w.faculty_code IS NOT NULL
-                    AND w.dbg_faculty_codes = 1
-                THEN 1
-                ELSE 0
-             END safe_to_add
+            -- currently we have no way to provide some crucial information
+            -- such as data_przyjecia, data_rozpoczecia, data_zakonczenia,
+            -- so, by definition, trying to feed USOS from these table rows is
+            -- an unsafe operation.
+            , 0 safe_to_add
+            -- .. otherwise we could try something along these lines...
+--            , CASE
+--                WHEN
+--                        w.map_program_code IS NOT NULL
+--                    AND w.dbg_map_program_codes = 1
+--                    -- maps for all instances existed but there were no
+--                    -- corresponding prgoses in target system
+--                    AND w.dbg_matched = 0
+--                    AND w.dbg_missing > 0
+--                    AND w.dbg_mapped = w.dbg_missing
+--                    -- ensure that there are no other propositions
+--                    AND w.dbg_matched_prg_kody <= 1
+--                    AND w.dbg_skipped_prg_kody = 0
+--                    -- ensure we found target entry for the student
+--                    AND w.new_os_id IS NOT NULL
+--                    AND w.new_st_id IS NOT NULL
+--                    --
+--                    AND w.faculty_code IS NOT NULL
+--                    AND w.dbg_faculty_codes = 1
+--                THEN 1
+--                ELSE 0
+--             END safe_to_add
         FROM w w
         LEFT JOIN v2u_dz_programy_osob programy_osob
             ON  (
