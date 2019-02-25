@@ -45,6 +45,10 @@ USING
                         COLLECT(grades.subj_grade)
                         AS V2u_Vchars1K_t
                   )) subj_grades
+                , SET(CAST(
+                        COLLECT(ma_przedm_j.prz_kod)
+                        AS V2u_Vchars1K_t
+                  )) prz_kody
                 , COUNT(ma_przedm_j.prz_kod) dbg_matched
                 , COUNT(mi_przedm_j.job_uuid) dbg_missing
                 , COUNT(sm_j.map_id) dbg_mapped
@@ -136,6 +140,10 @@ USING
                     FROM TABLE(u.subj_credit_kinds) t
                     WHERE ROWNUM <= 1
                   ) subj_credit_kind
+                , ( SELECT SUBSTR(VALUE(t), 1, 20)
+                    FROM TABLE(u.prz_kody) t
+                    WHERE ROWNUM <= 1
+                  ) prz_kod
                 , CAST(MULTISET(
                     SELECT SUBSTR(VALUE(t), 1, 10)
                     FROM TABLE(u.subj_grades) t
@@ -166,84 +174,166 @@ USING
                 , ( SELECT COUNT(*)
                     FROM TABLE(u.subj_credit_kinds)
                   ) dbg_subj_credit_kinds
+                , ( SELECT COUNT(*)
+                    FROM TABLE(u.prz_kody)
+                  ) dbg_prz_kody
 
                 , u.dbg_matched
                 , u.dbg_missing
                 , u.dbg_mapped
             FROM u u
+        ),
+        w AS
+        (
+            SELECT
+                  v.*
+
+                , v.map_subj_code new_kod
+                , v.subj_name new_nazwa
+                , COALESCE(v.map_org_unit, v.faculty_code) new_jed_org_kod
+                , V2u_Get.Utw_Id(v.job_uuid) new_utw_id
+                , V2u_Get.Mod_Id(v.job_uuid) new_mod_id
+                , V2u_Get.Tpro_Kod(
+                          subj_credit_kind => v.subj_credit_kind
+                        , subj_grades => v.subj_grades
+                  ) new_tpro_kod
+                , COALESCE(v.map_org_unit_recipient, v.faculty_code) new_jed_org_kod_biorca
+                , v.map_subj_lang new_jzk_kod
+
+                , CASE
+                    WHEN    v.dbg_matched > 0
+                        AND v.dbg_mapped = v.dbg_matched
+                        AND v.dbg_missing = 0
+                        AND v.dbg_prz_kody = 1
+                        AND v.dbg_prz_kody IS NOT NULL
+                    THEN 1
+                    ELSE 0
+                  END dbg_unique_match
+            FROM v v
         )
         SELECT
-              v.job_uuid
-            , v.coalesced_subj_code pk_subj_code
-            , v.map_subj_code kod
-            , v.subj_name nazwa
-            , COALESCE(v.map_org_unit, v.faculty_code) jed_org_kod
-            , V2u_Get.Utw_Id(v.job_uuid) utw_id
-            , V2u_Get.Mod_Id(v.job_uuid) mod_id
-            , V2u_Get.Tpro_Kod(
-                      subj_credit_kind => v.subj_credit_kind
-                    , subj_grades => v.subj_grades
-              ) tpro_kod
-            , COALESCE(v.map_org_unit_recipient, v.faculty_code) jed_org_kod_biorca
-            , v.map_subj_lang jzk_kod
+              w.job_uuid
+            , w.coalesced_subj_code pk_subject
 
+            , DECODE(w.dbg_unique_match, 1, przedmioty.kod, w.new_kod) kod
+            , DECODE(w.dbg_unique_match, 1, przedmioty.nazwa, w.new_nazwa) nazwa
+            , DECODE(w.dbg_unique_match, 1, przedmioty.jed_org_kod, w.new_jed_org_kod) jed_org_kod
+            , DECODE(w.dbg_unique_match, 1, przedmioty.utw_id, w.new_utw_id) utw_id
+            , DECODE(w.dbg_unique_match, 1, przedmioty.utw_data, NULL) utw_data
+            , DECODE(w.dbg_unique_match, 1, przedmioty.mod_id, w.new_mod_id) mod_id
+            , DECODE(w.dbg_unique_match, 1, przedmioty.mod_data, NULL) mod_data
+            , DECODE(w.dbg_unique_match, 1, przedmioty.tpro_kod, w.new_tpro_kod) tpro_kod
+            , DECODE(w.dbg_unique_match, 1, przedmioty.czy_wielokrotne, NULL) czy_wielokrotne
+            , DECODE(w.dbg_unique_match, 1, przedmioty.name, NULL) name
+            , DECODE(w.dbg_unique_match, 1, przedmioty.skrocony_opis, NULL) skrocony_opis
+            , DECODE(w.dbg_unique_match, 1, przedmioty.short_description, NULL) short_description
+            , DECODE(w.dbg_unique_match, 1, przedmioty.jed_org_kod_biorca, w.new_jed_org_kod_biorca) jed_org_kod_biorca
+            , DECODE(w.dbg_unique_match, 1, przedmioty.jzk_kod, w.new_jzk_kod) jzk_kod
+            , DECODE(w.dbg_unique_match, 1, przedmioty.kod_sok, NULL) kod_sok
+            , DECODE(w.dbg_unique_match, 1, przedmioty.opis, NULL) opis
+            , DECODE(w.dbg_unique_match, 1, przedmioty.description, NULL) description
+            , DECODE(w.dbg_unique_match, 1, przedmioty.literatura, NULL) literatura
+            , DECODE(w.dbg_unique_match, 1, przedmioty.bibliography, NULL) bibliography
+            , DECODE(w.dbg_unique_match, 1, przedmioty.efekty_uczenia, NULL) efekty_uczenia
+            , DECODE(w.dbg_unique_match, 1, przedmioty.efekty_uczenia_ang, NULL) efekty_uczenia_ang
+            , DECODE(w.dbg_unique_match, 1, przedmioty.kryteria_oceniania, NULL) kryteria_oceniania
+            , DECODE(w.dbg_unique_match, 1, przedmioty.kryteria_oceniania_ang, NULL) kryteria_oceniania_ang
+            , DECODE(w.dbg_unique_match, 1, przedmioty.praktyki_zawodowe, NULL) praktyki_zawodowe
+            , DECODE(w.dbg_unique_match, 1, przedmioty.praktyki_zawodowe_ang, NULL) praktyki_zawodowe_ang
+            , DECODE(w.dbg_unique_match, 1, przedmioty.url, NULL) url
+            , DECODE(w.dbg_unique_match, 1, przedmioty.kod_isced, NULL) kod_isced
+            , DECODE(w.dbg_unique_match, 1, przedmioty.nazwa_pol, NULL) nazwa_pol
+            , DECODE(w.dbg_unique_match, 1, przedmioty.guid, NULL) guid
+            , DECODE(w.dbg_unique_match, 1, przedmioty.pw_nazwa_supl, NULL) pw_nazwa_supl
+            , DECODE(w.dbg_unique_match, 1, przedmioty.pw_nazwa_supl_ang, NULL) pw_nazwa_supl_ang
+
+            , w.dbg_subj_codes
+            , w.dbg_map_subj_codes
+            , w.dbg_languages
+            , w.dbg_org_units
+            , w.dbg_org_unit_recipients
+            , w.dbg_faculty_codes
+            , w.dbg_subj_names
+            , w.dbg_subj_credit_kinds
+            , w.dbg_prz_kody
+            , w.dbg_unique_match
+            , w.dbg_matched
+            , w.dbg_missing
+            , w.dbg_mapped
+            ---
             , CASE
                 WHEN
                     -- ensure that
                     -- we have target subject code
-                        v.map_subj_code IS NOT NULL
-                    AND v.dbg_map_subj_codes = 1
-                    AND v.dbg_subj_codes > 0
+                        w.map_subj_code IS NOT NULL
+                    AND w.dbg_map_subj_codes = 1
+                    AND w.dbg_subj_codes > 0
                     -- maps for all instances existed but there were no
                     -- corresponding subject in target system
-                    AND v.dbg_matched = 0
-                    AND v.dbg_missing > 0
-                    AND v.dbg_mapped = v.dbg_missing
+                    AND w.dbg_matched = 0
+                    AND w.dbg_missing > 0
+                    AND w.dbg_mapped = w.dbg_missing
                     -- all the instances were consistent
-                    AND v.dbg_languages = 1
-                    AND v.dbg_org_units <= 1
-                    AND v.dbg_org_unit_recipients <= 1
-                    AND v.dbg_faculty_codes = 1
-                    AND v.dbg_subj_names = 1
-                    AND v.dbg_subj_credit_kinds = 1
+                    AND w.dbg_languages = 1
+                    AND w.dbg_org_units <= 1
+                    AND w.dbg_org_unit_recipients <= 1
+                    AND w.dbg_faculty_codes = 1
+                    AND w.dbg_subj_names = 1
+                    AND w.dbg_subj_credit_kinds = 1
                     -- and we have correct tpro_kod value
                     AND V2u_Get.Tpro_Kod(
-                          subj_credit_kind => v.subj_credit_kind
-                        , subj_grades => v.subj_grades
+                          subj_credit_kind => w.subj_credit_kind
+                        , subj_grades => w.subj_grades
                         ) <> '?'
                 THEN 1
                 ELSE 0
                 END safe_to_add
-
-            , v.dbg_subj_codes
-            , v.dbg_map_subj_codes
-            , v.dbg_languages
-            , v.dbg_org_units
-            , v.dbg_org_unit_recipients
-            , v.dbg_faculty_codes
-            , v.dbg_subj_names
-            , v.dbg_subj_credit_kinds
-            , v.dbg_matched
-            , v.dbg_missing
-            , v.dbg_mapped
-        FROM v v
+        FROM w w
+        LEFT JOIN v2u_dz_przedmioty przedmioty
+            ON  (
+                        przedmioty.kod = w.prz_kod
+                    AND dbg_unique_match = 1
+                )
     ) src
 ON  (
-            tgt.pk_subj_code = src.pk_subj_code
+            tgt.pk_subject = src.pk_subject
         AND tgt.job_uuid = src.job_uuid
     )
 WHEN NOT MATCHED THEN
     INSERT
-        ( kod
-        , job_uuid
-        , pk_subj_code
+        ( job_uuid
+        , pk_subject
+        , kod
         , nazwa
         , jed_org_kod
         , utw_id
+        , utw_data
         , mod_id
+        , mod_data
         , tpro_kod
+        , czy_wielokrotne
+        , name
+        , skrocony_opis
+        , short_description
         , jed_org_kod_biorca
         , jzk_kod
+        , kod_sok
+        , opis
+        , description
+        , literatura
+        , bibliography
+        , efekty_uczenia
+        , efekty_uczenia_ang
+        , kryteria_oceniania
+        , kryteria_oceniania_ang
+        , praktyki_zawodowe
+        , praktyki_zawodowe_ang
+        , url
+        , kod_isced
+        , nazwa_pol
+        , guid
+        , pw_nazwa_supl
+        , pw_nazwa_supl_ang
         , dbg_subj_codes
         , dbg_map_subj_codes
         , dbg_languages
@@ -252,22 +342,47 @@ WHEN NOT MATCHED THEN
         , dbg_faculty_codes
         , dbg_subj_names
         , dbg_subj_credit_kinds
+        , dbg_prz_kody
+        , dbg_unique_match
         , dbg_matched
         , dbg_missing
         , dbg_mapped
         , safe_to_add
         )
     VALUES
-        ( src.kod
-        , src.job_uuid
-        , src.pk_subj_code
+        ( src.job_uuid
+        , src.pk_subject
+        , src.kod
         , src.nazwa
         , src.jed_org_kod
         , src.utw_id
+        , src.utw_data
         , src.mod_id
+        , src.mod_data
         , src.tpro_kod
+        , src.czy_wielokrotne
+        , src.name
+        , src.skrocony_opis
+        , src.short_description
         , src.jed_org_kod_biorca
         , src.jzk_kod
+        , src.kod_sok
+        , src.opis
+        , src.description
+        , src.literatura
+        , src.bibliography
+        , src.efekty_uczenia
+        , src.efekty_uczenia_ang
+        , src.kryteria_oceniania
+        , src.kryteria_oceniania_ang
+        , src.praktyki_zawodowe
+        , src.praktyki_zawodowe_ang
+        , src.url
+        , src.kod_isced
+        , src.nazwa_pol
+        , src.guid
+        , src.pw_nazwa_supl
+        , src.pw_nazwa_supl_ang
         , src.dbg_subj_codes
         , src.dbg_map_subj_codes
         , src.dbg_languages
@@ -276,6 +391,8 @@ WHEN NOT MATCHED THEN
         , src.dbg_faculty_codes
         , src.dbg_subj_names
         , src.dbg_subj_credit_kinds
+        , src.dbg_prz_kody
+        , src.dbg_unique_match
         , src.dbg_matched
         , src.dbg_missing
         , src.dbg_mapped
@@ -287,10 +404,33 @@ WHEN MATCHED THEN
         , tgt.nazwa = src.nazwa
         , tgt.jed_org_kod = src.jed_org_kod
         , tgt.utw_id = src.utw_id
+        , tgt.utw_data = src.utw_data
         , tgt.mod_id = src.mod_id
+        , tgt.mod_data = src.mod_data
         , tgt.tpro_kod = src.tpro_kod
+        , tgt.czy_wielokrotne = src.czy_wielokrotne
+        , tgt.name = src.name
+        , tgt.skrocony_opis = src.skrocony_opis
+        , tgt.short_description = src.short_description
         , tgt.jed_org_kod_biorca = src.jed_org_kod_biorca
         , tgt.jzk_kod = src.jzk_kod
+        , tgt.kod_sok = src.kod_sok
+        , tgt.opis = src.opis
+        , tgt.description = src.description
+        , tgt.literatura = src.literatura
+        , tgt.bibliography = src.bibliography
+        , tgt.efekty_uczenia = src.efekty_uczenia
+        , tgt.efekty_uczenia_ang = src.efekty_uczenia_ang
+        , tgt.kryteria_oceniania = src.kryteria_oceniania
+        , tgt.kryteria_oceniania_ang = src.kryteria_oceniania_ang
+        , tgt.praktyki_zawodowe = src.praktyki_zawodowe
+        , tgt.praktyki_zawodowe_ang = src.praktyki_zawodowe_ang
+        , tgt.url = src.url
+        , tgt.kod_isced = src.kod_isced
+        , tgt.nazwa_pol = src.nazwa_pol
+        , tgt.guid = src.guid
+        , tgt.pw_nazwa_supl = src.pw_nazwa_supl
+        , tgt.pw_nazwa_supl_ang = src.pw_nazwa_supl_ang
         , tgt.dbg_subj_codes = src.dbg_subj_codes
         , tgt.dbg_map_subj_codes = src.dbg_map_subj_codes
         , tgt.dbg_languages = src.dbg_languages
@@ -299,6 +439,8 @@ WHEN MATCHED THEN
         , tgt.dbg_faculty_codes = src.dbg_faculty_codes
         , tgt.dbg_subj_names = src.dbg_subj_names
         , tgt.dbg_subj_credit_kinds = src.dbg_subj_credit_kinds
+        , tgt.dbg_prz_kody = src.dbg_prz_kody
+        , tgt.dbg_unique_match = src.dbg_unique_match
         , tgt.dbg_matched = src.dbg_matched
         , tgt.dbg_missing = src.dbg_missing
         , tgt.dbg_mapped = src.dbg_mapped

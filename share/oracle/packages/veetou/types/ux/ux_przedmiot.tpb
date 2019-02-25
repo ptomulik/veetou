@@ -33,19 +33,21 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_t AS
             , pw_nazwa_supl IN VARCHAR2
             , pw_nazwa_supl_ang IN VARCHAR2
             , job_uuid IN RAW
-            , pk_subj_code IN VARCHAR2
-            , dbg_subj_codes INTEGER
-            , dbg_map_subj_codes INTEGER
-            , dbg_languages INTEGER
-            , dbg_org_units INTEGER
-            , dbg_org_unit_recipients INTEGER
-            , dbg_faculty_codes INTEGER
-            , dbg_subj_names INTEGER
-            , dbg_subj_credit_kinds INTEGER
-            , dbg_missing INTEGER
-            , dbg_matched INTEGER
-            , dbg_mapped INTEGER
-            , safe_to_add INTEGER
+            , pk_subject IN VARCHAR2
+            , dbg_subj_codes IN INTEGER
+            , dbg_map_subj_codes IN INTEGER
+            , dbg_languages IN INTEGER
+            , dbg_org_units IN INTEGER
+            , dbg_org_unit_recipients IN INTEGER
+            , dbg_faculty_codes IN INTEGER
+            , dbg_subj_names IN INTEGER
+            , dbg_subj_credit_kinds IN INTEGER
+            , dbg_prz_kody IN INTEGER
+            , dbg_unique_match IN INTEGER
+            , dbg_missing IN INTEGER
+            , dbg_matched IN INTEGER
+            , dbg_mapped IN INTEGER
+            , safe_to_add IN INTEGER
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -82,7 +84,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_t AS
             , pw_nazwa_supl => pw_nazwa_supl
             , pw_nazwa_supl_ang => pw_nazwa_supl_ang
             , job_uuid => job_uuid
-            , pk_subj_code => pk_subj_code
+            , pk_subject => pk_subject
             , dbg_subj_codes => dbg_subj_codes
             , dbg_map_subj_codes => dbg_map_subj_codes
             , dbg_languages => dbg_languages
@@ -91,6 +93,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_t AS
             , dbg_faculty_codes => dbg_faculty_codes
             , dbg_subj_names => dbg_subj_names
             , dbg_subj_credit_kinds => dbg_subj_credit_kinds
+            , dbg_prz_kody => dbg_prz_kody
+            , dbg_unique_match => dbg_unique_match
             , dbg_missing => dbg_missing
             , dbg_matched => dbg_matched
             , dbg_mapped => dbg_mapped
@@ -133,19 +137,21 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_t AS
             , pw_nazwa_supl IN VARCHAR2
             , pw_nazwa_supl_ang IN VARCHAR2
             , job_uuid IN RAW
-            , pk_subj_code IN VARCHAR2
-            , dbg_subj_codes INTEGER
-            , dbg_map_subj_codes INTEGER
-            , dbg_languages INTEGER
-            , dbg_org_units INTEGER
-            , dbg_org_unit_recipients INTEGER
-            , dbg_faculty_codes INTEGER
-            , dbg_subj_names INTEGER
-            , dbg_subj_credit_kinds INTEGER
-            , dbg_missing INTEGER
-            , dbg_matched INTEGER
-            , dbg_mapped INTEGER
-            , safe_to_add INTEGER
+            , pk_subject IN VARCHAR2
+            , dbg_subj_codes IN INTEGER
+            , dbg_map_subj_codes IN INTEGER
+            , dbg_languages IN INTEGER
+            , dbg_org_units IN INTEGER
+            , dbg_org_unit_recipients IN INTEGER
+            , dbg_faculty_codes IN INTEGER
+            , dbg_subj_names IN INTEGER
+            , dbg_subj_credit_kinds IN INTEGER
+            , dbg_prz_kody IN INTEGER
+            , dbg_unique_match IN INTEGER
+            , dbg_missing IN INTEGER
+            , dbg_matched IN INTEGER
+            , dbg_mapped IN INTEGER
+            , safe_to_add IN INTEGER
             )
     IS
     BEGIN
@@ -183,7 +189,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_t AS
             , pw_nazwa_supl_ang => pw_nazwa_supl_ang
             );
         SELF.job_uuid := job_uuid;
-        SELF.pk_subj_code := pk_subj_code;
+        SELF.pk_subject := pk_subject;
         SELF.dbg_subj_codes := dbg_subj_codes;
         SELF.dbg_map_subj_codes := dbg_map_subj_codes;
         SELF.dbg_languages := dbg_languages;
@@ -192,6 +198,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_t AS
         SELF.dbg_faculty_codes := dbg_faculty_codes;
         SELF.dbg_subj_names := dbg_subj_names;
         SELF.dbg_subj_credit_kinds := dbg_subj_credit_kinds;
+        SELF.dbg_prz_kody := dbg_prz_kody;
+        SELF.dbg_unique_match := dbg_unique_match;
         SELF.dbg_missing := dbg_missing;
         SELF.dbg_matched := dbg_matched;
         SELF.dbg_mapped := dbg_mapped;

@@ -8,7 +8,7 @@ USING
                 , COALESCE(
                       subject_map.map_subj_code
                     , subjects.subj_code
-                  ) pk_subj_code
+                  ) pk_subject
                 , SET(CAST(
                         COLLECT(subjects.subj_code)
                         AS V2u_Vchars1K_t
@@ -56,7 +56,7 @@ USING
         (
             SELECT
                   u.job_uuid
-                , u.pk_subj_code
+                , u.pk_subject
 
                   -- "unaggregate'
                 , ( SELECT SUBSTR(VALUE(t), 1, 20)
@@ -142,7 +142,7 @@ USING
                 )
     ) src
 ON  (
-            tgt.pk_subj_code = src.pk_subj_code
+            tgt.pk_subject = src.pk_subject
         AND tgt.tatr_kod = src.tatr_kod
         AND tgt.job_uuid = src.job_uuid
     )
@@ -158,7 +158,7 @@ WHEN NOT MATCHED THEN
         , job_uuid
         , subj_codes
         , all_subj_codes
-        , pk_subj_code
+        , pk_subject
         -- DBG
         , dbg_map_subj_codes
         , dbg_subj_codes
@@ -177,7 +177,7 @@ WHEN NOT MATCHED THEN
         , src.job_uuid
         , src.subj_codes
         , src.all_subj_codes
-        , src.pk_subj_code
+        , src.pk_subject
         -- DBG
         , src.dbg_map_subj_codes
         , src.dbg_subj_codes

@@ -116,7 +116,7 @@ USING
         )
         SELECT
               v.job_uuid
-            , v.coalesced_subj_code pk_subj_code
+            , v.coalesced_subj_code pk_subject
             , v.semester_code pk_semester_code
             , v.map_subj_code prz_kod
             , v.semester_code cdyd_kod
@@ -159,7 +159,7 @@ USING
         FROM v v
     ) src
 ON  (
-            tgt.pk_subj_code = src.pk_subj_code
+            tgt.pk_subject = src.pk_subject
         AND tgt.pk_semester_code = src.pk_semester_code
         AND tgt.job_uuid = src.job_uuid
     )
@@ -170,7 +170,7 @@ WHEN NOT MATCHED THEN
         , utw_id
         , mod_id
         , job_uuid
-        , pk_subj_code
+        , pk_subject
         , pk_semester_code
         , tpro_kod
         , dbg_subj_codes
@@ -187,7 +187,7 @@ WHEN NOT MATCHED THEN
         , src.utw_id
         , src.mod_id
         , src.job_uuid
-        , src.pk_subj_code
+        , src.pk_subject
         , src.pk_semester_code
         , src.tpro_kod
         , src.dbg_subj_codes
