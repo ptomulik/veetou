@@ -432,47 +432,47 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Table('ko_specialties');
 
         --
-        Drop_Index('ux_classes_grades_idx1');
-        Drop_Index('ux_classes_grades_idx2');
-        Drop_Index('ux_classes_grades_idx3');
-        Drop_Index('ux_classes_grades_idx4');
-        Drop_Index('ux_classes_grades_idx5');
-        Drop_Index('ux_classes_grades_idx6');
-        Drop_Index('ux_classes_grades_idx7');
-        Drop_Index('ux_classes_grades_idx8');
-        Drop_Index('ux_classes_grades_idx9');
-        Drop_Table('ux_classes_grades');
+        Drop_Index('uu_classes_grades_idx1');
+        Drop_Index('uu_classes_grades_idx2');
+        Drop_Index('uu_classes_grades_idx3');
+        Drop_Index('uu_classes_grades_idx4');
+        Drop_Index('uu_classes_grades_idx5');
+        Drop_Index('uu_classes_grades_idx6');
+        Drop_Index('uu_classes_grades_idx7');
+        Drop_Index('uu_classes_grades_idx8');
+        Drop_Index('uu_classes_grades_idx9');
+        Drop_Table('uu_classes_grades');
         --
-        Drop_Table('ux_zaliczenia_przedmiotow');
+        Drop_Table('uu_zaliczenia_przedmiotow');
         --
-        Drop_Index('ux_etapy_osob_idx1');
-        Drop_Index('ux_etapy_osob_idx2');
-        Drop_Table('ux_etapy_osob');
+        Drop_Index('uu_etapy_osob_idx1');
+        Drop_Index('uu_etapy_osob_idx2');
+        Drop_Table('uu_etapy_osob');
         --
-        Drop_Index('ux_programy_osob_idx1');
-        Drop_Index('ux_programy_osob_idx2');
-        Drop_Index('ux_programy_osob_idx3');
-        Drop_Index('ux_programy_osob_idx4');
-        Drop_Table('ux_programy_osob');
+        Drop_Index('uu_programy_osob_idx1');
+        Drop_Index('uu_programy_osob_idx2');
+        Drop_Index('uu_programy_osob_idx3');
+        Drop_Index('uu_programy_osob_idx4');
+        Drop_Table('uu_programy_osob');
         --
-        Drop_Index('ux_studenci_idx1');
-        Drop_Table('ux_studenci');
+        Drop_Index('uu_studenci_idx1');
+        Drop_Table('uu_studenci');
         --
-        Drop_Index('ux_zajecia_cykli_idx1');
-        Drop_Trigger('ux_zajecia_cykli_tr1');
-        Drop_Sequence('ux_zajecia_cykli_sq1');
-        Drop_Table('ux_zajecia_cykli');
+        Drop_Index('uu_zajecia_cykli_idx1');
+        Drop_Trigger('uu_zajecia_cykli_tr1');
+        Drop_Sequence('uu_zajecia_cykli_sq1');
+        Drop_Table('uu_zajecia_cykli');
         --
-        Drop_Index('ux_przedmioty_cykli_idx1');
-        Drop_Index('ux_przedmioty_cykli_idx2');
-        Drop_Table('ux_przedmioty_cykli');
+        Drop_Index('uu_przedmioty_cykli_idx1');
+        Drop_Index('uu_przedmioty_cykli_idx2');
+        Drop_Table('uu_przedmioty_cykli');
         --
-        Drop_Index('ux_atrybuty_przedm_idx1');
-        Drop_Index('ux_atrybuty_przedm_idx2');
-        Drop_Table('ux_atrybuty_przedmiotow');
+        Drop_Index('uu_atrybuty_przedm_idx1');
+        Drop_Index('uu_atrybuty_przedm_idx2');
+        Drop_Table('uu_atrybuty_przedmiotow');
         --
-        Drop_Index('ux_przedmioty_idx1');
-        Drop_Table('ux_przedmioty');
+        Drop_Index('uu_przedmioty_idx1');
+        Drop_Table('uu_przedmioty');
 
         --
         Drop_Package('Fit');
@@ -517,15 +517,15 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Student_t');
         Drop_Type('Ko_Distinct_t');
 
-        Drop_Type('Ux_Classes_Grade_t', 'Ux_Classes_Grades_t');
-        Drop_Type('Ux_Etap_Osoby_t', 'Ux_Etapy_Osob_t');
-        Drop_Type('Ux_Program_Osoby_t', 'Ux_Programy_Osob_t');
-        Drop_Type('Ux_Student_t', 'Ux_Studenci_t');
-        Drop_Type('Ux_Atrybut_Przedmiotu_t', 'Ux_Atrybuty_Przedmiotow_t');
-        Drop_Type('Ux_Zalicz_Przedmiotu_t', 'Ux_Zalicz_Przedmiotow_t');
-        Drop_Type('Ux_Przedmiot_t', 'Ux_Przedmioty_t');
-        Drop_Type('Ux_Przedmiot_Cyklu_t', 'Ux_Przedmioty_Cykli_t');
-        Drop_Type('Ux_Zajecia_Cyklu_t', 'Ux_Zajecia_Cykli_t');
+        Drop_Type('Uu_Classes_Grade_t', 'Uu_Classes_Grades_t');
+        Drop_Type('Uu_Etap_Osoby_t', 'Uu_Etapy_Osob_t');
+        Drop_Type('Uu_Program_Osoby_t', 'Uu_Programy_Osob_t');
+        Drop_Type('Uu_Student_t', 'Uu_Studenci_t');
+        Drop_Type('Uu_Atrybut_Przedmiotu_t', 'Uu_Atrybuty_Przedmiotow_t');
+        Drop_Type('Uu_Zalicz_Przedmiotu_t', 'Uu_Zalicz_Przedmiotow_t');
+        Drop_Type('Uu_Przedmiot_t', 'Uu_Przedmioty_t');
+        Drop_Type('Uu_Przedmiot_Cyklu_t', 'Uu_Przedmioty_Cykli_t');
+        Drop_Type('Uu_Zajecia_Cyklu_t', 'Uu_Zajecia_Cykli_t');
 
         Drop_Type('Semester_Codes_t');
         Drop_Type('Program_Codes_t');
@@ -555,7 +555,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     PROCEDURE Tier3
     IS
     BEGIN
-        Drop_View('ux_subject_grades_v');
+        Drop_View('uu_subject_grades_v');
 
         Drop_View('ko_skipped_programs_v');
         Drop_View('ko_missing_zajcykl_v');
@@ -586,7 +586,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
 --        Drop_Collect_Types();
 --
 
-        Drop_Type('Ux_Subject_Grade_V_t');
+        Drop_Type('Uu_Subject_Grade_V_t');
         Drop_Type('Ko_Skipped_Program_V_t', 'Ko_Skipped_Programs_V_t');
         Drop_Type('Ko_Matched_Etpos_V_t', 'Ko_Matched_Etposes_V_t');
         Drop_Type('Ko_Matched_Prgos_V_t', 'Ko_Matched_Prgoses_V_t');
