@@ -13,7 +13,7 @@ CREATE OR REPLACE TYPE V2u_Ux_Classes_Grade_t
     , v2u_first_name VARCHAR2(48 CHAR)
     , v2u_last_name VARCHAR2(48 CHAR)
     , v2u_subj_code VARCHAR2(32 CHAR)
-    , v2u_map_subj_code VARCHAR2(32 CHAR)
+    , v2u_map_subj_code VARCHAR2(20 CHAR)
     , v2u_subj_name VARCHAR2(256 CHAR)
     , v2u_subj_hours_w NUMBER(8)
     , v2u_subj_hours_c NUMBER(8)

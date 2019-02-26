@@ -28,7 +28,7 @@ USING
                 , sm_j.matching_score subject_matching_score
                 , subject_map.map_subj_code
                 , CAST(MULTISET(
-                    SELECT SUBSTR(t.kod, 1, 32)
+                    SELECT SUBSTR(t.kod, 1, 20)
                     FROM v2u_dz_przedmioty t
                     WHERE t.kod = subject_map.map_subj_code
                   ) AS V2u_Subj_Codes_t) istniejace_prz_kody

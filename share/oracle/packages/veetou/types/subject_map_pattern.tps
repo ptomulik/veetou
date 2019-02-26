@@ -1,7 +1,7 @@
 CREATE OR REPLACE TYPE V2u_Subject_Map_Pattern_t
     FORCE AUTHID CURRENT_USER AS OBJECT
     ( subj_code VARCHAR2(32 CHAR)
-    , map_subj_code VARCHAR2(32 CHAR)
+    , map_subj_code VARCHAR2(20 CHAR)
     , map_subj_lang VARCHAR2(3 CHAR)
     , map_org_unit VARCHAR2(20 CHAR)
     , map_org_unit_recipient VARCHAR2(20 CHAR)

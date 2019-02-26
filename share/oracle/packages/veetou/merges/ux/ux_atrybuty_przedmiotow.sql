@@ -3,6 +3,10 @@ USING
     (
         WITH u AS
         (
+            -- determine what to use as a single output row;
+            --  (*) if possible, use corresponding map_subj_code as primary key,
+            --  (*) otherwise (incomplete or ambiguous subject map), use the
+            --      subj_code as primary key.
             SELECT
                   ss_j.job_uuid
                 , COALESCE(
@@ -21,6 +25,7 @@ USING
                         COLLECT(atrybuty_przedmiotow.id)
                         AS V2u_Vchars1K_t
                   )) ids
+                -- note; this also accounts maps with NULL map_subj_code
                 , COUNT(sm_j.map_id) dbg_mapped
             FROM v2u_ko_subject_semesters_j ss_j
             INNER JOIN v2u_ko_subjects subjects

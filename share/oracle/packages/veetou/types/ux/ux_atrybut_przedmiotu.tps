@@ -11,6 +11,8 @@ CREATE OR REPLACE TYPE V2u_Ux_Atrybut_Przedmiotu_t
     , dbg_subj_codes NUMBER(5)
     , dbg_all_subj_codes NUMBER(5)
     , dbg_ids NUMBER(5)
+    -- INF
+    , change_type CHAR(1)
     , safe_to_add NUMBER(1)
 
     , CONSTRUCTOR FUNCTION V2u_Ux_Atrybut_Przedmiotu_t(
@@ -36,6 +38,8 @@ CREATE OR REPLACE TYPE V2u_Ux_Atrybut_Przedmiotu_t
             , dbg_subj_codes IN NUMBER
             , dbg_all_subj_codes IN NUMBER
             , dbg_ids IN NUMBER
+            -- INF
+            , change_type IN CHAR
             , safe_to_add IN NUMBER
             ) RETURN SELF AS RESULT
 
@@ -62,6 +66,8 @@ CREATE OR REPLACE TYPE V2u_Ux_Atrybut_Przedmiotu_t
             , dbg_subj_codes IN NUMBER
             , dbg_all_subj_codes IN NUMBER
             , dbg_ids IN NUMBER
+            -- INF
+            , change_type IN CHAR
             , safe_to_add IN NUMBER
             )
     );

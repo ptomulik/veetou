@@ -22,6 +22,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Atrybut_Przedmiotu_t AS
             , dbg_subj_codes IN NUMBER
             , dbg_all_subj_codes IN NUMBER
             , dbg_ids IN NUMBER
+            -- INF
+            , change_type IN NUMBER
             , safe_to_add IN NUMBER
             ) RETURN SELF AS RESULT
     IS
@@ -47,6 +49,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Atrybut_Przedmiotu_t AS
             , dbg_subj_codes => dbg_subj_codes
             , dbg_all_subj_codes => dbg_all_subj_codes
             , dbg_ids => dbg_ids
+            , change_type => change_type
             , safe_to_add => safe_to_add
         );
         RETURN;
@@ -75,6 +78,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Atrybut_Przedmiotu_t AS
             , dbg_subj_codes IN NUMBER
             , dbg_all_subj_codes IN NUMBER
             , dbg_ids IN NUMBER
+            -- INF
+            , change_type IN NUMBER
             , safe_to_add IN NUMBER
             )
     IS
@@ -101,6 +106,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Atrybut_Przedmiotu_t AS
         SELF.dbg_subj_codes := dbg_subj_codes;
         SELF.dbg_all_subj_codes := dbg_all_subj_codes;
         SELF.dbg_ids := dbg_ids;
+        SELF.change_type := change_type;
         SELF.safe_to_add := safe_to_add;
     END;
 END;

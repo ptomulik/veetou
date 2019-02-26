@@ -2,7 +2,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Przedm_I_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Subject_Semester_I_t
     ( subject_map_id NUMBER(38)
     , subject_matching_score NUMBER(38)
-    , map_subj_code VARCHAR2(32 CHAR)
+    , map_subj_code VARCHAR2(20 CHAR)
     , reason VARCHAR2(80 CHAR)
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Missing_Przedm_I_t(

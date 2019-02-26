@@ -89,7 +89,7 @@ USING
                     FROM TABLE(u.subj_credit_kinds) t
                     WHERE ROWNUM <= 1
                   ) subj_credit_kind
-                , ( SELECT SUBSTR(VALUE(t), 1, 32)
+                , ( SELECT SUBSTR(VALUE(t), 1, 20)
                     FROM TABLE(u.map_subj_codes) t
                     WHERE ROWNUM <= 1
                   ) map_subj_code
