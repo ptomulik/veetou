@@ -1,8 +1,12 @@
 MERGE INTO v2u_ux_przedmioty tgt
 USING
     (
-        WITH u AS
+        WITH u_0 AS
         (
+            -- determine what to use as a single output row;
+            --  (*) if possible, use corresponding map_subj_code as primary key,
+            --  (*) otherwise (incomplete or ambiguous subject map), use the
+            --      subj_code as primary key.
             SELECT
                   ss_j.job_uuid
                 , COALESCE(
@@ -12,43 +16,43 @@ USING
                 , SET(CAST(
                         COLLECT(subjects.subj_code)
                         AS V2u_Vchars1K_t
-                  )) subj_codes
+                  )) subj_codes1k
                 , SET(CAST(
                         COLLECT(subject_map.map_subj_code)
                         AS V2u_Vchars1K_t
-                  )) map_subj_codes
+                  )) map_subj_codes1k
                 , SET(CAST(
                         COLLECT(subject_map.map_subj_lang)
                         AS V2u_Vchars1K_t
-                  )) map_subj_languages
+                  )) map_subj_languages1k
                 , SET(CAST(
                         COLLECT(subject_map.map_org_unit)
                         AS V2u_Vchars1K_t
-                  )) map_org_units
+                  )) map_org_units1k
                 , SET(CAST(
                         COLLECT(subject_map.map_org_unit_recipient)
                         AS V2u_Vchars1K_t
-                  )) map_org_unit_recipients
+                  )) map_org_unit_recipients1k
                 , SET(CAST(
                         COLLECT(faculties.code)
                         AS V2u_Vchars1K_t
-                  )) faculty_codes
+                  )) faculty_codes1k
                 , SET(CAST(
                         COLLECT(subjects.subj_name)
                         AS V2u_Vchars1K_t
-                  )) subj_names
+                  )) subj_names1k
                 , SET(CAST(
                         COLLECT(subjects.subj_credit_kind)
                         AS V2u_Vchars1K_t
-                  )) subj_credit_kinds
+                  )) subj_credit_kinds1k
                 , SET(CAST(
                         COLLECT(grades.subj_grade)
                         AS V2u_Vchars1K_t
-                  )) subj_grades
+                  )) subj_grades1k
                 , SET(CAST(
                         COLLECT(ma_przedm_j.prz_kod)
                         AS V2u_Vchars1K_t
-                  )) prz_kody
+                  )) prz_kody1k
                 , COUNT(ma_przedm_j.prz_kod) dbg_matched
                 , COUNT(mi_przedm_j.job_uuid) dbg_missing
                 , COUNT(sm_j.map_id) dbg_mapped
@@ -105,147 +109,268 @@ USING
                   ss_j.job_uuid
                 , COALESCE(subject_map.map_subj_code, subjects.subj_code)
         ),
-        v AS
-        (
+        u AS
+        ( -- make necessary adjustments to the raw values selected i u_0
             SELECT
-                  u.job_uuid
-                , u.coalesced_subj_code
+                  u_0.job_uuid
+                , u_0.coalesced_subj_code
 
                 -- select first element from each collection
                 , ( SELECT SUBSTR(VALUE(t), 1, 20)
-                    FROM TABLE(u.map_subj_codes) t
+                    FROM TABLE(u_0.map_subj_codes1k) t
                     WHERE ROWNUM <= 1
                   ) map_subj_code
                 , ( SELECT SUBSTR(VALUE(t), 1, 3)
-                    FROM TABLE(u.map_subj_languages) t
+                    FROM TABLE(u_0.map_subj_languages1k) t
                     WHERE ROWNUM <= 1
                   ) map_subj_lang
                 , ( SELECT SUBSTR(VALUE(t), 1, 20)
-                    FROM TABLE(u.map_org_units) t
+                    FROM TABLE(u_0.map_org_units1k) t
                     WHERE ROWNUM <= 1
                   ) map_org_unit
                 , ( SELECT SUBSTR(VALUE(t), 1, 20)
-                    FROM TABLE(u.map_org_unit_recipients) t
+                    FROM TABLE(u_0.map_org_unit_recipients1k) t
                     WHERE ROWNUM <= 1
                   ) map_org_unit_recipient
                 , ( SELECT SUBSTR(VALUE(t), 1, 20)
-                    FROM TABLE(u.faculty_codes) t
+                    FROM TABLE(u_0.faculty_codes1k) t
                     WHERE ROWNUM <= 1
                   ) faculty_code
                 , ( SELECT SUBSTR(VALUE(t), 1, 200)
-                    FROM TABLE(u.subj_names) t
+                    FROM TABLE(u_0.subj_names1k) t
                     WHERE ROWNUM <= 1
                   ) subj_name
                 , ( SELECT SUBSTR(VALUE(t), 1, 16)
-                    FROM TABLE(u.subj_credit_kinds) t
+                    FROM TABLE(u_0.subj_credit_kinds1k) t
                     WHERE ROWNUM <= 1
                   ) subj_credit_kind
                 , ( SELECT SUBSTR(VALUE(t), 1, 20)
-                    FROM TABLE(u.prz_kody) t
+                    FROM TABLE(u_0.prz_kody1k) t
                     WHERE ROWNUM <= 1
                   ) prz_kod
                 , CAST(MULTISET(
                     SELECT SUBSTR(VALUE(t), 1, 10)
-                    FROM TABLE(u.subj_grades) t
+                    FROM TABLE(u_0.subj_grades1k) t
                   ) AS V2u_Subj_Grades_t) subj_grades
 
                 -- columns used for debugging
                 , ( SELECT COUNT(*)
-                    FROM TABLE(u.subj_codes)
+                    FROM TABLE(u_0.subj_codes1k)
                   ) dbg_subj_codes
                 , ( SELECT COUNT(*)
-                    FROM TABLE(u.map_subj_codes)
+                    FROM TABLE(u_0.map_subj_codes1k)
                   ) dbg_map_subj_codes
                 , ( SELECT COUNT(*)
-                    FROM TABLE(u.map_subj_languages)
+                    FROM TABLE(u_0.map_subj_languages1k)
                   ) dbg_languages
                 , ( SELECT COUNT(*)
-                    FROM TABLE(u.map_org_units)
+                    FROM TABLE(u_0.map_org_units1k)
                   ) dbg_org_units
                 , ( SELECT COUNT(*)
-                    FROM TABLE(u.map_org_unit_recipients)
+                    FROM TABLE(u_0.map_org_unit_recipients1k)
                   ) dbg_org_unit_recipients
                 , ( SELECT COUNT(*)
-                    FROM TABLE(u.faculty_codes)
+                    FROM TABLE(u_0.faculty_codes1k)
                   ) dbg_faculty_codes
                 , ( SELECT COUNT(*)
-                    FROM TABLE(u.subj_names)
+                    FROM TABLE(u_0.subj_names1k)
                   ) dbg_subj_names
                 , ( SELECT COUNT(*)
-                    FROM TABLE(u.subj_credit_kinds)
+                    FROM TABLE(u_0.subj_credit_kinds1k)
                   ) dbg_subj_credit_kinds
                 , ( SELECT COUNT(*)
-                    FROM TABLE(u.prz_kody)
+                    FROM TABLE(u_0.prz_kody1k)
                   ) dbg_prz_kody
 
-                , u.dbg_matched
-                , u.dbg_missing
-                , u.dbg_mapped
-            FROM u u
+                , u_0.dbg_matched
+                , u_0.dbg_missing
+                , u_0.dbg_mapped
+            FROM u_0 u_0
         ),
-        w AS
-        (
+        v AS
+        ( -- determine our (v2u_*) values for certain fields
             SELECT
-                  v.*
+                  u.*
 
-                , v.map_subj_code new_kod
-                , v.subj_name new_nazwa
-                , COALESCE(v.map_org_unit, v.faculty_code) new_jed_org_kod
-                , V2u_Get.Utw_Id(v.job_uuid) new_utw_id
-                , V2u_Get.Mod_Id(v.job_uuid) new_mod_id
+                , u.map_subj_code v2u_kod
+                , u.subj_name v2u_nazwa
+                , COALESCE(u.map_org_unit, u.faculty_code) v2u_jed_org_kod
+                , V2u_Get.Utw_Id(u.job_uuid) v2u_utw_id
+                , V2u_Get.Mod_Id(u.job_uuid) v2u_mod_id
                 , V2u_Get.Tpro_Kod(
-                          subj_credit_kind => v.subj_credit_kind
-                        , subj_grades => v.subj_grades
-                  ) new_tpro_kod
-                , COALESCE(v.map_org_unit_recipient, v.faculty_code) new_jed_org_kod_biorca
-                , v.map_subj_lang new_jzk_kod
+                          subj_credit_kind => u.subj_credit_kind
+                        , subj_grades => u.subj_grades
+                  ) v2u_tpro_kod
+                , COALESCE(u.map_org_unit_recipient, u.faculty_code) v2u_jed_org_kod_biorca
+                , u.map_subj_lang v2u_jzk_kod
 
+                -- did we found unique row in the target table?
                 , CASE
-                    WHEN    v.dbg_matched > 0
-                        AND v.dbg_mapped = v.dbg_matched
-                        AND v.dbg_missing = 0
-                        AND v.dbg_prz_kody = 1
-                        AND v.dbg_prz_kody IS NOT NULL
+                    WHEN    u.dbg_matched > 0
+                        AND u.dbg_mapped = u.dbg_matched
+                        AND u.dbg_missing = 0
+                        AND u.dbg_prz_kody = 1
+                        AND u.dbg_prz_kody IS NOT NULL
                     THEN 1
                     ELSE 0
                   END dbg_unique_match
+
+                -- examine values we gonna propose
+                , CASE
+                    WHEN
+                        -- all the instances were consistent
+                            u.dbg_languages = 1
+                        AND u.dbg_org_units <= 1
+                        AND u.dbg_org_unit_recipients <= 1
+                        AND u.dbg_faculty_codes = 1
+                        AND u.dbg_subj_names = 1
+                        AND u.dbg_subj_credit_kinds = 1
+                        -- and we have correct tpro_kod value
+                        AND V2u_Get.Tpro_Kod(
+                              subj_credit_kind => u.subj_credit_kind
+                            , subj_grades => u.subj_grades
+                            ) IN ('E', 'Z', 'O', 'S')
+                    THEN 1
+                    ELSE 0
+                  END dbg_values_ok
+            FROM u u
+        ),
+        w AS
+        ( -- provide our values (v2u_*) and original ones (org_*)
+            SELECT
+                  v.*
+                , t.kod org_kod
+                , t.nazwa org_nazwa
+                , t.jed_org_kod org_jed_org_kod
+                , t.utw_id org_utw_id
+                , t.utw_data org_utw_data
+                , t.mod_id org_mod_id
+                , t.mod_data org_mod_data
+                , t.tpro_kod org_tpro_kod
+                , t.czy_wielokrotne org_czy_wielokrotne
+                , t.name org_name
+                , t.skrocony_opis org_skrocony_opis
+                , t.short_description org_short_description
+                , t.jed_org_kod_biorca org_jed_org_kod_biorca
+                , t.jzk_kod org_jzk_kod
+                , t.kod_sok org_kod_sok
+                , t.opis org_opis
+                , t.description org_description
+                , t.literatura org_literatura
+                , t.bibliography org_bibliography
+                , t.efekty_uczenia org_efekty_uczenia
+                , t.efekty_uczenia_ang org_efekty_uczenia_ang
+                , t.kryteria_oceniania org_kryteria_oceniania
+                , t.kryteria_oceniania_ang org_kryteria_oceniania_ang
+                , t.praktyki_zawodowe org_praktyki_zawodowe
+                , t.praktyki_zawodowe_ang org_praktyki_zawodowe_ang
+                , t.url org_url
+                , t.kod_isced org_kod_isced
+                , t.nazwa_pol org_nazwa_pol
+                , t.guid org_guid
+                , t.pw_nazwa_supl org_pw_nazwa_supl
+                , t.pw_nazwa_supl_ang org_pw_nazwa_supl_ang
+
+                -- is it insert, update or nothing?
+
+                , DECODE( v.dbg_unique_match, 1
+                        , (CASE
+                            WHEN    -- do we introduce any modification?
+                                    DECODE(v.v2u_kod, t.kod, 1, 0) = 1
+                                AND DECODE(v.v2u_nazwa, t.nazwa, 1, 0) = 1
+                                AND DECODE(v.v2u_jed_org_kod, t.jed_org_kod, 1, 0) = 1
+                                AND DECODE(v.v2u_tpro_kod, t.tpro_kod, 1, 0) = 1
+                                AND DECODE(v.v2u_jed_org_kod_biorca, t.jed_org_kod_biorca, 1, 0) = 1
+                                AND DECODE(v.v2u_jzk_kod, t.jzk_kod, 1, 0) = 1
+                            THEN '-'
+                            ELSE 'U'
+                          END)
+                        , 'I'
+                  ) change_type
+
+                , CASE
+                    WHEN
+                        -- ensure that
+                        -- we have single target subject code
+                            v.map_subj_code IS NOT NULL
+                        AND v.dbg_map_subj_codes = 1
+                        AND v.dbg_subj_codes > 0
+                        -- maps for all instances existed but there were no
+                        -- corresponding subject in target system
+                        AND v.dbg_matched = 0
+                        AND v.dbg_missing > 0
+                        AND v.dbg_mapped = v.dbg_missing
+                        -- values passed basic tests
+                        AND v.dbg_values_ok = 1
+                    THEN 1
+                    ELSE 0
+                  END safe_to_insert
+
+                , CASE
+                    WHEN
+                        -- ensure that
+                        -- we have target subject code
+                            v.map_subj_code IS NOT NULL
+                        AND v.dbg_map_subj_codes = 1
+                        AND v.dbg_subj_codes > 0
+                        -- and we uniquelly matched a row in target table
+                        AND v.dbg_unique_match = 1
+                        -- and values passed basic tests
+                        AND v.dbg_values_ok = 1
+                    THEN 1
+                    ELSE 0
+                  END safe_to_update
+
             FROM v v
+            LEFT JOIN v2u_dz_przedmioty t
+                ON  (
+                            v.dbg_unique_match = 1
+                        AND t.kod = v.prz_kod
+                    )
         )
         SELECT
               w.job_uuid
             , w.coalesced_subj_code pk_subject
 
-            , DECODE(w.dbg_unique_match, 1, przedmioty.kod, w.new_kod) kod
-            , DECODE(w.dbg_unique_match, 1, przedmioty.nazwa, w.new_nazwa) nazwa
-            , DECODE(w.dbg_unique_match, 1, przedmioty.jed_org_kod, w.new_jed_org_kod) jed_org_kod
-            , DECODE(w.dbg_unique_match, 1, przedmioty.utw_id, w.new_utw_id) utw_id
-            , DECODE(w.dbg_unique_match, 1, przedmioty.utw_data, NULL) utw_data
-            , DECODE(w.dbg_unique_match, 1, przedmioty.mod_id, w.new_mod_id) mod_id
-            , DECODE(w.dbg_unique_match, 1, przedmioty.mod_data, NULL) mod_data
-            , DECODE(w.dbg_unique_match, 1, przedmioty.tpro_kod, w.new_tpro_kod) tpro_kod
-            , DECODE(w.dbg_unique_match, 1, przedmioty.czy_wielokrotne, NULL) czy_wielokrotne
-            , DECODE(w.dbg_unique_match, 1, przedmioty.name, NULL) name
-            , DECODE(w.dbg_unique_match, 1, przedmioty.skrocony_opis, NULL) skrocony_opis
-            , DECODE(w.dbg_unique_match, 1, przedmioty.short_description, NULL) short_description
-            , DECODE(w.dbg_unique_match, 1, przedmioty.jed_org_kod_biorca, w.new_jed_org_kod_biorca) jed_org_kod_biorca
-            , DECODE(w.dbg_unique_match, 1, przedmioty.jzk_kod, w.new_jzk_kod) jzk_kod
-            , DECODE(w.dbg_unique_match, 1, przedmioty.kod_sok, NULL) kod_sok
-            , DECODE(w.dbg_unique_match, 1, przedmioty.opis, NULL) opis
-            , DECODE(w.dbg_unique_match, 1, przedmioty.description, NULL) description
-            , DECODE(w.dbg_unique_match, 1, przedmioty.literatura, NULL) literatura
-            , DECODE(w.dbg_unique_match, 1, przedmioty.bibliography, NULL) bibliography
-            , DECODE(w.dbg_unique_match, 1, przedmioty.efekty_uczenia, NULL) efekty_uczenia
-            , DECODE(w.dbg_unique_match, 1, przedmioty.efekty_uczenia_ang, NULL) efekty_uczenia_ang
-            , DECODE(w.dbg_unique_match, 1, przedmioty.kryteria_oceniania, NULL) kryteria_oceniania
-            , DECODE(w.dbg_unique_match, 1, przedmioty.kryteria_oceniania_ang, NULL) kryteria_oceniania_ang
-            , DECODE(w.dbg_unique_match, 1, przedmioty.praktyki_zawodowe, NULL) praktyki_zawodowe
-            , DECODE(w.dbg_unique_match, 1, przedmioty.praktyki_zawodowe_ang, NULL) praktyki_zawodowe_ang
-            , DECODE(w.dbg_unique_match, 1, przedmioty.url, NULL) url
-            , DECODE(w.dbg_unique_match, 1, przedmioty.kod_isced, NULL) kod_isced
-            , DECODE(w.dbg_unique_match, 1, przedmioty.nazwa_pol, NULL) nazwa_pol
-            , DECODE(w.dbg_unique_match, 1, przedmioty.guid, NULL) guid
-            , DECODE(w.dbg_unique_match, 1, przedmioty.pw_nazwa_supl, NULL) pw_nazwa_supl
-            , DECODE(w.dbg_unique_match, 1, przedmioty.pw_nazwa_supl_ang, NULL) pw_nazwa_supl_ang
+            , DECODE(w.change_type, 'I', w.v2u_kod, w.org_kod) kod
+            , DECODE(w.change_type, '-', w.org_nazwa, w.v2u_nazwa) nazwa
+            , DECODE(w.change_type, '-', w.org_jed_org_kod, w.v2u_jed_org_kod) jed_org_kod
+
+            , DECODE(w.change_type, 'I', w.v2u_utw_id, w.org_utw_id) utw_id
+            , DECODE(w.change_type, 'I', NULL, w.org_utw_data) utw_data
+            , DECODE(w.change_type, 'U', w.v2u_mod_id, w.org_mod_id) mod_id
+            , DECODE(w.change_type, 'U', NULL, w.org_mod_data) mod_data
+
+            , DECODE(w.change_type, '-', w.org_tpro_kod, w.v2u_tpro_kod) tpro_kod
+            , DECODE(w.change_type, 'I', NULL, w.org_czy_wielokrotne) czy_wielokrotne
+            , DECODE(w.change_type, 'I', NULL, w.org_name) name
+            , DECODE(w.change_type, 'I', NULL, w.org_skrocony_opis) skrocony_opis
+            , DECODE(w.change_type, 'I', NULL, w.org_short_description) short_description
+            , DECODE(w.change_type, '-', w.org_jed_org_kod_biorca, w.v2u_jed_org_kod_biorca) jed_org_kod_biorca
+            , DECODE(w.change_type, '-', w.org_jzk_kod, w.v2u_jzk_kod) jzk_kod
+            , DECODE(w.change_type, 'I', NULL, w.org_kod_sok) kod_sok
+            , DECODE(w.change_type, 'I', NULL, w.org_opis) opis
+            , DECODE(w.change_type, 'I', NULL, w.org_description) description
+            , DECODE(w.change_type, 'I', NULL, w.org_literatura) literatura
+            , DECODE(w.change_type, 'I', NULL, w.org_bibliography) bibliography
+            , DECODE(w.change_type, 'I', NULL, w.org_efekty_uczenia) efekty_uczenia
+            , DECODE(w.change_type, 'I', NULL, w.org_efekty_uczenia_ang) efekty_uczenia_ang
+            , DECODE(w.change_type, 'I', NULL, w.org_kryteria_oceniania) kryteria_oceniania
+            , DECODE(w.change_type, 'I', NULL, w.org_kryteria_oceniania_ang) kryteria_oceniania_ang
+            , DECODE(w.change_type, 'I', NULL, w.org_praktyki_zawodowe) praktyki_zawodowe
+            , DECODE(w.change_type, 'I', NULL, w.org_praktyki_zawodowe_ang) praktyki_zawodowe_ang
+            , DECODE(w.change_type, 'I', NULL, w.org_url) url
+            , DECODE(w.change_type, 'I', NULL, w.org_kod_isced) kod_isced
+            , DECODE(w.change_type, 'I', NULL, w.org_nazwa_pol) nazwa_pol
+            , DECODE(w.change_type, 'I', NULL, w.org_guid) guid
+            , DECODE(w.change_type, 'I', NULL, w.org_pw_nazwa_supl) pw_nazwa_supl
+            , DECODE(w.change_type, 'I', NULL, w.org_pw_nazwa_supl_ang) pw_nazwa_supl_ang
+
+            , w.change_type
+            , DECODE(w.change_type, 'I', w.safe_to_insert
+                                  , 'U', w.safe_to_update
+                                  ,  0
+              ) safe_to_change
 
             , w.dbg_subj_codes
             , w.dbg_map_subj_codes
@@ -256,44 +381,12 @@ USING
             , w.dbg_subj_names
             , w.dbg_subj_credit_kinds
             , w.dbg_prz_kody
+            , w.dbg_values_ok
             , w.dbg_unique_match
             , w.dbg_matched
             , w.dbg_missing
             , w.dbg_mapped
-            ---
-            , CASE
-                WHEN
-                    -- ensure that
-                    -- we have target subject code
-                        w.map_subj_code IS NOT NULL
-                    AND w.dbg_map_subj_codes = 1
-                    AND w.dbg_subj_codes > 0
-                    -- maps for all instances existed but there were no
-                    -- corresponding subject in target system
-                    AND w.dbg_matched = 0
-                    AND w.dbg_missing > 0
-                    AND w.dbg_mapped = w.dbg_missing
-                    -- all the instances were consistent
-                    AND w.dbg_languages = 1
-                    AND w.dbg_org_units <= 1
-                    AND w.dbg_org_unit_recipients <= 1
-                    AND w.dbg_faculty_codes = 1
-                    AND w.dbg_subj_names = 1
-                    AND w.dbg_subj_credit_kinds = 1
-                    -- and we have correct tpro_kod value
-                    AND V2u_Get.Tpro_Kod(
-                          subj_credit_kind => w.subj_credit_kind
-                        , subj_grades => w.subj_grades
-                        ) <> '?'
-                THEN 1
-                ELSE 0
-                END safe_to_add
         FROM w w
-        LEFT JOIN v2u_dz_przedmioty przedmioty
-            ON  (
-                        dbg_unique_match = 1
-                    AND przedmioty.kod = w.prz_kod
-                )
     ) src
 ON  (
             tgt.pk_subject = src.pk_subject
@@ -301,9 +394,7 @@ ON  (
     )
 WHEN NOT MATCHED THEN
     INSERT
-        ( job_uuid
-        , pk_subject
-        , kod
+        ( kod
         , nazwa
         , jed_org_kod
         , utw_id
@@ -334,6 +425,10 @@ WHEN NOT MATCHED THEN
         , guid
         , pw_nazwa_supl
         , pw_nazwa_supl_ang
+        -- KEY
+        , job_uuid
+        , pk_subject
+        -- DBG
         , dbg_subj_codes
         , dbg_map_subj_codes
         , dbg_languages
@@ -343,16 +438,17 @@ WHEN NOT MATCHED THEN
         , dbg_subj_names
         , dbg_subj_credit_kinds
         , dbg_prz_kody
+        , dbg_values_ok
         , dbg_unique_match
         , dbg_matched
         , dbg_missing
         , dbg_mapped
-        , safe_to_add
+        -- INF
+        , change_type
+        , safe_to_change
         )
     VALUES
-        ( src.job_uuid
-        , src.pk_subject
-        , src.kod
+        ( src.kod
         , src.nazwa
         , src.jed_org_kod
         , src.utw_id
@@ -383,6 +479,10 @@ WHEN NOT MATCHED THEN
         , src.guid
         , src.pw_nazwa_supl
         , src.pw_nazwa_supl_ang
+        -- KEY
+        , src.job_uuid
+        , src.pk_subject
+        -- DBG
         , src.dbg_subj_codes
         , src.dbg_map_subj_codes
         , src.dbg_languages
@@ -392,11 +492,14 @@ WHEN NOT MATCHED THEN
         , src.dbg_subj_names
         , src.dbg_subj_credit_kinds
         , src.dbg_prz_kody
+        , src.dbg_values_ok
         , src.dbg_unique_match
         , src.dbg_matched
         , src.dbg_missing
         , src.dbg_mapped
-        , src.safe_to_add
+        -- INF
+        , src.change_type
+        , src.safe_to_change
         )
 WHEN MATCHED THEN
     UPDATE SET
@@ -431,6 +534,10 @@ WHEN MATCHED THEN
         , tgt.guid = src.guid
         , tgt.pw_nazwa_supl = src.pw_nazwa_supl
         , tgt.pw_nazwa_supl_ang = src.pw_nazwa_supl_ang
+        -- KEY
+--        , tgt.job_uuid = src.job_uuid
+--        , tgt.pk_subject = src.pk_subject
+        -- DBG
         , tgt.dbg_subj_codes = src.dbg_subj_codes
         , tgt.dbg_map_subj_codes = src.dbg_map_subj_codes
         , tgt.dbg_languages = src.dbg_languages
@@ -440,11 +547,14 @@ WHEN MATCHED THEN
         , tgt.dbg_subj_names = src.dbg_subj_names
         , tgt.dbg_subj_credit_kinds = src.dbg_subj_credit_kinds
         , tgt.dbg_prz_kody = src.dbg_prz_kody
+        , tgt.dbg_values_ok = src.dbg_values_ok
         , tgt.dbg_unique_match = src.dbg_unique_match
         , tgt.dbg_matched = src.dbg_matched
         , tgt.dbg_missing = src.dbg_missing
         , tgt.dbg_mapped = src.dbg_mapped
-        , tgt.safe_to_add = src.safe_to_add
+        -- INF
+        , tgt.change_type = src.change_type
+        , tgt.safe_to_change = src.safe_to_change
 ;
 
 COMMIT;

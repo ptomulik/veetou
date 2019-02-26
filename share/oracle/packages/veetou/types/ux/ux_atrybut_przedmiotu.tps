@@ -3,14 +3,13 @@ CREATE OR REPLACE TYPE V2u_Ux_Atrybut_Przedmiotu_t
     ( job_uuid RAW(16)
     , pk_subject VARCHAR2(32 CHAR)
     , pk_attribute VARCHAR2(20 CHAR)
-    --
-    , subj_codes V2u_Subj_20Codes_t
-    , rev_subj_codes V2u_Subj_20Codes_t
     -- DBG
     , dbg_mapped NUMBER(5)
     , dbg_map_subj_codes NUMBER(5)
     , dbg_subj_codes NUMBER(5)
+    , dbg_subj_codes_tab V2u_Subj_20Codes_t
     , dbg_rev_subj_codes NUMBER(5)
+    , dbg_rev_subj_codes_tab V2u_Subj_20Codes_t
     , dbg_ids NUMBER(5)
     , dbg_unique_match NUMBER(1)
     -- INF
@@ -30,16 +29,17 @@ CREATE OR REPLACE TYPE V2u_Ux_Atrybut_Przedmiotu_t
             , wartosc IN CLOB
             , wartosc_ang IN CLOB
             , id IN VARCHAR2
+            -- KEY
             , job_uuid IN RAW
             , pk_subject IN VARCHAR2
             , pk_attribute IN VARCHAR2
-            , subj_codes IN V2u_Subj_20Codes_t
-            , rev_subj_codes IN V2u_Subj_20Codes_t
             -- DBG
             , dbg_mapped IN NUMBER
             , dbg_map_subj_codes IN NUMBER
             , dbg_subj_codes IN NUMBER
+            , dbg_subj_codes_tab IN V2u_Subj_20Codes_t
             , dbg_rev_subj_codes IN NUMBER
+            , dbg_rev_subj_codes_tab IN V2u_Subj_20Codes_t
             , dbg_ids IN NUMBER
             , dbg_unique_match IN NUMBER
             -- INF
@@ -60,16 +60,17 @@ CREATE OR REPLACE TYPE V2u_Ux_Atrybut_Przedmiotu_t
             , wartosc IN CLOB
             , wartosc_ang IN CLOB
             , id IN VARCHAR2
+            -- KEY
             , job_uuid IN RAW
             , pk_subject IN VARCHAR2
             , pk_attribute IN VARCHAR2
-            , subj_codes IN V2u_Subj_20Codes_t
-            , rev_subj_codes IN V2u_Subj_20Codes_t
             -- DBG
             , dbg_mapped IN NUMBER
             , dbg_map_subj_codes IN NUMBER
             , dbg_subj_codes IN NUMBER
+            , dbg_subj_codes_tab IN V2u_Subj_20Codes_t
             , dbg_rev_subj_codes IN NUMBER
+            , dbg_rev_subj_codes_tab IN V2u_Subj_20Codes_t
             , dbg_ids IN NUMBER
             , dbg_unique_match IN NUMBER
             -- INF

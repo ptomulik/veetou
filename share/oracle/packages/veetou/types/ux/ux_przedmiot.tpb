@@ -32,8 +32,10 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_t AS
             , guid IN VARCHAR2
             , pw_nazwa_supl IN VARCHAR2
             , pw_nazwa_supl_ang IN VARCHAR2
+            -- KEY
             , job_uuid IN RAW
             , pk_subject IN VARCHAR2
+            -- DBG
             , dbg_subj_codes IN NUMBER
             , dbg_map_subj_codes IN NUMBER
             , dbg_languages IN NUMBER
@@ -43,11 +45,14 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_t AS
             , dbg_subj_names IN NUMBER
             , dbg_subj_credit_kinds IN NUMBER
             , dbg_prz_kody IN NUMBER
+            , dbg_values_ok IN NUMBER
             , dbg_unique_match IN NUMBER
             , dbg_missing IN NUMBER
             , dbg_matched IN NUMBER
             , dbg_mapped IN NUMBER
-            , safe_to_add IN NUMBER
+            -- INF
+            , change_type IN CHAR
+            , safe_to_change IN NUMBER
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -83,8 +88,10 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_t AS
             , guid => guid
             , pw_nazwa_supl => pw_nazwa_supl
             , pw_nazwa_supl_ang => pw_nazwa_supl_ang
+            -- KEY
             , job_uuid => job_uuid
             , pk_subject => pk_subject
+            -- DBG
             , dbg_subj_codes => dbg_subj_codes
             , dbg_map_subj_codes => dbg_map_subj_codes
             , dbg_languages => dbg_languages
@@ -94,11 +101,14 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_t AS
             , dbg_subj_names => dbg_subj_names
             , dbg_subj_credit_kinds => dbg_subj_credit_kinds
             , dbg_prz_kody => dbg_prz_kody
+            , dbg_values_ok => dbg_values_ok
             , dbg_unique_match => dbg_unique_match
             , dbg_missing => dbg_missing
             , dbg_matched => dbg_matched
             , dbg_mapped => dbg_mapped
-            , safe_to_add => safe_to_add
+            -- INF
+            , change_type => change_type
+            , safe_to_change => safe_to_change
             );
         RETURN;
     END;
@@ -136,8 +146,10 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_t AS
             , guid IN VARCHAR2
             , pw_nazwa_supl IN VARCHAR2
             , pw_nazwa_supl_ang IN VARCHAR2
+            -- KEY
             , job_uuid IN RAW
             , pk_subject IN VARCHAR2
+            -- DBG
             , dbg_subj_codes IN NUMBER
             , dbg_map_subj_codes IN NUMBER
             , dbg_languages IN NUMBER
@@ -147,11 +159,14 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_t AS
             , dbg_subj_names IN NUMBER
             , dbg_subj_credit_kinds IN NUMBER
             , dbg_prz_kody IN NUMBER
+            , dbg_values_ok IN NUMBER
             , dbg_unique_match IN NUMBER
             , dbg_missing IN NUMBER
             , dbg_matched IN NUMBER
             , dbg_mapped IN NUMBER
-            , safe_to_add IN NUMBER
+            -- INF
+            , change_type IN CHAR
+            , safe_to_change IN NUMBER
             )
     IS
     BEGIN
@@ -188,8 +203,10 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_t AS
             , pw_nazwa_supl => pw_nazwa_supl
             , pw_nazwa_supl_ang => pw_nazwa_supl_ang
             );
+        -- KEY
         SELF.job_uuid := job_uuid;
         SELF.pk_subject := pk_subject;
+        -- DBG
         SELF.dbg_subj_codes := dbg_subj_codes;
         SELF.dbg_map_subj_codes := dbg_map_subj_codes;
         SELF.dbg_languages := dbg_languages;
@@ -199,11 +216,14 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_t AS
         SELF.dbg_subj_names := dbg_subj_names;
         SELF.dbg_subj_credit_kinds := dbg_subj_credit_kinds;
         SELF.dbg_prz_kody := dbg_prz_kody;
+        SELF.dbg_values_ok := dbg_values_ok;
         SELF.dbg_unique_match := dbg_unique_match;
         SELF.dbg_missing := dbg_missing;
         SELF.dbg_matched := dbg_matched;
         SELF.dbg_mapped := dbg_mapped;
-        SELF.safe_to_add := safe_to_add;
+        -- INF
+        SELF.change_type := change_type;
+        SELF.safe_to_change := safe_to_change;
     END;
 END;
 -- vim: set ft=sql ts=4 sw=4 et:

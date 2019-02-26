@@ -2,6 +2,7 @@ CREATE OR REPLACE TYPE V2u_Ux_Przedmiot_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Dz_Przedmiot_B_t
     ( job_uuid RAW(16)
     , pk_subject VARCHAR2(32 CHAR)
+    -- DBG
     , dbg_subj_codes NUMBER(5)
     , dbg_map_subj_codes NUMBER(5)
     , dbg_languages NUMBER(5)
@@ -11,11 +12,14 @@ CREATE OR REPLACE TYPE V2u_Ux_Przedmiot_t
     , dbg_subj_names NUMBER(5)
     , dbg_subj_credit_kinds NUMBER(5)
     , dbg_prz_kody NUMBER(5)
+    , dbg_values_ok NUMBER(1)
     , dbg_unique_match NUMBER(1)
     , dbg_missing NUMBER(5)
     , dbg_matched NUMBER(5)
     , dbg_mapped NUMBER(5)
-    , safe_to_add NUMBER(1)
+    -- INF
+    , change_type CHAR(1)
+    , safe_to_change NUMBER(1)
 
     , CONSTRUCTOR FUNCTION V2u_Ux_Przedmiot_t(
               SELF IN OUT NOCOPY V2u_Ux_Przedmiot_t
@@ -50,8 +54,10 @@ CREATE OR REPLACE TYPE V2u_Ux_Przedmiot_t
             , guid IN VARCHAR2
             , pw_nazwa_supl IN VARCHAR2
             , pw_nazwa_supl_ang IN VARCHAR2
+            -- KEY
             , job_uuid IN RAW
             , pk_subject IN VARCHAR2
+            -- DBG
             , dbg_subj_codes IN NUMBER
             , dbg_map_subj_codes IN NUMBER
             , dbg_languages IN NUMBER
@@ -61,11 +67,14 @@ CREATE OR REPLACE TYPE V2u_Ux_Przedmiot_t
             , dbg_subj_names IN NUMBER
             , dbg_subj_credit_kinds IN NUMBER
             , dbg_prz_kody IN NUMBER
+            , dbg_values_ok IN NUMBER
             , dbg_unique_match IN NUMBER
             , dbg_missing IN NUMBER
             , dbg_matched IN NUMBER
             , dbg_mapped IN NUMBER
-            , safe_to_add IN NUMBER
+            -- INF
+            , change_type IN CHAR
+            , safe_to_change IN NUMBER
             ) RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
@@ -101,8 +110,10 @@ CREATE OR REPLACE TYPE V2u_Ux_Przedmiot_t
             , guid IN VARCHAR2
             , pw_nazwa_supl IN VARCHAR2
             , pw_nazwa_supl_ang IN VARCHAR2
+            -- KEY
             , job_uuid IN RAW
             , pk_subject IN VARCHAR2
+            -- DBG
             , dbg_subj_codes IN NUMBER
             , dbg_map_subj_codes IN NUMBER
             , dbg_languages IN NUMBER
@@ -112,11 +123,14 @@ CREATE OR REPLACE TYPE V2u_Ux_Przedmiot_t
             , dbg_subj_names IN NUMBER
             , dbg_subj_credit_kinds IN NUMBER
             , dbg_prz_kody IN NUMBER
+            , dbg_values_ok IN NUMBER
             , dbg_unique_match IN NUMBER
             , dbg_missing IN NUMBER
             , dbg_matched IN NUMBER
             , dbg_mapped IN NUMBER
-            , safe_to_add IN NUMBER
+            -- INF
+            , change_type IN CHAR
+            , safe_to_change IN NUMBER
             )
     )
 ;

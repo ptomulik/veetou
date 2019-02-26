@@ -48,20 +48,6 @@ USING
                             subjects.id = ss_j.subject_id
                         AND subjects.job_uuid = ss_j.job_uuid
                     )
-            LEFT JOIN v2u_ko_matched_przedm_j ma_przedm_j
-                ON  (
-                            ma_przedm_j.subject_id = ss_j.subject_id
-                        AND ma_przedm_j.specialty_id = ss_j.specialty_id
-                        AND ma_przedm_j.semester_id = ss_j.semester_id
-                        AND ma_przedm_j.job_uuid = ss_j.job_uuid
-                    )
-            LEFT JOIN v2u_ko_missing_przedm_j mi_przedm_j
-                ON  (
-                            mi_przedm_j.subject_id = ss_j.subject_id
-                        AND mi_przedm_j.specialty_id = ss_j.specialty_id
-                        AND mi_przedm_j.semester_id = ss_j.semester_id
-                        AND mi_przedm_j.job_uuid = ss_j.job_uuid
-                    )
             LEFT JOIN v2u_ko_subject_map_j sm_j
                 ON  (
                             sm_j.subject_id = ss_j.subject_id
@@ -140,7 +126,7 @@ USING
             FROM u_0 u_0
         ),
         v AS
-        (
+        ( -- determine our (v2u_*) values of certain fields
             SELECT
                   u.*
                 , u.coalesced_subj_code pk_subject
@@ -152,9 +138,11 @@ USING
                     SELECT
                         LISTAGG(SUBSTR(VALUE(t), 1, 32), ', ')
                         WITHIN GROUP (ORDER BY VALUE(t))
-                    FROM TABLE(DECODE(u.dbg_rev_subj_codes, 0
-                                    , u.subj_codes
-                                    , u.rev_subj_codes)) t
+                    FROM TABLE(
+                            DECODE(u.dbg_rev_subj_codes, 0
+                                 , u.subj_codes
+                                 , u.rev_subj_codes)
+                        ) t
                   )) v2u_wartosc
                 , CASE
                     WHEN
@@ -238,6 +226,9 @@ USING
             , DECODE(w.change_type, 'I', NULL, w.org_wartosc_ang) wartosc_ang
             -- id appears in w.*
 
+            , w.subj_codes dbg_subj_codes_tab
+            , w.rev_subj_codes dbg_rev_subj_codes_tab
+
             , DECODE(w.change_type, 'I', w.safe_to_insert,
                                     'U', w.safe_to_update,
                                      0
@@ -266,13 +257,13 @@ WHEN NOT MATCHED THEN
         , job_uuid
         , pk_subject
         , pk_attribute
-        , subj_codes
-        , rev_subj_codes
         -- DBG
         , dbg_mapped
         , dbg_map_subj_codes
         , dbg_subj_codes
+        , dbg_subj_codes_tab
         , dbg_rev_subj_codes
+        , dbg_rev_subj_codes_tab
         , dbg_ids
         , dbg_unique_match
         -- INF
@@ -294,13 +285,13 @@ WHEN NOT MATCHED THEN
         , src.job_uuid
         , src.pk_subject
         , src.pk_attribute
-        , src.subj_codes
-        , src.rev_subj_codes
         -- DBG
         , src.dbg_mapped
         , src.dbg_map_subj_codes
         , src.dbg_subj_codes
+        , src.dbg_subj_codes_tab
         , src.dbg_rev_subj_codes
+        , src.dbg_rev_subj_codes_tab
         , src.dbg_ids
         , src.dbg_unique_match
         -- INF
@@ -323,13 +314,13 @@ WHEN MATCHED THEN
 --        , tgt.job_uuid = src.job_uuid
 --        , tgt.pk_subject = src.pk_subject
 --        , tgt.pk_attribute = src.pk_attribute
-        , tgt.subj_codes = src.subj_codes
-        , tgt.rev_subj_codes = src.rev_subj_codes
         -- DBG
         , tgt.dbg_mapped = src.dbg_mapped
         , tgt.dbg_map_subj_codes = src.dbg_map_subj_codes
         , tgt.dbg_subj_codes = src.dbg_subj_codes
+        , tgt.dbg_subj_codes_tab = src.dbg_subj_codes_tab
         , tgt.dbg_rev_subj_codes = src.dbg_rev_subj_codes
+        , tgt.dbg_rev_subj_codes_tab = src.dbg_rev_subj_codes_tab
         , tgt.dbg_ids = src.dbg_ids
         , tgt.dbg_unique_match = src.dbg_unique_match
         -- INF
