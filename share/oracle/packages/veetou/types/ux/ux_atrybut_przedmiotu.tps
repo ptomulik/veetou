@@ -5,15 +5,17 @@ CREATE OR REPLACE TYPE V2u_Ux_Atrybut_Przedmiotu_t
     , pk_attribute VARCHAR2(20 CHAR)
     --
     , subj_codes V2u_Subj_20Codes_t
-    , all_subj_codes V2u_Subj_20Codes_t
+    , rev_subj_codes V2u_Subj_20Codes_t
     -- DBG
+    , dbg_mapped NUMBER(5)
     , dbg_map_subj_codes NUMBER(5)
     , dbg_subj_codes NUMBER(5)
-    , dbg_all_subj_codes NUMBER(5)
+    , dbg_rev_subj_codes NUMBER(5)
     , dbg_ids NUMBER(5)
+    , dbg_unique_match NUMBER(1)
     -- INF
     , change_type CHAR(1)
-    , safe_to_add NUMBER(1)
+    , safe_to_change NUMBER(1)
 
     , CONSTRUCTOR FUNCTION V2u_Ux_Atrybut_Przedmiotu_t(
               SELF IN OUT NOCOPY V2u_Ux_Atrybut_Przedmiotu_t
@@ -32,15 +34,17 @@ CREATE OR REPLACE TYPE V2u_Ux_Atrybut_Przedmiotu_t
             , pk_subject IN VARCHAR2
             , pk_attribute IN VARCHAR2
             , subj_codes IN V2u_Subj_20Codes_t
-            , all_subj_codes IN V2u_Subj_20Codes_t
+            , rev_subj_codes IN V2u_Subj_20Codes_t
             -- DBG
+            , dbg_mapped IN NUMBER
             , dbg_map_subj_codes IN NUMBER
             , dbg_subj_codes IN NUMBER
-            , dbg_all_subj_codes IN NUMBER
+            , dbg_rev_subj_codes IN NUMBER
             , dbg_ids IN NUMBER
+            , dbg_unique_match IN NUMBER
             -- INF
             , change_type IN CHAR
-            , safe_to_add IN NUMBER
+            , safe_to_change IN NUMBER
             ) RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
@@ -60,15 +64,17 @@ CREATE OR REPLACE TYPE V2u_Ux_Atrybut_Przedmiotu_t
             , pk_subject IN VARCHAR2
             , pk_attribute IN VARCHAR2
             , subj_codes IN V2u_Subj_20Codes_t
-            , all_subj_codes IN V2u_Subj_20Codes_t
+            , rev_subj_codes IN V2u_Subj_20Codes_t
             -- DBG
+            , dbg_mapped IN NUMBER
             , dbg_map_subj_codes IN NUMBER
             , dbg_subj_codes IN NUMBER
-            , dbg_all_subj_codes IN NUMBER
+            , dbg_rev_subj_codes IN NUMBER
             , dbg_ids IN NUMBER
+            , dbg_unique_match IN NUMBER
             -- INF
             , change_type IN CHAR
-            , safe_to_add IN NUMBER
+            , safe_to_change IN NUMBER
             )
     );
 /
