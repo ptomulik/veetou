@@ -282,8 +282,8 @@ USING
         FROM w w
         LEFT JOIN v2u_dz_programy_osob programy_osob
             ON  (
-                        programy_osob.id = w.matched_id
-                    AND w.dbg_unique_match = 1
+                        w.dbg_unique_match = 1
+                    AND programy_osob.id = w.matched_id
                 )
     ) src
 ON  (

@@ -8,7 +8,7 @@ USING
                 , COALESCE(
                       subject_map.map_subj_code
                     , subjects.subj_code
-                  ) pk_subject
+                  ) coalesced_subj_code
                 , SET(CAST(
                         COLLECT(subjects.subj_code)
                         AS V2u_Vchars1K_t
@@ -56,9 +56,8 @@ USING
         (
             SELECT
                   u.job_uuid
-                , u.pk_subject
+                , u.coalesced_subj_code
 
-                  -- "unaggregate'
                 , ( SELECT SUBSTR(VALUE(t), 1, 20)
                     FROM TABLE(u.map_subj_codes) t
                     WHERE ROWNUM <= 1
@@ -88,8 +87,9 @@ USING
             FROM u u
         ),
         w AS
-        ( -- look back into subject_map to find all codes that we gonna map
-          -- onto map_subj_code
+        ( -- look back into v2u_subject_map to find all codes that we map onto
+          -- map_subj_code; this may yield more subjects than we already found
+          -- from v2u_ko_subject_semesters_j + v2u_ko_subjects
             SELECT
                   v.map_subj_code
                 , SET(CAST(
@@ -98,67 +98,107 @@ USING
                   )) all_subj_codes
                 , COUNT(DISTINCT subject_map.subj_code) dbg_all_subj_codes
             FROM v v
-            INNER JOIN v2u_subject_map subject_map
+            LEFT JOIN v2u_subject_map subject_map
                 ON  (
                             subject_map.map_subj_code = v.map_subj_code
                     )
             GROUP BY
                     v.map_subj_code
+        ),
+        x AS
+        (
+            SELECT
+                  v.*
+                , v.coalesced_subj_code pk_subject
+                , 'KOD_WYDZ' pk_attribute
+                , 'KOD_WYDZ' v2u_tatr_kod
+                , v.map_subj_code v2u_prz_kod
+                , V2u_Get.Utw_Id(v.job_uuid) v2u_utw_id
+                , V2u_Get.Mod_Id(v.job_uuid) v2u_mod_id
+                , CAST(MULTISET(
+                    SELECT(SUBSTR(VALUE(t), 1, 32))
+                    FROM TABLE(w.all_subj_codes) t
+                    WHERE VALUE(t) IS NOT NULL AND ROWNUM <= 20
+                  ) AS V2u_Subj_20Codes_t) all_subj_codes
+                , w.dbg_all_subj_codes
+                , TO_CLOB(( SELECT
+                        LISTAGG(SUBSTR(VALUE(t), 1, 32), ', ')
+                        WITHIN GROUP (ORDER BY VALUE(t))
+                    FROM TABLE(w.all_subj_codes) t
+                  )) v2u_wartosc
+                , CASE
+                    WHEN
+                            v.id IS NOT NULL
+                        AND v.dbg_ids = 1
+                        AND v.dbg_mapped > 0
+                    THEN 1
+                    ELSE 0
+                  END dbg_unique_match
+            FROM v v
+            INNER JOIN w w
+                ON  (
+                            v.map_subj_code = w.map_subj_code
+                    )
         )
         SELECT
-              v.*
-            , V2u_Get.Utw_Id(v.job_uuid) utw_id
-            , V2u_Get.Mod_Id(v.job_uuid) mod_id
-            , 'KOD_WYDZ' tatr_kod
-            , v.map_subj_code prz_kod
-            , CAST(MULTISET(
-                SELECT(SUBSTR(VALUE(t), 1, 32))
-                FROM TABLE(w.all_subj_codes) t
-                WHERE ROWNUM <= 20
-              ) AS V2u_Subj_20Codes_t) all_subj_codes
-            , COALESCE(w.dbg_all_subj_codes, 0) dbg_all_subj_codes
-            , ( SELECT
-                    LISTAGG(SUBSTR(VALUE(t), 1, 32), ', ')
-                    WITHIN GROUP (ORDER BY VALUE(t))
-                FROM TABLE(w.all_subj_codes) t
-              ) wartosc
+              x.*
+
+            , DECODE(x.dbg_unique_match, 1, ap.tatr_kod, x.v2u_tatr_kod) tatr_kod
+            , DECODE(x.dbg_unique_match, 1, ap.prz_kod, x.v2u_prz_kod) prz_kod
+            , DECODE(x.dbg_unique_match, 1, ap.wart_lst_id, NULL) wart_lst_id
+            , DECODE(x.dbg_unique_match, 1, ap.prz_kod_rel, NULL) prz_kod_rel
+            , DECODE(x.dbg_unique_match, 1, ap.utw_id, x.v2u_utw_id) utw_id
+            , DECODE(x.dbg_unique_match, 1, ap.utw_data, NULL) utw_data
+            , DECODE(x.dbg_unique_match, 1, ap.mod_id, x.v2u_mod_id) mod_id
+            , DECODE(x.dbg_unique_match, 1, ap.mod_data, NULL) mod_data
+            , DECODE(x.dbg_unique_match, 1, ap.wartosc, x.v2u_wartosc) wartosc
+            , DECODE(x.dbg_unique_match, 1, ap.wartosc_ang, NULL) wartosc_ang
+            -- id appears in x.*
+
             , CASE
                 WHEN
-                        v.map_subj_code IS NOT NULL
-                    AND v.dbg_map_subj_codes = 1
-                    AND v.dbg_subj_codes > 0
-                    AND v.dbg_subj_codes = (SELECT COUNT(1) FROM TABLE(v.subj_codes))
-                    AND w.dbg_all_subj_codes > 0
-                    AND w.dbg_all_subj_codes = (SELECT COUNT(1) FROM TABLE(w.all_subj_codes))
-                    AND v.dbg_mapped > 0
-                    AND v.dbg_ids = 0
+                        x.map_subj_code IS NOT NULL
+                    AND x.dbg_map_subj_codes = 1
+                    AND x.dbg_subj_codes > 0
+                    --AND x.dbg_subj_codes = (SELECT COUNT(1) FROM TABLE(x.subj_codes))
+                    AND x.dbg_all_subj_codes > 0
+                    --AND x.dbg_all_subj_codes = (SELECT COUNT(1) FROM TABLE(x.all_subj_codes))
+                    AND x.id IS NOT NULL
+                    AND x.dbg_ids = 0
+                    AND x.dbg_mapped > 0
                 THEN 1
                 ELSE 0
               END safe_to_add
-        FROM v v
-        LEFT JOIN w w
+        FROM x x
+        LEFT JOIN v2u_dz_atrybuty_przedmiotow ap
             ON  (
-                    v.map_subj_code = w.map_subj_code
+                        x.dbg_unique_match = 1
+                    AND ap.id = x.id
                 )
     ) src
 ON  (
             tgt.pk_subject = src.pk_subject
-        AND tgt.tatr_kod = src.tatr_kod
+        AND tgt.pk_attribute = src.pk_attribute
         AND tgt.job_uuid = src.job_uuid
     )
 WHEN NOT MATCHED THEN
     INSERT
-        (
-          tatr_kod
+        ( tatr_kod
         , prz_kod
+        , wart_lst_id
+        , prz_kod_rel
         , utw_id
+        , utw_data
         , mod_id
+        , mod_data
         , wartosc
+        , wartosc_ang
         , id
         , job_uuid
+        , pk_subject
+        , pk_attribute
         , subj_codes
         , all_subj_codes
-        , pk_subject
         -- DBG
         , dbg_map_subj_codes
         , dbg_subj_codes
@@ -167,17 +207,22 @@ WHEN NOT MATCHED THEN
         , safe_to_add
         )
     VALUES
-        (
-          src.tatr_kod
+        ( src.tatr_kod
         , src.prz_kod
+        , src.wart_lst_id
+        , src.prz_kod_rel
         , src.utw_id
+        , src.utw_data
         , src.mod_id
+        , src.mod_data
         , src.wartosc
+        , src.wartosc_ang
         , src.id
         , src.job_uuid
+        , src.pk_subject
+        , src.pk_attribute
         , src.subj_codes
         , src.all_subj_codes
-        , src.pk_subject
         -- DBG
         , src.dbg_map_subj_codes
         , src.dbg_subj_codes
@@ -187,11 +232,20 @@ WHEN NOT MATCHED THEN
         )
 WHEN MATCHED THEN
     UPDATE SET
-          tgt.prz_kod = src.prz_kod
+          tgt.tatr_kod = src.tatr_kod
+        , tgt.prz_kod = src.prz_kod
+        , tgt.wart_lst_id = src.wart_lst_id
+        , tgt.prz_kod_rel = src.prz_kod_rel
         , tgt.utw_id = src.utw_id
+        , tgt.utw_data = src.utw_data
         , tgt.mod_id = src.mod_id
+        , tgt.mod_data = src.mod_data
         , tgt.wartosc = src.wartosc
+        , tgt.wartosc_ang = src.wartosc_ang
         , tgt.id = src.id
+--        , tgt.job_uuid = src.job_uuid
+--        , tgt.pk_subject = src.pk_subject
+--        , tgt.pk_attribute = src.pk_attribute
         , tgt.subj_codes = src.subj_codes
         , tgt.all_subj_codes = src.all_subj_codes
         -- DBG

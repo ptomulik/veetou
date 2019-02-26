@@ -13,9 +13,10 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Atrybut_Przedmiotu_t AS
             , wartosc_ang IN CLOB
             , id IN VARCHAR2
             , job_uuid IN RAW
+            , pk_subject IN VARCHAR2
+            , pk_attribute IN VARCHAR2
             , subj_codes IN V2u_Subj_20Codes_t
             , all_subj_codes IN V2u_Subj_20Codes_t
-            , pk_subject IN VARCHAR2
             -- DBG
             , dbg_map_subj_codes IN INTEGER
             , dbg_subj_codes IN INTEGER
@@ -38,9 +39,10 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Atrybut_Przedmiotu_t AS
             , wartosc_ang => wartosc_ang
             , id => id
             , job_uuid => job_uuid
+            , pk_subject => pk_subject
+            , pk_attribute => pk_attribute
             , subj_codes => subj_codes
             , all_subj_codes => all_subj_codes
-            , pk_subject => pk_subject
             , dbg_map_subj_codes => dbg_map_subj_codes
             , dbg_subj_codes => dbg_subj_codes
             , dbg_all_subj_codes => dbg_all_subj_codes
@@ -64,9 +66,10 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Atrybut_Przedmiotu_t AS
             , wartosc_ang IN CLOB
             , id IN VARCHAR2
             , job_uuid IN RAW
+            , pk_subject IN VARCHAR2
+            , pk_attribute IN VARCHAR2
             , subj_codes IN V2u_Subj_20Codes_t
             , all_subj_codes IN V2u_Subj_20Codes_t
-            , pk_subject IN VARCHAR2
             -- DBG
             , dbg_map_subj_codes IN INTEGER
             , dbg_subj_codes IN INTEGER
@@ -90,9 +93,10 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Atrybut_Przedmiotu_t AS
             , id => id
         );
         SELF.job_uuid := job_uuid;
+        SELF.pk_subject := pk_subject;
+        SELF.pk_attribute := pk_attribute;
         SELF.subj_codes := subj_codes;
         SELF.all_subj_codes := all_subj_codes;
-        SELF.pk_subject := pk_subject;
         SELF.dbg_map_subj_codes := dbg_map_subj_codes;
         SELF.dbg_subj_codes := dbg_subj_codes;
         SELF.dbg_all_subj_codes := dbg_all_subj_codes;

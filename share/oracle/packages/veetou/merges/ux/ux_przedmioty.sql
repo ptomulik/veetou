@@ -291,8 +291,8 @@ USING
         FROM w w
         LEFT JOIN v2u_dz_przedmioty przedmioty
             ON  (
-                        przedmioty.kod = w.prz_kod
-                    AND dbg_unique_match = 1
+                        dbg_unique_match = 1
+                    AND przedmioty.kod = w.prz_kod
                 )
     ) src
 ON  (

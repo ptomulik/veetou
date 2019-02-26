@@ -2,6 +2,8 @@ CREATE OR REPLACE TYPE V2u_Ux_Atrybut_Przedmiotu_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Dz_Atrybut_Przedmiotu_B_t
     ( job_uuid RAW(16)
     , pk_subject VARCHAR2(32 CHAR)
+    , pk_attribute VARCHAR2(20 CHAR)
+    --
     , subj_codes V2u_Subj_20Codes_t
     , all_subj_codes V2u_Subj_20Codes_t
     -- DBG
@@ -25,9 +27,10 @@ CREATE OR REPLACE TYPE V2u_Ux_Atrybut_Przedmiotu_t
             , wartosc_ang IN CLOB
             , id IN VARCHAR2
             , job_uuid IN RAW
+            , pk_subject IN VARCHAR2
+            , pk_attribute IN VARCHAR2
             , subj_codes IN V2u_Subj_20Codes_t
             , all_subj_codes IN V2u_Subj_20Codes_t
-            , pk_subject IN VARCHAR2
             -- DBG
             , dbg_map_subj_codes IN INTEGER
             , dbg_subj_codes IN INTEGER
@@ -50,9 +53,10 @@ CREATE OR REPLACE TYPE V2u_Ux_Atrybut_Przedmiotu_t
             , wartosc_ang IN CLOB
             , id IN VARCHAR2
             , job_uuid IN RAW
+            , pk_subject IN VARCHAR2
+            , pk_attribute IN VARCHAR2
             , subj_codes IN V2u_Subj_20Codes_t
             , all_subj_codes IN V2u_Subj_20Codes_t
-            , pk_subject IN VARCHAR2
             -- DBG
             , dbg_map_subj_codes IN INTEGER
             , dbg_subj_codes IN INTEGER
