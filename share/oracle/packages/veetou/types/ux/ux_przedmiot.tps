@@ -2,20 +2,20 @@ CREATE OR REPLACE TYPE V2u_Ux_Przedmiot_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Dz_Przedmiot_B_t
     ( job_uuid RAW(16)
     , pk_subject VARCHAR2(32 CHAR)
-    , dbg_subj_codes INTEGER
-    , dbg_map_subj_codes INTEGER
-    , dbg_languages INTEGER
-    , dbg_org_units INTEGER
-    , dbg_org_unit_recipients INTEGER
-    , dbg_faculty_codes INTEGER
-    , dbg_subj_names INTEGER
-    , dbg_subj_credit_kinds INTEGER
-    , dbg_prz_kody INTEGER
-    , dbg_unique_match INTEGER
-    , dbg_missing INTEGER
-    , dbg_matched INTEGER
-    , dbg_mapped INTEGER
-    , safe_to_add INTEGER
+    , dbg_subj_codes NUMBER(5)
+    , dbg_map_subj_codes NUMBER(5)
+    , dbg_languages NUMBER(5)
+    , dbg_org_units NUMBER(5)
+    , dbg_org_unit_recipients NUMBER(5)
+    , dbg_faculty_codes NUMBER(5)
+    , dbg_subj_names NUMBER(5)
+    , dbg_subj_credit_kinds NUMBER(5)
+    , dbg_prz_kody NUMBER(5)
+    , dbg_unique_match NUMBER(1)
+    , dbg_missing NUMBER(5)
+    , dbg_matched NUMBER(5)
+    , dbg_mapped NUMBER(5)
+    , safe_to_add NUMBER(1)
 
     , CONSTRUCTOR FUNCTION V2u_Ux_Przedmiot_t(
               SELF IN OUT NOCOPY V2u_Ux_Przedmiot_t
@@ -52,20 +52,20 @@ CREATE OR REPLACE TYPE V2u_Ux_Przedmiot_t
             , pw_nazwa_supl_ang IN VARCHAR2
             , job_uuid IN RAW
             , pk_subject IN VARCHAR2
-            , dbg_subj_codes IN INTEGER
-            , dbg_map_subj_codes IN INTEGER
-            , dbg_languages IN INTEGER
-            , dbg_org_units IN INTEGER
-            , dbg_org_unit_recipients IN INTEGER
-            , dbg_faculty_codes IN INTEGER
-            , dbg_subj_names IN INTEGER
-            , dbg_subj_credit_kinds IN INTEGER
-            , dbg_prz_kody IN INTEGER
-            , dbg_unique_match IN INTEGER
-            , dbg_missing IN INTEGER
-            , dbg_matched IN INTEGER
-            , dbg_mapped IN INTEGER
-            , safe_to_add IN INTEGER
+            , dbg_subj_codes IN NUMBER
+            , dbg_map_subj_codes IN NUMBER
+            , dbg_languages IN NUMBER
+            , dbg_org_units IN NUMBER
+            , dbg_org_unit_recipients IN NUMBER
+            , dbg_faculty_codes IN NUMBER
+            , dbg_subj_names IN NUMBER
+            , dbg_subj_credit_kinds IN NUMBER
+            , dbg_prz_kody IN NUMBER
+            , dbg_unique_match IN NUMBER
+            , dbg_missing IN NUMBER
+            , dbg_matched IN NUMBER
+            , dbg_mapped IN NUMBER
+            , safe_to_add IN NUMBER
             ) RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
@@ -103,20 +103,20 @@ CREATE OR REPLACE TYPE V2u_Ux_Przedmiot_t
             , pw_nazwa_supl_ang IN VARCHAR2
             , job_uuid IN RAW
             , pk_subject IN VARCHAR2
-            , dbg_subj_codes IN INTEGER
-            , dbg_map_subj_codes IN INTEGER
-            , dbg_languages IN INTEGER
-            , dbg_org_units IN INTEGER
-            , dbg_org_unit_recipients IN INTEGER
-            , dbg_faculty_codes IN INTEGER
-            , dbg_subj_names IN INTEGER
-            , dbg_subj_credit_kinds IN INTEGER
-            , dbg_prz_kody IN INTEGER
-            , dbg_unique_match IN INTEGER
-            , dbg_missing IN INTEGER
-            , dbg_matched IN INTEGER
-            , dbg_mapped IN INTEGER
-            , safe_to_add IN INTEGER
+            , dbg_subj_codes IN NUMBER
+            , dbg_map_subj_codes IN NUMBER
+            , dbg_languages IN NUMBER
+            , dbg_org_units IN NUMBER
+            , dbg_org_unit_recipients IN NUMBER
+            , dbg_faculty_codes IN NUMBER
+            , dbg_subj_names IN NUMBER
+            , dbg_subj_credit_kinds IN NUMBER
+            , dbg_prz_kody IN NUMBER
+            , dbg_unique_match IN NUMBER
+            , dbg_missing IN NUMBER
+            , dbg_matched IN NUMBER
+            , dbg_mapped IN NUMBER
+            , safe_to_add IN NUMBER
             )
     )
 ;

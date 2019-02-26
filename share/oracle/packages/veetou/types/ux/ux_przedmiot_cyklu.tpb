@@ -23,12 +23,12 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_Cyklu_t AS
             , job_uuid IN RAW
             , pk_subject IN VARCHAR2
             , pk_semester_code IN VARCHAR2
-            , dbg_map_subj_codes IN INTEGER
-            , dbg_subj_credit_kinds IN INTEGER
-            , dbg_matched IN INTEGER
-            , dbg_missing IN INTEGER
-            , dbg_mapped IN INTEGER
-            , safe_to_add INTEGER
+            , dbg_map_subj_codes IN NUMBER
+            , dbg_subj_credit_kinds IN NUMBER
+            , dbg_matched IN NUMBER
+            , dbg_missing IN NUMBER
+            , dbg_mapped IN NUMBER
+            , safe_to_add IN NUMBER
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -89,12 +89,12 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_Cyklu_t AS
             , job_uuid IN RAW
             , pk_subject IN VARCHAR2
             , pk_semester_code IN VARCHAR2
-            , dbg_map_subj_codes IN INTEGER
-            , dbg_subj_credit_kinds IN INTEGER
-            , dbg_matched IN INTEGER
-            , dbg_missing IN INTEGER
-            , dbg_mapped IN INTEGER
-            , safe_to_add INTEGER
+            , dbg_map_subj_codes IN NUMBER
+            , dbg_subj_credit_kinds IN NUMBER
+            , dbg_matched IN NUMBER
+            , dbg_missing IN NUMBER
+            , dbg_mapped IN NUMBER
+            , safe_to_add IN NUMBER
             )
     IS
     BEGIN

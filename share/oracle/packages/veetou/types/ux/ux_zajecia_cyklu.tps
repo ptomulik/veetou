@@ -1,15 +1,15 @@
 CREATE OR REPLACE TYPE V2u_Ux_Zajecia_Cyklu_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Dz_Zajecia_Cyklu_B_t
     ( job_uuid RAW(16)
-    , dbg_subj_codes INTEGER
-    , dbg_map_subj_codes INTEGER
-    , dbg_classes_hours INTEGER
-    , dbg_subj_credit_kinds INTEGER
-    , dbg_matched INTEGER
-    , dbg_missing INTEGER
-    , dbg_subject_mapped INTEGER
-    , dbg_classes_mapped INTEGER
-    , safe_to_add INTEGER
+    , dbg_subj_codes NUMBER(5)
+    , dbg_map_subj_codes NUMBER(5)
+    , dbg_classes_hours NUMBER(5)
+    , dbg_subj_credit_kinds NUMBER(5)
+    , dbg_matched NUMBER(5)
+    , dbg_missing NUMBER(5)
+    , dbg_subject_mapped NUMBER(5)
+    , dbg_classes_mapped NUMBER(5)
+    , safe_to_add NUMBER(1)
 
     , CONSTRUCTOR FUNCTION V2u_Ux_Zajecia_Cyklu_t(
               SELF IN OUT NOCOPY V2u_Ux_Zajecia_Cyklu_t
@@ -38,15 +38,15 @@ CREATE OR REPLACE TYPE V2u_Ux_Zajecia_Cyklu_t
             , literatura_ang IN CLOB
             , czy_pokazywac_termin IN VARCHAR2
             , job_uuid IN RAW
-            , dbg_subj_codes IN INTEGER
-            , dbg_map_subj_codes IN INTEGER
-            , dbg_classes_hours IN INTEGER
-            , dbg_subj_credit_kinds IN INTEGER
-            , dbg_matched IN INTEGER
-            , dbg_missing IN INTEGER
-            , dbg_subject_mapped IN INTEGER
-            , dbg_classes_mapped IN INTEGER
-            , safe_to_add INTEGER
+            , dbg_subj_codes IN NUMBER
+            , dbg_map_subj_codes IN NUMBER
+            , dbg_classes_hours IN NUMBER
+            , dbg_subj_credit_kinds IN NUMBER
+            , dbg_matched IN NUMBER
+            , dbg_missing IN NUMBER
+            , dbg_subject_mapped IN NUMBER
+            , dbg_classes_mapped IN NUMBER
+            , safe_to_add IN NUMBER
             ) RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
@@ -76,15 +76,15 @@ CREATE OR REPLACE TYPE V2u_Ux_Zajecia_Cyklu_t
             , literatura_ang IN CLOB
             , czy_pokazywac_termin IN VARCHAR2
             , job_uuid IN RAW
-            , dbg_subj_codes IN INTEGER
-            , dbg_map_subj_codes IN INTEGER
-            , dbg_classes_hours IN INTEGER
-            , dbg_subj_credit_kinds IN INTEGER
-            , dbg_matched IN INTEGER
-            , dbg_missing IN INTEGER
-            , dbg_subject_mapped IN INTEGER
-            , dbg_classes_mapped IN INTEGER
-            , safe_to_add INTEGER
+            , dbg_subj_codes IN NUMBER
+            , dbg_map_subj_codes IN NUMBER
+            , dbg_classes_hours IN NUMBER
+            , dbg_subj_credit_kinds IN NUMBER
+            , dbg_matched IN NUMBER
+            , dbg_missing IN NUMBER
+            , dbg_subject_mapped IN NUMBER
+            , dbg_classes_mapped IN NUMBER
+            , safe_to_add IN NUMBER
             )
     )
 ;

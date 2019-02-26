@@ -7,11 +7,11 @@ CREATE OR REPLACE TYPE V2u_Ux_Atrybut_Przedmiotu_t
     , subj_codes V2u_Subj_20Codes_t
     , all_subj_codes V2u_Subj_20Codes_t
     -- DBG
-    , dbg_map_subj_codes INTEGER
-    , dbg_subj_codes INTEGER
-    , dbg_all_subj_codes INTEGER
-    , dbg_ids INTEGER
-    , safe_to_add INTEGER
+    , dbg_map_subj_codes NUMBER(5)
+    , dbg_subj_codes NUMBER(5)
+    , dbg_all_subj_codes NUMBER(5)
+    , dbg_ids NUMBER(5)
+    , safe_to_add NUMBER(1)
 
     , CONSTRUCTOR FUNCTION V2u_Ux_Atrybut_Przedmiotu_t(
               SELF IN OUT NOCOPY V2u_Ux_Atrybut_Przedmiotu_t
@@ -32,11 +32,11 @@ CREATE OR REPLACE TYPE V2u_Ux_Atrybut_Przedmiotu_t
             , subj_codes IN V2u_Subj_20Codes_t
             , all_subj_codes IN V2u_Subj_20Codes_t
             -- DBG
-            , dbg_map_subj_codes IN INTEGER
-            , dbg_subj_codes IN INTEGER
-            , dbg_all_subj_codes IN INTEGER
-            , dbg_ids IN INTEGER
-            , safe_to_add IN INTEGER
+            , dbg_map_subj_codes IN NUMBER
+            , dbg_subj_codes IN NUMBER
+            , dbg_all_subj_codes IN NUMBER
+            , dbg_ids IN NUMBER
+            , safe_to_add IN NUMBER
             ) RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
@@ -58,11 +58,11 @@ CREATE OR REPLACE TYPE V2u_Ux_Atrybut_Przedmiotu_t
             , subj_codes IN V2u_Subj_20Codes_t
             , all_subj_codes IN V2u_Subj_20Codes_t
             -- DBG
-            , dbg_map_subj_codes IN INTEGER
-            , dbg_subj_codes IN INTEGER
-            , dbg_all_subj_codes IN INTEGER
-            , dbg_ids IN INTEGER
-            , safe_to_add IN INTEGER
+            , dbg_map_subj_codes IN NUMBER
+            , dbg_subj_codes IN NUMBER
+            , dbg_all_subj_codes IN NUMBER
+            , dbg_ids IN NUMBER
+            , safe_to_add IN NUMBER
             )
     );
 /

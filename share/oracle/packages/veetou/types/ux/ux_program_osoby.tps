@@ -3,18 +3,18 @@ CREATE OR REPLACE TYPE V2u_Ux_Program_Osoby_t
     ( job_uuid RAW(16)
     , pk_student_index VARCHAR2(32 CHAR)
     , pk_program_osoby VARCHAR2(128 CHAR)
-    , dbg_unique_match INTEGER
-    , dbg_map_program_codes INTEGER
-    , dbg_faculty_codes INTEGER
-    , dbg_matched_ids INTEGER
-    , dbg_matched_prg_kody INTEGER
-    , dbg_matched_st_ids INTEGER
-    , dbg_matched_os_ids INTEGER
-    , dbg_skipped_prg_kody INTEGER
-    , dbg_matched INTEGER
-    , dbg_missing INTEGER
-    , dbg_mapped INTEGER
-    , safe_to_add INTEGER
+    , dbg_unique_match NUMBER(1)
+    , dbg_map_program_codes NUMBER(5)
+    , dbg_faculty_codes NUMBER(5)
+    , dbg_matched_ids NUMBER(5)
+    , dbg_matched_prg_kody NUMBER(5)
+    , dbg_matched_st_ids NUMBER(5)
+    , dbg_matched_os_ids NUMBER(5)
+    , dbg_skipped_prg_kody NUMBER(5)
+    , dbg_matched NUMBER(5)
+    , dbg_missing NUMBER(5)
+    , dbg_mapped NUMBER(5)
+    , safe_to_add NUMBER(1)
 
     , CONSTRUCTOR FUNCTION V2u_Ux_Program_Osoby_t(
               SELF IN OUT NOCOPY V2u_Ux_Program_Osoby_t
@@ -67,18 +67,18 @@ CREATE OR REPLACE TYPE V2u_Ux_Program_Osoby_t
             , job_uuid IN RAW
             , pk_student_index IN VARCHAR2
             , pk_program_osoby IN VARCHAR2
-            , dbg_unique_match IN INTEGER
-            , dbg_map_program_codes IN INTEGER
-            , dbg_faculty_codes IN INTEGER
-            , dbg_matched_ids IN INTEGER
-            , dbg_matched_prg_kody IN INTEGER
-            , dbg_matched_st_ids IN INTEGER
-            , dbg_matched_os_ids IN INTEGER
-            , dbg_skipped_prg_kody IN INTEGER
-            , dbg_matched IN INTEGER
-            , dbg_missing IN INTEGER
-            , dbg_mapped IN INTEGER
-            , safe_to_add IN INTEGER
+            , dbg_unique_match IN NUMBER
+            , dbg_map_program_codes IN NUMBER
+            , dbg_faculty_codes IN NUMBER
+            , dbg_matched_ids IN NUMBER
+            , dbg_matched_prg_kody IN NUMBER
+            , dbg_matched_st_ids IN NUMBER
+            , dbg_matched_os_ids IN NUMBER
+            , dbg_skipped_prg_kody IN NUMBER
+            , dbg_matched IN NUMBER
+            , dbg_missing IN NUMBER
+            , dbg_mapped IN NUMBER
+            , safe_to_add IN NUMBER
             ) RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
@@ -132,18 +132,18 @@ CREATE OR REPLACE TYPE V2u_Ux_Program_Osoby_t
             , job_uuid IN RAW
             , pk_student_index IN VARCHAR2
             , pk_program_osoby IN VARCHAR2
-            , dbg_unique_match IN INTEGER
-            , dbg_map_program_codes IN INTEGER
-            , dbg_faculty_codes IN INTEGER
-            , dbg_matched_ids IN INTEGER
-            , dbg_matched_prg_kody IN INTEGER
-            , dbg_matched_st_ids IN INTEGER
-            , dbg_matched_os_ids IN INTEGER
-            , dbg_skipped_prg_kody IN INTEGER
-            , dbg_matched IN INTEGER
-            , dbg_missing IN INTEGER
-            , dbg_mapped IN INTEGER
-            , safe_to_add IN INTEGER
+            , dbg_unique_match IN NUMBER
+            , dbg_map_program_codes IN NUMBER
+            , dbg_faculty_codes IN NUMBER
+            , dbg_matched_ids IN NUMBER
+            , dbg_matched_prg_kody IN NUMBER
+            , dbg_matched_st_ids IN NUMBER
+            , dbg_matched_os_ids IN NUMBER
+            , dbg_skipped_prg_kody IN NUMBER
+            , dbg_matched IN NUMBER
+            , dbg_missing IN NUMBER
+            , dbg_mapped IN NUMBER
+            , safe_to_add IN NUMBER
             )
     )
 ;

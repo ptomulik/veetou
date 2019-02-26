@@ -18,11 +18,11 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Atrybut_Przedmiotu_t AS
             , subj_codes IN V2u_Subj_20Codes_t
             , all_subj_codes IN V2u_Subj_20Codes_t
             -- DBG
-            , dbg_map_subj_codes IN INTEGER
-            , dbg_subj_codes IN INTEGER
-            , dbg_all_subj_codes IN INTEGER
-            , dbg_ids IN INTEGER
-            , safe_to_add IN INTEGER
+            , dbg_map_subj_codes IN NUMBER
+            , dbg_subj_codes IN NUMBER
+            , dbg_all_subj_codes IN NUMBER
+            , dbg_ids IN NUMBER
+            , safe_to_add IN NUMBER
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -71,11 +71,11 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Atrybut_Przedmiotu_t AS
             , subj_codes IN V2u_Subj_20Codes_t
             , all_subj_codes IN V2u_Subj_20Codes_t
             -- DBG
-            , dbg_map_subj_codes IN INTEGER
-            , dbg_subj_codes IN INTEGER
-            , dbg_all_subj_codes IN INTEGER
-            , dbg_ids IN INTEGER
-            , safe_to_add IN INTEGER
+            , dbg_map_subj_codes IN NUMBER
+            , dbg_subj_codes IN NUMBER
+            , dbg_all_subj_codes IN NUMBER
+            , dbg_ids IN NUMBER
+            , safe_to_add IN NUMBER
             )
     IS
     BEGIN

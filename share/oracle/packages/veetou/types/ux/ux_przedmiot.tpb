@@ -34,20 +34,20 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_t AS
             , pw_nazwa_supl_ang IN VARCHAR2
             , job_uuid IN RAW
             , pk_subject IN VARCHAR2
-            , dbg_subj_codes IN INTEGER
-            , dbg_map_subj_codes IN INTEGER
-            , dbg_languages IN INTEGER
-            , dbg_org_units IN INTEGER
-            , dbg_org_unit_recipients IN INTEGER
-            , dbg_faculty_codes IN INTEGER
-            , dbg_subj_names IN INTEGER
-            , dbg_subj_credit_kinds IN INTEGER
-            , dbg_prz_kody IN INTEGER
-            , dbg_unique_match IN INTEGER
-            , dbg_missing IN INTEGER
-            , dbg_matched IN INTEGER
-            , dbg_mapped IN INTEGER
-            , safe_to_add IN INTEGER
+            , dbg_subj_codes IN NUMBER
+            , dbg_map_subj_codes IN NUMBER
+            , dbg_languages IN NUMBER
+            , dbg_org_units IN NUMBER
+            , dbg_org_unit_recipients IN NUMBER
+            , dbg_faculty_codes IN NUMBER
+            , dbg_subj_names IN NUMBER
+            , dbg_subj_credit_kinds IN NUMBER
+            , dbg_prz_kody IN NUMBER
+            , dbg_unique_match IN NUMBER
+            , dbg_missing IN NUMBER
+            , dbg_matched IN NUMBER
+            , dbg_mapped IN NUMBER
+            , safe_to_add IN NUMBER
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -138,20 +138,20 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Przedmiot_t AS
             , pw_nazwa_supl_ang IN VARCHAR2
             , job_uuid IN RAW
             , pk_subject IN VARCHAR2
-            , dbg_subj_codes IN INTEGER
-            , dbg_map_subj_codes IN INTEGER
-            , dbg_languages IN INTEGER
-            , dbg_org_units IN INTEGER
-            , dbg_org_unit_recipients IN INTEGER
-            , dbg_faculty_codes IN INTEGER
-            , dbg_subj_names IN INTEGER
-            , dbg_subj_credit_kinds IN INTEGER
-            , dbg_prz_kody IN INTEGER
-            , dbg_unique_match IN INTEGER
-            , dbg_missing IN INTEGER
-            , dbg_matched IN INTEGER
-            , dbg_mapped IN INTEGER
-            , safe_to_add IN INTEGER
+            , dbg_subj_codes IN NUMBER
+            , dbg_map_subj_codes IN NUMBER
+            , dbg_languages IN NUMBER
+            , dbg_org_units IN NUMBER
+            , dbg_org_unit_recipients IN NUMBER
+            , dbg_faculty_codes IN NUMBER
+            , dbg_subj_names IN NUMBER
+            , dbg_subj_credit_kinds IN NUMBER
+            , dbg_prz_kody IN NUMBER
+            , dbg_unique_match IN NUMBER
+            , dbg_missing IN NUMBER
+            , dbg_matched IN NUMBER
+            , dbg_mapped IN NUMBER
+            , safe_to_add IN NUMBER
             )
     IS
     BEGIN

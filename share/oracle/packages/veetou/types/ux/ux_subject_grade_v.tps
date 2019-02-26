@@ -44,14 +44,14 @@ CREATE OR REPLACE TYPE V2u_Ux_Subject_Grade_V_t
     , tpro_kod VARCHAR2(20 CHAR)
     , prz_kod VARCHAR2(20 CHAR)
     -- DBG
-    , dbg_os_id NUMBER(38)
-    , dbg_st_id NUMBER(38)
-    , dbg_etpos_id NUMBER(38)
-    , dbg_prgos_id NUMBER(38)
-    , dbg_prg_kod NUMBER(38)
-    , dbg_etp_kod NUMBER(38)
-    , dbg_cdyd_kod NUMBER(38)
-    , dbg_prz_kod NUMBER(38)
+    , dbg_os_id NUMBER(5)
+    , dbg_st_id NUMBER(5)
+    , dbg_etpos_id NUMBER(5)
+    , dbg_prgos_id NUMBER(5)
+    , dbg_prg_kod NUMBER(5)
+    , dbg_etp_kod NUMBER(5)
+    , dbg_cdyd_kod NUMBER(5)
+    , dbg_prz_kod NUMBER(5)
 
     , CONSTRUCTOR FUNCTION V2u_Ux_Subject_Grade_V_t(
               SELF IN OUT NOCOPY V2u_Ux_Subject_Grade_V_t

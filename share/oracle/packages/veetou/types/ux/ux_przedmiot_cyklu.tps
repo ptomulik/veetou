@@ -3,13 +3,13 @@ CREATE OR REPLACE TYPE V2u_Ux_Przedmiot_Cyklu_t
     ( job_uuid RAW(16)
     , pk_subject VARCHAR2(32 CHAR)
     , pk_semester_code VARCHAR2(32 CHAR)
-    , dbg_subj_codes INTEGER
-    , dbg_map_subj_codes INTEGER
-    , dbg_subj_credit_kinds INTEGER
-    , dbg_matched INTEGER
-    , dbg_missing INTEGER
-    , dbg_mapped INTEGER
-    , safe_to_add INTEGER
+    , dbg_subj_codes NUMBER(5)
+    , dbg_map_subj_codes NUMBER(5)
+    , dbg_subj_credit_kinds NUMBER(5)
+    , dbg_matched NUMBER(5)
+    , dbg_missing NUMBER(5)
+    , dbg_mapped NUMBER(5)
+    , safe_to_add NUMBER(1)
 
 
     , CONSTRUCTOR FUNCTION V2u_Ux_Przedmiot_Cyklu_t(
@@ -36,12 +36,12 @@ CREATE OR REPLACE TYPE V2u_Ux_Przedmiot_Cyklu_t
             , job_uuid IN RAW
             , pk_subject IN VARCHAR2
             , pk_semester_code IN VARCHAR2
-            , dbg_map_subj_codes IN INTEGER
-            , dbg_subj_credit_kinds IN INTEGER
-            , dbg_matched IN INTEGER
-            , dbg_missing IN INTEGER
-            , dbg_mapped IN INTEGER
-            , safe_to_add IN INTEGER
+            , dbg_map_subj_codes IN NUMBER
+            , dbg_subj_credit_kinds IN NUMBER
+            , dbg_matched IN NUMBER
+            , dbg_missing IN NUMBER
+            , dbg_mapped IN NUMBER
+            , safe_to_add IN NUMBER
             ) RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
@@ -68,12 +68,12 @@ CREATE OR REPLACE TYPE V2u_Ux_Przedmiot_Cyklu_t
             , job_uuid IN RAW
             , pk_subject IN VARCHAR2
             , pk_semester_code IN VARCHAR2
-            , dbg_map_subj_codes IN INTEGER
-            , dbg_subj_credit_kinds IN INTEGER
-            , dbg_matched IN INTEGER
-            , dbg_missing IN INTEGER
-            , dbg_mapped IN INTEGER
-            , safe_to_add INTEGER
+            , dbg_map_subj_codes IN NUMBER
+            , dbg_subj_credit_kinds IN NUMBER
+            , dbg_matched IN NUMBER
+            , dbg_missing IN NUMBER
+            , dbg_mapped IN NUMBER
+            , safe_to_add IN NUMBER
             )
     )
 ;

@@ -50,18 +50,18 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Program_Osoby_t AS
             , job_uuid IN RAW
             , pk_student_index IN VARCHAR2
             , pk_program_osoby IN VARCHAR2
-            , dbg_unique_match IN INTEGER
-            , dbg_map_program_codes IN INTEGER
-            , dbg_faculty_codes IN INTEGER
-            , dbg_matched_ids IN INTEGER
-            , dbg_matched_prg_kody IN INTEGER
-            , dbg_matched_st_ids IN INTEGER
-            , dbg_matched_os_ids IN INTEGER
-            , dbg_skipped_prg_kody IN INTEGER
-            , dbg_matched IN INTEGER
-            , dbg_missing IN INTEGER
-            , dbg_mapped IN INTEGER
-            , safe_to_add INTEGER
+            , dbg_unique_match IN NUMBER
+            , dbg_map_program_codes IN NUMBER
+            , dbg_faculty_codes IN NUMBER
+            , dbg_matched_ids IN NUMBER
+            , dbg_matched_prg_kody IN NUMBER
+            , dbg_matched_st_ids IN NUMBER
+            , dbg_matched_os_ids IN NUMBER
+            , dbg_skipped_prg_kody IN NUMBER
+            , dbg_matched IN NUMBER
+            , dbg_missing IN NUMBER
+            , dbg_mapped IN NUMBER
+            , safe_to_add IN NUMBER
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -182,18 +182,18 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Program_Osoby_t AS
             , job_uuid IN RAW
             , pk_student_index IN VARCHAR2
             , pk_program_osoby IN VARCHAR2
-            , dbg_unique_match IN INTEGER
-            , dbg_map_program_codes IN INTEGER
-            , dbg_faculty_codes IN INTEGER
-            , dbg_matched_ids IN INTEGER
-            , dbg_matched_prg_kody IN INTEGER
-            , dbg_matched_st_ids IN INTEGER
-            , dbg_matched_os_ids IN INTEGER
-            , dbg_skipped_prg_kody IN INTEGER
-            , dbg_matched IN INTEGER
-            , dbg_missing IN INTEGER
-            , dbg_mapped IN INTEGER
-            , safe_to_add INTEGER
+            , dbg_unique_match IN NUMBER
+            , dbg_map_program_codes IN NUMBER
+            , dbg_faculty_codes IN NUMBER
+            , dbg_matched_ids IN NUMBER
+            , dbg_matched_prg_kody IN NUMBER
+            , dbg_matched_st_ids IN NUMBER
+            , dbg_matched_os_ids IN NUMBER
+            , dbg_skipped_prg_kody IN NUMBER
+            , dbg_matched IN NUMBER
+            , dbg_missing IN NUMBER
+            , dbg_mapped IN NUMBER
+            , safe_to_add IN NUMBER
             )
     IS
     BEGIN

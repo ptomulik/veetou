@@ -26,15 +26,15 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Zajecia_Cyklu_t AS
             , literatura_ang IN CLOB
             , czy_pokazywac_termin IN VARCHAR2
             , job_uuid IN RAW
-            , dbg_subj_codes IN INTEGER
-            , dbg_map_subj_codes IN INTEGER
-            , dbg_classes_hours IN INTEGER
-            , dbg_subj_credit_kinds IN INTEGER
-            , dbg_matched IN INTEGER
-            , dbg_missing IN INTEGER
-            , dbg_subject_mapped IN INTEGER
-            , dbg_classes_mapped IN INTEGER
-            , safe_to_add INTEGER
+            , dbg_subj_codes IN NUMBER
+            , dbg_map_subj_codes IN NUMBER
+            , dbg_classes_hours IN NUMBER
+            , dbg_subj_credit_kinds IN NUMBER
+            , dbg_matched IN NUMBER
+            , dbg_missing IN NUMBER
+            , dbg_subject_mapped IN NUMBER
+            , dbg_classes_mapped IN NUMBER
+            , safe_to_add IN NUMBER
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -104,15 +104,15 @@ CREATE OR REPLACE TYPE BODY V2u_Ux_Zajecia_Cyklu_t AS
             , literatura_ang IN CLOB
             , czy_pokazywac_termin IN VARCHAR2
             , job_uuid IN RAW
-            , dbg_subj_codes IN INTEGER
-            , dbg_map_subj_codes IN INTEGER
-            , dbg_classes_hours IN INTEGER
-            , dbg_subj_credit_kinds IN INTEGER
-            , dbg_matched IN INTEGER
-            , dbg_missing IN INTEGER
-            , dbg_subject_mapped IN INTEGER
-            , dbg_classes_mapped IN INTEGER
-            , safe_to_add INTEGER
+            , dbg_subj_codes IN NUMBER
+            , dbg_map_subj_codes IN NUMBER
+            , dbg_classes_hours IN NUMBER
+            , dbg_subj_credit_kinds IN NUMBER
+            , dbg_matched IN NUMBER
+            , dbg_missing IN NUMBER
+            , dbg_subject_mapped IN NUMBER
+            , dbg_classes_mapped IN NUMBER
+            , safe_to_add IN NUMBER
             )
     IS
     BEGIN
