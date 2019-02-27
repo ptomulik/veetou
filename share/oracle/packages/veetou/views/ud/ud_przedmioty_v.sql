@@ -61,9 +61,10 @@ SELECT * FROM uu
 UNION ALL
 SELECT * FROM dz
 ORDER BY
-        3           -- job_uuid
-      , 4           -- kod
-      , 1 DESC      -- diff
+        35          -- change_type
+      ,  3          -- job_uuid
+      ,  4          -- kod
+      ,  1 DESC     -- diff
 ;
 
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -41,7 +41,8 @@ SELECT * FROM uu
 UNION ALL
 SELECT * FROM dz
 ORDER BY
-         3 -- job_uuid
+        15 -- change_type
+      ,  3 -- job_uuid
       , 14 -- id
       ,  5 -- prz_kod
       ,  4 -- tatr_kod

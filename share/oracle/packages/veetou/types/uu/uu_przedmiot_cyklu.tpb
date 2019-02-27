@@ -20,15 +20,25 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Przedmiot_Cyklu_t AS
             , skrocony_opis_ang IN VARCHAR2
             , status_sylabusu IN VARCHAR2
             , guid IN VARCHAR2
+            -- KEY
             , job_uuid IN RAW
             , pk_subject IN VARCHAR2
-            , pk_semester_code IN VARCHAR2
+            , pk_semester IN VARCHAR2
+            -- DBG
+            , dbg_subj_codes IN NUMBER
             , dbg_map_subj_codes IN NUMBER
+            , dbg_map_proto_types IN NUMBER
             , dbg_subj_credit_kinds IN NUMBER
+            , dbg_prz_kody IN NUMBER
+            , dbg_cdyd_kody IN NUMBER
+            , dbg_values_ok IN NUMBER
+            , dbg_unique_match IN NUMBER
             , dbg_matched IN NUMBER
             , dbg_missing IN NUMBER
             , dbg_mapped IN NUMBER
-            , safe_to_add IN NUMBER
+            -- CTL
+            , change_type IN VARCHAR2
+            , safe_to_change IN NUMBER
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -52,15 +62,25 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Przedmiot_Cyklu_t AS
             , skrocony_opis_ang => skrocony_opis_ang
             , status_sylabusu => status_sylabusu
             , guid => guid
+            -- KEY
             , job_uuid => job_uuid
             , pk_subject => pk_subject
-            , pk_semester_code => pk_semester_code
+            , pk_semester => pk_semester
+            -- DBG
+            , dbg_subj_codes => dbg_subj_codes
             , dbg_map_subj_codes => dbg_map_subj_codes
+            , dbg_map_proto_types => dbg_map_proto_types
             , dbg_subj_credit_kinds => dbg_subj_credit_kinds
+            , dbg_prz_kody => dbg_prz_kody
+            , dbg_cdyd_kody => dbg_cdyd_kody
+            , dbg_values_ok => dbg_values_ok
+            , dbg_unique_match => dbg_unique_match
             , dbg_matched => dbg_matched
             , dbg_missing => dbg_missing
             , dbg_mapped => dbg_mapped
-            , safe_to_add => safe_to_add
+            -- CTL
+            , change_type => change_type
+            , safe_to_change => safe_to_change
             );
         RETURN;
     END;
@@ -88,13 +108,22 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Przedmiot_Cyklu_t AS
             , guid IN VARCHAR2
             , job_uuid IN RAW
             , pk_subject IN VARCHAR2
-            , pk_semester_code IN VARCHAR2
+            , pk_semester IN VARCHAR2
+            -- DBG
+            , dbg_subj_codes IN NUMBER
             , dbg_map_subj_codes IN NUMBER
+            , dbg_map_proto_types IN NUMBER
             , dbg_subj_credit_kinds IN NUMBER
+            , dbg_prz_kody IN NUMBER
+            , dbg_cdyd_kody IN NUMBER
+            , dbg_values_ok IN NUMBER
+            , dbg_unique_match IN NUMBER
             , dbg_matched IN NUMBER
             , dbg_missing IN NUMBER
             , dbg_mapped IN NUMBER
-            , safe_to_add IN NUMBER
+            -- CTL
+            , change_type IN VARCHAR2
+            , safe_to_change IN NUMBER
             )
     IS
     BEGIN
@@ -119,15 +148,25 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Przedmiot_Cyklu_t AS
             , status_sylabusu => status_sylabusu
             , guid => guid
             );
+        -- KEY
         SELF.job_uuid := job_uuid;
         SELF.pk_subject := pk_subject;
-        SELF.pk_semester_code := pk_semester_code;
+        SELF.pk_semester := pk_semester;
+        -- DBG
+        SELF.dbg_subj_codes := dbg_subj_codes;
         SELF.dbg_map_subj_codes := dbg_map_subj_codes;
+        SELF.dbg_map_proto_types := dbg_map_proto_types;
         SELF.dbg_subj_credit_kinds := dbg_subj_credit_kinds;
+        SELF.dbg_prz_kody := dbg_prz_kody;
+        SELF.dbg_cdyd_kody := dbg_cdyd_kody;
+        SELF.dbg_values_ok := dbg_values_ok;
+        SELF.dbg_unique_match := dbg_unique_match;
         SELF.dbg_matched := dbg_matched;
         SELF.dbg_missing := dbg_missing;
         SELF.dbg_mapped := dbg_mapped;
-        SELF.safe_to_add := safe_to_add;
+        -- CTL
+        SELF.change_type := change_type;
+        SELF.safe_to_change := safe_to_change;
     END;
 END;
 -- vim: set ft=sql ts=4 sw=4 et:

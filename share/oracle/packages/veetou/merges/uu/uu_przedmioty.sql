@@ -243,7 +243,7 @@ USING
                         AND u.dbg_mapped = u.dbg_matched
                         AND u.dbg_missing = 0
                         AND u.dbg_prz_kody = 1
-                        AND u.dbg_prz_kody IS NOT NULL
+                        AND u.prz_kod IS NOT NULL
                     THEN 1
                     ELSE 0
                   END dbg_unique_match
