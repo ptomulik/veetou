@@ -555,6 +555,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     PROCEDURE Tier3
     IS
     BEGIN
+        Drop_View('ud_przedmioty_v');
+        Drop_View('ud_atrybuty_przedmiotow_v');
+
         Drop_View('uu_subject_grades_v');
 
         Drop_View('ko_skipped_programs_v');

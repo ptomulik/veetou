@@ -169,11 +169,7 @@ USING
                 , t.wartosc org_wartosc
                 , t.wartosc_ang org_wartosc_ang
                 , DECODE( v.dbg_unique_match, 1
-                        , DECODE( TO_CHAR(t.wartosc)
-                                , TO_CHAR(v.v2u_wartosc)
-                                , '-'
-                                , 'U'
-                                )
+                        , DECODE(TO_CHAR(t.wartosc), TO_CHAR(v.v2u_wartosc), '-', 'U')
                         , 'I'
                   ) change_type
 

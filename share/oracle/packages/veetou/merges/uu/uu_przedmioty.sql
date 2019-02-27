@@ -277,7 +277,7 @@ USING
                         , (CASE
                             WHEN    -- do we introduce any modification?
                                     DECODE(v.v2u_kod, t.kod, 1, 0) = 1
-                                AND DECODE(v.v2u_nazwa, t.nazwa, 1, 0) = 1
+                                AND DECODE(UPPER(v.v2u_nazwa), UPPER(t.nazwa), 1, 0) = 1
                                 AND DECODE(v.v2u_jed_org_kod, t.jed_org_kod, 1, 0) = 1
                                 AND DECODE(v.v2u_tpro_kod, t.tpro_kod, 1, 0) = 1
                                 AND DECODE(v.v2u_jed_org_kod_biorca, t.jed_org_kod_biorca, 1, 0) = 1
