@@ -22,8 +22,14 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Map_V_t AS
         SELF.selected := selected;
         SELF.reason := reason;
         SELF.subj_code := subject.subj_code;
+        SELF.usr_subj_name := map.usr_subj_name;
         SELF.map_subj_code := map.map_subj_code;
+        SELF.map_subj_name := map.map_subj_name;
         SELF.map_subj_lang := map.map_subj_lang;
+        SELF.map_org_unit := map.map_org_unit;
+        SELF.map_org_unit_recipient := map.map_org_unit_recipient;
+        SELF.map_proto_type := map.map_proto_type;
+        SELF.map_grade_type := map.map_grade_type;
         SELF.subj_name := subject.subj_name;
         SELF.expr_subj_name := map.expr_subj_name;
         SELF.subj_hours_w := subject.subj_hours_w;

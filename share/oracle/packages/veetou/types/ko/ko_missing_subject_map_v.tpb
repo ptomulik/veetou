@@ -45,9 +45,13 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Subject_Map_V_t AS
               id => id
             , subj_code => subject.subj_code
             , map_subj_code => NULL
+            , usr_subj_name => NULL
             , map_subj_lang => NULL
+            , map_subj_name => NULL
             , map_org_unit => NULL
             , map_org_unit_recipient => NULL
+            , map_proto_type => NULL
+            , map_grade_type => NULL
             , expr_subj_name => subject.subj_name
             , expr_subj_hours_w => subject.subj_hours_w
             , expr_subj_hours_c => subject.subj_hours_c

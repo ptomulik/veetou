@@ -5,9 +5,12 @@ CREATE OR REPLACE TYPE V2u_Uu_Przedmiot_t
     -- DBG
     , dbg_subj_codes NUMBER(5)
     , dbg_map_subj_codes NUMBER(5)
+    , dbg_map_subj_names NUMBER(5)
     , dbg_languages NUMBER(5)
     , dbg_org_units NUMBER(5)
     , dbg_org_unit_recipients NUMBER(5)
+    , dbg_map_proto_types NUMBER(5)
+    , dbg_map_grade_types NUMBER(5)
     , dbg_faculty_codes NUMBER(5)
     , dbg_subj_names NUMBER(5)
     , dbg_subj_credit_kinds NUMBER(5)
@@ -60,9 +63,12 @@ CREATE OR REPLACE TYPE V2u_Uu_Przedmiot_t
             -- DBG
             , dbg_subj_codes IN NUMBER
             , dbg_map_subj_codes IN NUMBER
+            , dbg_map_subj_names IN NUMBER
             , dbg_languages IN NUMBER
             , dbg_org_units IN NUMBER
             , dbg_org_unit_recipients IN NUMBER
+            , dbg_map_proto_types IN NUMBER
+            , dbg_map_grade_types IN NUMBER
             , dbg_faculty_codes IN NUMBER
             , dbg_subj_names IN NUMBER
             , dbg_subj_credit_kinds IN NUMBER
@@ -116,9 +122,12 @@ CREATE OR REPLACE TYPE V2u_Uu_Przedmiot_t
             -- DBG
             , dbg_subj_codes IN NUMBER
             , dbg_map_subj_codes IN NUMBER
+            , dbg_map_subj_names IN NUMBER
             , dbg_languages IN NUMBER
             , dbg_org_units IN NUMBER
             , dbg_org_unit_recipients IN NUMBER
+            , dbg_map_proto_types IN NUMBER
+            , dbg_map_grade_types IN NUMBER
             , dbg_faculty_codes IN NUMBER
             , dbg_subj_names IN NUMBER
             , dbg_subj_credit_kinds IN NUMBER

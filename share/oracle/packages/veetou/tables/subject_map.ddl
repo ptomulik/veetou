@@ -3,9 +3,17 @@ OF V2u_Subject_Map_t
     ( CONSTRAINT v2u_subject_map_pk PRIMARY KEY(id) )
 OBJECT IDENTIFIER IS PRIMARY KEY;
 
-COMMENT ON TABLE v2u_subject_map IS 'Odwzorowanie kodów przedmiotów (VEE->USOS)';
-COMMENT ON COLUMN v2u_subject_map.subj_code IS 'Kod przedmiotu (VEE)';
-COMMENT ON COLUMN v2u_subject_map.map_subj_code IS 'Kod przedmiotu (USOS)';
+COMMENT ON TABLE v2u_subject_map IS 'Odwzorowanie kodów przedmiotów (wydział -> USOS)';
+COMMENT ON COLUMN v2u_subject_map.id IS 'Indeks główny tabeli (generowany automatycznie)';
+COMMENT ON COLUMN v2u_subject_map.subj_code IS 'Wydziałowy kod przedmiotu';
+COMMENT ON COLUMN v2u_subject_map.usr_subj_name IS 'Wydziałoa nazwa przedmiotu, kolumna pomocnicza dla użytkownika';
+COMMENT ON COLUMN v2u_subject_map.map_subj_code IS 'Kod przedmiotu dla USOS';
+COMMENT ON COLUMN v2u_subject_map.map_subj_name IS 'Nazwa przedmiotu dla USOS';
+COMMENT ON COLUMN v2u_subject_map.map_subj_lang IS 'Język prowadzenia przedmiotu dla USOS';
+COMMENT ON COLUMN v2u_subject_map.map_org_unit IS 'Kod jednostki organizacyjnej (dawca) dla USOS';
+COMMENT ON COLUMN v2u_subject_map.map_org_unit_recipient IS 'Kod jednostki organizacyjnej (biorca) dla USOS';
+COMMENT ON COLUMN v2u_subject_map.map_proto_type IS 'Typ protokołu zaliczeniowego dla USOS';
+COMMENT ON COLUMN v2u_subject_map.map_grade_type IS 'Typ skali ocen dla USOS';
 COMMENT ON COLUMN v2u_subject_map.expr_subj_name IS 'Wyrażenie określające dopuszczalne nazwy przedmiotu';
 COMMENT ON COLUMN v2u_subject_map.expr_university IS 'Wyrażenie określające dopuszczalne nazwy uczelni';
 COMMENT ON COLUMN v2u_subject_map.expr_faculty IS 'Wyrażenie określające dopuszczalne nazwy wydziałów';

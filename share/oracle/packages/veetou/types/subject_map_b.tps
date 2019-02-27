@@ -1,10 +1,14 @@
 CREATE OR REPLACE TYPE V2u_Subject_Map_B_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Distinct_t
     ( subj_code VARCHAR2(32 CHAR)
+    , usr_subj_name VARCHAR(200 CHAR)
     , map_subj_code VARCHAR2(20 CHAR)
+    , map_subj_name VARCHAR2(200 CHAR)
     , map_subj_lang VARCHAR2(3 CHAR)
     , map_org_unit VARCHAR2(20 CHAR)
     , map_org_unit_recipient VARCHAR2(20 CHAR)
+    , map_proto_type VARCHAR2(1)
+    , map_grade_type VARCHAR2(3)
     , expr_subj_name VARCHAR2(256 CHAR)
     , expr_subj_hours_w VARCHAR2(256 CHAR)
     , expr_subj_hours_c VARCHAR2(256 CHAR)
@@ -29,10 +33,14 @@ CREATE OR REPLACE TYPE V2u_Subject_Map_B_t
               SELF IN OUT NOCOPY V2u_Subject_Map_B_t
             , id IN NUMBER := NULL
             , subj_code IN VARCHAR2
+            , usr_subj_name IN VARCHAR2
             , map_subj_code IN VARCHAR2
+            , map_subj_name IN VARCHAR2
             , map_subj_lang IN VARCHAR2
             , map_org_unit IN VARCHAR2
             , map_org_unit_recipient IN VARCHAR2
+            , map_proto_type IN VARCHAR2
+            , map_grade_type IN VARCHAR2
             , expr_subj_name IN VARCHAR2
             , expr_subj_hours_w IN VARCHAR2
             , expr_subj_hours_c IN VARCHAR2
@@ -58,10 +66,14 @@ CREATE OR REPLACE TYPE V2u_Subject_Map_B_t
               SELF IN OUT NOCOPY V2u_Subject_Map_B_t
             , id IN NUMBER := NULL
             , subj_code IN VARCHAR2
+            , usr_subj_name IN VARCHAR2
             , map_subj_code IN VARCHAR2
+            , map_subj_name IN VARCHAR2
             , map_subj_lang IN VARCHAR2
             , map_org_unit IN VARCHAR2
             , map_org_unit_recipient IN VARCHAR2
+            , map_proto_type IN VARCHAR2
+            , map_grade_type IN VARCHAR2
             , expr_subj_name IN VARCHAR2
             , expr_subj_hours_w IN VARCHAR2
             , expr_subj_hours_c IN VARCHAR2

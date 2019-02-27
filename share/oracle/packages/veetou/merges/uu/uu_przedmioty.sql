@@ -22,6 +22,10 @@ USING
                         AS V2u_Vchars1K_t
                   )) map_subj_codes1k
                 , SET(CAST(
+                        COLLECT(subject_map.map_subj_name)
+                        AS V2u_Vchars1K_t
+                  )) map_subj_names1k
+                , SET(CAST(
                         COLLECT(subject_map.map_subj_lang)
                         AS V2u_Vchars1K_t
                   )) map_subj_languages1k
@@ -33,6 +37,14 @@ USING
                         COLLECT(subject_map.map_org_unit_recipient)
                         AS V2u_Vchars1K_t
                   )) map_org_unit_recipients1k
+                , SET(CAST(
+                        COLLECT(subject_map.map_proto_type)
+                        AS V2u_Vchars1K_t
+                  )) map_proto_types1k
+                , SET(CAST(
+                        COLLECT(subject_map.map_grade_type)
+                        AS V2u_Vchars1K_t
+                  )) map_grade_types1k
                 , SET(CAST(
                         COLLECT(faculties.code)
                         AS V2u_Vchars1K_t
@@ -120,6 +132,10 @@ USING
                     FROM TABLE(u_0.map_subj_codes1k) t
                     WHERE ROWNUM <= 1
                   ) map_subj_code
+                , ( SELECT SUBSTR(VALUE(t), 1, 200)
+                    FROM TABLE(u_0.map_subj_names1k) t
+                    WHERE ROWNUM <= 1
+                  ) map_subj_name
                 , ( SELECT SUBSTR(VALUE(t), 1, 3)
                     FROM TABLE(u_0.map_subj_languages1k) t
                     WHERE ROWNUM <= 1
@@ -132,6 +148,14 @@ USING
                     FROM TABLE(u_0.map_org_unit_recipients1k) t
                     WHERE ROWNUM <= 1
                   ) map_org_unit_recipient
+                , ( SELECT SUBSTR(VALUE(t), 1, 1)
+                    FROM TABLE(u_0.map_proto_types1k) t
+                    WHERE ROWNUM <= 1
+                  ) map_proto_type
+                , ( SELECT SUBSTR(VALUE(t), 1, 3)
+                    FROM TABLE(u_0.map_grade_types1k) t
+                    WHERE ROWNUM <= 1
+                  ) map_grade_type
                 , ( SELECT SUBSTR(VALUE(t), 1, 20)
                     FROM TABLE(u_0.faculty_codes1k) t
                     WHERE ROWNUM <= 1
@@ -161,6 +185,9 @@ USING
                     FROM TABLE(u_0.map_subj_codes1k)
                   ) dbg_map_subj_codes
                 , ( SELECT COUNT(*)
+                    FROM TABLE(u_0.map_subj_names1k)
+                  ) dbg_map_subj_names
+                , ( SELECT COUNT(*)
                     FROM TABLE(u_0.map_subj_languages1k)
                   ) dbg_languages
                 , ( SELECT COUNT(*)
@@ -169,6 +196,12 @@ USING
                 , ( SELECT COUNT(*)
                     FROM TABLE(u_0.map_org_unit_recipients1k)
                   ) dbg_org_unit_recipients
+                , ( SELECT COUNT(*)
+                    FROM TABLE(u_0.map_proto_types1k)
+                  ) dbg_map_proto_types
+                , ( SELECT COUNT(*)
+                    FROM TABLE(u_0.map_grade_types1k)
+                  ) dbg_map_grade_types
                 , ( SELECT COUNT(*)
                     FROM TABLE(u_0.faculty_codes1k)
                   ) dbg_faculty_codes
@@ -193,14 +226,14 @@ USING
                   u.*
 
                 , u.map_subj_code v2u_kod
-                , u.subj_name v2u_nazwa
+                , COALESCE(u.map_subj_name, u.subj_name) v2u_nazwa
                 , COALESCE(u.map_org_unit, u.faculty_code) v2u_jed_org_kod
                 , V2u_Get.Utw_Id(u.job_uuid) v2u_utw_id
                 , V2u_Get.Mod_Id(u.job_uuid) v2u_mod_id
-                , V2u_Get.Tpro_Kod(
+                , COALESCE(u.map_proto_type, V2u_Get.Tpro_Kod(
                           subj_credit_kind => u.subj_credit_kind
                         , subj_grades => u.subj_grades
-                  ) v2u_tpro_kod
+                  )) v2u_tpro_kod
                 , COALESCE(u.map_org_unit_recipient, u.faculty_code) v2u_jed_org_kod_biorca
                 , u.map_subj_lang v2u_jzk_kod
 
@@ -219,17 +252,20 @@ USING
                 , CASE
                     WHEN
                         -- all the instances were consistent
-                            u.dbg_languages = 1
+                            u.dbg_subj_names <= 1
+                        AND u.dbg_languages = 1
                         AND u.dbg_org_units <= 1
                         AND u.dbg_org_unit_recipients <= 1
+                        AND u.dbg_map_proto_types <= 1
+                        AND u.dbg_map_grade_types <= 1
                         AND u.dbg_faculty_codes = 1
                         AND u.dbg_subj_names = 1
                         AND u.dbg_subj_credit_kinds = 1
                         -- and we have correct tpro_kod value
-                        AND V2u_Get.Tpro_Kod(
+                        AND COALESCE(u.map_proto_type, V2u_Get.Tpro_Kod(
                               subj_credit_kind => u.subj_credit_kind
                             , subj_grades => u.subj_grades
-                            ) IN ('E', 'Z', 'O', 'S')
+                            )) IN ('E', 'Z', 'O', 'S')
                     THEN 1
                     ELSE 0
                   END dbg_values_ok
@@ -374,9 +410,12 @@ USING
 
             , w.dbg_subj_codes
             , w.dbg_map_subj_codes
+            , w.dbg_map_subj_names
             , w.dbg_languages
             , w.dbg_org_units
             , w.dbg_org_unit_recipients
+            , w.dbg_map_proto_types
+            , w.dbg_map_grade_types
             , w.dbg_faculty_codes
             , w.dbg_subj_names
             , w.dbg_subj_credit_kinds
@@ -431,9 +470,12 @@ WHEN NOT MATCHED THEN
         -- DBG
         , dbg_subj_codes
         , dbg_map_subj_codes
+        , dbg_map_subj_names
         , dbg_languages
         , dbg_org_units
         , dbg_org_unit_recipients
+        , dbg_map_proto_types
+        , dbg_map_grade_types
         , dbg_faculty_codes
         , dbg_subj_names
         , dbg_subj_credit_kinds
@@ -485,9 +527,12 @@ WHEN NOT MATCHED THEN
         -- DBG
         , src.dbg_subj_codes
         , src.dbg_map_subj_codes
+        , src.dbg_map_subj_names
         , src.dbg_languages
         , src.dbg_org_units
         , src.dbg_org_unit_recipients
+        , src.dbg_map_proto_types
+        , src.dbg_map_grade_types
         , src.dbg_faculty_codes
         , src.dbg_subj_names
         , src.dbg_subj_credit_kinds
@@ -540,9 +585,12 @@ WHEN MATCHED THEN
         -- DBG
         , tgt.dbg_subj_codes = src.dbg_subj_codes
         , tgt.dbg_map_subj_codes = src.dbg_map_subj_codes
+        , tgt.dbg_map_subj_names = src.dbg_map_subj_names
         , tgt.dbg_languages = src.dbg_languages
         , tgt.dbg_org_units = src.dbg_org_units
         , tgt.dbg_org_unit_recipients = src.dbg_org_unit_recipients
+        , tgt.dbg_map_proto_types = src.dbg_map_proto_types
+        , tgt.dbg_map_grade_types = src.dbg_map_grade_types
         , tgt.dbg_faculty_codes = src.dbg_faculty_codes
         , tgt.dbg_subj_names = src.dbg_subj_names
         , tgt.dbg_subj_credit_kinds = src.dbg_subj_credit_kinds

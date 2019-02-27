@@ -38,9 +38,12 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Przedmiot_t AS
             -- DBG
             , dbg_subj_codes IN NUMBER
             , dbg_map_subj_codes IN NUMBER
+            , dbg_map_subj_names IN NUMBER
             , dbg_languages IN NUMBER
             , dbg_org_units IN NUMBER
             , dbg_org_unit_recipients IN NUMBER
+            , dbg_map_proto_types IN NUMBER
+            , dbg_map_grade_types IN NUMBER
             , dbg_faculty_codes IN NUMBER
             , dbg_subj_names IN NUMBER
             , dbg_subj_credit_kinds IN NUMBER
@@ -94,9 +97,12 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Przedmiot_t AS
             -- DBG
             , dbg_subj_codes => dbg_subj_codes
             , dbg_map_subj_codes => dbg_map_subj_codes
+            , dbg_map_subj_names => dbg_map_subj_names
             , dbg_languages => dbg_languages
             , dbg_org_units => dbg_org_units
             , dbg_org_unit_recipients => dbg_org_unit_recipients
+            , dbg_map_proto_types => dbg_map_proto_types
+            , dbg_map_grade_types => dbg_map_grade_types
             , dbg_faculty_codes => dbg_faculty_codes
             , dbg_subj_names => dbg_subj_names
             , dbg_subj_credit_kinds => dbg_subj_credit_kinds
@@ -152,9 +158,12 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Przedmiot_t AS
             -- DBG
             , dbg_subj_codes IN NUMBER
             , dbg_map_subj_codes IN NUMBER
+            , dbg_map_subj_names IN NUMBER
             , dbg_languages IN NUMBER
             , dbg_org_units IN NUMBER
             , dbg_org_unit_recipients IN NUMBER
+            , dbg_map_proto_types IN NUMBER
+            , dbg_map_grade_types IN NUMBER
             , dbg_faculty_codes IN NUMBER
             , dbg_subj_names IN NUMBER
             , dbg_subj_credit_kinds IN NUMBER
@@ -209,9 +218,12 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Przedmiot_t AS
         -- DBG
         SELF.dbg_subj_codes := dbg_subj_codes;
         SELF.dbg_map_subj_codes := dbg_map_subj_codes;
+        SELF.dbg_map_subj_names := dbg_map_subj_names;
         SELF.dbg_languages := dbg_languages;
         SELF.dbg_org_units := dbg_org_units;
         SELF.dbg_org_unit_recipients := dbg_org_unit_recipients;
+        SELF.dbg_map_proto_types := dbg_map_proto_types;
+        SELF.dbg_map_grade_types := dbg_map_grade_types;
         SELF.dbg_faculty_codes := dbg_faculty_codes;
         SELF.dbg_subj_names := dbg_subj_names;
         SELF.dbg_subj_credit_kinds := dbg_subj_credit_kinds;
