@@ -230,6 +230,9 @@ USING
                 , V2u_Get.Utw_Id(u.job_uuid) v2u_utw_id
                 , V2u_Get.Mod_Id(u.job_uuid) v2u_mod_id
                 , u.classes_hours v2u_liczba_godz
+                -- FIXME: this is probably wrong, in most cases we'll use
+                --        the default tpro_kod from dz_przedmioty_cykli, for
+                --        which purpose we should keep NULL here
                 , COALESCE(u.map_proto_type, V2u_Get.Tpro_Kod(
                           subj_credit_kind => u.subj_credit_kind
                         , subj_grades => u.subj_grades
@@ -259,6 +262,7 @@ USING
                         AND u.dbg_classes_hours = 1
                         -- and we have correct tpro_kod value
                         AND u.classes_hours BETWEEN 0 AND 1200
+                        -- FIXME: keep in sync
                         AND COALESCE(u.map_proto_type, V2u_Get.Tpro_Kod(
                               subj_credit_kind => u.subj_credit_kind
                             , subj_grades => u.subj_grades
