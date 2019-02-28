@@ -25,16 +25,31 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Zajecia_Cyklu_t AS
             , literatura IN CLOB
             , literatura_ang IN CLOB
             , czy_pokazywac_termin IN VARCHAR2
+            -- KEY
             , job_uuid IN RAW
+            , pk_subject IN VARCHAR2
+            , pk_semester IN VARCHAR2
+            , pk_classes IN VARCHAR2
+            -- DBG
             , dbg_subj_codes IN NUMBER
             , dbg_map_subj_codes IN NUMBER
-            , dbg_classes_hours IN NUMBER
+            , dbg_map_classes_types IN NUMBER
+            , dbg_map_proto_types IN NUMBER
             , dbg_subj_credit_kinds IN NUMBER
+            , dbg_prz_kody IN NUMBER
+            , dbg_cdyd_kody IN NUMBER
+            , dbg_tzaj_kody IN NUMBER
+            , dbg_classes_hours IN NUMBER
+            , dbg_ids IN NUMBER
+            , dbg_unique_match IN NUMBER
+            , dbg_values_ok IN NUMBER
             , dbg_matched IN NUMBER
             , dbg_missing IN NUMBER
             , dbg_subject_mapped IN NUMBER
             , dbg_classes_mapped IN NUMBER
-            , safe_to_add IN NUMBER
+            -- CTL
+            , change_type IN VARCHAR2
+            , safe_to_change IN NUMBER
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -63,16 +78,31 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Zajecia_Cyklu_t AS
             , literatura => literatura
             , literatura_ang => literatura_ang
             , czy_pokazywac_termin => czy_pokazywac_termin
+            -- KEY
             , job_uuid => job_uuid
+            , pk_subject => pk_subject
+            , pk_semester => pk_semester
+            , pk_classes => pk_classes
+            -- DBG
             , dbg_subj_codes => dbg_subj_codes
             , dbg_map_subj_codes => dbg_map_subj_codes
-            , dbg_classes_hours => dbg_classes_hours
+            , dbg_map_classes_types => dbg_map_classes_types
+            , dbg_map_proto_types => dbg_map_proto_types
             , dbg_subj_credit_kinds => dbg_subj_credit_kinds
+            , dbg_prz_kody => dbg_prz_kody
+            , dbg_cdyd_kody => dbg_cdyd_kody
+            , dbg_tzaj_kody => dbg_tzaj_kody
+            , dbg_classes_hours => dbg_classes_hours
+            , dbg_ids => dbg_ids
+            , dbg_unique_match => dbg_unique_match
+            , dbg_values_ok => dbg_values_ok
             , dbg_matched => dbg_matched
             , dbg_missing => dbg_missing
             , dbg_subject_mapped => dbg_subject_mapped
             , dbg_classes_mapped => dbg_classes_mapped
-            , safe_to_add => safe_to_add
+            -- CTL
+            , change_type => change_type
+            , safe_to_change => safe_to_change
             );
         RETURN;
     END;
@@ -103,16 +133,31 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Zajecia_Cyklu_t AS
             , literatura IN CLOB
             , literatura_ang IN CLOB
             , czy_pokazywac_termin IN VARCHAR2
+            -- KEY
             , job_uuid IN RAW
+            , pk_subject IN VARCHAR2
+            , pk_semester IN VARCHAR2
+            , pk_classes IN VARCHAR2
+            -- DBG
             , dbg_subj_codes IN NUMBER
             , dbg_map_subj_codes IN NUMBER
-            , dbg_classes_hours IN NUMBER
+            , dbg_map_classes_types IN NUMBER
+            , dbg_map_proto_types IN NUMBER
             , dbg_subj_credit_kinds IN NUMBER
+            , dbg_prz_kody IN NUMBER
+            , dbg_cdyd_kody IN NUMBER
+            , dbg_tzaj_kody IN NUMBER
+            , dbg_classes_hours IN NUMBER
+            , dbg_ids IN NUMBER
+            , dbg_unique_match IN NUMBER
+            , dbg_values_ok IN NUMBER
             , dbg_matched IN NUMBER
             , dbg_missing IN NUMBER
             , dbg_subject_mapped IN NUMBER
             , dbg_classes_mapped IN NUMBER
-            , safe_to_add IN NUMBER
+            -- CTL
+            , change_type IN VARCHAR2
+            , safe_to_change IN NUMBER
             )
     IS
     BEGIN
@@ -142,16 +187,31 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Zajecia_Cyklu_t AS
             , literatura_ang => literatura_ang
             , czy_pokazywac_termin => czy_pokazywac_termin
             );
+        -- KEY
         SELF.job_uuid := job_uuid;
+        SELF.pk_subject := pk_subject;
+        SELF.pk_semester := pk_semester;
+        SELF.pk_classes := pk_classes;
+        -- DBG
         SELF.dbg_subj_codes := dbg_subj_codes;
         SELF.dbg_map_subj_codes := dbg_map_subj_codes;
-        SELF.dbg_classes_hours := dbg_classes_hours;
+        SELF.dbg_map_classes_types := dbg_map_classes_types;
+        SELF.dbg_map_proto_types := dbg_map_proto_types;
         SELF.dbg_subj_credit_kinds := dbg_subj_credit_kinds;
+        SELF.dbg_prz_kody := dbg_prz_kody;
+        SELF.dbg_cdyd_kody := dbg_cdyd_kody;
+        SELF.dbg_tzaj_kody := dbg_tzaj_kody;
+        SELF.dbg_classes_hours := dbg_classes_hours;
+        SELF.dbg_ids := dbg_ids;
+        SELF.dbg_unique_match := dbg_unique_match;
+        SELF.dbg_values_ok := dbg_values_ok;
         SELF.dbg_matched := dbg_matched;
         SELF.dbg_missing := dbg_missing;
         SELF.dbg_subject_mapped := dbg_subject_mapped;
         SELF.dbg_classes_mapped := dbg_classes_mapped;
-        SELF.safe_to_add := safe_to_add;
+        -- CTL
+        SELF.change_type := change_type;
+        SELF.safe_to_change := safe_to_change;
     END;
 END;
 

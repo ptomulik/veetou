@@ -36,7 +36,7 @@ USING
                 , cm_j.matching_score classes_matching_score
                 , classes_map.map_classes_type
                 , CAST(MULTISET(
-                        SELECT DISTINCT SUBSTR(t.tzaj_kod, 1, 3)
+                        SELECT DISTINCT SUBSTR(t.tzaj_kod, 1, 20)
                         FROM v2u_dz_zajecia_cykli t
                         WHERE       t.prz_kod = subject_map.map_subj_code
                                 AND t.cdyd_kod = semesters.semester_code
@@ -52,7 +52,7 @@ USING
                     )
             INNER JOIN v2u_ko_semesters semesters
                 ON  (
-                            semesters.id = u.subject_id
+                            semesters.id = u.semester_id
                         AND semesters.job_uuid = u.job_uuid
                     )
             LEFT JOIN v2u_ko_subject_map_j sm_j

@@ -459,8 +459,6 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Table('uu_studenci');
         --
         Drop_Index('uu_zajecia_cykli_idx1');
-        Drop_Trigger('uu_zajecia_cykli_tr1');
-        Drop_Sequence('uu_zajecia_cykli_sq1');
         Drop_Table('uu_zajecia_cykli');
         --
         Drop_Index('uu_przedmioty_cykli_idx1');
@@ -537,6 +535,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Dz_Ids_t');
         Drop_Type('5Ids_t');
         Drop_Type('Dz_5Ids_t');
+        Drop_Type('Ints8_t');
         Drop_Type('Integers_t');
         Drop_Type('Chars1_t');
         Drop_Type('5Chars1_t');
@@ -555,8 +554,10 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     PROCEDURE Tier3
     IS
     BEGIN
-        Drop_View('ud_przedmioty_v');
         Drop_View('ud_atrybuty_przedmiotow_v');
+        Drop_View('ud_przedmioty_v');
+        Drop_View('ud_przedmioty_cykli_v');
+        Drop_View('ud_zajecia_cykli_v');
 
         Drop_View('uu_subject_grades_v');
 

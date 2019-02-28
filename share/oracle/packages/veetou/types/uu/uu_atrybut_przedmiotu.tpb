@@ -25,7 +25,7 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Atrybut_Przedmiotu_t AS
             , dbg_rev_subj_codes_tab IN V2u_Subj_20Codes_t
             , dbg_ids IN NUMBER
             , dbg_unique_match IN NUMBER
-            -- INF
+            -- CTL
             , change_type IN CHAR
             , safe_to_change IN NUMBER
             ) RETURN SELF AS RESULT
@@ -56,7 +56,7 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Atrybut_Przedmiotu_t AS
             , dbg_rev_subj_codes_tab => dbg_rev_subj_codes_tab
             , dbg_ids => dbg_ids
             , dbg_unique_match => dbg_unique_match
-            -- INF
+            -- CTL
             , change_type => change_type
             , safe_to_change => safe_to_change
         );
@@ -89,7 +89,7 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Atrybut_Przedmiotu_t AS
             , dbg_rev_subj_codes_tab IN V2u_Subj_20Codes_t
             , dbg_ids IN NUMBER
             , dbg_unique_match IN NUMBER
-            -- INF
+            -- CTL
             , change_type IN CHAR
             , safe_to_change IN NUMBER
             )
@@ -121,7 +121,7 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Atrybut_Przedmiotu_t AS
         SELF.dbg_rev_subj_codes_tab := dbg_rev_subj_codes_tab;
         SELF.dbg_ids := dbg_ids;
         SELF.dbg_unique_match := dbg_unique_match;
-        -- INF
+        -- CTL
         SELF.change_type := change_type;
         SELF.safe_to_change := safe_to_change;
     END;

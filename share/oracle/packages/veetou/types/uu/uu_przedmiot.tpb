@@ -53,7 +53,7 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Przedmiot_t AS
             , dbg_missing IN NUMBER
             , dbg_matched IN NUMBER
             , dbg_mapped IN NUMBER
-            -- INF
+            -- CTL
             , change_type IN CHAR
             , safe_to_change IN NUMBER
             ) RETURN SELF AS RESULT
@@ -112,7 +112,7 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Przedmiot_t AS
             , dbg_missing => dbg_missing
             , dbg_matched => dbg_matched
             , dbg_mapped => dbg_mapped
-            -- INF
+            -- CTL
             , change_type => change_type
             , safe_to_change => safe_to_change
             );
@@ -173,7 +173,7 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Przedmiot_t AS
             , dbg_missing IN NUMBER
             , dbg_matched IN NUMBER
             , dbg_mapped IN NUMBER
-            -- INF
+            -- CTL
             , change_type IN CHAR
             , safe_to_change IN NUMBER
             )
@@ -233,7 +233,7 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Przedmiot_t AS
         SELF.dbg_missing := dbg_missing;
         SELF.dbg_matched := dbg_matched;
         SELF.dbg_mapped := dbg_mapped;
-        -- INF
+        -- CTL
         SELF.change_type := change_type;
         SELF.safe_to_change := safe_to_change;
     END;

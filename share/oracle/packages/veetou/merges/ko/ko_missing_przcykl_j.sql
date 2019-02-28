@@ -42,7 +42,7 @@ USING
                     )
             INNER JOIN v2u_ko_semesters semesters
                 ON  (
-                            semesters.id = u.subject_id
+                            semesters.id = u.semester_id
                         AND semesters.job_uuid = u.job_uuid
                     )
             LEFT JOIN v2u_ko_subject_map_j sm_j

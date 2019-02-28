@@ -20,7 +20,7 @@ CREATE OR REPLACE TYPE V2u_Uu_Przedmiot_t
     , dbg_missing NUMBER(5)
     , dbg_matched NUMBER(5)
     , dbg_mapped NUMBER(5)
-    -- INF
+    -- CTL
     , change_type CHAR(1)
     , safe_to_change NUMBER(1)
 
@@ -78,7 +78,7 @@ CREATE OR REPLACE TYPE V2u_Uu_Przedmiot_t
             , dbg_missing IN NUMBER
             , dbg_matched IN NUMBER
             , dbg_mapped IN NUMBER
-            -- INF
+            -- CTL
             , change_type IN CHAR
             , safe_to_change IN NUMBER
             ) RETURN SELF AS RESULT
@@ -137,7 +137,7 @@ CREATE OR REPLACE TYPE V2u_Uu_Przedmiot_t
             , dbg_missing IN NUMBER
             , dbg_matched IN NUMBER
             , dbg_mapped IN NUMBER
-            -- INF
+            -- CTL
             , change_type IN CHAR
             , safe_to_change IN NUMBER
             )

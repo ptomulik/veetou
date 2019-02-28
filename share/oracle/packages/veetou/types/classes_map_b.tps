@@ -1,7 +1,7 @@
 CREATE OR REPLACE TYPE V2u_Classes_Map_B_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Distinct_t
     ( classes_type VARCHAR2(1 CHAR)
-    , map_classes_type VARCHAR2(3 CHAR)
+    , map_classes_type VARCHAR2(20 CHAR)
     , expr_subj_code VARCHAR2(256 CHAR)
     , expr_subj_name VARCHAR2(256 CHAR)
     , expr_subj_hours_w VARCHAR2(256 CHAR)

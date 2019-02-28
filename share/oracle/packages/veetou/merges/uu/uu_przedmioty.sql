@@ -148,11 +148,11 @@ USING
                     FROM TABLE(u_0.map_org_unit_recipients1k) t
                     WHERE ROWNUM <= 1
                   ) map_org_unit_recipient
-                , ( SELECT SUBSTR(VALUE(t), 1, 1)
+                , ( SELECT SUBSTR(VALUE(t), 1, 20)
                     FROM TABLE(u_0.map_proto_types1k) t
                     WHERE ROWNUM <= 1
                   ) map_proto_type
-                , ( SELECT SUBSTR(VALUE(t), 1, 3)
+                , ( SELECT SUBSTR(VALUE(t), 1, 20)
                     FROM TABLE(u_0.map_grade_types1k) t
                     WHERE ROWNUM <= 1
                   ) map_grade_type
@@ -242,8 +242,7 @@ USING
                     WHEN    u.dbg_matched > 0
                         AND u.dbg_mapped = u.dbg_matched
                         AND u.dbg_missing = 0
-                        AND u.dbg_prz_kody = 1
-                        AND u.prz_kod IS NOT NULL
+                        AND u.dbg_prz_kody = 1 AND u.prz_kod IS NOT NULL
                     THEN 1
                     ELSE 0
                   END dbg_unique_match
@@ -485,7 +484,7 @@ WHEN NOT MATCHED THEN
         , dbg_matched
         , dbg_missing
         , dbg_mapped
-        -- INF
+        -- CTL
         , change_type
         , safe_to_change
         )
@@ -542,7 +541,7 @@ WHEN NOT MATCHED THEN
         , src.dbg_matched
         , src.dbg_missing
         , src.dbg_mapped
-        -- INF
+        -- CTL
         , src.change_type
         , src.safe_to_change
         )
@@ -600,7 +599,7 @@ WHEN MATCHED THEN
         , tgt.dbg_matched = src.dbg_matched
         , tgt.dbg_missing = src.dbg_missing
         , tgt.dbg_mapped = src.dbg_mapped
-        -- INF
+        -- CTL
         , tgt.change_type = src.change_type
         , tgt.safe_to_change = src.safe_to_change
 ;

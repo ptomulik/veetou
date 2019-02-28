@@ -2,7 +2,7 @@ CREATE OR REPLACE TYPE V2u_Uu_Przedmiot_Cyklu_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Dz_Przedmiot_Cyklu_B_t
     ( job_uuid RAW(16)
     , pk_subject VARCHAR2(32 CHAR)
-    , pk_semester VARCHAR2(32 CHAR)
+    , pk_semester VARCHAR2(20 CHAR)
     -- DBG
     , dbg_subj_codes NUMBER(5)
     , dbg_map_subj_codes NUMBER(5)

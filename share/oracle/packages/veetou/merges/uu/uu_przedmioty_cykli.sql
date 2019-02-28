@@ -112,7 +112,7 @@ USING
                     FROM TABLE(u_0.map_subj_codes1k) t
                     WHERE ROWNUM <= 1
                   ) map_subj_code
-                , ( SELECT SUBSTR(VALUE(t), 1, 1)
+                , ( SELECT SUBSTR(VALUE(t), 1, 20)
                     FROM TABLE(u_0.map_proto_types1k) t
                     WHERE ROWNUM <= 1
                   ) map_proto_type
@@ -124,7 +124,7 @@ USING
                     FROM TABLE(u_0.prz_kody1k) t
                     WHERE ROWNUM <= 1
                   ) prz_kod
-                , ( SELECT SUBSTR(VALUE(t), 1, 5)
+                , ( SELECT SUBSTR(VALUE(t), 1, 20)
                     FROM TABLE(u_0.cdyd_kody1k) t
                     WHERE ROWNUM <= 1
                   ) cdyd_kod
@@ -172,10 +172,8 @@ USING
                     WHEN    u.dbg_matched > 0
                         AND u.dbg_mapped = u.dbg_matched
                         AND u.dbg_missing = 0
-                        AND u.dbg_prz_kody = 1
-                        AND u.prz_kod IS NOT NULL
-                        AND u.dbg_cdyd_kody = 1
-                        AND u.cdyd_kod IS NOT NULL
+                        AND u.dbg_prz_kody = 1 AND u.prz_kod IS NOT NULL
+                        AND u.dbg_cdyd_kody = 1 AND u.cdyd_kod IS NOT NULL
                     THEN 1
                     ELSE 0
                   END dbg_unique_match

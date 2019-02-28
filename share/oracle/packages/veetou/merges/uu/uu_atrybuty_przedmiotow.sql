@@ -175,13 +175,18 @@ USING
 
                 , CASE
                     WHEN
-                            v.map_subj_code IS NOT NULL
+                        -- ensure that:
+                        -- at least one subj_code contributes this row
+                            v.dbg_subj_codes > 0
+                        -- we reach for exactly one, NON-NULL  map_subj_code
                         AND v.dbg_map_subj_codes = 1
-                        AND v.dbg_subj_codes > 0
+                        AND v.map_subj_code IS NOT NULL
+                        -- at least one subj_code in reverse map lookup
                         AND v.dbg_rev_subj_codes > 0
-                        -- no target ids found
+                        -- no target ids found...
                         AND v.id IS NULL
                         AND v.dbg_ids = 0
+                        -- ..but this wasn't due to missing mappings
                         AND v.dbg_mapped > 0
                     THEN 1
                     ELSE 0
@@ -193,7 +198,7 @@ USING
                         AND v.dbg_map_subj_codes = 1
                         AND v.dbg_subj_codes > 0
                         AND v.dbg_rev_subj_codes > 0
-                        -- single taraget id found
+                        -- single target id found
                         AND v.id IS NOT NULL
                         AND v.dbg_ids = 1
                         AND v.dbg_mapped > 0
@@ -262,7 +267,7 @@ WHEN NOT MATCHED THEN
         , dbg_rev_subj_codes_tab
         , dbg_ids
         , dbg_unique_match
-        -- INF
+        -- CTL
         , change_type
         , safe_to_change
         )
@@ -290,7 +295,7 @@ WHEN NOT MATCHED THEN
         , src.dbg_rev_subj_codes_tab
         , src.dbg_ids
         , src.dbg_unique_match
-        -- INF
+        -- CTL
         , src.change_type
         , src.safe_to_change
         )
@@ -319,7 +324,7 @@ WHEN MATCHED THEN
         , tgt.dbg_rev_subj_codes_tab = src.dbg_rev_subj_codes_tab
         , tgt.dbg_ids = src.dbg_ids
         , tgt.dbg_unique_match = src.dbg_unique_match
-        -- INF
+        -- CTL
         , tgt.change_type = src.change_type
         , tgt.safe_to_change = src.safe_to_change
 ;

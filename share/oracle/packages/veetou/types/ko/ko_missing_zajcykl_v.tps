@@ -5,7 +5,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Zajcykl_V_t
     , map_subj_code VARCHAR2(20 CHAR)
     , classes_map_id NUMBER(38)
     , classes_matching_score NUMBER(38)
-    , map_classes_type VARCHAR2(3 CHAR)
+    , map_classes_type VARCHAR2(20 CHAR)
     , reason VARCHAR2(80 CHAR)
     , istniejace_tzaj_kody V2u_5Chars3_t
 

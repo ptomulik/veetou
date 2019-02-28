@@ -2,7 +2,7 @@ CREATE OR REPLACE TYPE V2u_Classes_Map_Pattern_t
     FORCE AUTHID CURRENT_USER AS OBJECT
     ( expr_subj_code VARCHAR(256 CHAR)
     , classes_type VARCHAR2(1 CHAR)
-    , map_classes_type VARCHAR2(3 CHAR)
+    , map_classes_type VARCHAR2(20 CHAR)
     , classes_pattern V2u_Classes_Pattern_t
     , subject_pattern V2u_Subject_Pattern_t
     , specialty_pattern V2u_Specialty_Pattern_t

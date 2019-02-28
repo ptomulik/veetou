@@ -12,7 +12,7 @@ CREATE OR REPLACE TYPE V2u_Uu_Atrybut_Przedmiotu_t
     , dbg_rev_subj_codes_tab V2u_Subj_20Codes_t
     , dbg_ids NUMBER(5)
     , dbg_unique_match NUMBER(1)
-    -- INF
+    -- CTL
     , change_type CHAR(1)
     , safe_to_change NUMBER(1)
 
@@ -42,7 +42,7 @@ CREATE OR REPLACE TYPE V2u_Uu_Atrybut_Przedmiotu_t
             , dbg_rev_subj_codes_tab IN V2u_Subj_20Codes_t
             , dbg_ids IN NUMBER
             , dbg_unique_match IN NUMBER
-            -- INF
+            -- CTL
             , change_type IN CHAR
             , safe_to_change IN NUMBER
             ) RETURN SELF AS RESULT
@@ -73,7 +73,7 @@ CREATE OR REPLACE TYPE V2u_Uu_Atrybut_Przedmiotu_t
             , dbg_rev_subj_codes_tab IN V2u_Subj_20Codes_t
             , dbg_ids IN NUMBER
             , dbg_unique_match IN NUMBER
-            -- INF
+            -- CTL
             , change_type IN CHAR
             , safe_to_change IN NUMBER
             )

@@ -10,7 +10,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Classes_Map_V_t
     , selected NUMBER(1)
     , reason VARCHAR2(20)
     , classes_type VARCHAR2(1 CHAR)
-    , map_classes_type VARCHAR2(3 CHAR)
+    , map_classes_type VARCHAR2(20 CHAR)
     , classes_hours NUMBER(8)
     , subj_code VARCHAR2(32 CHAR)
     , expr_subj_code VARCHAR2(256 CHAR)
