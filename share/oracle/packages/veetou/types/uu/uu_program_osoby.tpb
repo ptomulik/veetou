@@ -47,21 +47,26 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Program_Osoby_t AS
             , umowa_data_podpisania IN DATE
             , umowa_sygnatura IN VARCHAR2
             , kod_isced IN VARCHAR2
+            -- KEY
             , job_uuid IN RAW
-            , pk_student_index IN VARCHAR2
+            , pk_student IN VARCHAR2
             , pk_program_osoby IN VARCHAR2
+            -- DBG
             , dbg_unique_match IN NUMBER
             , dbg_map_program_codes IN NUMBER
+            , dbg_map_org_units IN NUMBER
             , dbg_faculty_codes IN NUMBER
-            , dbg_matched_ids IN NUMBER
-            , dbg_matched_prg_kody IN NUMBER
-            , dbg_matched_st_ids IN NUMBER
-            , dbg_matched_os_ids IN NUMBER
+            , dbg_ids IN NUMBER
+            , dbg_prg_kody IN NUMBER
+            , dbg_st_ids IN NUMBER
+            , dbg_os_ids IN NUMBER
             , dbg_skipped_prg_kody IN NUMBER
             , dbg_matched IN NUMBER
             , dbg_missing IN NUMBER
             , dbg_mapped IN NUMBER
-            , safe_to_add IN NUMBER
+            -- CTL
+            , change_type IN VARCHAR2
+            , safe_to_change IN NUMBER
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -112,21 +117,26 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Program_Osoby_t AS
             , umowa_data_podpisania => umowa_data_podpisania
             , umowa_sygnatura => umowa_sygnatura
             , kod_isced => kod_isced
+            -- KEY
             , job_uuid => job_uuid
-            , pk_student_index => pk_student_index
+            , pk_student => pk_student
             , pk_program_osoby => pk_program_osoby
+            -- DBG
             , dbg_unique_match => dbg_unique_match
             , dbg_map_program_codes => dbg_map_program_codes
+            , dbg_map_org_units => dbg_map_org_units
             , dbg_faculty_codes => dbg_faculty_codes
-            , dbg_matched_ids => dbg_matched_ids
-            , dbg_matched_prg_kody => dbg_matched_prg_kody
-            , dbg_matched_st_ids => dbg_matched_st_ids
-            , dbg_matched_os_ids => dbg_matched_os_ids
+            , dbg_ids => dbg_ids
+            , dbg_prg_kody => dbg_prg_kody
+            , dbg_st_ids => dbg_st_ids
+            , dbg_os_ids => dbg_os_ids
             , dbg_skipped_prg_kody => dbg_skipped_prg_kody
             , dbg_matched => dbg_matched
             , dbg_missing => dbg_missing
             , dbg_mapped => dbg_mapped
-            , safe_to_add => safe_to_add
+            -- CTL
+            , change_type => change_type
+            , safe_to_change => safe_to_change
             );
         RETURN;
     END;
@@ -179,21 +189,26 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Program_Osoby_t AS
             , umowa_data_podpisania IN DATE
             , umowa_sygnatura IN VARCHAR2
             , kod_isced IN VARCHAR2
+            -- KEY
             , job_uuid IN RAW
-            , pk_student_index IN VARCHAR2
+            , pk_student IN VARCHAR2
             , pk_program_osoby IN VARCHAR2
+            -- DBG
             , dbg_unique_match IN NUMBER
             , dbg_map_program_codes IN NUMBER
+            , dbg_map_org_units IN NUMBER
             , dbg_faculty_codes IN NUMBER
-            , dbg_matched_ids IN NUMBER
-            , dbg_matched_prg_kody IN NUMBER
-            , dbg_matched_st_ids IN NUMBER
-            , dbg_matched_os_ids IN NUMBER
+            , dbg_ids IN NUMBER
+            , dbg_prg_kody IN NUMBER
+            , dbg_st_ids IN NUMBER
+            , dbg_os_ids IN NUMBER
             , dbg_skipped_prg_kody IN NUMBER
             , dbg_matched IN NUMBER
             , dbg_missing IN NUMBER
             , dbg_mapped IN NUMBER
-            , safe_to_add IN NUMBER
+            -- CTL
+            , change_type IN VARCHAR2
+            , safe_to_change IN NUMBER
             )
     IS
     BEGIN
@@ -245,21 +260,26 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Program_Osoby_t AS
             , umowa_sygnatura => umowa_sygnatura
             , kod_isced => kod_isced
             );
+        -- KEY
         SELF.job_uuid := job_uuid;
-        SELF.pk_student_index := pk_student_index;
+        SELF.pk_student := pk_student;
         SELF.pk_program_osoby := pk_program_osoby;
+        -- DBG
         SELF.dbg_unique_match := dbg_unique_match;
         SELF.dbg_map_program_codes := dbg_map_program_codes;
+        SELF.dbg_map_org_units := dbg_map_org_units;
         SELF.dbg_faculty_codes := dbg_faculty_codes;
-        SELF.dbg_matched_ids := dbg_matched_ids;
-        SELF.dbg_matched_prg_kody := dbg_matched_prg_kody;
-        SELF.dbg_matched_st_ids := dbg_matched_st_ids;
-        SELF.dbg_matched_os_ids := dbg_matched_os_ids;
+        SELF.dbg_ids := dbg_ids;
+        SELF.dbg_prg_kody := dbg_prg_kody;
+        SELF.dbg_st_ids := dbg_st_ids;
+        SELF.dbg_os_ids := dbg_os_ids;
         SELF.dbg_skipped_prg_kody := dbg_skipped_prg_kody;
         SELF.dbg_matched := dbg_matched;
         SELF.dbg_missing := dbg_missing;
         SELF.dbg_mapped := dbg_mapped;
-        SELF.safe_to_add := safe_to_add;
+        -- CTL
+        SELF.change_type := change_type;
+        SELF.safe_to_change := safe_to_change;
     END;
 END;
 

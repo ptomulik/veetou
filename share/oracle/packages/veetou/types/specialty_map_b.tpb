@@ -11,6 +11,7 @@ CREATE OR REPLACE TYPE BODY V2u_Specialty_Map_B_t AS
             , map_modetier_code IN VARCHAR2
             , map_field_code IN VARCHAR2
             , map_specialty_code IN VARCHAR2
+            , map_org_unit IN VARCHAR2
             , expr_semester_code IN VARCHAR2
             , expr_semester_number IN VARCHAR2
             , expr_ects_mandatory IN VARCHAR2
@@ -30,6 +31,7 @@ CREATE OR REPLACE TYPE BODY V2u_Specialty_Map_B_t AS
             , map_modetier_code => map_modetier_code
             , map_field_code => map_field_code
             , map_specialty_code => map_specialty_code
+            , map_org_unit => map_org_unit
             , expr_semester_code => expr_semester_code
             , expr_semester_number => expr_semester_number
             , expr_ects_mandatory => expr_ects_mandatory
@@ -52,6 +54,7 @@ CREATE OR REPLACE TYPE BODY V2u_Specialty_Map_B_t AS
             , map_modetier_code IN VARCHAR2
             , map_field_code IN VARCHAR2
             , map_specialty_code IN VARCHAR2
+            , map_org_unit IN VARCHAR2
             , expr_semester_code IN VARCHAR2
             , expr_semester_number IN VARCHAR2
             , expr_ects_mandatory IN VARCHAR2
@@ -72,6 +75,7 @@ CREATE OR REPLACE TYPE BODY V2u_Specialty_Map_B_t AS
         SELF.map_modetier_code := map_modetier_code;
         SELF.map_field_code := map_field_code;
         SELF.map_specialty_code := map_specialty_code;
+        SELF.map_org_unit := map_org_unit;
         SELF.expr_semester_code := expr_semester_code;
         SELF.expr_semester_number := expr_semester_number;
         SELF.expr_ects_mandatory := expr_ects_mandatory;
@@ -110,6 +114,8 @@ CREATE OR REPLACE TYPE BODY V2u_Specialty_Map_B_t AS
         ord := V2U_Cmp.StrNI(map_field_code, other.map_field_code);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.StrNI(map_specialty_code, other.map_specialty_code);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(map_org_unit, other.map_org_unit);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.StrNI(expr_semester_code, other.expr_semester_code);
         IF ord <> 0 THEN RETURN ord; END IF;

@@ -28,6 +28,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Map_V_t AS
         SELF.map_modetier_code := map.map_modetier_code;
         SELF.map_field_code := map.map_field_code;
         SELF.map_specialty_code := map.map_specialty_code;
+        SELF.map_org_unit := map.map_org_unit;
         SELF.semester_number := semester.semester_number;
         SELF.expr_semester_number := map.expr_semester_number;
         SELF.semester_code := semester.semester_code;

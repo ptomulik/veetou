@@ -1,20 +1,24 @@
 CREATE OR REPLACE TYPE V2u_Uu_Program_Osoby_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Dz_Program_Osoby_B_t
     ( job_uuid RAW(16)
-    , pk_student_index VARCHAR2(32 CHAR)
+    , pk_student VARCHAR2(32 CHAR)
     , pk_program_osoby VARCHAR2(128 CHAR)
+    -- DBG
     , dbg_unique_match NUMBER(1)
     , dbg_map_program_codes NUMBER(5)
+    , dbg_map_org_units NUMBER(5)
     , dbg_faculty_codes NUMBER(5)
-    , dbg_matched_ids NUMBER(5)
-    , dbg_matched_prg_kody NUMBER(5)
-    , dbg_matched_st_ids NUMBER(5)
-    , dbg_matched_os_ids NUMBER(5)
+    , dbg_ids NUMBER(5)
+    , dbg_prg_kody NUMBER(5)
+    , dbg_st_ids NUMBER(5)
+    , dbg_os_ids NUMBER(5)
     , dbg_skipped_prg_kody NUMBER(5)
     , dbg_matched NUMBER(5)
     , dbg_missing NUMBER(5)
     , dbg_mapped NUMBER(5)
-    , safe_to_add NUMBER(1)
+    -- CTL
+    , change_type VARCHAR2(1)
+    , safe_to_change NUMBER(1)
 
     , CONSTRUCTOR FUNCTION V2u_Uu_Program_Osoby_t(
               SELF IN OUT NOCOPY V2u_Uu_Program_Osoby_t
@@ -64,21 +68,26 @@ CREATE OR REPLACE TYPE V2u_Uu_Program_Osoby_t
             , umowa_data_podpisania IN DATE
             , umowa_sygnatura IN VARCHAR2
             , kod_isced IN VARCHAR2
+            -- KEY
             , job_uuid IN RAW
-            , pk_student_index IN VARCHAR2
+            , pk_student IN VARCHAR2
             , pk_program_osoby IN VARCHAR2
+            -- DBG
             , dbg_unique_match IN NUMBER
             , dbg_map_program_codes IN NUMBER
+            , dbg_map_org_units IN NUMBER
             , dbg_faculty_codes IN NUMBER
-            , dbg_matched_ids IN NUMBER
-            , dbg_matched_prg_kody IN NUMBER
-            , dbg_matched_st_ids IN NUMBER
-            , dbg_matched_os_ids IN NUMBER
+            , dbg_ids IN NUMBER
+            , dbg_prg_kody IN NUMBER
+            , dbg_st_ids IN NUMBER
+            , dbg_os_ids IN NUMBER
             , dbg_skipped_prg_kody IN NUMBER
             , dbg_matched IN NUMBER
             , dbg_missing IN NUMBER
             , dbg_mapped IN NUMBER
-            , safe_to_add IN NUMBER
+            -- CTL
+            , change_type IN VARCHAR2
+            , safe_to_change IN NUMBER
             ) RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
@@ -129,21 +138,26 @@ CREATE OR REPLACE TYPE V2u_Uu_Program_Osoby_t
             , umowa_data_podpisania IN DATE
             , umowa_sygnatura IN VARCHAR2
             , kod_isced IN VARCHAR2
+            -- KEY
             , job_uuid IN RAW
-            , pk_student_index IN VARCHAR2
+            , pk_student IN VARCHAR2
             , pk_program_osoby IN VARCHAR2
+            -- DBG
             , dbg_unique_match IN NUMBER
             , dbg_map_program_codes IN NUMBER
+            , dbg_map_org_units IN NUMBER
             , dbg_faculty_codes IN NUMBER
-            , dbg_matched_ids IN NUMBER
-            , dbg_matched_prg_kody IN NUMBER
-            , dbg_matched_st_ids IN NUMBER
-            , dbg_matched_os_ids IN NUMBER
+            , dbg_ids IN NUMBER
+            , dbg_prg_kody IN NUMBER
+            , dbg_st_ids IN NUMBER
+            , dbg_os_ids IN NUMBER
             , dbg_skipped_prg_kody IN NUMBER
             , dbg_matched IN NUMBER
             , dbg_missing IN NUMBER
             , dbg_mapped IN NUMBER
-            , safe_to_add IN NUMBER
+            -- CTL
+            , change_type IN VARCHAR2
+            , safe_to_change IN NUMBER
             )
     )
 ;

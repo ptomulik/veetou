@@ -9,6 +9,7 @@ CREATE OR REPLACE TYPE V2u_Specialty_Map_B_t
     , map_modetier_code VARCHAR2(32 CHAR)
     , map_field_code VARCHAR2(32 CHAR)
     , map_specialty_code VARCHAR2(32 CHAR)
+    , map_org_unit VARCHAR(20 CHAR)
     , expr_semester_code VARCHAR2(256 CHAR)
     , expr_semester_number VARCHAR2(256 CHAR)
     , expr_ects_mandatory VARCHAR2(256 CHAR)
@@ -27,6 +28,7 @@ CREATE OR REPLACE TYPE V2u_Specialty_Map_B_t
             , map_modetier_code IN VARCHAR2
             , map_field_code IN VARCHAR2
             , map_specialty_code IN VARCHAR2
+            , map_org_unit IN VARCHAR2
             , expr_semester_code IN VARCHAR2
             , expr_semester_number IN VARCHAR2
             , expr_ects_mandatory IN VARCHAR2
@@ -46,6 +48,7 @@ CREATE OR REPLACE TYPE V2u_Specialty_Map_B_t
             , map_modetier_code IN VARCHAR2
             , map_field_code IN VARCHAR2
             , map_specialty_code IN VARCHAR2
+            , map_org_unit IN VARCHAR2
             , expr_semester_code IN VARCHAR2
             , expr_semester_number IN VARCHAR2
             , expr_ects_mandatory IN VARCHAR2

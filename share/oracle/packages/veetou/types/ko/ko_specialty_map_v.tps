@@ -17,6 +17,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Specialty_Map_V_t
     , map_modetier_code VARCHAR2(32 CHAR)
     , map_field_code VARCHAR2(32 CHAR)
     , map_specialty_code VARCHAR2(32 CHAR)
+    , map_org_unit VARCHAR2(20 CHAR)
     , semester_number NUMBER(2)
     , expr_semester_number VARCHAR2(256 CHAR)
     , semester_code VARCHAR2(5 CHAR)

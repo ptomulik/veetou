@@ -43,6 +43,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Speclty_Map_V_t AS
             , map_modetier_code => NULL
             , map_field_code => NULL
             , map_specialty_code => NULL
+            , map_org_unit => NULL
             , expr_semester_code => semester.semester_code
             , expr_semester_number => semester.semester_number
             , expr_ects_mandatory => semester.ects_mandatory
