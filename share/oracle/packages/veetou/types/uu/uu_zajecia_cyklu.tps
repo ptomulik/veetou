@@ -14,6 +14,7 @@ CREATE OR REPLACE TYPE V2u_Uu_Zajecia_Cyklu_t
     , dbg_cdyd_kody NUMBER(5)
     , dbg_tzaj_kody NUMBER(5)
     , dbg_classes_hours NUMBER(5)
+    , dbg_map_classes_hours NUMBER(5)
     , dbg_ids NUMBER(5)
     , dbg_unique_match NUMBER(1)
     , dbg_values_ok NUMBER(1)
@@ -66,6 +67,7 @@ CREATE OR REPLACE TYPE V2u_Uu_Zajecia_Cyklu_t
             , dbg_cdyd_kody IN NUMBER
             , dbg_tzaj_kody IN NUMBER
             , dbg_classes_hours IN NUMBER
+            , dbg_map_classes_hours IN NUMBER
             , dbg_ids IN NUMBER
             , dbg_unique_match IN NUMBER
             , dbg_values_ok IN NUMBER
@@ -119,6 +121,7 @@ CREATE OR REPLACE TYPE V2u_Uu_Zajecia_Cyklu_t
             , dbg_cdyd_kody IN NUMBER
             , dbg_tzaj_kody IN NUMBER
             , dbg_classes_hours IN NUMBER
+            , dbg_map_classes_hours IN NUMBER
             , dbg_ids IN NUMBER
             , dbg_unique_match IN NUMBER
             , dbg_values_ok IN NUMBER

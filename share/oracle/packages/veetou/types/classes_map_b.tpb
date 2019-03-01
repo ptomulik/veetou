@@ -4,6 +4,8 @@ CREATE OR REPLACE TYPE BODY V2u_Classes_Map_B_t AS
             , id IN NUMBER
             , classes_type IN VARCHAR2
             , map_classes_type IN VARCHAR2
+            , map_classes_hours IN NUMBER
+            , map_proto_type IN VARCHAR2
             , expr_subj_code IN VARCHAR2
             , expr_subj_name IN VARCHAR2
             , expr_subj_hours_w IN VARCHAR2
@@ -31,6 +33,8 @@ CREATE OR REPLACE TYPE BODY V2u_Classes_Map_B_t AS
               id => id
             , classes_type => classes_type
             , map_classes_type => map_classes_type
+            , map_classes_hours => map_classes_hours
+            , map_proto_type => map_proto_type
             , expr_subj_code => expr_subj_code
             , expr_subj_name => expr_subj_name
             , expr_subj_hours_w => expr_subj_hours_w
@@ -60,6 +64,8 @@ CREATE OR REPLACE TYPE BODY V2u_Classes_Map_B_t AS
             , id IN NUMBER := NULL
             , classes_type IN VARCHAR2
             , map_classes_type IN VARCHAR2
+            , map_classes_hours IN NUMBER
+            , map_proto_type IN VARCHAR2
             , expr_subj_code IN VARCHAR2
             , expr_subj_name IN VARCHAR2
             , expr_subj_hours_w IN VARCHAR2
@@ -87,6 +93,8 @@ CREATE OR REPLACE TYPE BODY V2u_Classes_Map_B_t AS
         --
         SELF.classes_type := classes_type;
         SELF.map_classes_type := map_classes_type;
+        SELF.map_classes_hours := map_classes_hours;
+        SELF.map_proto_type := map_proto_type;
         SELF.expr_subj_code := expr_subj_code;
         SELF.expr_subj_name := expr_subj_name;
         SELF.expr_subj_hours_w := expr_subj_hours_w;
@@ -124,6 +132,10 @@ CREATE OR REPLACE TYPE BODY V2u_Classes_Map_B_t AS
         ord := V2U_Cmp.StrNI(classes_type, other.classes_type);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.StrNI(map_classes_type, other.map_classes_type);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.NumN(map_classes_hours, other.map_classes_hours);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(map_proto_type, other.map_proto_type);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.StrNI(expr_subj_code, other.expr_subj_code);
         IF ord <> 0 THEN RETURN ord; END IF;

@@ -40,6 +40,7 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Zajecia_Cyklu_t AS
             , dbg_cdyd_kody IN NUMBER
             , dbg_tzaj_kody IN NUMBER
             , dbg_classes_hours IN NUMBER
+            , dbg_map_classes_hours IN NUMBER
             , dbg_ids IN NUMBER
             , dbg_unique_match IN NUMBER
             , dbg_values_ok IN NUMBER
@@ -93,6 +94,7 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Zajecia_Cyklu_t AS
             , dbg_cdyd_kody => dbg_cdyd_kody
             , dbg_tzaj_kody => dbg_tzaj_kody
             , dbg_classes_hours => dbg_classes_hours
+            , dbg_map_classes_hours => dbg_map_classes_hours
             , dbg_ids => dbg_ids
             , dbg_unique_match => dbg_unique_match
             , dbg_values_ok => dbg_values_ok
@@ -148,6 +150,7 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Zajecia_Cyklu_t AS
             , dbg_cdyd_kody IN NUMBER
             , dbg_tzaj_kody IN NUMBER
             , dbg_classes_hours IN NUMBER
+            , dbg_map_classes_hours IN NUMBER
             , dbg_ids IN NUMBER
             , dbg_unique_match IN NUMBER
             , dbg_values_ok IN NUMBER
@@ -202,6 +205,7 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Zajecia_Cyklu_t AS
         SELF.dbg_cdyd_kody := dbg_cdyd_kody;
         SELF.dbg_tzaj_kody := dbg_tzaj_kody;
         SELF.dbg_classes_hours := dbg_classes_hours;
+        SELF.dbg_map_classes_hours := dbg_map_classes_hours;
         SELF.dbg_ids := dbg_ids;
         SELF.dbg_unique_match := dbg_unique_match;
         SELF.dbg_values_ok := dbg_values_ok;

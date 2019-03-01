@@ -26,6 +26,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Classes_Map_V_t AS
         SELF.classes_type := classes_type;
         SELF.map_classes_type := map.map_classes_type;
         SELF.classes_hours := classes_hours;
+        SELF.map_classes_hours:= map.map_classes_hours;
+        SELF.map_proto_type:= map.map_proto_type;
         SELF.subj_code := subject.subj_code;
         SELF.expr_subj_code := map.expr_subj_code;
         SELF.subj_name := subject.subj_name;

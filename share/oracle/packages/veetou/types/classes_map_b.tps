@@ -2,6 +2,8 @@ CREATE OR REPLACE TYPE V2u_Classes_Map_B_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Distinct_t
     ( classes_type VARCHAR2(1 CHAR)
     , map_classes_type VARCHAR2(20 CHAR)
+    , map_classes_hours NUMBER(8)
+    , map_proto_type VARCHAR2(20 CHAR)
     , expr_subj_code VARCHAR2(256 CHAR)
     , expr_subj_name VARCHAR2(256 CHAR)
     , expr_subj_hours_w VARCHAR2(256 CHAR)
@@ -28,6 +30,8 @@ CREATE OR REPLACE TYPE V2u_Classes_Map_B_t
             , id IN NUMBER := NULL
             , classes_type IN VARCHAR2
             , map_classes_type IN VARCHAR2
+            , map_classes_hours IN NUMBER
+            , map_proto_type IN VARCHAR2
             , expr_subj_code IN VARCHAR2
             , expr_subj_name IN VARCHAR2
             , expr_subj_hours_w IN VARCHAR2
@@ -55,6 +59,8 @@ CREATE OR REPLACE TYPE V2u_Classes_Map_B_t
             , id IN NUMBER := NULL
             , classes_type IN VARCHAR2
             , map_classes_type IN VARCHAR2
+            , map_classes_hours IN NUMBER
+            , map_proto_type IN VARCHAR2
             , expr_subj_code IN VARCHAR2
             , expr_subj_name IN VARCHAR2
             , expr_subj_hours_w IN VARCHAR2

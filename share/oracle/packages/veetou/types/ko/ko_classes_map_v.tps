@@ -12,6 +12,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Classes_Map_V_t
     , classes_type VARCHAR2(1 CHAR)
     , map_classes_type VARCHAR2(20 CHAR)
     , classes_hours NUMBER(8)
+    , map_classes_hours NUMBER(8)
+    , map_proto_type VARCHAR2(20 CHAR)
     , subj_code VARCHAR2(32 CHAR)
     , expr_subj_code VARCHAR2(256 CHAR)
     , subj_name VARCHAR2(256 CHAR)

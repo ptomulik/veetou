@@ -15,7 +15,7 @@ USING
                     , subjects.subj_code
                 ) coalesced_subj_code
                 , COALESCE(
-                      cm_j.map_classes_type
+                      classes_map.map_classes_type
                     , cs_j.classes_type
                 ) coalesced_classes_type
                 , semesters.semester_code
@@ -32,7 +32,7 @@ USING
                         AS V2u_Vchars1K_t
                   )) classes_types1k
                 , SET(CAST(
-                        COLLECT(cm_j.map_classes_type)
+                        COLLECT(classes_map.map_classes_type)
                         AS V2u_Vchars1K_t
                   )) map_classes_types1k
                 , SET(CAST(
@@ -40,7 +40,11 @@ USING
                         AS V2u_Ints8_t
                   )) classes_hours_tab
                 , SET(CAST(
-                        COLLECT(subject_map.map_proto_type)
+                        COLLECT(classes_map.map_classes_hours)
+                        AS V2u_Ints8_t
+                  )) map_classes_hours_tab
+                , SET(CAST(
+                        COLLECT(classes_map.map_proto_type)
                         AS V2u_Vchars1K_t
                   )) map_proto_types1k
                 , SET(CAST(
@@ -121,6 +125,10 @@ USING
                         AND cm_j.job_uuid = cs_j.job_uuid
                         AND cm_j.selected = 1
                     )
+            LEFT JOIN v2u_classes_map classes_map
+                ON  (
+                            classes_map.id = cm_j.map_id
+                    )
             LEFT JOIN v2u_ko_grades_j grades
                 ON  (
                             grades.subject_id = cs_j.subject_id
@@ -131,7 +139,7 @@ USING
             GROUP BY
                   cs_j.job_uuid
                 , COALESCE(subject_map.map_subj_code, subjects.subj_code)
-                , COALESCE(cm_j.map_classes_type, cs_j.classes_type)
+                , COALESCE(classes_map.map_classes_type, cs_j.classes_type)
                 , semesters.semester_code
         ),
         u AS
@@ -157,6 +165,10 @@ USING
                     FROM TABLE(u_0.classes_hours_tab) t
                     WHERE ROWNUM <= 1
                   ) classes_hours
+                , ( SELECT VALUE(t)
+                    FROM TABLE(u_0.map_classes_hours_tab) t
+                    WHERE ROWNUM <= 1
+                  ) map_classes_hours
                 , ( SELECT SUBSTR(VALUE(t), 1, 20)
                     FROM TABLE(u_0.map_proto_types1k) t
                     WHERE ROWNUM <= 1
@@ -196,6 +208,9 @@ USING
                     FROM TABLE(u_0.classes_hours_tab)
                   ) dbg_classes_hours
                 , ( SELECT COUNT(*)
+                    FROM TABLE(u_0.classes_hours_tab)
+                  ) dbg_map_classes_hours
+                , ( SELECT COUNT(*)
                     FROM TABLE(u_0.map_proto_types1k)
                   ) dbg_map_proto_types
                 , ( SELECT COUNT(*)
@@ -229,14 +244,13 @@ USING
                 , u.map_classes_type v2u_tzaj_kod
                 , V2u_Get.Utw_Id(u.job_uuid) v2u_utw_id
                 , V2u_Get.Mod_Id(u.job_uuid) v2u_mod_id
-                , u.classes_hours v2u_liczba_godz
-                -- FIXME: this is probably wrong, in most cases we'll use
-                --        the default tpro_kod from dz_przedmioty_cykli, for
-                --        which purpose we should keep NULL here
-                , COALESCE(u.map_proto_type, V2u_Get.Tpro_Kod(
-                          subj_credit_kind => u.subj_credit_kind
-                        , subj_grades => u.subj_grades
-                  )) v2u_tpro_kod
+                , COALESCE(u.map_classes_hours, u.classes_hours) v2u_liczba_godz
+                -- FIXME: verify that my understanding is correct:  in most
+                -- cases we should set NULL to tpro_kod, and then USOS will use
+                -- defauts provided by dz_przedmioty or dz_przedmioty_cykli.
+                -- Special casses, when tpro_kod should get a specific value,
+                -- may be defined in our classes_map.
+                , u.map_proto_type v2u_tpro_kod
 
                 -- did we found unique row in the target table?
                 , CASE
@@ -257,16 +271,15 @@ USING
                 , CASE
                     WHEN
                         -- all the instances were consistent
-                            u.dbg_map_proto_types <= 1
+                            u.dbg_map_classes_hours <= 1
+                        AND u.dbg_map_proto_types <= 1
                         AND u.dbg_subj_credit_kinds = 1
                         AND u.dbg_classes_hours = 1
                         -- and we have correct tpro_kod value
-                        AND u.classes_hours BETWEEN 0 AND 1200
-                        -- FIXME: keep in sync
-                        AND COALESCE(u.map_proto_type, V2u_Get.Tpro_Kod(
-                              subj_credit_kind => u.subj_credit_kind
-                            , subj_grades => u.subj_grades
-                            )) IN ('E', 'Z', 'O', 'S')
+                        AND COALESCE(u.map_classes_hours, u.classes_hours)
+                            BETWEEN 0 AND 1200
+                        AND (   u.map_proto_type IN ('E', 'Z', 'O', 'S')
+                             OR u.map_proto_type IS NULL)
                     THEN 1
                     ELSE 0
                   END dbg_values_ok
@@ -411,6 +424,7 @@ USING
             , w.dbg_cdyd_kody
             , w.dbg_tzaj_kody
             , w.dbg_classes_hours
+            , w.dbg_map_classes_hours
             , w.dbg_ids
             , w.dbg_unique_match
             , w.dbg_values_ok
@@ -467,6 +481,7 @@ WHEN NOT MATCHED THEN
         , dbg_cdyd_kody
         , dbg_tzaj_kody
         , dbg_classes_hours
+        , dbg_map_classes_hours
         , dbg_ids
         , dbg_unique_match
         , dbg_values_ok
@@ -518,6 +533,7 @@ WHEN NOT MATCHED THEN
         , src.dbg_cdyd_kody
         , src.dbg_tzaj_kody
         , src.dbg_classes_hours
+        , src.dbg_map_classes_hours
         , src.dbg_ids
         , src.dbg_unique_match
         , src.dbg_values_ok
@@ -570,6 +586,7 @@ WHEN MATCHED THEN
         , tgt.dbg_cdyd_kody = src.dbg_cdyd_kody
         , tgt.dbg_tzaj_kody = src.dbg_tzaj_kody
         , tgt.dbg_classes_hours = src.dbg_classes_hours
+        , tgt.dbg_map_classes_hours = src.dbg_map_classes_hours
         , tgt.dbg_ids = src.dbg_ids
         , tgt.dbg_unique_match = src.dbg_unique_match
         , tgt.dbg_values_ok = src.dbg_values_ok
