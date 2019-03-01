@@ -456,6 +456,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Table('uu_programy_osob');
         --
         Drop_Index('uu_studenci_idx1');
+        Drop_Index('uu_studenci_idx2');
         Drop_Table('uu_studenci');
         --
         Drop_Index('uu_zajecia_cykli_idx1');

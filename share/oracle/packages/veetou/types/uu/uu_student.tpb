@@ -11,9 +11,21 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Student_t AS
             , mod_data IN DATE
             , os_id IN NUMBER
             , indeks_glowny IN VARCHAR2
+            -- KEY
             , job_uuid IN RAW
-            , is_missing IN INTEGER
-            , safe_to_add IN NUMBER
+            , pk_student IN VARCHAR2
+            -- DBG
+            , dbg_first_name IN VARCHAR2
+            , dbg_last_name IN VARCHAR2
+            , dbg_first_names IN NUMBER
+            , dbg_last_names IN NUMBER
+            , dbg_ids IN NUMBER
+            , dbg_matched IN NUMBER
+            , dbg_unique_match IN NUMBER
+            , dbg_values_ok IN NUMBER
+            -- CTL
+            , change_type IN VARCHAR2
+            , safe_to_change IN NUMBER
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -28,9 +40,21 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Student_t AS
             , mod_data => mod_data
             , os_id => os_id
             , indeks_glowny => indeks_glowny
+            -- KEY
             , job_uuid => job_uuid
-            , is_missing => is_missing
-            , safe_to_add => safe_to_add
+            , pk_student => pk_student
+            -- DBG
+            , dbg_first_name => dbg_first_name
+            , dbg_last_name => dbg_last_name
+            , dbg_first_names => dbg_first_names
+            , dbg_last_names => dbg_last_names
+            , dbg_ids => dbg_ids
+            , dbg_matched => dbg_matched
+            , dbg_unique_match => dbg_unique_match
+            , dbg_values_ok => dbg_values_ok
+            -- CTL
+            , change_type => change_type
+            , safe_to_change => safe_to_change
             );
         RETURN;
     END;
@@ -47,9 +71,21 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Student_t AS
             , mod_data IN DATE
             , os_id IN NUMBER
             , indeks_glowny IN VARCHAR2
+            -- KEY
             , job_uuid IN RAW
-            , is_missing IN INTEGER
-            , safe_to_add IN NUMBER
+            , pk_student IN VARCHAR2
+            -- DBG
+            , dbg_first_name IN VARCHAR2
+            , dbg_last_name IN VARCHAR2
+            , dbg_first_names IN NUMBER
+            , dbg_last_names IN NUMBER
+            , dbg_ids IN NUMBER
+            , dbg_matched IN NUMBER
+            , dbg_unique_match IN NUMBER
+            , dbg_values_ok IN NUMBER
+            -- CTL
+            , change_type IN VARCHAR2
+            , safe_to_change IN NUMBER
             )
     IS
     BEGIN
@@ -65,9 +101,22 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Student_t AS
             , os_id => os_id
             , indeks_glowny => indeks_glowny
             );
+        -- KEY
         SELF.job_uuid := job_uuid;
-        SELF.is_missing := is_missing;
-        SELF.safe_to_add := safe_to_add;
+        SELF.pk_student := pk_student;
+        -- DBG
+        SELF.dbg_first_name := dbg_first_name;
+        SELF.dbg_last_name := dbg_last_name;
+        SELF.dbg_first_names := dbg_first_names;
+        SELF.dbg_last_names := dbg_last_names;
+        SELF.dbg_ids := dbg_ids;
+        SELF.dbg_matched := dbg_matched;
+        SELF.dbg_unique_match := dbg_unique_match;
+        SELF.dbg_values_ok := dbg_values_ok;
+        -- CTL
+        SELF.change_type := change_type;
+        SELF.safe_to_change := safe_to_change;
     END;
 END;
+
 -- vim: set ft=sql ts=4 sw=4 et:

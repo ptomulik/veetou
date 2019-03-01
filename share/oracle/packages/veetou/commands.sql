@@ -3,6 +3,10 @@
  *            Just place a cursor on a command and press F9.
  ****************************************************************************/
 
+-- Prevents fatal consequences of pressing F5 in SQL Developer.
+EXIT;
+
+
 
 -- Creates empty veetou schema (first time, or after uninstall). --
 @@create_all.sql;

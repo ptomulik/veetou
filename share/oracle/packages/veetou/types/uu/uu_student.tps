@@ -1,8 +1,19 @@
 CREATE OR REPLACE TYPE V2u_Uu_Student_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Dz_Student_B_t
     ( job_uuid RAW(16)
-    , is_missing INTEGER
-    , safe_to_add NUMBER(1)
+    , pk_student VARCHAR2(32 CHAR)
+    -- DBG
+    , dbg_first_name VARCHAR2(48 CHAR)
+    , dbg_last_name VARCHAR2(48 CHAR)
+    , dbg_first_names NUMBER(5)
+    , dbg_last_names NUMBER(5)
+    , dbg_ids NUMBER(5)
+    , dbg_matched NUMBER(5)
+    , dbg_unique_match NUMBER(1)
+    , dbg_values_ok NUMBER(1)
+    -- CTL
+    , change_type VARCHAR2(1)
+    , safe_to_change NUMBER(1)
 
     , CONSTRUCTOR FUNCTION V2u_Uu_Student_t(
               SELF IN OUT NOCOPY V2u_Uu_Student_t
@@ -16,9 +27,21 @@ CREATE OR REPLACE TYPE V2u_Uu_Student_t
             , mod_data IN DATE
             , os_id IN NUMBER
             , indeks_glowny IN VARCHAR2
+            -- KEY
             , job_uuid IN RAW
-            , is_missing IN INTEGER
-            , safe_to_add IN NUMBER
+            , pk_student IN VARCHAR2
+            -- DBG
+            , dbg_first_name IN VARCHAR2
+            , dbg_last_name IN VARCHAR2
+            , dbg_first_names IN NUMBER
+            , dbg_last_names IN NUMBER
+            , dbg_ids IN NUMBER
+            , dbg_matched IN NUMBER
+            , dbg_unique_match IN NUMBER
+            , dbg_values_ok IN NUMBER
+            -- CTL
+            , change_type IN VARCHAR2
+            , safe_to_change IN NUMBER
             ) RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
@@ -33,9 +56,21 @@ CREATE OR REPLACE TYPE V2u_Uu_Student_t
             , mod_data IN DATE
             , os_id IN NUMBER
             , indeks_glowny IN VARCHAR2
+            -- KEY
             , job_uuid IN RAW
-            , is_missing IN INTEGER
-            , safe_to_add IN NUMBER
+            , pk_student IN VARCHAR2
+            -- DBG
+            , dbg_first_name IN VARCHAR2
+            , dbg_last_name IN VARCHAR2
+            , dbg_first_names IN NUMBER
+            , dbg_last_names IN NUMBER
+            , dbg_ids IN NUMBER
+            , dbg_matched IN NUMBER
+            , dbg_unique_match IN NUMBER
+            , dbg_values_ok IN NUMBER
+            -- CTL
+            , change_type IN VARCHAR2
+            , safe_to_change IN NUMBER
             )
     )
 ;

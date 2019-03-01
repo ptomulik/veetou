@@ -1,3 +1,4 @@
+@@uu_studenci.sql;
 @@uu_przedmioty.sql;
 @@uu_atrybuty_przedmiotow.sql;
 @@uu_przedmioty_cykli.sql;
