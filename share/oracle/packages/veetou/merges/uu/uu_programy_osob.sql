@@ -23,8 +23,6 @@ USING
                     V2U_Get.Acronym(specialties.studies_field)
                     || ':' ||
                     V2U_Get.Acronym(specialties.studies_specialty)
-                    || '|' ||
-                    semesters.semester_code
                   , 1, 128
                   ) specialty_string
             FROM v2u_ko_student_semesters_j ss_j
@@ -62,6 +60,8 @@ USING
                              u_00.semester_code
                         END
                     , u_00.specialty_string
+                      || '|' ||
+                      u_00.semester_code
                   ) coalesced_program_osoby
 
                 -- values
@@ -153,6 +153,8 @@ USING
                              u_00.semester_code
                         END
                     , u_00.specialty_string
+                      || '|' ||
+                      u_00.semester_code
                   )
         ),
         u AS
@@ -238,7 +240,6 @@ USING
                   u.*
                 , u.os_id v2u_os_id
                 , u.st_id v2u_st_id
-                --, u.map_program_code v2u_prg_kod
                 , COALESCE(u.prg_kod, u.map_program_code) v2u_prg_kod
                 , COALESCE(u.map_org_unit, u.faculty_code) v2u_jed_org_kod
 
@@ -266,8 +267,6 @@ USING
                         -- program code is determined uniquely
                            (u.prg_kod IS NOT NULL AND u.dbg_prg_kody = 1
                          OR u.map_program_code IS NOT NULL AND u.dbg_map_program_codes = 1)
-                        AND u.dbg_map_program_codes = 1
-                        AND u.dbg_prg_kody = 1
                         -- org_unit is determined uniquely
                         AND u.dbg_map_org_units <= 1
                         AND u.dbg_faculty_codes = 1
@@ -366,16 +365,7 @@ USING
 
                 , CASE
                     WHEN
-                            -- single target id is found
-                                v.dbg_ids = 1
-                            AND v.id IS NOT NULL
-                            -- maps for all instances existed but there were no
-                            -- corresponding subject in target system
-                            AND v.dbg_matched = 0
-                            AND v.dbg_missing > 0
-                            AND v.dbg_mapped = v.dbg_missing
-                            -- and we haven't skipped possibly matching programs
-                            AND v.dbg_skipped_prg_kody = 0
+                                v.dbg_unique_match = 1
                             -- values are correct
                             AND v.dbg_values_ok = 1
                     THEN 1
@@ -446,6 +436,7 @@ USING
             -- DBG
 
             , w.dbg_unique_match
+            , w.dbg_values_ok
             , w.dbg_map_program_codes
             , w.dbg_map_org_units
             , w.dbg_faculty_codes
@@ -526,6 +517,7 @@ WHEN NOT MATCHED THEN
         , pk_program_osoby
         -- DBG
         , dbg_unique_match
+        , dbg_values_ok
         , dbg_map_program_codes
         , dbg_map_org_units
         , dbg_faculty_codes
@@ -594,6 +586,7 @@ WHEN NOT MATCHED THEN
         , src.pk_program_osoby
         -- DBG
         , src.dbg_unique_match
+        , src.dbg_values_ok
         , src.dbg_map_program_codes
         , src.dbg_map_org_units
         , src.dbg_faculty_codes
@@ -663,6 +656,7 @@ WHEN MATCHED THEN
 --        , tgt.pk_program_osoby = src.pk_program_osoby
         -- DBG
         , tgt.dbg_unique_match = src.dbg_unique_match
+        , tgt.dbg_values_ok = src.dbg_values_ok
         , tgt.dbg_map_program_codes = src.dbg_map_program_codes
         , tgt.dbg_map_org_units = src.dbg_map_org_units
         , tgt.dbg_faculty_codes = src.dbg_faculty_codes

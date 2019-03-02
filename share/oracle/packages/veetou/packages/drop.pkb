@@ -447,6 +447,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         --
         Drop_Index('uu_etapy_osob_idx1');
         Drop_Index('uu_etapy_osob_idx2');
+        Drop_Index('uu_etapy_osob_idx3');
         Drop_Table('uu_etapy_osob');
         --
         Drop_Index('uu_programy_osob_idx1');
@@ -557,6 +558,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     BEGIN
         Drop_View('ud_studenci_v');
         Drop_View('ud_programy_osob_v');
+        Drop_View('ud_etapy_osob_v');
         Drop_View('ud_atrybuty_przedmiotow_v');
         Drop_View('ud_przedmioty_v');
         Drop_View('ud_przedmioty_cykli_v');

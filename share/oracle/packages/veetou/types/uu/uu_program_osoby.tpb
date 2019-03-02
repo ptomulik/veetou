@@ -53,6 +53,7 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Program_Osoby_t AS
             , pk_program_osoby IN VARCHAR2
             -- DBG
             , dbg_unique_match IN NUMBER
+            , dbg_values_ok IN NUMBER
             , dbg_map_program_codes IN NUMBER
             , dbg_map_org_units IN NUMBER
             , dbg_faculty_codes IN NUMBER
@@ -123,6 +124,7 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Program_Osoby_t AS
             , pk_program_osoby => pk_program_osoby
             -- DBG
             , dbg_unique_match => dbg_unique_match
+            , dbg_values_ok => dbg_values_ok
             , dbg_map_program_codes => dbg_map_program_codes
             , dbg_map_org_units => dbg_map_org_units
             , dbg_faculty_codes => dbg_faculty_codes
@@ -195,6 +197,7 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Program_Osoby_t AS
             , pk_program_osoby IN VARCHAR2
             -- DBG
             , dbg_unique_match IN NUMBER
+            , dbg_values_ok IN NUMBER
             , dbg_map_program_codes IN NUMBER
             , dbg_map_org_units IN NUMBER
             , dbg_faculty_codes IN NUMBER
@@ -266,6 +269,7 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Program_Osoby_t AS
         SELF.pk_program_osoby := pk_program_osoby;
         -- DBG
         SELF.dbg_unique_match := dbg_unique_match;
+        SELF.dbg_values_ok := dbg_values_ok;
         SELF.dbg_map_program_codes := dbg_map_program_codes;
         SELF.dbg_map_org_units := dbg_map_org_units;
         SELF.dbg_faculty_codes := dbg_faculty_codes;

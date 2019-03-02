@@ -3,7 +3,7 @@
  *            Just place a cursor on a command and press F9.
  ****************************************************************************/
 
--- Prevents fatal consequences of pressing F5 in SQL Developer.
+-- Disaster prevention (we don't want to run all the commands below at once).
 EXIT;
 
 

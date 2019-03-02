@@ -1,8 +1,25 @@
 CREATE OR REPLACE TYPE V2u_Uu_Etap_Osoby_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Dz_Etap_Osoby_B_t
     ( job_uuid RAW(16)
-    , is_missing INTEGER
-    , safe_to_add NUMBER(1)
+    , pk_student VARCHAR2(32 CHAR)
+    , pk_etap_osoby VARCHAR2(128 CHAR)
+    -- DBG
+    , dbg_unique_match NUMBER(1)
+    , dbg_values_ok NUMBER(1)
+    , dbg_map_program_codes NUMBER(5)
+    , dbg_ids NUMBER(5)
+    , dbg_prgos_ids NUMBER(5)
+    , dbg_etp_kody NUMBER(5)
+    , dbg_prg_kody NUMBER(5)
+    , dbg_semester_codes NUMBER(5)
+    , dbg_ects_attained NUMBER(5)
+    , dbg_skipped_prg_kody NUMBER(5)
+    , dbg_matched NUMBER(5)
+    , dbg_missing NUMBER(5)
+    , dbg_mapped NUMBER(5)
+    -- CTL
+    , change_type VARCHAR2(1)
+    , safe_to_change NUMBER(1)
 
 
     , CONSTRUCTOR FUNCTION V2u_Uu_Etap_Osoby_t(
@@ -30,9 +47,27 @@ CREATE OR REPLACE TYPE V2u_Uu_Etap_Osoby_t
             , kolejnosc IN NUMBER
             , czy_erasmus IN VARCHAR2
             , jedn_dyplomujaca IN VARCHAR2
+            -- KEY
             , job_uuid IN RAW
-            , is_missing IN INTEGER
-            , safe_to_add IN NUMBER
+            , pk_student IN VARCHAR2
+            , pk_etap_osoby IN VARCHAR2
+            -- DBG
+            , dbg_unique_match IN NUMBER
+            , dbg_values_ok IN NUMBER
+            , dbg_map_program_codes IN NUMBER
+            , dbg_ids IN NUMBER
+            , dbg_prgos_ids IN NUMBER
+            , dbg_etp_kody IN NUMBER
+            , dbg_prg_kody IN NUMBER
+            , dbg_semester_codes IN NUMBER
+            , dbg_ects_attained IN NUMBER
+            , dbg_skipped_prg_kody IN NUMBER
+            , dbg_matched IN NUMBER
+            , dbg_missing IN NUMBER
+            , dbg_mapped IN NUMBER
+            -- CTL
+            , change_type IN VARCHAR2
+            , safe_to_change IN NUMBER
             ) RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
@@ -60,9 +95,27 @@ CREATE OR REPLACE TYPE V2u_Uu_Etap_Osoby_t
             , kolejnosc IN NUMBER
             , czy_erasmus IN VARCHAR2
             , jedn_dyplomujaca IN VARCHAR2
+            -- KEY
             , job_uuid IN RAW
-            , is_missing IN INTEGER
-            , safe_to_add IN NUMBER
+            , pk_student IN VARCHAR2
+            , pk_etap_osoby IN VARCHAR2
+            -- DBG
+            , dbg_unique_match IN NUMBER
+            , dbg_values_ok IN NUMBER
+            , dbg_map_program_codes IN NUMBER
+            , dbg_ids IN NUMBER
+            , dbg_prgos_ids IN NUMBER
+            , dbg_etp_kody IN NUMBER
+            , dbg_prg_kody IN NUMBER
+            , dbg_semester_codes IN NUMBER
+            , dbg_ects_attained IN NUMBER
+            , dbg_skipped_prg_kody IN NUMBER
+            , dbg_matched IN NUMBER
+            , dbg_missing IN NUMBER
+            , dbg_mapped IN NUMBER
+            -- CTL
+            , change_type IN VARCHAR2
+            , safe_to_change IN NUMBER
             )
     )
 ;

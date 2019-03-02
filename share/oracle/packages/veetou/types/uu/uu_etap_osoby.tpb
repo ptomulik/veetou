@@ -24,9 +24,27 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Etap_Osoby_t AS
             , kolejnosc IN NUMBER
             , czy_erasmus IN VARCHAR2
             , jedn_dyplomujaca IN VARCHAR2
+            -- KEY
             , job_uuid IN RAW
-            , is_missing IN INTEGER
-            , safe_to_add IN NUMBER
+            , pk_student IN VARCHAR2
+            , pk_etap_osoby IN VARCHAR2
+            -- DBG
+            , dbg_unique_match IN NUMBER
+            , dbg_values_ok IN NUMBER
+            , dbg_map_program_codes IN NUMBER
+            , dbg_ids IN NUMBER
+            , dbg_prgos_ids IN NUMBER
+            , dbg_etp_kody IN NUMBER
+            , dbg_prg_kody IN NUMBER
+            , dbg_semester_codes IN NUMBER
+            , dbg_ects_attained IN NUMBER
+            , dbg_skipped_prg_kody IN NUMBER
+            , dbg_matched IN NUMBER
+            , dbg_missing IN NUMBER
+            , dbg_mapped IN NUMBER
+            -- CTL
+            , change_type IN VARCHAR2
+            , safe_to_change IN NUMBER
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -54,9 +72,27 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Etap_Osoby_t AS
             , kolejnosc => kolejnosc
             , czy_erasmus => czy_erasmus
             , jedn_dyplomujaca => jedn_dyplomujaca
+            -- KEY
             , job_uuid => job_uuid
-            , is_missing => is_missing
-            , safe_to_add => safe_to_add
+            , pk_student => pk_student
+            , pk_etap_osoby => pk_etap_osoby
+            -- DBG
+            , dbg_unique_match => dbg_unique_match
+            , dbg_values_ok => dbg_values_ok
+            , dbg_map_program_codes => dbg_map_program_codes
+            , dbg_ids => dbg_ids
+            , dbg_prgos_ids => dbg_prgos_ids
+            , dbg_etp_kody => dbg_etp_kody
+            , dbg_prg_kody => dbg_prg_kody
+            , dbg_semester_codes => dbg_semester_codes
+            , dbg_ects_attained => dbg_ects_attained
+            , dbg_skipped_prg_kody => dbg_skipped_prg_kody
+            , dbg_matched => dbg_matched
+            , dbg_missing => dbg_missing
+            , dbg_mapped => dbg_mapped
+            -- CTL
+            , change_type => change_type
+            , safe_to_change => safe_to_change
             );
             RETURN;
     END;
@@ -86,9 +122,27 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Etap_Osoby_t AS
             , kolejnosc IN NUMBER
             , czy_erasmus IN VARCHAR2
             , jedn_dyplomujaca IN VARCHAR2
+            -- KEY
             , job_uuid IN RAW
-            , is_missing IN INTEGER
-            , safe_to_add IN NUMBER
+            , pk_student IN VARCHAR2
+            , pk_etap_osoby IN VARCHAR2
+            -- DBG
+            , dbg_unique_match IN NUMBER
+            , dbg_values_ok IN NUMBER
+            , dbg_map_program_codes IN NUMBER
+            , dbg_ids IN NUMBER
+            , dbg_prgos_ids IN NUMBER
+            , dbg_etp_kody IN NUMBER
+            , dbg_prg_kody IN NUMBER
+            , dbg_semester_codes IN NUMBER
+            , dbg_ects_attained IN NUMBER
+            , dbg_skipped_prg_kody IN NUMBER
+            , dbg_matched IN NUMBER
+            , dbg_missing IN NUMBER
+            , dbg_mapped IN NUMBER
+            -- CTL
+            , change_type IN VARCHAR2
+            , safe_to_change IN NUMBER
             )
     IS
     BEGIN
@@ -117,9 +171,27 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Etap_Osoby_t AS
             , czy_erasmus => czy_erasmus
             , jedn_dyplomujaca => jedn_dyplomujaca
             );
+        -- KEY
         SELF.job_uuid := job_uuid;
-        SELF.is_missing := is_missing;
-        SELF.safe_to_add := safe_to_add;
+        SELF.pk_student := pk_student;
+        SELF.pk_etap_osoby := pk_etap_osoby;
+        -- DBG
+        SELF.dbg_unique_match := dbg_unique_match;
+        SELF.dbg_values_ok := dbg_values_ok;
+        SELF.dbg_map_program_codes := dbg_map_program_codes;
+        SELF.dbg_ids := dbg_ids;
+        SELF.dbg_prgos_ids := dbg_prgos_ids;
+        SELF.dbg_etp_kody := dbg_etp_kody;
+        SELF.dbg_prg_kody := dbg_prg_kody;
+        SELF.dbg_semester_codes := dbg_semester_codes;
+        SELF.dbg_ects_attained := dbg_ects_attained;
+        SELF.dbg_skipped_prg_kody := dbg_skipped_prg_kody;
+        SELF.dbg_matched := dbg_matched;
+        SELF.dbg_missing := dbg_missing;
+        SELF.dbg_mapped := dbg_mapped;
+        -- CTL
+        SELF.change_type := change_type;
+        SELF.safe_to_change := safe_to_change;
     END;
 END;
 

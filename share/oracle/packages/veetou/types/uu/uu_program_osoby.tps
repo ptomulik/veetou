@@ -5,6 +5,7 @@ CREATE OR REPLACE TYPE V2u_Uu_Program_Osoby_t
     , pk_program_osoby VARCHAR2(128 CHAR)
     -- DBG
     , dbg_unique_match NUMBER(1)
+    , dbg_values_ok NUMBER(1)
     , dbg_map_program_codes NUMBER(5)
     , dbg_map_org_units NUMBER(5)
     , dbg_faculty_codes NUMBER(5)
@@ -74,6 +75,7 @@ CREATE OR REPLACE TYPE V2u_Uu_Program_Osoby_t
             , pk_program_osoby IN VARCHAR2
             -- DBG
             , dbg_unique_match IN NUMBER
+            , dbg_values_ok IN NUMBER
             , dbg_map_program_codes IN NUMBER
             , dbg_map_org_units IN NUMBER
             , dbg_faculty_codes IN NUMBER
@@ -144,6 +146,7 @@ CREATE OR REPLACE TYPE V2u_Uu_Program_Osoby_t
             , pk_program_osoby IN VARCHAR2
             -- DBG
             , dbg_unique_match IN NUMBER
+            , dbg_values_ok IN NUMBER
             , dbg_map_program_codes IN NUMBER
             , dbg_map_org_units IN NUMBER
             , dbg_faculty_codes IN NUMBER

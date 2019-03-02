@@ -4,7 +4,7 @@
 @@uu_przedmioty_cykli.sql;
 @@uu_zajecia_cykli.sql;
 @@uu_programy_osob.sql;
---@@uu_etapy_osob.sql;
+@@uu_etapy_osob.sql;
 @@uu_zaliczenia_przedmiotow.sql;
 
 @@uu_classes_grades.sql;
