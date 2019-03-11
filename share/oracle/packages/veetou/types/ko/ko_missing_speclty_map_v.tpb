@@ -50,6 +50,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Speclty_Map_V_t AS
             , expr_ects_other => semester.ects_other
             , expr_ects_total => semester.ects_total
             );
+        SELF.job_uuid := specialty.job_uuid;
+        SELF.specialty_id := specialty.id;
+        SELF.semester_id := semester.id;
     END;
 END;
 
