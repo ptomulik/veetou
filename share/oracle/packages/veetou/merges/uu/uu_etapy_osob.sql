@@ -80,9 +80,13 @@ USING
                     AS V2u_Dz_Ids_t
                   )) ids
                 , SET(CAST(
+                    COLLECT(ma_etpos_j.prgos_id)
+                    AS V2u_Dz_Ids_t
+                  )) eo_prgos_ids
+                , SET(CAST(
                     COLLECT(ma_prgos_j.prgos_id)
                     AS V2u_Dz_Ids_t
-                  )) prgos_ids
+                  )) po_prgos_ids
                 , SET(CAST(
                     COLLECT(ma_etpos_j.etp_kod)
                     AS V2u_Vchars1K_t
@@ -92,9 +96,13 @@ USING
                     AS V2u_Vchars1K_t
                   )) ek_etp_kody1k
                 , SET(CAST(
+                    COLLECT(ma_etpos_j.prg_kod)
+                    AS V2u_Vchars1K_t
+                  )) eo_prg_kody1k
+                , SET(CAST(
                     COLLECT(ma_prgos_j.prg_kod)
                     AS V2u_Vchars1K_t
-                  )) prg_kody1k
+                  )) po_prg_kody1k
                 , SET(CAST(
                     COLLECT(sk_progs_j.prg_kod)
                     AS V2u_Vchars1K_t
@@ -138,12 +146,12 @@ USING
                         AND ma_prgos_j.semester_id = u_00.semester_id
                         AND ma_prgos_j.job_uuid = u_00.job_uuid
                     )
-            LEFT JOIN v2u_ko_missing_prgos_j mi_prgos_j
+            /*LEFT JOIN v2u_ko_missing_prgos_j mi_prgos_j
                 ON  (       mi_prgos_j.student_id = u_00.student_id
                         AND mi_prgos_j.specialty_id = u_00.specialty_id
                         AND mi_prgos_j.semester_id = u_00.semester_id
                         AND mi_prgos_j.job_uuid = u_00.job_uuid
-                    )
+                    )*/
             LEFT JOIN v2u_ko_skipped_programs_j sk_progs_j
                 ON  (
                             sk_progs_j.specialty_id =  u_00.specialty_id
@@ -211,13 +219,21 @@ USING
                     WHERE ROWNUM <= 1
                   ) id
                 , ( SELECT VALUE(t)
-                    FROM TABLE(u_0.prgos_ids) t
+                    FROM TABLE(u_0.eo_prgos_ids) t
                     WHERE ROWNUM <= 1
-                  ) prgos_id
+                  ) eo_prgos_id
+                , ( SELECT VALUE(t)
+                    FROM TABLE(u_0.po_prgos_ids) t
+                    WHERE ROWNUM <= 1
+                  ) po_prgos_id
                 , ( SELECT SUBSTR(VALUE(t), 1, 20)
-                    FROM TABLE(u_0.prg_kody1k) t
+                    FROM TABLE(u_0.eo_prg_kody1k) t
                     WHERE ROWNUM <= 1
-                  ) prg_kod
+                  ) eo_prg_kod
+                , ( SELECT SUBSTR(VALUE(t), 1, 20)
+                    FROM TABLE(u_0.po_prg_kody1k) t
+                    WHERE ROWNUM <= 1
+                  ) po_prg_kod
                 , ( SELECT SUBSTR(VALUE(t), 1, 20)
                     FROM TABLE(u_0.eo_etp_kody1k) t
                     WHERE ROWNUM <= 1
@@ -244,8 +260,11 @@ USING
                     FROM TABLE(u_0.ids)
                   ) dbg_ids
                 , ( SELECT COUNT(*)
-                    FROM TABLE(u_0.prgos_ids)
-                  ) dbg_prgos_ids
+                    FROM TABLE(u_0.eo_prgos_ids)
+                  ) dbg_eo_prgos_ids
+                , ( SELECT COUNT(*)
+                    FROM TABLE(u_0.eo_prgos_ids)
+                  ) dbg_po_prgos_ids
                 , ( SELECT COUNT(*)
                     FROM TABLE(u_0.eo_etp_kody1k)
                   ) dbg_eo_etp_kody
@@ -253,8 +272,11 @@ USING
                     FROM TABLE(u_0.ek_etp_kody1k)
                   ) dbg_ek_etp_kody
                 , ( SELECT COUNT(*)
-                    FROM TABLE(u_0.prg_kody1k)
-                  ) dbg_prg_kody
+                    FROM TABLE(u_0.eo_prg_kody1k)
+                  ) dbg_eo_prg_kody
+                , ( SELECT COUNT(*)
+                    FROM TABLE(u_0.po_prg_kody1k)
+                  ) dbg_po_prg_kody
                 , ( SELECT COUNT(*)
                     FROM TABLE(u_0.skipped_prg_kody1k)
                   ) dbg_skipped_prg_kody
@@ -278,8 +300,8 @@ USING
                   u.*
                 -- FIXME: check if my concept for retrieving etp_kod is correct
                 , COALESCE(u.eo_etp_kod, u.ek_etp_kod) v$etp_kod
-                , COALESCE(u.prg_kod, u.map_program_code) v$prg_kod
-                , u.prgos_id v$prgos_id
+                , COALESCE(u.eo_prg_kod, u.po_prg_kod, u.map_program_code) v$prg_kod
+                , u.eo_prgos_id v$prgos_id
                 , u.semester_code v$cdyd_kod
                 -- FIXME: implement ects_uzyskane. It's a cumulative number of
                 --        ECTS at the beginning of semester.
@@ -307,13 +329,14 @@ USING
                     WHEN
                         -- ensure that:
                         -- stage code is determined uniquely
-                            ( u.eo_etp_kod IS NOT NULL AND u.dbg_eo_etp_kody = 1
-                              OR u.ek_etp_kod IS NOT NULL AND u.dbg_ek_etp_kody = 1 )
+                            (     u.eo_etp_kod IS NOT NULL AND u.dbg_eo_etp_kody = 1
+                              OR  u.ek_etp_kod IS NOT NULL AND u.dbg_ek_etp_kody = 1 )
                         -- program code is determined uniquely
-                        AND ( u.prg_kod IS NOT NULL AND u.dbg_prg_kody = 1
+                        AND (     u.eo_prg_kod IS NOT NULL AND u.dbg_eo_prg_kody = 1
+                              OR  u.po_prg_kod IS NOT NULL AND u.dbg_po_prg_kody = 1
                               OR  u.map_program_code IS NOT NULL AND u.dbg_map_program_codes = 1 )
                         -- prgos_id is determined uniquely
-                        AND u.prgos_id IS NOT NULL AND u.dbg_prgos_ids = 1
+                        AND u.eo_prgos_id IS NOT NULL AND u.dbg_eo_prgos_ids = 1
                         -- semester_code is determined uniquely
                         AND u.semester_code IS NOT NULL
                         AND u.dbg_semester_codes = 1
@@ -442,10 +465,12 @@ USING
             , w.dbg_values_ok
             , w.dbg_map_program_codes
             , w.dbg_ids
-            , w.dbg_prgos_ids
+            , w.dbg_eo_prgos_ids
+            , w.dbg_po_prgos_ids
             , w.dbg_eo_etp_kody
             , w.dbg_ek_etp_kody
-            , w.dbg_prg_kody
+            , w.dbg_eo_prg_kody
+            , w.dbg_po_prg_kody
             , w.dbg_semester_codes
             , w.dbg_ects_attained
             , w.dbg_skipped_prg_kody
@@ -501,10 +526,12 @@ WHEN NOT MATCHED THEN
         , dbg_values_ok
         , dbg_map_program_codes
         , dbg_ids
-        , dbg_prgos_ids
+        , dbg_eo_prgos_ids
+        , dbg_po_prgos_ids
         , dbg_eo_etp_kody
         , dbg_ek_etp_kody
-        , dbg_prg_kody
+        , dbg_eo_prg_kody
+        , dbg_po_prg_kody
         , dbg_semester_codes
         , dbg_ects_attained
         , dbg_skipped_prg_kody
@@ -548,10 +575,12 @@ WHEN NOT MATCHED THEN
         , src.dbg_values_ok
         , src.dbg_map_program_codes
         , src.dbg_ids
-        , src.dbg_prgos_ids
+        , src.dbg_eo_prgos_ids
+        , src.dbg_po_prgos_ids
         , src.dbg_eo_etp_kody
         , src.dbg_ek_etp_kody
-        , src.dbg_prg_kody
+        , src.dbg_eo_prg_kody
+        , src.dbg_po_prg_kody
         , src.dbg_semester_codes
         , src.dbg_ects_attained
         , src.dbg_skipped_prg_kody
@@ -596,10 +625,12 @@ WHEN MATCHED THEN
         , tgt.dbg_values_ok = src.dbg_values_ok
         , tgt.dbg_map_program_codes = src.dbg_map_program_codes
         , tgt.dbg_ids = src.dbg_ids
-        , tgt.dbg_prgos_ids = src.dbg_prgos_ids
+        , tgt.dbg_eo_prgos_ids = src.dbg_eo_prgos_ids
+        , tgt.dbg_po_prgos_ids = src.dbg_po_prgos_ids
         , tgt.dbg_eo_etp_kody = src.dbg_eo_etp_kody
         , tgt.dbg_ek_etp_kody = src.dbg_ek_etp_kody
-        , tgt.dbg_prg_kody = src.dbg_prg_kody
+        , tgt.dbg_eo_prg_kody = src.dbg_eo_prg_kody
+        , tgt.dbg_po_prg_kody = src.dbg_po_prg_kody
         , tgt.dbg_semester_codes = src.dbg_semester_codes
         , tgt.dbg_ects_attained = src.dbg_ects_attained
         , tgt.dbg_skipped_prg_kody = src.dbg_skipped_prg_kody
