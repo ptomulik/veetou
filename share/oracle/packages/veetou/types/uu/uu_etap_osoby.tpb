@@ -34,7 +34,8 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Etap_Osoby_t AS
             , dbg_map_program_codes IN NUMBER
             , dbg_ids IN NUMBER
             , dbg_prgos_ids IN NUMBER
-            , dbg_etp_kody IN NUMBER
+            , dbg_eo_etp_kody IN NUMBER
+            , dbg_ek_etp_kody IN NUMBER
             , dbg_prg_kody IN NUMBER
             , dbg_semester_codes IN NUMBER
             , dbg_ects_attained IN NUMBER
@@ -82,7 +83,8 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Etap_Osoby_t AS
             , dbg_map_program_codes => dbg_map_program_codes
             , dbg_ids => dbg_ids
             , dbg_prgos_ids => dbg_prgos_ids
-            , dbg_etp_kody => dbg_etp_kody
+            , dbg_eo_etp_kody => dbg_eo_etp_kody
+            , dbg_ek_etp_kody => dbg_ek_etp_kody
             , dbg_prg_kody => dbg_prg_kody
             , dbg_semester_codes => dbg_semester_codes
             , dbg_ects_attained => dbg_ects_attained
@@ -132,7 +134,8 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Etap_Osoby_t AS
             , dbg_map_program_codes IN NUMBER
             , dbg_ids IN NUMBER
             , dbg_prgos_ids IN NUMBER
-            , dbg_etp_kody IN NUMBER
+            , dbg_eo_etp_kody IN NUMBER
+            , dbg_ek_etp_kody IN NUMBER
             , dbg_prg_kody IN NUMBER
             , dbg_semester_codes IN NUMBER
             , dbg_ects_attained IN NUMBER
@@ -181,7 +184,8 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Etap_Osoby_t AS
         SELF.dbg_map_program_codes := dbg_map_program_codes;
         SELF.dbg_ids := dbg_ids;
         SELF.dbg_prgos_ids := dbg_prgos_ids;
-        SELF.dbg_etp_kody := dbg_etp_kody;
+        SELF.dbg_eo_etp_kody := dbg_eo_etp_kody;
+        SELF.dbg_ek_etp_kody := dbg_ek_etp_kody;
         SELF.dbg_prg_kody := dbg_prg_kody;
         SELF.dbg_semester_codes := dbg_semester_codes;
         SELF.dbg_ects_attained := dbg_ects_attained;

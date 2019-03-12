@@ -229,22 +229,18 @@ USING
                 , u_0.dbg_mapped
 
             FROM u_0 u_0
-            LEFT JOIN v2u_dz_studenci studenci
-                ON  (
-                            studenci.indeks = u_0.student_index
-                    )
         ),
         v AS
-        ( -- determine our (v2u_*) values of certain fields
+        ( -- determine our (v$*) values of certain fields
             SELECT
                   u.*
-                , u.os_id v2u_os_id
-                , u.st_id v2u_st_id
-                , COALESCE(u.prg_kod, u.map_program_code) v2u_prg_kod
-                , COALESCE(u.map_org_unit, u.faculty_code) v2u_jed_org_kod
+                , u.os_id v$os_id
+                , u.st_id v$st_id
+                , COALESCE(u.prg_kod, u.map_program_code) v$prg_kod
+                , COALESCE(u.map_org_unit, u.faculty_code) v$jed_org_kod
 
-                , V2u_Get.Utw_Id(u.job_uuid) v2u_utw_id
-                , V2u_Get.Mod_Id(u.job_uuid) v2u_mod_id
+                , V2u_Get.Utw_Id(u.job_uuid) v$utw_id
+                , V2u_Get.Mod_Id(u.job_uuid) v$mod_id
 
                 -- have we matched unique row in target table?
 
@@ -282,63 +278,63 @@ USING
             FROM u u
         ),
         w AS
-        ( -- provide our values (v2u_*) together with original ones (org_*)
+        ( -- provide our values (v$*) together with original ones (org_*)
             SELECT
                   v.*
 
-                , t.os_id o$os_id
-                , t.prg_kod o$prg_kod
-                , t.utw_id o$utw_id
-                , t.utw_data o$utw_data
-                , t.mod_id o$mod_id
-                , t.mod_data o$mod_data
-                , t.st_id o$st_id
-                , t.czy_glowny o$czy_glowny
-                , t.id o$id
-                , t.data_nast_zal o$data_nast_zal
-                , t.uprawnienia_zawodowe o$uprawnienia_zawodowe
-                , t.uprawnienia_zawodowe_ang o$uprawnienia_zawodowe_ang
-                , t.jed_org_kod o$jed_org_kod
-                , t.dok_upr_id o$dok_upr_id
-                , t.data_przyjecia o$data_przyjecia
-                , t.plan_data_ukon o$plan_data_ukon
-                , t.czy_zgloszony o$czy_zgloszony
-                , t.status o$status
-                , t.data_rozpoczecia o$data_rozpoczecia
-                , t.numer_s o$numer_s
-                , t.numer_swiadectwa o$numer_swiadectwa
-                , t.tecz_id o$tecz_id
-                , t.data_arch o$data_arch
-                , t.warunki_przyjec_na_prog o$warunkiprzyjec_na_prog
-                , t.warunki_przyjec_na_prog_ang o$warunkiprzyjec_na_prog_ang
-                , t.numer_do_banku o$numer_do_banku
-                , t.numer_do_banku_sygn o$numer_do_banku_sygn
-                , t.numer_5_proc o$numer_5_proc
-                , t.numer_5_proc_sygn o$numer_5_proc_sygn
-                , t.status_arch o$status_arch
-                , t.osiagniecia o$osiagniecia
-                , t.osiagniecia_ang o$osiagniecia_ang
-                , t.nr_kierunku_ustawa o$nr_kierunku_ustawa
-                , t.limit_ects o$limit_ects
-                , t.dodatkowe_ects_uczelnia o$dodatkowe_ects_uczelnia
-                , t.wykorzystane_ects_obce o$wykorzystane_ects_obce
-                , t.limit_ects_podpiecia o$limit_ects_podpiecia
-                , t.prgos_id o$prgos_id
-                , t.osiagniecia_programu o$osiagniecia_programu
-                , t.osiagniecia_programu_ang o$osiagniecia_programu_ang
-                , t.wynik_studiow o$wynik_studiow
-                , t.wynik_studiow_ang o$wynik_studiow_ang
-                , t.umowa_data_przeczytania o$umowa_data_przeczytania
-                , t.umowa_data_podpisania o$umowa_data_podpisania
-                , t.umowa_sygnatura o$umowa_sygnatura
-                , t.kod_isced o$kod_isced
+                , t.os_id u$os_id
+                , t.prg_kod u$prg_kod
+                , t.utw_id u$utw_id
+                , t.utw_data u$utw_data
+                , t.mod_id u$mod_id
+                , t.mod_data u$mod_data
+                , t.st_id u$st_id
+                , t.czy_glowny u$czy_glowny
+                , t.id u$id
+                , t.data_nast_zal u$data_nast_zal
+                , t.uprawnienia_zawodowe u$uprawnienia_zawodowe
+                , t.uprawnienia_zawodowe_ang u$uprawnienia_zawodowe_ang
+                , t.jed_org_kod u$jed_org_kod
+                , t.dok_upr_id u$dok_upr_id
+                , t.data_przyjecia u$data_przyjecia
+                , t.plan_data_ukon u$plan_data_ukon
+                , t.czy_zgloszony u$czy_zgloszony
+                , t.status u$status
+                , t.data_rozpoczecia u$data_rozpoczecia
+                , t.numer_s u$numer_s
+                , t.numer_swiadectwa u$numer_swiadectwa
+                , t.tecz_id u$tecz_id
+                , t.data_arch u$data_arch
+                , t.warunki_przyjec_na_prog u$warunkiprzyjec_na_prog
+                , t.warunki_przyjec_na_prog_ang u$warunkiprzyjec_na_prog_ang
+                , t.numer_do_banku u$numer_do_banku
+                , t.numer_do_banku_sygn u$numer_do_banku_sygn
+                , t.numer_5_proc u$numer_5_proc
+                , t.numer_5_proc_sygn u$numer_5_proc_sygn
+                , t.status_arch u$status_arch
+                , t.osiagniecia u$osiagniecia
+                , t.osiagniecia_ang u$osiagniecia_ang
+                , t.nr_kierunku_ustawa u$nr_kierunku_ustawa
+                , t.limit_ects u$limit_ects
+                , t.dodatkowe_ects_uczelnia u$dodatkowe_ects_uczelnia
+                , t.wykorzystane_ects_obce u$wykorzystane_ects_obce
+                , t.limit_ects_podpiecia u$limit_ects_podpiecia
+                , t.prgos_id u$prgos_id
+                , t.osiagniecia_programu u$osiagniecia_programu
+                , t.osiagniecia_programu_ang u$osiagniecia_programu_ang
+                , t.wynik_studiow u$wynik_studiow
+                , t.wynik_studiow_ang u$wynik_studiow_ang
+                , t.umowa_data_przeczytania u$umowa_data_przeczytania
+                , t.umowa_data_podpisania u$umowa_data_podpisania
+                , t.umowa_sygnatura u$umowa_sygnatura
+                , t.kod_isced u$kod_isced
 
                 , DECODE( v.dbg_unique_match, 1
                         , CASE WHEN
-                                    DECODE(v.v2u_os_id, t.os_id, 1, 0) = 1
-                                AND DECODE(v.v2u_prg_kod, t.prg_kod, 1, 0) = 1
-                                AND DECODE(v.v2u_st_id, t.st_id, 1, 0) = 1
-                                AND DECODE(v.v2u_jed_org_kod, t.jed_org_kod, 1, 0) = 1
+                                    DECODE(v.v$os_id, t.os_id, 1, 0) = 1
+                                AND DECODE(v.v$prg_kod, t.prg_kod, 1, 0) = 1
+                                AND DECODE(v.v$st_id, t.st_id, 1, 0) = 1
+                                AND DECODE(v.v$jed_org_kod, t.jed_org_kod, 1, 0) = 1
                             THEN '-'
                             ELSE 'U'
                           END
@@ -386,52 +382,52 @@ USING
 
             -- VAL
 
-            , DECODE(w.change_type, '-', w.o$os_id, w.v2u_os_id) os_id
-            , DECODE(w.change_type, '-', w.o$prg_kod, w.v2u_prg_kod) prg_kod
-            , DECODE(w.change_type, 'I', w.v2u_utw_id, o$utw_id) utw_id
-            , DECODE(w.change_type, 'I', NULL, o$utw_data) utw_data
-            , DECODE(w.change_type, 'U', w.v2u_mod_id, o$mod_id) mod_id
-            , DECODE(w.change_type, 'U', NULL, o$mod_data) mod_data
-            , DECODE(w.change_type, '-', w.o$st_id, w.v2u_st_id) st_id
-            , DECODE(w.change_type, 'I', NULL, w.o$czy_glowny) czy_glowny
+            , DECODE(w.change_type, '-', w.u$os_id, w.v$os_id) os_id
+            , DECODE(w.change_type, '-', w.u$prg_kod, w.v$prg_kod) prg_kod
+            , DECODE(w.change_type, 'I', w.v$utw_id, u$utw_id) utw_id
+            , DECODE(w.change_type, 'I', NULL, u$utw_data) utw_data
+            , DECODE(w.change_type, 'U', w.v$mod_id, u$mod_id) mod_id
+            , DECODE(w.change_type, 'U', NULL, u$mod_data) mod_data
+            , DECODE(w.change_type, '-', w.u$st_id, w.v$st_id) st_id
+            , DECODE(w.change_type, 'I', NULL, w.u$czy_glowny) czy_glowny
             , w.id
-            , DECODE(w.change_type, 'I', NULL, w.o$data_nast_zal) data_nast_zal
-            , DECODE(w.change_type, 'I', NULL, w.o$uprawnienia_zawodowe) uprawnienia_zawodowe
-            , DECODE(w.change_type, 'I', NULL, w.o$uprawnienia_zawodowe_ang) uprawnienia_zawodowe_ang
-            , DECODE(w.change_type, '-', w.o$jed_org_kod, w.v2u_jed_org_kod) jed_org_kod
-            , DECODE(w.change_type, 'I', NULL, w.o$dok_upr_id) dok_upr_id
-            , DECODE(w.change_type, 'I', NULL, w.o$data_przyjecia) data_przyjecia
-            , DECODE(w.change_type, 'I', NULL, w.o$plan_data_ukon) plan_data_ukon
-            , DECODE(w.change_type, 'I', NULL, w.o$czy_zgloszony) czy_zgloszony
-            , DECODE(w.change_type, 'I', NULL, w.o$status) status
-            , DECODE(w.change_type, 'I', NULL, w.o$data_rozpoczecia) data_rozpoczecia
-            , DECODE(w.change_type, 'I', NULL, w.o$numer_s) numer_s
-            , DECODE(w.change_type, 'I', NULL, w.o$numer_swiadectwa) numer_swiadectwa
-            , DECODE(w.change_type, 'I', NULL, w.o$tecz_id) tecz_id
-            , DECODE(w.change_type, 'I', NULL, w.o$data_arch) data_arch
-            , DECODE(w.change_type, 'I', NULL, w.o$warunkiprzyjec_na_prog) warunki_przyjec_na_prog
-            , DECODE(w.change_type, 'I', NULL, w.o$warunkiprzyjec_na_prog_ang) warunki_przyjec_na_prog_ang
-            , DECODE(w.change_type, 'I', NULL, w.o$numer_do_banku) numer_do_banku
-            , DECODE(w.change_type, 'I', NULL, w.o$numer_do_banku_sygn) numer_do_banku_sygn
-            , DECODE(w.change_type, 'I', NULL, w.o$numer_5_proc) numer_5_proc
-            , DECODE(w.change_type, 'I', NULL, w.o$numer_5_proc_sygn) numer_5_proc_sygn
-            , DECODE(w.change_type, 'I', NULL, w.o$status_arch) status_arch
-            , DECODE(w.change_type, 'I', NULL, w.o$osiagniecia) osiagniecia
-            , DECODE(w.change_type, 'I', NULL, w.o$osiagniecia_ang) osiagniecia_ang
-            , DECODE(w.change_type, 'I', NULL, w.o$nr_kierunku_ustawa) nr_kierunku_ustawa
-            , DECODE(w.change_type, 'I', NULL, w.o$limit_ects) limit_ects
-            , DECODE(w.change_type, 'I', NULL, w.o$dodatkowe_ects_uczelnia) dodatkowe_ects_uczelnia
-            , DECODE(w.change_type, 'I', NULL, w.o$wykorzystane_ects_obce) wykorzystane_ects_obce
-            , DECODE(w.change_type, 'I', NULL, w.o$limit_ects_podpiecia) limit_ects_podpiecia
-            , DECODE(w.change_type, 'I', NULL, w.o$prgos_id) prgos_id
-            , DECODE(w.change_type, 'I', NULL, w.o$osiagniecia_programu) osiagniecia_programu
-            , DECODE(w.change_type, 'I', NULL, w.o$osiagniecia_programu_ang) osiagniecia_programu_ang
-            , DECODE(w.change_type, 'I', NULL, w.o$wynik_studiow) wynik_studiow
-            , DECODE(w.change_type, 'I', NULL, w.o$wynik_studiow_ang) wynik_studiow_ang
-            , DECODE(w.change_type, 'I', NULL, w.o$umowa_data_przeczytania) umowa_data_przeczytania
-            , DECODE(w.change_type, 'I', NULL, w.o$umowa_data_podpisania) umowa_data_podpisania
-            , DECODE(w.change_type, 'I', NULL, w.o$umowa_sygnatura) umowa_sygnatura
-            , DECODE(w.change_type, 'I', NULL, w.o$kod_isced) kod_isced
+            , DECODE(w.change_type, 'I', NULL, w.u$data_nast_zal) data_nast_zal
+            , DECODE(w.change_type, 'I', NULL, w.u$uprawnienia_zawodowe) uprawnienia_zawodowe
+            , DECODE(w.change_type, 'I', NULL, w.u$uprawnienia_zawodowe_ang) uprawnienia_zawodowe_ang
+            , DECODE(w.change_type, '-', w.u$jed_org_kod, w.v$jed_org_kod) jed_org_kod
+            , DECODE(w.change_type, 'I', NULL, w.u$dok_upr_id) dok_upr_id
+            , DECODE(w.change_type, 'I', NULL, w.u$data_przyjecia) data_przyjecia
+            , DECODE(w.change_type, 'I', NULL, w.u$plan_data_ukon) plan_data_ukon
+            , DECODE(w.change_type, 'I', NULL, w.u$czy_zgloszony) czy_zgloszony
+            , DECODE(w.change_type, 'I', NULL, w.u$status) status
+            , DECODE(w.change_type, 'I', NULL, w.u$data_rozpoczecia) data_rozpoczecia
+            , DECODE(w.change_type, 'I', NULL, w.u$numer_s) numer_s
+            , DECODE(w.change_type, 'I', NULL, w.u$numer_swiadectwa) numer_swiadectwa
+            , DECODE(w.change_type, 'I', NULL, w.u$tecz_id) tecz_id
+            , DECODE(w.change_type, 'I', NULL, w.u$data_arch) data_arch
+            , DECODE(w.change_type, 'I', NULL, w.u$warunkiprzyjec_na_prog) warunki_przyjec_na_prog
+            , DECODE(w.change_type, 'I', NULL, w.u$warunkiprzyjec_na_prog_ang) warunki_przyjec_na_prog_ang
+            , DECODE(w.change_type, 'I', NULL, w.u$numer_do_banku) numer_do_banku
+            , DECODE(w.change_type, 'I', NULL, w.u$numer_do_banku_sygn) numer_do_banku_sygn
+            , DECODE(w.change_type, 'I', NULL, w.u$numer_5_proc) numer_5_proc
+            , DECODE(w.change_type, 'I', NULL, w.u$numer_5_proc_sygn) numer_5_proc_sygn
+            , DECODE(w.change_type, 'I', NULL, w.u$status_arch) status_arch
+            , DECODE(w.change_type, 'I', NULL, w.u$osiagniecia) osiagniecia
+            , DECODE(w.change_type, 'I', NULL, w.u$osiagniecia_ang) osiagniecia_ang
+            , DECODE(w.change_type, 'I', NULL, w.u$nr_kierunku_ustawa) nr_kierunku_ustawa
+            , DECODE(w.change_type, 'I', NULL, w.u$limit_ects) limit_ects
+            , DECODE(w.change_type, 'I', NULL, w.u$dodatkowe_ects_uczelnia) dodatkowe_ects_uczelnia
+            , DECODE(w.change_type, 'I', NULL, w.u$wykorzystane_ects_obce) wykorzystane_ects_obce
+            , DECODE(w.change_type, 'I', NULL, w.u$limit_ects_podpiecia) limit_ects_podpiecia
+            , DECODE(w.change_type, 'I', NULL, w.u$prgos_id) prgos_id
+            , DECODE(w.change_type, 'I', NULL, w.u$osiagniecia_programu) osiagniecia_programu
+            , DECODE(w.change_type, 'I', NULL, w.u$osiagniecia_programu_ang) osiagniecia_programu_ang
+            , DECODE(w.change_type, 'I', NULL, w.u$wynik_studiow) wynik_studiow
+            , DECODE(w.change_type, 'I', NULL, w.u$wynik_studiow_ang) wynik_studiow_ang
+            , DECODE(w.change_type, 'I', NULL, w.u$umowa_data_przeczytania) umowa_data_przeczytania
+            , DECODE(w.change_type, 'I', NULL, w.u$umowa_data_podpisania) umowa_data_podpisania
+            , DECODE(w.change_type, 'I', NULL, w.u$umowa_sygnatura) umowa_sygnatura
+            , DECODE(w.change_type, 'I', NULL, w.u$kod_isced) kod_isced
 
             -- DBG
 

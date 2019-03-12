@@ -6,6 +6,9 @@
 @@dz_zajecia_cykli.ddl;
 @@dz_programy.ddl;
 @@dz_programy_osob.ddl;
+@@dz_etapy.ddl;
+@@dz_etapy_programow.ddl;
+@@dz_etapy_kierunkow.ddl;
 @@dz_etapy_osob.ddl;
 @@dz_zaliczenia_przedmiotow.ddl;
 

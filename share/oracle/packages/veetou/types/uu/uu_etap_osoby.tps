@@ -9,7 +9,8 @@ CREATE OR REPLACE TYPE V2u_Uu_Etap_Osoby_t
     , dbg_map_program_codes NUMBER(5)
     , dbg_ids NUMBER(5)
     , dbg_prgos_ids NUMBER(5)
-    , dbg_etp_kody NUMBER(5)
+    , dbg_eo_etp_kody NUMBER(5)
+    , dbg_ek_etp_kody NUMBER(5)
     , dbg_prg_kody NUMBER(5)
     , dbg_semester_codes NUMBER(5)
     , dbg_ects_attained NUMBER(5)
@@ -57,7 +58,8 @@ CREATE OR REPLACE TYPE V2u_Uu_Etap_Osoby_t
             , dbg_map_program_codes IN NUMBER
             , dbg_ids IN NUMBER
             , dbg_prgos_ids IN NUMBER
-            , dbg_etp_kody IN NUMBER
+            , dbg_eo_etp_kody IN NUMBER
+            , dbg_ek_etp_kody IN NUMBER
             , dbg_prg_kody IN NUMBER
             , dbg_semester_codes IN NUMBER
             , dbg_ects_attained IN NUMBER
@@ -105,7 +107,8 @@ CREATE OR REPLACE TYPE V2u_Uu_Etap_Osoby_t
             , dbg_map_program_codes IN NUMBER
             , dbg_ids IN NUMBER
             , dbg_prgos_ids IN NUMBER
-            , dbg_etp_kody IN NUMBER
+            , dbg_eo_etp_kody IN NUMBER
+            , dbg_ek_etp_kody IN NUMBER
             , dbg_prg_kody IN NUMBER
             , dbg_semester_codes IN NUMBER
             , dbg_ects_attained IN NUMBER

@@ -86,7 +86,11 @@ USING
                 , SET(CAST(
                     COLLECT(ma_etpos_j.etp_kod)
                     AS V2u_Vchars1K_t
-                  )) etp_kody1k
+                  )) eo_etp_kody1k
+                , SET(CAST(
+                    COLLECT(etapy_kierunkow.etp_kod)
+                    AS V2u_Vchars1K_t
+                  )) ek_etp_kody1k
                 , SET(CAST(
                     COLLECT(ma_prgos_j.prg_kod)
                     AS V2u_Vchars1K_t
@@ -99,16 +103,21 @@ USING
                     COLLECT(u_00.semester_code)
                     AS V2u_Vchars1K_t
                   )) semester_codes1k
-               , SET(CAST(
+                , SET(CAST(
                     COLLECT(u_00.ects_attained)
                     AS V2u_Ints4_t
                   )) ects_attained_tab
 
                 -- debugging
 
-                , COUNT(ma_etpos_j.etpos_id) dbg_matched
+                /* The "+ 0" seems to be a workaround for the following bug.
+                 * The values of dbg_missing and dbg_matched get mixed randomly
+                 * in this query (depending in v2u_dz_etapy_programow
+                 * and v2u_etapy_kierunkow being JOINED or not while using
+                 * nested (SELECT ...) queries in the subquery "u" below). */
+                , COUNT(ma_etpos_j.etpos_id + 0) dbg_matched
                 , COUNT(mi_etpos_j.job_uuid) dbg_missing
-                , COUNT(sm_j.map_id) dbg_mapped
+                , COUNT(sm_j.map_id + 0) dbg_mapped
 
             FROM u_00 u_00
             LEFT JOIN v2u_ko_matched_etpos_j ma_etpos_j
@@ -151,9 +160,16 @@ USING
                 ON  (
                             specialty_map.id = sm_j.map_id
                     )
-            LEFT JOIN v2u_dz_studenci studenci
+            LEFT JOIN v2u_dz_etapy_programow etapy_programow
                 ON  (
-                            studenci.indeks = u_00.student_index
+                            etapy_programow.prg_kod = specialty_map.map_program_code
+                        AND etapy_programow.nr_roku = u_00.semester_number
+                        AND etapy_programow.tcdyd_kod = 'SEM'
+                    )
+            LEFT JOIN v2u_dz_etapy_kierunkow etapy_kierunkow
+                ON  (
+                            etapy_kierunkow.krstd_kod = specialty_map.map_specialty_code
+                        AND etapy_kierunkow.etp_kod = etapy_programow.etp_kod
                     )
             GROUP BY
                   u_00.job_uuid
@@ -203,9 +219,13 @@ USING
                     WHERE ROWNUM <= 1
                   ) prg_kod
                 , ( SELECT SUBSTR(VALUE(t), 1, 20)
-                    FROM TABLE(u_0.etp_kody1k) t
+                    FROM TABLE(u_0.eo_etp_kody1k) t
                     WHERE ROWNUM <= 1
-                  ) etp_kod
+                  ) eo_etp_kod
+                , ( SELECT SUBSTR(VALUE(t), 1, 20)
+                    FROM TABLE(u_0.ek_etp_kody1k) t
+                    WHERE ROWNUM <= 1
+                  ) ek_etp_kod
                 , ( SELECT SUBSTR(VALUE(t), 1, 20)
                     FROM TABLE(u_0.semester_codes1k) t
                     WHERE ROWNUM <= 1
@@ -227,8 +247,11 @@ USING
                     FROM TABLE(u_0.prgos_ids)
                   ) dbg_prgos_ids
                 , ( SELECT COUNT(*)
-                    FROM TABLE(u_0.etp_kody1k)
-                  ) dbg_etp_kody
+                    FROM TABLE(u_0.eo_etp_kody1k)
+                  ) dbg_eo_etp_kody
+                , ( SELECT COUNT(*)
+                    FROM TABLE(u_0.ek_etp_kody1k)
+                  ) dbg_ek_etp_kody
                 , ( SELECT COUNT(*)
                     FROM TABLE(u_0.prg_kody1k)
                   ) dbg_prg_kody
@@ -248,17 +271,13 @@ USING
                 , u_0.dbg_mapped
 
             FROM u_0 u_0
-            LEFT JOIN v2u_dz_studenci studenci
-                ON  (
-                            studenci.indeks = u_0.student_index
-                    )
         ),
         v AS
         ( -- determine our (v$*) values of certain fields
             SELECT
                   u.*
-                -- FIXME: implement etp_kod retrieval
-                , COALESCE(u.etp_kod, '???') v$etp_kod
+                -- FIXME: check if my concept for retrieving etp_kod is correct
+                , COALESCE(u.eo_etp_kod, u.ek_etp_kod) v$etp_kod
                 , COALESCE(u.prg_kod, u.map_program_code) v$prg_kod
                 , u.prgos_id v$prgos_id
                 , u.semester_code v$cdyd_kod
@@ -288,8 +307,8 @@ USING
                     WHEN
                         -- ensure that:
                         -- stage code is determined uniquely
-                            ( u.etp_kod IS NOT NULL AND u.dbg_etp_kody = 1
-                              OR '???' IS NOT NULL AND 0 = 1 ) -- FIXME: etp_kod
+                            ( u.eo_etp_kod IS NOT NULL AND u.dbg_eo_etp_kody = 1
+                              OR u.ek_etp_kod IS NOT NULL AND u.dbg_ek_etp_kody = 1 )
                         -- program code is determined uniquely
                         AND ( u.prg_kod IS NOT NULL AND u.dbg_prg_kody = 1
                               OR  u.map_program_code IS NOT NULL AND u.dbg_map_program_codes = 1 )
@@ -424,7 +443,8 @@ USING
             , w.dbg_map_program_codes
             , w.dbg_ids
             , w.dbg_prgos_ids
-            , w.dbg_etp_kody
+            , w.dbg_eo_etp_kody
+            , w.dbg_ek_etp_kody
             , w.dbg_prg_kody
             , w.dbg_semester_codes
             , w.dbg_ects_attained
@@ -482,7 +502,8 @@ WHEN NOT MATCHED THEN
         , dbg_map_program_codes
         , dbg_ids
         , dbg_prgos_ids
-        , dbg_etp_kody
+        , dbg_eo_etp_kody
+        , dbg_ek_etp_kody
         , dbg_prg_kody
         , dbg_semester_codes
         , dbg_ects_attained
@@ -528,7 +549,8 @@ WHEN NOT MATCHED THEN
         , src.dbg_map_program_codes
         , src.dbg_ids
         , src.dbg_prgos_ids
-        , src.dbg_etp_kody
+        , src.dbg_eo_etp_kody
+        , src.dbg_ek_etp_kody
         , src.dbg_prg_kody
         , src.dbg_semester_codes
         , src.dbg_ects_attained
@@ -575,7 +597,8 @@ WHEN MATCHED THEN
         , tgt.dbg_map_program_codes = src.dbg_map_program_codes
         , tgt.dbg_ids = src.dbg_ids
         , tgt.dbg_prgos_ids = src.dbg_prgos_ids
-        , tgt.dbg_etp_kody = src.dbg_etp_kody
+        , tgt.dbg_eo_etp_kody = src.dbg_eo_etp_kody
+        , tgt.dbg_ek_etp_kody = src.dbg_ek_etp_kody
         , tgt.dbg_prg_kody = src.dbg_prg_kody
         , tgt.dbg_semester_codes = src.dbg_semester_codes
         , tgt.dbg_ects_attained = src.dbg_ects_attained
