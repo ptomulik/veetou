@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY V2u_Dz_Program_Osoby_t AS
-    CONSTRUCTOR FUNCTION V2u_Dz_Program_Osoby_t(
-              SELF IN OUT NOCOPY V2u_Dz_Program_Osoby_t
+CREATE OR REPLACE TYPE BODY V2u_Dz_Program_t AS
+    CONSTRUCTOR FUNCTION V2u_Dz_Program_t(
+              SELF IN OUT NOCOPY V2u_Dz_Program_t
             , kod IN VARCHAR2
             , opis IN VARCHAR2
             , data_od IN DATE

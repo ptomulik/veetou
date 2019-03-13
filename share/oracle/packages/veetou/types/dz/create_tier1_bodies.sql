@@ -1,23 +1,43 @@
 @@dz_student_b.tpb;
 @@dz_przedmiot_b.tpb;
+@@dz_przedmiot_obcy_b.tpb;
 @@dz_atrybut_przedmiotu_b.tpb;
 @@dz_przedmiot_cyklu_b.tpb;
 @@dz_punkty_przedmiotu_b.tpb;
 @@dz_zajecia_cyklu_b.tpb;
+@@dz_zajecia_prz_obcego_b.tpb;
+@@dz_program_b.tpb;
 @@dz_program_osoby_b.tpb;
+@@dz_decyzja_b.tpb;
 @@dz_etap_b.tpb;
+@@dz_etap_programu_b.tpb;
+@@dz_etap_kierunku_b.tpb;
 @@dz_etap_osoby_b.tpb;
 @@dz_zalicz_przedmiotu_b.tpb;
+@@dz_zal_przedm_prgos_b.tpb;
+@@dz_ocena_b.tpb;
+@@dz_termin_protokolu_b.tpb;
+@@dz_protokol_b.tpb;
 
 @@dz_student.tpb;
 @@dz_atrybut_przedmiotu.tpb;
 @@dz_przedmiot.tpb;
+@@dz_przedmiot_obcy.tpb;
 @@dz_przedmiot_cyklu.tpb;
 @@dz_punkty_przedmiotu.tpb;
 @@dz_zajecia_cyklu.tpb;
+@@dz_zajecia_prz_obcego.tpb;
+@@dz_program.tpb;
 @@dz_program_osoby.tpb;
+@@dz_decyzja.tpb;
 @@dz_etap.tpb;
+@@dz_etap_programu.tpb;
+@@dz_etap_kierunku.tpb;
 @@dz_etap_osoby.tpb;
 @@dz_zalicz_przedmiotu.tpb;
+@@dz_zal_przedm_prgos.tpb;
+@@dz_ocena.tpb;
+@@dz_termin_protokolu.tpb;
+@@dz_protokol.tpb;
 
 -- vim: set ft=sql ts=4 sw=4 et:

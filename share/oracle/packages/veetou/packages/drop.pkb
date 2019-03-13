@@ -172,9 +172,13 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     PROCEDURE Tier1_Dz
     IS
     BEGIN
+        Drop_Table('dz_zal_przedm_prgos');
+        --
         Drop_Table('dz_zaliczenia_przedmiotow');
         --
         Drop_Table('dz_etapy');
+        --
+        Drop_Table('dz_decyzje');
         --
         Drop_Index('dz_etapy_programow_idx1');
         Drop_Index('dz_etapy_programow_idx2');
@@ -206,6 +210,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('dz_zajecia_cykli_idx1');
         Drop_Table('dz_zajecia_cykli');
         --
+        Drop_Index('dz_zajecia_prz_obcych_idx1');
+        Drop_Table('dz_zajecia_prz_obcych');
+        --
         Drop_Index('dz_przedmioty_cykli_idx1');
         Drop_Index('dz_przedmioty_cykli_idx2');
         Drop_Table('dz_przedmioty_cykli');
@@ -223,9 +230,22 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Table('dz_atrybuty_przedmiotow');
         --
         Drop_Table('dz_przedmioty');
+        --
+        Drop_Table('dz_przedmioty_obce');
+        --
+        Drop_Table('dz_oceny');
+        --
+        Drop_Table('dz_terminy_protokolow');
+        --
+        Drop_Table('dz_protokoly');
 
+        Drop_Type('Dz_Protokol_t', 'Dz_Protokoly_t');
+        Drop_Type('Dz_Termin_Protokolu_t', 'Dz_Terminy_Protokolow_t');
+        Drop_Type('Dz_Ocena_t', 'Dz_Oceny_t');
         Drop_Type('Dz_Zalicz_Przedmiotu_t', 'Dz_Zalicz_Przedmiotow_t');
+        Drop_Type('Dz_Zal_Przedm_Prgos_t', 'Dz_Zal_Przedm_Prgoses_t');
         Drop_Type('Dz_Program_Osoby_t', 'Dz_Programy_Osob_t');
+        Drop_Type('Dz_Decyzja_t', 'Dz_Decyzje_t');
         Drop_Type('Dz_Etap_t', 'Dz_Etapy_t');
         Drop_Type('Dz_Etap_Programu_t', 'Dz_Etapy_Programow_t');
         Drop_Type('Dz_Etap_Kierunku_t', 'Dz_Etapy_Kierunkow_t');
@@ -234,23 +254,32 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Dz_Program_t', 'Dz_Programy_t');
         Drop_Type('Dz_Atrybut_Przedmiotu_t', 'Dz_Atrybuty_Przedmiotow_t');
         Drop_Type('Dz_Przedmiot_t', 'Dz_Przedmioty_t');
+        Drop_Type('Dz_Przedmiot_Obcy_t', 'Dz_Przedmioty_Obce_t');
         Drop_Type('Dz_Punkty_Przedmiotu_t', 'Dz_Punkty_Przedmiotow_t');
         Drop_Type('Dz_Przedmiot_Cyklu_t', 'Dz_Przedmioty_Cykli_t');
         Drop_Type('Dz_Zajecia_Cyklu_t', 'Dz_Zajecia_Cykli_t');
+        Drop_Type('Dz_Zajecia_Prz_Obcego_t', 'Dz_Zajecia_Prz_Obcych_t');
 
         Drop_Type('Dz_Program_Osoby_B_t');
         Drop_Type('Dz_Program_B_t');
+        Drop_Type('Dz_Decyzja_B_t');
         Drop_Type('Dz_Etap_B_t');
         Drop_Type('Dz_Etap_Programu_B_t');
         Drop_Type('Dz_Etap_Kierunku_B_t');
         Drop_Type('Dz_Etap_Osoby_B_t');
         Drop_Type('Dz_Student_B_t');
         Drop_Type('Dz_Atrybut_Przedmiotu_B_t');
+        Drop_Type('Dz_Zal_Przedm_Prgos_B_t');
         Drop_Type('Dz_Zalicz_Przedmiotu_B_t');
         Drop_Type('Dz_Przedmiot_B_t');
+        Drop_Type('Dz_Przedmiot_Obcy_B_t');
         Drop_Type('Dz_Przedmiot_Cyklu_B_t');
         Drop_Type('Dz_Punkty_Przedmiotu_B_t');
         Drop_Type('Dz_Zajecia_Cyklu_B_t');
+        Drop_Type('Dz_Zajecia_Prz_Obcego_B_t');
+        Drop_Type('Dz_Ocena_B_t');
+        Drop_Type('Dz_Termin_Protokolu_B_t');
+        Drop_Type('Dz_Protokol_B_t');
     END;
 
     PROCEDURE Tier1_Ko
