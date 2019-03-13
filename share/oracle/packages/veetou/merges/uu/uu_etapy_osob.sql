@@ -58,6 +58,8 @@ USING
                         THEN NULL
                         ELSE specialty_map.map_program_code
                              || '|' ||
+                             specialty_map.map_specialty_code
+                             || '|' ||
                              u_00.semester_code
                              || '|' ||
                              TO_CHAR(u_00.semester_number)
@@ -118,11 +120,12 @@ USING
 
                 -- debugging
 
-                /* The "+ 0" seems to be a workaround for the following bug.
-                 * The values of dbg_missing and dbg_matched get mixed randomly
-                 * in this query (depending in v2u_dz_etapy_programow
+                /* The ".. + 0" seems to be a workaround the following bug:
+                 *
+                 * BUG: The values of dbg_missing and dbg_matched get mixed
+                 * randomly in this query depending on v2u_dz_etapy_programow
                  * and v2u_etapy_kierunkow being JOINED or not while using
-                 * nested (SELECT ...) queries in the subquery "u" below). */
+                 * nested (SELECT ...) queries in the subquery "u" below. */
                 , COUNT(ma_etpos_j.etpos_id + 0) dbg_matched
                 , COUNT(mi_etpos_j.job_uuid) dbg_missing
                 , COUNT(sm_j.map_id + 0) dbg_mapped
@@ -146,12 +149,6 @@ USING
                         AND ma_prgos_j.semester_id = u_00.semester_id
                         AND ma_prgos_j.job_uuid = u_00.job_uuid
                     )
-            /*LEFT JOIN v2u_ko_missing_prgos_j mi_prgos_j
-                ON  (       mi_prgos_j.student_id = u_00.student_id
-                        AND mi_prgos_j.specialty_id = u_00.specialty_id
-                        AND mi_prgos_j.semester_id = u_00.semester_id
-                        AND mi_prgos_j.job_uuid = u_00.job_uuid
-                    )*/
             LEFT JOIN v2u_ko_skipped_programs_j sk_progs_j
                 ON  (
                             sk_progs_j.specialty_id =  u_00.specialty_id
@@ -170,7 +167,10 @@ USING
                     )
             LEFT JOIN v2u_dz_etapy_programow etapy_programow
                 ON  (
-                            etapy_programow.prg_kod = specialty_map.map_program_code
+                            etapy_programow.prg_kod = COALESCE(
+                                      ma_prgos_j.prg_kod
+                                    , specialty_map.map_program_code
+                            )
                         AND etapy_programow.nr_roku = u_00.semester_number
                         AND etapy_programow.tcdyd_kod = 'SEM'
                     )
@@ -188,6 +188,8 @@ USING
                         WHEN specialty_map.map_program_code IS NULL
                         THEN NULL
                         ELSE specialty_map.map_program_code
+                             || '|' ||
+                             specialty_map.map_specialty_code
                              || '|' ||
                              u_00.semester_code
                              || '|' ||
@@ -303,6 +305,7 @@ USING
                 , COALESCE(u.eo_prg_kod, u.po_prg_kod, u.map_program_code) v$prg_kod
                 , u.eo_prgos_id v$prgos_id
                 , u.semester_code v$cdyd_kod
+                , V2U_Get.Semester(u.semester_code).end_date v$data_zakon
                 -- FIXME: implement ects_uzyskane. It's a cumulative number of
                 --        ECTS at the beginning of semester.
                 --, u.ects_attained v$ects_uzyskane
@@ -434,7 +437,7 @@ USING
             -- VAL
 
             , w.id
-            , DECODE(w.change_type, 'I', NULL, w.u$data_zakon) data_zakon
+            , DECODE(w.change_type, 'I', w.v$data_zakon, w.u$data_zakon) data_zakon
             , DECODE(w.change_type, 'I', w.v$utw_id, w.u$utw_id) utw_id
             , DECODE(w.change_type, 'I', NULL, w.u$utw_data) utw_data
             , DECODE(w.change_type, 'U', w.v$mod_id, w.u$mod_id) mod_id
