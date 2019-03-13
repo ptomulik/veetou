@@ -509,6 +509,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('uu_zajecia_cykli_idx1');
         Drop_Table('uu_zajecia_cykli');
         --
+        Drop_Table('uu_punkty_przedmiotow');
+        --
         Drop_Index('uu_przedmioty_cykli_idx1');
         Drop_Index('uu_przedmioty_cykli_idx2');
         Drop_Table('uu_przedmioty_cykli');
@@ -571,6 +573,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Uu_Zalicz_Przedmiotu_t', 'Uu_Zalicz_Przedmiotow_t');
         Drop_Type('Uu_Przedmiot_t', 'Uu_Przedmioty_t');
         Drop_Type('Uu_Przedmiot_Cyklu_t', 'Uu_Przedmioty_Cykli_t');
+        Drop_Type('Uu_Punkty_Przedmiotu_t', 'Uu_Punkty_Przedmiotow_t');
         Drop_Type('Uu_Zajecia_Cyklu_t', 'Uu_Zajecia_Cykli_t');
 
         Drop_Type('Semester_Codes_t');

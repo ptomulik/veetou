@@ -126,14 +126,14 @@ USING
             FROM u_0 u_0
         ),
         v AS
-        ( -- determine our (v2u_*) values of certain fields
+        ( -- determine our (v$*) values of certain fields
             SELECT
                   u.*
                 , u.coalesced_subj_code pk_subject
-                , u.pk_attribute v2u_tatr_kod
-                , u.map_subj_code v2u_prz_kod
-                , V2u_Get.Utw_Id(u.job_uuid) v2u_utw_id
-                , V2u_Get.Mod_Id(u.job_uuid) v2u_mod_id
+                , u.pk_attribute v$tatr_kod
+                , u.map_subj_code v$prz_kod
+                , V2u_Get.Utw_Id(u.job_uuid) v$utw_id
+                , V2u_Get.Mod_Id(u.job_uuid) v$mod_id
                 , TO_CLOB((
                     SELECT
                         LISTAGG(SUBSTR(VALUE(t), 1, 32), ', ')
@@ -143,7 +143,7 @@ USING
                                  , u.subj_codes
                                  , u.rev_subj_codes)
                         ) t
-                  )) v2u_wartosc
+                  )) v$wartosc
                 , CASE
                     WHEN
                             u.id IS NOT NULL
@@ -155,21 +155,21 @@ USING
             FROM u u
         ),
         w AS
-        ( -- provide our values (v2u_*) and original ones (org_*)
+        ( -- provide our values (v$*) and original ones (u$*)
             SELECT
                   v.*
-                , t.tatr_kod org_tatr_kod
-                , t.prz_kod org_prz_kod
-                , t.wart_lst_id org_wart_lst_id
-                , t.prz_kod_rel org_prz_kod_rel
-                , t.utw_id org_utw_id
-                , t.utw_data org_utw_data
-                , t.mod_id org_mod_id
-                , t.mod_data org_mod_data
-                , t.wartosc org_wartosc
-                , t.wartosc_ang org_wartosc_ang
+                , t.tatr_kod u$tatr_kod
+                , t.prz_kod u$prz_kod
+                , t.wart_lst_id u$wart_lst_id
+                , t.prz_kod_rel u$prz_kod_rel
+                , t.utw_id u$utw_id
+                , t.utw_data u$utw_data
+                , t.mod_id u$mod_id
+                , t.mod_data u$mod_data
+                , t.wartosc u$wartosc
+                , t.wartosc_ang u$wartosc_ang
                 , DECODE( v.dbg_unique_match, 1
-                        , DECODE(TO_CHAR(t.wartosc), TO_CHAR(v.v2u_wartosc), '-', 'U')
+                        , DECODE(TO_CHAR(t.wartosc), TO_CHAR(v.v$wartosc), '-', 'U')
                         , 'I'
                   ) change_type
 
@@ -215,16 +215,16 @@ USING
         SELECT
               w.*
 
-            , DECODE(w.change_type, 'I', w.v2u_tatr_kod, w.org_tatr_kod) tatr_kod
-            , DECODE(w.change_type, 'I', w.v2u_prz_kod, w.org_prz_kod) prz_kod
-            , DECODE(w.change_type, 'I', NULL, w.org_wart_lst_id) wart_lst_id
-            , DECODE(w.change_type, 'I', NULL, w.org_prz_kod_rel, NULL) prz_kod_rel
-            , DECODE(w.change_type, 'I', w.v2u_utw_id, w.org_utw_id) utw_id
-            , DECODE(w.change_type, 'I', NULL, w.org_utw_data) utw_data
-            , DECODE(w.change_type, 'U', w.v2u_mod_id, w.org_mod_id) mod_id
-            , DECODE(w.change_type, 'U', NULL, w.org_mod_data) mod_data
-            , DECODE(w.change_type, '-', w.org_wartosc, w.v2u_wartosc) wartosc
-            , DECODE(w.change_type, 'I', NULL, w.org_wartosc_ang) wartosc_ang
+            , DECODE(w.change_type, 'I', w.v$tatr_kod, w.u$tatr_kod) tatr_kod
+            , DECODE(w.change_type, 'I', w.v$prz_kod, w.u$prz_kod) prz_kod
+            , DECODE(w.change_type, 'I', NULL, w.u$wart_lst_id) wart_lst_id
+            , DECODE(w.change_type, 'I', NULL, w.u$prz_kod_rel, NULL) prz_kod_rel
+            , DECODE(w.change_type, 'I', w.v$utw_id, w.u$utw_id) utw_id
+            , DECODE(w.change_type, 'I', NULL, w.u$utw_data) utw_data
+            , DECODE(w.change_type, 'U', w.v$mod_id, w.u$mod_id) mod_id
+            , DECODE(w.change_type, 'U', NULL, w.u$mod_data) mod_data
+            , DECODE(w.change_type, '-', w.u$wartosc, w.v$wartosc) wartosc
+            , DECODE(w.change_type, 'I', NULL, w.u$wartosc_ang) wartosc_ang
             -- id appears in w.*
 
             , w.subj_codes dbg_subj_codes_tab

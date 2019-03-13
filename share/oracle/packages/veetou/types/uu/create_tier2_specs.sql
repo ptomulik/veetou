@@ -2,6 +2,7 @@
 @@uu_przedmiot.tps;
 @@uu_atrybut_przedmiotu.tps;
 @@uu_przedmiot_cyklu.tps;
+@@uu_punkty_przedmiotu.tps;
 @@uu_zajecia_cyklu.tps;
 @@uu_program_osoby.tps;
 @@uu_etap_osoby.tps;

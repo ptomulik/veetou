@@ -155,17 +155,17 @@ USING
             FROM u_0 u_0
         ),
         v AS
-        ( -- determine our (v2u_*) values for certain fields
+        ( -- determine our (v$*) values for certain fields
             SELECT
                   u.*
-                , u.map_subj_code v2u_prz_kod
-                , u.semester_code v2u_cdyd_kod
-                , V2u_Get.Utw_Id(u.job_uuid) v2u_utw_id
-                , V2u_Get.Mod_Id(u.job_uuid) v2u_mod_id
+                , u.map_subj_code v$prz_kod
+                , u.semester_code v$cdyd_kod
+                , V2u_Get.Utw_Id(u.job_uuid) v$utw_id
+                , V2u_Get.Mod_Id(u.job_uuid) v$mod_id
                 , COALESCE(u.map_proto_type, V2u_Get.Tpro_Kod(
                           subj_credit_kind => u.subj_credit_kind
                         , subj_grades => u.subj_grades
-                  )) v2u_tpro_kod
+                  )) v$tpro_kod
 
                 -- did we found unique row in the target table?
                 , CASE
@@ -195,37 +195,37 @@ USING
             FROM u u
         ),
         w AS
-        ( -- provide our value (v2u_*) and original ones (org_*)
+        ( -- provide our value (v$*) and original ones (u$*)
             SELECT
                   v.*
-                , t.prz_kod org_prz_kod
-                , t.cdyd_kod org_cdyd_kod
-                , t.utw_id org_utw_id
-                , t.utw_data org_utw_data
-                , t.mod_id org_mod_id
-                , t.mod_data org_mod_data
-                , t.tpro_kod org_tpro_kod
-                , t.uczestnicy org_uczestnicy
-                , t.url org_url
-                , t.uwagi org_uwagi
-                , t.notes org_notes
-                , t.literatura org_literatura
-                , t.literatura_ang org_literatura_ang
-                , t.opis org_opis
-                , t.opis_ang org_opis_ang
-                , t.skrocony_opis org_skrocony_opis
-                , t.skrocony_opis_ang org_skrocony_opis_ang
-                , t.status_sylabusu org_status_sylabusu
-                , t.guid org_guid
+                , t.prz_kod u$prz_kod
+                , t.cdyd_kod u$cdyd_kod
+                , t.utw_id u$utw_id
+                , t.utw_data u$utw_data
+                , t.mod_id u$mod_id
+                , t.mod_data u$mod_data
+                , t.tpro_kod u$tpro_kod
+                , t.uczestnicy u$uczestnicy
+                , t.url u$url
+                , t.uwagi u$uwagi
+                , t.notes u$notes
+                , t.literatura u$literatura
+                , t.literatura_ang u$literatura_ang
+                , t.opis u$opis
+                , t.opis_ang u$opis_ang
+                , t.skrocony_opis u$skrocony_opis
+                , t.skrocony_opis_ang u$skrocony_opis_ang
+                , t.status_sylabusu u$status_sylabusu
+                , t.guid u$guid
 
                 -- is it insert, update or nothing?
 
                 , DECODE( v.dbg_unique_match, 1
                         , (CASE
                             WHEN    -- do we introduce any modification?
-                                    DECODE(v.v2u_prz_kod, t.prz_kod, 1, 0) = 1
-                                AND DECODE(v.v2u_cdyd_kod, t.cdyd_kod, 1, 0) = 1
-                                AND DECODE(v.v2u_tpro_kod, t.tpro_kod, 1, 0) = 1
+                                    DECODE(v.v$prz_kod, t.prz_kod, 1, 0) = 1
+                                AND DECODE(v.v$cdyd_kod, t.cdyd_kod, 1, 0) = 1
+                                AND DECODE(v.v$tpro_kod, t.tpro_kod, 1, 0) = 1
                             THEN '-'
                             ELSE 'U'
                           END)
@@ -278,25 +278,25 @@ USING
             , w.coalesced_subj_code pk_subject
             , w.semester_code pk_semester
 
-            , DECODE(w.change_type, 'I', w.v2u_prz_kod, w.org_prz_kod) prz_kod
-            , DECODE(w.change_type, 'I', w.v2u_cdyd_kod, w.org_cdyd_kod) cdyd_kod
-            , DECODE(w.change_type, 'I', w.v2u_utw_id, w.org_utw_id) utw_id
-            , DECODE(w.change_type, 'I', NULL, w.org_utw_data) utw_data
-            , DECODE(w.change_type, 'U', w.v2u_mod_id, w.org_mod_id) mod_id
-            , DECODE(w.change_type, 'U', NULL, w.org_mod_data) mod_data
-            , DECODE(w.change_type, '-', w.org_tpro_kod, w.v2u_tpro_kod) tpro_kod
-            , DECODE(w.change_type, 'I', NULL, w.org_uczestnicy) uczestnicy
-            , DECODE(w.change_type, 'I', NULL, w.org_url) url
-            , DECODE(w.change_type, 'I', NULL, w.org_uwagi) uwagi
-            , DECODE(w.change_type, 'I', NULL, w.org_notes) notes
-            , DECODE(w.change_type, 'I', NULL, w.org_literatura) literatura
-            , DECODE(w.change_type, 'I', NULL, w.org_literatura_ang) literatura_ang
-            , DECODE(w.change_type, 'I', NULL, w.org_opis) opis
-            , DECODE(w.change_type, 'I', NULL, w.org_opis_ang) opis_ang
-            , DECODE(w.change_type, 'I', NULL, w.org_skrocony_opis) skrocony_opis
-            , DECODE(w.change_type, 'I', NULL, w.org_skrocony_opis_ang) skrocony_opis_ang
-            , DECODE(w.change_type, 'I', NULL, w.org_status_sylabusu) status_sylabusu
-            , DECODE(w.change_type, 'I', NULL, w.org_guid) guid
+            , DECODE(w.change_type, 'I', w.v$prz_kod, w.u$prz_kod) prz_kod
+            , DECODE(w.change_type, 'I', w.v$cdyd_kod, w.u$cdyd_kod) cdyd_kod
+            , DECODE(w.change_type, 'I', w.v$utw_id, w.u$utw_id) utw_id
+            , DECODE(w.change_type, 'I', NULL, w.u$utw_data) utw_data
+            , DECODE(w.change_type, 'U', w.v$mod_id, w.u$mod_id) mod_id
+            , DECODE(w.change_type, 'U', NULL, w.u$mod_data) mod_data
+            , DECODE(w.change_type, '-', w.u$tpro_kod, w.v$tpro_kod) tpro_kod
+            , DECODE(w.change_type, 'I', NULL, w.u$uczestnicy) uczestnicy
+            , DECODE(w.change_type, 'I', NULL, w.u$url) url
+            , DECODE(w.change_type, 'I', NULL, w.u$uwagi) uwagi
+            , DECODE(w.change_type, 'I', NULL, w.u$notes) notes
+            , DECODE(w.change_type, 'I', NULL, w.u$literatura) literatura
+            , DECODE(w.change_type, 'I', NULL, w.u$literatura_ang) literatura_ang
+            , DECODE(w.change_type, 'I', NULL, w.u$opis) opis
+            , DECODE(w.change_type, 'I', NULL, w.u$opis_ang) opis_ang
+            , DECODE(w.change_type, 'I', NULL, w.u$skrocony_opis) skrocony_opis
+            , DECODE(w.change_type, 'I', NULL, w.u$skrocony_opis_ang) skrocony_opis_ang
+            , DECODE(w.change_type, 'I', NULL, w.u$status_sylabusu) status_sylabusu
+            , DECODE(w.change_type, 'I', NULL, w.u$guid) guid
 
             , w.change_type
             , DECODE(w.change_type, 'I', w.safe_to_insert

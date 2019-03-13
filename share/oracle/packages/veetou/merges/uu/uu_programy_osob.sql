@@ -278,7 +278,7 @@ USING
             FROM u u
         ),
         w AS
-        ( -- provide our values (v$*) together with original ones (org_*)
+        ( -- provide our values (v$*) together with original ones (u$*)
             SELECT
                   v.*
 

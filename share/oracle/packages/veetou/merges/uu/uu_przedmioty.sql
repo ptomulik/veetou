@@ -221,21 +221,21 @@ USING
             FROM u_0 u_0
         ),
         v AS
-        ( -- determine our (v2u_*) values for certain fields
+        ( -- determine our (v$*) values for certain fields
             SELECT
                   u.*
 
-                , u.map_subj_code v2u_kod
-                , COALESCE(u.map_subj_name, u.subj_name) v2u_nazwa
-                , COALESCE(u.map_org_unit, u.faculty_code) v2u_jed_org_kod
-                , V2u_Get.Utw_Id(u.job_uuid) v2u_utw_id
-                , V2u_Get.Mod_Id(u.job_uuid) v2u_mod_id
+                , u.map_subj_code v$kod
+                , COALESCE(u.map_subj_name, u.subj_name) v$nazwa
+                , COALESCE(u.map_org_unit, u.faculty_code) v$jed_org_kod
+                , V2u_Get.Utw_Id(u.job_uuid) v$utw_id
+                , V2u_Get.Mod_Id(u.job_uuid) v$mod_id
                 , COALESCE(u.map_proto_type, V2u_Get.Tpro_Kod(
                           subj_credit_kind => u.subj_credit_kind
                         , subj_grades => u.subj_grades
-                  )) v2u_tpro_kod
-                , COALESCE(u.map_org_unit_recipient, u.faculty_code) v2u_jed_org_kod_biorca
-                , u.map_subj_lang v2u_jzk_kod
+                  )) v$tpro_kod
+                , COALESCE(u.map_org_unit_recipient, u.faculty_code) v$jed_org_kod_biorca
+                , u.map_subj_lang v$jzk_kod
 
                 -- did we found unique row in the target table?
                 , CASE
@@ -271,52 +271,52 @@ USING
             FROM u u
         ),
         w AS
-        ( -- provide our values (v2u_*) and original ones (org_*)
+        ( -- provide our values (v$*) and original ones (u$*)
             SELECT
                   v.*
-                , t.kod org_kod
-                , t.nazwa org_nazwa
-                , t.jed_org_kod org_jed_org_kod
-                , t.utw_id org_utw_id
-                , t.utw_data org_utw_data
-                , t.mod_id org_mod_id
-                , t.mod_data org_mod_data
-                , t.tpro_kod org_tpro_kod
-                , t.czy_wielokrotne org_czy_wielokrotne
-                , t.name org_name
-                , t.skrocony_opis org_skrocony_opis
-                , t.short_description org_short_description
-                , t.jed_org_kod_biorca org_jed_org_kod_biorca
-                , t.jzk_kod org_jzk_kod
-                , t.kod_sok org_kod_sok
-                , t.opis org_opis
-                , t.description org_description
-                , t.literatura org_literatura
-                , t.bibliography org_bibliography
-                , t.efekty_uczenia org_efekty_uczenia
-                , t.efekty_uczenia_ang org_efekty_uczenia_ang
-                , t.kryteria_oceniania org_kryteria_oceniania
-                , t.kryteria_oceniania_ang org_kryteria_oceniania_ang
-                , t.praktyki_zawodowe org_praktyki_zawodowe
-                , t.praktyki_zawodowe_ang org_praktyki_zawodowe_ang
-                , t.url org_url
-                , t.kod_isced org_kod_isced
-                , t.nazwa_pol org_nazwa_pol
-                , t.guid org_guid
-                , t.pw_nazwa_supl org_pw_nazwa_supl
-                , t.pw_nazwa_supl_ang org_pw_nazwa_supl_ang
+                , t.kod u$kod
+                , t.nazwa u$nazwa
+                , t.jed_org_kod u$jed_org_kod
+                , t.utw_id u$utw_id
+                , t.utw_data u$utw_data
+                , t.mod_id u$mod_id
+                , t.mod_data u$mod_data
+                , t.tpro_kod u$tpro_kod
+                , t.czy_wielokrotne u$czy_wielokrotne
+                , t.name u$name
+                , t.skrocony_opis u$skrocony_opis
+                , t.short_description u$short_description
+                , t.jed_org_kod_biorca u$jed_org_kod_biorca
+                , t.jzk_kod u$jzk_kod
+                , t.kod_sok u$kod_sok
+                , t.opis u$opis
+                , t.description u$description
+                , t.literatura u$literatura
+                , t.bibliography u$bibliography
+                , t.efekty_uczenia u$efekty_uczenia
+                , t.efekty_uczenia_ang u$efekty_uczenia_ang
+                , t.kryteria_oceniania u$kryteria_oceniania
+                , t.kryteria_oceniania_ang u$kryteria_oceniania_ang
+                , t.praktyki_zawodowe u$praktyki_zawodowe
+                , t.praktyki_zawodowe_ang u$praktyki_zawodowe_ang
+                , t.url u$url
+                , t.kod_isced u$kod_isced
+                , t.nazwa_pol u$nazwa_pol
+                , t.guid u$guid
+                , t.pw_nazwa_supl u$pw_nazwa_supl
+                , t.pw_nazwa_supl_ang u$pw_nazwa_supl_ang
 
                 -- is it insert, update or nothing?
 
                 , DECODE( v.dbg_unique_match, 1
                         , (CASE
                             WHEN    -- do we introduce any modification?
-                                    DECODE(v.v2u_kod, t.kod, 1, 0) = 1
-                                AND DECODE(UPPER(v.v2u_nazwa), UPPER(t.nazwa), 1, 0) = 1
-                                AND DECODE(v.v2u_jed_org_kod, t.jed_org_kod, 1, 0) = 1
-                                AND DECODE(v.v2u_tpro_kod, t.tpro_kod, 1, 0) = 1
-                                AND DECODE(v.v2u_jed_org_kod_biorca, t.jed_org_kod_biorca, 1, 0) = 1
-                                AND DECODE(v.v2u_jzk_kod, t.jzk_kod, 1, 0) = 1
+                                    DECODE(v.v$kod, t.kod, 1, 0) = 1
+                                AND DECODE(UPPER(v.v$nazwa), UPPER(t.nazwa), 1, 0) = 1
+                                AND DECODE(v.v$jed_org_kod, t.jed_org_kod, 1, 0) = 1
+                                AND DECODE(v.v$tpro_kod, t.tpro_kod, 1, 0) = 1
+                                AND DECODE(v.v$jed_org_kod_biorca, t.jed_org_kod_biorca, 1, 0) = 1
+                                AND DECODE(v.v$jzk_kod, t.jzk_kod, 1, 0) = 1
                             THEN '-'
                             ELSE 'U'
                           END)
@@ -367,39 +367,39 @@ USING
               w.job_uuid
             , w.coalesced_subj_code pk_subject
 
-            , DECODE(w.change_type, 'I', w.v2u_kod, w.org_kod) kod
-            , DECODE(w.change_type, '-', w.org_nazwa, w.v2u_nazwa) nazwa
-            , DECODE(w.change_type, '-', w.org_jed_org_kod, w.v2u_jed_org_kod) jed_org_kod
+            , DECODE(w.change_type, 'I', w.v$kod, w.u$kod) kod
+            , DECODE(w.change_type, '-', w.u$nazwa, w.v$nazwa) nazwa
+            , DECODE(w.change_type, '-', w.u$jed_org_kod, w.v$jed_org_kod) jed_org_kod
 
-            , DECODE(w.change_type, 'I', w.v2u_utw_id, w.org_utw_id) utw_id
-            , DECODE(w.change_type, 'I', NULL, w.org_utw_data) utw_data
-            , DECODE(w.change_type, 'U', w.v2u_mod_id, w.org_mod_id) mod_id
-            , DECODE(w.change_type, 'U', NULL, w.org_mod_data) mod_data
+            , DECODE(w.change_type, 'I', w.v$utw_id, w.u$utw_id) utw_id
+            , DECODE(w.change_type, 'I', NULL, w.u$utw_data) utw_data
+            , DECODE(w.change_type, 'U', w.v$mod_id, w.u$mod_id) mod_id
+            , DECODE(w.change_type, 'U', NULL, w.u$mod_data) mod_data
 
-            , DECODE(w.change_type, '-', w.org_tpro_kod, w.v2u_tpro_kod) tpro_kod
-            , DECODE(w.change_type, 'I', NULL, w.org_czy_wielokrotne) czy_wielokrotne
-            , DECODE(w.change_type, 'I', NULL, w.org_name) name
-            , DECODE(w.change_type, 'I', NULL, w.org_skrocony_opis) skrocony_opis
-            , DECODE(w.change_type, 'I', NULL, w.org_short_description) short_description
-            , DECODE(w.change_type, '-', w.org_jed_org_kod_biorca, w.v2u_jed_org_kod_biorca) jed_org_kod_biorca
-            , DECODE(w.change_type, '-', w.org_jzk_kod, w.v2u_jzk_kod) jzk_kod
-            , DECODE(w.change_type, 'I', NULL, w.org_kod_sok) kod_sok
-            , DECODE(w.change_type, 'I', NULL, w.org_opis) opis
-            , DECODE(w.change_type, 'I', NULL, w.org_description) description
-            , DECODE(w.change_type, 'I', NULL, w.org_literatura) literatura
-            , DECODE(w.change_type, 'I', NULL, w.org_bibliography) bibliography
-            , DECODE(w.change_type, 'I', NULL, w.org_efekty_uczenia) efekty_uczenia
-            , DECODE(w.change_type, 'I', NULL, w.org_efekty_uczenia_ang) efekty_uczenia_ang
-            , DECODE(w.change_type, 'I', NULL, w.org_kryteria_oceniania) kryteria_oceniania
-            , DECODE(w.change_type, 'I', NULL, w.org_kryteria_oceniania_ang) kryteria_oceniania_ang
-            , DECODE(w.change_type, 'I', NULL, w.org_praktyki_zawodowe) praktyki_zawodowe
-            , DECODE(w.change_type, 'I', NULL, w.org_praktyki_zawodowe_ang) praktyki_zawodowe_ang
-            , DECODE(w.change_type, 'I', NULL, w.org_url) url
-            , DECODE(w.change_type, 'I', NULL, w.org_kod_isced) kod_isced
-            , DECODE(w.change_type, 'I', NULL, w.org_nazwa_pol) nazwa_pol
-            , DECODE(w.change_type, 'I', NULL, w.org_guid) guid
-            , DECODE(w.change_type, 'I', NULL, w.org_pw_nazwa_supl) pw_nazwa_supl
-            , DECODE(w.change_type, 'I', NULL, w.org_pw_nazwa_supl_ang) pw_nazwa_supl_ang
+            , DECODE(w.change_type, '-', w.u$tpro_kod, w.v$tpro_kod) tpro_kod
+            , DECODE(w.change_type, 'I', NULL, w.u$czy_wielokrotne) czy_wielokrotne
+            , DECODE(w.change_type, 'I', NULL, w.u$name) name
+            , DECODE(w.change_type, 'I', NULL, w.u$skrocony_opis) skrocony_opis
+            , DECODE(w.change_type, 'I', NULL, w.u$short_description) short_description
+            , DECODE(w.change_type, '-', w.u$jed_org_kod_biorca, w.v$jed_org_kod_biorca) jed_org_kod_biorca
+            , DECODE(w.change_type, '-', w.u$jzk_kod, w.v$jzk_kod) jzk_kod
+            , DECODE(w.change_type, 'I', NULL, w.u$kod_sok) kod_sok
+            , DECODE(w.change_type, 'I', NULL, w.u$opis) opis
+            , DECODE(w.change_type, 'I', NULL, w.u$description) description
+            , DECODE(w.change_type, 'I', NULL, w.u$literatura) literatura
+            , DECODE(w.change_type, 'I', NULL, w.u$bibliography) bibliography
+            , DECODE(w.change_type, 'I', NULL, w.u$efekty_uczenia) efekty_uczenia
+            , DECODE(w.change_type, 'I', NULL, w.u$efekty_uczenia_ang) efekty_uczenia_ang
+            , DECODE(w.change_type, 'I', NULL, w.u$kryteria_oceniania) kryteria_oceniania
+            , DECODE(w.change_type, 'I', NULL, w.u$kryteria_oceniania_ang) kryteria_oceniania_ang
+            , DECODE(w.change_type, 'I', NULL, w.u$praktyki_zawodowe) praktyki_zawodowe
+            , DECODE(w.change_type, 'I', NULL, w.u$praktyki_zawodowe_ang) praktyki_zawodowe_ang
+            , DECODE(w.change_type, 'I', NULL, w.u$url) url
+            , DECODE(w.change_type, 'I', NULL, w.u$kod_isced) kod_isced
+            , DECODE(w.change_type, 'I', NULL, w.u$nazwa_pol) nazwa_pol
+            , DECODE(w.change_type, 'I', NULL, w.u$guid) guid
+            , DECODE(w.change_type, 'I', NULL, w.u$pw_nazwa_supl) pw_nazwa_supl
+            , DECODE(w.change_type, 'I', NULL, w.u$pw_nazwa_supl_ang) pw_nazwa_supl_ang
 
             , w.change_type
             , DECODE(w.change_type, 'I', w.safe_to_insert

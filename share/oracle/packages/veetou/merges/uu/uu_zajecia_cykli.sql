@@ -236,21 +236,21 @@ USING
             FROM u_0 u_0
         ),
         v AS
-        ( -- determine our (v2u_*) values for certain fields
+        ( -- determine our (v$*) values for certain fields
             SELECT
                   u.*
-                , u.map_subj_code v2u_prz_kod
-                , u.semester_code v2u_cdyd_kod
-                , u.map_classes_type v2u_tzaj_kod
-                , V2u_Get.Utw_Id(u.job_uuid) v2u_utw_id
-                , V2u_Get.Mod_Id(u.job_uuid) v2u_mod_id
-                , COALESCE(u.map_classes_hours, u.classes_hours) v2u_liczba_godz
+                , u.map_subj_code v$prz_kod
+                , u.semester_code v$cdyd_kod
+                , u.map_classes_type v$tzaj_kod
+                , V2u_Get.Utw_Id(u.job_uuid) v$utw_id
+                , V2u_Get.Mod_Id(u.job_uuid) v$mod_id
+                , COALESCE(u.map_classes_hours, u.classes_hours) v$liczba_godz
                 -- FIXME: verify that my understanding is correct:  in most
                 -- cases we should set NULL to tpro_kod, and then USOS will use
                 -- defauts provided by dz_przedmioty or dz_przedmioty_cykli.
                 -- Special casses, when tpro_kod should get a specific value,
                 -- may be defined in our classes_map.
-                , u.map_proto_type v2u_tpro_kod
+                , u.map_proto_type v$tpro_kod
 
                 -- did we found unique row in the target table?
                 , CASE
@@ -286,44 +286,44 @@ USING
             FROM u u
         ),
         w AS
-        ( -- provide our value (v2u_*) and original ones (org_*)
+        ( -- provide our value (v$*) and original ones (u$*)
             SELECT
                   v.*
 
-                , t.prz_kod org_prz_kod
-                , t.cdyd_kod org_cdyd_kod
-                , t.tzaj_kod org_tzaj_kod
-                , t.liczba_godz org_liczba_godz
-                , t.limit_miejsc org_limit_miejsc
-                , t.utw_id org_utw_id
-                , t.utw_data org_utw_data
-                , t.mod_id org_mod_id
-                , t.mod_data org_mod_data
-                , t.waga_pensum org_waga_pensum
-                , t.tpro_kod org_tpro_kod
-                , t.efekty_uczenia org_efekty_uczenia
-                , t.efekty_uczenia_ang org_efekty_uczenia_ang
-                , t.kryteria_oceniania org_kryteria_oceniania
-                , t.kryteria_oceniania_ang org_kryteria_oceniania_ang
-                , t.url org_url
-                , t.zakres_tematow org_zakres_tematow
-                , t.zakres_tematow_ang org_zakres_tematow_ang
-                , t.metody_dyd org_metody_dyd
-                , t.metody_dyd_ang org_metody_dyd_ang
-                , t.literatura org_literatura
-                , t.literatura_ang org_literatura_ang
-                , t.czy_pokazywac_termin org_czy_pokazywac_termin
+                , t.prz_kod u$prz_kod
+                , t.cdyd_kod u$cdyd_kod
+                , t.tzaj_kod u$tzaj_kod
+                , t.liczba_godz u$liczba_godz
+                , t.limit_miejsc u$limit_miejsc
+                , t.utw_id u$utw_id
+                , t.utw_data u$utw_data
+                , t.mod_id u$mod_id
+                , t.mod_data u$mod_data
+                , t.waga_pensum u$waga_pensum
+                , t.tpro_kod u$tpro_kod
+                , t.efekty_uczenia u$efekty_uczenia
+                , t.efekty_uczenia_ang u$efekty_uczenia_ang
+                , t.kryteria_oceniania u$kryteria_oceniania
+                , t.kryteria_oceniania_ang u$kryteria_oceniania_ang
+                , t.url u$url
+                , t.zakres_tematow u$zakres_tematow
+                , t.zakres_tematow_ang u$zakres_tematow_ang
+                , t.metody_dyd u$metody_dyd
+                , t.metody_dyd_ang u$metody_dyd_ang
+                , t.literatura u$literatura
+                , t.literatura_ang u$literatura_ang
+                , t.czy_pokazywac_termin u$czy_pokazywac_termin
 
                 -- is it insert, update or nothing?
 
                 , DECODE( v.dbg_unique_match, 1
                         , (CASE
                             WHEN    -- do we introduce any modification?
-                                    DECODE(v.v2u_prz_kod, t.prz_kod, 1, 0) = 1
-                                AND DECODE(v.v2u_cdyd_kod, t.cdyd_kod, 1, 0) = 1
-                                AND DECODE(v.v2u_tzaj_kod, t.tzaj_kod, 1, 0) = 1
-                                AND DECODE(v.v2u_liczba_godz, t.liczba_godz, 1, 0) = 1
-                                AND DECODE(v.v2u_tpro_kod, t.tpro_kod, 1, 0) = 1
+                                    DECODE(v.v$prz_kod, t.prz_kod, 1, 0) = 1
+                                AND DECODE(v.v$cdyd_kod, t.cdyd_kod, 1, 0) = 1
+                                AND DECODE(v.v$tzaj_kod, t.tzaj_kod, 1, 0) = 1
+                                AND DECODE(v.v$liczba_godz, t.liczba_godz, 1, 0) = 1
+                                AND DECODE(v.v$tpro_kod, t.tpro_kod, 1, 0) = 1
                             THEN '-'
                             ELSE 'U'
                           END)
@@ -384,29 +384,29 @@ USING
             , w.coalesced_classes_type pk_classes
 
             , w.id
-            , DECODE(w.change_type, '-', w.org_prz_kod, w.v2u_prz_kod) prz_kod
-            , DECODE(w.change_type, '-', w.org_cdyd_kod, w.v2u_cdyd_kod) cdyd_kod
-            , DECODE(w.change_type, '-', w.org_tzaj_kod, w.v2u_tzaj_kod) tzaj_kod
-            , DECODE(w.change_type, '-', w.org_liczba_godz, w.v2u_liczba_godz) liczba_godz
-            , DECODE(w.change_type, 'I', NULL, w.org_limit_miejsc) limit_miejsc
-            , DECODE(w.change_type, 'I', w.v2u_utw_id, w.org_utw_id) utw_id
-            , DECODE(w.change_type, 'I', NULL, w.org_utw_data) utw_data
-            , DECODE(w.change_type, 'U', w.v2u_mod_id, w.org_mod_id) mod_id
-            , DECODE(w.change_type, 'U', NULL, w.org_mod_data) mod_data
-            , DECODE(w.change_type, 'I', NULL, w.org_waga_pensum) waga_pensum
-            , DECODE(w.change_type, '-', w.org_tpro_kod, w.v2u_tpro_kod) tpro_kod
-            , DECODE(w.change_type, 'I', NULL, w.org_efekty_uczenia) efekty_uczenia
-            , DECODE(w.change_type, 'I', NULL, w.org_efekty_uczenia_ang) efekty_uczenia_ang
-            , DECODE(w.change_type, 'I', NULL, w.org_kryteria_oceniania) kryteria_oceniania
-            , DECODE(w.change_type, 'I', NULL, w.org_kryteria_oceniania_ang) kryteria_oceniania_ang
-            , DECODE(w.change_type, 'I', NULL, w.org_url) url
-            , DECODE(w.change_type, 'I', NULL, w.org_zakres_tematow) zakres_tematow
-            , DECODE(w.change_type, 'I', NULL, w.org_zakres_tematow_ang) zakres_tematow_ang
-            , DECODE(w.change_type, 'I', NULL, w.org_metody_dyd) metody_dyd
-            , DECODE(w.change_type, 'I', NULL, w.org_metody_dyd_ang) metody_dyd_ang
-            , DECODE(w.change_type, 'I', NULL, w.org_literatura) literatura
-            , DECODE(w.change_type, 'I', NULL, w.org_literatura_ang) literatura_ang
-            , DECODE(w.change_type, 'I', NULL, w.org_czy_pokazywac_termin) czy_pokazywac_termin
+            , DECODE(w.change_type, '-', w.u$prz_kod, w.v$prz_kod) prz_kod
+            , DECODE(w.change_type, '-', w.u$cdyd_kod, w.v$cdyd_kod) cdyd_kod
+            , DECODE(w.change_type, '-', w.u$tzaj_kod, w.v$tzaj_kod) tzaj_kod
+            , DECODE(w.change_type, '-', w.u$liczba_godz, w.v$liczba_godz) liczba_godz
+            , DECODE(w.change_type, 'I', NULL, w.u$limit_miejsc) limit_miejsc
+            , DECODE(w.change_type, 'I', w.v$utw_id, w.u$utw_id) utw_id
+            , DECODE(w.change_type, 'I', NULL, w.u$utw_data) utw_data
+            , DECODE(w.change_type, 'U', w.v$mod_id, w.u$mod_id) mod_id
+            , DECODE(w.change_type, 'U', NULL, w.u$mod_data) mod_data
+            , DECODE(w.change_type, 'I', NULL, w.u$waga_pensum) waga_pensum
+            , DECODE(w.change_type, '-', w.u$tpro_kod, w.v$tpro_kod) tpro_kod
+            , DECODE(w.change_type, 'I', NULL, w.u$efekty_uczenia) efekty_uczenia
+            , DECODE(w.change_type, 'I', NULL, w.u$efekty_uczenia_ang) efekty_uczenia_ang
+            , DECODE(w.change_type, 'I', NULL, w.u$kryteria_oceniania) kryteria_oceniania
+            , DECODE(w.change_type, 'I', NULL, w.u$kryteria_oceniania_ang) kryteria_oceniania_ang
+            , DECODE(w.change_type, 'I', NULL, w.u$url) url
+            , DECODE(w.change_type, 'I', NULL, w.u$zakres_tematow) zakres_tematow
+            , DECODE(w.change_type, 'I', NULL, w.u$zakres_tematow_ang) zakres_tematow_ang
+            , DECODE(w.change_type, 'I', NULL, w.u$metody_dyd) metody_dyd
+            , DECODE(w.change_type, 'I', NULL, w.u$metody_dyd_ang) metody_dyd_ang
+            , DECODE(w.change_type, 'I', NULL, w.u$literatura) literatura
+            , DECODE(w.change_type, 'I', NULL, w.u$literatura_ang) literatura_ang
+            , DECODE(w.change_type, 'I', NULL, w.u$czy_pokazywac_termin) czy_pokazywac_termin
 
             , w.change_type
             , DECODE(w.change_type, 'I', w.safe_to_insert

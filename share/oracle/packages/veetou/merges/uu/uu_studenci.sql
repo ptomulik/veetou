@@ -76,13 +76,13 @@ USING
             FROM u_0 u_0
         ),
         v AS
-        ( -- determine our (v2u_*) values of certain fields
+        ( -- determine our (v$*) values of certain fields
             SELECT
                   u.*
                 , u.student_index pk_student
-                , u.student_index v2u_indeks
-                , V2u_Get.Utw_Id(u.job_uuid) v2u_utw_id
-                , V2u_Get.Mod_Id(u.job_uuid) v2u_mod_id
+                , u.student_index v$indeks
+                , V2u_Get.Utw_Id(u.job_uuid) v$utw_id
+                , V2u_Get.Mod_Id(u.job_uuid) v$mod_id
                 , CASE
                     WHEN
                             u.id IS NOT NULL
@@ -106,19 +106,19 @@ USING
             FROM u u
         ),
         w AS
-        ( -- provide our values (v2u_*) and original ones (org_*)
+        ( -- provide our values (v$*) and original ones (u$*)
             SELECT
                   v.*
 
-                , t.indeks org_indeks
-                , t.jed_org_kod org_jed_org_kod
-                , t.typ_ind_kod org_typ_ind_kod
-                , t.utw_id org_utw_id
-                , t.utw_data org_utw_data
-                , t.mod_id org_mod_id
-                , t.mod_data org_mod_data
-                , t.os_id org_os_id
-                , t.indeks_glowny org_indeks_glowny
+                , t.indeks u$indeks
+                , t.jed_org_kod u$jed_org_kod
+                , t.typ_ind_kod u$typ_ind_kod
+                , t.utw_id u$utw_id
+                , t.utw_data u$utw_data
+                , t.mod_id u$mod_id
+                , t.mod_data u$mod_data
+                , t.os_id u$os_id
+                , t.indeks_glowny u$indeks_glowny
 
                 , DECODE( v.dbg_unique_match, 1
                         , '-' -- we never update records of this table
@@ -158,15 +158,15 @@ USING
             , w.pk_student
 
             , w.id
-            , DECODE(w.change_type, 'I', w.v2u_indeks, w.org_indeks) indeks
-            , DECODE(w.change_type, 'I', NULL, w.org_jed_org_kod) jed_org_kod
-            , DECODE(w.change_type, 'I', NULL, w.org_typ_ind_kod) typ_ind_kod
-            , DECODE(w.change_type, 'I', w.v2u_utw_id, w.org_utw_id) utw_id
-            , DECODE(w.change_type, 'I', NULL, w.org_utw_data) utw_data
-            , DECODE(w.change_type, 'U', w.v2u_mod_id, w.org_mod_id) mod_id
-            , DECODE(w.change_type, 'U', NULL, w.org_mod_data) mod_data
-            , DECODE(w.change_type, 'I', NULL, w.org_os_id) os_id
-            , DECODE(w.change_type, 'I', NULL, w.org_indeks_glowny) indeks_glowny
+            , DECODE(w.change_type, 'I', w.v$indeks, w.u$indeks) indeks
+            , DECODE(w.change_type, 'I', NULL, w.u$jed_org_kod) jed_org_kod
+            , DECODE(w.change_type, 'I', NULL, w.u$typ_ind_kod) typ_ind_kod
+            , DECODE(w.change_type, 'I', w.v$utw_id, w.u$utw_id) utw_id
+            , DECODE(w.change_type, 'I', NULL, w.u$utw_data) utw_data
+            , DECODE(w.change_type, 'U', w.v$mod_id, w.u$mod_id) mod_id
+            , DECODE(w.change_type, 'U', NULL, w.u$mod_data) mod_data
+            , DECODE(w.change_type, 'I', NULL, w.u$os_id) os_id
+            , DECODE(w.change_type, 'I', NULL, w.u$indeks_glowny) indeks_glowny
 
             , w.dbg_first_name
             , w.dbg_last_name

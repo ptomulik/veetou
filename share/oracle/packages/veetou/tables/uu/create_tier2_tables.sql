@@ -2,6 +2,7 @@
 @@uu_przedmioty.ddl;
 @@uu_atrybuty_przedmiotow.ddl;
 @@uu_przedmioty_cykli.ddl;
+@@uu_punkty_przedmiotow.ddl;
 @@uu_zajecia_cykli.ddl;
 @@uu_programy_osob.ddl;
 @@uu_etapy_osob.ddl;
