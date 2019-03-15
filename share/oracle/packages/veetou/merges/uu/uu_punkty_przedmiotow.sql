@@ -46,10 +46,23 @@ USING
             -- determine what to use as a single output row;
             SELECT
                   u_00.job_uuid
---                , COALESCE(
---                          subject_map.map_subj_code
---                        , subjects.subj_code
---                  ) coalesced_subj_code
+                , COALESCE(
+                      TO_CHAR(ma_prgos_j.prgos_id)
+                    , CASE
+                        WHEN specialty_map.map_program_code IS NULL
+                        THEN NULL
+                        ELSE specialty_map.map_program_code
+                             || '|' ||
+                             u_00.semester_code
+                        END
+                    , u_00.specialty_string
+                      || '|' ||
+                      u_00.semester_code
+                  ) coalesced_program_code
+                , COALESCE(
+                          subject_map.map_subj_code
+                        , subjects.subj_code
+                  ) coalesced_subj_code
 --                , SET(CAST(
 --                        COLLECT(subjects.subj_code)
 --                        AS V2u_Vchars1K_t
