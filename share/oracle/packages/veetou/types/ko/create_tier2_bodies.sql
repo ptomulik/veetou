@@ -11,6 +11,8 @@
 @@ko_subject_semester_i.tpb;
 @@ko_classes_semester_i.tpb;
 @@ko_matched_przedm_i.tpb;
+@@ko_matched_przcykl_i.tpb;
+@@ko_matched_pktprz_i.tpb;
 @@ko_missing_przedm_i.tpb;
 
 @@ko_semester_j.tpb;
@@ -27,6 +29,7 @@
 @@ko_matched_przedm_j.tpb;
 @@ko_matched_przcykl_j.tpb;
 @@ko_matched_zajcykl_j.tpb;
+@@ko_matched_pktprz_j.tpb;
 @@ko_missing_prgos_j.tpb;
 @@ko_missing_etpos_j.tpb;
 @@ko_missing_przedm_j.tpb;

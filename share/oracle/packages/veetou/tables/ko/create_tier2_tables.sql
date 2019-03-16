@@ -25,6 +25,7 @@
 @@ko_matched_przedm_j.ddl;
 @@ko_matched_przcykl_j.ddl;
 @@ko_matched_zajcykl_j.ddl;
+@@ko_matched_pktprz_j.ddl;
 @@ko_missing_zajcykl_j.ddl;
 @@ko_missing_przcykl_j.ddl;
 @@ko_missing_przedm_j.ddl;

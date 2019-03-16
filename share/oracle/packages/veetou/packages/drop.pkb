@@ -425,6 +425,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('ko_matched_zajcykl_j_idx1');
         Drop_Table('ko_matched_zajcykl_j');
         --
+        Drop_Table('ko_matched_pktprz_j');
+        --
         Drop_Index('ko_grades_j_idx1');
         Drop_Table('ko_grades_j');
         --
@@ -538,6 +540,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Missing_Przedm_J_t', 'Ko_Missing_Przedms_J_t');
         Drop_Type('Ko_Matched_Prgos_J_t', 'Ko_Matched_Prgoses_J_t');
         Drop_Type('Ko_Matched_Etpos_J_t', 'Ko_Matched_Etposes_J_t');
+        Drop_Type('Ko_Matched_Pktprz_J_t', 'Ko_Matched_Pktprzes_J_t');
         Drop_Type('Ko_Matched_Zajcykl_J_t', 'Ko_Matched_Zajcykles_J_t');
         Drop_Type('Ko_Matched_Przcykl_J_t', 'Ko_Matched_Przcykles_J_t');
         Drop_Type('Ko_Matched_Przedm_J_t', 'Ko_Matched_Przedms_J_t');
@@ -551,6 +554,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Specialty_Semester_J_t', 'Ko_Specialty_Semesters_J_t');
         Drop_Type('Ko_Semester_J_t', 'Ko_Semesters_J_t');
 
+        Drop_Type('Ko_Matched_Pktprz_I_t');
+        Drop_Type('Ko_Matched_Przcykl_I_t');
         Drop_Type('Ko_Matched_Przedm_I_t');
         Drop_Type('Ko_Missing_Przedm_I_t');
         Drop_Type('Ko_Classes_Semester_I_t');
