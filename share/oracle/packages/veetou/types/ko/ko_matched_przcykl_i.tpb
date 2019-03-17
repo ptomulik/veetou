@@ -6,7 +6,6 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Przcykl_I_t AS
             , specialty_id IN NUMBER
             , semester_id IN NUMBER
             , subject_map_id IN NUMBER
-            , matching_score IN NUMBER
             , prz_kod IN VARCHAR2
             , cdyd_kod IN VARCHAR2
             ) RETURN SELF AS RESULT
@@ -18,7 +17,6 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Przcykl_I_t AS
             , specialty_id => specialty_id
             , semester_id => semester_id
             , subject_map_id => subject_map_id
-            , matching_score => matching_score
             , prz_kod => prz_kod
             , cdyd_kod => cdyd_kod
             );
@@ -32,7 +30,6 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Przcykl_I_t AS
             , specialty_id IN NUMBER
             , semester_id IN NUMBER
             , subject_map_id IN NUMBER
-            , matching_score IN NUMBER
             , prz_kod IN VARCHAR2
             , cdyd_kod IN VARCHAR2
             )
@@ -44,7 +41,6 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Przcykl_I_t AS
             , specialty_id => specialty_id
             , semester_id => semester_id
             , subject_map_id => subject_map_id
-            , matching_score => matching_score
             , prz_kod => prz_kod
             );
         SELF.cdyd_kod := cdyd_kod;

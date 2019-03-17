@@ -7,7 +7,6 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Przedm_J_t
             , specialty_id IN NUMBER
             , semester_id IN NUMBER
             , subject_map_id IN NUMBER
-            , matching_score IN NUMBER
             , prz_kod IN VARCHAR2
             ) RETURN SELF AS RESULT
     );

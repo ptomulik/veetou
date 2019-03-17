@@ -4,9 +4,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Przedm_V_t AS
             , subject IN V2u_Ko_Subject_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
-            , subject_map IN V2u_Subject_Map_t
+            , subject_map_j IN V2u_Ko_Subject_Map_J_t
             , przedmiot IN V2u_Dz_Przedmiot_t
-            , matching_score IN NUMBER
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -14,9 +13,12 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Przedm_V_t AS
         SELF.subject_id := subject.id;
         SELF.specialty_id := specialty.id;
         SELF.semester_id := semester.id;
-        SELF.subject_map_id := subject_map.id;
-        SELF.matching_score := matching_score;
-        SELF.prz_kod := przedmiot.kod;
+        SELF.subject_map_id := subject_map_j.map_id;
+        SELF.matching_score := subject_map_j.matching_score;
+        SELF.highest_score := subject_map_j.highest_score;
+        SELF.selected := subject_map_j.selected;
+        SELF.reason := subject_map_j.reason;
+        -- KO
         SELF.subj_code := subject.subj_code;
         SELF.subj_name := subject.subj_name;
         SELF.subj_hours_w := subject.subj_hours_w;
@@ -37,6 +39,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Przedm_V_t AS
         SELF.ects_mandatory := semester.ects_mandatory;
         SELF.ects_other := semester.ects_other;
         SELF.ects_total := semester.ects_total;
+        -- DZ
+        SELF.kod := przedmiot.kod;
         SELF.nazwa := przedmiot.nazwa;
         SELF.jed_org_kod := przedmiot.jed_org_kod;
         SELF.utw_id := przedmiot.utw_id;

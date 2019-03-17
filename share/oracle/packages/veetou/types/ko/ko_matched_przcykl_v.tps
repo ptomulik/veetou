@@ -6,8 +6,9 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Przcykl_V_t
     , semester_id NUMBER(38)
     , subject_map_id NUMBER(38)
     , matching_score NUMBER(38)
-    , prz_kod VARCHAR2(20 CHAR)
-    , cdyd_kod VARCHAR2(20 CHAR)
+    , highest_score NUMBER(38)
+    , selected NUMBER(1)
+    , reason VARCHAR2(20 CHAR)
     -- KO
     , subj_code VARCHAR2(32 CHAR)
     , subj_name VARCHAR2(256 CHAR)
@@ -30,6 +31,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Przcykl_V_t
     , ects_other NUMBER(4)
     , ects_total NUMBER(4)
     -- DZ
+    , prz_kod VARCHAR2(20 CHAR)
+    , cdyd_kod VARCHAR2(20 CHAR)
     , utw_id VARCHAR2(30 CHAR)
     , utw_data DATE
     , mod_id VARCHAR2(30 CHAR)
@@ -53,9 +56,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Przcykl_V_t
             , subject IN V2u_Ko_Subject_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
-            , subject_map IN V2u_Subject_Map_t
+            , subject_map_j IN V2u_Ko_Subject_Map_J_t
             , przedmiot_cyklu IN V2u_Dz_Przedmiot_Cyklu_t
-            , matching_score IN NUMBER
             ) RETURN SELF AS RESULT
 
     );

@@ -9,12 +9,18 @@ USING
                 , subj_m_j.specialty_id
                 , subj_m_j.semester_id
                 , subj_m_j.map_id subject_map_id
-                , subj_m_j.matching_score
                 , pkt_prz.prz_kod
                 , pkt_prz.id pktprz_id
                 , pkt_prz.prg_kod
                 , pkt_prz.cdyd_pocz
                 , pkt_prz.cdyd_kon
+                , CASE
+                    WHEN pkt_prz.ilosc = subjects.subj_ects
+                    THEN NULL
+                    ELSE TO_CHAR(pkt_prz.ilosc, 'FM9999')
+                         || ' <> ' ||
+                         TO_CHAR(subjects.subj_ects, 'FM9999')
+                  END ilosc_missmatch
                 , (
                         V2U_Get.Semester(code => pkt_prz.cdyd_kon).id
                     -   V2U_Get.Semester(code => pkt_prz.cdyd_pocz).id
@@ -34,6 +40,11 @@ USING
             INNER JOIN v2u_specialty_map specialty_map
                 ON  (
                             specialty_map.id = spec_m_j.map_id
+                    )
+            INNER JOIN v2u_ko_subjects subjects
+                ON  (
+                            subjects.id = subj_m_j.subject_id
+                        AND subjects.job_uuid = subj_m_j.job_uuid
                     )
             INNER JOIN v2u_ko_semesters semesters
                 ON  (
@@ -72,11 +83,6 @@ USING
                     AS V2u_Ids_t
                   ) subject_map_ids
                 , CAST(
-                    COLLECT(u.matching_score
-                            ORDER BY u.prz_kod, u.cdyd_diff, u.prg_kod)
-                    AS V2u_Integers_t
-                  ) matching_scores
-                , CAST(
                     COLLECT(u.prz_kod
                             ORDER BY u.prz_kod, u.cdyd_diff, u.prg_kod)
                     AS V2u_Vchars1K_t
@@ -101,6 +107,11 @@ USING
                             ORDER BY u.prz_kod, u.cdyd_diff, u.prg_kod)
                     AS V2u_Vchars1K_t
                   ) cdyd_kon1k
+                , CAST(
+                    COLLECT(u.ilosc_missmatch
+                            ORDER BY u.prz_kod, u.cdyd_diff, u.prg_kod)
+                    AS V2u_Vchars1K_t
+                  ) ilosc_missmatch1k
             FROM u u
             GROUP BY
                   u.job_uuid
@@ -117,10 +128,6 @@ USING
                 FROM TABLE(v.subject_map_ids) t
                 WHERE ROWNUM <= 1
               ) subject_map_id
-            , ( SELECT VALUE(t)
-                FROM TABLE(v.matching_scores) t
-                WHERE ROWNUM <= 1
-              ) matching_score
             , ( SELECT SUBSTR(VALUE(t), 1, 20)
                 FROM TABLE(v.prz_kody1k) t
                 WHERE ROWNUM <= 1
@@ -141,6 +148,10 @@ USING
                 FROM TABLE(v.cdyd_kon1k) t
                 WHERE ROWNUM <= 1
               ) cdyd_kon
+            , ( SELECT SUBSTR(VALUE(t), 1, 20)
+                FROM TABLE(v.ilosc_missmatch1k) t
+                WHERE ROWNUM <= 1
+              ) ilosc_missmatch
         FROM v v
     ) src
 ON  (
@@ -156,12 +167,12 @@ WHEN NOT MATCHED THEN
         , specialty_id
         , semester_id
         , subject_map_id
-        , matching_score
         , prz_kod
         , pktprz_id
         , prg_kod
         , cdyd_pocz
         , cdyd_kon
+        , ilosc_missmatch
         )
     VALUES
         ( src.job_uuid
@@ -169,22 +180,22 @@ WHEN NOT MATCHED THEN
         , src.specialty_id
         , src.semester_id
         , src.subject_map_id
-        , src.matching_score
         , src.prz_kod
         , src.pktprz_id
         , src.prg_kod
         , src.cdyd_pocz
         , src.cdyd_kon
+        , src.ilosc_missmatch
         )
 WHEN MATCHED THEN
     UPDATE SET
           tgt.subject_map_id = src.subject_map_id
-        , tgt.matching_score = src.matching_score
         , tgt.prz_kod = src.prz_kod
         , tgt.pktprz_id = src.pktprz_id
         , tgt.prg_kod = src.prg_kod
         , tgt.cdyd_pocz = src.cdyd_pocz
         , tgt.cdyd_kon = src.cdyd_kon
+        , tgt.ilosc_missmatch = src.ilosc_missmatch
 ;
 
 COMMIT;

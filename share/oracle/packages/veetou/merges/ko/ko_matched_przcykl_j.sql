@@ -7,7 +7,6 @@ USING
             , sm_j.specialty_id specialty_id
             , sm_j.semester_id semester_id
             , sm_j.map_id subject_map_id
-            , sm_j.matching_score matching_score
             , przedmioty_cykli.prz_kod prz_kod
             , przedmioty_cykli.cdyd_kod cdyd_kod
         FROM v2u_ko_subject_map_j sm_j
@@ -41,7 +40,6 @@ WHEN NOT MATCHED THEN
         , specialty_id
         , semester_id
         , subject_map_id
-        , matching_score
         , prz_kod
         , cdyd_kod
         )
@@ -51,14 +49,12 @@ WHEN NOT MATCHED THEN
         , src.specialty_id
         , src.semester_id
         , src.subject_map_id
-        , src.matching_score
         , src.prz_kod
         , src.cdyd_kod
         )
 WHEN MATCHED THEN
     UPDATE SET
           tgt.subject_map_id = src.subject_map_id
-        , tgt.matching_score = src.matching_score
         , tgt.prz_kod = src.prz_kod
         , tgt.cdyd_kod = src.cdyd_kod
 ;

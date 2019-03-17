@@ -7,7 +7,6 @@ USING
             , sm_j.specialty_id specialty_id
             , sm_j.semester_id semester_id
             , sm_j.map_id subject_map_id
-            , sm_j.matching_score matching_score
             , subject_map.map_subj_code prz_kod
         FROM v2u_ko_subject_map_j sm_j
         INNER JOIN v2u_subject_map subject_map
@@ -34,7 +33,6 @@ WHEN NOT MATCHED THEN
         , specialty_id
         , semester_id
         , subject_map_id
-        , matching_score
         , prz_kod
         )
     VALUES
@@ -43,13 +41,11 @@ WHEN NOT MATCHED THEN
         , src.specialty_id
         , src.semester_id
         , src.subject_map_id
-        , src.matching_score
         , src.prz_kod
         )
 WHEN MATCHED THEN
     UPDATE SET
           tgt.subject_map_id = src.subject_map_id
-        , tgt.matching_score = src.matching_score
         , tgt.prz_kod = src.prz_kod
 ;
 

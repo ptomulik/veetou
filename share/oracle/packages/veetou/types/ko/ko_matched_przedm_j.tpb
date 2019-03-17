@@ -6,7 +6,6 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Przedm_J_t AS
             , specialty_id IN NUMBER
             , semester_id IN NUMBER
             , subject_map_id IN NUMBER
-            , matching_score IN NUMBER
             , prz_kod IN VARCHAR2
             ) RETURN SELF AS RESULT
     IS
@@ -17,7 +16,6 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Przedm_J_t AS
             , specialty_id => specialty_id
             , semester_id => semester_id
             , subject_map_id => subject_map_id
-            , matching_score => matching_score
             , prz_kod => prz_kod
             );
         RETURN;
