@@ -6,8 +6,10 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Pktprz_J_t AS
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
             , subject_map_id IN NUMBER
-            , subject_matching_score IN NUMBER
             , map_subj_code IN VARCHAR2
+            , specialty_map_ids IN V2u_20Ids_t
+            , map_program_codes IN V2u_Program_20Codes_t
+            , istniejace_pkt_prz_ids IN V2u_Dz_20Ids_t
             , reason IN VARCHAR2
             ) RETURN SELF AS RESULT
     IS
@@ -18,8 +20,10 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Pktprz_J_t AS
             , specialty_id => specialty_id
             , subject_id => subject_id
             , subject_map_id => subject_map_id
-            , subject_matching_score => subject_matching_score
             , map_subj_code => map_subj_code
+            , specialty_map_ids => specialty_map_ids
+            , map_program_codes => map_program_codes
+            , istniejace_pkt_prz_ids => istniejace_pkt_prz_ids
             , reason => reason
             );
         RETURN;
@@ -33,8 +37,10 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Pktprz_J_t AS
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
             , subject_map_id IN NUMBER
-            , subject_matching_score IN NUMBER
             , map_subj_code IN VARCHAR2
+            , specialty_map_ids IN V2u_20Ids_t
+            , map_program_codes IN V2u_Program_20Codes_t
+            , istniejace_pkt_prz_ids IN V2u_Dz_20Ids_t
             , reason IN VARCHAR2
             )
     IS
@@ -44,11 +50,13 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Pktprz_J_t AS
             , semester_id => semester_id
             , specialty_id => specialty_id
             , subject_id => subject_id
-            , subject_map_id => subject_map_id
-            , subject_matching_score => subject_matching_score
-            , map_subj_code => map_subj_code
-            , reason => reason
             );
+        SELF.subject_map_id := subject_map_id;
+        SELF.map_subj_code := map_subj_code;
+        SELF.specialty_map_ids := specialty_map_ids;
+        SELF.map_program_codes := map_program_codes;
+        SELF.istniejace_pkt_prz_ids := istniejace_pkt_prz_ids;
+        SELF.reason := reason;
     END;
 END;
 

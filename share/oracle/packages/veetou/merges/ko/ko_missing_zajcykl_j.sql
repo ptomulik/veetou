@@ -30,10 +30,8 @@ USING
             SELECT
                   u.*
                 , sm_j.map_id subject_map_id
-                , sm_j.matching_score subject_matching_score
                 , subject_map.map_subj_code
                 , cm_j.map_id classes_map_id
-                , cm_j.matching_score classes_matching_score
                 , classes_map.map_classes_type
                 , CAST(MULTISET(
                         SELECT DISTINCT SUBSTR(t.tzaj_kod, 1, 20)
@@ -148,10 +146,8 @@ WHEN NOT MATCHED THEN
         , classes_type
         , classes_hours
         , subject_map_id
-        , subject_matching_score
         , map_subj_code
         , classes_map_id
-        , classes_matching_score
         , map_classes_type
         , istniejace_tzaj_kody
         , reason
@@ -164,10 +160,8 @@ WHEN NOT MATCHED THEN
         , src.classes_type
         , src.classes_hours
         , src.subject_map_id
-        , src.subject_matching_score
         , src.map_subj_code
         , src.classes_map_id
-        , src.classes_matching_score
         , src.map_classes_type
         , src.istniejace_tzaj_kody
         , src.reason
@@ -176,10 +170,8 @@ WHEN MATCHED THEN
     UPDATE SET
           tgt.classes_hours = src.classes_hours
         , tgt.subject_map_id = src.subject_map_id
-        , tgt.subject_matching_score = src.subject_matching_score
         , tgt.map_subj_code = src.map_subj_code
         , tgt.classes_map_id = src.classes_map_id
-        , tgt.classes_matching_score = src.classes_matching_score
         , tgt.map_classes_type = src.map_classes_type
         , tgt.istniejace_tzaj_kody = src.istniejace_tzaj_kody
         , tgt.reason = src.reason

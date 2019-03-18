@@ -20,15 +20,22 @@
 
 @@ko_matched_prgos_j.ddl;
 @@ko_missing_prgos_j.ddl;
+
 @@ko_matched_etpos_j.ddl;
 @@ko_missing_etpos_j.ddl;
+
 @@ko_matched_przedm_j.ddl;
-@@ko_matched_przcykl_j.ddl;
-@@ko_matched_zajcykl_j.ddl;
-@@ko_matched_pktprz_j.ddl;
-@@ko_missing_zajcykl_j.ddl;
-@@ko_missing_przcykl_j.ddl;
 @@ko_missing_przedm_j.ddl;
+
+@@ko_matched_przcykl_j.ddl;
+@@ko_missing_przcykl_j.ddl;
+
+@@ko_matched_zajcykl_j.ddl;
+@@ko_missing_zajcykl_j.ddl;
+
+@@ko_matched_pktprz_j.ddl;
+@@ko_missing_pktprz_j.ddl;
+
 @@ko_skipped_programs_j.ddl;
 
 -- vim: set ft=sql ts=4 sw=4 et:

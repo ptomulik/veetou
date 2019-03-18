@@ -8,10 +8,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Zajcykl_J_t AS
             , classes_type IN VARCHAR2
             , classes_hours IN NUMBER
             , subject_map_id IN NUMBER
-            , subject_matching_score IN NUMBER
             , map_subj_code VARCHAR2
             , classes_map_id IN NUMBER
-            , classes_matching_score IN NUMBER
             , map_classes_type VARCHAR2
             , reason IN VARCHAR2
             , istniejace_tzaj_kody V2u_5Chars3_t
@@ -26,10 +24,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Zajcykl_J_t AS
             , classes_type => classes_type
             , classes_hours => classes_hours
             , subject_map_id => subject_map_id
-            , subject_matching_score => subject_matching_score
             , map_subj_code => map_subj_code
             , classes_map_id => classes_map_id
-            , classes_matching_score => classes_matching_score
             , map_classes_type => map_classes_type
             , reason => reason
             , istniejace_tzaj_kody => istniejace_tzaj_kody
@@ -47,10 +43,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Zajcykl_J_t AS
             , classes_type IN VARCHAR2
             , classes_hours IN NUMBER
             , subject_map_id IN NUMBER
-            , subject_matching_score IN NUMBER
             , map_subj_code VARCHAR2
             , classes_map_id IN NUMBER
-            , classes_matching_score IN NUMBER
             , map_classes_type VARCHAR2
             , reason IN VARCHAR2
             , istniejace_tzaj_kody V2u_5Chars3_t
@@ -66,10 +60,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Zajcykl_J_t AS
             , classes_hours => classes_hours
             );
         SELF.subject_map_id := subject_map_id;
-        SELF.subject_matching_score := subject_matching_score;
         SELF.map_subj_code := map_subj_code;
         SELF.classes_map_id := classes_map_id;
-        SELF.classes_matching_score := classes_matching_score;
         SELF.map_classes_type := map_classes_type;
         SELF.reason := reason;
         SELF.istniejace_tzaj_kody := istniejace_tzaj_kody;

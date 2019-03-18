@@ -375,7 +375,6 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Subject_Map_B_t');
         Drop_Type('Specialty_Map_B_t');
 
-        Drop_Type('Semester_Codes_t');
         Drop_Type('Semester_t', 'Semesters_t');
         Drop_Type('Faculty_t', 'Faculties_t', 'Faculty_Codes_t');
         Drop_Type('University_t', 'Universities_t', 'University_Codes_t');
@@ -577,15 +576,23 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Uu_Zajecia_Cyklu_t', 'Uu_Zajecia_Cykli_t');
 
         Drop_Type('Semester_Codes_t');
+        Drop_Type('Semester_5Codes_t');
+        Drop_Type('Semester_20Codes_t');
         Drop_Type('Program_Codes_t');
+        Drop_Type('Program_5Codes_t');
+        Drop_Type('Program_20Codes_t');
         Drop_Type('Subj_Grades_t');
-        Drop_Type('Subj_Codes_t');
         Drop_Type('Subj_5Grades_t');
+        Drop_Type('Subj_20Grades_t');
+        Drop_Type('Subj_Codes_t');
         Drop_Type('Subj_5Codes_t');
+        Drop_Type('Subj_20Codes_t');
         Drop_Type('Ids_t');
-        Drop_Type('Dz_Ids_t');
         Drop_Type('5Ids_t');
+        Drop_Type('20Ids_t');
+        Drop_Type('Dz_Ids_t');
         Drop_Type('Dz_5Ids_t');
+        Drop_Type('Dz_20Ids_t');
         Drop_Type('Ints8_t');
         Drop_Type('Integers_t');
         Drop_Type('Chars1_t');
@@ -596,10 +603,6 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('5Vchars1K_t');
         Drop_Type('Ints2_t');
         Drop_Type('Ints4_t');
-        Drop_Type('Subj_20Grades_t');
-        Drop_Type('Subj_20Codes_t');
-        Drop_Type('Program_5Codes_t');
-        Drop_Type('Program_20Codes_t');
     END;
 
     PROCEDURE Tier3

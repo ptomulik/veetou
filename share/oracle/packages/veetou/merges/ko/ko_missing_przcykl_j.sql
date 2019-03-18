@@ -25,7 +25,6 @@ USING
                 , u.specialty_id
                 , u.semester_id
                 , sm_j.map_id subject_map_id
-                , sm_j.matching_score subject_matching_score
                 , subject_map.map_subj_code map_subj_code
                 , CAST(MULTISET(
                     SELECT SUBSTR(t.cdyd_kod, 1, 6)
@@ -100,22 +99,20 @@ ON  (
 WHEN NOT MATCHED THEN
     INSERT
         ( job_uuid
-        , subject_id
-        , specialty_id
         , semester_id
+        , specialty_id
+        , subject_id
         , subject_map_id
-        , subject_matching_score
         , map_subj_code
         , reason
         , istniejace_cdyd_kody
         )
     VALUES
         ( src.job_uuid
-        , src.subject_id
-        , src.specialty_id
         , src.semester_id
+        , src.specialty_id
+        , src.subject_id
         , src.subject_map_id
-        , src.subject_matching_score
         , src.map_subj_code
         , src.reason
         , src.istniejace_cdyd_kody
@@ -123,7 +120,6 @@ WHEN NOT MATCHED THEN
 WHEN MATCHED THEN
     UPDATE SET
           tgt.subject_map_id = src.subject_map_id
-        , tgt.subject_matching_score = src.subject_matching_score
         , tgt.map_subj_code = src.map_subj_code
         , tgt.reason = src.reason
         , tgt.istniejace_cdyd_kody = src.istniejace_cdyd_kody

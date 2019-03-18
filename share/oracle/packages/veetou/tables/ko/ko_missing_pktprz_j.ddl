@@ -1,5 +1,5 @@
 CREATE TABLE v2u_ko_missing_pktprz_j
-OF V2u_Ko_Missing_Przcykl_J_t
+OF V2u_Ko_Missing_Pktprz_J_t
     (
         -- PK
           CONSTRAINT v2u_ko_missing_pktprz_j_pk
@@ -22,8 +22,6 @@ OF V2u_Ko_Missing_Przcykl_J_t
             REFERENCES v2u_ko_subject_semesters_j(subject_id, specialty_id, semester_id, job_uuid)
     )
 OBJECT IDENTIFIER IS PRIMARY KEY
-/*NESTED TABLE istniejace_cdyd_kody STORE AS v2u_ko_mpktprz_j_cdyds_nt
-    ((CONSTRAINT v2u_ko_mpktprz_j_cdyds_nt_pk PRIMARY KEY (NESTED_TABLE_ID, COLUMN_VALUE)))*/
 ;
 
 -- vim: set ft=sql ts=4 sw=4 et:

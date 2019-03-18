@@ -26,9 +26,6 @@ CREATE OR REPLACE TYPE V2u_Semester_t
         RETURN VARCHAR2
     );
 /
-CREATE OR REPLACE TYPE V2u_Semester_Codes_t
-    AS TABLE OF VARCHAR2(5 CHAR);
-/
 CREATE OR REPLACE TYPE V2u_Semesters_t
     AS TABLE OF V2u_Semester_t;
 

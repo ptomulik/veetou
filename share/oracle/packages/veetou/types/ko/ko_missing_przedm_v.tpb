@@ -5,7 +5,6 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Przedm_V_t AS
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
             , subject_map_id IN NUMBER
-            , subject_matching_score IN NUMBER
             , map_subj_code IN VARCHAR2
             , reason IN VARCHAR2
             ) RETURN SELF AS RESULT
@@ -16,7 +15,6 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Przedm_V_t AS
             , specialty => specialty
             , semester => semester
             , subject_map_id => subject_map_id
-            , subject_matching_score => subject_matching_score
             , map_subj_code => map_subj_code
             , reason => reason
             );
@@ -29,7 +27,6 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Przedm_V_t AS
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
             , subject_map_id IN NUMBER
-            , subject_matching_score IN NUMBER
             , map_subj_code IN VARCHAR2
             , reason IN VARCHAR2
             )
@@ -41,7 +38,6 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Przedm_V_t AS
           , semester => semester
         );
         SELF.subject_map_id := subject_map_id;
-        SELF.subject_matching_score := subject_matching_score;
         SELF.map_subj_code := map_subj_code;
         SELF.reason := reason;
     END;

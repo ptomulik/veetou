@@ -7,32 +7,30 @@ AS
               subject => VALUE(subjects)
             , specialty => VALUE(specialties)
             , semester => VALUE(semesters)
-            , classes_type => j.classes_type
-            , classes_hours => j.classes_hours
-            , subject_map_id => j.subject_map_id
-            , subject_matching_score => j.subject_matching_score
-            , map_subj_code => j.map_subj_code
-            , classes_map_id => j.classes_map_id
-            , classes_matching_score => j.classes_matching_score
-            , map_classes_type => j.map_classes_type
-            , reason => j.reason
-            , istniejace_tzaj_kody => j.istniejace_tzaj_kody
+            , classes_type => mi_zajcykl_j.classes_type
+            , classes_hours => mi_zajcykl_j.classes_hours
+            , subject_map_id => mi_zajcykl_j.subject_map_id
+            , map_subj_code => mi_zajcykl_j.map_subj_code
+            , classes_map_id => mi_zajcykl_j.classes_map_id
+            , map_classes_type => mi_zajcykl_j.map_classes_type
+            , reason => mi_zajcykl_j.reason
+            , istniejace_tzaj_kody => mi_zajcykl_j.istniejace_tzaj_kody
         )
-    FROM v2u_ko_missing_zajcykl_j j
+    FROM v2u_ko_missing_zajcykl_j mi_zajcykl_j
     INNER JOIN v2u_ko_subjects subjects
         ON  (
-                    subjects.id = j.subject_id
-               AND subjects.job_uuid = j.job_uuid
+                    subjects.id = mi_zajcykl_j.subject_id
+               AND subjects.job_uuid = mi_zajcykl_j.job_uuid
             )
     INNER JOIN v2u_ko_specialties specialties
         ON  (
-                    specialties.id = j.specialty_id
-                AND specialties.job_uuid = j.job_uuid
+                    specialties.id = mi_zajcykl_j.specialty_id
+                AND specialties.job_uuid = mi_zajcykl_j.job_uuid
             )
     INNER JOIN v2u_ko_semesters semesters
         ON  (
-                    semesters.id = j.semester_id
-                AND semesters.job_uuid = j.job_uuid
+                    semesters.id = mi_zajcykl_j.semester_id
+                AND semesters.job_uuid = mi_zajcykl_j.job_uuid
             )
 WITH READ ONLY
 ;

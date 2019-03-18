@@ -9,7 +9,6 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Przcykl_J_t
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
             , subject_map_id IN NUMBER
-            , subject_matching_score IN NUMBER
             , map_subj_code IN VARCHAR2
             , reason IN VARCHAR2
             , istniejace_cdyd_kody IN V2u_Semester_Codes_t
@@ -23,7 +22,6 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Przcykl_J_t
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
             , subject_map_id IN NUMBER
-            , subject_matching_score IN NUMBER
             , map_subj_code IN VARCHAR2
             , reason IN VARCHAR2
             , istniejace_cdyd_kody IN V2u_Semester_Codes_t

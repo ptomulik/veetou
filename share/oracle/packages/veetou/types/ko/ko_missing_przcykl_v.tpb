@@ -5,7 +5,6 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Przcykl_V_t AS
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
             , subject_map_id IN NUMBER
-            , subject_matching_score IN NUMBER
             , map_subj_code IN VARCHAR2
             , reason IN VARCHAR2
             , istniejace_cdyd_kody IN V2u_Semester_Codes_t
@@ -17,7 +16,6 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Przcykl_V_t AS
             , specialty => specialty
             , semester => semester
             , subject_map_id => subject_map_id
-            , subject_matching_score => subject_matching_score
             , map_subj_code => map_subj_code
             , reason => reason
             , istniejace_cdyd_kody => istniejace_cdyd_kody
@@ -31,7 +29,6 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Przcykl_V_t AS
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
             , subject_map_id IN NUMBER
-            , subject_matching_score IN NUMBER
             , map_subj_code IN VARCHAR2
             , reason IN VARCHAR2
             , istniejace_cdyd_kody IN V2u_Semester_Codes_t
@@ -43,7 +40,6 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Przcykl_V_t AS
             , specialty => specialty
             , semester => semester
             , subject_map_id => subject_map_id
-            , subject_matching_score => subject_matching_score
             , map_subj_code => map_subj_code
             , reason => reason
             );

@@ -1,7 +1,6 @@
 CREATE OR REPLACE TYPE V2u_Ko_Missing_Przedm_I_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Subject_Semester_I_t
     ( subject_map_id NUMBER(38)
-    , subject_matching_score NUMBER(38)
     , map_subj_code VARCHAR2(20 CHAR)
     , reason VARCHAR2(80 CHAR)
 
@@ -12,7 +11,6 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Przedm_I_t
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
             , subject_map_id IN NUMBER
-            , subject_matching_score IN NUMBER
             , map_subj_code IN VARCHAR2
             , reason IN VARCHAR2
             ) RETURN SELF AS RESULT
@@ -24,7 +22,6 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Przedm_I_t
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
             , subject_map_id IN NUMBER
-            , subject_matching_score IN NUMBER
             , map_subj_code IN VARCHAR2
             , reason IN VARCHAR2
             )
