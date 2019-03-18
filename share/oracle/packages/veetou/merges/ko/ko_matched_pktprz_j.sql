@@ -65,6 +65,7 @@ USING
                                     AND
                                 COALESCE(pkt_prz.cdyd_kon, '9999Z')
                             )
+                        AND pkt_prz.tpkt_kod = 'ECTS'
                     )
             WHERE subj_m_j.selected = 1
         ),

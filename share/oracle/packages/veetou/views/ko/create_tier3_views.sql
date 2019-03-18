@@ -28,6 +28,9 @@
 @@ko_matched_zajcykl_v.ddl;
 @@ko_missing_zajcykl_v.ddl;
 
+@@ko_matched_pktprz_v.ddl;
+@@ko_missing_pktprz_v.ddl;
+
 @@ko_skipped_programs_v.ddl;
 
 -- vim: set ft=sql ts=4 sw=4 et:

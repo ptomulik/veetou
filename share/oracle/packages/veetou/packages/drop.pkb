@@ -400,16 +400,10 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         --
         Drop_Table('ko_missing_etpos_j');
         --
-        Drop_Trigger('ko_missing_przedm_j_tr1');
-        Drop_Sequence('ko_missing_przedm_j_sq1');
         Drop_Table('ko_missing_przedm_j');
         --
-        Drop_Trigger('ko_missing_przcykl_j_tr1');
-        Drop_Sequence('ko_missing_przcykl_j_sq1');
         Drop_Table('ko_missing_przcykl_j');
         --
-        Drop_Trigger('ko_missing_zajcykl_j_tr1');
-        Drop_Sequence('ko_missing_zajcykl_j_sq1');
         Drop_Table('ko_missing_zajcykl_j');
         --
         Drop_Index('ko_matched_etpos_j_idx1');
@@ -535,6 +529,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Skipped_Program_J_t', 'Ko_Skipped_Programs_J_t');
         Drop_Type('Ko_Missing_Prgos_J_t', 'Ko_Missing_Prgoses_J_t');
         Drop_Type('Ko_Missing_Etpos_J_t', 'Ko_Missing_Etposes_J_t');
+        Drop_Type('Ko_Missing_Pktprz_J_t', 'Ko_Missing_Pktprzes_J_t');
         Drop_Type('Ko_Missing_Zajcykl_J_t', 'Ko_Missing_Zajcykles_J_t');
         Drop_Type('Ko_Missing_Przcykl_J_t', 'Ko_Missing_Przcykles_J_t');
         Drop_Type('Ko_Missing_Przedm_J_t', 'Ko_Missing_Przedms_J_t');
@@ -621,6 +616,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_View('uu_subject_grades_v');
 
         Drop_View('ko_skipped_programs_v');
+        Drop_View('ko_missing_pktprz_v');
         Drop_View('ko_missing_zajcykl_v');
         Drop_View('ko_missing_przcykl_v');
         Drop_View('ko_missing_przedm_v');
@@ -628,6 +624,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_View('ko_missing_prgos_v');
         Drop_View('ko_matched_prgos_v');
         Drop_View('ko_matched_etpos_v');
+        Drop_View('ko_matched_pktprz_v');
         Drop_View('ko_matched_zajcykl_v');
         Drop_View('ko_matched_przcykl_v');
         Drop_View('ko_matched_przedm_v');
@@ -656,6 +653,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Matched_Przedm_V_t', 'Ko_Matched_Przedms_V_t');
         Drop_Type('Ko_Matched_Przcykl_V_t', 'Ko_Matched_Przcykles_V_t');
         Drop_Type('Ko_Matched_Zajcykl_V_t', 'Ko_Matched_Zajcykles_V_t');
+        Drop_Type('Ko_Matched_Pktprz_V_t', 'Ko_Matched_Pktprzes_V_t');
+        Drop_Type('Ko_Missing_Pktprz_V_t', 'Ko_Missing_Pktprzes_V_t');
         Drop_Type('Ko_Missing_Zajcykl_V_t', 'Ko_Missing_Zajcykles_V_t');
         Drop_Type('Ko_Missing_Przcykl_V_t', 'Ko_Missing_Przcykles_V_t');
         Drop_Type('Ko_Missing_Przedm_V_t', 'Ko_Missing_Przedms_V_t');

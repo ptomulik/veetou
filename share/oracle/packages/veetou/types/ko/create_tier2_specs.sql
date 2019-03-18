@@ -35,6 +35,7 @@
 @@ko_missing_przedm_j.tps;
 @@ko_missing_przcykl_j.tps;
 @@ko_missing_zajcykl_j.tps;
+@@ko_missing_pktprz_j.tps;
 @@ko_skipped_program_j.tps;
 
 -- vim: set ft=sql ts=4 sw=4 et:
