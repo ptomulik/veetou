@@ -1,14 +1,15 @@
 MERGE INTO v2u_uu_punkty_przedmiotow tgt
 USING
     (
-        u_00 AS
+        WITH u_00 AS
         (
             SELECT
                   ss_j.job_uuid
                 , ss_j.subject_id
                 , ss_j.specialty_id
                 , ss_j.semester_id
-                , subjects.subject_code
+                , subjects.subj_code
+                , subjects.subj_ects
                 , semesters.semester_code
                 , SUBSTR(
                     specialties.university
@@ -28,7 +29,7 @@ USING
             INNER JOIN v2u_ko_subjects subjects
                 ON  (
                             subjects.id = ss_j.subject_id
-                        AND subject.job_uuid = ss_j.job_uuid
+                        AND subjects.job_uuid = ss_j.job_uuid
                     )
             INNER JOIN v2u_ko_specialties specialties
                 ON  (
@@ -41,173 +42,173 @@ USING
                         AND semesters.job_uuid = ss_j.job_uuid
                     )
         ),
-        u_0 AS
+        u_01 AS
         (
-            -- determine what to use as a single output row;
+            -- TODO: comments?...
             SELECT
                   u_00.job_uuid
-                , ma_pktprz_j pktprz_id
                 , COALESCE(
-                      subject_map.map_subj_code
-                    , u_00.subj_code
-                  ) coalesced_subj_code
-                , (
-                        specialty_map
-                  )
+                      TO_CHAR(ma_pktprz_j.pktprz_id)
+                    , COALESCE(subject_map.map_subj_code, u_00.subj_code)
+                        || '|' ||
+                      TO_CHAR(u_00.subj_ects)
+                  ) coalesced_punkty_przedmiotu
+                , u_00.semester_code
+
+                , CAST( COLLECT(subject_map.map_subj_code
+                                ORDER BY  specialty_map.map_program_code
+                                        , u_00.semester_id
+                                        , u_00.specialty_id
+                                        , u_00.subject_id)
+                        AS V2u_Vchars1K_t
+                  ) map_subj_codes1k
+                , CAST( COLLECT(u_00.subj_code
+                                ORDER BY specialty_map.map_program_code
+                                        , u_00.semester_id
+                                        , u_00.specialty_id
+                                        , u_00.subject_id)
+                        AS V2u_Vchars1K_t
+                  ) subj_codes1k
+                , CAST( COLLECT(specialty_map.map_program_code
+                                ORDER BY specialty_map.map_program_code
+                                        , u_00.semester_id
+                                        , u_00.specialty_id
+                                        , u_00.subject_id)
+                        AS V2u_Vchars1K_t
+                  ) map_program_codes1k
+                , CAST( COLLECT(u_00.subj_ects
+                                ORDER BY specialty_map.map_program_code
+                                        , u_00.semester_id
+                                        , u_00.specialty_id
+                                        , u_00.subject_id)
+                        AS V2u_Integers_t
+                  ) subj_ectses
+
+                -- debugging
+
+                , COUNT(ma_pktprz_j.pktprz_id) dbg_matched
+                , COUNT(mi_pktprz_j.job_uuid) dbg_missing
+                , COUNT(subj_m_j.map_id) dbg_subject_mapped
+                , COUNT(spec_m_j.map_id) dbg_specialty_mapped
+
             FROM u_00 u_00
             LEFT JOIN v2u_ko_matched_pktprz_j ma_pktprz_j
                 ON  (
-                            ma_pktprz_j.subject_id = ss_j.subject_id
-                        AND ma_pktprz_j.specialty_id = ss_j.specialty_id
-                        AND ma_pktprz_j.semester_id = ss_j.semester_id
-                        AND ma_pktprz_j.job_uuid = ss_j.job_uuid
+                            ma_pktprz_j.subject_id = u_00.subject_id
+                        AND ma_pktprz_j.specialty_id = u_00.specialty_id
+                        AND ma_pktprz_j.semester_id = u_00.semester_id
+                        AND ma_pktprz_j.job_uuid = u_00.job_uuid
                     )
             LEFT JOIN v2u_ko_missing_pktprz_j mi_pktprz_j
                 ON  (
-                            mi_pktprz_j.subject_id = ss_j.subject_id
-                        AND mi_pktprz_j.specialty_id = ss_j.specialty_id
-                        AND mi_pktprz_j.semester_id = ss_j.semester_id
-                        AND mi_pktprz_j.job_uuid = ss_j.job_uuid
+                            mi_pktprz_j.subject_id = u_00.subject_id
+                        AND mi_pktprz_j.specialty_id = u_00.specialty_id
+                        AND mi_pktprz_j.semester_id = u_00.semester_id
+                        AND mi_pktprz_j.job_uuid = u_00.job_uuid
                     )
             LEFT JOIN v2u_ko_subject_map_j subj_m_j
                 ON  (
-                            subj_m_j.subject_id = ss_j.subject_id
-                        AND subj_m_j.specialty_id = ss_j.specialty_id
-                        AND subj_m_j.semester_id = ss_j.semester_id
-                        AND subj_m_j.job_uuid = ss_j.job_uuid
+                            subj_m_j.subject_id = u_00.subject_id
+                        AND subj_m_j.specialty_id = u_00.specialty_id
+                        AND subj_m_j.semester_id = u_00.semester_id
+                        AND subj_m_j.job_uuid = u_00.job_uuid
                         AND subj_m_j.selected = 1
                     )
             LEFT JOIN v2u_subject_map subject_map
                 ON  (
                             subject_map.id = subj_m_j.map_id
                     )
-            LEFT JOIN v2u_ko_specialty_map_j
+            LEFT JOIN v2u_ko_specialty_map_j spec_m_j
+                ON  (
+                            spec_m_j.specialty_id = u_00.specialty_id
+                        AND spec_m_j.semester_id = u_00.semester_id
+                        AND spec_m_j.job_uuid = u_00.job_uuid
+                    )
+            LEFT JOIN v2u_specialty_map specialty_map
+                ON (
+                            specialty_map.id = spec_m_j.map_id
+                   )
             GROUP BY
-                  ss_j.job_uuid
-                , ...
+                  u_00.job_uuid
+                , COALESCE(
+                      TO_CHAR(ma_pktprz_j.pktprz_id)
+                    , COALESCE(subject_map.map_subj_code, u_00.subj_code)
+                        || '|' ||
+                      TO_CHAR(u_00.subj_ects)
+                  )
+                , u_00.semester_code
         ),
-        u AS
-        ( -- make necessary adjustments to the raw values selected i u_0
+        u_02 AS
+        ( -- make necessary adjustments to the raw values selected i u_01
             SELECT
-                  u_0.job_uuid
-                , u_0.coalesced_subj_code
+                  u_01.job_uuid
+                , u_01.coalesced_punkty_przedmiotu
+                , u_01.semester_code
 
                 -- select first element from each collection
-                , ( SELECT SUBSTR(VALUE(t), 1, 20)
-                    FROM TABLE(u_0.map_subj_codes1k) t
+                , ( SELECT DISTINCT SUBSTR(VALUE(t), 1, 32)
+                    FROM TABLE(u_01.subj_codes1k) t
+                    WHERE ROWNUM <= 1
+                  ) subj_code
+                , ( SELECT DISTINCT SUBSTR(VALUE(t), 1, 20)
+                    FROM TABLE(u_01.map_subj_codes1k) t
                     WHERE ROWNUM <= 1
                   ) map_subj_code
-                , ( SELECT SUBSTR(VALUE(t), 1, 200)
-                    FROM TABLE(u_0.map_subj_names1k) t
-                    WHERE ROWNUM <= 1
-                  ) map_subj_name
-                , ( SELECT SUBSTR(VALUE(t), 1, 3)
-                    FROM TABLE(u_0.map_subj_languages1k) t
-                    WHERE ROWNUM <= 1
-                  ) map_subj_lang
-                , ( SELECT SUBSTR(VALUE(t), 1, 20)
-                    FROM TABLE(u_0.map_org_units1k) t
-                    WHERE ROWNUM <= 1
-                  ) map_org_unit
-                , ( SELECT SUBSTR(VALUE(t), 1, 20)
-                    FROM TABLE(u_0.map_org_unit_recipients1k) t
-                    WHERE ROWNUM <= 1
-                  ) map_org_unit_recipient
-                , ( SELECT SUBSTR(VALUE(t), 1, 20)
-                    FROM TABLE(u_0.map_proto_types1k) t
-                    WHERE ROWNUM <= 1
-                  ) map_proto_type
-                , ( SELECT SUBSTR(VALUE(t), 1, 20)
-                    FROM TABLE(u_0.map_grade_types1k) t
-                    WHERE ROWNUM <= 1
-                  ) map_grade_type
-                , ( SELECT SUBSTR(VALUE(t), 1, 20)
-                    FROM TABLE(u_0.faculty_codes1k) t
-                    WHERE ROWNUM <= 1
-                  ) faculty_code
-                , ( SELECT SUBSTR(VALUE(t), 1, 200)
-                    FROM TABLE(u_0.subj_names1k) t
-                    WHERE ROWNUM <= 1
-                  ) subj_name
-                , ( SELECT SUBSTR(VALUE(t), 1, 16)
-                    FROM TABLE(u_0.subj_credit_kinds1k) t
-                    WHERE ROWNUM <= 1
-                  ) subj_credit_kind
-                , ( SELECT SUBSTR(VALUE(t), 1, 20)
-                    FROM TABLE(u_0.prz_kody1k) t
-                    WHERE ROWNUM <= 1
-                  ) prz_kod
                 , CAST(MULTISET(
-                    SELECT SUBSTR(VALUE(t), 1, 10)
-                    FROM TABLE(u_0.subj_grades1k) t
-                  ) AS V2u_Subj_Grades_t) subj_grades
+                        SELECT DISTINCT SUBSTR(VALUE(t), 1, 20)
+                        FROM TABLE(u_01.map_program_codes1k) t
+                    ) AS V2u_Program_Codes_t
+                  ) map_program_codes
+                , ( SELECT LISTAGG(VALUE(t), '|') WITHIN GROUP(ORDER BY VALUE(t))
+                    FROM TABLE(u_01.map_program_codes1k) t)
+                , ( SELECT DISTINCT VALUE(t)
+                    FROM TABLE(u_01.subj_ectses) t
+                    WHERE ROWNUM <= 1
+                  ) subj_ects
 
                 -- columns used for debugging
-                , ( SELECT COUNT(*)
-                    FROM TABLE(u_0.subj_codes1k)
+                , ( SELECT COUNT(DISTINCT VALUE(t))
+                    FROM TABLE(u_01.subj_codes1k) t
                   ) dbg_subj_codes
-                , ( SELECT COUNT(*)
-                    FROM TABLE(u_0.map_subj_codes1k)
+                , ( SELECT COUNT(DISTINCT VALUE(t))
+                    FROM TABLE(u_01.map_subj_codes1k) t
                   ) dbg_map_subj_codes
-                , ( SELECT COUNT(*)
-                    FROM TABLE(u_0.map_subj_names1k)
-                  ) dbg_map_subj_names
-                , ( SELECT COUNT(*)
-                    FROM TABLE(u_0.map_subj_languages1k)
-                  ) dbg_languages
-                , ( SELECT COUNT(*)
-                    FROM TABLE(u_0.map_org_units1k)
-                  ) dbg_org_units
-                , ( SELECT COUNT(*)
-                    FROM TABLE(u_0.map_org_unit_recipients1k)
-                  ) dbg_org_unit_recipients
-                , ( SELECT COUNT(*)
-                    FROM TABLE(u_0.map_proto_types1k)
-                  ) dbg_map_proto_types
-                , ( SELECT COUNT(*)
-                    FROM TABLE(u_0.map_grade_types1k)
-                  ) dbg_map_grade_types
-                , ( SELECT COUNT(*)
-                    FROM TABLE(u_0.faculty_codes1k)
-                  ) dbg_faculty_codes
-                , ( SELECT COUNT(*)
-                    FROM TABLE(u_0.subj_names1k)
-                  ) dbg_subj_names
-                , ( SELECT COUNT(*)
-                    FROM TABLE(u_0.subj_credit_kinds1k)
-                  ) dbg_subj_credit_kinds
-                , ( SELECT COUNT(*)
-                    FROM TABLE(u_0.prz_kody1k)
-                  ) dbg_prz_kody
+                , ( SELECT COUNT(DISTINCT VALUE(t))
+                    FROM TABLE(u_01.map_program_codes1k) t
+                  ) dbg_map_program_codes
+                , ( SELECT COUNT(DISTINCT VALUE(t))
+                    FROM TABLE(u_01.subj_ectses) t
+                  ) dbg_subj_ectses
 
-                , u_0.dbg_matched
-                , u_0.dbg_missing
-                , u_0.dbg_mapped
-            FROM u_0 u_0
+                , u_01.dbg_matched
+                , u_01.dbg_missing
+                , u_01.dbg_subject_mapped
+                , u_01.dbg_specialty_mapped
+            FROM u_01 u_01
         ),
         v AS
         ( -- determine our (v$*) values for certain fields
             SELECT
-                  u.*
+                  u_02.*
 
-                , u.map_subj_code v$kod
-                , COALESCE(u.map_subj_name, u.subj_name) v$nazwa
-                , COALESCE(u.map_org_unit, u.faculty_code) v$jed_org_kod
-                , V2u_Get.Utw_Id(u.job_uuid) v$utw_id
-                , V2u_Get.Mod_Id(u.job_uuid) v$mod_id
-                , COALESCE(u.map_proto_type, V2u_Get.Tpro_Kod(
-                          subj_credit_kind => u.subj_credit_kind
-                        , subj_grades => u.subj_grades
+                , u_02.map_subj_code v$kod
+                , COALESCE(u_02.map_subj_name, u_02.subj_name) v$nazwa
+                , COALESCE(u_02.map_org_unit, u_02.faculty_code) v$jed_org_kod
+                , V2u_Get.Utw_Id(u_02.job_uuid) v$utw_id
+                , V2u_Get.Mod_Id(u_02.job_uuid) v$mod_id
+                , COALESCE(u_02.map_proto_type, V2u_Get.Tpro_Kod(
+                          subj_credit_kind => u_02.subj_credit_kind
+                        , subj_grades => u_02.subj_grades
                   )) v$tpro_kod
-                , COALESCE(u.map_org_unit_recipient, u.faculty_code) v$jed_org_kod_biorca
-                , u.map_subj_lang v$jzk_kod
+                , COALESCE(u_02.map_org_unit_recipient, u_02.faculty_code) v$jed_org_kod_biorca
+                , u_02.map_subj_lang v$jzk_kod
 
                 -- did we found unique row in the target table?
                 , CASE
-                    WHEN    u.dbg_matched > 0
-                        AND u.dbg_mapped = u.dbg_matched
-                        AND u.dbg_missing = 0
-                        AND u.dbg_prz_kody = 1 AND u.prz_kod IS NOT NULL
+                    WHEN    u_02.dbg_matched > 0
+                        AND u_02.dbg_mapped = u_02.dbg_matched
+                        AND u_02.dbg_missing = 0
+                        AND u_02.dbg_prz_kody = 1 AND u_02.prz_kod IS NOT NULL
                     THEN 1
                     ELSE 0
                   END dbg_unique_match
@@ -216,24 +217,24 @@ USING
                 , CASE
                     WHEN
                         -- all the instances were consistent
-                            u.dbg_subj_names <= 1
-                        AND u.dbg_languages = 1
-                        AND u.dbg_org_units <= 1
-                        AND u.dbg_org_unit_recipients <= 1
-                        AND u.dbg_map_proto_types <= 1
-                        AND u.dbg_map_grade_types <= 1
-                        AND u.dbg_faculty_codes = 1
-                        AND u.dbg_subj_names = 1
-                        AND u.dbg_subj_credit_kinds = 1
+                            u_02.dbg_subj_names <= 1
+                        AND u_02.dbg_languages = 1
+                        AND u_02.dbg_org_units <= 1
+                        AND u_02.dbg_org_unit_recipients <= 1
+                        AND u_02.dbg_map_proto_types <= 1
+                        AND u_02.dbg_map_grade_types <= 1
+                        AND u_02.dbg_faculty_codes = 1
+                        AND u_02.dbg_subj_names = 1
+                        AND u_02.dbg_subj_credit_kinds = 1
                         -- and we have correct tpro_kod value
-                        AND COALESCE(u.map_proto_type, V2u_Get.Tpro_Kod(
-                              subj_credit_kind => u.subj_credit_kind
-                            , subj_grades => u.subj_grades
+                        AND COALESCE(u_02.map_proto_type, V2u_Get.Tpro_Kod(
+                              subj_credit_kind => u_02.subj_credit_kind
+                            , subj_grades => u_02.subj_grades
                             )) IN ('E', 'Z', 'O', 'S')
                     THEN 1
                     ELSE 0
                   END dbg_values_ok
-            FROM u u
+            FROM u_02 u_02
         ),
         w AS
         ( -- provide our values (v$*) and original ones (u$*)

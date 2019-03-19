@@ -405,6 +405,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         --
         Drop_Table('ko_missing_zajcykl_j');
         --
+        --
+        Drop_Table('ko_missing_pktprz_j');
+        --
         Drop_Index('ko_matched_etpos_j_idx1');
         Drop_Table('ko_matched_etpos_j');
         --

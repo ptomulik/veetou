@@ -2,7 +2,7 @@
 @@uu_przedmioty.sql;
 @@uu_atrybuty_przedmiotow.sql;
 @@uu_przedmioty_cykli.sql;
-@@uu_punkty_przedmiotow.sql;
+--@@uu_punkty_przedmiotow.sql;
 @@uu_zajecia_cykli.sql;
 @@uu_programy_osob.sql;
 @@uu_etapy_osob.sql;
