@@ -3,6 +3,7 @@ CREATE OR REPLACE TYPE V2u_Subject_Map_Pattern_t
     ( subj_code VARCHAR2(32 CHAR)
     , map_subj_code VARCHAR2(20 CHAR)
     , map_subj_lang VARCHAR2(3 CHAR)
+    , map_subj_ects NUMBER(4)
     , map_org_unit VARCHAR2(20 CHAR)
     , map_org_unit_recipient VARCHAR2(20 CHAR)
     , subject_pattern V2u_Subject_Pattern_t
@@ -14,6 +15,7 @@ CREATE OR REPLACE TYPE V2u_Subject_Map_Pattern_t
             , subj_code IN VARCHAR2
             , map_subj_code IN VARCHAR2
             , map_subj_lang IN VARCHAR2
+            , map_subj_ects IN NUMBER
             , map_org_unit IN VARCHAR2
             , map_org_unit_recipient IN VARCHAR2
             , subject_pattern IN V2u_Subject_Pattern_t
@@ -31,6 +33,7 @@ CREATE OR REPLACE TYPE V2u_Subject_Map_Pattern_t
             , subj_code IN VARCHAR2
             , map_subj_code IN VARCHAR2
             , map_subj_lang IN VARCHAR2
+            , map_subj_ects IN NUMBER
             , map_org_unit IN VARCHAR2
             , map_org_unit_recipient IN VARCHAR2
             , subject_pattern IN V2u_Subject_Pattern_t

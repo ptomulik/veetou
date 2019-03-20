@@ -4,6 +4,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_Pattern_t AS
             , subj_code IN VARCHAR2
             , map_subj_code IN VARCHAR2
             , map_subj_lang IN VARCHAR2
+            , map_subj_ects IN NUMBER
             , map_org_unit IN VARCHAR2
             , map_org_unit_recipient IN VARCHAR2
             , subject_pattern IN V2u_Subject_Pattern_t
@@ -16,6 +17,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_Pattern_t AS
               subj_code => subj_code
             , map_subj_code => map_subj_code
             , map_subj_lang => map_subj_lang
+            , map_subj_ects => map_subj_ects
             , map_org_unit => map_org_unit
             , map_org_unit_recipient => map_org_unit_recipient
             , subject_pattern => subject_pattern
@@ -41,6 +43,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_Pattern_t AS
             , subj_code IN VARCHAR2
             , map_subj_code IN VARCHAR2
             , map_subj_lang IN VARCHAR2
+            , map_subj_ects IN NUMBER
             , map_org_unit IN VARCHAR2
             , map_org_unit_recipient IN VARCHAR2
             , subject_pattern IN V2u_Subject_Pattern_t
@@ -52,6 +55,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_Pattern_t AS
         SELF.subj_code := subj_code;
         SELF.map_subj_code := map_subj_code;
         SELF.map_subj_lang := map_subj_lang;
+        SELF.map_subj_ects := map_subj_ects;
         SELF.map_org_unit := map_org_unit;
         SELF.map_org_unit_recipient := map_org_unit_recipient;
         SELF.subject_pattern := subject_pattern;
@@ -69,6 +73,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_Pattern_t AS
               subj_code => subject_map.subj_code
             , map_subj_code => subject_map.map_subj_code
             , map_subj_lang => subject_map.map_subj_lang
+            , map_subj_ects => subject_map.map_subj_ects
             , map_org_unit => subject_map.map_org_unit
             , map_org_unit_recipient => subject_map.map_org_unit_recipient
             , subject_pattern => V2u_Subject_Pattern_t(

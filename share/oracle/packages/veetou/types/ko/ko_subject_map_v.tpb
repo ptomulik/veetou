@@ -26,6 +26,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Map_V_t AS
         SELF.map_subj_code := map.map_subj_code;
         SELF.map_subj_name := map.map_subj_name;
         SELF.map_subj_lang := map.map_subj_lang;
+        SELF.map_subj_ects := map.map_subj_ects;
         SELF.map_org_unit := map.map_org_unit;
         SELF.map_org_unit_recipient := map.map_org_unit_recipient;
         SELF.map_proto_type := map.map_proto_type;

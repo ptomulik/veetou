@@ -7,6 +7,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_B_t AS
             , map_subj_code IN VARCHAR2
             , map_subj_name IN VARCHAR2
             , map_subj_lang IN VARCHAR2
+            , map_subj_ects IN NUMBER
             , map_org_unit IN VARCHAR2
             , map_org_unit_recipient IN VARCHAR2
             , map_proto_type IN VARCHAR2
@@ -40,6 +41,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_B_t AS
             , map_subj_code => map_subj_code
             , map_subj_name => map_subj_name
             , map_subj_lang => map_subj_lang
+            , map_subj_ects => map_subj_ects
             , map_org_unit => map_org_unit
             , map_org_unit_recipient => map_org_unit_recipient
             , map_proto_type => map_proto_type
@@ -75,6 +77,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_B_t AS
             , map_subj_code IN VARCHAR2
             , map_subj_name IN VARCHAR2
             , map_subj_lang IN VARCHAR2
+            , map_subj_ects IN NUMBER
             , map_org_unit IN VARCHAR2
             , map_org_unit_recipient IN VARCHAR2
             , map_proto_type IN VARCHAR2
@@ -108,6 +111,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_B_t AS
         SELF.map_subj_code := map_subj_code;
         SELF.map_subj_name := map_subj_name;
         SELF.map_subj_lang := map_subj_lang;
+        SELF.map_subj_ects := map_subj_ects;
         SELF.map_org_unit := map_org_unit;
         SELF.map_org_unit_recipient := map_org_unit_recipient;
         SELF.map_proto_type := map_proto_type;
@@ -154,6 +158,8 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_B_t AS
         ord := V2U_Cmp.StrNI(map_subj_name, other.map_subj_name);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.StrNI(map_subj_lang, other.map_subj_lang);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.NumN(map_subj_ects, other.map_subj_ects);
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.StrNI(map_org_unit, other.map_org_unit);
         IF ord <> 0 THEN RETURN ord; END IF;

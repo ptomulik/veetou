@@ -47,6 +47,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Subject_Map_V_t AS
             , map_subj_code => NULL
             , usr_subj_name => NULL
             , map_subj_lang => NULL
+            , map_subj_ects => NULL
             , map_subj_name => NULL
             , map_org_unit => NULL
             , map_org_unit_recipient => NULL

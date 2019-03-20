@@ -14,6 +14,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Map_V_t
     , map_subj_code VARCHAR2(20 CHAR)
     , map_subj_name VARCHAR2(200 CHAR)
     , map_subj_lang VARCHAR2(3 CHAR)
+    , map_subj_ects NUMBER(4)
     , map_org_unit VARCHAR2(20 CHAR)
     , map_org_unit_recipient VARCHAR2(20 CHAR)
     , map_proto_type VARCHAR2(20 CHAR)
