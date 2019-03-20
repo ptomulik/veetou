@@ -5,80 +5,33 @@ USING
         ( -- determine what to use as an input row
             SELECT
                   ss_j.job_uuid
-                , COALESCE(
-                      TO_CHAR(ma_pktprz_j.pktprz_id)
-                    , COALESCE(
+                , ss_j.subject_id
+                , ss_j.specialty_id
+                , ss_j.semester_id
+                , ma_pktprz_j.pktprz_id
+                , mi_pktprz_j.job_uuid mi_pktprz_job_uuid
+                , subjects.subj_code
+                , subjects.subj_ects
+                , semesters.semester_code
+                , subj_m_j.map_id subject_map_id
+                , spec_m_j.map_id specialty_map_id
+                , subject_map.map_subj_code
+                , subject_map.map_subj_ects
+                , specialty_map.map_program_code
+                , ( '{subject: "' || COALESCE(
                           subject_map.map_subj_code
                         , subjects.subj_code
-                      )
-                        || '|' ||
-                      TO_CHAR(subjects.subj_ects)
-                        || '|' ||
-                      semesters.semester_code
-                  ) coalesced_punkty_przedmiotu
-                , CAST(
-                    COLLECT(subject_map.map_subj_code
-                            ORDER BY  specialty_map.map_program_code
-                                    , ss_j.specialty_id
-                                    , ss_j.semester_id
-                                    , ss_j.subject_id
-                    ) AS V2u_Vchars1K_t
-                  ) map_subj_codes1k
-                , CAST(
-                    COLLECT(subject_map.map_subj_ects
-                            ORDER BY  specialty_map.map_program_code
-                                    , ss_j.specialty_id
-                                    , ss_j.semester_id
-                                    , ss_j.subject_id
-                    ) AS V2u_Ints4_t
-                  ) map_subj_ectses
-                , CAST(
-                    COLLECT(subjects.subj_code
-                            ORDER BY  specialty_map.map_program_code
-                                    , ss_j.specialty_id
-                                    , ss_j.semester_id
-                                    , ss_j.subject_id
-                    ) AS V2u_Vchars1K_t
-                  ) subj_codes1k
-                , CAST(
-                    COLLECT(subjects.subj_ects
-                            ORDER BY  specialty_map.map_program_code
-                                    , ss_j.specialty_id
-                                    , ss_j.semester_id
-                                    , ss_j.subject_id
-                    ) AS V2u_Integers_t
-                  ) subj_ectses
-                , CAST(
-                    COLLECT(specialty_map.map_program_code
-                            ORDER BY  specialty_map.map_program_code
-                                    , ss_j.specialty_id
-                                    , ss_j.semester_id
-                                    , ss_j.subject_id
-                    ) AS V2u_Vchars1K_t
-                  ) map_program_codes1k
-                , CAST(
-                    COLLECT(semesters.semester_code
-                            ORDER BY  specialty_map.map_program_code
-                                    , ss_j.specialty_id
-                                    , ss_j.semester_id
-                                    , ss_j.subject_id
-                    ) AS V2u_Vchars1K_t
-                  ) semester_codes1k
-                , CAST(
-                    COLLECT(ma_pktprz_j.pktprz_id
-                            ORDER BY  specialty_map.map_program_code
-                                    , ss_j.specialty_id
-                                    , ss_j.semester_id
-                                    , ss_j.subject_id
-                    ) AS V2u_Dz_Ids_t
-                  ) pktprz_ids
-
-                -- debugging
-
-                , COUNT(ma_pktprz_j.pktprz_id) dbg_matched
-                , COUNT(mi_pktprz_j.job_uuid) dbg_missing
-                , COUNT(subj_m_j.map_id) dbg_subject_mapped
-                , COUNT(spec_m_j.map_id) dbg_specialty_mapped
+                    )
+                    || '", ects: ' ||
+                    TO_CHAR(
+                        COALESCE(subject_map.map_subj_ects, subjects.subj_ects)
+                    )
+                    || ', semester: "' ||
+                    semesters.semester_code
+                    || '", program: "' ||
+                    specialty_map.map_program_code
+                    || '"}'
+                  ) non_id_key
 
             FROM v2u_ko_subject_semesters_j ss_j
             INNER JOIN v2u_ko_subjects subjects
@@ -127,152 +80,80 @@ USING
                 ON (
                             specialty_map.id = spec_m_j.map_id
                    )
-            GROUP BY
-                  ss_j.job_uuid
-                , COALESCE(
-                      TO_CHAR(ma_pktprz_j.pktprz_id)
-                    , COALESCE(
-                          subject_map.map_subj_code
-                        , subjects.subj_code
-                      )
-                        || '|' ||
-                      TO_CHAR(subjects.subj_ects)
-                        || '|' ||
-                      semesters.semester_code
-                  )
         ),
         u_01 AS
-        ( -- make necessary adjustments to raw values obtained from u_00
-          -- only: matched punkty_przedmiotow
+        (
             SELECT
                   u_00.job_uuid
-                , u_00.coalesced_punkty_przedmiotu pk_punkty_przedmiotu
+                , u_00.pktprz_id
+                , SET(CAST(
+                    COLLECT(u_00.map_subj_code
+                            ORDER BY  u_00.map_program_code
+                                    , u_00.specialty_id
+                                    , u_00.semester_id
+                                    , u_00.subject_id
+                    ) AS V2u_Vchars1K_t
+                  )) map_subj_codes1k
+                , SET(CAST(
+                    COLLECT(u_00.map_subj_ects
+                            ORDER BY  u_00.map_program_code
+                                    , u_00.specialty_id
+                                    , u_00.semester_id
+                                    , u_00.subject_id
+                    ) AS V2u_Ints4_t
+                  )) map_subj_ectses
+                , SET(CAST(
+                    COLLECT(u_00.subj_code
+                            ORDER BY  u_00.map_program_code
+                                    , u_00.specialty_id
+                                    , u_00.semester_id
+                                    , u_00.subject_id
+                    ) AS V2u_Vchars1K_t
+                  )) subj_codes1k
+                , SET(CAST(
+                    COLLECT(u_00.subj_ects
+                            ORDER BY  u_00.map_program_code
+                                    , u_00.specialty_id
+                                    , u_00.semester_id
+                                    , u_00.subject_id
+                    ) AS V2u_Integers_t
+                  )) subj_ectses
+                , SET(CAST(
+                    COLLECT(u_00.map_program_code
+                            ORDER BY  u_00.map_program_code
+                                    , u_00.specialty_id
+                                    , u_00.semester_id
+                                    , u_00.subject_id
+                    ) AS V2u_Vchars1K_t
+                  )) map_program_codes1k
+                , SET(CAST(
+                    COLLECT(u_00.semester_code
+                            ORDER BY  u_00.map_program_code
+                                    , u_00.specialty_id
+                                    , u_00.semester_id
+                                    , u_00.subject_id
+                    ) AS V2u_Vchars1K_t
+                  )) semester_codes1k
+                , SET(CAST(
+                    COLLECT(u_00.pktprz_id
+                            ORDER BY  u_00.map_program_code
+                                    , u_00.specialty_id
+                                    , u_00.semester_id
+                                    , u_00.subject_id
+                    ) AS V2u_Dz_Ids_t
+                  )) pktprz_ids
 
-                , ( SELECT SUBSTR(VALUE(t), 1, 20)
-                    FROM TABLE(map_subj_codes1k) t
-                    WHERE ROWNUM <= 1
-                  ) map_subj_code
-                , ( SELECT VALUE(t)
-                    FROM TABLE(map_subj_ectses) t
-                    WHERE ROWNUM <= 1
-                  ) map_subj_ects
-                , CAST(MULTISET(
-                    SELECT DISTINCT SUBSTR(VALUE(t), 1, 32)
-                    FROM TABLE(subj_codes1k) t
-                  ) AS V2u_Subj_20Codes_t) subj_codes
-                , CAST(MULTISET(
-                    SELECT DISTINCT VALUE(t)
-                    FROM TABLE(subj_ectses) t
-                  ) AS V2u_Subj_20Codes_t) subj_ectses
-                , CAST(MULTISET(
-                    SELECT DISTINCT SUBSTR(VALUE(t), 1, 20)
-                    FROM TABLE(map_program_codes1k) t
-                  ) AS V2u_Program_20Codes_t) map_program_codes
-                , CAST(MULTISET(
-                    SELECT DISTINCT SUBSTR(VALUE(t), 1, 20)
-                    FROM TABLE(semester_codes1k) t
-                  ) AS V2u_Program_20Codes_t) semester_codes
-                , ( SELECT SUBSTR(VALUE(t), 1, 20)
-                    FROM TABLE(semester_codes1k) t
-                    WHERE ROWNUM <= 1
-                  ) semester_code
-                , ( SELECT SUBSTR(VALUE(t), 1, 20)
-                    FROM TABLE(pktprz_ids) t
-                    WHERE ROWNUM <= 1
-                  ) pktprz_id
+                -- debugging
 
-                -- columns used for debugging
-                , ( SELECT COUNT(DISTINCT SUBSTR(VALUE(t), 1, 32))
-                    FROM TABLE(map_subj_codes1k) t
-                  ) dbg_map_subj_codes
-                , ( SELECT COUNT(DISTINCT VALUE(t))
-                    FROM TABLE(map_subj_ectses) t
-                  ) dbg_map_subj_ectses
-                , ( SELECT COUNT(DISTINCT SUBSTR(VALUE(t), 1, 32))
-                    FROM TABLE(subj_codes1k) t
-                  ) dbg_subj_codes
-                , ( SELECT COUNT(DISTINCT VALUE(t))
-                    FROM TABLE(subj_ectses) t
-                  ) dbg_subj_ectses
-                , ( SELECT COUNT(DISTINCT SUBSTR(VALUE(t), 1, 32))
-                    FROM TABLE(map_program_codes1k) t
-                  ) dbg_map_program_codes
-                , ( SELECT COUNT(DISTINCT SUBSTR(VALUE(t), 1, 32))
-                    FROM TABLE(semester_codes1k) t
-                  ) dbg_semester_codes
-                , ( SELECT COUNT(DISTINCT SUBSTR(VALUE(t), 1, 32))
-                    FROM TABLE(pktprz_ids) t
-                  ) dbg_pktprz_ids
-
-                , u_00.dbg_matched
-                , u_00.dbg_missing
-                , u_00.dbg_subject_mapped
-                , u_00.dbg_specialty_mapped
+                , COUNT(u_00.pktprz_id) dbg_matched
+                , COUNT(u_00.mi_pktprz_job_uuid) dbg_missing
+                , COUNT(u_00.subject_map_id) dbg_subject_mapped
+                , COUNT(u_00.specialty_map_id) dbg_specialty_mapped
             FROM u_00 u_00
-            WHERE (SELECT COUNT(VALUE(t)) FROM TABLE(u_00.pktprz_ids) t) > 0
-        ),
-        u_02 AS
-        ( -- make necessary adjustments to raw values obtained from u_00
-          -- only: missing (unmatched) punkty_przedmiotow
-            SELECT
+            WHERE u_00.pktprz_id IS NOT NULL
+            GROUP BY
                   u_00.job_uuid
-                , u_00.coalesced_punkty_przedmiotu pk_punkty_przedmiotu
-
-                , ( SELECT SUBSTR(VALUE(t), 1, 20)
-                    FROM TABLE(map_subj_codes1k) t
-                    WHERE ROWNUM <= 1
-                  ) map_subj_code
-                , CAST(MULTISET(
-                    SELECT DISTINCT SUBSTR(VALUE(t), 1, 32)
-                    FROM TABLE(subj_codes1k) t
-                  ) AS V2u_Subj_20Codes_t) subj_codes
-                , CAST(MULTISET(
-                    SELECT DISTINCT VALUE(t)
-                    FROM TABLE(subj_ectses) t
-                  ) AS V2u_Subj_20Codes_t) subj_ectses
-                , CAST(MULTISET(
-                    SELECT DISTINCT SUBSTR(VALUE(t), 1, 20)
-                    FROM TABLE(map_program_codes1k) t
-                  ) AS V2u_Program_20Codes_t) map_program_codes
-                , CAST(MULTISET(
-                    SELECT DISTINCT SUBSTR(VALUE(t), 1, 20)
-                    FROM TABLE(semester_codes1k) t
-                  ) AS V2u_Program_20Codes_t) semester_codes
-                , ( SELECT SUBSTR(VALUE(t), 1, 20)
-                    FROM TABLE(semester_codes1k) t
-                    WHERE ROWNUM <= 1
-                  ) semester_code
-                , ( SELECT SUBSTR(VALUE(t), 1, 20)
-                    FROM TABLE(pktprz_ids) t
-                    WHERE ROWNUM <= 1
-                  ) pktprz_id
-
-                -- columns used for debugging
-                , ( SELECT COUNT(DISTINCT SUBSTR(VALUE(t), 1, 32))
-                    FROM TABLE(map_subj_codes1k) t
-                  ) dbg_map_subj_codes
-                , ( SELECT COUNT(DISTINCT SUBSTR(VALUE(t), 1, 32))
-                    FROM TABLE(subj_codes1k) t
-                  ) dbg_subj_codes
-                , ( SELECT COUNT(DISTINCT VALUE(t))
-                    FROM TABLE(subj_ectses) t
-                  ) dbg_subj_ectses
-                , ( SELECT COUNT(DISTINCT SUBSTR(VALUE(t), 1, 32))
-                    FROM TABLE(map_program_codes1k) t
-                  ) dbg_map_program_codes
-                , ( SELECT COUNT(DISTINCT SUBSTR(VALUE(t), 1, 32))
-                    FROM TABLE(semester_codes1k) t
-                  ) dbg_semester_codes
-                , ( SELECT COUNT(DISTINCT SUBSTR(VALUE(t), 1, 32))
-                    FROM TABLE(pktprz_ids) t
-                  ) dbg_pktprz_ids
-
-                , u_00.dbg_matched
-                , u_00.dbg_missing
-                , u_00.dbg_subject_mapped
-                , u_00.dbg_specialty_mapped
-            FROM u_00 u_00
-            WHERE (SELECT COUNT(VALUE(t)) FROM TABLE(u_00.pktprz_ids) t) = 0
+                , u_00.pktprz_id
         ),
 --        v AS
 --        ( -- determine our (v$*) values for certain fields
