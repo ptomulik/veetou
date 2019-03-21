@@ -16,6 +16,23 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Punkty_Przedmiotu_t AS
             , job_uuid IN RAW
             , pk_punkty_przedmiotu IN VARCHAR2
             -- DBG
+            , dbg_pktprz_ids IN NUMBER
+            , dbg_prz_kody IN NUMBER
+            , dbg_prg_kody IN NUMBER
+            , dbg_cdyd_pocz IN NUMBER
+            , dbg_cdyd_kon IN NUMBER
+            , dbg_coalesced_subj_codes IN NUMBER
+            , dbg_coalesced_subj_ectses IN NUMBER
+            , dbg_map_program_codes IN NUMBER
+            , dbg_semester_codes IN NUMBER
+            , dbg_ectses_per_id IN NUMBER
+            , dbg_ectses_per_non_id IN NUMBER
+            , dbg_unique_match IN NUMBER
+            , dbg_values_ok IN NUMBER
+            , dbg_matched IN NUMBER
+            , dbg_missing IN NUMBER
+            , dbg_subject_mapped IN NUMBER
+            , dbg_specialty_mapped IN NUMBER
             -- CTL
             , change_type IN CHAR
             , safe_to_change IN NUMBER
@@ -38,6 +55,23 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Punkty_Przedmiotu_t AS
             , job_uuid => job_uuid
             , pk_punkty_przedmiotu => pk_punkty_przedmiotu
             -- DBG
+            , dbg_pktprz_ids => dbg_pktprz_ids
+            , dbg_prz_kody => dbg_prz_kody
+            , dbg_prg_kody => dbg_prg_kody
+            , dbg_cdyd_pocz => dbg_cdyd_pocz
+            , dbg_cdyd_kon => dbg_cdyd_kon
+            , dbg_coalesced_subj_codes => dbg_coalesced_subj_codes
+            , dbg_coalesced_subj_ectses => dbg_coalesced_subj_ectses
+            , dbg_map_program_codes => dbg_map_program_codes
+            , dbg_semester_codes => dbg_semester_codes
+            , dbg_ectses_per_id => dbg_ectses_per_id
+            , dbg_ectses_per_non_id => dbg_ectses_per_non_id
+            , dbg_unique_match => dbg_unique_match
+            , dbg_values_ok => dbg_values_ok
+            , dbg_matched => dbg_matched
+            , dbg_missing => dbg_missing
+            , dbg_subject_mapped => dbg_subject_mapped
+            , dbg_specialty_mapped => dbg_specialty_mapped
             -- CTL
             , change_type => change_type
             , safe_to_change => safe_to_change
@@ -62,6 +96,23 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Punkty_Przedmiotu_t AS
             , job_uuid IN RAW
             , pk_punkty_przedmiotu IN VARCHAR2
             -- DBG
+            , dbg_pktprz_ids IN NUMBER
+            , dbg_prz_kody IN NUMBER
+            , dbg_prg_kody IN NUMBER
+            , dbg_cdyd_pocz IN NUMBER
+            , dbg_cdyd_kon IN NUMBER
+            , dbg_coalesced_subj_codes IN NUMBER
+            , dbg_coalesced_subj_ectses IN NUMBER
+            , dbg_map_program_codes IN NUMBER
+            , dbg_semester_codes IN NUMBER
+            , dbg_ectses_per_id IN NUMBER
+            , dbg_ectses_per_non_id IN NUMBER
+            , dbg_unique_match IN NUMBER
+            , dbg_values_ok IN NUMBER
+            , dbg_matched IN NUMBER
+            , dbg_missing IN NUMBER
+            , dbg_subject_mapped IN NUMBER
+            , dbg_specialty_mapped IN NUMBER
             -- CTL
             , change_type IN CHAR
             , safe_to_change IN NUMBER
@@ -85,6 +136,23 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Punkty_Przedmiotu_t AS
         SELF.job_uuid := job_uuid;
         SELF.pk_punkty_przedmiotu := pk_punkty_przedmiotu;
         -- DBG
+        SELF.dbg_pktprz_ids := dbg_pktprz_ids;
+        SELF.dbg_prz_kody := dbg_prz_kody;
+        SELF.dbg_prg_kody := dbg_prg_kody;
+        SELF.dbg_cdyd_pocz := dbg_cdyd_pocz;
+        SELF.dbg_cdyd_kon := dbg_cdyd_kon;
+        SELF.dbg_coalesced_subj_codes := dbg_coalesced_subj_codes;
+        SELF.dbg_coalesced_subj_ectses := dbg_coalesced_subj_ectses;
+        SELF.dbg_map_program_codes := dbg_map_program_codes;
+        SELF.dbg_semester_codes := dbg_semester_codes;
+        SELF.dbg_ectses_per_id := dbg_ectses_per_id;
+        SELF.dbg_ectses_per_non_id := dbg_ectses_per_non_id;
+        SELF.dbg_unique_match := dbg_unique_match;
+        SELF.dbg_values_ok := dbg_values_ok;
+        SELF.dbg_matched := dbg_matched;
+        SELF.dbg_missing := dbg_missing;
+        SELF.dbg_subject_mapped := dbg_subject_mapped;
+        SELF.dbg_specialty_mapped := dbg_specialty_mapped;
         -- CTL
         SELF.change_type := change_type;
         SELF.safe_to_change := safe_to_change;
