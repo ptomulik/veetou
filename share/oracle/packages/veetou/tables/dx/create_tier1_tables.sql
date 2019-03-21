@@ -1,0 +1,22 @@
+--@@dx_studenci.ddl;
+--@@dx_przedmioty.ddl;
+--@@dx_przedmioty_obce.ddl;
+--@@dx_atrybuty_przedmiotow.ddl;
+--@@dx_przedmioty_cykli.ddl;
+@@dx_punkty_przedmiotow.ddl;
+--@@dx_zajecia_cykli.ddl;
+--@@dx_zajecia_prz_obcych.ddl;
+--@@dx_programy.ddl;
+--@@dx_programy_osob.ddl;
+--@@dx_decyzje.ddl;
+--@@dx_etapy.ddl;
+--@@dx_etapy_programow.ddl;
+--@@dx_etapy_kierunkow.ddl;
+--@@dx_etapy_osob.ddl;
+--@@dx_zaliczenia_przedmiotow.ddl;
+--@@dx_zal_przedm_prgos.ddl;
+--@@dx_oceny.ddl;
+--@@dx_terminy_protokolow.ddl;
+--@@dx_protokoly.ddl;
+
+-- vim: set ft=sql ts=4 sw=4 et:

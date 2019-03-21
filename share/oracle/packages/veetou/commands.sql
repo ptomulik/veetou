@@ -58,6 +58,16 @@ EXIT;
 
 
 
+-- Creates tier1 dx_* tables.
+@@create_tier1_dx.sql
+
+
+
+-- Wipes-out tier1 dx_* tables.
+@@drop_tier1_dx.sql
+
+
+
 -- Creates tier1 ko_* tables and related stuff.
 @@create_tier1_ko.sql
 
@@ -98,8 +108,12 @@ EXIT;
 
 
 
--- Load data from external sources to tier1 tables
-@reload_tier1.sql;
+-- Merge data from dz_* tables to v2u_dz_* tables
+@merge_tier1_dz.sql;
+
+
+-- Merge data from v2u_dx_* tables to v2u_dz_* tables 
+@merge_tier1_dx.sql;
 
 
 -- Merge data from tier1 tables into tier2 tables.

@@ -320,7 +320,11 @@ USING
         ( -- determine our (v$*) values for certain fields
             SELECT
                   u.*
-                , u.pktprz_id v$id
+                , CASE
+                    WHEN u.pktprz_id < 0
+                    THEN NULL
+                    ELSE u.pktprz_id
+                  END v$id
                 , DECODE( u.pktprz_id, NULL
                         , u.coalesced_subj_code
                         , u.prz_kod
@@ -420,6 +424,8 @@ USING
 
                 , DECODE( v.dbg_unique_match, 1
                         , (CASE
+                            WHEN v.pktprz_id < 0
+                            THEN 'I'
                             WHEN    -- do we introduce any modification?
                                     DECODE(v.v$prz_kod, t.prz_kod, 1, 0) = 1
                                 AND DECODE(v.v$prg_kod, t.prg_kod, 1, 0) = 1
@@ -437,8 +443,11 @@ USING
                     WHEN
                         -- ensure that
                         -- we haven't reached the target
-                            v.pktprz_id IS NULL
-                        AND v.dbg_pktprz_ids = 0
+                            (
+                                v.pktprz_id IS NULL AND v.dbg_pktprz_ids = 0
+                             OR
+                                v.pktprz_id < 0 AND v.dbg_pktprz_ids = 1
+                            )
                         -- maps for all instances existed but there were no
                         -- corresponding entry in target system
                         AND v.dbg_matched = 0
@@ -457,7 +466,7 @@ USING
                     WHEN
                         -- ensure that
                         -- we UNIQUELLY matched a row in target table
-                            v.dbg_unique_match = 1
+                            v.dbg_unique_match = 1 AND v.pktprz_id > 0
                         -- there are no other colliding entries
                         AND v.dbg_ectses_per_id = 1
                         -- and values passed basic tests

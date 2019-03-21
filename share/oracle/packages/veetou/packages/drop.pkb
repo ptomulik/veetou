@@ -169,9 +169,25 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_If_Exists('PACKAGE', 'V2U_' || package_name);
     END;
 
+    PROCEDURE Tier1_Dx
+    IS
+    BEGIN
+        Drop_Trigger('dx_punkty_przedmiotow_tr1');
+        Drop_Sequence('dx_punkty_przedmiotow_sq1');
+        Drop_Index('dx_punkty_przedmiotow_idx1');
+        Drop_Index('dx_punkty_przedmiotow_idx2');
+        Drop_Index('dx_punkty_przedmiotow_idx3');
+        Drop_Index('dx_punkty_przedmiotow_idx4');
+        Drop_Index('dx_punkty_przedmiotow_idx5');
+        Drop_Index('dx_punkty_przedmiotow_idx6');
+        Drop_Table('dx_punkty_przedmiotow');
+    END;
+
     PROCEDURE Tier1_Dz
     IS
     BEGIN
+        Tier1_Dx();
+        --
         Drop_Table('dz_zal_przedm_prgos');
         --
         Drop_Table('dz_zaliczenia_przedmiotow');
@@ -618,6 +634,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_View('ud_przedmioty_v');
         Drop_View('ud_przedmioty_cykli_v');
         Drop_View('ud_zajecia_cykli_v');
+        Drop_View('ud_punkty_przedmiotow_v');
 
         Drop_View('uu_subject_grades_v');
 
