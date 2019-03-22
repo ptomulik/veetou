@@ -3,9 +3,14 @@ USING
     (
         WITH punkty_przedmiotow AS
         (
+            ----------------------------------------------------------------
+            -- Ideally we should just use v2u_vx_punkty_przedmiotow_v, but
+            -- it doesn't work due to DB bug (internal error).
+            -- SELECT * FROM v2u_xv_punkty_przedmiotow_v
+            ----------------------------------------------------------------
             SELECT * FROM v2u_dz_punkty_przedmiotow
-            UNION
-            SELECT * FROM v2u_dx_punkty_przedmiotow
+            UNION ALL
+            SELECT * FROM v2u_xr_punkty_przedmiotow
         ),
         u_00 AS
         ( -- join crucial tables
@@ -326,11 +331,7 @@ USING
         ( -- determine our (v$*) values for certain fields
             SELECT
                   u.*
-                , CASE
-                    WHEN u.pktprz_id < 0
-                    THEN NULL
-                    ELSE u.pktprz_id
-                  END v$id
+                , u.pktprz_id v$id
                 , DECODE( u.pktprz_id, NULL
                         , u.coalesced_subj_code
                         , u.prz_kod
@@ -430,8 +431,6 @@ USING
 
                 , DECODE( v.dbg_unique_match, 1
                         , (CASE
-                            WHEN v.pktprz_id < 0
-                            THEN 'I'
                             WHEN    -- do we introduce any modification?
                                     DECODE(v.v$prz_kod, t.prz_kod, 1, 0) = 1
                                 AND DECODE(v.v$prg_kod, t.prg_kod, 1, 0) = 1
@@ -449,11 +448,7 @@ USING
                     WHEN
                         -- ensure that
                         -- we haven't reached the target
-                            (
-                                v.pktprz_id IS NULL AND v.dbg_pktprz_ids = 0
-                             OR
-                                v.pktprz_id < 0 AND v.dbg_pktprz_ids = 1
-                            )
+                        v.pktprz_id IS NULL AND v.dbg_pktprz_ids = 0
                         -- maps for all instances existed but there were no
                         -- corresponding entry in target system
                         AND v.dbg_matched = 0
@@ -472,7 +467,7 @@ USING
                     WHEN
                         -- ensure that
                         -- we UNIQUELLY matched a row in target table
-                            v.dbg_unique_match = 1 AND v.pktprz_id > 0
+                            v.dbg_unique_match = 1 /* AND v.pktprz_id > 0 */
                         -- there are no other colliding entries
                         AND v.dbg_ectses_per_id = 1
                         -- and values passed basic tests

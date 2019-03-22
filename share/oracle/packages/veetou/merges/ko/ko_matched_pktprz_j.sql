@@ -3,12 +3,17 @@ USING
     (
         WITH punkty_przedmiotow AS
         (
+            ----------------------------------------------------------------
+            -- Ideally we should just use v2u_vx_punkty_przedmiotow_v, but
+            -- it doesn't work due to DB bug (internal error).
+            -- SELECT * FROM v2u_xv_punkty_przedmiotow_v
+            ----------------------------------------------------------------
             SELECT * FROM v2u_dz_punkty_przedmiotow
-            UNION
-            SELECT * FROM v2u_dx_punkty_przedmiotow
+            UNION ALL
+            SELECT * FROM v2u_xr_punkty_przedmiotow
         ),
         u AS
-        (   -- identify all matching entries in v2u_dz_punkty_przedmiotow
+        (   -- identify all matching entries in v2u_xv_punkty_przedmiotow_v
             SELECT DISTINCT
                   subj_m_j.job_uuid
                 , subj_m_j.subject_id
@@ -18,7 +23,7 @@ USING
                 , pkt_prz.prz_kod
                 , pkt_prz.id pktprz_id
                   -- v2u_dz_punkty_przedmiotow  => ord=0
-                  -- v2u_dx_punkty_przedmiotow  => ord=1
+                  -- v2u_xr_punkty_przedmiotow  => ord=1
                 , DECODE(SIGN(pkt_prz.id), -1, 1, 0) ord
                 , pkt_prz.prg_kod
                 , pkt_prz.cdyd_pocz
@@ -60,7 +65,7 @@ USING
                             semesters.id = subj_m_j.semester_id
                         AND semesters.job_uuid = subj_m_j.job_uuid
                     )
-            INNER JOIN v2u_dz_punkty_przedmiotow pkt_prz
+            INNER JOIN punkty_przedmiotow pkt_prz
                 ON  (
                             pkt_prz.prz_kod = subject_map.map_subj_code
                         AND (
@@ -82,7 +87,7 @@ USING
         (   -- eliminate redundant matches (pktprz_ids) as follows
             --  * prefer narrower semester ranges over wider ones, and
             --  * prefer non-NULL prg_kod over NULL ones
-            --  * prefer dz_punkty_przedmiotow over v2u_dx_punkty_przedmiotow
+            --  * prefer v2u_dz_punkty_przedmiotow over v2u_xr_punkty_przedmiotow
             SELECT
                   u.job_uuid
                 , u.subject_id

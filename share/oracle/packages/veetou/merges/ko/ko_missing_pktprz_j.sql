@@ -3,9 +3,14 @@ USING
     (
         WITH punkty_przedmiotow AS
         (
+            ----------------------------------------------------------------
+            -- Ideally we should just use v2u_vx_punkty_przedmiotow_v, but
+            -- it doesn't work due to DB bug (internal error).
+            -- SELECT * FROM v2u_xv_punkty_przedmiotow_v
+            ----------------------------------------------------------------
             SELECT * FROM v2u_dz_punkty_przedmiotow
-            UNION
-            SELECT * FROM v2u_dx_punkty_przedmiotow
+            UNION ALL
+            SELECT * FROM v2u_xr_punkty_przedmiotow
         ),
         u AS
         ( -- select all unmatched entries

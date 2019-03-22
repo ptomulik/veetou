@@ -169,24 +169,32 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_If_Exists('PACKAGE', 'V2U_' || package_name);
     END;
 
-    PROCEDURE Tier1_Dx
+    PROCEDURE Tier1_Xv
     IS
     BEGIN
-        Drop_Trigger('dx_punkty_przedmiotow_tr1');
-        Drop_Sequence('dx_punkty_przedmiotow_sq1');
-        Drop_Index('dx_punkty_przedmiotow_idx1');
-        Drop_Index('dx_punkty_przedmiotow_idx2');
-        Drop_Index('dx_punkty_przedmiotow_idx3');
-        Drop_Index('dx_punkty_przedmiotow_idx4');
-        Drop_Index('dx_punkty_przedmiotow_idx5');
-        Drop_Index('dx_punkty_przedmiotow_idx6');
-        Drop_Table('dx_punkty_przedmiotow');
+        Drop_View('xv_punkty_przedmiotow_v');
+    END;
+
+    PROCEDURE Tier1_Xr
+    IS
+    BEGIN
+        Tier1_Xv();
+        Drop_Trigger('xr_punkty_przedmiotow_tr1');
+        Drop_Sequence('xr_punkty_przedmiotow_sq1');
+        Drop_Index('xr_punkty_przedmiotow_idx1');
+        Drop_Index('xr_punkty_przedmiotow_idx2');
+        Drop_Index('xr_punkty_przedmiotow_idx3');
+        Drop_Index('xr_punkty_przedmiotow_idx4');
+        Drop_Index('xr_punkty_przedmiotow_idx5');
+        Drop_Index('xr_punkty_przedmiotow_idx6');
+        Drop_Table('xr_punkty_przedmiotow');
     END;
 
     PROCEDURE Tier1_Dz
     IS
     BEGIN
-        Tier1_Dx();
+        Tier1_Xv();
+        Tier1_Xr();
         --
         Drop_Table('dz_zal_przedm_prgos');
         --

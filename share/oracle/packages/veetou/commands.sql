@@ -57,14 +57,23 @@ EXIT;
 @@drop_tier1_dz.sql
 
 
-
--- Creates tier1 dx_* tables.
-@@create_tier1_dx.sql
-
+-- Creates tier1 xr_* tables.
+@@create_tier1_xr.sql
 
 
--- Wipes-out tier1 dx_* tables.
-@@drop_tier1_dx.sql
+
+-- Wipes-out tier1 xr_* tables.
+@@drop_tier1_xr.sql
+
+
+
+-- Creates tier1 xv_* views.
+@@create_tier1_xv.sql
+
+
+
+-- Creates tier1 xv_* views.
+@@drop_tier1_xv.sql
 
 
 

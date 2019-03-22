@@ -5,7 +5,7 @@
 @@packages/drop.pkg;
 
 BEGIN
-    V2U_Drop.Tier1_Dx();
+    V2U_Drop.Tier1_Xr();
 END;
 /
 DROP PACKAGE V2U_Drop;
