@@ -1,7 +1,13 @@
 MERGE INTO v2u_ko_matched_pktprz_j tgt
 USING
     (
-        WITH u AS
+        WITH punkty_przedmiotow AS
+        (
+            SELECT * FROM v2u_dz_punkty_przedmiotow
+            UNION
+            SELECT * FROM v2u_dx_punkty_przedmiotow
+        ),
+        u AS
         (   -- identify all matching entries in v2u_dz_punkty_przedmiotow
             SELECT DISTINCT
                   subj_m_j.job_uuid
@@ -11,6 +17,9 @@ USING
                 , subj_m_j.map_id subject_map_id
                 , pkt_prz.prz_kod
                 , pkt_prz.id pktprz_id
+                  -- v2u_dz_punkty_przedmiotow  => ord=0
+                  -- v2u_dx_punkty_przedmiotow  => ord=1
+                , DECODE(SIGN(pkt_prz.id), -1, 1, 0) ord
                 , pkt_prz.prg_kod
                 , pkt_prz.cdyd_pocz
                 , pkt_prz.cdyd_kon
@@ -73,6 +82,7 @@ USING
         (   -- eliminate redundant matches (pktprz_ids) as follows
             --  * prefer narrower semester ranges over wider ones, and
             --  * prefer non-NULL prg_kod over NULL ones
+            --  * prefer dz_punkty_przedmiotow over v2u_dx_punkty_przedmiotow
             SELECT
                   u.job_uuid
                 , u.subject_id
@@ -80,37 +90,37 @@ USING
                 , u.semester_id
                 , CAST(
                     COLLECT(u.subject_map_id
-                            ORDER BY u.prz_kod, u.cdyd_diff, u.prg_kod)
+                            ORDER BY u.prz_kod, u.cdyd_diff, u.prg_kod, u.ord)
                     AS V2u_Ids_t
                   ) subject_map_ids
                 , CAST(
                     COLLECT(u.prz_kod
-                            ORDER BY u.prz_kod, u.cdyd_diff, u.prg_kod)
+                            ORDER BY u.prz_kod, u.cdyd_diff, u.prg_kod, u.ord)
                     AS V2u_Vchars1K_t
                   ) prz_kody1k
                 , CAST(
                     COLLECT(u.pktprz_id
-                            ORDER BY u.prz_kod, u.cdyd_diff, u.prg_kod)
+                            ORDER BY u.prz_kod, u.cdyd_diff, u.prg_kod, u.ord)
                     AS V2u_Dz_Ids_t
                   ) pktprz_ids
                 , CAST(
                     COLLECT(u.prg_kod
-                            ORDER BY u.prz_kod, u.cdyd_diff, u.prg_kod)
+                            ORDER BY u.prz_kod, u.cdyd_diff, u.prg_kod, u.ord)
                     AS V2u_Vchars1K_t
                   ) prg_kody1k
                 , CAST(
                     COLLECT(u.cdyd_pocz
-                            ORDER BY u.prz_kod, u.cdyd_diff, u.prg_kod)
+                            ORDER BY u.prz_kod, u.cdyd_diff, u.prg_kod, u.ord)
                     AS V2u_Vchars1K_t
                   ) cdyd_pocz1k
                 , CAST(
                     COLLECT(u.cdyd_kon
-                            ORDER BY u.prz_kod, u.cdyd_diff, u.prg_kod)
+                            ORDER BY u.prz_kod, u.cdyd_diff, u.prg_kod, u.ord)
                     AS V2u_Vchars1K_t
                   ) cdyd_kon1k
                 , CAST(
                     COLLECT(u.ilosc_missmatch
-                            ORDER BY u.prz_kod, u.cdyd_diff, u.prg_kod)
+                            ORDER BY u.prz_kod, u.cdyd_diff, u.prg_kod, u.ord)
                     AS V2u_Vchars1K_t
                   ) ilosc_missmatch1k
             FROM u u
@@ -157,16 +167,16 @@ USING
     ) src
 ON  (
             tgt.job_uuid = src.job_uuid
-        AND tgt.subject_id = src.subject_id
-        AND tgt.specialty_id = src.specialty_id
         AND tgt.semester_id = src.semester_id
+        AND tgt.specialty_id = src.specialty_id
+        AND tgt.subject_id = src.subject_id
     )
 WHEN NOT MATCHED THEN
     INSERT
         ( job_uuid
-        , subject_id
-        , specialty_id
         , semester_id
+        , specialty_id
+        , subject_id
         , subject_map_id
         , prz_kod
         , pktprz_id
@@ -177,9 +187,9 @@ WHEN NOT MATCHED THEN
         )
     VALUES
         ( src.job_uuid
-        , src.subject_id
-        , src.specialty_id
         , src.semester_id
+        , src.specialty_id
+        , src.subject_id
         , src.subject_map_id
         , src.prz_kod
         , src.pktprz_id

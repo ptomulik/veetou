@@ -1,10 +1,10 @@
 CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Przedm_I_t AS
     CONSTRUCTOR FUNCTION V2u_Ko_Matched_Przedm_I_t(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Przedm_I_t
-            , job_uuid IN RAW
-            , subject_id IN NUMBER
-            , specialty_id IN NUMBER
+            , job_uuid RAW
             , semester_id IN NUMBER
+            , specialty_id IN NUMBER
+            , subject_id IN NUMBER
             , subject_map_id IN NUMBER
             , prz_kod IN VARCHAR2
             ) RETURN SELF AS RESULT
@@ -13,8 +13,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Przedm_I_t AS
         SELF.init(
               job_uuid => job_uuid
             , subject_id => subject_id
-            , specialty_id => specialty_id
             , semester_id => semester_id
+            , specialty_id => specialty_id
             , subject_map_id => subject_map_id
             , prz_kod => prz_kod
             );
@@ -23,10 +23,10 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Przedm_I_t AS
 
     MEMBER PROCEDURE init(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Przedm_I_t
-            , job_uuid IN RAW
-            , subject_id IN NUMBER
-            , specialty_id IN NUMBER
+            , job_uuid RAW
             , semester_id IN NUMBER
+            , specialty_id IN NUMBER
+            , subject_id IN NUMBER
             , subject_map_id IN NUMBER
             , prz_kod IN VARCHAR2
             )
@@ -34,9 +34,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Przedm_I_t AS
     BEGIN
         SELF.init(
               job_uuid => job_uuid
-            , subject_id => subject_id
-            , specialty_id => specialty_id
             , semester_id => semester_id
+            , specialty_id => specialty_id
+            , subject_id => subject_id
             );
         SELF.subject_map_id := subject_map_id;
         SELF.prz_kod := prz_kod;

@@ -109,14 +109,21 @@ EXIT;
 
 
 -- Merge data from dz_* tables to v2u_dz_* tables
-@merge_tier1_dz.sql;
+@@merge_tier1_dz.sql;
 
 
--- Merge data from v2u_dx_* tables to v2u_dz_* tables 
-@merge_tier1_dx.sql;
+-- Merge data into v2u_ko_* tables
+@@merge_tier2_ko.sql;
+
+
+
+-- Merge data into v2u_uu_* tables
+@@merge_tier2_uu.sql;
+
+
 
 
 -- Merge data from tier1 tables into tier2 tables.
-@reload_tier2.sql;
+@merge_tier2.sql;
 
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -9,7 +9,7 @@ AS
             , semester => VALUE(semesters)
             , subject_map_j => VALUE(subject_map_j)
             , matched_pktprz_j => VALUE(ma_pktprz_j)
-            , punkty_przedmiotu => VALUE(punkty_przedmiotow)
+            , punkty_przedmiotu => VALUE(pkt_prz)
         )
     FROM v2u_ko_matched_pktprz_j ma_pktprz_j
     INNER JOIN v2u_ko_subjects subjects
@@ -35,9 +35,9 @@ AS
                 AND subject_map_j.map_id = ma_pktprz_j.subject_map_id
                 AND subject_map_j.job_uuid = ma_pktprz_j.job_uuid
             )
-    INNER JOIN v2u_dz_punkty_przedmiotow punkty_przedmiotow
+    INNER JOIN v2u_dz_punkty_przedmiotow pkt_prz
         ON  (
-                    punkty_przedmiotow.id = ma_pktprz_j.pktprz_id
+                    pkt_prz.id = ma_pktprz_j.pktprz_id
             )
 WITH READ ONLY
 ;

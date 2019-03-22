@@ -8,10 +8,10 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Pktprz_I_t
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Pktprz_I_t(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Pktprz_I_t
-            , job_uuid IN RAW
-            , subject_id IN NUMBER
-            , specialty_id IN NUMBER
+            , job_uuid RAW
             , semester_id IN NUMBER
+            , specialty_id IN NUMBER
+            , subject_id IN NUMBER
             , subject_map_id IN NUMBER
             , prz_kod IN VARCHAR2
             , pktprz_id IN NUMBER
@@ -23,10 +23,10 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Pktprz_I_t
 
     , MEMBER PROCEDURE init(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Pktprz_I_t
-            , job_uuid IN RAW
-            , subject_id IN NUMBER
-            , specialty_id IN NUMBER
+            , job_uuid RAW
             , semester_id IN NUMBER
+            , specialty_id IN NUMBER
+            , subject_id IN NUMBER
             , subject_map_id IN NUMBER
             , prz_kod IN VARCHAR2
             , pktprz_id IN NUMBER

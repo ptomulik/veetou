@@ -1,7 +1,13 @@
 MERGE INTO v2u_ko_missing_pktprz_j tgt
 USING
     (
-        WITH u AS
+        WITH punkty_przedmiotow AS
+        (
+            SELECT * FROM v2u_dz_punkty_przedmiotow
+            UNION
+            SELECT * FROM v2u_dx_punkty_przedmiotow
+        ),
+        u AS
         ( -- select all unmatched entries
             SELECT
                   ss_j.job_uuid
@@ -118,7 +124,7 @@ USING
                   w.*
                 , CAST(MULTISET(
                         SELECT t.id
-                        FROM v2u_dz_punkty_przedmiotow t
+                        FROM punkty_przedmiotow t
                         WHERE
                                 t.prz_kod = w.map_subj_code
                             AND (
