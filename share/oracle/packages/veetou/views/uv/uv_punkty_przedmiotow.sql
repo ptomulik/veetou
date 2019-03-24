@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW v2u_xv_punkty_przedmiotow_v
+CREATE OR REPLACE VIEW v2u_uv_punkty_przedmiotow
 OF V2u_Dz_Punkty_Przedmiotu_t
 WITH OBJECT IDENTIFIER (id)
 AS

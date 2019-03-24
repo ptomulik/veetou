@@ -4,16 +4,16 @@ USING
         WITH punkty_przedmiotow AS
         (
             ----------------------------------------------------------------
-            -- Ideally we should just use v2u_vx_punkty_przedmiotow_v, but
+            -- Ideally we should just use v2u_uv_punkty_przedmiotow_v, but
             -- it doesn't work due to DB bug (internal error).
-            -- SELECT * FROM v2u_xv_punkty_przedmiotow_v
+            -- SELECT * FROM v2u_uv_punkty_przedmiotow_v
             ----------------------------------------------------------------
             SELECT * FROM v2u_dz_punkty_przedmiotow
             UNION ALL
             SELECT * FROM v2u_xr_punkty_przedmiotow
         ),
         u AS
-        (   -- identify all matching entries in v2u_xv_punkty_przedmiotow_v
+        (   -- identify all matching entries in v2u_uv_punkty_przedmiotow_v
             SELECT DISTINCT
                   subj_m_j.job_uuid
                 , subj_m_j.subject_id

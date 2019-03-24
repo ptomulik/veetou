@@ -4,9 +4,9 @@ USING
         WITH punkty_przedmiotow AS
         (
             ----------------------------------------------------------------
-            -- Ideally we should just use v2u_vx_punkty_przedmiotow_v, but
+            -- Ideally we should just use v2u_uv_punkty_przedmiotow_v, but
             -- it doesn't work due to DB bug (internal error).
-            -- SELECT * FROM v2u_xv_punkty_przedmiotow_v
+            -- SELECT * FROM v2u_uv_punkty_przedmiotow_v
             ----------------------------------------------------------------
             SELECT * FROM v2u_dz_punkty_przedmiotow
             UNION ALL

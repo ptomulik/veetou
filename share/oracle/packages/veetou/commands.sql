@@ -67,13 +67,13 @@ EXIT;
 
 
 
--- Creates tier1 xv_* views.
-@@create_tier1_xv.sql
+-- Creates tier1 uv_* views.
+@@create_tier1_uv.sql
 
 
 
--- Creates tier1 xv_* views.
-@@drop_tier1_xv.sql
+-- Creates tier1 uv_* views.
+@@drop_tier1_uv.sql
 
 
 

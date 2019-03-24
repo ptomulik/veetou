@@ -35,7 +35,7 @@ AS
                 AND subject_map_j.map_id = ma_pktprz_j.subject_map_id
                 AND subject_map_j.job_uuid = ma_pktprz_j.job_uuid
             )
-    INNER JOIN v2u_xv_punkty_przedmiotow_v pkt_prz
+    INNER JOIN v2u_uv_punkty_przedmiotow pkt_prz
         ON  (
                     pkt_prz.id = ma_pktprz_j.pktprz_id
             )

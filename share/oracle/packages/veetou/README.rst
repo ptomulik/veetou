@@ -92,15 +92,15 @@ module as of a set of related types, tables and views.
 |      |                     | tables and DZ tables. The differences can be analyzed     |
 |      |                     | without actually applying any changes to DZ.              |
 +------+---------------------+-----------------------------------------------------------+
-| XR   | Extra Records       | A set of tables, each of which provides extra records     |
+| XR   | Extra Rows          | A set of tables, each of which provides extra rows        |
 |      |                     | to its corresponding USOS table. For example, a table     |
-|      |                     | named ``v2u_xr_punkty_przedmiotow`` provides records      |
+|      |                     | named ``v2u_xr_punkty_przedmiotow`` provides rows         |
 |      |                     | that are currently not in ``v2u_dz_punkty_przedmiotu``    |
-|      |                     | but, supposedly, will be added there in the future.       |
+|      |                     | but, supposedly, will be inserted there at some point.    |
 +------+---------------------+-----------------------------------------------------------+
-| XV   | Extra View          | A set of views, each of which provides access to UNION    |
+| UV   | Union View          | A set of views, each of which provides access to UNION    |
 |      |                     | of a table and its corresponding XR table. For example    |
-|      |                     | a view named ``v2u_xv_punkty_przedmiotow_v`` is an UNION  |
+|      |                     | a view named ``v2u_uv_punkty_przedmiotow`` is an UNION    |
 |      |                     | of ``v2u_dz_punkty_przedmiotow`` and                      |
 |      |                     | ``v2u_xr_punkty_przedmiotow``.                            |
 +------+---------------------+-----------------------------------------------------------+

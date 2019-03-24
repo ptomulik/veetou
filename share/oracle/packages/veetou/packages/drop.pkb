@@ -169,16 +169,16 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_If_Exists('PACKAGE', 'V2U_' || package_name);
     END;
 
-    PROCEDURE Tier1_Xv
+    PROCEDURE Tier1_Uv
     IS
     BEGIN
-        Drop_View('xv_punkty_przedmiotow_v');
+        Drop_View('uv_punkty_przedmiotow_v');
     END;
 
     PROCEDURE Tier1_Xr
     IS
     BEGIN
-        Tier1_Xv();
+        Tier1_Uv();
         Drop_Trigger('xr_punkty_przedmiotow_tr1');
         Drop_Sequence('xr_punkty_przedmiotow_sq1');
         Drop_Index('xr_punkty_przedmiotow_idx1');
@@ -193,7 +193,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     PROCEDURE Tier1_Dz
     IS
     BEGIN
-        Tier1_Xv();
+        Tier1_Uv();
         Tier1_Xr();
         --
         Drop_Table('dz_zal_przedm_prgos');
