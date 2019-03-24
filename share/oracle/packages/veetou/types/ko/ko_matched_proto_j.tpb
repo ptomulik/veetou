@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Zajcykl_J_t AS
-    CONSTRUCTOR FUNCTION V2u_Ko_Matched_Zajcykl_J_t(
-              SELF IN OUT NOCOPY V2u_Ko_Matched_Zajcykl_J_t
+CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Proto_J_t AS
+    CONSTRUCTOR FUNCTION V2u_Ko_Matched_Proto_J_t(
+              SELF IN OUT NOCOPY V2u_Ko_Matched_Proto_J_t
             , job_uuid RAW
             , semester_id IN NUMBER
             , specialty_id IN NUMBER
@@ -13,6 +13,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Zajcykl_J_t AS
             , classes_matching_score IN NUMBER
             , prz_kod IN VARCHAR2
             , cdyd_kod IN VARCHAR2
+            , prot_id IN NUMBER
             , tzaj_kod IN VARCHAR2
             , zajcykl_id IN NUMBER
             ) RETURN SELF AS RESULT
@@ -31,6 +32,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Zajcykl_J_t AS
             , classes_matching_score => classes_matching_score
             , prz_kod => prz_kod
             , cdyd_kod => cdyd_kod
+            , prot_id => prot_id
             , tzaj_kod => tzaj_kod
             , zajcykl_id => zajcykl_id
             );
@@ -38,7 +40,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Zajcykl_J_t AS
     END;
 
     MEMBER PROCEDURE init(
-              SELF IN OUT NOCOPY V2u_Ko_Matched_Zajcykl_J_t
+              SELF IN OUT NOCOPY V2u_Ko_Matched_Proto_J_t
             , job_uuid RAW
             , semester_id IN NUMBER
             , specialty_id IN NUMBER
@@ -51,6 +53,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Zajcykl_J_t AS
             , classes_matching_score IN NUMBER
             , prz_kod IN VARCHAR2
             , cdyd_kod IN VARCHAR2
+            , prot_id IN NUMBER
             , tzaj_kod IN VARCHAR2
             , zajcykl_id IN NUMBER
             )
@@ -70,6 +73,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Zajcykl_J_t AS
         SELF.classes_matching_score := classes_matching_score;
         SELF.prz_kod := prz_kod;
         SELF.cdyd_kod := cdyd_kod;
+        SELF.prot_id := prot_id;
         SELF.tzaj_kod := tzaj_kod;
         SELF.zajcykl_id := zajcykl_id;
     END;

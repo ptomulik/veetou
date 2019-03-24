@@ -26,10 +26,12 @@
 @@ko_matched_zajcykl_j.sql;
 @@ko_matched_przedm_j.sql;
 @@ko_matched_pktprz_j.sql;
+@@ko_matched_proto_j.sql;
 @@ko_missing_zajcykl_j.sql;
 @@ko_missing_przcykl_j.sql;
 @@ko_missing_przedm_j.sql;
 @@ko_missing_pktprz_j.sql;
+@@ko_missing_proto_j.sql;
 @@ko_skipped_programs_j.sql;
 
 -- vim: set ft=sql ts=4 sw=4 et:

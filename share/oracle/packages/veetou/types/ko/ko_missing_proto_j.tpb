@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Zajcykl_J_t AS
-    CONSTRUCTOR FUNCTION V2u_Ko_Matched_Zajcykl_J_t(
-              SELF IN OUT NOCOPY V2u_Ko_Matched_Zajcykl_J_t
+CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Proto_J_t AS
+    CONSTRUCTOR FUNCTION V2u_Ko_Missing_Proto_J_t(
+              SELF IN OUT NOCOPY V2u_Ko_Missing_Proto_J_t
             , job_uuid RAW
             , semester_id IN NUMBER
             , specialty_id IN NUMBER
@@ -8,13 +8,11 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Zajcykl_J_t AS
             , classes_type IN VARCHAR2
             , classes_hours IN NUMBER
             , subject_map_id IN NUMBER
-            , subject_matching_score IN NUMBER
+            , map_subj_code VARCHAR2
             , classes_map_id IN NUMBER
-            , classes_matching_score IN NUMBER
-            , prz_kod IN VARCHAR2
-            , cdyd_kod IN VARCHAR2
-            , tzaj_kod IN VARCHAR2
-            , zajcykl_id IN NUMBER
+            , map_classes_type VARCHAR2
+            , reason IN VARCHAR2
+            , istniejace_tzaj_kody V2u_5Chars3_t
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -26,19 +24,18 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Zajcykl_J_t AS
             , classes_type => classes_type
             , classes_hours => classes_hours
             , subject_map_id => subject_map_id
-            , subject_matching_score => subject_matching_score
+            , map_subj_code => map_subj_code
             , classes_map_id => classes_map_id
-            , classes_matching_score => classes_matching_score
-            , prz_kod => prz_kod
-            , cdyd_kod => cdyd_kod
-            , tzaj_kod => tzaj_kod
-            , zajcykl_id => zajcykl_id
+            , map_classes_type => map_classes_type
+            , reason => reason
+            , istniejace_tzaj_kody => istniejace_tzaj_kody
             );
         RETURN;
     END;
 
+
     MEMBER PROCEDURE init(
-              SELF IN OUT NOCOPY V2u_Ko_Matched_Zajcykl_J_t
+              SELF IN OUT NOCOPY V2u_Ko_Missing_Proto_J_t
             , job_uuid RAW
             , semester_id IN NUMBER
             , specialty_id IN NUMBER
@@ -46,13 +43,11 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Zajcykl_J_t AS
             , classes_type IN VARCHAR2
             , classes_hours IN NUMBER
             , subject_map_id IN NUMBER
-            , subject_matching_score IN NUMBER
+            , map_subj_code VARCHAR2
             , classes_map_id IN NUMBER
-            , classes_matching_score IN NUMBER
-            , prz_kod IN VARCHAR2
-            , cdyd_kod IN VARCHAR2
-            , tzaj_kod IN VARCHAR2
-            , zajcykl_id IN NUMBER
+            , map_classes_type VARCHAR2
+            , reason IN VARCHAR2
+            , istniejace_tzaj_kody V2u_5Chars3_t
             )
     IS
     BEGIN
@@ -65,13 +60,11 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Zajcykl_J_t AS
             , classes_hours => classes_hours
             );
         SELF.subject_map_id := subject_map_id;
-        SELF.subject_matching_score := subject_matching_score;
+        SELF.map_subj_code := map_subj_code;
         SELF.classes_map_id := classes_map_id;
-        SELF.classes_matching_score := classes_matching_score;
-        SELF.prz_kod := prz_kod;
-        SELF.cdyd_kod := cdyd_kod;
-        SELF.tzaj_kod := tzaj_kod;
-        SELF.zajcykl_id := zajcykl_id;
+        SELF.map_classes_type := map_classes_type;
+        SELF.reason := reason;
+        SELF.istniejace_tzaj_kody := istniejace_tzaj_kody;
     END;
 END;
 

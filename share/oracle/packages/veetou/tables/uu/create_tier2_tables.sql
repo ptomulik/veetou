@@ -7,6 +7,7 @@
 @@uu_programy_osob.ddl;
 @@uu_etapy_osob.ddl;
 @@uu_zaliczenia_przedmiotow.ddl;
+@@uu_protokoly.ddl;
 
 @@uu_classes_grades.ddl;
 

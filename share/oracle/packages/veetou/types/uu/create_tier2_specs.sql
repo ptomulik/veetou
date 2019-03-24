@@ -7,6 +7,7 @@
 @@uu_program_osoby.tps;
 @@uu_etap_osoby.tps;
 @@uu_zalicz_przedmiotu.tps;
+@@uu_protokol.tps;
 
 @@uu_classes_grade.tps;
 
