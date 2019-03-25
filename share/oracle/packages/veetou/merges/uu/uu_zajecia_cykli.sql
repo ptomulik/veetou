@@ -134,6 +134,7 @@ USING
                             grades.subject_id = cs_j.subject_id
                         AND grades.specialty_id = cs_j.specialty_id
                         AND grades.semester_id = cs_j.semester_id
+                        AND grades.classes_type = cs_j.classes_type
                         AND grades.job_uuid = cs_j.job_uuid
                     )
             GROUP BY

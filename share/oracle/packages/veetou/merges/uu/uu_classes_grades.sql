@@ -175,6 +175,7 @@ USING
                         cm_j.semester_id = g_j.semester_id
                     AND cm_j.specialty_id = g_j.specialty_id
                     AND cm_j.subject_id = g_j.subject_id
+                    AND cm_j.classes_type = g_j.classes_type
                     AND cm_j.job_uuid = g_j.job_uuid
                     AND cm_j.selected = 1
                 )

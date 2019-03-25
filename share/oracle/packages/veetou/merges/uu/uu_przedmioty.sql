@@ -111,6 +111,7 @@ USING
                             grades.subject_id = ss_j.subject_id
                         AND grades.specialty_id = ss_j.specialty_id
                         AND grades.semester_id = ss_j.semester_id
+                        AND grades.classes_type = '-'
                         AND grades.job_uuid = ss_j.job_uuid
                     )
             LEFT JOIN v2u_faculties faculties

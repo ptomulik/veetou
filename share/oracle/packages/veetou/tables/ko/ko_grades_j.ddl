@@ -3,7 +3,11 @@ OF V2u_Ko_Grade_J_t
     (
         -- PK
           CONSTRAINT v2u_ko_grades_j_pk
-            PRIMARY KEY (student_id, subject_id, specialty_id, semester_id, job_uuid)
+            PRIMARY KEY ( classes_type , student_id
+                        , subject_id
+                        , specialty_id
+                        , semester_id
+                        , job_uuid)
         -- FK
         , CONSTRAINT v2u_ko_grades_j_f0 FOREIGN KEY (job_uuid)
             REFERENCES v2u_ko_jobs(job_uuid)
@@ -28,10 +32,19 @@ OF V2u_Ko_Grade_J_t
         , CONSTRAINT v2u_ko_grades_j_f7
             FOREIGN KEY (subject_id, specialty_id, semester_id, job_uuid)
             REFERENCES v2u_ko_subject_semesters_j(subject_id, specialty_id, semester_id, job_uuid)
+
+        -- DEF
+        , classes_type DEFAULT '-'
     )
 OBJECT IDENTIFIER IS PRIMARY KEY
 ;
 /
 CREATE INDEX v2u_ko_grades_j_idx1
     ON v2u_ko_grades_j(subject_id, specialty_id, semester_id, job_uuid);
+/
+CREATE INDEX v2u_ko_grades_j_idx2
+    ON v2u_ko_grades_j(student_id, subject_id, specialty_id, semester_id, job_uuid);
+/
+CREATE INDEX v2u_ko_grades_j_idx3
+    ON v2u_ko_grades_j(classes_type, subject_id, specialty_id, semester_id, job_uuid);
 -- vim: set ft=sql ts=4 sw=4 et:

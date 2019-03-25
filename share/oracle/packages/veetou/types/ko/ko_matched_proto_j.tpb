@@ -5,8 +5,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Proto_J_t AS
             , semester_id IN NUMBER
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
+            , classes_type IN CHAR
             , subject_map_id IN NUMBER
-            , subject_matching_score IN NUMBER
+            , classes_map_id IN NUMBER
             , prz_kod IN VARCHAR2
             , cdyd_kod IN VARCHAR2
             , tpro_kod IN VARCHAR2
@@ -19,8 +20,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Proto_J_t AS
             , semester_id => semester_id
             , specialty_id => specialty_id
             , subject_id => subject_id
+            , classes_type => classes_type
             , subject_map_id => subject_map_id
-            , subject_matching_score => subject_matching_score
+            , classes_map_id => classes_map_id
             , prz_kod => prz_kod
             , cdyd_kod => cdyd_kod
             , tpro_kod => tpro_kod
@@ -35,8 +37,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Proto_J_t AS
             , semester_id IN NUMBER
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
+            , classes_type IN CHAR
             , subject_map_id IN NUMBER
-            , subject_matching_score IN NUMBER
+            , classes_map_id IN NUMBER
             , prz_kod IN VARCHAR2
             , cdyd_kod IN VARCHAR2
             , tpro_kod IN VARCHAR2
@@ -50,8 +53,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Proto_J_t AS
             , specialty_id => specialty_id
             , subject_id => subject_id
             );
+        SELF.classes_type := classes_type;
         SELF.subject_map_id := subject_map_id;
-        SELF.subject_matching_score := subject_matching_score;
+        SELF.classes_map_id := classes_map_id;
         SELF.prz_kod := prz_kod;
         SELF.cdyd_kod := cdyd_kod;
         SELF.tpro_kod := tpro_kod;

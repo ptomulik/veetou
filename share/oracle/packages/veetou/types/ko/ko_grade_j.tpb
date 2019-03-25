@@ -6,6 +6,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Grade_J_t AS
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
             , student_id IN NUMBER
+            , classes_type IN CHAR
             , subj_grade IN VARCHAR2
             , subj_grade_date IN DATE
             , tr_id IN NUMBER
@@ -18,6 +19,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Grade_J_t AS
             , specialty_id => specialty_id
             , subject_id => subject_id
             , student_id => student_id
+            , classes_type => classes_type
             , subj_grade => subj_grade
             , subj_grade_date => subj_grade_date
             , tr_id => tr_id
@@ -33,6 +35,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Grade_J_t AS
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
             , student_id IN NUMBER
+            , classes_type IN CHAR
             , subj_grade IN VARCHAR2
             , subj_grade_date IN DATE
             , tr_id IN NUMBER
@@ -46,6 +49,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Grade_J_t AS
             , subject_id => subject_id
             );
         SELF.student_id := student_id;
+        SELF.classes_type := classes_type;
         SELF.subj_grade := subj_grade;
         SELF.subj_grade_date := subj_grade_date;
         SELF.tr_id := tr_id;

@@ -1,6 +1,7 @@
 CREATE OR REPLACE TYPE V2u_Ko_Grade_J_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Subject_Semester_I_t
     ( student_id NUMBER(38)
+    , classes_type CHAR(1)
     , subj_grade VARCHAR2(10 CHAR)
     , subj_grade_date DATE
     , tr_id NUMBER(38)
@@ -12,6 +13,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Grade_J_t
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
             , student_id IN NUMBER
+            , classes_type IN CHAR
             , subj_grade IN VARCHAR2
             , subj_grade_date IN DATE
             , tr_id IN NUMBER
@@ -24,6 +26,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Grade_J_t
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
             , student_id IN NUMBER
+            , classes_type IN CHAR
             , subj_grade IN VARCHAR2
             , subj_grade_date IN DATE
             , tr_id IN NUMBER
