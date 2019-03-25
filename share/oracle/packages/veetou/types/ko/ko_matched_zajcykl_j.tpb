@@ -14,7 +14,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Zajcykl_J_t AS
             , prz_kod IN VARCHAR2
             , cdyd_kod IN VARCHAR2
             , tzaj_kod IN VARCHAR2
-            , zajcykl_id IN NUMBER
+            , zaj_cyk_id IN NUMBER
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -32,7 +32,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Zajcykl_J_t AS
             , prz_kod => prz_kod
             , cdyd_kod => cdyd_kod
             , tzaj_kod => tzaj_kod
-            , zajcykl_id => zajcykl_id
+            , zaj_cyk_id => zaj_cyk_id
             );
         RETURN;
     END;
@@ -52,7 +52,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Zajcykl_J_t AS
             , prz_kod IN VARCHAR2
             , cdyd_kod IN VARCHAR2
             , tzaj_kod IN VARCHAR2
-            , zajcykl_id IN NUMBER
+            , zaj_cyk_id IN NUMBER
             )
     IS
     BEGIN
@@ -71,7 +71,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Zajcykl_J_t AS
         SELF.prz_kod := prz_kod;
         SELF.cdyd_kod := cdyd_kod;
         SELF.tzaj_kod := tzaj_kod;
-        SELF.zajcykl_id := zajcykl_id;
+        SELF.zaj_cyk_id := zaj_cyk_id;
     END;
 END;
 

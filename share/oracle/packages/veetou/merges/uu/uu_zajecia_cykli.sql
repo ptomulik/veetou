@@ -68,11 +68,11 @@ USING
                         AS V2u_Vchars1K_t
                   )) tzaj_kody1k
                 , SET(CAST(
-                        COLLECT(ma_j.zajcykl_id ORDER BY ma_j.subject_map_id)
+                        COLLECT(ma_j.zaj_cyk_id ORDER BY ma_j.subject_map_id)
                         AS V2u_Dz_Ids_t
                   )) ids
 
-                , COUNT(ma_j.zajcykl_id) dbg_matched
+                , COUNT(ma_j.zaj_cyk_id) dbg_matched
                 , COUNT(mi_j.job_uuid) dbg_missing
                 , COUNT(sm_j.map_id) dbg_subject_mapped
                 , COUNT(cm_j.map_id) dbg_classes_mapped

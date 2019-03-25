@@ -569,12 +569,14 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Missing_Pktprz_J_t', 'Ko_Missing_Pktprzes_J_t');
         Drop_Type('Ko_Missing_Proto_J_t', 'Ko_Missing_Protos_J_t');
         Drop_Type('Ko_Missing_Zajcykl_J_t', 'Ko_Missing_Zajcykles_J_t');
+        Drop_Type('Ko_Missing_Proto_J_t', 'Ko_Missing_Protos_J_t');
         Drop_Type('Ko_Missing_Przcykl_J_t', 'Ko_Missing_Przcykles_J_t');
         Drop_Type('Ko_Missing_Przedm_J_t', 'Ko_Missing_Przedms_J_t');
         Drop_Type('Ko_Matched_Prgos_J_t', 'Ko_Matched_Prgoses_J_t');
         Drop_Type('Ko_Matched_Etpos_J_t', 'Ko_Matched_Etposes_J_t');
         Drop_Type('Ko_Matched_Pktprz_J_t', 'Ko_Matched_Pktprzes_J_t');
         Drop_Type('Ko_Matched_Zajcykl_J_t', 'Ko_Matched_Zajcykles_J_t');
+        Drop_Type('Ko_Matched_Proto_J_t', 'Ko_Matched_Protos_J_t');
         Drop_Type('Ko_Matched_Przcykl_J_t', 'Ko_Matched_Przcykles_J_t');
         Drop_Type('Ko_Matched_Przedm_J_t', 'Ko_Matched_Przedms_J_t');
         Drop_Type('Ko_Classes_Map_J_t', 'Ko_Classes_Maps_J_t');
@@ -700,9 +702,11 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Matched_Przedm_V_t', 'Ko_Matched_Przedms_V_t');
         Drop_Type('Ko_Matched_Przcykl_V_t', 'Ko_Matched_Przcykles_V_t');
         Drop_Type('Ko_Matched_Zajcykl_V_t', 'Ko_Matched_Zajcykles_V_t');
+        Drop_Type('Ko_Matched_Proto_V_t', 'Ko_Matched_Protos_V_t');
         Drop_Type('Ko_Matched_Pktprz_V_t', 'Ko_Matched_Pktprzes_V_t');
         Drop_Type('Ko_Missing_Pktprz_V_t', 'Ko_Missing_Pktprzes_V_t');
         Drop_Type('Ko_Missing_Zajcykl_V_t', 'Ko_Missing_Zajcykles_V_t');
+        Drop_Type('Ko_Mising_Proto_V_t', 'Ko_Mising_Protos_V_t');
         Drop_Type('Ko_Missing_Przcykl_V_t', 'Ko_Missing_Przcykles_V_t');
         Drop_Type('Ko_Missing_Przedm_V_t', 'Ko_Missing_Przedms_V_t');
         Drop_Type('Ko_Missing_Etpos_V_t', 'Ko_Missing_Etposes_V_t');

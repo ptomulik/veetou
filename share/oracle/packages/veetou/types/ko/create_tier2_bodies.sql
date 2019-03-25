@@ -29,12 +29,14 @@
 @@ko_matched_przedm_j.tpb;
 @@ko_matched_przcykl_j.tpb;
 @@ko_matched_zajcykl_j.tpb;
+@@ko_matched_proto_j.tpb;
 @@ko_matched_pktprz_j.tpb;
 @@ko_missing_prgos_j.tpb;
 @@ko_missing_etpos_j.tpb;
 @@ko_missing_przedm_j.tpb;
 @@ko_missing_przcykl_j.tpb;
 @@ko_missing_zajcykl_j.tpb;
+@@ko_missing_proto_j.tpb;
 @@ko_missing_pktprz_j.tpb;
 @@ko_skipped_program_j.tpb;
 

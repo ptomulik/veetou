@@ -3,7 +3,7 @@ OF V2u_Ko_Matched_Proto_J_t
     (
         -- PK
           CONSTRAINT v2u_ko_matched_proto_j_pk
-            PRIMARY KEY (classes_type, subject_id, specialty_id, semester_id, job_uuid)
+            PRIMARY KEY (prot_id, subject_id, specialty_id, semester_id, job_uuid)
         -- FK
         , CONSTRAINT v2u_ko_matched_proto_j_f0
             FOREIGN KEY (job_uuid)

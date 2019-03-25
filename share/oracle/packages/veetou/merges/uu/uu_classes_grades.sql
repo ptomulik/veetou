@@ -254,7 +254,7 @@ USING
                 )
         LEFT JOIN v2u_dz_zajecia_cykli zajecia_cykli
             ON  (
-                        ma_zajcykl_j.zajcykl_id = zajecia_cykli.id
+                        ma_zajcykl_j.zaj_cyk_id = zajecia_cykli.id
                 )
     ) src
 ON  (

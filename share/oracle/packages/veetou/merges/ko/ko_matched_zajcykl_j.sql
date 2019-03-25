@@ -15,7 +15,7 @@ USING
             , zajecia_cykli.prz_kod prz_kod
             , zajecia_cykli.cdyd_kod cdyd_kod
             , zajecia_cykli.tzaj_kod tzaj_kod
-            , zajecia_cykli.id zajcykl_id
+            , zajecia_cykli.id zaj_cyk_id
         FROM v2u_ko_subject_map_j sm_j
         INNER JOIN v2u_ko_classes_map_j cm_j
             ON  (
@@ -70,7 +70,7 @@ WHEN NOT MATCHED THEN
         , prz_kod
         , cdyd_kod
         , tzaj_kod
-        , zajcykl_id
+        , zaj_cyk_id
         )
     VALUES
         ( src.job_uuid
@@ -86,7 +86,7 @@ WHEN NOT MATCHED THEN
         , src.prz_kod
         , src.cdyd_kod
         , src.tzaj_kod
-        , src.zajcykl_id
+        , src.zaj_cyk_id
         )
 WHEN MATCHED THEN
     UPDATE SET
@@ -98,7 +98,7 @@ WHEN MATCHED THEN
         , tgt.prz_kod = src.prz_kod
         , tgt.cdyd_kod = src.cdyd_kod
         , tgt.tzaj_kod = src.tzaj_kod
-        , tgt.zajcykl_id = src.zajcykl_id
+        , tgt.zaj_cyk_id = src.zaj_cyk_id
 ;
 
 COMMIT;

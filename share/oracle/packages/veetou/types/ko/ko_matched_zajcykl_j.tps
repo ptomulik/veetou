@@ -7,7 +7,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Zajcykl_J_t
     , prz_kod VARCHAR2(20 CHAR)
     , cdyd_kod VARCHAR2(20 CHAR)
     , tzaj_kod VARCHAR2(20 CHAR)
-    , zajcykl_id NUMBER(10)
+    , zaj_cyk_id NUMBER(10)
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Zajcykl_J_t(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Zajcykl_J_t
@@ -24,7 +24,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Zajcykl_J_t
             , prz_kod IN VARCHAR2
             , cdyd_kod IN VARCHAR2
             , tzaj_kod IN VARCHAR2
-            , zajcykl_id IN NUMBER
+            , zaj_cyk_id IN NUMBER
             ) RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
@@ -42,7 +42,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Zajcykl_J_t
             , prz_kod IN VARCHAR2
             , cdyd_kod IN VARCHAR2
             , tzaj_kod IN VARCHAR2
-            , zajcykl_id IN NUMBER
+            , zaj_cyk_id IN NUMBER
             )
     )
 NOT FINAL;
