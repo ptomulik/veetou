@@ -1,20 +1,21 @@
-CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Pktprz_V_t AS
-    CONSTRUCTOR FUNCTION V2u_Ko_Matched_Pktprz_V_t(
-              SELF IN OUT NOCOPY V2u_Ko_Matched_Pktprz_V_t
-            , matched_pktprz_j IN V2u_Ko_Matched_Pktprz_J_t
+CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Proto_V_t AS
+    CONSTRUCTOR FUNCTION V2u_Ko_Matched_Proto_V_t(
+              SELF IN OUT NOCOPY V2u_Ko_Matched_Proto_V_t
+            , matched_proto_j IN V2u_Ko_Matched_Proto_J_t
             , subject IN V2u_Ko_Subject_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
-            , punkty_przedmiotu IN V2u_Dz_Punkty_Przedmiotu_t
+            , protokol IN V2u_Dz_Protokol_t
             ) RETURN SELF AS RESULT
     IS
     BEGIN
-        SELF.job_uuid := matched_pktprz_j.job_uuid;
-        SELF.subject_id := matched_pktprz_j.subject_id;
-        SELF.specialty_id := matched_pktprz_j.specialty_id;
-        SELF.semester_id := matched_pktprz_j.semester_id;
-        SELF.subject_map_id := matched_pktprz_j.subject_map_id;
-        SELF.ilosc_missmatch := matched_pktprz_j.ilosc_missmatch;
+        SELF.job_uuid := matched_proto_j.job_uuid;
+        SELF.classes_type := matched_proto_j.classes_type;
+        SELF.subject_id := matched_proto_j.subject_id;
+        SELF.specialty_id := matched_proto_j.specialty_id;
+        SELF.semester_id := matched_proto_j.semester_id;
+        SELF.subject_map_id := matched_proto_j.subject_map_id;
+        SELF.classes_map_id := matched_proto_j.classes_map_id;
         -- KO
         SELF.subj_code := subject.subj_code;
         SELF.subj_name := subject.subj_name;
@@ -37,17 +38,19 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Pktprz_V_t AS
         SELF.ects_other := semester.ects_other;
         SELF.ects_total := semester.ects_total;
         -- DZ
-        SELF.prz_kod := punkty_przedmiotu.prz_kod;
-        SELF.prg_kod := punkty_przedmiotu.prg_kod;
-        SELF.tpkt_kod := punkty_przedmiotu.tpkt_kod;
-        SELF.ilosc := punkty_przedmiotu.ilosc;
-        SELF.utw_id := punkty_przedmiotu.utw_id;
-        SELF.utw_data := punkty_przedmiotu.utw_data;
-        SELF.mod_id := punkty_przedmiotu.mod_id;
-        SELF.mod_data := punkty_przedmiotu.mod_data;
-        SELF.id := punkty_przedmiotu.id;
-        SELF.cdyd_pocz := punkty_przedmiotu.cdyd_pocz;
-        SELF.cdyd_kon := punkty_przedmiotu.cdyd_kon;
+        SELF.zaj_cyk_id := protokol.zaj_cyk_id;
+        SELF.opis := protokol.opis;
+        SELF.utw_id := protokol.utw_id;
+        SELF.utw_data := protokol.utw_data;
+        SELF.mod_id := protokol.mod_id;
+        SELF.mod_data := protokol.mod_data;
+        SELF.tpro_kod := protokol.tpro_kod;
+        SELF.prot_id := protokol.id;
+        SELF.prz_kod := protokol.prz_kod;
+        SELF.cdyd_kod := protokol.cdyd_kod;
+        SELF.czy_do_sredniej := protokol.czy_do_sredniej;
+        SELF.edycja := protokol.edycja;
+        SELF.opis_ang := protokol.opis_ang;
         RETURN;
     END;
 END;

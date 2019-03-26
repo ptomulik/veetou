@@ -1,23 +1,19 @@
 CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Przedm_V_t AS
     CONSTRUCTOR FUNCTION V2u_Ko_Matched_Przedm_V_t(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Przedm_V_t
+            , matched_przedm_j IN V2u_Ko_Matched_Przedm_J_t
             , subject IN V2u_Ko_Subject_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
-            , subject_map_j IN V2u_Ko_Subject_Map_J_t
             , przedmiot IN V2u_Dz_Przedmiot_t
             ) RETURN SELF AS RESULT
     IS
     BEGIN
-        SELF.job_uuid := subject.job_uuid;
-        SELF.subject_id := subject.id;
-        SELF.specialty_id := specialty.id;
-        SELF.semester_id := semester.id;
-        SELF.subject_map_id := subject_map_j.map_id;
-        SELF.matching_score := subject_map_j.matching_score;
-        SELF.highest_score := subject_map_j.highest_score;
-        SELF.selected := subject_map_j.selected;
-        SELF.reason := subject_map_j.reason;
+        SELF.job_uuid := matched_przedm_j.job_uuid;
+        SELF.subject_id := matched_przedm_j.subject_id;
+        SELF.specialty_id := matched_przedm_j.specialty_id;
+        SELF.semester_id := matched_przedm_j.semester_id;
+        SELF.subject_map_id := matched_przedm_j.subject_map_id;
         -- KO
         SELF.subj_code := subject.subj_code;
         SELF.subj_name := subject.subj_name;

@@ -4,45 +4,33 @@ WITH OBJECT IDENTIFIER (classes_type, subject_id, specialty_id, semester_id, job
 AS
     SELECT
           V2u_Ko_Matched_Zajcykl_V_t(
-              classes_type => j.classes_type
+              matched_zajcykl_j => VALUE(ma_zajcykl_j)
             , subject => VALUE(subjects)
             , specialty => VALUE(specialties)
             , semester => VALUE(semesters)
-            , subject_map => VALUE(subject_map)
-            , classes_map => VALUE(classes_map)
             , zajecia_cyklu => VALUE(zajecia_cykli)
-            , subject_matching_score => j.subject_matching_score
-            , classes_matching_score => j.classes_matching_score
         )
-    FROM v2u_ko_matched_zajcykl_j j
+    FROM v2u_ko_matched_zajcykl_j ma_zajcykl_j
     INNER JOIN v2u_ko_subjects subjects
         ON  (
-                    subjects.id = j.subject_id
-                AND subjects.job_uuid = j.job_uuid
+                    subjects.id = ma_zajcykl_j.subject_id
+                AND subjects.job_uuid = ma_zajcykl_j.job_uuid
             )
     INNER JOIN v2u_ko_specialties specialties
         ON  (
-                    specialties.id = j.specialty_id
-                AND specialties.job_uuid = j.job_uuid
+                    specialties.id = ma_zajcykl_j.specialty_id
+                AND specialties.job_uuid = ma_zajcykl_j.job_uuid
             )
     INNER JOIN v2u_ko_semesters semesters
         ON  (
-                    semesters.id = j.semester_id
-                AND semesters.job_uuid = j.job_uuid
-            )
-    INNER JOIN v2u_subject_map subject_map
-        ON  (
-                    subject_map.id = j.subject_map_id
-            )
-    INNER JOIN v2u_classes_map classes_map
-        ON  (
-                    classes_map.id = j.classes_map_id
+                    semesters.id = ma_zajcykl_j.semester_id
+                AND semesters.job_uuid = ma_zajcykl_j.job_uuid
             )
     INNER JOIN v2u_dz_zajecia_cykli zajecia_cykli
         ON  (
-                    zajecia_cykli.prz_kod = j.prz_kod
-                AND zajecia_cykli.cdyd_kod = j.cdyd_kod
-                AND zajecia_cykli.tzaj_kod = j.tzaj_kod
+                    zajecia_cykli.prz_kod = ma_zajcykl_j.prz_kod
+                AND zajecia_cykli.cdyd_kod = ma_zajcykl_j.cdyd_kod
+                AND zajecia_cykli.tzaj_kod = ma_zajcykl_j.tzaj_kod
             )
 WITH READ ONLY;
 

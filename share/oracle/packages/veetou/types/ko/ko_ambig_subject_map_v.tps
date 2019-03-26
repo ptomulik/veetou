@@ -1,4 +1,5 @@
-CREATE OR REPLACE TYPE V2u_Ko_Ambig_Subject_Map_V_t FORCE AUTHID CURRENT_USER AS OBJECT
+CREATE OR REPLACE TYPE V2u_Ko_Ambig_Subject_Map_V_t
+    FORCE AUTHID CURRENT_USER AS OBJECT
     ( job_uuid RAW(16)
     , subject_id NUMBER(38)
     , specialty_id NUMBER(38)

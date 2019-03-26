@@ -54,4 +54,7 @@ CREATE INDEX v2u_subject_map_idx1
 CREATE INDEX v2u_subject_map_idx2
      ON v2u_subject_map(map_subj_code);
 
+CREATE INDEX v2u_subject_map_idx3
+     ON v2u_subject_map(id, map_subj_code);
+
 -- vim: set ft=sql ts=4 sw=4 et:

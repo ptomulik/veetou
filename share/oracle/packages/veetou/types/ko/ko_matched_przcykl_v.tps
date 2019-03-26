@@ -5,10 +5,6 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Przcykl_V_t
     , specialty_id NUMBER(38)
     , semester_id NUMBER(38)
     , subject_map_id NUMBER(38)
-    , matching_score NUMBER(38)
-    , highest_score NUMBER(38)
-    , selected NUMBER(1)
-    , reason VARCHAR2(20 CHAR)
     -- KO
     , subj_code VARCHAR2(32 CHAR)
     , subj_name VARCHAR2(256 CHAR)
@@ -53,10 +49,10 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Przcykl_V_t
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Przcykl_V_t(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Przcykl_V_t
+            , matched_przcykl_j IN V2u_Ko_Matched_Przcykl_J_t
             , subject IN V2u_Ko_Subject_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
-            , subject_map_j IN V2u_Ko_Subject_Map_J_t
             , przedmiot_cyklu IN V2u_Dz_Przedmiot_Cyklu_t
             ) RETURN SELF AS RESULT
 

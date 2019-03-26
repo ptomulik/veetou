@@ -11,6 +11,7 @@ OF V2u_Dz_Zajecia_Cyklu_t
     )
 OBJECT IDENTIFIER IS PRIMARY KEY;
 /
-CREATE INDEX v2u_dz_zajecia_cykli_idx1 ON v2u_dz_zajecia_cykli(prz_kod, cdyd_kod, tzaj_kod);
+CREATE INDEX v2u_dz_zajecia_cykli_idx1
+    ON v2u_dz_zajecia_cykli(prz_kod, cdyd_kod, tzaj_kod);
 
 -- vim: set ft=sql ts=4 sw=4 et:

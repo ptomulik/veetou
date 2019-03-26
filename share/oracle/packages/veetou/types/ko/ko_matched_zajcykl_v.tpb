@@ -1,27 +1,22 @@
 CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Zajcykl_V_t AS
     CONSTRUCTOR FUNCTION V2u_Ko_Matched_Zajcykl_V_t(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Zajcykl_V_t
-            , classes_type IN VARCHAR2
+            , matched_zajcykl_j IN V2u_Ko_Matched_Zajcykl_J_t
             , subject IN V2u_Ko_Subject_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
-            , subject_map IN V2u_Subject_Map_t
-            , classes_map IN V2u_Classes_Map_t
             , zajecia_cyklu IN V2u_Dz_Zajecia_Cyklu_t
-            , subject_matching_score IN NUMBER
-            , classes_matching_score IN NUMBER
             ) RETURN SELF AS RESULT
     IS
     BEGIN
         SELF.job_uuid := subject.job_uuid;
-        SELF.classes_type := classes_type;
-        SELF.subject_id := subject.id;
-        SELF.specialty_id := specialty.id;
-        SELF.semester_id := semester.id;
-        SELF.subject_map_id := subject_map.id;
-        SELF.subject_matching_score := subject_matching_score;
-        SELF.classes_map_id := classes_map.id;
-        SELF.classes_matching_score := classes_matching_score;
+        SELF.classes_type := matched_zajcykl_j.classes_type;
+        SELF.classes_hours := matched_zajcykl_j.classes_hours;
+        SELF.subject_id := matched_zajcykl_j.subject_id;
+        SELF.specialty_id := matched_zajcykl_j.specialty_id;
+        SELF.semester_id := matched_zajcykl_j.semester_id;
+        SELF.subject_map_id := matched_zajcykl_j.subject_map_id;
+        SELF.classes_map_id := matched_zajcykl_j.classes_map_id;
         -- KO
         SELF.subj_code := subject.subj_code;
         SELF.subj_name := subject.subj_name;

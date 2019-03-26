@@ -36,8 +36,8 @@
 @@ko_matched_pktprz_j.ddl;
 @@ko_missing_pktprz_j.ddl;
 
-@@ko_matched_proto_j.ddl;
-@@ko_missing_proto_j.ddl;
+@@ko_matched_protos_j.ddl;
+@@ko_missing_protos_j.ddl;
 
 @@ko_skipped_programs_j.ddl;
 

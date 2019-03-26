@@ -1,6 +1,6 @@
 CREATE OR REPLACE VIEW v2u_ko_missing_zajcykl_v
 OF V2u_Ko_Missing_Zajcykl_V_t
-WITH OBJECT IDENTIFIER (job_uuid, subject_id, specialty_id, semester_id)
+WITH OBJECT IDENTIFIER (job_uuid, subject_id, specialty_id, semester_id, classes_type)
 AS
     SELECT
           V2u_Ko_Missing_Zajcykl_V_t(

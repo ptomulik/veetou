@@ -362,6 +362,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
 
         Drop_Index('subject_map_idx1');
         Drop_Index('subject_map_idx2');
+        Drop_Index('subject_map_idx3');
         Drop_Trigger('subject_map_tr1');
         Drop_Sequence('subject_map_sq1');
         Drop_Table('subject_map');
@@ -435,7 +436,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         --
         Drop_Table('ko_missing_pktprz_j');
         --
-        Drop_Table('ko_missing_proto_j');
+        Drop_Table('ko_missing_protos_j');
         --
         Drop_Index('ko_matched_etpos_j_idx1');
         Drop_Table('ko_matched_etpos_j');
@@ -452,8 +453,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         --
         Drop_Table('ko_matched_pktprz_j');
         --
-        Drop_Index('ko_matched_proto_j_idx1');
-        Drop_Table('ko_matched_proto_j');
+        Drop_Index('ko_matched_protos_j_idx1');
+        Drop_Index('ko_matched_protos_j_idx2');
+        Drop_Table('ko_matched_protos_j');
         --
         Drop_Index('ko_grades_j_idx1');
         Drop_Index('ko_grades_j_idx2');
@@ -474,6 +476,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('ko_classes_map_j_idx3');
         Drop_Index('ko_classes_map_j_idx4');
         Drop_Index('ko_classes_map_j_idx5');
+        Drop_Index('ko_classes_map_j_idx6');
+        Drop_Index('ko_classes_map_j_idx7');
         Drop_Table('ko_classes_map_j');
         --
         Drop_Table('ko_classes_semesters_j');
@@ -482,6 +486,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('ko_subject_map_j_idx2');
         Drop_Index('ko_subject_map_j_idx3');
         Drop_Index('ko_subject_map_j_idx4');
+        Drop_Index('ko_subject_map_j_idx5');
         Drop_Table('ko_subject_map_j');
         --
         Drop_Table('ko_subject_semesters_j');
@@ -665,7 +670,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_View('uu_subject_grades_v');
 
         Drop_View('ko_skipped_programs_v');
-        Drop_View('ko_missing_proto_v');
+        Drop_View('ko_missing_protos_v');
         Drop_View('ko_missing_pktprz_v');
         Drop_View('ko_missing_zajcykl_v');
         Drop_View('ko_missing_przcykl_v');
@@ -674,7 +679,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_View('ko_missing_prgos_v');
         Drop_View('ko_matched_prgos_v');
         Drop_View('ko_matched_etpos_v');
-        Drop_View('ko_matched_proto_v');
+        Drop_View('ko_matched_protos_v');
         Drop_View('ko_matched_pktprz_v');
         Drop_View('ko_matched_zajcykl_v');
         Drop_View('ko_matched_przcykl_v');
@@ -708,7 +713,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Matched_Pktprz_V_t', 'Ko_Matched_Pktprzes_V_t');
         Drop_Type('Ko_Missing_Pktprz_V_t', 'Ko_Missing_Pktprzes_V_t');
         Drop_Type('Ko_Missing_Zajcykl_V_t', 'Ko_Missing_Zajcykles_V_t');
-        Drop_Type('Ko_Mising_Proto_V_t', 'Ko_Mising_Protos_V_t');
+        Drop_Type('Ko_Missing_Proto_V_t', 'Ko_Missing_Protos_V_t');
         Drop_Type('Ko_Missing_Przcykl_V_t', 'Ko_Missing_Przcykles_V_t');
         Drop_Type('Ko_Missing_Przedm_V_t', 'Ko_Missing_Przedms_V_t');
         Drop_Type('Ko_Missing_Etpos_V_t', 'Ko_Missing_Etposes_V_t');

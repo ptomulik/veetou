@@ -9,9 +9,7 @@ USING
             , cm_j.classes_type classes_type
             , cm_j.classes_hours classes_hours
             , sm_j.map_id subject_map_id
-            , sm_j.matching_score subject_matching_score
             , cm_j.map_id classes_map_id
-            , cm_j.matching_score classes_matching_score
             , zajecia_cykli.prz_kod prz_kod
             , zajecia_cykli.cdyd_kod cdyd_kod
             , zajecia_cykli.tzaj_kod tzaj_kod
@@ -64,9 +62,7 @@ WHEN NOT MATCHED THEN
         , classes_type
         , classes_hours
         , subject_map_id
-        , subject_matching_score
         , classes_map_id
-        , classes_matching_score
         , prz_kod
         , cdyd_kod
         , tzaj_kod
@@ -80,9 +76,7 @@ WHEN NOT MATCHED THEN
         , src.classes_type
         , src.classes_hours
         , src.subject_map_id
-        , src.subject_matching_score
         , src.classes_map_id
-        , src.classes_matching_score
         , src.prz_kod
         , src.cdyd_kod
         , src.tzaj_kod
@@ -92,9 +86,7 @@ WHEN MATCHED THEN
     UPDATE SET
           tgt.classes_hours = src.classes_hours
         , tgt.subject_map_id = src.subject_map_id
-        , tgt.subject_matching_score = src.subject_matching_score
         , tgt.classes_map_id = src.classes_map_id
-        , tgt.classes_matching_score = src.classes_matching_score
         , tgt.prz_kod = src.prz_kod
         , tgt.cdyd_kod = src.cdyd_kod
         , tgt.tzaj_kod = src.tzaj_kod
