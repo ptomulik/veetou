@@ -6,11 +6,10 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Proto_J_t AS
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
             , classes_type IN VARCHAR2
-            , classes_hours IN NUMBER
             , subject_map_id IN NUMBER
-            , map_subj_code VARCHAR2
+            , map_subj_code IN VARCHAR2
             , classes_map_id IN NUMBER
-            , map_classes_type VARCHAR2
+            , map_classes_type IN VARCHAR2
             , reason IN VARCHAR2
             ) RETURN SELF AS RESULT
     IS
@@ -52,7 +51,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Proto_J_t AS
             , specialty_id => specialty_id
             , subject_id => subject_id
             );
-        SELF.classes_type := classes_type
+        SELF.classes_type := classes_type;
         SELF.subject_map_id := subject_map_id;
         SELF.map_subj_code := map_subj_code;
         SELF.classes_map_id := classes_map_id;

@@ -4,43 +4,44 @@ USING
         WITH u AS
         (
             SELECT
-                  ss_j.job_uuid
-                , ss_j.semester_id
-                , ss_j.specialty_id
-                , ss_j.subject_id
-                , '-' classes_type
-            FROM v2u_ko_subject_semesters_j ss_j
-            UNION ALL
-            SELECT
-                  cs_j.job_uuid
-                , cs_j.semester_id
-                , cs_j.specialty_id
-                , cs_j.subject_id
-                , cs_j.classes_type
-            FROM v2u_ko_classes_semesters_j cs_j
-        ),
-        v AS
-        (
-            SELECT
-                  u.job_uuid
-                , u.semester_id
-                , u.specialty_id
-                , u.subject_id
-                , u.classes_type
-                , ma_zajcykl_j.zaj_cyk_id
+                  g_j.job_uuid
+                , g_j.semester_id
+                , g_j.specialty_id
+                , g_j.subject_id
+                , g_j.classes_type
                 , SET(CAST(
                         COLLECT(g_j.subj_grade ORDER BY g_j.subj_grade)
                         AS V2u_Vchars1K_t
                   )) subj_grades1k
-            FROM u u
-            INNER JOIN v2u_ko_grades_j g_j
+            FROM v2u_ko_grades_j g_j
+            LEFT JOIN v2u_ko_matched_protos_j ma_j
                 ON  (
-                            g_j.subject_id = u.subject_id
-                        AND g_j.specialty_id = u.specialty_id
-                        AND g_j.semester_id = u.semester_id
-                        AND g_j.classes_type = u.classes_type
-                        AND g_j.job_uuid = u.job_uuid
+                            ma_j.subject_id = g_j.subject_id
+                        AND ma_j.specialty_id = g_j.specialty_id
+                        AND ma_j.semester_id = g_j.semester_id
+                        AND ma_j.classes_type = g_j.classes_type
+                        AND ma_j.job_uuid = g_j.job_uuid
                     )
+            WHERE
+                    g_j.subj_grade IS NOT NULL
+                AND ma_j.job_uuid IS NULL
+            GROUP BY
+                  g_j.job_uuid
+                , g_j.semester_id
+                , g_j.specialty_id
+                , g_j.subject_id
+                , g_j.classes_type
+        ),
+        v AS
+        (
+            SELECT
+                  u.*
+                , ma_zajcykl_j.zaj_cyk_id
+                , CAST(MULTISET(
+                    SELECT SUBSTR(VALUE(t), 1, 10)
+                    FROM TABLE(u.subj_grades1k) t
+                  ) AS V2u_Subj_Grades_t) subj_grades
+            FROM u u
             LEFT JOIN v2u_ko_matched_zajcykl_j ma_zajcykl_j
                 ON  (
                             ma_zajcykl_j.subject_id = u.subject_id
@@ -49,14 +50,6 @@ USING
                         AND ma_zajcykl_j.classes_type = u.classes_type
                         AND ma_zajcykl_j.job_uuid = u.job_uuid
                     )
-            GROUP BY
-                  u.job_uuid
-                , u.semester_id
-                , u.specialty_id
-                , u.subject_id
-                , u.classes_type
-                , ma_zajcykl_j.zaj_cyk_id
-            HAVING COUNT(g_j.subj_grade) > 0
         ),
         w AS
         ( -- select additional fields
@@ -67,10 +60,6 @@ USING
                 , v.subject_id
                 , v.classes_type
                 , v.zaj_cyk_id
-                , CAST(MULTISET(
-                    SELECT SUBSTR(VALUE(t), 1, 10)
-                    FROM TABLE(u.subj_grades1k) t
-                  ) AS V2u_Subj_Grades_t) subj_grades
                 , sm_j.map_id subject_map_id
                 , subject_map.map_subj_code
                 , cm_j.map_id classes_map_id

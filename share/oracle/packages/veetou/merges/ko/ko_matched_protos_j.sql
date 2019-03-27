@@ -8,99 +8,96 @@ USING
                 , sm_j.semester_id
                 , sm_j.specialty_id
                 , sm_j.subject_id
-                , '-' classes_type
-                , sm_j.map_id subject_map_id
-                , NULL classes_map_id
-            FROM v2u_ko_subject_map_j sm_j
-            WHERE sm_j.selected = 1
-            UNION ALL
-            SELECT
-                  cm_j.job_uuid
-                , cm_j.semester_id
-                , cm_j.specialty_id
-                , cm_j.subject_id
                 , cm_j.classes_type
-                , sm2_j.map_id subject_map_id
+                , sm_j.map_id subject_map_id
                 , cm_j.map_id classes_map_id
-            FROM v2u_ko_classes_map_j cm_j
-            INNER JOIN v2u_ko_subject_map_j sm2_j
-                ON  (
-                            sm2_j.subject_id = cm_j.subject_id
-                        AND sm2_j.specialty_id = cm_j.specialty_id
-                        AND sm2_j.semester_id = cm_j.semester_id
-                        AND sm2_j.job_uuid = cm_j.job_uuid
-                        AND sm2_j.selected = 1
-                    )
-            WHERE cm_j.selected = 1
-        ),
-        v AS
-        (
-            SELECT
-                  u.job_uuid
-                , u.semester_id
-                , u.specialty_id
-                , u.subject_id
-                , u.classes_type
-                , u.subject_map_id
-                , u.classes_map_id
-                , ma_zajcykl_j.zaj_cyk_id
                 , SET(CAST(
                         COLLECT(g_j.subj_grade ORDER BY g_j.subj_grade)
                         AS V2u_Vchars1K_t
                   )) subj_grades1k
-            FROM u u
+            FROM v2u_ko_subject_map_j sm_j
+            INNER JOIN v2u_ko_classes_map_j cm_j
+                ON  (
+                            cm_j.subject_id = sm_j.subject_id
+                        AND cm_j.specialty_id = cm_j.specialty_id
+                        AND cm_j.semester_id = sm_j.semester_id
+                        AND cm_j.job_uuid = sm_j.job_uuid
+                        AND cm_j.selected = 1
+                    )
             INNER JOIN v2u_ko_grades_j g_j
                 ON  (
-                            g_j.subject_id = u.subject_id
-                        AND g_j.specialty_id = u.specialty_id
-                        AND g_j.semester_id = u.semester_id
-                        AND g_j.classes_type = u.classes_type
-                        AND g_j.job_uuid = u.job_uuid
+                            g_j.subject_id = sm_j.subject_id
+                        AND g_j.specialty_id = sm_j.specialty_id
+                        AND g_j.semester_id = sm_j.semester_id
+                        AND g_j.classes_type = cm_j.classes_type
+                        AND g_j.job_uuid = sm_j.job_uuid
                     )
-            LEFT JOIN v2u_ko_matched_zajcykl_j ma_zajcykl_j
-                ON  (
-                            ma_zajcykl_j.subject_id = u.subject_id
-                        AND ma_zajcykl_j.specialty_id = u.specialty_id
-                        AND ma_zajcykl_j.semester_id = u.semester_id
-                        AND ma_zajcykl_j.classes_type = u.classes_type
-                        AND ma_zajcykl_j.job_uuid = u.job_uuid
-                    )
+            WHERE sm_j.selected = 1 AND g_j.subj_grade IS NOT NULL
             GROUP BY
-                  u.job_uuid
-                , u.semester_id
-                , u.specialty_id
-                , u.subject_id
-                , u.classes_type
-                , u.subject_map_id
-                , u.classes_map_id
-                , ma_zajcykl_j.zaj_cyk_id
-            HAVING COUNT(g_j.subj_grade) > 0
+                  sm_j.job_uuid
+                , sm_j.semester_id
+                , sm_j.specialty_id
+                , sm_j.subject_id
+                , cm_j.classes_type
+                , sm_j.map_id
+                , cm_j.map_id
+
+            UNION ALL
+
+            SELECT
+                  sm_j.job_uuid
+                , sm_j.semester_id
+                , sm_j.specialty_id
+                , sm_j.subject_id
+                , '-' classes_type
+                , sm_j.map_id subject_map_id
+                , NULL classes_map_id
+                , SET(CAST(
+                        COLLECT(g_j.subj_grade ORDER BY g_j.subj_grade)
+                        AS V2u_Vchars1K_t
+                  )) subj_grades1k
+            FROM v2u_ko_subject_map_j sm_j
+            INNER JOIN v2u_ko_grades_j g_j
+                ON  (
+                            g_j.subject_id = sm_j.subject_id
+                        AND g_j.specialty_id = sm_j.specialty_id
+                        AND g_j.semester_id = sm_j.semester_id
+                        AND g_j.classes_type = '-'
+                        AND g_j.job_uuid = sm_j.job_uuid
+                    )
+            WHERE sm_j.selected = 1 AND g_j.subj_grade IS NOT NULL
+            GROUP BY
+                  sm_j.job_uuid
+                , sm_j.semester_id
+                , sm_j.specialty_id
+                , sm_j.subject_id
+                , sm_j.map_id
+        ),
+        v AS
+        (
+            SELECT
+                  u.*
+                , CAST(MULTISET(
+                    SELECT SUBSTR(VALUE(t), 1, 10)
+                    FROM TABLE(u.subj_grades1k) t
+                  ) AS V2u_Subj_Grades_t) subj_grades
+            FROM u u
         ),
         w AS
         (
             SELECT
-                  v.job_uuid
-                , v.semester_id
-                , v.specialty_id
-                , v.subject_id
-                , v.classes_type
-                , v.subject_map_id
-                , v.classes_map_id
-                , v.zaj_cyk_id
+                  v.*
                 , subject_map.map_subj_code
                 , subject_map.map_proto_type
                 , semesters.semester_code
-                , CAST(MULTISET(
-                    SELECT SUBSTR(VALUE(t), 1, 10)
-                    FROM TABLE(v.subj_grades1k) t
-                  ) AS V2u_Subj_Grades_t) subj_grades
-                , V2U_Get.Tpro_Kod(
-                      subj_credit_kind => subjects.subj_credit_kind
-                    , subj_grades => CAST(MULTISET(
-                        SELECT SUBSTR(VALUE(t), 1, 10)
-                        FROM TABLE(v.subj_grades1k) t
-                      ) AS V2u_Subj_Grades_t)
-                  ) fallback_tpro_kod
+                , COALESCE(
+                      subject_map.map_proto_type
+                    , V2U_Get.Tpro_Kod(
+                          subj_credit_kind => subjects.subj_credit_kind
+                        , subj_grades => v.subj_grades
+                      )
+                  ) coalesced_proto_type
+                , ma_zajcykl_j.zaj_cyk_id
             FROM v v
             INNER JOIN v2u_subject_map subject_map
                 ON  (
@@ -117,15 +114,17 @@ USING
                             semesters.id = v.semester_id
                         AND semesters.job_uuid = v.job_uuid
                     )
+            LEFT JOIN v2u_ko_matched_zajcykl_j ma_zajcykl_j
+                ON  (
+                            ma_zajcykl_j.subject_id = v.subject_id
+                        AND ma_zajcykl_j.specialty_id = v.specialty_id
+                        AND ma_zajcykl_j.semester_id = v.semester_id
+                        AND ma_zajcykl_j.classes_type = v.classes_type
+                        AND ma_zajcykl_j.job_uuid = v.job_uuid
+                    )
         )
         SELECT
-              w.job_uuid
-            , w.semester_id
-            , w.specialty_id
-            , w.subject_id
-            , w.classes_type
-            , w.subject_map_id
-            , w.classes_map_id
+              w.*
             , protokoly.prz_kod
             , protokoly.cdyd_kod
             , protokoly.tpro_kod
@@ -135,7 +134,7 @@ USING
             ON  (
                         protokoly.prz_kod = w.map_subj_code
                     AND protokoly.cdyd_kod = w.semester_code
-                    AND protokoly.tpro_kod = COALESCE(w.map_proto_type, w.fallback_tpro_kod)
+                    AND protokoly.tpro_kod = w.coalesced_proto_type
                     AND (
                                 protokoly.zaj_cyk_id = w.zaj_cyk_id
                             OR  (w.classes_type = '-' AND protokoly.zaj_cyk_id IS NULL)
