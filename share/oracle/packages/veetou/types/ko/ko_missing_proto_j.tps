@@ -5,7 +5,10 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Proto_J_t
     , map_subj_code VARCHAR2(20 CHAR)
     , classes_map_id NUMBER(38)
     , map_classes_type VARCHAR2(20 CHAR)
-    , reason VARCHAR2(80 CHAR)
+    , coalesced_proto_type VARCHAR2(20 CHAR)
+    , zaj_cyk_id NUMBER(10)
+    , prot_id NUMBER(10)
+    , reason VARCHAR2(200 CHAR)
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Missing_Proto_J_t(
               SELF IN OUT NOCOPY V2u_Ko_Missing_Proto_J_t
@@ -18,6 +21,9 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Proto_J_t
             , map_subj_code IN VARCHAR2
             , classes_map_id IN NUMBER
             , map_classes_type IN VARCHAR2
+            , coalesced_proto_type IN VARCHAR2
+            , zaj_cyk_id IN NUMBER
+            , prot_id IN NUMBER
             , reason IN VARCHAR2
             ) RETURN SELF AS RESULT
 
@@ -32,6 +38,9 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Proto_J_t
             , map_subj_code IN VARCHAR2
             , classes_map_id IN NUMBER
             , map_classes_type IN VARCHAR2
+            , coalesced_proto_type IN VARCHAR2
+            , zaj_cyk_id IN NUMBER
+            , prot_id IN NUMBER
             , reason IN VARCHAR2
             )
     )

@@ -10,6 +10,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Proto_J_t AS
             , map_subj_code IN VARCHAR2
             , classes_map_id IN NUMBER
             , map_classes_type IN VARCHAR2
+            , coalesced_proto_type IN VARCHAR2
+            , zaj_cyk_id IN NUMBER
+            , prot_id IN NUMBER
             , reason IN VARCHAR2
             ) RETURN SELF AS RESULT
     IS
@@ -24,6 +27,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Proto_J_t AS
             , map_subj_code => map_subj_code
             , classes_map_id => classes_map_id
             , map_classes_type => map_classes_type
+            , coalesced_proto_type => coalesced_proto_type
+            , zaj_cyk_id => zaj_cyk_id
+            , prot_id => prot_id
             , reason => reason
             );
         RETURN;
@@ -38,9 +44,12 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Proto_J_t AS
             , subject_id IN NUMBER
             , classes_type IN VARCHAR2
             , subject_map_id IN NUMBER
-            , map_subj_code VARCHAR2
+            , map_subj_code IN VARCHAR2
             , classes_map_id IN NUMBER
-            , map_classes_type VARCHAR2
+            , map_classes_type IN VARCHAR2
+            , coalesced_proto_type IN VARCHAR2
+            , zaj_cyk_id IN NUMBER
+            , prot_id IN NUMBER
             , reason IN VARCHAR2
             )
     IS
@@ -56,6 +65,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Proto_J_t AS
         SELF.map_subj_code := map_subj_code;
         SELF.classes_map_id := classes_map_id;
         SELF.map_classes_type := map_classes_type;
+        SELF.coalesced_proto_type := coalesced_proto_type;
+        SELF.zaj_cyk_id := zaj_cyk_id;
+        SELF.prot_id := prot_id;
         SELF.reason := reason;
     END;
 END;
