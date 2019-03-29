@@ -46,12 +46,6 @@ USING
         ( -- select additional fields
             SELECT
                   v.*
---                  v.job_uuid
---                , v.semester_id
---                , v.specialty_id
---                , v.subject_id
---                , v.classes_type
---                , v.zaj_cyk_id
                 , sm_j.map_id subject_map_id
                 , subject_map.map_subj_code
                 , cm_j.map_id classes_map_id
@@ -114,19 +108,6 @@ USING
         SELECT
               w.*
             , protokoly.id prot_id
---              w.job_uuid
---            , w.semester_id
---            , w.specialty_id
---            , w.subject_id
---            , w.classes_type
---            , w.zaj_cyk_id
---            , w.subj_grades
---            , w.subject_map_id
---            , w.map_subj_code
---            , w.classes_map_id
---            , w.map_classes_type
---            , w.subj_code                -- for diagnostics
---            , w.semester_code           -- for diagnostics
             , CASE
                 WHEN w.classes_type = '-' AND w.subject_map_id IS NULL
                 THEN 'no subject map for {subject: "'

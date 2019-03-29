@@ -252,7 +252,7 @@ USING
                 , CASE
                     WHEN
                         -- all the instances were consistent
-                            u.dbg_subj_names <= 1
+                            u.dbg_map_subj_names <= 1
                         AND u.dbg_languages = 1
                         AND u.dbg_org_units <= 1
                         AND u.dbg_org_unit_recipients <= 1

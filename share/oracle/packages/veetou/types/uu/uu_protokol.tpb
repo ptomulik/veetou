@@ -18,6 +18,25 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Protokol_t AS
             , job_uuid IN RAW
             , pk_protokol IN VARCHAR2
             -- DBG
+            , dbg_subj_codes IN NUMBER
+            , dbg_classes_types IN NUMBER
+            , dbg_map_subj_codes IN NUMBER
+            , dbg_map_proto_types IN NUMBER
+            , dbg_map_classes_types IN NUMBER
+            , dbg_subj_credit_kinds IN NUMBER
+            , dbg_prot_ids IN NUMBER
+            , dbg_opisy IN NUMBER
+            , dbg_czy_do_sredniej IN NUMBER
+            , dbg_edycje IN NUMBER
+            , dbg_opisy_ang IN NUMBER
+            , dbg_zaj_cyk_ids IN NUMBER
+            , dbg_subj_grades IN NUMBER
+            , dbg_values_ok IN NUMBER
+            , dbg_unique_match IN NUMBER
+            , dbg_matched IN NUMBER
+            , dbg_missing IN NUMBER
+            , dbg_subject_mapped IN NUMBER
+            , dbg_classes_mapped IN NUMBER
             -- CTL
             , change_type IN CHAR
             , safe_to_change IN NUMBER
@@ -43,6 +62,25 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Protokol_t AS
         SELF.job_uuid := job_uuid;
         SELF.pk_protokol := pk_protokol;
         -- DBG
+        SELF.dbg_subj_codes := dbg_subj_codes;
+        SELF.dbg_classes_types := dbg_classes_types;
+        SELF.dbg_map_subj_codes := dbg_map_subj_codes;
+        SELF.dbg_map_proto_types := dbg_map_proto_types;
+        SELF.dbg_map_classes_types := dbg_map_classes_types;
+        SELF.dbg_subj_credit_kinds := dbg_subj_credit_kinds;
+        SELF.dbg_prot_ids := dbg_prot_ids;
+        SELF.dbg_opisy := dbg_opisy;
+        SELF.dbg_czy_do_sredniej := dbg_czy_do_sredniej;
+        SELF.dbg_edycje := dbg_edycje;
+        SELF.dbg_opisy_ang := dbg_opisy_ang;
+        SELF.dbg_zaj_cyk_ids := dbg_zaj_cyk_ids;
+        SELF.dbg_subj_grades := dbg_subj_grades;
+        SELF.dbg_values_ok := dbg_values_ok;
+        SELF.dbg_unique_match := dbg_unique_match;
+        SELF.dbg_matched := dbg_matched;
+        SELF.dbg_missing := dbg_missing;
+        SELF.dbg_subject_mapped := dbg_subject_mapped;
+        SELF.dbg_classes_mapped := dbg_classes_mapped;
         -- CTL
         SELF.change_type := change_type;
         SELF.safe_to_change := safe_to_change;

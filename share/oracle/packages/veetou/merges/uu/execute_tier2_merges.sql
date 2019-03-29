@@ -7,7 +7,7 @@
 @@uu_programy_osob.sql;
 @@uu_etapy_osob.sql;
 @@uu_zaliczenia_przedmiotow.sql;
---@@uu_protokoly.sql;
+@@uu_protokoly.sql;
 
 @@uu_classes_grades.sql;
 
