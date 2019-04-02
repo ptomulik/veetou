@@ -9,6 +9,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Proto_V_t
     , zaj_cyk_id NUMBER(10)
     , prot_id NUMBER(10)
     , reason VARCHAR2(200 CHAR)
+    , istniejace_tpro_kody V2u_Prot_20Codes_t
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Missing_Proto_V_t(
               SELF IN OUT NOCOPY V2u_Ko_Missing_Proto_V_t

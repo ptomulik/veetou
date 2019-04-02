@@ -274,7 +274,9 @@ USING
                             WHEN 'S' THEN 'Ocena łączna'
                             WHEN 'Z' THEN 'Zaliczenie'
                             WHEN 'O' THEN 'Zaliczenie na ocenę'
-                            ELSE 'error: unknown protocol type'
+                            ELSE 'error: unknown protocol type "'
+                                || u.coalesced_proto_type ||
+                                '"'
                           END
                         , u.opis
                   ) v$opis

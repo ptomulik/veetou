@@ -40,6 +40,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Proto_V_t AS
         SELF.zaj_cyk_id := missing_proto_j.zaj_cyk_id;
         SELF.prot_id := missing_proto_j.prot_id;
         SELF.reason := missing_proto_j.reason;
+        SELF.istniejace_tpro_kody := missing_proto_j.istniejace_tpro_kody;
     END;
 END;
 

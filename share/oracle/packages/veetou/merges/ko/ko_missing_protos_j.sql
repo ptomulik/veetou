@@ -60,6 +60,25 @@ USING
                       )
                   ) coalesced_proto_type
                 , ma_zajcykl_j.zaj_cyk_id
+                , CAST(MULTISET(
+                    SELECT DISTINCT p.tpro_kod
+                    FROM v2u_dz_protokoly p
+                    WHERE   p.prz_kod = subject_map.map_subj_code
+                        AND p.cdyd_kod = semesters.semester_code
+                        AND (
+                                        v.classes_type = '-'
+                                    AND p.zaj_cyk_id IS NULL
+                                OR
+                                EXISTS
+                                    (
+                                        SELECT NULL
+                                        FROM v2u_dz_zajecia_cykli z
+                                        WHERE z.id = p.zaj_cyk_id
+                                    )
+                            )
+                        AND ROWNUM <= 20
+                    ORDER BY p.tpro_kod
+                  ) AS V2u_Prot_20Codes_t) istniejace_tpro_kody
             FROM v v
             INNER JOIN v2u_ko_subjects subjects
                 ON  (
@@ -197,6 +216,7 @@ WHEN NOT MATCHED THEN
         , zaj_cyk_id
         , prot_id
         , reason
+        , istniejace_tpro_kody
         )
     VALUES
         ( src.job_uuid
@@ -212,6 +232,7 @@ WHEN NOT MATCHED THEN
         , src.zaj_cyk_id
         , src.prot_id
         , src.reason
+        , src.istniejace_tpro_kody
         )
 WHEN MATCHED THEN
     UPDATE SET
@@ -223,6 +244,7 @@ WHEN MATCHED THEN
         , tgt.zaj_cyk_id = src.zaj_cyk_id
         , tgt.prot_id = src.prot_id
         , tgt.reason = src.reason
+        , tgt.istniejace_tpro_kody = src.istniejace_tpro_kody
 ;
 
 COMMIT;
