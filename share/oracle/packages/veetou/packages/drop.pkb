@@ -453,6 +453,12 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         --
         Drop_Table('ko_matched_pktprz_j');
         --
+        Drop_Index('ko_matched_trmpro_j_idx1');
+        Drop_Index('ko_matched_trmpro_j_idx2');
+        Drop_Index('ko_matched_trmpro_j_idx3');
+        Drop_Index('ko_matched_trmpro_j_idx4');
+        Drop_Table('ko_matched_trmpro_j');
+        --
         Drop_Index('ko_matched_protos_j_idx1');
         Drop_Index('ko_matched_protos_j_idx2');
         Drop_Table('ko_matched_protos_j');
@@ -583,6 +589,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Matched_Etpos_J_t', 'Ko_Matched_Etposes_J_t');
         Drop_Type('Ko_Matched_Pktprz_J_t', 'Ko_Matched_Pktprzes_J_t');
         Drop_Type('Ko_Matched_Zajcykl_J_t', 'Ko_Matched_Zajcykles_J_t');
+        Drop_Type('Ko_Matched_Trmpro_J_t', 'Ko_Matched_Trmpros_J_t');
         Drop_Type('Ko_Matched_Proto_J_t', 'Ko_Matched_Protos_J_t');
         Drop_Type('Ko_Matched_Przcykl_J_t', 'Ko_Matched_Przcykles_J_t');
         Drop_Type('Ko_Matched_Przedm_J_t', 'Ko_Matched_Przedms_J_t');
@@ -624,9 +631,15 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Uu_Zajecia_Cyklu_t', 'Uu_Zajecia_Cykli_t');
         Drop_Type('Uu_Protokol_t', 'Uu_Protokoly_t');
 
+        Drop_Type('Dates_t');
+        Drop_Type('5Dates_t');
+        Drop_Type('20Dates_t');
         Drop_Type('Semester_Codes_t');
         Drop_Type('Semester_5Codes_t');
         Drop_Type('Semester_20Codes_t');
+        Drop_Type('Prot_Codes_t');
+        Drop_Type('Prot_5Codes_t');
+        Drop_Type('Prot_20Codes_t');
         Drop_Type('Program_Codes_t');
         Drop_Type('Program_5Codes_t');
         Drop_Type('Program_20Codes_t');
