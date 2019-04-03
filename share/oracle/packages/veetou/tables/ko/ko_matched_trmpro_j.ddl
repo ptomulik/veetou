@@ -3,7 +3,7 @@ OF V2u_Ko_Matched_Trmpro_J_t
     (
         -- PK
           CONSTRAINT v2u_ko_matched_trmpro_j_pk
-            PRIMARY KEY (subj_grade_date, prot_id, subject_id, specialty_id, semester_id, job_uuid)
+            PRIMARY KEY (nr, prot_id, subject_id, specialty_id, semester_id, job_uuid)
         -- FK
         , CONSTRAINT v2u_ko_matched_trmpro_j_f0
             FOREIGN KEY (job_uuid)
@@ -40,6 +40,6 @@ CREATE INDEX v2u_ko_matched_trmpro_j_idx3
     ON v2u_ko_matched_trmpro_j(prot_id, subject_id, specialty_id, semester_id, job_uuid);
 
 CREATE INDEX v2u_ko_matched_trmpro_j_idx4
-    ON v2u_ko_matched_trmpro_j(nr, prot_id, subject_id, specialty_id, semester_id, job_uuid);
+    ON v2u_ko_matched_trmpro_j(subj_grade_date, classes_type, subject_id, specialty_id, semester_id, job_uuid);
 
 -- vim: set ft=sql ts=4 sw=4 et:

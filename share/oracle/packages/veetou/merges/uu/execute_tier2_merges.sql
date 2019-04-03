@@ -8,6 +8,7 @@
 @@uu_etapy_osob.sql;
 @@uu_zaliczenia_przedmiotow.sql;
 @@uu_protokoly.sql;
+--@@uu_terminy_protokolow.sql;
 
 @@uu_classes_grades.sql;
 

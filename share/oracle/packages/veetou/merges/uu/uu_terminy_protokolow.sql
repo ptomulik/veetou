@@ -1,4 +1,4 @@
-MERGE INTO v2u_uu_protokoly tgt
+MERGE INTO v2u_uu_terminy_protokolow tgt
 USING
     (
         WITH u_0 AS

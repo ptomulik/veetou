@@ -567,6 +567,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         --
         Drop_Index('uu_protokoly_idx1');
         Drop_Table('uu_protokoly');
+        --
+        Drop_Index('uu_terminy_protokolow_idx1');
+        Drop_Table('uu_terminy_protokolow');
 
         --
         Drop_Package('Fit');
@@ -630,6 +633,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Uu_Punkty_Przedmiotu_t', 'Uu_Punkty_Przedmiotow_t');
         Drop_Type('Uu_Zajecia_Cyklu_t', 'Uu_Zajecia_Cykli_t');
         Drop_Type('Uu_Protokol_t', 'Uu_Protokoly_t');
+        Drop_Type('Uu_Termin_Protokolu_t', 'Uu_Terminy_Protokolow_t');
 
         Drop_Type('Dates_t');
         Drop_Type('5Dates_t');
@@ -683,6 +687,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_View('uu_subject_grades_v');
 
         Drop_View('ko_skipped_programs_v');
+        Drop_View('ko_missing_trmpro_v');
         Drop_View('ko_missing_protos_v');
         Drop_View('ko_missing_pktprz_v');
         Drop_View('ko_missing_zajcykl_v');
