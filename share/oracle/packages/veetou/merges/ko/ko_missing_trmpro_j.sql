@@ -13,15 +13,15 @@ USING
                 , SET(CAST(
                         COLLECT(ma_prot_j.prot_id)
                         AS V2u_Dz_Ids_t
-                  )) ma_prot_ids
+                  )) prot_ids
                 , SET(CAST(
                         COLLECT(mi_prot_j.reason)
                         AS V2u_Vchars1K_t
                   )) mi_reasons1k
---                , SET(CAST(
---                        COLLECT(g_j.subj_grade ORDER BY g_j.subj_grade)
---                        AS V2u_Vchars1K_t
---                  )) subj_grades1k
+                , SET(CAST(
+                        COLLECT(g_j.subj_grade ORDER BY g_j.subj_grade)
+                        AS V2u_Vchars1K_t
+                  )) subj_grades1k
             FROM v2u_ko_grades_j g_j
             LEFT JOIN v2u_ko_matched_trmpro_j ma_j
                 ON  (
@@ -67,6 +67,14 @@ USING
                     SELECT SUBSTR(VALUE(t), 1, 10)
                     FROM TABLE(u.subj_grades1k) t
                   ) AS V2u_Subj_Grades_t) subj_grades
+                , ( SELECT VALUE(t)
+                    FROM TABLE(u.prot_ids) t
+                    WHERE ROWNUM <= 1
+                  ) prot_id
+                , ( SELECT SUBSTR(VALUE(t), 1, 200)
+                    FROM TABLE(u.mi_reasons1k) t
+                    WHERE ROWNUM <= 1
+                  ) mi_reason
             FROM u u
         ),
         w AS
@@ -86,26 +94,13 @@ USING
                         , subj_grades => v.subj_grades
                       )
                   ) coalesced_proto_type
-                , ma_zajcykl_j.zaj_cyk_id
                 , CAST(MULTISET(
-                    SELECT DISTINCT p.tpro_kod
-                    FROM v2u_dz_protokoly p
-                    WHERE   p.prz_kod = subject_map.map_subj_code
-                        AND p.cdyd_kod = semesters.semester_code
-                        AND (
-                                        v.classes_type = '-'
-                                    AND p.zaj_cyk_id IS NULL
-                                OR
-                                EXISTS
-                                    (
-                                        SELECT NULL
-                                        FROM v2u_dz_zajecia_cykli z
-                                        WHERE z.id = p.zaj_cyk_id
-                                    )
-                            )
-                        AND ROWNUM <= 20
-                    ORDER BY p.tpro_kod
-                  ) AS V2u_Prot_20Codes_t) istniejace_tpro_kody
+                        SELECT DISTINCT t.data_zwrotu
+                        FROM v2u_dz_terminy_protokolow t
+                        WHERE   t.prot_id = v.prot_id
+                            AND ROWNUM <= 20
+                        ORDER BY t.data_zwrotu
+                  ) AS V2u_20Dates_t ) istniejace_daty_zwrotu
             FROM v v
             INNER JOIN v2u_ko_subjects subjects
                 ON  (
@@ -142,61 +137,14 @@ USING
                 ON  (
                             classes_map.id = cm_j.map_id
                     )
-            LEFT JOIN v2u_ko_matched_zajcykl_j ma_zajcykl_j
-                ON  (
-                            ma_zajcykl_j.subject_id = v.subject_id
-                        AND ma_zajcykl_j.specialty_id = v.specialty_id
-                        AND ma_zajcykl_j.semester_id = v.semester_id
-                        AND ma_zajcykl_j.classes_type = v.classes_type
-                        AND ma_zajcykl_j.job_uuid = v.job_uuid
-                    )
         )
         SELECT
               w.*
-            , protokoly.id prot_id
+            , trmpro.nr
             , CASE
-                WHEN w.classes_type = '-' AND w.subject_map_id IS NULL
-                THEN 'no subject map for {subject: "'
-                     ||
-                     w.subj_code
-                     || '", semester: "' ||
-                     w.semester_code
-                     || '"}'
-                WHEN w.map_subj_code IS NULL
-                THEN 'map_subj_code IS NULL for {subject: "'
-                     ||
-                     w.subj_code
-                     || '", semester: ' ||
-                     w.semester_code
-                    || '"}'
-                WHEN w.classes_type <> '-' AND w.classes_map_id IS NULL
-                THEN 'no classes map for {subject: "'
-                     ||
-                     w.subj_code
-                     || '", semester: "' ||
-                     w.semester_code
-                     || '", classes: "' ||
-                     w.classes_type
-                     || '"}'
-                WHEN w.classes_type <> '-' AND w.map_classes_type IS NULL
-                THEN 'map_classes_type IS NULL for {subject: "'
-                     ||
-                     w.subj_code
-                     || '", semester: "' ||
-                     w.semester_code
-                     || '", classes: "' ||
-                     w.classes_type
-                     || '"}'
-                WHEN w.classes_type <> '-' AND w.zaj_cyk_id IS NULL
-                THEN '{subject: "'
-                     ||
-                     w.map_subj_code
-                     || '", semester: "' ||
-                     w.semester_code
-                     || '", tzaj: "' ||
-                     w.map_classes_type
-                     || '"} not in v2u_ko_matched_zajcykl_j'
-                WHEN protokoly.id IS NULL
+                WHEN w.prot_id IS NULL
+                THEN w.mi_reason
+                WHEN trmpro.nr IS NULL
                 THEN '{subject: "'
                      ||
                      w.map_subj_code
@@ -206,18 +154,32 @@ USING
                      w.map_classes_type
                      || '", protocol: "' ||
                      w.coalesced_proto_type
-                     || '"} not in dz_protokoly'
-                ELSE 'error (v2u_ko_matched_protos_j out of sync?)'
+                     || '", date: "' ||
+                     w.subj_grade_date
+                     || '"} not in dz_terminy_protokolow'
+                ELSE 'error (v2u_ko_matched_trmpro_j out of sync?)'
               END reason
         FROM w w
-        LEFT JOIN v2u_dz_protokoly protokoly
+        LEFT JOIN v2u_semesters semesters
             ON  (
-                        protokoly.prz_kod = w.map_subj_code
-                    AND protokoly.cdyd_kod = w.semester_code
-                    AND protokoly.tpro_kod = w.coalesced_proto_type
+                        semesters.code = w.semester_code
+                )
+        LEFT JOIN v2u_dz_terminy_protokolow trmpro
+            ON  (
+                        trmpro.prot_id = w.prot_id
+                    AND trmpro.data_zwrotu = w.subj_grade_date
                     AND (
-                                protokoly.zaj_cyk_id = w.zaj_cyk_id
-                            OR  (w.classes_type = '-' AND protokoly.zaj_cyk_id IS NULL)
+                                trmpro.data_zwrotu = w.subj_grade_date
+                            OR (
+                                        -- fallback date ...
+                                        trmpro.data_zwrotu = semesters.end_date
+                                    AND NOT EXISTS (
+                                        SELECT NULL
+                                        FROM v2u_dz_terminy_protokolow t
+                                        WHERE   t.prot_id = w.prot_id
+                                            AND t.data_zwrotu = w.subj_grade_date
+                                    )
+                                )
                         )
                 )
     ) src
@@ -227,39 +189,42 @@ ON  (
         AND tgt.specialty_id = src.specialty_id
         AND tgt.semester_id = src.semester_id
         AND tgt.classes_type = src.classes_type
+        AND tgt.subj_grade_date = src.subj_grade_date
     )
 WHEN NOT MATCHED THEN
     INSERT
         ( job_uuid
-        , subject_id
-        , specialty_id
         , semester_id
+        , specialty_id
+        , subject_id
         , classes_type
+        , subj_grade_date
         , subject_map_id
         , map_subj_code
         , classes_map_id
         , map_classes_type
         , coalesced_proto_type
-        , zaj_cyk_id
         , prot_id
+        , nr
         , reason
-        , istniejace_tpro_kody
+        , istniejace_daty_zwrotu
         )
     VALUES
         ( src.job_uuid
-        , src.subject_id
-        , src.specialty_id
         , src.semester_id
+        , src.specialty_id
+        , src.subject_id
         , src.classes_type
+        , src.subj_grade_date
         , src.subject_map_id
         , src.map_subj_code
         , src.classes_map_id
         , src.map_classes_type
         , src.coalesced_proto_type
-        , src.zaj_cyk_id
         , src.prot_id
+        , src.nr
         , src.reason
-        , src.istniejace_tpro_kody
+        , src.istniejace_daty_zwrotu
         )
 WHEN MATCHED THEN
     UPDATE SET
@@ -268,10 +233,10 @@ WHEN MATCHED THEN
         , tgt.classes_map_id = src.classes_map_id
         , tgt.map_classes_type = src.map_classes_type
         , tgt.coalesced_proto_type = src.coalesced_proto_type
-        , tgt.zaj_cyk_id = src.zaj_cyk_id
         , tgt.prot_id = src.prot_id
+        , tgt.nr = src.nr
         , tgt.reason = src.reason
-        , tgt.istniejace_tpro_kody = src.istniejace_tpro_kody
+        , tgt.istniejace_daty_zwrotu = src.istniejace_daty_zwrotu
 ;
 
 COMMIT;

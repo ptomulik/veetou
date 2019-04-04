@@ -436,6 +436,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         --
         Drop_Table('ko_missing_pktprz_j');
         --
+        Drop_Table('ko_missing_trmpro_j');
+        --
         Drop_Table('ko_missing_protos_j');
         --
         Drop_Index('ko_matched_etpos_j_idx1');
@@ -585,6 +587,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Missing_Pktprz_J_t', 'Ko_Missing_Pktprzes_J_t');
         Drop_Type('Ko_Missing_Proto_J_t', 'Ko_Missing_Protos_J_t');
         Drop_Type('Ko_Missing_Zajcykl_J_t', 'Ko_Missing_Zajcykles_J_t');
+        Drop_Type('Ko_Missing_Trmpro_J_t', 'Ko_Missing_Trmpros_J_t');
         Drop_Type('Ko_Missing_Proto_J_t', 'Ko_Missing_Protos_J_t');
         Drop_Type('Ko_Missing_Przcykl_J_t', 'Ko_Missing_Przcykles_J_t');
         Drop_Type('Ko_Missing_Przedm_J_t', 'Ko_Missing_Przedms_J_t');

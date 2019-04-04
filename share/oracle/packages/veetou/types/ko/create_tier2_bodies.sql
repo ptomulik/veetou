@@ -38,7 +38,7 @@
 @@ko_missing_przcykl_j.tpb;
 @@ko_missing_zajcykl_j.tpb;
 @@ko_missing_proto_j.tpb;
---@@ko_missing_trmpro_j.tpb;
+@@ko_missing_trmpro_j.tpb;
 @@ko_missing_pktprz_j.tpb;
 @@ko_skipped_program_j.tpb;
 

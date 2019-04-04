@@ -40,7 +40,7 @@
 @@ko_missing_protos_j.ddl;
 
 @@ko_matched_trmpro_j.ddl;
---@@ko_missing_trmpro_j.ddl;
+@@ko_missing_trmpro_j.ddl;
 
 @@ko_skipped_programs_j.ddl;
 
