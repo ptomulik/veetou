@@ -16,9 +16,10 @@ USING
                         , g_j.classes_type
                   ) coalesced_classes_type
                 , COALESCE(
-                          ma_prot_j.tpro_kod
-                        , mi_prot_j.coalesced_proto_type
+                          ma_trmpro_j.tpro_kod
+                        , mi_trmpro_j.coalesced_proto_type
                   ) coalesced_proto_type
+                , g_j.subj_grade_date
                 , SET(CAST(
                         COLLECT(subject_map.map_subj_code)
                         AS V2u_Vchars1K_t
@@ -48,32 +49,32 @@ USING
                         AS V2u_Vchars1K_t
                   )) subj_grades1k
                 , SET(CAST(
-                        COLLECT(ma_prot_j.prot_id)
+                        COLLECT(ma_trmpro_j.prot_id)
                         AS V2u_Dz_Ids_t
                   )) prot_ids
                 , SET(CAST(
-                        COLLECT(protokoly.opis)
+                        COLLECT(ma_trmpro_j.nr)
+                        AS V2u_Ints10_t
+                  )) nrs
+                , SET(CAST(
+                        COLLECT(trmpro.status)
+                        AS V2u_Vchars1K_t
+                  )) statusy1k
+                , SET(CAST(
+                        COLLECT(trmpro.opis)
                         AS V2u_Vchars1K_t
                   )) opisy1k
                 , SET(CAST(
-                        COLLECT(protokoly.czy_do_sredniej)
-                        AS V2u_Vchars1K_t
-                  )) czy_do_sredniej1k
+                        COLLECT(trmpro.data_zwrotu)
+                        AS V2u_Dates_t
+                  )) daty_zwrotu
                 , SET(CAST(
-                        COLLECT(protokoly.edycja)
+                        COLLECT(trmpro.egzamin_komisyjny)
                         AS V2u_Vchars1K_t
-                  )) edycje1k
-                , SET(CAST(
-                        COLLECT(protokoly.opis_ang)
-                        AS V2u_Vchars1K_t
-                  )) opis_ang1k
-                , SET(CAST(
-                        COLLECT(ma_zajcykl_j.zaj_cyk_id)
-                        AS V2u_Dz_Ids_t
-                  )) zaj_cyk_ids
+                  )) egzaminy_komisyjne1k
 
-                , COUNT(ma_prot_j.prz_kod) dbg_matched
-                , COUNT(mi_prot_j.job_uuid) dbg_missing
+                , COUNT(ma_trmpro_j.prz_kod) dbg_matched
+                , COUNT(mi_trmpro_j.job_uuid) dbg_missing
                 , COUNT(sm_j.map_id) dbg_subject_mapped
                 , COUNT(cm_j.map_id) dbg_classes_mapped
 
@@ -88,21 +89,23 @@ USING
                             semesters.id = g_j.semester_id
                         AND semesters.job_uuid = g_j.job_uuid
                     )
-            LEFT JOIN v2u_ko_matched_protos_j ma_prot_j
+            LEFT JOIN v2u_ko_matched_trmpro_j ma_trmpro_j
                 ON  (
-                            ma_prot_j.subject_id = g_j.subject_id
-                        AND ma_prot_j.specialty_id = g_j.specialty_id
-                        AND ma_prot_j.semester_id = g_j.semester_id
-                        AND ma_prot_j.classes_type = g_j.classes_type
-                        AND ma_prot_j.job_uuid = g_j.job_uuid
+                            ma_trmpro_j.subject_id = g_j.subject_id
+                        AND ma_trmpro_j.specialty_id = g_j.specialty_id
+                        AND ma_trmpro_j.semester_id = g_j.semester_id
+                        AND ma_trmpro_j.classes_type = g_j.classes_type
+                        AND ma_trmpro_j.subj_grade_date = g_j.subj_grade_date
+                        AND ma_trmpro_j.job_uuid = g_j.job_uuid
                     )
-            LEFT JOIN v2u_ko_missing_protos_j mi_prot_j
+            LEFT JOIN v2u_ko_missing_trmpro_j mi_trmpro_j
                 ON  (
-                            mi_prot_j.subject_id = g_j.subject_id
-                        AND mi_prot_j.specialty_id = g_j.specialty_id
-                        AND mi_prot_j.semester_id = g_j.semester_id
-                        AND mi_prot_j.classes_type = g_j.classes_type
-                        AND mi_prot_j.job_uuid = g_j.job_uuid
+                            mi_trmpro_j.subject_id = g_j.subject_id
+                        AND mi_trmpro_j.specialty_id = g_j.specialty_id
+                        AND mi_trmpro_j.semester_id = g_j.semester_id
+                        AND mi_trmpro_j.classes_type = g_j.classes_type
+                        AND ma_trmpro_j.subj_grade_date = g_j.subj_grade_date
+                        AND mi_trmpro_j.job_uuid = g_j.job_uuid
                     )
             LEFT JOIN v2u_ko_subject_map_j sm_j
                 ON  (
@@ -129,17 +132,10 @@ USING
                 ON  (
                             classes_map.id = cm_j.map_id
                     )
-            LEFT JOIN v2u_dz_protokoly protokoly
+            LEFT JOIN v2u_dz_terminy_protokolow trmpro
                 ON  (
-                            protokoly.id = ma_prot_j.prot_id
-                    )
-            LEFT JOIN v2u_ko_matched_zajcykl_j ma_zajcykl_j
-                ON  (
-                            ma_zajcykl_j.subject_id = g_j.subject_id
-                        AND ma_zajcykl_j.specialty_id = g_j.specialty_id
-                        AND ma_zajcykl_j.semester_id = g_j.semester_id
-                        AND ma_zajcykl_j.classes_type = g_j.classes_type
-                        AND ma_zajcykl_j.job_uuid = g_j.job_uuid
+                            trmpro.prot_id = ma_trmpro_j.prot_id
+                        AND trmpro.nr = ma_trmpro_j.nr
                     )
             WHERE g_j.subj_grade IS NOT NULL
             GROUP BY
@@ -147,7 +143,8 @@ USING
                 , COALESCE(subject_map.map_subj_code, subjects.subj_code)
                 , semesters.semester_code
                 , COALESCE(classes_map.map_classes_type, g_j.classes_type)
-                , COALESCE(ma_prot_j.tpro_kod, mi_prot_j.coalesced_proto_type)
+                , COALESCE(ma_trmpro_j.tpro_kod, mi_trmpro_j.coalesced_proto_type)
+                , g_j.subj_grade_date
         ),
         u AS
         ( -- make necessary adjustments to the raw values selected i u_0
@@ -157,6 +154,7 @@ USING
                 , u_0.semester_code
                 , u_0.coalesced_classes_type
                 , u_0.coalesced_proto_type
+                , u_0.subj_grade_date
 
                 -- select first element from each collection
                 , ( SELECT SUBSTR(VALUE(t), 1, 20)
@@ -187,26 +185,27 @@ USING
                     FROM TABLE(u_0.prot_ids) t
                     WHERE ROWNUM <= 1
                   ) prot_id
+                , ( SELECT VALUE(t)
+                    FROM TABLE(u_0.nrs) t
+                    WHERE ROWNUM <= 1
+                  ) nr
+                , ( SELECT SUBSTR(VALUE(t), 1, 2)
+                    FROM TABLE(u_0.statusy1k) t
+                    WHERE ROWNUM <= 1
+                  ) status
                 , ( SELECT SUBSTR(VALUE(t), 1, 100)
                     FROM TABLE(u_0.opisy1k) t
                     WHERE ROWNUM <= 1
                   ) opis
-                , ( SELECT SUBSTR(VALUE(t), 1, 1)
-                    FROM TABLE(u_0.czy_do_sredniej1k) t
-                    WHERE ROWNUM <= 1
-                  ) czy_do_sredniej
-                , ( SELECT SUBSTR(VALUE(t), 1, 1)
-                    FROM TABLE(u_0.edycje1k) t
-                    WHERE ROWNUM <= 1
-                  ) edycja
-                , ( SELECT SUBSTR(VALUE(t), 1, 100)
-                    FROM TABLE(u_0.opis_ang1k) t
-                    WHERE ROWNUM <= 1
-                  ) opis_ang
                 , ( SELECT VALUE(t)
-                    FROM TABLE(u_0.zaj_cyk_ids) t
+                    FROM TABLE(u_0.daty_zwrotu) t
                     WHERE ROWNUM <= 1
-                  ) zaj_cyk_id
+                  ) data_zwrotu
+                , ( SELECT SUBSTR(VALUE(t), 1, 1)
+                    FROM TABLE(u_0.egzaminy_komisyjne1k) t
+                    WHERE ROWNUM <= 1
+                  ) egzamin_komisyjny
+
                 , CAST(MULTISET(
                     SELECT SUBSTR(VALUE(t), 1, 10)
                     FROM TABLE(u_0.subj_grades1k) t
@@ -235,20 +234,20 @@ USING
                     FROM TABLE(u_0.prot_ids)
                   ) dbg_prot_ids
                 , ( SELECT COUNT(*)
-                    FROM TABLE(u_0.opisy1k)
+                    FROM TABLE(u_0.nrs)
+                  ) dbg_nrs
+                , ( SELECT COUNT(*)
+                    FROM TABLE(u_0.statusy1k) t
+                  ) dbg_statusy
+                , ( SELECT COUNT(*)
+                    FROM TABLE(u_0.opisy1k) t
                   ) dbg_opisy
                 , ( SELECT COUNT(*)
-                    FROM TABLE(u_0.czy_do_sredniej1k)
-                  ) dbg_czy_do_sredniej
+                    FROM TABLE(u_0.daty_zwrotu) t
+                  ) dbg_daty_zwrotu
                 , ( SELECT COUNT(*)
-                    FROM TABLE(u_0.edycje1k)
-                  ) dbg_edycje
-                , ( SELECT COUNT(*)
-                    FROM TABLE(u_0.opis_ang1k)
-                  ) dbg_opisy_ang
-                , ( SELECT COUNT(*)
-                    FROM TABLE(u_0.prot_ids)
-                  ) dbg_zaj_cyk_ids
+                    FROM TABLE(u_0.egzaminy_komisyjne1k) t
+                  ) dbg_egzaminy_komisyjne
                 , ( SELECT COUNT(*)
                     FROM TABLE(u_0.subj_grades1k)
                   ) dbg_subj_grades
@@ -264,28 +263,33 @@ USING
             SELECT
                   u.*
 
-                , u.zaj_cyk_id v$zaj_cyk_id
-                , DECODE(u.prot_id, NULL
-                        , CASE u.coalesced_proto_type
-                            WHEN 'E' THEN 'Egzamin'
-                            WHEN 'S' THEN 'Ocena łączna'
-                            WHEN 'Z' THEN 'Zaliczenie'
-                            WHEN 'O' THEN 'Zaliczenie na ocenę'
-                            ELSE 'error: unknown protocol type "'
-                                || u.coalesced_proto_type ||
-                                '"'
-                          END
+                , u.prot_id v$prot_id
+                , u.nr v$nr
+                , DECODE( u.nr, NULL
+                        , 'Zd'
+                        , u.status
+                ) v$status
+                , V2u_Get.Utw_Id(u.job_uuid) v$utw_id
+                , DECODE( u.nr, NULL
+                        , 'V2U import {przedmiot: "' ||
+                          u.coalesced_subj_code
+                          || '", zajecia: "' ||
+                          u.coalesced_classes_type
+                          || '", data: "' ||
+                          TO_CHAR(u.subj_grade_date, 'YYYY-MM-DD')
+                          || '"}'
                         , u.opis
                   ) v$opis
-                , V2u_Get.Utw_Id(u.job_uuid) v$utw_id
+                , DECODE( u.nr, NULL
+                        , u.subj_grade_date
+                        , u.data_zwrotu
+                  ) v$data_zwrotu
                 , V2u_Get.Mod_Id(u.job_uuid) v$mod_id
-                , u.coalesced_proto_type v$tpro_kod
-                , u.prot_id v$id
-                , u.coalesced_subj_code v$prz_kod
-                , u.semester_code v$cdyd_kod
-                , DECODE(u.prot_id, NULL, 'T', u.czy_do_sredniej) v$czy_do_sredniej
-                , DECODE(u.prot_id, NULL, NULL, u.edycja) v$edycja
-                , DECODE(u.prot_id, NULL, NULL, u.opis_ang) v$opis_ang
+                , DECODE( u.nr
+                        , NULL
+                        , 'N'
+                        , u.egzamin_komisyjny
+                ) v$egzamin_komisyjny
 
                 -- did we found unique row in the target table?
                 , CASE
@@ -300,6 +304,7 @@ USING
                             )
                         AND u.dbg_missing = 0
                         AND u.dbg_prot_ids = 1 AND u.prot_id IS NOT NULL
+                        AND u.dbg_nrs = 1 AND u.nr IS NOT NULL
                     THEN 1
                     ELSE 0
                   END dbg_unique_match
@@ -308,33 +313,11 @@ USING
                 , CASE
                     WHEN
                         -- all the instances were consistent
-                            u.dbg_subj_codes = 1
-                        AND u.dbg_classes_types = 1
-                        AND (
-                                    u.dbg_map_subj_codes = 1
-                                AND u.coalesced_subj_code = u.map_subj_code
-                            )
-                        AND u.dbg_map_proto_types <= 1
-                        AND u.dbg_subj_credit_kinds = 1
+                            u.dbg_nrs <= 1
+                        AND u.dbg_statusy <= 1
                         AND u.dbg_opisy <= 1
-                        AND u.dbg_czy_do_sredniej <= 1
-                        AND u.dbg_edycje <= 1
-                        AND u.dbg_opisy_ang <= 1
-                        AND (
-                                        u.classes_type = '-'
-                                    AND u.dbg_map_classes_types = 0
-                                    AND u.zaj_cyk_id IS NULL
-                                    AND u.dbg_zaj_cyk_ids = 0
-                                OR
-                                        u.classes_type <> '-'
-                                    AND u.dbg_map_classes_types = 1
-                                    AND u.zaj_cyk_id IS NOT NULL
-                                    AND u.dbg_zaj_cyk_ids = 1
-                            )
-                        AND u.dbg_subj_grades > 0
-
-                        -- and we have correct tpro_kod value
-                        AND u.coalesced_proto_type IN ('E', 'Z', 'O', 'S')
+                        AND u.dbg_daty_zwrotu <= 1
+                        AND u.dbg_egzaminy_komisyjne <= 1
                     THEN 1
                     ELSE 0
                   END dbg_values_ok
