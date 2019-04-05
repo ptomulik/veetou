@@ -6,20 +6,30 @@ USING
             -- determine what to use as a single output row;
             SELECT
                   g_j.job_uuid
-                , COALESCE(
-                          subject_map.map_subj_code
-                        , subjects.subj_code
-                  ) coalesced_subj_code
-                , semesters.semester_code
-                , COALESCE(
-                          classes_map.map_classes_type
-                        , g_j.classes_type
-                  ) coalesced_classes_type
-                , COALESCE(
-                          ma_trmpro_j.tpro_kod
-                        , mi_trmpro_j.coalesced_proto_type
-                  ) coalesced_proto_type
-                , g_j.subj_grade_date
+                , CASE
+                    WHEN ma_trmpro_j.job_uuid IS NOT NULL
+                    THEN
+                      '{prot_id: '
+                        || ma_trmpro_j.prot_id ||
+                      ', nr: '
+                        || ma_trmpro_j.nr ||
+                      '}'
+                    ELSE
+                      '{subject: "'
+                        || COALESCE( subject_map.map_subj_code
+                                   , subjects.subj_code) ||
+                      '", semester: "'
+                        || semesters.semester_code ||
+                      '", proto: "'
+                        || mi_trmpro_j.coalesced_proto_type ||
+                      '", classes: "'
+                        || COALESCE( classes_map.map_classes_type
+                                   , g_j.classes_type ) ||
+                      '", date: "'
+                        || g_j.subj_grade_date ||
+                      '"}'
+                  END pk_termin_protokolu
+
                 , SET(CAST(
                         COLLECT(subject_map.map_subj_code)
                         AS V2u_Vchars1K_t
@@ -72,6 +82,11 @@ USING
                         COLLECT(trmpro.egzamin_komisyjny)
                         AS V2u_Vchars1K_t
                   )) egzaminy_komisyjne1k
+                , SET(CAST(
+                        COLLECT(g_j.subj_grade_date ORDER BY g_j.subj_grade_date)
+                        AS V2u_Dates_t
+                  )) subj_grade_dates
+
 
                 , COUNT(ma_trmpro_j.prz_kod) dbg_matched
                 , COUNT(mi_trmpro_j.job_uuid) dbg_missing
@@ -140,21 +155,35 @@ USING
             WHERE g_j.subj_grade IS NOT NULL
             GROUP BY
                   g_j.job_uuid
-                , COALESCE(subject_map.map_subj_code, subjects.subj_code)
-                , semesters.semester_code
-                , COALESCE(classes_map.map_classes_type, g_j.classes_type)
-                , COALESCE(ma_trmpro_j.tpro_kod, mi_trmpro_j.coalesced_proto_type)
-                , g_j.subj_grade_date
+                , CASE
+                    WHEN ma_trmpro_j.job_uuid IS NOT NULL
+                    THEN
+                      '{prot_id: '
+                        || ma_trmpro_j.prot_id ||
+                      ', nr: '
+                        || ma_trmpro_j.nr ||
+                      '}'
+                    ELSE
+                      '{subject: "'
+                        || COALESCE( subject_map.map_subj_code
+                                   , subjects.subj_code) ||
+                      '", semester: "'
+                        || semesters.semester_code ||
+                      '", proto: "'
+                        || mi_trmpro_j.coalesced_proto_type ||
+                      '", classes: "'
+                        || COALESCE( classes_map.map_classes_type
+                                   , g_j.classes_type ) ||
+                      '", date: "'
+                        || g_j.subj_grade_date ||
+                      '"}'
+                  END
         ),
         u AS
         ( -- make necessary adjustments to the raw values selected i u_0
             SELECT
                   u_0.job_uuid
-                , u_0.coalesced_subj_code
-                , u_0.semester_code
-                , u_0.coalesced_classes_type
-                , u_0.coalesced_proto_type
-                , u_0.subj_grade_date
+                , u_0.pk_termin_protokolu
 
                 -- select first element from each collection
                 , ( SELECT SUBSTR(VALUE(t), 1, 20)
@@ -211,6 +240,13 @@ USING
                     FROM TABLE(u_0.subj_grades1k) t
                   ) AS V2u_Subj_Grades_t) subj_grades
 
+                , u_0.subj_grade_dates
+
+                , ( SELECT VALUE(t)
+                    FROM TABLE(u_0.subj_grade_dates) t
+                    WHERE ROWNUM <= 1
+                  ) subj_grade_date
+
                 -- columns used for debugging
                 , ( SELECT COUNT(*)
                     FROM TABLE(u_0.subj_codes1k)
@@ -251,6 +287,9 @@ USING
                 , ( SELECT COUNT(*)
                     FROM TABLE(u_0.subj_grades1k)
                   ) dbg_subj_grades
+                , ( SELECT COUNT(*)
+                    FROM TABLE(u_0.subj_grade_dates)
+                  ) dbg_subj_grade_dates
 
                 , u_0.dbg_matched
                 , u_0.dbg_missing
@@ -272,9 +311,9 @@ USING
                 , V2u_Get.Utw_Id(u.job_uuid) v$utw_id
                 , DECODE( u.nr, NULL
                         , 'V2U import {przedmiot: "' ||
-                          u.coalesced_subj_code
+                          COALESCE(u.map_subj_code, u.subj_code)
                           || '", zajecia: "' ||
-                          u.coalesced_classes_type
+                          COALESCE(u.map_classes_type, u.classes_type)
                           || '", data: "' ||
                           TO_CHAR(u.subj_grade_date, 'YYYY-MM-DD')
                           || '"}'
@@ -291,7 +330,7 @@ USING
                         , u.egzamin_komisyjny
                 ) v$egzamin_komisyjny
 
-                -- did we found unique row in the target table?
+                -- did we find unique row in the target table?
                 , CASE
                     WHEN    u.dbg_matched > 0
                         AND u.dbg_subject_mapped = u.dbg_matched
@@ -313,11 +352,41 @@ USING
                 , CASE
                     WHEN
                         -- all the instances were consistent
-                            u.dbg_nrs <= 1
-                        AND u.dbg_statusy <= 1
-                        AND u.dbg_opisy <= 1
-                        AND u.dbg_daty_zwrotu <= 1
-                        AND u.dbg_egzaminy_komisyjne <= 1
+                            (
+                                    u.dbg_statusy = 0
+                                OR
+                                        u.dbg_statusy = 1
+                                    AND
+                                        u.status IN ('P', 'Zd', 'A', 'X', 'Zn', 'Zt')
+                            )
+                        AND (
+                                    u.dbg_opisy = 0
+                                OR
+                                        u.dbg_opisy = 1
+                                    AND
+                                        u.opis IS NOT NULL
+                            )
+                        AND (
+                                        u.dbg_daty_zwrotu = 0
+                                    AND u.data_zwrotu IS NULL
+                                    AND u.dbg_subj_grade_dates = 1
+                                    AND u.subj_grade_date IS NOT NULL
+                                OR
+                                        u.dbg_daty_zwrotu = 1
+                                    AND u.data_zwrotu
+                                        BETWEEN
+                                            TO_DATE('1990-01-01', 'YYYY-MM-DD')
+                                        AND
+                                            TO_DATE('2030-12-31', 'YYYY-MM-DD')
+                                    AND u.dbg_subj_grade_dates >= 1
+                            )
+                        AND (
+                                    u.dbg_egzaminy_komisyjne = 0
+                                OR
+                                        u.dbg_egzaminy_komisyjne = 1
+                                    AND
+                                        UPPER(u.egzamin_komisyjny) IN ('T', 'N')
+                            )
                     THEN 1
                     ELSE 0
                   END dbg_values_ok
@@ -327,33 +396,26 @@ USING
         ( -- provide our values (v$*) and original ones (u$*)
             SELECT
                   v.*
-                , t.zaj_cyk_id u$zaj_cyk_id
-                , t.opis u$opis
+                , t.prot_id u$prot_id
+                , t.nr u$nr
+                , t.status u$status
                 , t.utw_id u$utw_id
                 , t.utw_data u$utw_data
+                , t.opis u$opis
+                , t.data_zwrotu u$data_zwrotu
                 , t.mod_id u$mod_id
                 , t.mod_data u$mod_data
-                , t.tpro_kod u$tpro_kod
-                , t.id u$id
-                , t.prz_kod u$prz_kod
-                , t.cdyd_kod u$cdyd_kod
-                , t.czy_do_sredniej u$czy_do_sredniej
-                , t.edycja u$edycja
-                , t.opis_ang u$opis_ang
+                , t.egzamin_komisyjny u$egzamin_komisyjny
 
                 -- is it insert, update or nothing?
 
                 , DECODE( v.dbg_unique_match, 1
                         , (CASE
                             WHEN    -- do we introduce any modification?
-                                    DECODE(v.v$zaj_cyk_id, t.zaj_cyk_id, 1, 0) = 1
+                                    DECODE(v.v$status, t.status, 1, 0) = 1
                                 AND DECODE(v.v$opis, t.opis, 1, 0) = 1
-                                AND DECODE(v.v$tpro_kod, t.tpro_kod, 1, 0) = 1
-                                AND DECODE(v.v$prz_kod, t.prz_kod, 1, 0) = 1
-                                AND DECODE(v.v$cdyd_kod, t.cdyd_kod, 1, 0) = 1
-                                AND DECODE(v.v$czy_do_sredniej, t.czy_do_sredniej, 1, 0) = 1
-                                AND DECODE(v.v$edycja, t.edycja, 1, 0) = 1
-                                AND DECODE(v.v$opis_ang, t.opis_ang, 1, 0) = 1
+                                AND DECODE(v.v$data_zwrotu, t.data_zwrotu, 1, 0) = 1
+                                AND DECODE(v.v$egzamin_komisyjny, t.egzamin_komisyjny, 1, 0) = 1
                             THEN '-'
                             ELSE 'U'
                           END)
@@ -397,49 +459,31 @@ USING
                   END safe_to_update
 
             FROM v v
-            LEFT JOIN v2u_dz_protokoly t
+            LEFT JOIN v2u_dz_terminy_protokolow t
                 ON  (
                             v.dbg_unique_match = 1
-                        AND t.id = v.prot_id
+                        AND t.prot_id = v.prot_id
+                        AND t.nr = v.nr
                     )
         )
         SELECT
               w.job_uuid
-            , DECODE(w.dbg_unique_match, 1,
-                  '{id: ' || w.prot_id || '}'
-                , '{subject: "'
-                    || w.coalesced_subj_code ||
-                  '", semester: "'
-                    || w.semester_code ||
-                  '", proto: "'
-                    || w.coalesced_proto_type ||
-                  '", classes: "'
-                    || w.coalesced_classes_type ||
-                  '"}'
-              ) pk_protokol
+            , w.pk_termin_protokolu
 
-            , w.v$zaj_cyk_id zaj_cyk_id
-            , w.v$opis opis
+            , w.v$prot_id prot_id
+            , w.v$nr nr
+            , w.v$status status
 
             , DECODE(w.change_type, 'I', w.v$utw_id, w.u$utw_id) utw_id
             , DECODE(w.change_type, 'I', NULL, w.u$utw_data) utw_data
+
+            , w.v$opis opis
+            , w.v$data_zwrotu data_zwrotu
+
             , DECODE(w.change_type, 'U', w.v$mod_id, w.u$mod_id) mod_id
             , DECODE(w.change_type, 'U', NULL, w.u$mod_data) mod_data
 
-            , w.v$tpro_kod tpro_kod
-            , DECODE(w.change_type, 'I', NULL, w.u$id) id
-            , w.v$prz_kod prz_kod
-            , w.v$cdyd_kod cdyd_kod
-            , w.v$czy_do_sredniej czy_do_sredniej
-            , w.v$edycja edycja
-            , w.v$opis_ang opis_ang
-
-
-            , w.change_type
-            , DECODE(w.change_type, 'I', w.safe_to_insert
-                                  , 'U', w.safe_to_update
-                                  ,  0
-              ) safe_to_change
+            , w.v$egzamin_komisyjny egzamin_komisyjny
 
             , w.dbg_subj_codes
             , w.dbg_classes_types
@@ -448,42 +492,46 @@ USING
             , w.dbg_map_classes_types
             , w.dbg_subj_credit_kinds
             , w.dbg_prot_ids
+            , w.dbg_nrs
+            , w.dbg_statusy
             , w.dbg_opisy
-            , w.dbg_czy_do_sredniej
-            , w.dbg_edycje
-            , w.dbg_opisy_ang
-            , w.dbg_zaj_cyk_ids
+            , w.dbg_daty_zwrotu
+            , w.dbg_egzaminy_komisyjne
             , w.dbg_subj_grades
-            , w.dbg_values_ok
-            , w.dbg_unique_match
+            , w.dbg_subj_grade_dates
             , w.dbg_matched
             , w.dbg_missing
             , w.dbg_subject_mapped
             , w.dbg_classes_mapped
+            , w.dbg_unique_match
+            , w.dbg_values_ok
+
+            , w.change_type
+            , DECODE(w.change_type, 'I', w.safe_to_insert
+                                  , 'U', w.safe_to_update
+                                  ,  0
+            ) safe_to_change
         FROM w w
     ) src
 ON  (
-            tgt.pk_protokol = src.pk_protokol
+            tgt.pk_termin_protokolu = src.pk_termin_protokolu
         AND tgt.job_uuid = src.job_uuid
     )
 WHEN NOT MATCHED THEN
     INSERT
-        ( zaj_cyk_id
-        , opis
+        ( prot_id
+        , nr
+        , status
         , utw_id
         , utw_data
+        , opis
+        , data_zwrotu
         , mod_id
         , mod_data
-        , tpro_kod
-        , id
-        , prz_kod
-        , cdyd_kod
-        , czy_do_sredniej
-        , edycja
-        , opis_ang
+        , egzamin_komisyjny
         -- KEY
         , job_uuid
-        , pk_protokol
+        , pk_termin_protokolu
         -- DBG
         , dbg_subj_codes
         , dbg_classes_types
@@ -492,39 +540,37 @@ WHEN NOT MATCHED THEN
         , dbg_map_classes_types
         , dbg_subj_credit_kinds
         , dbg_prot_ids
+        , dbg_nrs
+        , dbg_statusy
         , dbg_opisy
-        , dbg_czy_do_sredniej
-        , dbg_edycje
-        , dbg_opisy_ang
-        , dbg_zaj_cyk_ids
+        , dbg_daty_zwrotu
+        , dbg_egzaminy_komisyjne
         , dbg_subj_grades
-        , dbg_values_ok
-        , dbg_unique_match
+        , dbg_subj_grade_dates
         , dbg_matched
         , dbg_missing
         , dbg_subject_mapped
         , dbg_classes_mapped
+        , dbg_unique_match
+        , dbg_values_ok
         -- CTL
         , change_type
         , safe_to_change
         )
     VALUES
-        ( src.zaj_cyk_id
-        , src.opis
+        ( src.prot_id
+        , src.nr
+        , src.status
         , src.utw_id
         , src.utw_data
+        , src.opis
+        , src.data_zwrotu
         , src.mod_id
         , src.mod_data
-        , src.tpro_kod
-        , src.id
-        , src.prz_kod
-        , src.cdyd_kod
-        , src.czy_do_sredniej
-        , src.edycja
-        , src.opis_ang
+        , src.egzamin_komisyjny
         -- KEY
         , src.job_uuid
-        , src.pk_protokol
+        , src.pk_termin_protokolu
         -- DBG
         , src.dbg_subj_codes
         , src.dbg_classes_types
@@ -533,40 +579,38 @@ WHEN NOT MATCHED THEN
         , src.dbg_map_classes_types
         , src.dbg_subj_credit_kinds
         , src.dbg_prot_ids
+        , src.dbg_nrs
+        , src.dbg_statusy
         , src.dbg_opisy
-        , src.dbg_czy_do_sredniej
-        , src.dbg_edycje
-        , src.dbg_opisy_ang
-        , src.dbg_zaj_cyk_ids
+        , src.dbg_daty_zwrotu
+        , src.dbg_egzaminy_komisyjne
         , src.dbg_subj_grades
-        , src.dbg_values_ok
-        , src.dbg_unique_match
+        , src.dbg_subj_grade_dates
         , src.dbg_matched
         , src.dbg_missing
         , src.dbg_subject_mapped
         , src.dbg_classes_mapped
+        , src.dbg_unique_match
+        , src.dbg_values_ok
         -- CTL
         , src.change_type
         , src.safe_to_change
         )
 WHEN MATCHED THEN
     UPDATE SET
-          tgt.zaj_cyk_id = src.zaj_cyk_id
-        , tgt.opis = src.opis
+          tgt.prot_id = src.prot_id
+        , tgt.nr = src.nr
+        , tgt.status = src.status
         , tgt.utw_id = src.utw_id
         , tgt.utw_data = src.utw_data
+        , tgt.opis = src.opis
+        , tgt.data_zwrotu = src.data_zwrotu
         , tgt.mod_id = src.mod_id
         , tgt.mod_data = src.mod_data
-        , tgt.tpro_kod = src.tpro_kod
-        , tgt.id = src.id
-        , tgt.prz_kod = src.prz_kod
-        , tgt.cdyd_kod = src.cdyd_kod
-        , tgt.czy_do_sredniej = src.czy_do_sredniej
-        , tgt.edycja = src.edycja
-        , tgt.opis_ang = src.opis_ang
+        , tgt.egzamin_komisyjny = src.egzamin_komisyjny
         -- KEY
 --        , tgt.job_uuid = src.job_uuid
---        , tgt.pk_protokol = src.pk_protokol
+--        , tgt.pk_termin_protokolu = src.pk_termin_protokolu
         -- DBG
         , tgt.dbg_subj_codes = src.dbg_subj_codes
         , tgt.dbg_classes_types = src.dbg_classes_types
@@ -575,18 +619,19 @@ WHEN MATCHED THEN
         , tgt.dbg_map_classes_types = src.dbg_map_classes_types
         , tgt.dbg_subj_credit_kinds = src.dbg_subj_credit_kinds
         , tgt.dbg_prot_ids = src.dbg_prot_ids
+        , tgt.dbg_nrs = src.dbg_nrs
+        , tgt.dbg_statusy = src.dbg_statusy
         , tgt.dbg_opisy = src.dbg_opisy
-        , tgt.dbg_czy_do_sredniej = src.dbg_czy_do_sredniej
-        , tgt.dbg_edycje = src.dbg_edycje
-        , tgt.dbg_opisy_ang = src.dbg_opisy_ang
-        , tgt.dbg_zaj_cyk_ids = src.dbg_zaj_cyk_ids
+        , tgt.dbg_daty_zwrotu = src.dbg_daty_zwrotu
+        , tgt.dbg_egzaminy_komisyjne = src.dbg_egzaminy_komisyjne
         , tgt.dbg_subj_grades = src.dbg_subj_grades
-        , tgt.dbg_values_ok = src.dbg_values_ok
-        , tgt.dbg_unique_match = src.dbg_unique_match
+        , tgt.dbg_subj_grade_dates = src.dbg_subj_grade_dates
         , tgt.dbg_matched = src.dbg_matched
         , tgt.dbg_missing = src.dbg_missing
         , tgt.dbg_subject_mapped = src.dbg_subject_mapped
         , tgt.dbg_classes_mapped = src.dbg_classes_mapped
+        , tgt.dbg_unique_match = src.dbg_unique_match
+        , tgt.dbg_values_ok = src.dbg_values_ok
         -- CTL
         , tgt.change_type = src.change_type
         , tgt.safe_to_change = src.safe_to_change
