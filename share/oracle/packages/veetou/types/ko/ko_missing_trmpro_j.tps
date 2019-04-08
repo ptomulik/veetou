@@ -10,7 +10,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Trmpro_J_t
     , prot_id NUMBER(10)
     , nr NUMBER(10)
     , reason VARCHAR2(200 CHAR)
-    , istniejace_daty_zwrotu V2u_20Dates_t
+    , max_istniejacy_nr NUMBER(10)
+    , istniejace_daty_zwrotow V2u_20Dates_t
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Missing_Trmpro_J_t(
               SELF IN OUT NOCOPY V2u_Ko_Missing_Trmpro_J_t
@@ -28,7 +29,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Trmpro_J_t
             , prot_id IN NUMBER
             , nr IN NUMBER
             , reason IN VARCHAR2
-            , istniejace_daty_zwrotu IN V2u_20Dates_t
+            , max_istniejacy_nr IN NUMBER
+            , istniejace_daty_zwrotow IN V2u_20Dates_t
             ) RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
@@ -47,7 +49,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Trmpro_J_t
             , prot_id IN NUMBER
             , nr IN NUMBER
             , reason IN VARCHAR2
-            , istniejace_daty_zwrotu IN V2u_20Dates_t
+            , max_istniejacy_nr IN NUMBER
+            , istniejace_daty_zwrotow IN V2u_20Dates_t
             )
     )
 NOT FINAL;

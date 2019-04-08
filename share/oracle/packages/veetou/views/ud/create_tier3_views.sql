@@ -7,5 +7,6 @@
 @@ud_programy_osob_v.sql;
 @@ud_etapy_osob_v.sql;
 @@ud_protokoly_v.sql;
+@@ud_terminy_protokolow_v.sql;
 
 -- vim: set ft=sql ts=4 sw=4 et:

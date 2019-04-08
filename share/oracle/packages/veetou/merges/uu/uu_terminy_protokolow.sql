@@ -1,9 +1,8 @@
 MERGE INTO v2u_uu_terminy_protokolow tgt
 USING
     (
-        WITH u_0 AS
+        WITH u_00 AS
         (
-            -- determine what to use as a single output row;
             SELECT
                   g_j.job_uuid
                 , CASE
@@ -30,68 +29,59 @@ USING
                       '"}'
                   END pk_termin_protokolu
 
-                , SET(CAST(
-                        COLLECT(subject_map.map_subj_code)
-                        AS V2u_Vchars1K_t
-                  )) map_subj_codes1k
-                , SET(CAST(
-                        COLLECT(subject_map.map_proto_type)
-                        AS V2u_Vchars1K_t
-                  )) map_proto_types1k
-                , SET(CAST(
-                        COLLECT(classes_map.map_classes_type)
-                        AS V2u_Vchars1K_t
-                  )) map_classes_types1k
-                , SET(CAST(
-                        COLLECT(subjects.subj_code)
-                        AS V2u_Vchars1K_t
-                  )) subj_codes1k
-                , SET(CAST(
-                        COLLECT(g_j.classes_type)
-                        AS V2u_Chars1_t
-                  )) classes_types
-                , SET(CAST(
-                        COLLECT(subjects.subj_credit_kind)
-                        AS V2u_Vchars1K_t
-                  )) subj_credit_kinds1k
-                , SET(CAST(
-                        COLLECT(g_j.subj_grade ORDER BY g_j.subj_grade)
-                        AS V2u_Vchars1K_t
-                  )) subj_grades1k
-                , SET(CAST(
-                        COLLECT(ma_trmpro_j.prot_id)
-                        AS V2u_Dz_Ids_t
-                  )) prot_ids
-                , SET(CAST(
-                        COLLECT(ma_trmpro_j.nr)
-                        AS V2u_Ints10_t
-                  )) nrs
-                , SET(CAST(
-                        COLLECT(trmpro.status)
-                        AS V2u_Vchars1K_t
-                  )) statusy1k
-                , SET(CAST(
-                        COLLECT(trmpro.opis)
-                        AS V2u_Vchars1K_t
-                  )) opisy1k
-                , SET(CAST(
-                        COLLECT(trmpro.data_zwrotu)
-                        AS V2u_Dates_t
-                  )) daty_zwrotu
-                , SET(CAST(
-                        COLLECT(trmpro.egzamin_komisyjny)
-                        AS V2u_Vchars1K_t
-                  )) egzaminy_komisyjne1k
-                , SET(CAST(
-                        COLLECT(g_j.subj_grade_date ORDER BY g_j.subj_grade_date)
-                        AS V2u_Dates_t
-                  )) subj_grade_dates
+                , CASE
+                    WHEN ma_trmpro_j.prot_id IS NOT NULL
+                    THEN DENSE_RANK() OVER (
+                            PARTITION BY
+                                  g_j.job_uuid
+                                , ma_trmpro_j.prot_id
+                            ORDER BY
+                                  g_j.subj_grade_date
+                        )
+                    WHEN mi_trmpro_j.prot_id IS NOT NULL
+                    THEN DENSE_RANK() OVER (
+                            PARTITION BY
+                                  g_j.job_uuid
+                                , mi_trmpro_j.prot_id
+                            ORDER BY
+                                  g_j.subj_grade_date
+                        )
+                    ELSE DENSE_RANK() OVER (
+                            PARTITION BY
+                                  g_j.job_uuid
+                                , COALESCE( subject_map.map_subj_code
+                                          , subjects.subj_code )
+                                , semesters.semester_code
+                                , mi_trmpro_j.coalesced_proto_type
+                                , COALESCE( classes_map.map_classes_type
+                                          , g_j.classes_type )
+                            ORDER BY
+                                  g_j.subj_grade_date
+                        )
+                  END subj_grade_date_rank
 
-
-                , COUNT(ma_trmpro_j.prz_kod) dbg_matched
-                , COUNT(mi_trmpro_j.job_uuid) dbg_missing
-                , COUNT(sm_j.map_id) dbg_subject_mapped
-                , COUNT(cm_j.map_id) dbg_classes_mapped
+                , subject_map.map_subj_code
+                , subject_map.map_proto_type
+                , classes_map.map_classes_type
+                , subjects.subj_code
+                , subjects.subj_credit_kind
+                , semesters.semester_code
+                , g_j.classes_type
+                , g_j.subj_grade
+                , g_j.subj_grade_date
+                , ma_trmpro_j.prot_id
+                , ma_trmpro_j.nr
+                , mi_trmpro_j.prot_id mi_prot_id
+                , mi_trmpro_j.coalesced_proto_type mi_coalesced_proto_type
+                , mi_trmpro_j.max_istniejacy_nr max_istniejacy_nr
+                , terminy_protokolow.status
+                , terminy_protokolow.opis
+                , terminy_protokolow.data_zwrotu
+                , terminy_protokolow.egzamin_komisyjny
+                , ma_trmpro_j.prz_kod
+                , mi_trmpro_j.job_uuid mi_job_uuid
+                , sm_j.map_id subject_map_id
+                , cm_j.map_id classes_map_id
 
             FROM v2u_ko_grades_j g_j
             INNER JOIN v2u_ko_subjects subjects
@@ -119,7 +109,7 @@ USING
                         AND mi_trmpro_j.specialty_id = g_j.specialty_id
                         AND mi_trmpro_j.semester_id = g_j.semester_id
                         AND mi_trmpro_j.classes_type = g_j.classes_type
-                        AND ma_trmpro_j.subj_grade_date = g_j.subj_grade_date
+                        AND mi_trmpro_j.subj_grade_date = g_j.subj_grade_date
                         AND mi_trmpro_j.job_uuid = g_j.job_uuid
                     )
             LEFT JOIN v2u_ko_subject_map_j sm_j
@@ -147,37 +137,104 @@ USING
                 ON  (
                             classes_map.id = cm_j.map_id
                     )
-            LEFT JOIN v2u_dz_terminy_protokolow trmpro
+            LEFT JOIN v2u_dz_terminy_protokolow terminy_protokolow
                 ON  (
-                            trmpro.prot_id = ma_trmpro_j.prot_id
-                        AND trmpro.nr = ma_trmpro_j.nr
+                            terminy_protokolow.prot_id = ma_trmpro_j.prot_id
+                        AND terminy_protokolow.nr = ma_trmpro_j.nr
                     )
             WHERE g_j.subj_grade IS NOT NULL
+        ),
+        u_0 AS
+        (
+            -- determine what to use as a single output row;
+            SELECT
+                  u_00.job_uuid
+                , u_00.pk_termin_protokolu
+
+                , SET(CAST(
+                        COLLECT(u_00.subj_grade_date_rank)
+                        AS V2u_Integers_t
+                  )) subj_grade_date_ranks
+
+                , SET(CAST(
+                        COLLECT(u_00.map_subj_code)
+                        AS V2u_Vchars1K_t
+                  )) map_subj_codes1k
+                , SET(CAST(
+                        COLLECT(u_00.map_proto_type)
+                        AS V2u_Vchars1K_t
+                  )) map_proto_types1k
+                , SET(CAST(
+                        COLLECT(u_00.map_classes_type)
+                        AS V2u_Vchars1K_t
+                  )) map_classes_types1k
+                , SET(CAST(
+                        COLLECT(u_00.subj_code)
+                        AS V2u_Vchars1K_t
+                  )) subj_codes1k
+                , SET(CAST(
+                        COLLECT(u_00.classes_type)
+                        AS V2u_Chars1_t
+                  )) classes_types
+                , SET(CAST(
+                        COLLECT(u_00.subj_credit_kind)
+                        AS V2u_Vchars1K_t
+                  )) subj_credit_kinds1k
+                , SET(CAST(
+                        COLLECT(u_00.subj_grade ORDER BY u_00.subj_grade)
+                        AS V2u_Vchars1K_t
+                  )) subj_grades1k
+                , SET(CAST(
+                        COLLECT(u_00.prot_id)
+                        AS V2u_Dz_Ids_t
+                  )) prot_ids
+                , SET(CAST(
+                        COLLECT(u_00.nr)
+                        AS V2u_Ints10_t
+                  )) nrs
+                , SET(CAST(
+                        COLLECT(u_00.status)
+                        AS V2u_Vchars1K_t
+                  )) statusy1k
+                , SET(CAST(
+                        COLLECT(u_00.opis)
+                        AS V2u_Vchars1K_t
+                  )) opisy1k
+                , SET(CAST(
+                        COLLECT(u_00.data_zwrotu)
+                        AS V2u_Dates_t
+                  )) daty_zwrotu
+                , SET(CAST(
+                        COLLECT(u_00.egzamin_komisyjny)
+                        AS V2u_Vchars1K_t
+                  )) egzaminy_komisyjne1k
+                , SET(CAST(
+                        COLLECT(u_00.subj_grade_date ORDER BY u_00.subj_grade_date)
+                        AS V2u_Dates_t
+                  )) subj_grade_dates
+                , SET(CAST(
+                        COLLECT(u_00.mi_prot_id)
+                        AS V2u_Dz_Ids_t
+                  )) mi_prot_ids
+                , SET(CAST(
+                        COLLECT(u_00.max_istniejacy_nr ORDER BY u_00.max_istniejacy_nr)
+                        AS V2u_Ints10_t
+                  )) max_istniejace_nry
+
+
+                /* The ".. + 0" seems to be a workaround the following bug:
+                 *
+                 * BUG: The values of dbg_matched and dbg_subject_mapped get
+                 * mixed randomly in this query. */
+                , COUNT(u_00.prz_kod) dbg_matched
+                , COUNT(u_00.mi_job_uuid) dbg_missing
+                , COUNT(u_00.subject_map_id + 0) dbg_subject_mapped
+                , COUNT(u_00.classes_map_id + 0) dbg_classes_mapped
+
+            FROM u_00 u_00
             GROUP BY
-                  g_j.job_uuid
-                , CASE
-                    WHEN ma_trmpro_j.job_uuid IS NOT NULL
-                    THEN
-                      '{prot_id: '
-                        || ma_trmpro_j.prot_id ||
-                      ', nr: '
-                        || ma_trmpro_j.nr ||
-                      '}'
-                    ELSE
-                      '{subject: "'
-                        || COALESCE( subject_map.map_subj_code
-                                   , subjects.subj_code) ||
-                      '", semester: "'
-                        || semesters.semester_code ||
-                      '", proto: "'
-                        || mi_trmpro_j.coalesced_proto_type ||
-                      '", classes: "'
-                        || COALESCE( classes_map.map_classes_type
-                                   , g_j.classes_type ) ||
-                      '", date: "'
-                        || g_j.subj_grade_date ||
-                      '"}'
-                  END
+                  u_00.job_uuid
+                , u_00.pk_termin_protokolu
         ),
         u AS
         ( -- make necessary adjustments to the raw values selected i u_0
@@ -186,6 +243,11 @@ USING
                 , u_0.pk_termin_protokolu
 
                 -- select first element from each collection
+                , ( SELECT VALUE(t)
+                    FROM TABLE(u_0.subj_grade_date_ranks) t
+                    WHERE ROWNUM <= 1
+                  ) subj_grade_date_rank
+
                 , ( SELECT SUBSTR(VALUE(t), 1, 20)
                     FROM TABLE(u_0.map_subj_codes1k) t
                     WHERE ROWNUM <= 1
@@ -234,6 +296,14 @@ USING
                     FROM TABLE(u_0.egzaminy_komisyjne1k) t
                     WHERE ROWNUM <= 1
                   ) egzamin_komisyjny
+                , ( SELECT VALUE(t)
+                    FROM TABLE(u_0.mi_prot_ids) t
+                    WHERE ROWNUM <= 1
+                  ) mi_prot_id
+                , ( SELECT VALUE(t)
+                    FROM TABLE(u_0.max_istniejace_nry) t
+                    WHERE ROWNUM <= 1
+                  ) max_istniejacy_nr
 
                 , CAST(MULTISET(
                     SELECT SUBSTR(VALUE(t), 1, 10)
@@ -248,6 +318,9 @@ USING
                   ) subj_grade_date
 
                 -- columns used for debugging
+                , ( SELECT COUNT(*)
+                    FROM TABLE(u_0.subj_grade_date_ranks)
+                  ) dbg_subj_grade_date_ranks
                 , ( SELECT COUNT(*)
                     FROM TABLE(u_0.subj_codes1k)
                   ) dbg_subj_codes
@@ -290,6 +363,12 @@ USING
                 , ( SELECT COUNT(*)
                     FROM TABLE(u_0.subj_grade_dates)
                   ) dbg_subj_grade_dates
+                , ( SELECT COUNT(*)
+                    FROM TABLE(u_0.mi_prot_ids)
+                  ) dbg_mi_prot_ids
+                , ( SELECT COUNT(*)
+                    FROM TABLE(u_0.max_istniejace_nry)
+                  ) dbg_max_istniejace_nry
 
                 , u_0.dbg_matched
                 , u_0.dbg_missing
@@ -302,12 +381,19 @@ USING
             SELECT
                   u.*
 
-                , u.prot_id v$prot_id
-                , u.nr v$nr
+                , DECODE( u.nr, NULL
+                        , u.mi_prot_id
+                        , u.prot_id
+                  ) v$prot_id
+                , DECODE( u.nr, NULL
+                    , COALESCE(u.max_istniejacy_nr, 0)
+                      + u.subj_grade_date_rank
+                    , u.nr
+                  ) v$nr
                 , DECODE( u.nr, NULL
                         , 'Zd'
                         , u.status
-                ) v$status
+                  ) v$status
                 , V2u_Get.Utw_Id(u.job_uuid) v$utw_id
                 , DECODE( u.nr, NULL
                         , 'V2U import {przedmiot: "' ||
@@ -437,6 +523,10 @@ USING
                                         v.classes_type <> '-'
                                     AND v.dbg_classes_mapped = v.dbg_missing
                             )
+                        AND v.dbg_subj_grade_date_ranks = 1
+                        AND v.subj_grade_date_rank > 0
+                        AND v.dbg_mi_prot_ids = 1
+                        AND v.mi_prot_id IS NOT NULL
                         -- values passed basic tests
                         AND v.dbg_values_ok = 1
                     THEN 1
@@ -499,6 +589,9 @@ USING
             , w.dbg_egzaminy_komisyjne
             , w.dbg_subj_grades
             , w.dbg_subj_grade_dates
+            , w.dbg_mi_prot_ids
+            , w.dbg_max_istniejace_nry
+            , w.dbg_subj_grade_date_ranks
             , w.dbg_matched
             , w.dbg_missing
             , w.dbg_subject_mapped
@@ -547,6 +640,9 @@ WHEN NOT MATCHED THEN
         , dbg_egzaminy_komisyjne
         , dbg_subj_grades
         , dbg_subj_grade_dates
+        , dbg_mi_prot_ids
+        , dbg_max_istniejace_nry
+        , dbg_subj_grade_date_ranks
         , dbg_matched
         , dbg_missing
         , dbg_subject_mapped
@@ -586,6 +682,9 @@ WHEN NOT MATCHED THEN
         , src.dbg_egzaminy_komisyjne
         , src.dbg_subj_grades
         , src.dbg_subj_grade_dates
+        , src.dbg_mi_prot_ids
+        , src.dbg_max_istniejace_nry
+        , src.dbg_subj_grade_date_ranks
         , src.dbg_matched
         , src.dbg_missing
         , src.dbg_subject_mapped
@@ -626,6 +725,9 @@ WHEN MATCHED THEN
         , tgt.dbg_egzaminy_komisyjne = src.dbg_egzaminy_komisyjne
         , tgt.dbg_subj_grades = src.dbg_subj_grades
         , tgt.dbg_subj_grade_dates = src.dbg_subj_grade_dates
+        , tgt.dbg_mi_prot_ids = src.dbg_mi_prot_ids
+        , tgt.dbg_max_istniejace_nry = src.dbg_max_istniejace_nry
+        , tgt.dbg_subj_grade_date_ranks = src.dbg_subj_grade_date_ranks
         , tgt.dbg_matched = src.dbg_matched
         , tgt.dbg_missing = src.dbg_missing
         , tgt.dbg_subject_mapped = src.dbg_subject_mapped

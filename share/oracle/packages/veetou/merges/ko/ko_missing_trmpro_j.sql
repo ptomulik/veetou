@@ -22,15 +22,23 @@ USING
                         COLLECT(g_j.subj_grade ORDER BY g_j.subj_grade)
                         AS V2u_Vchars1K_t
                   )) subj_grades1k
+                , MAX(terminy_protokolow.nr) KEEP (
+                    DENSE_RANK LAST ORDER BY terminy_protokolow.nr
+                  ) max_istniejacy_nr
+                , SET(CAST(
+                        COLLECT(terminy_protokolow.data_zwrotu
+                                ORDER BY terminy_protokolow.data_zwrotu)
+                        AS V2u_Dates_t
+                  )) istniejace_daty_zwrotow_udt
             FROM v2u_ko_grades_j g_j
-            LEFT JOIN v2u_ko_matched_trmpro_j ma_j
+            LEFT JOIN v2u_ko_matched_trmpro_j ma_trmpro_j
                 ON  (
-                            ma_j.subject_id = g_j.subject_id
-                        AND ma_j.specialty_id = g_j.specialty_id
-                        AND ma_j.semester_id = g_j.semester_id
-                        AND ma_j.classes_type = g_j.classes_type
-                        AND ma_j.subj_grade_date = g_j.subj_grade_date
-                        AND ma_j.job_uuid = g_j.job_uuid
+                            ma_trmpro_j.subject_id = g_j.subject_id
+                        AND ma_trmpro_j.specialty_id = g_j.specialty_id
+                        AND ma_trmpro_j.semester_id = g_j.semester_id
+                        AND ma_trmpro_j.classes_type = g_j.classes_type
+                        AND ma_trmpro_j.subj_grade_date = g_j.subj_grade_date
+                        AND ma_trmpro_j.job_uuid = g_j.job_uuid
                     )
             LEFT JOIN v2u_ko_matched_protos_j ma_prot_j
                 ON  (
@@ -48,9 +56,13 @@ USING
                         AND mi_prot_j.classes_type = g_j.classes_type
                         AND mi_prot_j.job_uuid = g_j.job_uuid
                     )
+            LEFT JOIN v2u_dz_terminy_protokolow terminy_protokolow
+                ON  (
+                            terminy_protokolow.prot_id = ma_prot_j.prot_id
+                    )
             WHERE
                     g_j.subj_grade IS NOT NULL
-                AND ma_j.job_uuid IS NULL
+                AND ma_trmpro_j.job_uuid IS NULL
             GROUP BY
                   g_j.job_uuid
                 , g_j.semester_id
@@ -95,12 +107,10 @@ USING
                       )
                   ) coalesced_proto_type
                 , CAST(MULTISET(
-                        SELECT DISTINCT t.data_zwrotu
-                        FROM v2u_dz_terminy_protokolow t
-                        WHERE   t.prot_id = v.prot_id
-                            AND ROWNUM <= 20
-                        ORDER BY t.data_zwrotu
-                  ) AS V2u_20Dates_t ) istniejace_daty_zwrotu
+                        SELECT VALUE(t)
+                        FROM TABLE(v.istniejace_daty_zwrotow_udt) t
+                        WHERE ROWNUM <= 20
+                  ) AS V2u_20Dates_t ) istniejace_daty_zwrotow
             FROM v v
             INNER JOIN v2u_ko_subjects subjects
                 ON  (
@@ -207,7 +217,8 @@ WHEN NOT MATCHED THEN
         , prot_id
         , nr
         , reason
-        , istniejace_daty_zwrotu
+        , max_istniejacy_nr
+        , istniejace_daty_zwrotow
         )
     VALUES
         ( src.job_uuid
@@ -224,7 +235,8 @@ WHEN NOT MATCHED THEN
         , src.prot_id
         , src.nr
         , src.reason
-        , src.istniejace_daty_zwrotu
+        , src.max_istniejacy_nr
+        , src.istniejace_daty_zwrotow
         )
 WHEN MATCHED THEN
     UPDATE SET
@@ -236,7 +248,8 @@ WHEN MATCHED THEN
         , tgt.prot_id = src.prot_id
         , tgt.nr = src.nr
         , tgt.reason = src.reason
-        , tgt.istniejace_daty_zwrotu = src.istniejace_daty_zwrotu
+        , tgt.max_istniejacy_nr = src.max_istniejacy_nr
+        , tgt.istniejace_daty_zwrotow = src.istniejace_daty_zwrotow
 ;
 
 COMMIT;

@@ -15,7 +15,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Trmpro_J_t AS
             , prot_id IN NUMBER
             , nr IN NUMBER
             , reason IN VARCHAR2
-            , istniejace_daty_zwrotu IN V2u_20Dates_t
+            , max_istniejacy_nr IN NUMBER
+            , istniejace_daty_zwrotow IN V2u_20Dates_t
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -34,7 +35,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Trmpro_J_t AS
             , prot_id => prot_id
             , nr => nr
             , reason => reason
-            , istniejace_daty_zwrotu => istniejace_daty_zwrotu
+            , max_istniejacy_nr => max_istniejacy_nr
+            , istniejace_daty_zwrotow => istniejace_daty_zwrotow
             );
         RETURN;
     END;
@@ -56,7 +58,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Trmpro_J_t AS
             , prot_id IN NUMBER
             , nr IN NUMBER
             , reason IN VARCHAR2
-            , istniejace_daty_zwrotu IN V2u_20Dates_t
+            , max_istniejacy_nr IN NUMBER
+            , istniejace_daty_zwrotow IN V2u_20Dates_t
             )
     IS
     BEGIN
@@ -73,10 +76,11 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Trmpro_J_t AS
         SELF.subj_grade_date := subj_grade_date;
         SELF.map_classes_type := map_classes_type;
         SELF.coalesced_proto_type := coalesced_proto_type;
-        SELF.prot_id := prot_id;
         SELF.nr := nr;
+        SELF.prot_id := prot_id;
         SELF.reason := reason;
-        SELF.istniejace_daty_zwrotu := istniejace_daty_zwrotu;
+        SELF.max_istniejacy_nr := max_istniejacy_nr;
+        SELF.istniejace_daty_zwrotow := istniejace_daty_zwrotow;
     END;
 END;
 
