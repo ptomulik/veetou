@@ -701,6 +701,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_View('ko_missing_prgos_v');
         Drop_View('ko_matched_prgos_v');
         Drop_View('ko_matched_etpos_v');
+        Drop_View('ko_matched_trmpro_v');
         Drop_View('ko_matched_protos_v');
         Drop_View('ko_matched_pktprz_v');
         Drop_View('ko_matched_zajcykl_v');
@@ -731,10 +732,12 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Matched_Przedm_V_t', 'Ko_Matched_Przedms_V_t');
         Drop_Type('Ko_Matched_Przcykl_V_t', 'Ko_Matched_Przcykles_V_t');
         Drop_Type('Ko_Matched_Zajcykl_V_t', 'Ko_Matched_Zajcykles_V_t');
+        Drop_Type('Ko_Matched_Trmpro_V_t', 'Ko_Matched_Trmpros_V_t');
         Drop_Type('Ko_Matched_Proto_V_t', 'Ko_Matched_Protos_V_t');
         Drop_Type('Ko_Matched_Pktprz_V_t', 'Ko_Matched_Pktprzes_V_t');
         Drop_Type('Ko_Missing_Pktprz_V_t', 'Ko_Missing_Pktprzes_V_t');
         Drop_Type('Ko_Missing_Zajcykl_V_t', 'Ko_Missing_Zajcykles_V_t');
+        Drop_Type('Ko_Missing_Trmpro_V_t', 'Ko_Missing_Trmpros_V_t');
         Drop_Type('Ko_Missing_Proto_V_t', 'Ko_Missing_Protos_V_t');
         Drop_Type('Ko_Missing_Przcykl_V_t', 'Ko_Missing_Przcykles_V_t');
         Drop_Type('Ko_Missing_Przedm_V_t', 'Ko_Missing_Przedms_V_t');

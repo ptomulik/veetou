@@ -2,63 +2,66 @@ MERGE INTO v2u_ko_matched_trmpro_j tgt
 USING
     (
         SELECT
-              ma_j.job_uuid
-            , ma_j.semester_id
-            , ma_j.specialty_id
-            , ma_j.subject_id
-            , ma_j.classes_type
-            , ma_j.subject_map_id
-            , ma_j.classes_map_id
-            , ma_j.prz_kod
-            , ma_j.cdyd_kod
-            , ma_j.tpro_kod
-            , ma_j.prot_id
+              ma_protos_j.job_uuid
+            , ma_protos_j.semester_id
+            , ma_protos_j.specialty_id
+            , ma_protos_j.subject_id
+            , ma_protos_j.classes_type
+            , ma_protos_j.subject_map_id
+            , ma_protos_j.classes_map_id
+            , ma_protos_j.prz_kod
+            , ma_protos_j.cdyd_kod
+            , ma_protos_j.tpro_kod
+            , ma_protos_j.prot_id
             , g_j.subj_grade_date
             , trmpro.nr nr
             , trmpro.data_zwrotu
 
-        FROM v2u_ko_matched_protos_j ma_j
+        FROM v2u_ko_matched_protos_j ma_protos_j
         INNER JOIN v2u_ko_grades_j g_j
             ON  (
-                        g_j.subject_id = ma_j.subject_id
-                    AND g_j.specialty_id = ma_j.specialty_id
-                    AND g_j.semester_id = ma_j.semester_id
-                    AND g_j.job_uuid = ma_j.job_uuid
-                    AND g_j.classes_type = ma_j.classes_type
+                        g_j.subject_id = ma_protos_j.subject_id
+                    AND g_j.specialty_id = ma_protos_j.specialty_id
+                    AND g_j.semester_id = ma_protos_j.semester_id
+                    AND g_j.job_uuid = ma_protos_j.job_uuid
+                    AND g_j.classes_type = ma_protos_j.classes_type
                 )
         INNER JOIN v2u_semesters semesters
             ON  (
-                        semesters.code = ma_j.cdyd_kod
+                        semesters.code = ma_protos_j.cdyd_kod
                 )
         INNER JOIN v2u_dz_terminy_protokolow trmpro
             ON  (
-                        trmpro.prot_id = ma_j.prot_id
+                        trmpro.prot_id = ma_protos_j.prot_id
                     AND (
-                                trmpro.data_zwrotu = g_j.subj_grade_date
+                                TO_CHAR(trmpro.data_zwrotu, 'YYYY-MM-DD')
+                              = TO_CHAR(g_j.subj_grade_date, 'YYYY-MM-DD')
                             OR (
                                         -- fallback date ...
-                                        trmpro.data_zwrotu = semesters.end_date
+                                        TO_CHAR(trmpro.data_zwrotu, 'YYYY-MM-DD')
+                                      = TO_CHAR(semesters.end_date, 'YYYY-MM-DD')
                                     AND NOT EXISTS (
                                         SELECT NULL
                                         FROM v2u_dz_terminy_protokolow t
-                                        WHERE   t.prot_id = ma_j.prot_id
-                                            AND t.data_zwrotu = g_j.subj_grade_date
+                                        WHERE   t.prot_id = ma_protos_j.prot_id
+                                            AND TO_CHAR(t.data_zwrotu, 'YYYY-MM-DD')
+                                              = TO_CHAR(g_j.subj_grade_date, 'YYYY-MM-DD')
                                     )
                                 )
                         )
                 )
         GROUP BY
-              ma_j.job_uuid
-            , ma_j.semester_id
-            , ma_j.specialty_id
-            , ma_j.subject_id
-            , ma_j.classes_type
-            , ma_j.subject_map_id
-            , ma_j.classes_map_id
-            , ma_j.prz_kod
-            , ma_j.cdyd_kod
-            , ma_j.tpro_kod
-            , ma_j.prot_id
+              ma_protos_j.job_uuid
+            , ma_protos_j.semester_id
+            , ma_protos_j.specialty_id
+            , ma_protos_j.subject_id
+            , ma_protos_j.classes_type
+            , ma_protos_j.subject_map_id
+            , ma_protos_j.classes_map_id
+            , ma_protos_j.prz_kod
+            , ma_protos_j.cdyd_kod
+            , ma_protos_j.tpro_kod
+            , ma_protos_j.prot_id
             , g_j.subj_grade_date
             , trmpro.nr
             , trmpro.data_zwrotu

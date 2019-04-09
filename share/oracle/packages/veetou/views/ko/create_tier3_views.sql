@@ -34,6 +34,9 @@
 @@ko_matched_protos_v.ddl;
 @@ko_missing_protos_v.ddl;
 
+@@ko_matched_trmpro_v.ddl;
+@@ko_missing_trmpro_v.ddl;
+
 @@ko_skipped_programs_v.ddl;
 
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -177,17 +177,19 @@ USING
         LEFT JOIN v2u_dz_terminy_protokolow trmpro
             ON  (
                         trmpro.prot_id = w.prot_id
-                    AND trmpro.data_zwrotu = w.subj_grade_date
                     AND (
-                                trmpro.data_zwrotu = w.subj_grade_date
+                                TO_CHAR(trmpro.data_zwrotu, 'YYYY-MM-DD')
+                              = TO_CHAR(w.subj_grade_date, 'YYYY-MM-DD')
                             OR (
                                         -- fallback date ...
-                                        trmpro.data_zwrotu = semesters.end_date
+                                        TO_CHAR(trmpro.data_zwrotu, 'YYYY-MM-DD')
+                                      = TO_CHAR(semesters.end_date, 'YYYY-MM-DD')
                                     AND NOT EXISTS (
                                         SELECT NULL
                                         FROM v2u_dz_terminy_protokolow t
                                         WHERE   t.prot_id = w.prot_id
-                                            AND t.data_zwrotu = w.subj_grade_date
+                                            AND TO_CHAR(t.data_zwrotu, 'YYYY-MM-DD')
+                                              = TO_CHAR(w.subj_grade_date, 'YYYY-MM-DD')
                                     )
                                 )
                         )
