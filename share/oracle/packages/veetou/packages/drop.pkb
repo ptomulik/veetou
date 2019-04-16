@@ -637,6 +637,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Uu_Zajecia_Cyklu_t', 'Uu_Zajecia_Cykli_t');
         Drop_Type('Uu_Protokol_t', 'Uu_Protokoly_t');
         Drop_Type('Uu_Termin_Protokolu_t', 'Uu_Terminy_Protokolow_t');
+        Drop_Type('Uu_Ocena_t', 'Uu_Oceny_t');
 
         Drop_Type('Dates_t');
         Drop_Type('5Dates_t');
