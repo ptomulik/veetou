@@ -9,6 +9,7 @@
 @@uu_zaliczenia_przedmiotow.ddl;
 @@uu_protokoly.ddl;
 @@uu_terminy_protokolow.ddl;
+@@uu_oceny.ddl;
 
 @@uu_classes_grades.ddl;
 

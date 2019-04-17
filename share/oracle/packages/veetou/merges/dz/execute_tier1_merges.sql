@@ -16,6 +16,7 @@
 @@dz_zaliczenia_przedmiotow.sql;
 @@dz_zal_przedm_prgos.sql;
 @@dz_oceny.sql;
+@@dz_wartosci_ocen.sql;
 @@dz_terminy_protokolow.sql;
 @@dz_protokoly.sql;
 

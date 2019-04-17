@@ -9,6 +9,7 @@
 @@uu_zaliczenia_przedmiotow.sql;
 @@uu_protokoly.sql;
 @@uu_terminy_protokolow.sql;
+@@uu_oceny.sql;
 
 @@uu_classes_grades.sql;
 

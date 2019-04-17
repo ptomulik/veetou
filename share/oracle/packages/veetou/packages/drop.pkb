@@ -259,6 +259,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         --
         Drop_Table('dz_oceny');
         --
+        Drop_Table('dz_wartosci_ocen');
+        --
         Drop_Table('dz_terminy_protokolow');
         --
         Drop_Index('dz_protokoly_idx1');
@@ -270,6 +272,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Dz_Protokol_t', 'Dz_Protokoly_t');
         Drop_Type('Dz_Termin_Protokolu_t', 'Dz_Terminy_Protokolow_t');
         Drop_Type('Dz_Ocena_t', 'Dz_Oceny_t');
+        Drop_Type('Dz_Wartosc_Oceny_t', 'Dz_Wartosci_Ocen_t');
         Drop_Type('Dz_Zalicz_Przedmiotu_t', 'Dz_Zalicz_Przedmiotow_t');
         Drop_Type('Dz_Zal_Przedm_Prgos_t', 'Dz_Zal_Przedm_Prgoses_t');
         Drop_Type('Dz_Program_Osoby_t', 'Dz_Programy_Osob_t');
@@ -306,6 +309,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Dz_Zajecia_Cyklu_B_t');
         Drop_Type('Dz_Zajecia_Prz_Obcego_B_t');
         Drop_Type('Dz_Ocena_B_t');
+        Drop_Type('Dz_Wartosc_Oceny_B_t');
         Drop_Type('Dz_Termin_Protokolu_B_t');
         Drop_Type('Dz_Protokol_B_t');
     END;
@@ -572,6 +576,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         --
         Drop_Index('uu_terminy_protokolow_idx1');
         Drop_Table('uu_terminy_protokolow');
+        --
+        Drop_Index('uu_oceny_idx1');
+        Drop_Table('uu_oceny');
 
         --
         Drop_Package('Fit');

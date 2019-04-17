@@ -16,6 +16,7 @@
 @@dz_zalicz_przedmiotu_b.tpb;
 @@dz_zal_przedm_prgos_b.tpb;
 @@dz_ocena_b.tpb;
+@@dz_wartosc_oceny_b.tpb;
 @@dz_termin_protokolu_b.tpb;
 @@dz_protokol_b.tpb;
 
@@ -37,6 +38,7 @@
 @@dz_zalicz_przedmiotu.tpb;
 @@dz_zal_przedm_prgos.tpb;
 @@dz_ocena.tpb;
+@@dz_wartosc_oceny.tpb;
 @@dz_termin_protokolu.tpb;
 @@dz_protokol.tpb;
 

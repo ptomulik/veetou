@@ -16,6 +16,7 @@
 @@dz_zaliczenia_przedmiotow.ddl;
 @@dz_zal_przedm_prgos.ddl;
 @@dz_oceny.ddl;
+@@dz_wartosci_ocen.ddl;
 @@dz_terminy_protokolow.ddl;
 @@dz_protokoly.ddl;
 

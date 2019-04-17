@@ -9,6 +9,7 @@
 @@uu_zalicz_przedmiotu.tpb;
 @@uu_protokol.tpb;
 @@uu_termin_protokolu.tpb;
+@@uu_ocena.tpb;
 
 @@uu_classes_grade.tpb;
 
