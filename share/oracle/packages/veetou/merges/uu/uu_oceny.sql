@@ -1,149 +1,144 @@
 MERGE INTO v2u_uu_oceny tgt
 USING
     (
---        WITH u_00 AS
---        (
---            SELECT
---                  g_j.job_uuid
---                , CASE
---                    WHEN ma_trmpro_j.job_uuid IS NOT NULL
---                    THEN
---                      '{prot_id: '
---                        || ma_trmpro_j.prot_id ||
---                      ', nr: '
---                        || ma_trmpro_j.nr ||
---                      '}'
---                    ELSE
---                      '{subject: "'
---                        || COALESCE( subject_map.map_subj_code
---                                   , subjects.subj_code) ||
---                      '", semester: "'
---                        || semesters.semester_code ||
---                      '", proto: "'
---                        || mi_trmpro_j.coalesced_proto_type ||
---                      '", classes: "'
---                        || COALESCE( classes_map.map_classes_type
---                                   , g_j.classes_type ) ||
---                      '", date: "'
---                        || g_j.subj_grade_date ||
---                      '"}'
---                  END pk_ocena
---
---                , CASE
---                    WHEN ma_trmpro_j.prot_id IS NOT NULL
---                    THEN DENSE_RANK() OVER (
---                            PARTITION BY
---                                  g_j.job_uuid
---                                , ma_trmpro_j.prot_id
---                            ORDER BY
---                                  g_j.subj_grade_date
---                        )
---                    WHEN mi_trmpro_j.prot_id IS NOT NULL
---                    THEN DENSE_RANK() OVER (
---                            PARTITION BY
---                                  g_j.job_uuid
---                                , mi_trmpro_j.prot_id
---                            ORDER BY
---                                  g_j.subj_grade_date
---                        )
---                    ELSE DENSE_RANK() OVER (
---                            PARTITION BY
---                                  g_j.job_uuid
---                                , COALESCE( subject_map.map_subj_code
---                                          , subjects.subj_code )
---                                , semesters.semester_code
---                                , mi_trmpro_j.coalesced_proto_type
---                                , COALESCE( classes_map.map_classes_type
---                                          , g_j.classes_type )
---                            ORDER BY
---                                  g_j.subj_grade_date
---                        )
---                  END subj_grade_date_rank
---
---                , subject_map.map_subj_code
---                , subject_map.map_proto_type
---                , classes_map.map_classes_type
---                , subjects.subj_code
---                , subjects.subj_credit_kind
---                , semesters.semester_code
---                , g_j.classes_type
---                , g_j.subj_grade
---                , g_j.subj_grade_date
---                , ma_trmpro_j.prot_id
---                , ma_trmpro_j.nr
---                , mi_trmpro_j.prot_id mi_prot_id
---                , mi_trmpro_j.coalesced_proto_type mi_coalesced_proto_type
---                , mi_trmpro_j.max_istniejacy_nr max_istniejacy_nr
---                , oceny.status
---                , oceny.opis
---                , oceny.data_zwrotu
---                , oceny.egzamin_komisyjny
---                , ma_trmpro_j.prz_kod
---                , mi_trmpro_j.job_uuid mi_job_uuid
---                , sm_j.map_id subject_map_id
---                , cm_j.map_id classes_map_id
---
---            FROM v2u_ko_grades_j g_j
---            INNER JOIN v2u_ko_subjects subjects
---                ON  (
---                            subjects.id = g_j.subject_id
---                        AND subjects.job_uuid = g_j.job_uuid
---                    )
---            INNER JOIN v2u_ko_semesters semesters
---                ON  (
---                            semesters.id = g_j.semester_id
---                        AND semesters.job_uuid = g_j.job_uuid
---                    )
---            LEFT JOIN v2u_ko_matched_trmpro_j ma_trmpro_j
---                ON  (
---                            ma_trmpro_j.subject_id = g_j.subject_id
---                        AND ma_trmpro_j.specialty_id = g_j.specialty_id
---                        AND ma_trmpro_j.semester_id = g_j.semester_id
---                        AND ma_trmpro_j.classes_type = g_j.classes_type
---                        AND ma_trmpro_j.subj_grade_date = g_j.subj_grade_date
---                        AND ma_trmpro_j.job_uuid = g_j.job_uuid
---                    )
---            LEFT JOIN v2u_ko_missing_trmpro_j mi_trmpro_j
---                ON  (
---                            mi_trmpro_j.subject_id = g_j.subject_id
---                        AND mi_trmpro_j.specialty_id = g_j.specialty_id
---                        AND mi_trmpro_j.semester_id = g_j.semester_id
---                        AND mi_trmpro_j.classes_type = g_j.classes_type
---                        AND mi_trmpro_j.subj_grade_date = g_j.subj_grade_date
---                        AND mi_trmpro_j.job_uuid = g_j.job_uuid
---                    )
---            LEFT JOIN v2u_ko_subject_map_j sm_j
---                ON  (
---                            sm_j.subject_id = g_j.subject_id
---                        AND sm_j.specialty_id = g_j.specialty_id
---                        AND sm_j.semester_id = g_j.semester_id
---                        AND sm_j.job_uuid = g_j.job_uuid
---                        AND sm_j.selected = 1
---                    )
---            LEFT JOIN v2u_subject_map subject_map
---                ON  (
---                            subject_map.id = sm_j.map_id
---                    )
---            LEFT JOIN v2u_ko_classes_map_j cm_j
---                ON  (
---                            cm_j.subject_id = g_j.subject_id
---                        AND cm_j.specialty_id = g_j.specialty_id
---                        AND cm_j.semester_id = g_j.semester_id
---                        AND cm_j.classes_type = g_j.classes_type
---                        AND cm_j.job_uuid = g_j.job_uuid
---                        AND cm_j.selected = 1
---                    )
---            LEFT JOIN v2u_classes_map classes_map
---                ON  (
---                            classes_map.id = cm_j.map_id
---                    )
---            LEFT JOIN v2u_dz_oceny oceny
---                ON  (
---                            oceny.prot_id = ma_trmpro_j.prot_id
---                        AND oceny.nr = ma_trmpro_j.nr
---                    )
---            WHERE g_j.subj_grade IS NOT NULL
---        ),
+        WITH u_00 AS
+        (
+            SELECT
+                  g_j.job_uuid
+                , CASE
+                    WHEN ma_trmpro_j.job_uuid IS NOT NULL
+                    THEN
+                      '{os_id: '
+                        -- FIXME: COALESCE(ma_etpos_j.os_id, ma_osoby_j.os_id) ?
+                        || ma_etpos_j.os_id ||
+                      ', prot_id: '
+                        || ma_trmpro_j.prot_id ||
+                      ', term_prot_nr: '
+                        || ma_trmpro_j.nr ||
+                      '}'
+                    ELSE
+                      '{student: "'
+                        || students.student_index ||
+                      ', subject: "'
+                        || COALESCE( subject_map.map_subj_code
+                                   , subjects.subj_code) ||
+                      '", semester: "'
+                        || semesters.semester_code ||
+                      '", proto: "'
+                        || mi_trmpro_j.coalesced_proto_type ||
+                      '", classes: "'
+                        || COALESCE( classes_map.map_classes_type
+                                   , g_j.classes_type ) ||
+                      '", date: "'
+                        || g_j.subj_grade_date ||
+                      '"}'
+                  END pk_ocena
+
+                , subject_map.map_subj_code
+                , subject_map.map_proto_type
+                , classes_map.map_classes_type
+                , subjects.subj_code
+                , subjects.subj_credit_kind
+                , semesters.semester_code
+                , g_j.classes_type
+                , g_j.subj_grade
+                , g_j.subj_grade_date
+                , ma_etpos_j.os_id
+                , ma_trmpro_j.prot_id
+                , mi_etpos_j.job_uuid mi_etpos_job_uuid
+                , ma_trmpro_j.nr
+                , mi_trmpro_j.prot_id mi_prot_id
+                , mi_trmpro_j.coalesced_proto_type mi_coalesced_proto_type
+                , mi_trmpro_j.max_istniejacy_nr max_istniejacy_nr
+                , oceny.toc_kod
+                , oceny.wart_oc_kolejnosc
+                , ma_trmpro_j.prz_kod
+                , mi_trmpro_j.job_uuid mi_trmpro_job_uuid
+                , sm_j.map_id subject_map_id
+                , cm_j.map_id classes_map_id
+
+            FROM v2u_ko_grades_j g_j
+            INNER JOIN v2u_ko_students students
+                ON  (
+                            students.id = g_j.student_id
+                        AND students.job_uuid = g_j.job_uuid
+                    )
+            INNER JOIN v2u_ko_subjects subjects
+                ON  (
+                            subjects.id = g_j.subject_id
+                        AND subjects.job_uuid = g_j.job_uuid
+                    )
+            INNER JOIN v2u_ko_semesters semesters
+                ON  (
+                            semesters.id = g_j.semester_id
+                        AND semesters.job_uuid = g_j.job_uuid
+                    )
+            LEFT JOIN v2u_ko_matched_etpos_j ma_etpos_j
+                ON  (
+                            ma_etpos_j.student_id = g_j.student_id
+                        AND ma_etpos_j.specialty_id = g_j.specialty_id
+                        AND ma_etpos_j.semester_id = g_j.semester_id
+                        AND ma_etpos_j.job_uuid = g_j.job_uuid
+                    )
+            LEFT JOIN v2u_ko_missing_etpos_j mi_etpos_j
+                ON  (
+                            mi_etpos_j.student_id = g_j.student_id
+                        AND mi_etpos_j.specialty_id = g_j.specialty_id
+                        AND mi_etpos_j.semester_id = g_j.semester_id
+                        AND mi_etpos_j.job_uuid = g_j.job_uuid
+                    )
+            LEFT JOIN v2u_ko_matched_trmpro_j ma_trmpro_j
+                ON  (
+                            ma_trmpro_j.subject_id = g_j.subject_id
+                        AND ma_trmpro_j.specialty_id = g_j.specialty_id
+                        AND ma_trmpro_j.semester_id = g_j.semester_id
+                        AND ma_trmpro_j.classes_type = g_j.classes_type
+                        AND ma_trmpro_j.subj_grade_date = g_j.subj_grade_date
+                        AND ma_trmpro_j.job_uuid = g_j.job_uuid
+                    )
+            LEFT JOIN v2u_ko_missing_trmpro_j mi_trmpro_j
+                ON  (
+                            mi_trmpro_j.subject_id = g_j.subject_id
+                        AND mi_trmpro_j.specialty_id = g_j.specialty_id
+                        AND mi_trmpro_j.semester_id = g_j.semester_id
+                        AND mi_trmpro_j.classes_type = g_j.classes_type
+                        AND mi_trmpro_j.subj_grade_date = g_j.subj_grade_date
+                        AND mi_trmpro_j.job_uuid = g_j.job_uuid
+                    )
+            LEFT JOIN v2u_ko_subject_map_j sm_j
+                ON  (
+                            sm_j.subject_id = g_j.subject_id
+                        AND sm_j.specialty_id = g_j.specialty_id
+                        AND sm_j.semester_id = g_j.semester_id
+                        AND sm_j.job_uuid = g_j.job_uuid
+                        AND sm_j.selected = 1
+                    )
+            LEFT JOIN v2u_subject_map subject_map
+                ON  (
+                            subject_map.id = sm_j.map_id
+                    )
+            LEFT JOIN v2u_ko_classes_map_j cm_j
+                ON  (
+                            cm_j.subject_id = g_j.subject_id
+                        AND cm_j.specialty_id = g_j.specialty_id
+                        AND cm_j.semester_id = g_j.semester_id
+                        AND cm_j.classes_type = g_j.classes_type
+                        AND cm_j.job_uuid = g_j.job_uuid
+                        AND cm_j.selected = 1
+                    )
+            LEFT JOIN v2u_classes_map classes_map
+                ON  (
+                            classes_map.id = cm_j.map_id
+                    )
+            LEFT JOIN v2u_dz_oceny oceny
+                ON  (
+                            -- FIXME: COALESCE(ma_etpos_j.os_id, ma_osoby_j.os_id)?
+                            oceny.os_id = ma_etpos_j.os_id
+                        AND oceny.prot_id = ma_trmpro_j.prot_id
+                        AND oceny.term_prot_nr = ma_trmpro_j.nr
+                    )
+            WHERE g_j.subj_grade IS NOT NULL
+        ),
 --        u_0 AS
 --        (
 --            -- determine what to use as a single output row;
