@@ -6,7 +6,9 @@ USING
             SELECT
                   g_j.job_uuid
                 , CASE
-                    WHEN ma_trmpro_j.job_uuid IS NOT NULL
+                    -- FIXME: COALESCE(ma_etpos_j.os_id, ma_osoby_j.os_id) ?
+                    WHEN    ma_etpos_j.os_id IS NOT NULL
+                        AND ma_trmpro_j.job_uuid IS NOT NULL
                     THEN
                       '{os_id: '
                         -- FIXME: COALESCE(ma_etpos_j.os_id, ma_osoby_j.os_id) ?
@@ -19,7 +21,7 @@ USING
                     ELSE
                       '{student: "'
                         || students.student_index ||
-                      ', subject: "'
+                      '", subject: "'
                         || COALESCE( subject_map.map_subj_code
                                    , subjects.subj_code) ||
                       '", semester: "'
@@ -43,13 +45,13 @@ USING
                 , g_j.classes_type
                 , g_j.subj_grade
                 , g_j.subj_grade_date
+                -- FIXME: COALESCE(ma_etpos_j.os_id, ma_osoby_j.os_id)?
                 , ma_etpos_j.os_id
                 , ma_trmpro_j.prot_id
                 , mi_etpos_j.job_uuid mi_etpos_job_uuid
                 , ma_trmpro_j.nr
                 , mi_trmpro_j.prot_id mi_prot_id
                 , mi_trmpro_j.coalesced_proto_type mi_coalesced_proto_type
-                , mi_trmpro_j.max_istniejacy_nr max_istniejacy_nr
                 , oceny.toc_kod
                 , oceny.wart_oc_kolejnosc
                 , ma_trmpro_j.prz_kod
@@ -139,340 +141,303 @@ USING
                     )
             WHERE g_j.subj_grade IS NOT NULL
         ),
---        u_0 AS
---        (
---            -- determine what to use as a single output row;
---            SELECT
---                  u_00.job_uuid
---                , u_00.pk_ocena
---
---                , SET(CAST(
---                        COLLECT(u_00.subj_grade_date_rank)
---                        AS V2u_Integers_t
---                  )) subj_grade_date_ranks
---
---                , SET(CAST(
---                        COLLECT(u_00.map_subj_code)
---                        AS V2u_Vchars1K_t
---                  )) map_subj_codes1k
---                , SET(CAST(
---                        COLLECT(u_00.map_proto_type)
---                        AS V2u_Vchars1K_t
---                  )) map_proto_types1k
---                , SET(CAST(
---                        COLLECT(u_00.map_classes_type)
---                        AS V2u_Vchars1K_t
---                  )) map_classes_types1k
---                , SET(CAST(
---                        COLLECT(u_00.subj_code)
---                        AS V2u_Vchars1K_t
---                  )) subj_codes1k
---                , SET(CAST(
---                        COLLECT(u_00.classes_type)
---                        AS V2u_Chars1_t
---                  )) classes_types
---                , SET(CAST(
---                        COLLECT(u_00.subj_credit_kind)
---                        AS V2u_Vchars1K_t
---                  )) subj_credit_kinds1k
---                , SET(CAST(
---                        COLLECT(u_00.subj_grade ORDER BY u_00.subj_grade)
---                        AS V2u_Vchars1K_t
---                  )) subj_grades1k
---                , SET(CAST(
---                        COLLECT(u_00.prot_id)
---                        AS V2u_Dz_Ids_t
---                  )) prot_ids
---                , SET(CAST(
---                        COLLECT(u_00.nr)
---                        AS V2u_Ints10_t
---                  )) nrs
---                , SET(CAST(
---                        COLLECT(u_00.status)
---                        AS V2u_Vchars1K_t
---                  )) statusy1k
---                , SET(CAST(
---                        COLLECT(u_00.opis)
---                        AS V2u_Vchars1K_t
---                  )) opisy1k
---                , SET(CAST(
---                        COLLECT(u_00.data_zwrotu)
---                        AS V2u_Dates_t
---                  )) daty_zwrotu
---                , SET(CAST(
---                        COLLECT(u_00.egzamin_komisyjny)
---                        AS V2u_Vchars1K_t
---                  )) egzaminy_komisyjne1k
---                , SET(CAST(
---                        COLLECT(u_00.subj_grade_date ORDER BY u_00.subj_grade_date)
---                        AS V2u_Dates_t
---                  )) subj_grade_dates
---                , SET(CAST(
---                        COLLECT(u_00.mi_prot_id)
---                        AS V2u_Dz_Ids_t
---                  )) mi_prot_ids
---                , SET(CAST(
---                        COLLECT(u_00.max_istniejacy_nr ORDER BY u_00.max_istniejacy_nr)
---                        AS V2u_Ints10_t
---                  )) max_istniejace_nry
---
---
---                /* The ".. + 0" seems to be a workaround the following bug:
---                 *
---                 * BUG: The values of dbg_matched and dbg_subject_mapped get
---                 * mixed randomly in this query. */
---                , COUNT(u_00.prz_kod) dbg_matched
---                , COUNT(u_00.mi_job_uuid) dbg_missing
---                , COUNT(u_00.subject_map_id + 0) dbg_subject_mapped
---                , COUNT(u_00.classes_map_id + 0) dbg_classes_mapped
---
---            FROM u_00 u_00
---            GROUP BY
---                  u_00.job_uuid
---                , u_00.pk_ocena
---        ),
---        u AS
---        ( -- make necessary adjustments to the raw values selected i u_0
---            SELECT
---                  u_0.job_uuid
---                , u_0.pk_ocena
---
---                -- select first element from each collection
---                , ( SELECT VALUE(t)
---                    FROM TABLE(u_0.subj_grade_date_ranks) t
---                    WHERE ROWNUM <= 1
---                  ) subj_grade_date_rank
---
---                , ( SELECT SUBSTR(VALUE(t), 1, 20)
---                    FROM TABLE(u_0.map_subj_codes1k) t
---                    WHERE ROWNUM <= 1
---                  ) map_subj_code
---                , ( SELECT SUBSTR(VALUE(t), 1, 20)
---                    FROM TABLE(u_0.map_proto_types1k) t
---                    WHERE ROWNUM <= 1
---                  ) map_proto_type
---                , ( SELECT SUBSTR(VALUE(t), 1, 20)
---                    FROM TABLE(u_0.map_classes_types1k) t
---                    WHERE ROWNUM <= 1
---                  ) map_classes_type
---                , ( SELECT SUBSTR(VALUE(t), 1, 16)
---                    FROM TABLE(u_0.subj_credit_kinds1k) t
---                    WHERE ROWNUM <= 1
---                  ) subj_credit_kind
---                , ( SELECT SUBSTR(VALUE(t), 1, 32)
---                    FROM TABLE(u_0.subj_codes1k) t
---                    WHERE ROWNUM <= 1
---                  ) subj_code
---                , ( SELECT VALUE(t)
---                    FROM TABLE(u_0.classes_types) t
---                    WHERE ROWNUM <= 1
---                  ) classes_type
---                , ( SELECT VALUE(t)
---                    FROM TABLE(u_0.prot_ids) t
---                    WHERE ROWNUM <= 1
---                  ) prot_id
---                , ( SELECT VALUE(t)
---                    FROM TABLE(u_0.nrs) t
---                    WHERE ROWNUM <= 1
---                  ) nr
---                , ( SELECT SUBSTR(VALUE(t), 1, 2)
---                    FROM TABLE(u_0.statusy1k) t
---                    WHERE ROWNUM <= 1
---                  ) status
---                , ( SELECT SUBSTR(VALUE(t), 1, 100)
---                    FROM TABLE(u_0.opisy1k) t
---                    WHERE ROWNUM <= 1
---                  ) opis
---                , ( SELECT VALUE(t)
---                    FROM TABLE(u_0.daty_zwrotu) t
---                    WHERE ROWNUM <= 1
---                  ) data_zwrotu
---                , ( SELECT SUBSTR(VALUE(t), 1, 1)
---                    FROM TABLE(u_0.egzaminy_komisyjne1k) t
---                    WHERE ROWNUM <= 1
---                  ) egzamin_komisyjny
---                , ( SELECT VALUE(t)
---                    FROM TABLE(u_0.mi_prot_ids) t
---                    WHERE ROWNUM <= 1
---                  ) mi_prot_id
---                , ( SELECT VALUE(t)
---                    FROM TABLE(u_0.max_istniejace_nry) t
---                    WHERE ROWNUM <= 1
---                  ) max_istniejacy_nr
---
---                , CAST(MULTISET(
---                    SELECT SUBSTR(VALUE(t), 1, 10)
---                    FROM TABLE(u_0.subj_grades1k) t
---                  ) AS V2u_Subj_Grades_t) subj_grades
---
---                , u_0.subj_grade_dates
---
---                , ( SELECT VALUE(t)
---                    FROM TABLE(u_0.subj_grade_dates) t
---                    WHERE ROWNUM <= 1
---                  ) subj_grade_date
---
---                -- columns used for debugging
---                , ( SELECT COUNT(*)
---                    FROM TABLE(u_0.subj_grade_date_ranks)
---                  ) dbg_subj_grade_date_ranks
---                , ( SELECT COUNT(*)
---                    FROM TABLE(u_0.subj_codes1k)
---                  ) dbg_subj_codes
---                , ( SELECT COUNT(*)
---                    FROM TABLE(u_0.classes_types)
---                  ) dbg_classes_types
---                , ( SELECT COUNT(*)
---                    FROM TABLE(u_0.map_subj_codes1k)
---                  ) dbg_map_subj_codes
---                , ( SELECT COUNT(*)
---                    FROM TABLE(u_0.map_proto_types1k)
---                  ) dbg_map_proto_types
---                , ( SELECT COUNT(*)
---                    FROM TABLE(u_0.map_classes_types1k)
---                  ) dbg_map_classes_types
---                , ( SELECT COUNT(*)
---                    FROM TABLE(u_0.subj_credit_kinds1k)
---                  ) dbg_subj_credit_kinds
---                , ( SELECT COUNT(*)
---                    FROM TABLE(u_0.prot_ids)
---                  ) dbg_prot_ids
---                , ( SELECT COUNT(*)
---                    FROM TABLE(u_0.nrs)
---                  ) dbg_nrs
---                , ( SELECT COUNT(*)
---                    FROM TABLE(u_0.statusy1k) t
---                  ) dbg_statusy
---                , ( SELECT COUNT(*)
---                    FROM TABLE(u_0.opisy1k) t
---                  ) dbg_opisy
---                , ( SELECT COUNT(*)
---                    FROM TABLE(u_0.daty_zwrotu) t
---                  ) dbg_daty_zwrotu
---                , ( SELECT COUNT(*)
---                    FROM TABLE(u_0.egzaminy_komisyjne1k) t
---                  ) dbg_egzaminy_komisyjne
---                , ( SELECT COUNT(*)
---                    FROM TABLE(u_0.subj_grades1k)
---                  ) dbg_subj_grades
---                , ( SELECT COUNT(*)
---                    FROM TABLE(u_0.subj_grade_dates)
---                  ) dbg_subj_grade_dates
---                , ( SELECT COUNT(*)
---                    FROM TABLE(u_0.mi_prot_ids)
---                  ) dbg_mi_prot_ids
---                , ( SELECT COUNT(*)
---                    FROM TABLE(u_0.max_istniejace_nry)
---                  ) dbg_max_istniejace_nry
---
---                , u_0.dbg_matched
---                , u_0.dbg_missing
---                , u_0.dbg_subject_mapped
---                , u_0.dbg_classes_mapped
---            FROM u_0 u_0
---        ),
---        v AS
---        ( -- determine our (v$*) values for certain fields
---            SELECT
---                  u.*
---
---                , DECODE( u.nr, NULL
---                        , u.mi_prot_id
---                        , u.prot_id
---                  ) v$prot_id
---                , DECODE( u.nr, NULL
---                    , COALESCE(u.max_istniejacy_nr, 0)
---                      + u.subj_grade_date_rank
---                    , u.nr
---                  ) v$nr
---                , DECODE( u.nr, NULL
---                        , 'Zd'
---                        , u.status
---                  ) v$status
---                , V2u_Get.Utw_Id(u.job_uuid) v$utw_id
---                , DECODE( u.nr, NULL
---                        , 'V2U import {przedmiot: "' ||
---                          COALESCE(u.map_subj_code, u.subj_code)
---                          || '", zajecia: "' ||
---                          COALESCE(u.map_classes_type, u.classes_type)
---                          || '", data: "' ||
---                          TO_CHAR(u.subj_grade_date, 'YYYY-MM-DD')
---                          || '"}'
---                        , u.opis
---                  ) v$opis
---                , DECODE( u.nr, NULL
---                        , u.subj_grade_date
---                        , u.data_zwrotu
---                  ) v$data_zwrotu
---                , V2u_Get.Mod_Id(u.job_uuid) v$mod_id
---                , DECODE( u.nr
---                        , NULL
---                        , 'N'
---                        , u.egzamin_komisyjny
---                ) v$egzamin_komisyjny
---
---                -- did we find unique row in the target table?
---                , CASE
---                    WHEN    u.dbg_matched > 0
---                        AND u.dbg_subject_mapped = u.dbg_matched
---                        AND (
---                                        u.classes_type = '-'
---                                    AND u.dbg_classes_mapped = 0
---                                OR
---                                        u.classes_type <> '-'
---                                    AND u.dbg_classes_mapped = u.dbg_matched
---                            )
---                        AND u.dbg_missing = 0
---                        AND u.dbg_prot_ids = 1 AND u.prot_id IS NOT NULL
---                        AND u.dbg_nrs = 1 AND u.nr IS NOT NULL
---                    THEN 1
---                    ELSE 0
---                  END dbg_unique_match
---
---                -- examine values we gonna propose
---                , CASE
---                    WHEN
---                        -- all the instances were consistent
---                            (
---                                    u.dbg_statusy = 0
---                                OR
---                                        u.dbg_statusy = 1
---                                    AND
---                                        u.status IN ('P', 'Zd', 'A', 'X', 'Zn', 'Zt')
---                            )
---                        AND (
---                                    u.dbg_opisy = 0
---                                OR
---                                        u.dbg_opisy = 1
---                                    AND
---                                        u.opis IS NOT NULL
---                            )
---                        AND (
---                                        u.dbg_daty_zwrotu = 0
---                                    AND u.data_zwrotu IS NULL
---                                    AND u.dbg_subj_grade_dates = 1
---                                    AND u.subj_grade_date IS NOT NULL
---                                OR
---                                        u.dbg_daty_zwrotu = 1
---                                    AND u.data_zwrotu
---                                        BETWEEN
---                                            TO_DATE('1990-01-01', 'YYYY-MM-DD')
---                                        AND
---                                            TO_DATE('2030-12-31', 'YYYY-MM-DD')
---                                    AND u.dbg_subj_grade_dates >= 1
---                            )
---                        AND (
---                                    u.dbg_egzaminy_komisyjne = 0
---                                OR
---                                        u.dbg_egzaminy_komisyjne = 1
---                                    AND
---                                        UPPER(u.egzamin_komisyjny) IN ('T', 'N')
---                            )
---                    THEN 1
---                    ELSE 0
---                  END dbg_values_ok
---            FROM u u
---        ),
+        u_0 AS
+        (
+            -- determine what to use as a single output row;
+            SELECT
+                  u_00.job_uuid
+                , u_00.pk_ocena
+
+                , SET(CAST(
+                        COLLECT(u_00.map_subj_code)
+                        AS V2u_Vchars1K_t
+                  )) map_subj_codes1k
+                , SET(CAST(
+                        COLLECT(u_00.map_proto_type)
+                        AS V2u_Vchars1K_t
+                  )) map_proto_types1k
+                , SET(CAST(
+                        COLLECT(u_00.map_classes_type)
+                        AS V2u_Vchars1K_t
+                  )) map_classes_types1k
+                , SET(CAST(
+                        COLLECT(u_00.subj_code)
+                        AS V2u_Vchars1K_t
+                  )) subj_codes1k
+                , SET(CAST(
+                        COLLECT(u_00.classes_type)
+                        AS V2u_Chars1_t
+                  )) classes_types
+                , SET(CAST(
+                        COLLECT(u_00.subj_credit_kind)
+                        AS V2u_Vchars1K_t
+                  )) subj_credit_kinds1k
+                , SET(CAST(
+                        COLLECT(u_00.subj_grade ORDER BY u_00.subj_grade)
+                        AS V2u_Vchars1K_t
+                  )) subj_grades1k
+                , SET(CAST(
+                        COLLECT(u_00.os_id)
+                        AS V2u_Dz_Ids_t
+                  )) os_ids
+                , SET(CAST(
+                        COLLECT(u_00.prot_id)
+                        AS V2u_Dz_Ids_t
+                  )) prot_ids
+                , SET(CAST(
+                        COLLECT(u_00.nr)
+                        AS V2u_Ints10_t
+                  )) nrs
+                , SET(CAST(
+                        COLLECT(u_00.toc_kod)
+                        AS V2u_Vchars1K_t
+                  )) toc_kody1k
+                , SET(CAST(
+                        COLLECT(u_00.wart_oc_kolejnosc)
+                        AS V2u_Ints10_t
+                  )) wart_oc_kolejnosci
+                , SET(CAST(
+                        COLLECT(u_00.subj_grade_date ORDER BY u_00.subj_grade_date)
+                        AS V2u_Dates_t
+                  )) subj_grade_dates
+                , SET(CAST(
+                        COLLECT(u_00.mi_prot_id)
+                        AS V2u_Dz_Ids_t
+                  )) mi_prot_ids
+
+
+                /* The ".. + 0" seems to be a workaround the following bug:
+                 *
+                 * BUG: The values of dbg_matched and dbg_subject_mapped get
+                 * mixed randomly in this query. */
+                , COUNT(u_00.prz_kod) dbg_matched
+                , COUNT(u_00.mi_etpos_job_uuid) dbg_missing_etpos
+                , COUNT(u_00.mi_trmpro_job_uuid) dbg_missing_trmpro
+                , COUNT(u_00.subject_map_id + 0) dbg_subject_mapped
+                , COUNT(u_00.classes_map_id + 0) dbg_classes_mapped
+
+            FROM u_00 u_00
+            GROUP BY
+                  u_00.job_uuid
+                , u_00.pk_ocena
+        ),
+        u AS
+        ( -- make necessary adjustments to the raw values selected i u_0
+            SELECT
+                  u_0.job_uuid
+                , u_0.pk_ocena
+
+                -- select first element from each collection
+                , ( SELECT SUBSTR(VALUE(t), 1, 20)
+                    FROM TABLE(u_0.map_subj_codes1k) t
+                    WHERE ROWNUM <= 1
+                  ) map_subj_code
+                , ( SELECT SUBSTR(VALUE(t), 1, 20)
+                    FROM TABLE(u_0.map_proto_types1k) t
+                    WHERE ROWNUM <= 1
+                  ) map_proto_type
+                , ( SELECT SUBSTR(VALUE(t), 1, 20)
+                    FROM TABLE(u_0.map_classes_types1k) t
+                    WHERE ROWNUM <= 1
+                  ) map_classes_type
+                , ( SELECT SUBSTR(VALUE(t), 1, 16)
+                    FROM TABLE(u_0.subj_credit_kinds1k) t
+                    WHERE ROWNUM <= 1
+                  ) subj_credit_kind
+                , ( SELECT SUBSTR(VALUE(t), 1, 32)
+                    FROM TABLE(u_0.subj_codes1k) t
+                    WHERE ROWNUM <= 1
+                  ) subj_code
+                , ( SELECT VALUE(t)
+                    FROM TABLE(u_0.classes_types) t
+                    WHERE ROWNUM <= 1
+                  ) classes_type
+                , ( SELECT VALUE(t)
+                    FROM TABLE(u_0.os_ids) t
+                    WHERE ROWNUM <= 1
+                  ) os_id
+                , ( SELECT VALUE(t)
+                    FROM TABLE(u_0.prot_ids) t
+                    WHERE ROWNUM <= 1
+                  ) prot_id
+                , ( SELECT VALUE(t)
+                    FROM TABLE(u_0.nrs) t
+                    WHERE ROWNUM <= 1
+                  ) nr
+                , ( SELECT SUBSTR(VALUE(t), 1, 2)
+                    FROM TABLE(u_0.toc_kody1k) t
+                    WHERE ROWNUM <= 1
+                  ) toc_kod
+                , ( SELECT VALUE(t)
+                    FROM TABLE(u_0.wart_oc_kolejnosci) t
+                    WHERE ROWNUM <= 1
+                  ) wart_oc_kolejnosc
+                , ( SELECT VALUE(t)
+                    FROM TABLE(u_0.mi_prot_ids) t
+                    WHERE ROWNUM <= 1
+                  ) mi_prot_id
+
+                , CAST(MULTISET(
+                    SELECT SUBSTR(VALUE(t), 1, 10)
+                    FROM TABLE(u_0.subj_grades1k) t
+                  ) AS V2u_Subj_Grades_t) subj_grades
+
+                , u_0.subj_grade_dates
+
+                , ( SELECT VALUE(t)
+                    FROM TABLE(u_0.subj_grade_dates) t
+                    WHERE ROWNUM <= 1
+                  ) subj_grade_date
+
+                -- columns used for debugging
+                , ( SELECT COUNT(*)
+                    FROM TABLE(u_0.subj_codes1k)
+                  ) dbg_subj_codes
+                , ( SELECT COUNT(*)
+                    FROM TABLE(u_0.classes_types)
+                  ) dbg_classes_types
+                , ( SELECT COUNT(*)
+                    FROM TABLE(u_0.map_subj_codes1k)
+                  ) dbg_map_subj_codes
+                , ( SELECT COUNT(*)
+                    FROM TABLE(u_0.map_proto_types1k)
+                  ) dbg_map_proto_types
+                , ( SELECT COUNT(*)
+                    FROM TABLE(u_0.map_classes_types1k)
+                  ) dbg_map_classes_types
+                , ( SELECT COUNT(*)
+                    FROM TABLE(u_0.subj_credit_kinds1k)
+                  ) dbg_subj_credit_kinds
+                , ( SELECT COUNT(*)
+                    FROM TABLE(u_0.os_ids)
+                  ) dbg_os_ids
+                , ( SELECT COUNT(*)
+                    FROM TABLE(u_0.prot_ids)
+                  ) dbg_prot_ids
+                , ( SELECT COUNT(*)
+                    FROM TABLE(u_0.nrs)
+                  ) dbg_nrs
+                , ( SELECT COUNT(*)
+                    FROM TABLE(u_0.toc_kody1k) t
+                  ) dbg_toc_kody
+                , ( SELECT COUNT(*)
+                    FROM TABLE(u_0.wart_oc_kolejnosci) t
+                  ) dbg_wart_oc_kolejnosci
+                , ( SELECT COUNT(*)
+                    FROM TABLE(u_0.subj_grades1k)
+                  ) dbg_subj_grades
+                , ( SELECT COUNT(*)
+                    FROM TABLE(u_0.subj_grade_dates)
+                  ) dbg_subj_grade_dates
+                , ( SELECT COUNT(*)
+                    FROM TABLE(u_0.mi_prot_ids)
+                  ) dbg_mi_prot_ids
+
+                , u_0.dbg_matched
+                , u_0.dbg_missing_etpos
+                , u_0.dbg_missing_trmpro
+                , u_0.dbg_subject_mapped
+                , u_0.dbg_classes_mapped
+            FROM u_0 u_0
+        ),
+        v AS
+        ( -- determine our (v$*) values for certain fields
+            SELECT
+                  u.*
+
+                , DECODE( u.term_prot_nr, NULL
+                        , u.mi_prot_id
+                        , u.prot_id
+                  ) v$prot_id
+                , u.term_prot_nr v$term_prot_nr
+                , DECODE( u.nr, NULL
+                        , 'Zd'
+                        , u.status
+                  ) v$status
+                , V2u_Get.Utw_Id(u.job_uuid) v$utw_id
+                , DECODE( u.nr, NULL
+                        , 'V2U import {przedmiot: "' ||
+                          COALESCE(u.map_subj_code, u.subj_code)
+                          || '", zajecia: "' ||
+                          COALESCE(u.map_classes_type, u.classes_type)
+                          || '", data: "' ||
+                          TO_CHAR(u.subj_grade_date, 'YYYY-MM-DD')
+                          || '"}'
+                        , u.opis
+                  ) v$opis
+                , DECODE( u.nr, NULL
+                        , u.subj_grade_date
+                        , u.data_zwrotu
+                  ) v$data_zwrotu
+                , V2u_Get.Mod_Id(u.job_uuid) v$mod_id
+                , DECODE( u.nr
+                        , NULL
+                        , 'N'
+                        , u.egzamin_komisyjny
+                ) v$egzamin_komisyjny
+
+                -- did we find unique row in the target table?
+                , CASE
+                    WHEN    u.dbg_matched > 0
+                        AND u.dbg_subject_mapped = u.dbg_matched
+                        AND (
+                                        u.classes_type = '-'
+                                    AND u.dbg_classes_mapped = 0
+                                OR
+                                        u.classes_type <> '-'
+                                    AND u.dbg_classes_mapped = u.dbg_matched
+                            )
+                        AND u.dbg_missing = 0
+                        AND u.dbg_prot_ids = 1 AND u.prot_id IS NOT NULL
+                        AND u.dbg_nrs = 1 AND u.nr IS NOT NULL
+                    THEN 1
+                    ELSE 0
+                  END dbg_unique_match
+
+                -- examine values we gonna propose
+                , CASE
+                    WHEN
+                        -- all the instances were consistent
+                            (
+                                    u.dbg_statusy = 0
+                                OR
+                                        u.dbg_statusy = 1
+                                    AND
+                                        u.status IN ('P', 'Zd', 'A', 'X', 'Zn', 'Zt')
+                            )
+                        AND (
+                                    u.dbg_opisy = 0
+                                OR
+                                        u.dbg_opisy = 1
+                                    AND
+                                        u.opis IS NOT NULL
+                            )
+                        AND (
+                                        u.dbg_daty_zwrotu = 0
+                                    AND u.data_zwrotu IS NULL
+                                    AND u.dbg_subj_grade_dates = 1
+                                    AND u.subj_grade_date IS NOT NULL
+                                OR
+                                        u.dbg_daty_zwrotu = 1
+                                    AND u.data_zwrotu
+                                        BETWEEN
+                                            TO_DATE('1990-01-01', 'YYYY-MM-DD')
+                                        AND
+                                            TO_DATE('2030-12-31', 'YYYY-MM-DD')
+                                    AND u.dbg_subj_grade_dates >= 1
+                            )
+                        AND (
+                                    u.dbg_egzaminy_komisyjne = 0
+                                OR
+                                        u.dbg_egzaminy_komisyjne = 1
+                                    AND
+                                        UPPER(u.egzamin_komisyjny) IN ('T', 'N')
+                            )
+                    THEN 1
+                    ELSE 0
+                  END dbg_values_ok
+            FROM u u
+        ),
 --        w AS
 --        ( -- provide our values (v$*) and original ones (u$*)
 --            SELECT
