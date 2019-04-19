@@ -6,12 +6,12 @@ USING
             SELECT
                   g_j.job_uuid
                 , CASE
-                    -- FIXME: COALESCE(ma_etpos_j.os_id, ma_osoby_j.os_id) ?
+                    -- FIXME: COALESCE(ma_etpos_j.os_id, studenci.os_id) ?
                     WHEN    ma_etpos_j.os_id IS NOT NULL
                         AND ma_trmpro_j.job_uuid IS NOT NULL
                     THEN
                       '{os_id: '
-                        -- FIXME: COALESCE(ma_etpos_j.os_id, ma_osoby_j.os_id) ?
+                        -- FIXME: COALESCE(ma_etpos_j.os_id, studenci.os_id) ?
                         || ma_etpos_j.os_id ||
                       ', prot_id: '
                         || ma_trmpro_j.prot_id ||
@@ -45,15 +45,13 @@ USING
                 , g_j.classes_type
                 , g_j.subj_grade
                 , g_j.subj_grade_date
-                -- FIXME: COALESCE(ma_etpos_j.os_id, ma_osoby_j.os_id)?
+                -- FIXME: COALESCE(ma_etpos_j.os_id, studenci.os_id)?
+                , oceny.toc_kod ma_toc_kod
+                , oceny.wart_oc_kolejnosc ma_wart_oc_kolejnosc
                 , ma_etpos_j.os_id
                 , ma_trmpro_j.prot_id
                 , mi_etpos_j.job_uuid mi_etpos_job_uuid
-                , ma_trmpro_j.nr
-                , mi_trmpro_j.prot_id mi_prot_id
-                , mi_trmpro_j.coalesced_proto_type mi_coalesced_proto_type
-                , oceny.toc_kod
-                , oceny.wart_oc_kolejnosc
+                , ma_trmpro_j.nr term_prot_nr
                 , ma_trmpro_j.prz_kod
                 , mi_trmpro_j.job_uuid mi_trmpro_job_uuid
                 , sm_j.map_id subject_map_id
@@ -134,7 +132,7 @@ USING
                     )
             LEFT JOIN v2u_dz_oceny oceny
                 ON  (
-                            -- FIXME: COALESCE(ma_etpos_j.os_id, ma_osoby_j.os_id)?
+                            -- FIXME: COALESCE(ma_etpos_j.os_id, studenci.os_id)?
                             oceny.os_id = ma_etpos_j.os_id
                         AND oceny.prot_id = ma_trmpro_j.prot_id
                         AND oceny.term_prot_nr = ma_trmpro_j.nr
@@ -185,36 +183,25 @@ USING
                         AS V2u_Dz_Ids_t
                   )) prot_ids
                 , SET(CAST(
-                        COLLECT(u_00.nr)
+                        COLLECT(u_00.term_prot_nr)
                         AS V2u_Ints10_t
-                  )) nrs
-                , SET(CAST(
-                        COLLECT(u_00.toc_kod)
-                        AS V2u_Vchars1K_t
-                  )) toc_kody1k
-                , SET(CAST(
-                        COLLECT(u_00.wart_oc_kolejnosc)
-                        AS V2u_Ints10_t
-                  )) wart_oc_kolejnosci
+                  )) term_prot_nrs
                 , SET(CAST(
                         COLLECT(u_00.subj_grade_date ORDER BY u_00.subj_grade_date)
                         AS V2u_Dates_t
                   )) subj_grade_dates
-                , SET(CAST(
-                        COLLECT(u_00.mi_prot_id)
-                        AS V2u_Dz_Ids_t
-                  )) mi_prot_ids
 
 
                 /* The ".. + 0" seems to be a workaround the following bug:
                  *
                  * BUG: The values of dbg_matched and dbg_subject_mapped get
                  * mixed randomly in this query. */
-                , COUNT(u_00.prz_kod) dbg_matched
+                , COUNT(u_00.ma_toc_kod) dbg_matched
                 , COUNT(u_00.mi_etpos_job_uuid) dbg_missing_etpos
                 , COUNT(u_00.mi_trmpro_job_uuid) dbg_missing_trmpro
                 , COUNT(u_00.subject_map_id + 0) dbg_subject_mapped
                 , COUNT(u_00.classes_map_id + 0) dbg_classes_mapped
+                , COUNT(u_00.os_id + 0) dbg_student_mapped
 
             FROM u_00 u_00
             GROUP BY
@@ -261,33 +248,31 @@ USING
                     WHERE ROWNUM <= 1
                   ) prot_id
                 , ( SELECT VALUE(t)
-                    FROM TABLE(u_0.nrs) t
+                    FROM TABLE(u_0.term_prot_nrs) t
                     WHERE ROWNUM <= 1
-                  ) nr
-                , ( SELECT SUBSTR(VALUE(t), 1, 2)
-                    FROM TABLE(u_0.toc_kody1k) t
+                  ) term_prot_nr
+
+                , ( SELECT
+                    CASE
+                        WHEN REGEXP_INSTR(VALUE(t), '[2-5]([,.](0|5))?$') = 1
+                        THEN 'STD'
+                        WHEN UPPER(VALUE(t)) IN ('NZAL', 'ZAL', 'ZW')
+                        THEN 'ZAL'
+                        ELSE '?'
+                    END
+                    FROM TABLE(u_0.subj_grades1k) t
                     WHERE ROWNUM <= 1
                   ) toc_kod
-                , ( SELECT VALUE(t)
-                    FROM TABLE(u_0.wart_oc_kolejnosci) t
-                    WHERE ROWNUM <= 1
-                  ) wart_oc_kolejnosc
-                , ( SELECT VALUE(t)
-                    FROM TABLE(u_0.mi_prot_ids) t
-                    WHERE ROWNUM <= 1
-                  ) mi_prot_id
-
-                , CAST(MULTISET(
-                    SELECT SUBSTR(VALUE(t), 1, 10)
+                , ( SELECT
+                    REGEXP_REPLACE(UPPER(VALUE(t)), '([2-5]),0', '\1')
                     FROM TABLE(u_0.subj_grades1k) t
-                  ) AS V2u_Subj_Grades_t) subj_grades
-
-                , u_0.subj_grade_dates
-
-                , ( SELECT VALUE(t)
-                    FROM TABLE(u_0.subj_grade_dates) t
                     WHERE ROWNUM <= 1
-                  ) subj_grade_date
+                  ) opis
+
+                , ( SELECT SUBSTR(VALUE(t), 1, 10)
+                    FROM TABLE(u_0.subj_grades1k) t
+                    WHERE ROWNUM <= 1
+                  ) subj_grade
 
                 -- columns used for debugging
                 , ( SELECT COUNT(*)
@@ -315,29 +300,21 @@ USING
                     FROM TABLE(u_0.prot_ids)
                   ) dbg_prot_ids
                 , ( SELECT COUNT(*)
-                    FROM TABLE(u_0.nrs)
-                  ) dbg_nrs
-                , ( SELECT COUNT(*)
-                    FROM TABLE(u_0.toc_kody1k) t
-                  ) dbg_toc_kody
-                , ( SELECT COUNT(*)
-                    FROM TABLE(u_0.wart_oc_kolejnosci) t
-                  ) dbg_wart_oc_kolejnosci
+                    FROM TABLE(u_0.term_prot_nrs)
+                  ) dbg_term_prot_nrs
                 , ( SELECT COUNT(*)
                     FROM TABLE(u_0.subj_grades1k)
                   ) dbg_subj_grades
                 , ( SELECT COUNT(*)
                     FROM TABLE(u_0.subj_grade_dates)
                   ) dbg_subj_grade_dates
-                , ( SELECT COUNT(*)
-                    FROM TABLE(u_0.mi_prot_ids)
-                  ) dbg_mi_prot_ids
 
                 , u_0.dbg_matched
                 , u_0.dbg_missing_etpos
                 , u_0.dbg_missing_trmpro
                 , u_0.dbg_subject_mapped
                 , u_0.dbg_classes_mapped
+                , u_0.dbg_student_mapped
             FROM u_0 u_0
         ),
         v AS
@@ -345,36 +322,14 @@ USING
             SELECT
                   u.*
 
-                , DECODE( u.term_prot_nr, NULL
-                        , u.mi_prot_id
-                        , u.prot_id
-                  ) v$prot_id
+                , u.os_id v$os_id
+                , u.prot_id v$prot_id
                 , u.term_prot_nr v$term_prot_nr
-                , DECODE( u.nr, NULL
-                        , 'Zd'
-                        , u.status
-                  ) v$status
+                , u.toc_kod v$toc_kod
+                , wartosci_ocen.kolejnosc v$wart_oc_kolejnosc
+
                 , V2u_Get.Utw_Id(u.job_uuid) v$utw_id
-                , DECODE( u.nr, NULL
-                        , 'V2U import {przedmiot: "' ||
-                          COALESCE(u.map_subj_code, u.subj_code)
-                          || '", zajecia: "' ||
-                          COALESCE(u.map_classes_type, u.classes_type)
-                          || '", data: "' ||
-                          TO_CHAR(u.subj_grade_date, 'YYYY-MM-DD')
-                          || '"}'
-                        , u.opis
-                  ) v$opis
-                , DECODE( u.nr, NULL
-                        , u.subj_grade_date
-                        , u.data_zwrotu
-                  ) v$data_zwrotu
                 , V2u_Get.Mod_Id(u.job_uuid) v$mod_id
-                , DECODE( u.nr
-                        , NULL
-                        , 'N'
-                        , u.egzamin_komisyjny
-                ) v$egzamin_komisyjny
 
                 -- did we find unique row in the target table?
                 , CASE
@@ -387,9 +342,12 @@ USING
                                         u.classes_type <> '-'
                                     AND u.dbg_classes_mapped = u.dbg_matched
                             )
-                        AND u.dbg_missing = 0
+                        AND u.dbg_student_mapped = u.dbg_matched
+                        AND u.dbg_missing_trmpro = 0
                         AND u.dbg_prot_ids = 1 AND u.prot_id IS NOT NULL
-                        AND u.dbg_nrs = 1 AND u.nr IS NOT NULL
+                        AND u.dbg_missing_etpos = 0
+                        AND u.dbg_os_ids = 1 AND u.os_id IS NOT NULL
+                        AND u.dbg_term_prot_nrs = 1 AND u.term_prot_nr IS NOT NULL
                     THEN 1
                     ELSE 0
                   END dbg_unique_match
@@ -398,124 +356,98 @@ USING
                 , CASE
                     WHEN
                         -- all the instances were consistent
-                            (
-                                    u.dbg_statusy = 0
-                                OR
-                                        u.dbg_statusy = 1
-                                    AND
-                                        u.status IN ('P', 'Zd', 'A', 'X', 'Zn', 'Zt')
-                            )
-                        AND (
-                                    u.dbg_opisy = 0
-                                OR
-                                        u.dbg_opisy = 1
-                                    AND
-                                        u.opis IS NOT NULL
-                            )
-                        AND (
-                                        u.dbg_daty_zwrotu = 0
-                                    AND u.data_zwrotu IS NULL
-                                    AND u.dbg_subj_grade_dates = 1
-                                    AND u.subj_grade_date IS NOT NULL
-                                OR
-                                        u.dbg_daty_zwrotu = 1
-                                    AND u.data_zwrotu
-                                        BETWEEN
-                                            TO_DATE('1990-01-01', 'YYYY-MM-DD')
-                                        AND
-                                            TO_DATE('2030-12-31', 'YYYY-MM-DD')
-                                    AND u.dbg_subj_grade_dates >= 1
-                            )
-                        AND (
-                                    u.dbg_egzaminy_komisyjne = 0
-                                OR
-                                        u.dbg_egzaminy_komisyjne = 1
-                                    AND
-                                        UPPER(u.egzamin_komisyjny) IN ('T', 'N')
-                            )
+                            u.dbg_subj_grades = 1
+                        AND u.subj_grade IS NOT NULL
+                        AND u.toc_kod IN ('STD', 'ZAL')
+                        AND u.opis IN ( 'ZAL', 'NZAL', 'ZW',
+                                        '2', '3', '3,5', '4', '4,5', '5')
                     THEN 1
                     ELSE 0
                   END dbg_values_ok
             FROM u u
+            LEFT JOIN v2u_dz_wartosci_ocen wartosci_ocen
+                ON  (
+                            wartosci_ocen.toc_kod = u.toc_kod
+                        AND wartosci_ocen.opis = u.opis
+                    )
         ),
---        w AS
---        ( -- provide our values (v$*) and original ones (u$*)
---            SELECT
---                  v.*
---                , t.prot_id u$prot_id
---                , t.nr u$nr
---                , t.status u$status
---                , t.utw_id u$utw_id
---                , t.utw_data u$utw_data
---                , t.opis u$opis
---                , t.data_zwrotu u$data_zwrotu
---                , t.mod_id u$mod_id
---                , t.mod_data u$mod_data
---                , t.egzamin_komisyjny u$egzamin_komisyjny
---
---                -- is it insert, update or nothing?
---
---                , DECODE( v.dbg_unique_match, 1
---                        , (CASE
---                            WHEN    -- do we introduce any modification?
---                                    DECODE(v.v$status, t.status, 1, 0) = 1
---                                AND DECODE(v.v$opis, t.opis, 1, 0) = 1
---                                AND DECODE(v.v$data_zwrotu, t.data_zwrotu, 1, 0) = 1
---                                AND DECODE(v.v$egzamin_komisyjny, t.egzamin_komisyjny, 1, 0) = 1
---                            THEN '-'
---                            ELSE 'U'
---                          END)
---                        , 'I'
---                  ) change_type
---
---                , CASE
---                    WHEN
---                        -- ensure that
---                        -- maps for all instances existed but there were no
---                        -- corresponding subject in target system
---                            v.dbg_matched = 0
---                        AND v.dbg_missing > 0
---                        AND v.dbg_subject_mapped = v.dbg_missing
---                        AND (
---                                        v.classes_type = '-'
---                                    AND v.dbg_classes_mapped = 0
---                                OR
---                                        v.classes_type <> '-'
---                                    AND v.dbg_classes_mapped = v.dbg_missing
---                            )
---                        AND v.dbg_subj_grade_date_ranks = 1
---                        AND v.subj_grade_date_rank > 0
---                        AND v.dbg_mi_prot_ids = 1
---                        AND v.mi_prot_id IS NOT NULL
---                        -- values passed basic tests
---                        AND v.dbg_values_ok = 1
---                    THEN 1
---                    ELSE 0
---                  END safe_to_insert
---
---                , CASE
---                    WHEN
---                        -- ensure that
---                        -- we have target subject code
---                            v.map_subj_code IS NOT NULL
---                        AND v.dbg_map_subj_codes = 1
---                        AND v.dbg_subj_codes > 0
---                        -- and we uniquelly matched a row in target table
---                        AND v.dbg_unique_match = 1
---                        -- and values passed basic tests
---                        AND v.dbg_values_ok = 1
---                    THEN 1
---                    ELSE 0
---                  END safe_to_update
---
---            FROM v v
---            LEFT JOIN v2u_dz_oceny t
---                ON  (
---                            v.dbg_unique_match = 1
---                        AND t.prot_id = v.prot_id
---                        AND t.nr = v.nr
---                    )
---        )
+        w AS
+        ( -- provide our values (v$*) and original ones (u$*)
+            SELECT
+                  v.*
+                , t.os_id u$os_id
+                , t.komentarz_pub u$komentarz_pub
+                , t.komentarz_pryw u$komentarz_pryw
+                , t.toc_kod u$toc_kod
+                , t.wart_oc_kolejnosc u$wart_oc_kolejnosc
+                , t.utw_id u$utw_id
+                , t.utw_data u$utw_data
+                , t.mod_id u$mod_id
+                , t.mod_data u$mod_data
+                , t.prot_id u$prot_id
+                , t.term_prot_nr u$term_prot_nr
+                , t.zmiana_os_id u$zmiana_os_id
+                , t.zmiana_data u$zmiana_data
+                , t.pos_komi_id u$pos_komi_id
+
+                -- is it insert, update or nothing?
+
+                , DECODE( v.dbg_unique_match, 1
+                        , (CASE
+                            WHEN    -- do we introduce any modification?
+                                    DECODE(v.v$toc_kod, t.toc_kod, 1, 0) = 1
+                                AND DECODE(v.v$wart_oc_kolejnosc, t.wart_oc_kolejnosc, 1, 0) = 1
+                            THEN '-'
+                            ELSE 'U'
+                          END)
+                        , 'I'
+                  ) change_type
+
+                , CASE
+                    WHEN
+                        -- ensure that
+                        -- maps for all instances existed but there were no
+                        -- corresponding "ocena" in the target system
+                            v.dbg_matched = 0
+                        AND v.dbg_subject_mapped = v.dbg_missing
+                        AND (
+                                        v.classes_type = '-'
+                                    AND v.dbg_classes_mapped = 0
+                                OR
+                                        v.classes_type <> '-'
+                                    AND v.dbg_classes_mapped = v.dbg_missing
+                            )
+                        AND v.dbg_student_mapped = v.dbg_missing
+                        AND v.dbg_os_ids = 1
+                        AND v.dbg_os_id IS NOT NULL
+                        AND v.dbg_prot_ids = 1
+                        AND v.prot_id IS NOT NULL
+                        AND v.dbg_term_prot_nrs = 1
+                        AND v.term_prot_nr IS NOT NULL
+                        -- values passed basic tests
+                        AND v.dbg_values_ok = 1
+                    THEN 1
+                    ELSE 0
+                  END safe_to_insert
+
+                , CASE
+                    WHEN
+                        -- ensure that
+                        -- values passed basic tests
+                            v.dbg_values_ok = 1
+                    THEN 1
+                    ELSE 0
+                  END safe_to_update
+
+            FROM v v
+            LEFT JOIN v2u_dz_oceny t
+                ON  (
+                            v.dbg_unique_match = 1
+                        AND t.os_id = v.os_id
+                        AND t.prot_id = v.prot_id
+                        AND t.term_prot_nr = v.term_prot_nr
+                    )
+        )
 --        SELECT
 --              w.job_uuid
 --            , w.pk_ocena
