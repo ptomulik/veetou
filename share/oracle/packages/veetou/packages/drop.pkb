@@ -469,6 +469,11 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('ko_matched_protos_j_idx2');
         Drop_Table('ko_matched_protos_j');
         --
+        Drop_Index('ko_matched_oceny_j_idx1');
+        Drop_Index('ko_matched_oceny_j_idx2');
+        Drop_Index('ko_matched_oceny_j_idx3');
+        Drop_Table('ko_matched_oceny_j');
+        --
         Drop_Index('ko_grades_j_idx1');
         Drop_Index('ko_grades_j_idx2');
         Drop_Index('ko_grades_j_idx3');
@@ -589,6 +594,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Collect_Types();
 
         Drop_Type('Ko_Skipped_Program_J_t', 'Ko_Skipped_Programs_J_t');
+        Drop_Type('Ko_Missing_Ocena_J_t', 'Ko_Missing_Oceny_J_t');
         Drop_Type('Ko_Missing_Prgos_J_t', 'Ko_Missing_Prgoses_J_t');
         Drop_Type('Ko_Missing_Etpos_J_t', 'Ko_Missing_Etposes_J_t');
         Drop_Type('Ko_Missing_Pktprz_J_t', 'Ko_Missing_Pktprzes_J_t');
@@ -598,6 +604,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Missing_Proto_J_t', 'Ko_Missing_Protos_J_t');
         Drop_Type('Ko_Missing_Przcykl_J_t', 'Ko_Missing_Przcykles_J_t');
         Drop_Type('Ko_Missing_Przedm_J_t', 'Ko_Missing_Przedms_J_t');
+        Drop_Type('Ko_Matched_Ocena_J_t', 'Ko_Matched_Oceny_J_t')
         Drop_Type('Ko_Matched_Prgos_J_t', 'Ko_Matched_Prgoses_J_t');
         Drop_Type('Ko_Matched_Etpos_J_t', 'Ko_Matched_Etposes_J_t');
         Drop_Type('Ko_Matched_Pktprz_J_t', 'Ko_Matched_Pktprzes_J_t');
