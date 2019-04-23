@@ -39,6 +39,9 @@
 @@ko_matched_trmpro_v.tpb;
 @@ko_missing_trmpro_v.tpb;
 
+@@ko_matched_ocena_v.tpb;
+--@@ko_missing_ocena_v.tpb;
+
 @@ko_skipped_program_v.tpb;
 
 -- vim: set ft=sql ts=4 sw=4 et:

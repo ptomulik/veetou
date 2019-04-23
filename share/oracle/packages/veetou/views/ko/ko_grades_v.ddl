@@ -4,34 +4,32 @@ WITH OBJECT IDENTIFIER (job_uuid, student_id, subject_id, specialty_id, semester
 AS
     SELECT
         V2u_Ko_Grade_V_t(
-              student => VALUE(students)
+              grade_j => VALUE(g_j)
+            , student => VALUE(students)
             , subject => VALUE(subjects)
             , specialty => VALUE(specialties)
             , semester => VALUE(semesters)
-            , subj_grade => j.subj_grade
-            , subj_grade_date => j.subj_grade_date
-            , tr_id => j.tr_id
         )
-    FROM v2u_ko_grades_j j
+    FROM v2u_ko_grades_j g_j
     INNER JOIN v2u_ko_students students
         ON  (
-                    students.id = j.student_id
-                AND students.job_uuid = j.job_uuid
+                    students.id = g_j.student_id
+                AND students.job_uuid = g_j.job_uuid
             )
     INNER JOIN v2u_ko_subjects subjects
         ON  (
-                    subjects.id = j.subject_id
-                AND subjects.job_uuid = j.job_uuid
+                    subjects.id = g_j.subject_id
+                AND subjects.job_uuid = g_j.job_uuid
             )
     INNER JOIN v2u_ko_specialties specialties
         ON  (
-                    specialties.id = j.specialty_id
-                AND specialties.job_uuid = j.job_uuid
+                    specialties.id = g_j.specialty_id
+                AND specialties.job_uuid = g_j.job_uuid
             )
     INNER JOIN v2u_ko_semesters semesters
         ON  (
-                    semesters.id = j.semester_id
-                AND semesters.job_uuid = j.job_uuid
+                    semesters.id = g_j.semester_id
+                AND semesters.job_uuid = g_j.job_uuid
             )
 WITH READ ONLY
 ;

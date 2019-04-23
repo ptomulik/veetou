@@ -12,6 +12,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Ocena_J_t AS
             , os_id IN NUMBER
             , prot_id IN NUMBER
             , term_prot_nr IN NUMBER
+            , ocena_missmatch IN VARCHAR2
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -27,6 +28,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Ocena_J_t AS
             , os_id => os_id
             , prot_id => prot_id
             , term_prot_nr => term_prot_nr
+            , ocena_missmatch => ocena_missmatch
             );
         RETURN;
     END;
@@ -45,6 +47,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Ocena_J_t AS
             , os_id IN NUMBER
             , prot_id IN NUMBER
             , term_prot_nr IN NUMBER
+            , ocena_missmatch IN VARCHAR2
             )
     IS
     BEGIN
@@ -61,6 +64,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Ocena_J_t AS
         SELF.os_id := os_id;
         SELF.prot_id := prot_id;
         SELF.term_prot_nr := term_prot_nr;
+        SELF.ocena_missmatch := ocena_missmatch;
     END;
 END;
 

@@ -5,6 +5,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Grade_J_t
     , subj_grade VARCHAR2(10 CHAR)
     , subj_grade_date DATE
     , tr_id NUMBER(38)
+    , ocena_opis VARCHAR2(100 CHAR)
+    , toc_kod VARCHAR2(20 CHAR)
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Grade_J_t(
               SELF IN OUT NOCOPY V2u_Ko_Grade_J_t
@@ -17,6 +19,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Grade_J_t
             , subj_grade IN VARCHAR2
             , subj_grade_date IN DATE
             , tr_id IN NUMBER
+            , ocena_opis IN VARCHAR2
+            , toc_kod IN VARCHAR2
             ) RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
@@ -30,6 +34,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Grade_J_t
             , subj_grade IN VARCHAR2
             , subj_grade_date IN DATE
             , tr_id IN NUMBER
+            , ocena_opis IN VARCHAR2
+            , toc_kod IN VARCHAR2
             )
     )
 NOT FINAL;

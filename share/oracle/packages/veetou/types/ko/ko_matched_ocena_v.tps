@@ -1,4 +1,4 @@
-CREATE OR REPLACE TYPE V2u_Ko_Grade_V_t
+CREATE OR REPLACE TYPE V2u_Ko_Matched_Ocena_V_t
     FORCE AUTHID CURRENT_USER AS OBJECT
     ( job_uuid RAW(16)
     , student_id NUMBER(38)
@@ -32,13 +32,17 @@ CREATE OR REPLACE TYPE V2u_Ko_Grade_V_t
     , ects_mandatory NUMBER(4)
     , ects_other NUMBER(4)
     , ects_total NUMBER(4)
-    , tr_id NUMBER(38)
-    , ocena_opis VARCHAR2(100 CHAR)
-    , toc_kod VARCHAR2(20 CHAR)
+--    , tr_id NUMBER(38)
+--    , ocena_opis VARCHAR2(100 CHAR)
+--    , toc_kod VARCHAR2(20 CHAR)
+    , os_id NUMBER(10)
+    , prot_id NUMBER(10)
+    , term_prot_nr NUMBER(10)
+    , ocena_missmatch VARCHAR2(32 CHAR)
 
-    , CONSTRUCTOR FUNCTION V2u_Ko_Grade_V_t(
-              SELF IN OUT NOCOPY V2u_Ko_Grade_V_t
-            , grade_j IN V2u_Ko_Grade_J_t
+    , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Ocena_V_t(
+              SELF IN OUT NOCOPY V2u_Ko_Matched_Ocena_V_t
+            , matched_ocena_j IN V2u_Ko_Matched_Ocena_J_t
             , student IN V2u_Ko_Student_t
             , subject IN V2u_Ko_Subject_t
             , specialty IN V2u_Ko_Specialty_t
