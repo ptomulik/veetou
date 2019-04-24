@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY V2u_Ko_Grade_J_t AS
-    CONSTRUCTOR FUNCTION V2u_Ko_Grade_J_t(
-              SELF IN OUT NOCOPY V2u_Ko_Grade_J_t
+CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Ocena_J_t AS
+    CONSTRUCTOR FUNCTION V2u_Ko_Missing_Ocena_J_t(
+              SELF IN OUT NOCOPY V2u_Ko_Missing_Ocena_J_t
             , job_uuid RAW
             , semester_id IN NUMBER
             , specialty_id IN NUMBER
@@ -10,8 +10,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Grade_J_t AS
             , subj_grade IN VARCHAR2
             , subj_grade_date IN DATE
             , tr_id IN NUMBER
-            , ocena_opis IN VARCHAR2
-            , toc_kod IN VARCHAR2
+            , reason IN VARCHAR2
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -25,15 +24,14 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Grade_J_t AS
             , subj_grade => subj_grade
             , subj_grade_date => subj_grade_date
             , tr_id => tr_id
-            , ocena_opis => ocena_opis
-            , toc_kod => toc_kod
+            , reason => reason
             );
         RETURN;
     END;
 
 
     MEMBER PROCEDURE init(
-              SELF IN OUT NOCOPY V2u_Ko_Grade_J_t
+              SELF IN OUT NOCOPY V2u_Ko_Missing_Ocena_J_t
             , job_uuid RAW
             , semester_id IN NUMBER
             , specialty_id IN NUMBER
@@ -43,8 +41,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Grade_J_t AS
             , subj_grade IN VARCHAR2
             , subj_grade_date IN DATE
             , tr_id IN NUMBER
-            , ocena_opis IN VARCHAR2
-            , toc_kod IN VARCHAR2
+            , reason IN VARCHAR2
             )
     IS
     BEGIN
@@ -59,8 +56,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Grade_J_t AS
         SELF.subj_grade := subj_grade;
         SELF.subj_grade_date := subj_grade_date;
         SELF.tr_id := tr_id;
-        SELF.ocena_opis := ocena_opis;
-        SELF.toc_kod := toc_kod;
+        SELF.reason := reason;
     END;
 END;
 

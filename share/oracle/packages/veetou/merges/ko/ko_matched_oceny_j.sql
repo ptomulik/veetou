@@ -27,8 +27,10 @@ USING
                         ma_trmpro_j.subject_id = g_j.subject_id
                     AND ma_trmpro_j.specialty_id = g_j.specialty_id
                     AND ma_trmpro_j.semester_id = g_j.semester_id
-                    AND ma_trmpro_j.job_uuid = g_j.job_uuid
                     AND ma_trmpro_j.classes_type = g_j.classes_type
+                    -- FIXME: use subj_grade_date too...
+                    --AND ma_trmpro_j.subj_grade_date = g_j.subj_grade_date
+                    AND ma_trmpro_j.job_uuid = g_j.job_uuid
                 )
         INNER JOIN v2u_ko_matched_etpos_j ma_etpos_j
             ON  (

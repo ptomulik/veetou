@@ -36,7 +36,7 @@
 @@ko_missing_pktprz_j.sql;
 @@ko_missing_protos_j.sql;
 @@ko_missing_trmpro_j.sql;
---@@ko_missing_oceny_j.sql;
+@@ko_missing_oceny_j.sql;
 
 @@ko_skipped_programs_j.sql;
 

@@ -425,8 +425,11 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     PROCEDURE Tier2
     IS
     BEGIN
+        --
         Drop_Index('ko_skipped_programs_j_idx1');
         Drop_Table('ko_skipped_programs_j');
+        --
+        Drop_Table('ko_missing_oceny_j');
         --
         Drop_Table('ko_missing_prgos_j');
         --
@@ -702,6 +705,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_View('ud_zajecia_cykli_v');
         Drop_View('ud_protokoly_v');
         Drop_View('ud_punkty_przedmiotow_v');
+        Drop_View('ud_terminy_protokolow_v');
 
         Drop_View('uu_subject_grades_v');
 

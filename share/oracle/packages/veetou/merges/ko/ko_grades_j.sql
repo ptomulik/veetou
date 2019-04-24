@@ -21,10 +21,11 @@ USING
         )
         SELECT
               u.job_uuid job_uuid
-            , student_sheets.student_id student_id
-            , subject_trs.subject_id subject_id
-            , specialty_sheets.specialty_id specialty_id
-            , semester_sheets.semester_id semester_id
+            , semester_sheets.semester_id
+            , specialty_sheets.specialty_id
+            , subject_trs.subject_id
+            , student_sheets.student_id
+            , '-' classes_type
             , u.subj_grade subj_grade
             , u.subj_grade_date subj_grade_date
             , u.id tr_id
@@ -66,32 +67,35 @@ USING
                         semester_sheets.sheet_id = sheet_pages.ko_sheet_id
                     AND semester_sheets.job_uuid = u.job_uuid
                 )
-        GROUP BY
-              u.job_uuid
-            , student_sheets.student_id
-            , subject_trs.subject_id
-            , specialty_sheets.specialty_id
-            , semester_sheets.semester_id
-            , u.subj_grade
-            , u.subj_grade_date
-            , u.id
-            , u.ocena_opis
-            , u.toc_kod
+----        XXX: Grouping should not be necessary, duplicates should not occur
+--        GROUP BY
+--              u.job_uuid
+--            , student_sheets.student_id
+--            , subject_trs.subject_id
+--            , specialty_sheets.specialty_id
+--            , semester_sheets.semester_id
+--            , u.subj_grade
+--            , u.subj_grade_date
+--            , u.id
+--            , u.ocena_opis
+--            , u.toc_kod
     ) src
 ON  (
             tgt.student_id = src.student_id
         AND tgt.subject_id = src.subject_id
         AND tgt.specialty_id = src.specialty_id
         AND tgt.semester_id = src.semester_id
+        AND tgt.classes_type = src.classes_type
         AND tgt.job_uuid = src.job_uuid
     )
 WHEN NOT MATCHED THEN
     INSERT
         ( job_uuid
-        , student_id
-        , subject_id
-        , specialty_id
         , semester_id
+        , specialty_id
+        , subject_id
+        , student_id
+        , classes_type
         , subj_grade
         , subj_grade_date
         , tr_id
@@ -100,10 +104,11 @@ WHEN NOT MATCHED THEN
         )
     VALUES
         ( src.job_uuid
-        , src.student_id
-        , src.subject_id
-        , src.specialty_id
         , src.semester_id
+        , src.specialty_id
+        , src.subject_id
+        , src.student_id
+        , src.classes_type
         , src.subj_grade
         , src.subj_grade_date
         , src.tr_id

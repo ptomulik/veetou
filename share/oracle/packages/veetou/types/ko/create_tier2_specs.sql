@@ -41,7 +41,7 @@
 @@ko_missing_proto_j.tps;
 @@ko_missing_trmpro_j.tps;
 @@ko_missing_pktprz_j.tps;
---@@ko_missing_ocena_j.gps;
+@@ko_missing_ocena_j.tps;
 
 @@ko_skipped_program_j.tps;
 
