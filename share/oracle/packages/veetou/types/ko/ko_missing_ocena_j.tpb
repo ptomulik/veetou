@@ -10,6 +10,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Ocena_J_t AS
             , subj_grade IN VARCHAR2
             , subj_grade_date IN DATE
             , tr_id IN NUMBER
+            , os_id IN NUMBER
+            , prot_id IN NUMBER
+            , term_prot_nr IN NUMBER
             , reason IN VARCHAR2
             ) RETURN SELF AS RESULT
     IS
@@ -24,6 +27,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Ocena_J_t AS
             , subj_grade => subj_grade
             , subj_grade_date => subj_grade_date
             , tr_id => tr_id
+            , os_id => os_id
+            , prot_id => prot_id
+            , term_prot_nr => term_prot_nr
             , reason => reason
             );
         RETURN;
@@ -41,6 +47,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Ocena_J_t AS
             , subj_grade IN VARCHAR2
             , subj_grade_date IN DATE
             , tr_id IN NUMBER
+            , os_id IN NUMBER
+            , prot_id IN NUMBER
+            , term_prot_nr IN NUMBER
             , reason IN VARCHAR2
             )
     IS
@@ -56,6 +65,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Ocena_J_t AS
         SELF.subj_grade := subj_grade;
         SELF.subj_grade_date := subj_grade_date;
         SELF.tr_id := tr_id;
+        SELF.os_id := os_id;
+        SELF.prot_id := prot_id;
+        SELF.term_prot_nr := term_prot_nr;
         SELF.reason := reason;
     END;
 END;

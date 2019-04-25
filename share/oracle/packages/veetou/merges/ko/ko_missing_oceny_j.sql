@@ -13,13 +13,18 @@ USING
                 , g_j.subj_grade
                 , g_j.subj_grade_date
                 , g_j.tr_id
-                , COUNT(mi_trmpro_j.job_uuid) mi_trmpro_cnt
-                , COUNT(mi_etpos_j.job_uuid) mi_etpos_cnt
-                , COUNT(ma_trmpro_j.job_uuid) ma_trmpro_cnt
-                , COUNT(ma_etpos_j.job_uuid) ma_etpos_cnt
-                , COUNT(semesters.code) semesters_cnt
-                , COUNT(oceny.os_id) oceny_cnt
-                , COUNT(wartosci_ocen.toc_kod) wartosci_ocen_cnt
+                , SET(CAST(
+                        COLLECT(ma_etpos_j.os_id)
+                        AS V2u_Ints10_t
+                  )) os_ids
+                , SET(CAST(
+                        COLLECT(ma_trmpro_j.prot_id)
+                        AS V2u_Ints10_t
+                  )) prot_ids
+                , SET(CAST(
+                        COLLECT(ma_trmpro_j.nr)
+                        AS V2u_Ints10_t
+                  )) term_prot_nry
                 , SET(CAST(
                         COLLECT(mi_trmpro_j.reason)
                         AS V2u_Vchars1K_t
@@ -29,6 +34,14 @@ USING
 --                        COLLECT(mi_etpos_j.reason)
 --                        AS V2u_Vchars1K_t
 --                  )) mi_etpos_reasons1k
+                -- XXX: Several "+ 0" tricks are necessary to workaround oracle bug
+                , COUNT(mi_trmpro_j.subject_id + 0) mi_trmpro_cnt
+                , COUNT(mi_etpos_j.student_id + 0) mi_etpos_cnt
+                , COUNT(ma_trmpro_j.subject_id + 0) ma_trmpro_cnt
+                , COUNT(ma_etpos_j.student_id + 0) ma_etpos_cnt
+                , COUNT(semesters.code) semesters_cnt
+                , COUNT(oceny.os_id + 0) oceny_cnt
+                , COUNT(wartosci_ocen.toc_kod) wartosci_ocen_cnt
             FROM v2u_ko_grades_j g_j
             LEFT JOIN v2u_ko_matched_oceny_j ma_oceny_j
                 ON  (
@@ -120,6 +133,18 @@ USING
                          ')'
                     ELSE NULL
                   END mi_etpos_reason
+                , ( SELECT VALUE(t)
+                    FROM TABLE(u.os_ids) t
+                    WHERE ROWNUM <= 1
+                  ) os_id
+                , ( SELECT VALUE(t)
+                    FROM TABLE(u.prot_ids) t
+                    WHERE ROWNUM <= 1
+                  ) prot_id
+                , ( SELECT VALUE(t)
+                    FROM TABLE(u.term_prot_nry) t
+                    WHERE ROWNUM <= 1
+                  ) term_prot_nr
             FROM u u
         )
         SELECT
@@ -175,6 +200,9 @@ WHEN NOT MATCHED THEN
         , subj_grade
         , subj_grade_date
         , tr_id
+        , os_id
+        , prot_id
+        , term_prot_nr
         , reason
         )
     VALUES
@@ -187,12 +215,18 @@ WHEN NOT MATCHED THEN
         , src.subj_grade
         , src.subj_grade_date
         , src.tr_id
+        , src.os_id
+        , src.prot_id
+        , src.term_prot_nr
         , src.reason
         )
 WHEN MATCHED THEN
     UPDATE SET
           tgt.subj_grade = src.subj_grade
         , tgt.tr_id = src.tr_id
+        , tgt.os_id = src.os_id
+        , tgt.prot_id = src.prot_id
+        , tgt.term_prot_nr = src.term_prot_nr
         , tgt.reason = src.reason
 ;
 

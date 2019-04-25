@@ -5,6 +5,9 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Ocena_J_t
     , subj_grade VARCHAR2(10 CHAR)
     , subj_grade_date DATE
     , tr_id NUMBER(38)
+    , os_id NUMBER(10)
+    , prot_id NUMBER(10)
+    , term_prot_nr NUMBER(10)
     , reason VARCHAR2(200 CHAR)
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Missing_Ocena_J_t(
@@ -18,6 +21,9 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Ocena_J_t
             , subj_grade IN VARCHAR2
             , subj_grade_date IN DATE
             , tr_id IN NUMBER
+            , os_id IN NUMBER
+            , prot_id IN NUMBER
+            , term_prot_nr IN NUMBER
             , reason IN VARCHAR2
             ) RETURN SELF AS RESULT
 
@@ -32,6 +38,9 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Ocena_J_t
             , subj_grade IN VARCHAR2
             , subj_grade_date IN DATE
             , tr_id IN NUMBER
+            , os_id IN NUMBER
+            , prot_id IN NUMBER
+            , term_prot_nr IN NUMBER
             , reason IN VARCHAR2
             )
     )

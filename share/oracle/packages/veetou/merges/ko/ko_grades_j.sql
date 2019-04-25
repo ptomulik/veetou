@@ -9,7 +9,7 @@ USING
                       REGEXP_REPLACE(UPPER(trs.subj_grade), '([2-5]),0', '\1')
                     , 'ZW'
                     , 'ZWL'
-                  ) ocena_opis
+                  ) opis
                 , CASE
                     WHEN REGEXP_INSTR(trs.subj_grade, '[2-5]([,.](0|5))?$') = 1
                     THEN 'STD'
@@ -29,7 +29,7 @@ USING
             , u.subj_grade subj_grade
             , u.subj_grade_date subj_grade_date
             , u.id tr_id
-            , u.ocena_opis
+            , u.opis
             , u.toc_kod
 
         FROM u u
@@ -77,7 +77,7 @@ USING
 --            , u.subj_grade
 --            , u.subj_grade_date
 --            , u.id
---            , u.ocena_opis
+--            , u.opis
 --            , u.toc_kod
     ) src
 ON  (
@@ -99,7 +99,7 @@ WHEN NOT MATCHED THEN
         , subj_grade
         , subj_grade_date
         , tr_id
-        , ocena_opis
+        , opis
         , toc_kod
         )
     VALUES
@@ -112,7 +112,7 @@ WHEN NOT MATCHED THEN
         , src.subj_grade
         , src.subj_grade_date
         , src.tr_id
-        , src.ocena_opis
+        , src.opis
         , src.toc_kod
         )
 WHEN MATCHED THEN
@@ -120,7 +120,7 @@ WHEN MATCHED THEN
           tgt.subj_grade = src.subj_grade
         , tgt.subj_grade_date = src.subj_grade_date
         , tgt.tr_id = src.tr_id
-        , tgt.ocena_opis = src.ocena_opis
+        , tgt.opis = src.opis
         , tgt.toc_kod = src.toc_kod
 ;
 

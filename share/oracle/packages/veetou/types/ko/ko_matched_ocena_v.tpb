@@ -42,7 +42,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Ocena_V_t AS
         SELF.ects_other := semester.ects_other;
         SELF.ects_total := semester.ects_total;
 --        SELF.tr_id := matched_ocena_j.tr_id;
---        SELF.ocena_opis := matched_ocena_j.ocena_opis;
+--        SELF.opis := matched_ocena_j.opis;
 --        SELF.toc_kod := matched_ocena_j.toc_kod;
         SELF.os_id := matched_ocena_j.os_id;
         SELF.prot_id := matched_ocena_j.prot_id;

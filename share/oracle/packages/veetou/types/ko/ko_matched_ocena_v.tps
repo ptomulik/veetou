@@ -33,7 +33,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Ocena_V_t
     , ects_other NUMBER(4)
     , ects_total NUMBER(4)
 --    , tr_id NUMBER(38)
---    , ocena_opis VARCHAR2(100 CHAR)
+--    , opis VARCHAR2(100 CHAR)
 --    , toc_kod VARCHAR2(20 CHAR)
     , os_id NUMBER(10)
     , prot_id NUMBER(10)

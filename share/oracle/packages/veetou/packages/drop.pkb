@@ -707,6 +707,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_View('ud_protokoly_v');
         Drop_View('ud_punkty_przedmiotow_v');
         Drop_View('ud_terminy_protokolow_v');
+        Drop_View('ud_oceny_v');
 
         Drop_View('uu_subject_grades_v');
 

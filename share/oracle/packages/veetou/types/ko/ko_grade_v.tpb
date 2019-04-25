@@ -42,7 +42,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Grade_V_t AS
         SELF.ects_other := semester.ects_other;
         SELF.ects_total := semester.ects_total;
         SELF.tr_id := grade_j.tr_id;
-        SELF.ocena_opis := grade_j.ocena_opis;
+        SELF.opis := grade_j.opis;
         SELF.toc_kod := grade_j.toc_kod;
         RETURN;
     END;

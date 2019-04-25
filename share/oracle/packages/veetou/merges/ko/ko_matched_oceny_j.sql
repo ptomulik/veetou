@@ -14,8 +14,8 @@ USING
             , ma_trmpro_j.prot_id
             , oceny.term_prot_nr
             , CASE
-                WHEN g_j.ocena_opis <> wartosci_ocen.opis
-                THEN '"' || g_j.ocena_opis || '" <> "' || wartosci_ocen.opis || '"'
+                WHEN g_j.opis <> wartosci_ocen.opis
+                THEN '"' || g_j.opis || '" <> "' || wartosci_ocen.opis || '"'
                 WHEN g_j.toc_kod <> oceny.toc_kod
                 THEN '[' || g_j.toc_kod || '] <> [' || oceny.toc_kod || ']'
                 ELSE NULL
