@@ -31,15 +31,39 @@ OBJECT IDENTIFIER IS PRIMARY KEY
 ;
 /
 CREATE INDEX v2u_ko_matched_trmpro_j_idx1
-    ON v2u_ko_matched_trmpro_j(subject_id, specialty_id, semester_id, job_uuid);
+    ON v2u_ko_matched_trmpro_j(
+              subject_id
+            , specialty_id
+            , semester_id
+            , job_uuid
+            );
 /
 CREATE INDEX v2u_ko_matched_trmpro_j_idx2
-    ON v2u_ko_matched_trmpro_j(classes_type, subject_id, specialty_id, semester_id, job_uuid);
+    ON v2u_ko_matched_trmpro_j(
+              classes_type
+            , subject_id
+            , specialty_id
+            , semester_id
+            , job_uuid
+            );
 /
 CREATE INDEX v2u_ko_matched_trmpro_j_idx3
-    ON v2u_ko_matched_trmpro_j(prot_id, subject_id, specialty_id, semester_id, job_uuid);
+    ON v2u_ko_matched_trmpro_j(
+              prot_id
+            , subject_id
+            , specialty_id
+            , semester_id
+            , job_uuid
+            );
 
 CREATE INDEX v2u_ko_matched_trmpro_j_idx4
-    ON v2u_ko_matched_trmpro_j(subj_grade_date, classes_type, subject_id, specialty_id, semester_id, job_uuid);
+    ON v2u_ko_matched_trmpro_j(
+              subj_grade_date
+            , classes_type
+            , subject_id
+            , specialty_id
+            , semester_id
+            , job_uuid
+            );
 
 -- vim: set ft=sql ts=4 sw=4 et:

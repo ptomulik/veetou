@@ -37,6 +37,7 @@ USING
                         AND ma_oceny_j.specialty_id = g_j.specialty_id
                         AND ma_oceny_j.semester_id = g_j.semester_id
                         AND ma_oceny_j.classes_type = g_j.classes_type
+                        AND ma_oceny_j.subj_grade_date = g_j.subj_grade_date
                         AND ma_oceny_j.job_uuid = g_j.job_uuid
                     )
             LEFT JOIN v2u_ko_missing_trmpro_j mi_trmpro_j
@@ -61,6 +62,7 @@ USING
                         AND ma_trmpro_j.specialty_id = g_j.specialty_id
                         AND ma_trmpro_j.semester_id = g_j.semester_id
                         AND ma_trmpro_j.classes_type = g_j.classes_type
+                        AND ma_trmpro_j.subj_grade_date = g_j.subj_grade_date
                         AND ma_trmpro_j.job_uuid = g_j.job_uuid
                     )
             LEFT JOIN v2u_ko_matched_etpos_j ma_etpos_j
@@ -85,7 +87,8 @@ USING
                             wartosci_ocen.toc_kod = oceny.toc_kod
                         AND wartosci_ocen.kolejnosc = oceny.wart_oc_kolejnosc
                     )
-            WHERE ma_oceny_j.job_uuid IS NULL
+            WHERE   g_j.subj_grade_date IS NOT NULL
+                AND ma_oceny_j.job_uuid IS NULL
             GROUP BY
                   g_j.job_uuid
                 , g_j.semester_id
@@ -158,6 +161,7 @@ ON  (
         AND tgt.specialty_id = src.specialty_id
         AND tgt.semester_id = src.semester_id
         AND tgt.classes_type = src.classes_type
+        AND tgt.subj_grade_date = src.subj_grade_date
         AND tgt.job_uuid = src.job_uuid
     )
 WHEN NOT MATCHED THEN
@@ -188,7 +192,6 @@ WHEN NOT MATCHED THEN
 WHEN MATCHED THEN
     UPDATE SET
           tgt.subj_grade = src.subj_grade
-        , tgt.subj_grade_date = src.subj_grade_date
         , tgt.tr_id = src.tr_id
         , tgt.reason = src.reason
 ;

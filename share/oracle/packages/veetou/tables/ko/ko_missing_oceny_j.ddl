@@ -4,6 +4,7 @@ OF V2u_Ko_Missing_Ocena_J_t
         -- PK
           CONSTRAINT v2u_ko_missing_oceny_j_pk
             PRIMARY KEY ( classes_type
+                        , subj_grade_date
                         , student_id
                         , subject_id
                         , specialty_id

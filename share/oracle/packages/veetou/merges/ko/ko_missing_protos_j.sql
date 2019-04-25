@@ -179,7 +179,7 @@ USING
                      w.map_classes_type
                      || '", protocol: "' ||
                      w.coalesced_proto_type
-                     || '"} not in dz_protokoly'
+                     || '"} not in v2u_dz_protokoly'
                 ELSE 'error (v2u_ko_matched_protos_j out of sync?)'
               END reason
         FROM w w

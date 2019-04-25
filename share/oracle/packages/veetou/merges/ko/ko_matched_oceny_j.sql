@@ -28,8 +28,7 @@ USING
                     AND ma_trmpro_j.specialty_id = g_j.specialty_id
                     AND ma_trmpro_j.semester_id = g_j.semester_id
                     AND ma_trmpro_j.classes_type = g_j.classes_type
-                    -- FIXME: use subj_grade_date too...
-                    --AND ma_trmpro_j.subj_grade_date = g_j.subj_grade_date
+                    AND ma_trmpro_j.subj_grade_date = g_j.subj_grade_date
                     AND ma_trmpro_j.job_uuid = g_j.job_uuid
                 )
         INNER JOIN v2u_ko_matched_etpos_j ma_etpos_j
@@ -54,6 +53,7 @@ USING
                         wartosci_ocen.toc_kod = oceny.toc_kod
                     AND wartosci_ocen.kolejnosc = oceny.wart_oc_kolejnosc
                 )
+        WHERE g_j.subj_grade_date IS NOT NULL
     ) src
 ON  (
             tgt.job_uuid = src.job_uuid
@@ -61,6 +61,7 @@ ON  (
         AND tgt.specialty_id = src.specialty_id
         AND tgt.semester_id = src.semester_id
         AND tgt.classes_type = src.classes_type
+        AND tgt.subj_grade_date = src.subj_grade_date
         AND tgt.student_id = src.student_id
     )
 WHEN NOT MATCHED THEN
@@ -95,7 +96,6 @@ WHEN NOT MATCHED THEN
 WHEN MATCHED THEN
     UPDATE SET
           tgt.subj_grade = src.subj_grade
-        , tgt.subj_grade_date = src.subj_grade_date
         , tgt.os_id = src.os_id
         , tgt.prot_id = src.prot_id
         , tgt.term_prot_nr = src.term_prot_nr
