@@ -65,9 +65,10 @@ USING
                         COLLECT(ma_przedm_j.prz_kod)
                         AS V2u_Vchars1K_t
                   )) prz_kody1k
+                  -- "+ 0" trick is used to workaround oracle bug
                 , COUNT(ma_przedm_j.prz_kod) dbg_matched
-                , COUNT(mi_przedm_j.job_uuid) dbg_missing
-                , COUNT(sm_j.map_id) dbg_mapped
+                , COUNT(mi_przedm_j.subject_id + 0) dbg_missing
+                , COUNT(sm_j.map_id + 0) dbg_mapped
 
             FROM v2u_ko_subject_semesters_j ss_j
             INNER JOIN v2u_ko_subjects subjects

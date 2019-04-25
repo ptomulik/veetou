@@ -4,7 +4,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Map_J_t
     , matching_score NUMBER(38)
     , highest_score NUMBER(38)
     , selected NUMBER(1)
-    , reason VARCHAR2(20 CHAR)
+    , reason VARCHAR2(300 CHAR)
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Subject_Map_J_t(
               SELF IN OUT NOCOPY V2u_Ko_Subject_Map_J_t

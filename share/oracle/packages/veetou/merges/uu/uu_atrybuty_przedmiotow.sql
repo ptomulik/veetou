@@ -40,7 +40,8 @@ USING
 
                 -- debugging
 
-                , COUNT(sm_j.map_id) dbg_mapped -- includes NULL map_subj_codes
+                  -- "+ 0" trick is used to workaround oracle bug
+                , COUNT(sm_j.map_id + 0) dbg_mapped -- includes NULL map_subj_codes
 
             FROM v2u_ko_subject_semesters_j ss_j
             INNER JOIN v2u_ko_subjects subjects

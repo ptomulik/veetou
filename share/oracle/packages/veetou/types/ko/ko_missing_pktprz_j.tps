@@ -5,7 +5,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Pktprz_J_t
     , specialty_map_ids V2u_20Ids_t
     , map_program_codes V2u_Program_20Codes_t
     , istniejace_pkt_prz_ids V2u_Dz_20Ids_t
-    , reason VARCHAR2(200 CHAR)
+    , reason VARCHAR2(300 CHAR)
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Missing_Pktprz_J_t(
               SELF IN OUT NOCOPY V2u_Ko_Missing_Pktprz_J_t

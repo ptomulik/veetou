@@ -2,15 +2,15 @@ MERGE INTO v2u_ko_matched_oceny_j tgt
 USING
     (
         SELECT
-              ma_trmpro_j.job_uuid
-            , ma_trmpro_j.semester_id
-            , ma_trmpro_j.specialty_id
-            , ma_trmpro_j.subject_id
-            , ma_etpos_j.student_id
-            , ma_trmpro_j.classes_type
+              g_j.job_uuid
+            , g_j.semester_id
+            , g_j.specialty_id
+            , g_j.subject_id
+            , g_j.student_id
+            , g_j.classes_type
             , g_j.subj_grade
             , g_j.subj_grade_date
-            , ma_etpos_j.os_id
+            , COALESCE(ma_etpos_j.os_id, studenci.os_id) os_id
             , ma_trmpro_j.prot_id
             , oceny.term_prot_nr
             , CASE
@@ -22,6 +22,22 @@ USING
               END ocena_missmatch
 
         FROM v2u_ko_grades_j g_j
+        INNER JOIN v2u_ko_students students
+            ON  (
+                        students.id = g_j.student_id
+                    AND students.job_uuid = g_j.job_uuid
+                )
+        INNER JOIN v2u_dz_studenci studenci
+            ON  (
+                        studenci.indeks = students.student_index
+                )
+        LEFT JOIN v2u_ko_matched_etpos_j ma_etpos_j
+            ON  (
+                        ma_etpos_j.student_id = g_j.student_id
+                    AND ma_etpos_j.specialty_id = g_j.specialty_id
+                    AND ma_etpos_j.semester_id = g_j.semester_id
+                    AND ma_etpos_j.job_uuid = g_j.job_uuid
+                )
         INNER JOIN v2u_ko_matched_trmpro_j ma_trmpro_j
             ON  (
                         ma_trmpro_j.subject_id = g_j.subject_id
@@ -31,20 +47,13 @@ USING
                     AND ma_trmpro_j.subj_grade_date = g_j.subj_grade_date
                     AND ma_trmpro_j.job_uuid = g_j.job_uuid
                 )
-        INNER JOIN v2u_ko_matched_etpos_j ma_etpos_j
-            ON  (
-                        ma_etpos_j.student_id = g_j.student_id
-                    AND ma_etpos_j.specialty_id = g_j.specialty_id
-                    AND ma_etpos_j.semester_id = g_j.semester_id
-                    AND ma_etpos_j.job_uuid = g_j.job_uuid
-                )
         INNER JOIN v2u_semesters semesters
             ON  (
                         semesters.code = ma_trmpro_j.cdyd_kod
                 )
         INNER JOIN v2u_dz_oceny oceny
             ON  (
-                        oceny.os_id = ma_etpos_j.os_id
+                        oceny.os_id = COALESCE(ma_etpos_j.os_id, studenci.os_id)
                     AND oceny.prot_id = ma_trmpro_j.prot_id
                     AND oceny.term_prot_nr = ma_trmpro_j.nr
                 )

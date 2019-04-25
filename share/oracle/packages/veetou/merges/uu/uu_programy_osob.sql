@@ -101,9 +101,10 @@ USING
 
                 -- debugging
 
-                , COUNT(ma_prgos_j.prgos_id) dbg_matched
-                , COUNT(mi_prgos_j.job_uuid) dbg_missing
-                , COUNT(sm_j.map_id) dbg_mapped
+                  -- "+ 0" trick is used to workaround oracle bug
+                , COUNT(ma_prgos_j.prgos_id + 0) dbg_matched
+                , COUNT(mi_prgos_j.student_id + 0) dbg_missing
+                , COUNT(sm_j.map_id + 0) dbg_mapped
 
             FROM u_00 u_00
             LEFT JOIN v2u_ko_matched_prgos_j ma_prgos_j

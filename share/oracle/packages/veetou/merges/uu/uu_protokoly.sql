@@ -72,10 +72,11 @@ USING
                         AS V2u_Dz_Ids_t
                   )) zaj_cyk_ids
 
+                  -- "+ 0" trick is used to workaround oracle bug
                 , COUNT(ma_prot_j.prz_kod) dbg_matched
-                , COUNT(mi_prot_j.job_uuid) dbg_missing
-                , COUNT(sm_j.map_id) dbg_subject_mapped
-                , COUNT(cm_j.map_id) dbg_classes_mapped
+                , COUNT(mi_prot_j.subject_id + 0) dbg_missing
+                , COUNT(sm_j.map_id + 0) dbg_subject_mapped
+                , COUNT(cm_j.map_id + 0) dbg_classes_mapped
 
             FROM v2u_ko_grades_j g_j
             INNER JOIN v2u_ko_subjects subjects

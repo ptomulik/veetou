@@ -14,7 +14,7 @@ USING
                 , g_j.subj_grade_date
                 , g_j.tr_id
                 , SET(CAST(
-                        COLLECT(ma_etpos_j.os_id)
+                        COLLECT(COALESCE(ma_etpos_j.os_id, studenci.os_id))
                         AS V2u_Ints10_t
                   )) os_ids
                 , SET(CAST(
@@ -27,22 +27,32 @@ USING
                   )) term_prot_nry
                 , SET(CAST(
                         COLLECT(mi_trmpro_j.reason)
-                        AS V2u_Vchars1K_t
-                  )) mi_trmpro_reasons1k
-                  -- FIXME: implement mi_etpos_reasons1k
+                        AS V2u_Vchars2K_t
+                  )) mi_trmpro_reasons2k
+                  -- FIXME: implement mi_etpos_reasons2k
 --                , SET(CAST(
 --                        COLLECT(mi_etpos_j.reason)
---                        AS V2u_Vchars1K_t
---                  )) mi_etpos_reasons1k
-                -- XXX: Several "+ 0" tricks are necessary to workaround oracle bug
+--                        AS V2u_Vchars2K_t
+--                  )) mi_etpos_reasons2k
+                -- XXX: "+ 0" tricks are necessary to workaround oracle bug
                 , COUNT(mi_trmpro_j.subject_id + 0) mi_trmpro_cnt
                 , COUNT(mi_etpos_j.student_id + 0) mi_etpos_cnt
                 , COUNT(ma_trmpro_j.subject_id + 0) ma_trmpro_cnt
                 , COUNT(ma_etpos_j.student_id + 0) ma_etpos_cnt
                 , COUNT(semesters.code) semesters_cnt
+                , COUNT(studenci.os_id + 0) studenci_cnt
                 , COUNT(oceny.os_id + 0) oceny_cnt
                 , COUNT(wartosci_ocen.toc_kod) wartosci_ocen_cnt
             FROM v2u_ko_grades_j g_j
+            INNER JOIN v2u_ko_students students
+                ON  (
+                            students.id = g_j.student_id
+                        AND students.job_uuid = g_j.job_uuid
+                    )
+            LEFT JOIN v2u_dz_studenci studenci
+                ON  (
+                            studenci.indeks = students.student_index
+                    )
             LEFT JOIN v2u_ko_matched_oceny_j ma_oceny_j
                 ON  (
                             ma_oceny_j.student_id = g_j.student_id
@@ -91,7 +101,7 @@ USING
                     )
             LEFT JOIN v2u_dz_oceny oceny
                 ON  (
-                            oceny.os_id = ma_etpos_j.os_id
+                            oceny.os_id = COALESCE(ma_etpos_j.os_id, studenci.os_id)
                         AND oceny.prot_id = ma_trmpro_j.prot_id
                         AND oceny.term_prot_nr = ma_trmpro_j.nr
                     )
@@ -117,22 +127,27 @@ USING
         (
             SELECT
                   u.*
-                , ( SELECT SUBSTR(VALUE(t), 1, 200)
-                    FROM TABLE(u.mi_trmpro_reasons1k) t
+                , ( SELECT SUBSTR(VALUE(t), 1, 300)
+                    FROM TABLE(u.mi_trmpro_reasons2k) t
                     WHERE ROWNUM <= 1
                   ) mi_trmpro_reason
                   -- FIXME: implement mi_etpos_reason
---                , ( SELECT SUBSTR(VALUE(t), 1, 200)
---                    FROM TABLE(u.mi_etpos_reasons1k) t
+--                , ( SELECT SUBSTR(VALUE(t), 1, 300)
+--                    FROM TABLE(u.mi_etpos_reasons2k) t
 --                    WHERE ROWNUM <= 1
 --                  ) mi_etpos_reason
                 , CASE
                     WHEN u.mi_etpos_cnt <> 0
-                    THEN 'student|specialty|semester found in v2u_ko_missing_etpos_j (count: '
+                    THEN '{student: "", specialty: "", semester: ""} found in v2u_ko_missing_etpos_j (count: '
                          || TO_CHAR(u.mi_etpos_cnt) ||
                          ')'
                     ELSE NULL
                   END mi_etpos_reason
+                , CASE
+                    WHEN u.studenci_cnt = 0
+                    THEN '{student: ""} not found in v2u_dz_studenci'
+                    ELSE NULL
+                  END studenci_reason
                 , ( SELECT VALUE(t)
                     FROM TABLE(u.os_ids) t
                     WHERE ROWNUM <= 1
@@ -150,12 +165,14 @@ USING
         SELECT
               v.*
             , CASE
-                WHEN v.mi_trmpro_cnt = 1 AND v.mi_etpos_cnt = 1
-                THEN v.mi_trmpro_reason || ' and ' || v.mi_etpos_reason
+                WHEN v.mi_trmpro_cnt = 1 AND v.mi_etpos_cnt = 1 AND v.studenci_cnt = 0
+                THEN v.mi_trmpro_reason || ' and ' || v.mi_etpos_reason || ' and ' || v.studenci_reason
+--                WHEN v.mi_trmpro_cnt = 1 AND v.mi_etpos_cnt = 1
+--                THEN v.mi_trmpro_reason || ' and ' || v.mi_etpos_reason
                 WHEN v.mi_trmpro_cnt = 1
                 THEN v.mi_trmpro_reason
-                WHEN v.mi_etpos_cnt = 1
-                THEN v.mi_etpos_reason
+                WHEN v.mi_etpos_cnt = 1 AND v.studenci_cnt = 0
+                THEN v.mi_etpos_reason || ' and ' || v.studenci_reason
                 WHEN v.ma_trmpro_cnt = 1 AND v.semesters_cnt <> 1
                 THEN 'INNER JOIN v2u_semesters failed (count: '
                      || TO_CHAR(v.semesters_cnt) ||

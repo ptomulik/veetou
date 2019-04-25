@@ -8,7 +8,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Subject_Map_V_t
     , matching_score NUMBER(38)
     , highest_score NUMBER(38)
     , selected NUMBER(1)
-    , reason VARCHAR2(20)
+    , reason VARCHAR2(300)
     , subj_code VARCHAR2(32 CHAR)
     , usr_subj_name VARCHAR2(200 CHAR)
     , map_subj_code VARCHAR2(20 CHAR)

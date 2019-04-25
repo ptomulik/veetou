@@ -16,8 +16,8 @@ USING
                   )) prot_ids
                 , SET(CAST(
                         COLLECT(mi_prot_j.reason)
-                        AS V2u_Vchars1K_t
-                  )) mi_reasons1k
+                        AS V2u_Vchars2K_t
+                  )) mi_reasons2k
                 , SET(CAST(
                         COLLECT(g_j.subj_grade ORDER BY g_j.subj_grade)
                         AS V2u_Vchars1K_t
@@ -83,8 +83,8 @@ USING
                     FROM TABLE(u.prot_ids) t
                     WHERE ROWNUM <= 1
                   ) prot_id
-                , ( SELECT SUBSTR(VALUE(t), 1, 200)
-                    FROM TABLE(u.mi_reasons1k) t
+                , ( SELECT SUBSTR(VALUE(t), 1, 300)
+                    FROM TABLE(u.mi_reasons2k) t
                     WHERE ROWNUM <= 1
                   ) mi_reason
             FROM u u

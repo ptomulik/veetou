@@ -18,16 +18,17 @@ USING
                 -- values
                 , SET(CAST(
                     COLLECT(students.first_name ORDER BY students.id)
-                    AS V2u_Vchars1k_t
+                    AS V2u_Vchars1K_t
                 )) first_names1k
                 , SET(CAST(
                     COLLECT(students.last_name ORDER BY students.id)
-                    AS V2u_Vchars1k_t
+                    AS V2u_Vchars1K_t
                 )) last_names1k
 
                 -- debugging
 
-                , COUNT(studenci.id) dbg_matched
+                  -- "+ 0" trick used to workaround oracle bug
+                , COUNT(studenci.id + 0) dbg_matched
 
             FROM v2u_ko_students students
             LEFT JOIN v2u_dz_studenci studenci

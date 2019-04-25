@@ -8,7 +8,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Ocena_J_t
     , os_id NUMBER(10)
     , prot_id NUMBER(10)
     , term_prot_nr NUMBER(10)
-    , reason VARCHAR2(200 CHAR)
+    , reason VARCHAR2(300 CHAR)
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Missing_Ocena_J_t(
               SELF IN OUT NOCOPY V2u_Ko_Missing_Ocena_J_t

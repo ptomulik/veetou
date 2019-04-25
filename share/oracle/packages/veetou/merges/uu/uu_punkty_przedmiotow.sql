@@ -24,7 +24,7 @@ USING
                 , ma_pktprz_j.prg_kod
                 , ma_pktprz_j.cdyd_pocz
                 , ma_pktprz_j.cdyd_kon
-                , mi_pktprz_j.job_uuid mi_pktprz_job_uuid
+                , mi_pktprz_j.subject_id mi_pktprz_subject_id
                 , subjects.subj_code
                 , subjects.subj_ects
                 , semesters.semester_code
@@ -221,10 +221,11 @@ USING
 
                 -- debugging
 
-                , COUNT(u_00.pktprz_id) dbg_matched
-                , COUNT(u_00.mi_pktprz_job_uuid) dbg_missing
-                , COUNT(u_00.subject_map_id) dbg_subject_mapped
-                , COUNT(u_00.specialty_map_id) dbg_specialty_mapped
+                  -- "+ 0" trick is used to workaround oracle bug
+                , COUNT(u_00.pktprz_id + 0) dbg_matched
+                , COUNT(u_00.mi_pktprz_subject_id + 0) dbg_missing
+                , COUNT(u_00.subject_map_id + 0) dbg_subject_mapped
+                , COUNT(u_00.specialty_map_id + 0) dbg_specialty_mapped
             FROM u_00 u_00
             GROUP BY
                   u_00.job_uuid

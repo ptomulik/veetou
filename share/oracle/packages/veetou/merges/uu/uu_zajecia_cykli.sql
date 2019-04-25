@@ -56,26 +56,27 @@ USING
                         AS V2u_Vchars1K_t
                   )) subj_grades1k
                 , SET(CAST(
-                        COLLECT(ma_j.prz_kod ORDER BY ma_j.subject_map_id)
+                        COLLECT(ma_zajcykl_j.prz_kod ORDER BY ma_zajcykl_j.subject_map_id)
                         AS V2u_Vchars1K_t
                   )) prz_kody1k
                 , SET(CAST(
-                        COLLECT(ma_j.cdyd_kod ORDER BY ma_j.subject_map_id)
+                        COLLECT(ma_zajcykl_j.cdyd_kod ORDER BY ma_zajcykl_j.subject_map_id)
                         AS V2u_Vchars1K_t
                   )) cdyd_kody1k
                 , SET(CAST(
-                        COLLECT(ma_j.tzaj_kod ORDER BY ma_j.subject_map_id)
+                        COLLECT(ma_zajcykl_j.tzaj_kod ORDER BY ma_zajcykl_j.subject_map_id)
                         AS V2u_Vchars1K_t
                   )) tzaj_kody1k
                 , SET(CAST(
-                        COLLECT(ma_j.zaj_cyk_id ORDER BY ma_j.subject_map_id)
+                        COLLECT(ma_zajcykl_j.zaj_cyk_id ORDER BY ma_zajcykl_j.subject_map_id)
                         AS V2u_Dz_Ids_t
                   )) ids
 
-                , COUNT(ma_j.zaj_cyk_id) dbg_matched
-                , COUNT(mi_j.job_uuid) dbg_missing
-                , COUNT(sm_j.map_id) dbg_subject_mapped
-                , COUNT(cm_j.map_id) dbg_classes_mapped
+                  -- "+ 0" trick is used to workaround oracle bug
+                , COUNT(ma_zajcykl_j.zaj_cyk_id + 0) dbg_matched
+                , COUNT(mi_zajcykl_j.subject_id + 0) dbg_missing
+                , COUNT(sm_j.map_id + 0) dbg_subject_mapped
+                , COUNT(cm_j.map_id + 0) dbg_classes_mapped
 
             FROM v2u_ko_classes_semesters_j cs_j
             INNER JOIN v2u_ko_subjects subjects
@@ -88,21 +89,21 @@ USING
                             semesters.id = cs_j.semester_id
                         AND semesters.job_uuid = cs_j.job_uuid
                     )
-            LEFT JOIN v2u_ko_matched_zajcykl_j ma_j
+            LEFT JOIN v2u_ko_matched_zajcykl_j ma_zajcykl_j
                 ON  (
-                            ma_j.subject_id = cs_j.subject_id
-                        AND ma_j.specialty_id = cs_j.specialty_id
-                        AND ma_j.semester_id = cs_j.semester_id
-                        AND ma_j.classes_type = cs_j.classes_type
-                        AND ma_j.job_uuid = cs_j.job_uuid
+                            ma_zajcykl_j.subject_id = cs_j.subject_id
+                        AND ma_zajcykl_j.specialty_id = cs_j.specialty_id
+                        AND ma_zajcykl_j.semester_id = cs_j.semester_id
+                        AND ma_zajcykl_j.classes_type = cs_j.classes_type
+                        AND ma_zajcykl_j.job_uuid = cs_j.job_uuid
                     )
-            LEFT JOIN v2u_ko_missing_zajcykl_j mi_j
+            LEFT JOIN v2u_ko_missing_zajcykl_j mi_zajcykl_j
                 ON  (
-                            mi_j.subject_id = cs_j.subject_id
-                        AND mi_j.specialty_id = cs_j.specialty_id
-                        AND mi_j.semester_id = cs_j.semester_id
-                        AND mi_j.classes_type = cs_j.classes_type
-                        AND mi_j.job_uuid = cs_j.job_uuid
+                            mi_zajcykl_j.subject_id = cs_j.subject_id
+                        AND mi_zajcykl_j.specialty_id = cs_j.specialty_id
+                        AND mi_zajcykl_j.semester_id = cs_j.semester_id
+                        AND mi_zajcykl_j.classes_type = cs_j.classes_type
+                        AND mi_zajcykl_j.job_uuid = cs_j.job_uuid
                     )
             LEFT JOIN v2u_ko_subject_map_j sm_j
                 ON  (

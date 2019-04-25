@@ -35,19 +35,20 @@ USING
                         AS V2u_Vchars1K_t
                   )) subj_grades1k
                 , SET(CAST(
-                        COLLECT(ma_j.prz_kod
-                                ORDER BY ma_j.subject_map_id)
+                        COLLECT(ma_przcykl_j.prz_kod
+                                ORDER BY ma_przcykl_j.subject_map_id)
                         AS V2u_Vchars1K_t
                   )) prz_kody1k
                 , SET(CAST(
-                        COLLECT(ma_j.cdyd_kod
-                                ORDER BY ma_j.subject_map_id)
+                        COLLECT(ma_przcykl_j.cdyd_kod
+                                ORDER BY ma_przcykl_j.subject_map_id)
                         AS V2u_Vchars1K_t
                   )) cdyd_kody1k
 
-                , COUNT(ma_j.prz_kod) dbg_matched
-                , COUNT(mi_j.job_uuid) dbg_missing
-                , COUNT(sm_j.map_id) dbg_mapped
+                  -- "+ 0" trick is used to workaround oracle bug
+                , COUNT(ma_przcykl_j.prz_kod) dbg_matched
+                , COUNT(mi_przcykl_j.subject_id + 0) dbg_missing
+                , COUNT(sm_j.map_id + 0) dbg_mapped
 
             FROM v2u_ko_subject_semesters_j ss_j
             INNER JOIN v2u_ko_subjects subjects
@@ -60,19 +61,19 @@ USING
                             semesters.id = ss_j.semester_id
                         AND semesters.job_uuid = ss_j.job_uuid
                     )
-            LEFT JOIN v2u_ko_matched_przcykl_j ma_j
+            LEFT JOIN v2u_ko_matched_przcykl_j ma_przcykl_j
                 ON  (
-                            ma_j.subject_id = ss_j.subject_id
-                        AND ma_j.specialty_id = ss_j.specialty_id
-                        AND ma_j.semester_id = ss_j.semester_id
-                        AND ma_j.job_uuid = ss_j.job_uuid
+                            ma_przcykl_j.subject_id = ss_j.subject_id
+                        AND ma_przcykl_j.specialty_id = ss_j.specialty_id
+                        AND ma_przcykl_j.semester_id = ss_j.semester_id
+                        AND ma_przcykl_j.job_uuid = ss_j.job_uuid
                     )
-            LEFT JOIN v2u_ko_missing_przcykl_j mi_j
+            LEFT JOIN v2u_ko_missing_przcykl_j mi_przcykl_j
                 ON  (
-                            mi_j.subject_id = ss_j.subject_id
-                        AND mi_j.specialty_id = ss_j.specialty_id
-                        AND mi_j.semester_id = ss_j.semester_id
-                        AND mi_j.job_uuid = ss_j.job_uuid
+                            mi_przcykl_j.subject_id = ss_j.subject_id
+                        AND mi_przcykl_j.specialty_id = ss_j.specialty_id
+                        AND mi_przcykl_j.semester_id = ss_j.semester_id
+                        AND mi_przcykl_j.job_uuid = ss_j.job_uuid
                     )
             LEFT JOIN v2u_ko_subject_map_j sm_j
                 ON  (

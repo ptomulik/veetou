@@ -7,7 +7,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Specialty_Map_V_t
     , matching_score NUMBER(38)
     , highest_score NUMBER(38)
     , selected NUMBER(1)
-    , reason VARCHAR2(20)
+    , reason VARCHAR2(300)
     , university VARCHAR2(8 CHAR)
     , faculty VARCHAR2(8 CHAR)
     , studies_modetier VARCHAR2(100 CHAR)

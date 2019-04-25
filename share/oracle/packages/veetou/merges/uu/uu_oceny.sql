@@ -9,7 +9,6 @@ USING
                     WHEN  ma_oceny_j.job_uuid IS NOT NULL
                     THEN
                       '{os_id: '
-                        -- FIXME: COALESCE(ma_etpos_j.os_id, studenci.os_id) ?
                         || TO_CHAR(ma_oceny_j.os_id) ||
                       ', prot_id: '
                         || TO_CHAR(ma_oceny_j.prot_id) ||
@@ -61,8 +60,8 @@ USING
                 , g_j.opis
                 , wartosci_ocen.kolejnosc wart_oc_kolejnosc
                 -- for debugging
-                , mi_oceny_j.student_id ma_student_id
-                , ma_oceny_j.student_id mi_student_id
+                , mi_oceny_j.student_id mi_student_id
+                , ma_oceny_j.student_id ma_student_id
                 , subject_map.id subject_map_id
                 , classes_map.id classes_map_id
 

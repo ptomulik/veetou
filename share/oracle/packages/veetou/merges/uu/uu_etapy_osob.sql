@@ -127,7 +127,7 @@ USING
                  * and v2u_etapy_kierunkow being JOINED or not while using
                  * nested (SELECT ...) queries in the subquery "u" below. */
                 , COUNT(ma_etpos_j.etpos_id + 0) dbg_matched
-                , COUNT(mi_etpos_j.job_uuid) dbg_missing
+                , COUNT(mi_etpos_j.student_id + 0) dbg_missing
                 , COUNT(sm_j.map_id + 0) dbg_mapped
 
             FROM u_00 u_00

@@ -8,7 +8,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Proto_V_t
     , coalesced_proto_type VARCHAR2(20 CHAR)
     , zaj_cyk_id NUMBER(10)
     , prot_id NUMBER(10)
-    , reason VARCHAR2(200 CHAR)
+    , reason VARCHAR2(300 CHAR)
     , istniejace_tpro_kody V2u_Prot_20Codes_t
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Missing_Proto_V_t(

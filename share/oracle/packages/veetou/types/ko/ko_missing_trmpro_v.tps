@@ -9,7 +9,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Trmpro_V_t
     , coalesced_proto_type VARCHAR2(20 CHAR)
     , prot_id NUMBER(10)
     , nr NUMBER(10)
-    , reason VARCHAR2(200 CHAR)
+    , reason VARCHAR2(300 CHAR)
     , max_istniejacy_nr NUMBER(10)
     , istniejace_daty_zwrotow V2u_20Dates_t
 

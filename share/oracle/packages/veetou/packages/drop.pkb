@@ -688,6 +688,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Chars3_t');
         Drop_Type('5Chars3_t');
         Drop_Type('Vchars1K_t');
+        Drop_Type('Vchars2K_t');
         Drop_Type('5Vchars1K_t');
         Drop_Type('Ints2_t');
         Drop_Type('Ints4_t');
