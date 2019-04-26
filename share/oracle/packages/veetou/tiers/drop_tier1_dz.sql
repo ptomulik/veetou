@@ -2,12 +2,12 @@
 -- NOTE: This destroys all the veetou data and structure.
 --
 
-@@packages/drop.pkg;
+@@../packages/drop.pkg;
 
 BEGIN
     V2U_Drop.Tier3();
     V2U_Drop.Tier2();
-    V2U_Drop.Tier1();
+    V2U_Drop.Tier1_Dz();
 END;
 /
 DROP PACKAGE V2U_Drop;

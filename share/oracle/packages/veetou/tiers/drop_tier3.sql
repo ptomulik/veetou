@@ -1,4 +1,4 @@
-@@packages/drop.pkg;
+@@../packages/drop.pkg;
 
 BEGIN
     V2U_Drop.Tier3();
