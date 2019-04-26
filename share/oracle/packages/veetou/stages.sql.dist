@@ -1,0 +1,281 @@
+/****************************************************************************
+ *                  This file is for SQL Developer users.
+ *            Just place a cursor on a command and press F9.
+ ****************************************************************************/
+
+-- Disaster prevention (we don't want to run all the commands below at once).
+EXIT;
+
+
+--
+-- dz_studenci
+--
+TRUNCATE TABLE v2u_dz_studenci DROP STORAGE;
+@@merges/dz/dz_studenci.sql;
+
+
+
+--
+-- dz_przedmioty
+--
+TRUNCATE TABLE v2u_dz_przedmioty DROP STORAGE;
+@@merges/dz/dz_przedmioty.sql;
+
+TRUNCATE TABLE v2u_ko_missing_przedm_j DROP STORAGE;
+@@merges/ko/ko_matched_przedm_j.sql;
+
+TRUNCATE TABLE v2u_ko_missing_przedm_j DROP STORAGE;
+@@merges/ko/ko_missing_przedm_j.sql;
+
+TRUNCATE TABLE v2u_uu_przedmioty DROP STORAGE;
+@@merges/uu/uu_przedmioty_j.sql;
+
+/* INSERT INTO dz_przedmioty
+    ( kod
+    , nazwa
+    , jed_org_kod
+    , utw_id
+--    , utw_data
+--    , mod_id
+--    , mod_data
+    , tpro_kod
+    , czy_wielokrotne
+    , name
+    , skrocony_opis
+    , short_description
+    , jed_org_kod_biorca
+    , jzk_kod
+    , kod_sok
+    , opis
+    , description
+    , literatura
+    , bibliography
+    , efekty_uczenia
+    , efekty_uczenia_ang
+    , kryteria_oceniania
+    , kryteria_oceniania_ang
+    , praktyki_zawodowe
+    , praktyki_zawodowe_ang
+    , url
+    , kod_isced
+    , nazwa_pol
+    , guid
+    , pw_nazwa_supl
+    , pw_nazwa_supl_ang
+    ) */
+SELECT
+      src.kod
+    , src.nazwa
+    , src.jed_org_kod
+    , src.utw_id
+--    , src.utw_data
+--    , src.mod_id
+--    , src.mod_data
+    , src.tpro_kod
+    , src.czy_wielokrotne
+    , src.name
+    , src.skrocony_opis
+    , src.short_description
+    , src.jed_org_kod_biorca
+    , src.jzk_kod
+    , src.kod_sok
+    , src.opis
+    , src.description
+    , src.literatura
+    , src.bibliography
+    , src.efekty_uczenia
+    , src.efekty_uczenia_ang
+    , src.kryteria_oceniania
+    , src.kryteria_oceniania_ang
+    , src.praktyki_zawodowe
+    , src.praktyki_zawodowe_ang
+    , src.url
+    , src.kod_isced
+    , src.nazwa_pol
+    , src.guid
+    , src.pw_nazwa_supl
+    , src.pw_nazwa_supl_ang
+FROM v2u_uu_przedmioty src
+WHERE
+        src.change_type = 'I'
+    AND src.safe_to_change = 1
+;
+
+SELECT
+      src.kod
+    , src.nazwa
+    , src.jed_org_kod
+--    , src.utw_id
+--    , src.utw_data
+    , src.mod_id
+--    , src.mod_data
+    , src.tpro_kod
+    , src.czy_wielokrotne
+    , src.name
+    , src.skrocony_opis
+    , src.short_description
+    , src.jed_org_kod_biorca
+    , src.jzk_kod
+    , src.kod_sok
+    , src.opis
+    , src.description
+    , src.literatura
+    , src.bibliography
+    , src.efekty_uczenia
+    , src.efekty_uczenia_ang
+    , src.kryteria_oceniania
+    , src.kryteria_oceniania_ang
+    , src.praktyki_zawodowe
+    , src.praktyki_zawodowe_ang
+    , src.url
+    , src.kod_isced
+    , src.nazwa_pol
+    , src.guid
+    , src.pw_nazwa_supl
+    , src.pw_nazwa_supl_ang
+FROM v2u_uu_przedmioty src
+WHERE
+        src.change_type = 'U'
+    AND src.safe_to_change = 1
+;
+
+COMMIT;
+
+
+--
+-- dz_atrybuty_przedmiotow
+--
+TRUNCATE TABLE v2u_dz_atrybuty_przedmiotow DROP STORAGE;
+@@merges/dz/dz_atrybuty_przedmiotow.sql;
+
+TRUNCATE TABLE v2u_uu_atrybuty_przedmiotow DROP STORAGE;
+@@merges/uu/uu_atrybuty_przedmiotow.sql;
+
+
+--
+-- dz_przedmioty_obce
+--
+TRUNCATE TABLE v2u_dz_przedmioty_obce DROP STORAGE;
+@@merges/dz/dz_przedmioty_obce.sql;
+
+--
+-- dz_przedmioty_cykli
+--
+TRUNCATE TABLE v2u_dz_przedmioty_cykli DROP STORAGE;
+@@merges/dz/dz_przedmioty_cykli.sql;
+
+
+--
+-- dz_punkty_przedmiotow
+--
+TRUNCATE TABLE v2u_dz_punkty_przedmiotow DROP STORAGE;
+@@merges/dz/dz_punkty_przedmiotow.sql;
+
+
+--
+-- dz_zajecia_cykli
+--
+TRUNCATE TABLE v2u_dz_zajecia_cykli DROP STORAGE;
+@@merges/dz/dz_zajecia_cykli.sql;
+
+
+--
+-- dz_zajecia_prz_obcych
+--
+TRUNCATE TABLE v2u_dz_zajecia_prz_obcych DROP STORAGE;
+@@merges/dz/dz_zajecia_prz_obcych.sql;
+
+
+--
+-- dz_programy
+--
+TRUNCATE TABLE v2u_dz_programy DROP STORAGE;
+@@merges/dz/dz_programy.sql;
+
+
+--
+-- dz_programy_osob
+--
+TRUNCATE TABLE v2u_dz_programy_osob DROP STORAGE;
+@@merges/dz/dz_programy_osob.sql;
+
+
+--
+-- dz_decyzje
+--
+TRUNCATE TABLE v2u_dz_decyzje DROP STORAGE;
+@@merges/dz/dz_decyzje.sql;
+
+
+--
+-- dz_etapy
+--
+TRUNCATE TABLE v2u_dz_etapy DROP STORAGE;
+@@merges/dz/dz_etapy.sql;
+
+
+--
+-- dz_etapy_programow
+--
+TRUNCATE TABLE v2u_dz_etapy_programow DROP STORAGE;
+@@merges/dz/dz_etapy_programow.sql;
+
+
+--
+-- dz_etapy_kierunkow
+--
+TRUNCATE TABLE v2u_dz_etapy_kierunkow DROP STORAGE;
+@@merges/dz/dz_etapy_kierunkow.sql;
+
+
+--
+-- dz_etapy_osob
+--
+TRUNCATE TABLE v2u_dz_etapy_osob DROP STORAGE;
+@@merges/dz/dz_etapy_osob.sql;
+
+
+--
+-- dz_zaliczenia_przedmiotow
+--
+TRUNCATE TABLE v2u_dz_zaliczenia_przedmiotow DROP STORAGE;
+@@merges/dz/dz_zaliczenia_przedmiotow.sql;
+
+
+--
+-- dz_zal_przedm_prgos
+--
+TRUNCATE TABLE v2u_dz_zal_przedm_prgos DROP STORAGE;
+@@merges/dz/dz_zal_przedm_prgos.sql;
+
+
+--
+-- dz_oceny
+--
+TRUNCATE TABLE v2u_dz_oceny DROP STORAGE;
+@@merges/dz/dz_oceny.sql;
+
+
+--
+-- dz_wartosci_ocen
+--
+TRUNCATE TABLE v2u_dz_wartosci_ocen DROP STORAGE;
+@@merges/dz/dz_wartosci_ocen.sql;
+
+
+--
+-- dz_terminy_protokolow
+--
+TRUNCATE TABLE v2u_dz_terminy_protokolow DROP STORAGE;
+@@merges/dz/dz_terminy_protokolow.sql;
+
+
+--
+-- dz_protokoly
+--
+TRUNCATE TABLE v2u_dz_protokoly DROP STORAGE;
+@@merges/dz/dz_protokoly.sql;
+
+
+
+-- vim: set ft=sql ts=4 sw=4 et:
