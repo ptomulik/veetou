@@ -1,18 +1,7 @@
 MERGE INTO v2u_ko_matched_pktprz_j tgt
 USING
     (
-        WITH punkty_przedmiotow AS
-        (
-            ----------------------------------------------------------------
-            -- Ideally we should just use v2u_uv_punkty_przedmiotow_v, but
-            -- it doesn't work due to DB bug (internal error).
-            -- SELECT * FROM v2u_uv_punkty_przedmiotow_v
-            ----------------------------------------------------------------
-            SELECT * FROM v2u_dz_punkty_przedmiotow
-            UNION ALL
-            SELECT * FROM v2u_xr_punkty_przedmiotow
-        ),
-        u AS
+        WITH u AS
         (   -- identify all matching entries in v2u_uv_punkty_przedmiotow_v
             SELECT DISTINCT
                   subj_m_j.job_uuid
@@ -65,7 +54,7 @@ USING
                             semesters.id = subj_m_j.semester_id
                         AND semesters.job_uuid = subj_m_j.job_uuid
                     )
-            INNER JOIN punkty_przedmiotow pkt_prz
+            INNER JOIN v2u_dz_punkty_przedmiotow pkt_prz
                 ON  (
                             pkt_prz.prz_kod = subject_map.map_subj_code
                         AND (

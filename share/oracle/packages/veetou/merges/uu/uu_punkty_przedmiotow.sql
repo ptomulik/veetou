@@ -1,18 +1,7 @@
 MERGE INTO v2u_uu_punkty_przedmiotow tgt
 USING
     (
-        WITH punkty_przedmiotow AS
-        (
-            ----------------------------------------------------------------
-            -- Ideally we should just use v2u_uv_punkty_przedmiotow_v, but
-            -- it doesn't work due to DB bug (internal error).
-            -- SELECT * FROM v2u_uv_punkty_przedmiotow_v
-            ----------------------------------------------------------------
-            SELECT * FROM v2u_dz_punkty_przedmiotow
-            UNION ALL
-            SELECT * FROM v2u_xr_punkty_przedmiotow
-        ),
-        u_00 AS
+        WITH u_00 AS
         ( -- join crucial tables
             SELECT
                   ss_j.job_uuid
@@ -478,7 +467,7 @@ USING
                   END safe_to_update
 
             FROM v v
-            LEFT JOIN punkty_przedmiotow t
+            LEFT JOIN v2u_dz_punkty_przedmiotow t
                 ON  (
                             v.dbg_unique_match = 1
                         AND t.id = v.pktprz_id
