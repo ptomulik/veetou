@@ -2,7 +2,7 @@ MERGE INTO v2u_ko_matched_pktprz_j tgt
 USING
     (
         WITH u AS
-        (   -- identify all matching entries in v2u_uv_punkty_przedmiotow_v
+        (   -- identify all matching entries in v2u_dz_punkty_przedmiotow
             SELECT DISTINCT
                   subj_m_j.job_uuid
                 , subj_m_j.subject_id
@@ -12,7 +12,6 @@ USING
                 , pkt_prz.prz_kod
                 , pkt_prz.id pktprz_id
                   -- v2u_dz_punkty_przedmiotow  => ord=0
-                  -- v2u_xr_punkty_przedmiotow  => ord=1
                 , DECODE(SIGN(pkt_prz.id), -1, 1, 0) ord
                 , pkt_prz.prg_kod
                 , pkt_prz.cdyd_pocz
@@ -76,7 +75,7 @@ USING
         (   -- eliminate redundant matches (pktprz_ids) as follows
             --  * prefer narrower semester ranges over wider ones, and
             --  * prefer non-NULL prg_kod over NULL ones
-            --  * prefer v2u_dz_punkty_przedmiotow over v2u_xr_punkty_przedmiotow
+            --  * prefer original (positive) ids over our own (negative)
             SELECT
                   u.job_uuid
                 , u.subject_id

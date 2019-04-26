@@ -1,5 +1,4 @@
 @@ko/create_tier1_tables.sql;
-@@xr/create_tier1_tables.sql;
 @@dz/create_tier1_tables.sql;
 @@create_tier1_tables_local.sql;
 

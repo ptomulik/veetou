@@ -57,25 +57,6 @@ EXIT;
 @@drop_tier1_dz.sql
 
 
--- Creates tier1 xr_* tables.
-@@create_tier1_xr.sql
-
-
-
--- Wipes-out tier1 xr_* tables.
-@@drop_tier1_xr.sql
-
-
-
--- Creates tier1 uv_* views.
-@@create_tier1_uv.sql
-
-
-
--- Creates tier1 uv_* views.
-@@drop_tier1_uv.sql
-
-
 
 -- Creates tier1 ko_* tables and related stuff.
 @@create_tier1_ko.sql

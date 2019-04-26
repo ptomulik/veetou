@@ -92,18 +92,6 @@ module as of a set of related types, tables and views.
 |      |                     | tables and DZ tables. The differences can be analyzed     |
 |      |                     | without actually applying any changes to DZ.              |
 +------+---------------------+-----------------------------------------------------------+
-| XR   | Extra Rows          | A set of tables, each of which provides extra rows        |
-|      |                     | to its corresponding USOS table. For example, a table     |
-|      |                     | named ``v2u_xr_punkty_przedmiotow`` provides rows         |
-|      |                     | that are currently not in ``v2u_dz_punkty_przedmiotu``    |
-|      |                     | but, supposedly, will be inserted there at some point.    |
-+------+---------------------+-----------------------------------------------------------+
-| UV   | Union View          | A set of views, each of which provides access to UNION    |
-|      |                     | of a table and its corresponding XR table. For example    |
-|      |                     | a view named ``v2u_uv_punkty_przedmiotow`` is an UNION    |
-|      |                     | of ``v2u_dz_punkty_przedmiotow`` and                      |
-|      |                     | ``v2u_xr_punkty_przedmiotow``.                            |
-+------+---------------------+-----------------------------------------------------------+
 
 Tables, views and types belonging to a given module (except the basis module)
 get additional prefix to their names (tables and views from a module have same
@@ -124,13 +112,9 @@ prefix).
 | UU   +-------+-------------+-----------------------------------------------------------+
 |      | type  | ``V2u_Uu_`` | ``V2u_Uu_Programy_t``                                     |
 +------+-------+-------------+-----------------------------------------------------------+
-|      | table | ``v2u_uu_`` | ``v2u_uu_programy``                                       |
-| UU   +-------+-------------+-----------------------------------------------------------+
-|      | type  | ``V2u_Uu_`` | ``V2u_Uu_Programy_t``                                     |
-+------+-------+-------------+-----------------------------------------------------------+
-|      | table | ``v2u_xr_`` | ``v2u_xr_punkty_przedmiotow``                             |
-| XR   +-------+-------------+-----------------------------------------------------------+
-|      | type  | ``V2u_Dz_`` | ``V2u_Dz_Punkty_Przedmiotu_t``                            |
+|      | view  | ``v2u_ud_`` | ``v2u_ud_programy``                                       |
+| UD   +-------+-------------+-----------------------------------------------------------+
+|      | type  |             |                                                           |
 +------+-------+-------------+-----------------------------------------------------------+
 
 .. <!--- vim: set spell expandtab tabstop=2 shiftwidth=2 syntax=rst: -->
