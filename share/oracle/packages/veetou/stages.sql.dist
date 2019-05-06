@@ -30,113 +30,150 @@ TRUNCATE TABLE v2u_ko_missing_przedm_j DROP STORAGE;
 TRUNCATE TABLE v2u_uu_przedmioty DROP STORAGE;
 @@merges/uu/uu_przedmioty_j.sql;
 
-/* INSERT INTO dz_przedmioty
-    ( kod
-    , nazwa
-    , jed_org_kod
-    , utw_id
---    , utw_data
---    , mod_id
---    , mod_data
-    , tpro_kod
-    , czy_wielokrotne
-    , name
-    , skrocony_opis
-    , short_description
-    , jed_org_kod_biorca
-    , jzk_kod
-    , kod_sok
-    , opis
-    , description
-    , literatura
-    , bibliography
-    , efekty_uczenia
-    , efekty_uczenia_ang
-    , kryteria_oceniania
-    , kryteria_oceniania_ang
-    , praktyki_zawodowe
-    , praktyki_zawodowe_ang
-    , url
-    , kod_isced
-    , nazwa_pol
-    , guid
-    , pw_nazwa_supl
-    , pw_nazwa_supl_ang
-    ) */
-SELECT
-      src.kod
-    , src.nazwa
-    , src.jed_org_kod
-    , src.utw_id
---    , src.utw_data
---    , src.mod_id
---    , src.mod_data
-    , src.tpro_kod
-    , src.czy_wielokrotne
-    , src.name
-    , src.skrocony_opis
-    , src.short_description
-    , src.jed_org_kod_biorca
-    , src.jzk_kod
-    , src.kod_sok
-    , src.opis
-    , src.description
-    , src.literatura
-    , src.bibliography
-    , src.efekty_uczenia
-    , src.efekty_uczenia_ang
-    , src.kryteria_oceniania
-    , src.kryteria_oceniania_ang
-    , src.praktyki_zawodowe
-    , src.praktyki_zawodowe_ang
-    , src.url
-    , src.kod_isced
-    , src.nazwa_pol
-    , src.guid
-    , src.pw_nazwa_supl
-    , src.pw_nazwa_supl_ang
-FROM v2u_uu_przedmioty src
-WHERE
-        src.change_type = 'I'
-    AND src.safe_to_change = 1
-;
-
-SELECT
-      src.kod
-    , src.nazwa
-    , src.jed_org_kod
---    , src.utw_id
---    , src.utw_data
-    , src.mod_id
---    , src.mod_data
-    , src.tpro_kod
-    , src.czy_wielokrotne
-    , src.name
-    , src.skrocony_opis
-    , src.short_description
-    , src.jed_org_kod_biorca
-    , src.jzk_kod
-    , src.kod_sok
-    , src.opis
-    , src.description
-    , src.literatura
-    , src.bibliography
-    , src.efekty_uczenia
-    , src.efekty_uczenia_ang
-    , src.kryteria_oceniania
-    , src.kryteria_oceniania_ang
-    , src.praktyki_zawodowe
-    , src.praktyki_zawodowe_ang
-    , src.url
-    , src.kod_isced
-    , src.nazwa_pol
-    , src.guid
-    , src.pw_nazwa_supl
-    , src.pw_nazwa_supl_ang
-FROM v2u_uu_przedmioty src
-WHERE
-        src.change_type = 'U'
-    AND src.safe_to_change = 1
+/* MERGE INTO dz_przedmioty tgt
+USING
+    ( */
+        SELECT
+              kod
+            , nazwa
+            , jed_org_kod
+            , utw_id
+            , utw_data
+            , mod_id
+            , mod_data
+            , tpro_kod
+            , czy_wielokrotne
+            , name
+            , skrocony_opis
+            , short_description
+            , jed_org_kod_biorca
+            , jzk_kod
+            , kod_sok
+            , opis
+            , description
+            , literatura
+            , bibliography
+            , efekty_uczenia
+            , efekty_uczenia_ang
+            , kryteria_oceniania
+            , kryteria_oceniania_ang
+            , praktyki_zawodowe
+            , praktyki_zawodowe_ang
+            , url
+            , kod_isced
+            , nazwa_pol
+            , guid
+            , pw_nazwa_supl
+            , pw_nazwa_supl_ang
+            , change_type
+            , safe_to_change
+        FROM v2u_uu_przedmioty
+        WHERE change_type IN ('I', 'U') AND safe_to_change = 1
+/*    ) src
+ON  (
+            src.kod = tgt.kod
+        AND src.change_type = 'I'
+    )
+WHEN NOT MATCHED THEN
+    INSERT
+        ( kod
+        , nazwa
+        , jed_org_kod
+        , utw_id
+--        , utw_data
+--        , mod_id
+--        , mod_data
+        , tpro_kod
+        , czy_wielokrotne
+        , name
+        , skrocony_opis
+        , short_description
+        , jed_org_kod_biorca
+        , jzk_kod
+        , kod_sok
+        , opis
+        , description
+        , literatura
+        , bibliography
+        , efekty_uczenia
+        , efekty_uczenia_ang
+        , kryteria_oceniania
+        , kryteria_oceniania_ang
+        , praktyki_zawodowe
+        , praktyki_zawodowe_ang
+        , url
+        , kod_isced
+        , nazwa_pol
+        , guid
+        , pw_nazwa_supl
+        , pw_nazwa_supl_ang
+        )
+VALUES
+        ( src.kod
+        , src.nazwa
+        , src.jed_org_kod
+        , src.utw_id
+--        , src.utw_data
+--        , src.mod_id
+--        , src.mod_data
+        , src.tpro_kod
+        , src.czy_wielokrotne
+        , src.name
+        , src.skrocony_opis
+        , src.short_description
+        , src.jed_org_kod_biorca
+        , src.jzk_kod
+        , src.kod_sok
+        , src.opis
+        , src.description
+        , src.literatura
+        , src.bibliography
+        , src.efekty_uczenia
+        , src.efekty_uczenia_ang
+        , src.kryteria_oceniania
+        , src.kryteria_oceniania_ang
+        , src.praktyki_zawodowe
+        , src.praktyki_zawodowe_ang
+        , src.url
+        , src.kod_isced
+        , src.nazwa_pol
+        , src.guid
+        , src.pw_nazwa_supl
+        , src.pw_nazwa_supl_ang
+        )
+WHEN MATCHED THEN
+    UPDATE SET
+--        , tgt.kod = src.kod
+          tgt.nazwa = src.nazwa
+        , tgt.jed_org_kod = src.jed_org_kod
+--        , tgt.utw_id = src.utw_id
+--        , tgt.utw_data = src.utw_data
+        , tgt.mod_id = src.mod_id
+--        , tgt.mod_data = src.mod_data
+        , tgt.tpro_kod = src.tpro_kod
+        , tgt.czy_wielokrotne = src.czy_wielokrotne
+        , tgt.name = src.name
+        , tgt.skrocony_opis = src.skrocony_opis
+        , tgt.short_description = src.short_description
+        , tgt.jed_org_kod_biorca = src.jed_org_kod_biorca
+        , tgt.jzk_kod = src.jzk_kod
+        , tgt.kod_sok = src.kod_sok
+        , tgt.opis = src.opis
+        , tgt.description = src.description
+        , tgt.literatura = src.literatura
+        , tgt.bibliography = src.bibliography
+        , tgt.efekty_uczenia = src.efekty_uczenia
+        , tgt.efekty_uczenia_ang = src.efekty_uczenia_ang
+        , tgt.kryteria_oceniania = src.kryteria_oceniania
+        , tgt.kryteria_oceniania_ang = src.kryteria_oceniania_ang
+        , tgt.praktyki_zawodowe = src.praktyki_zawodowe
+        , tgt.praktyki_zawodowe_ang = src.praktyki_zawodowe_ang
+        , tgt.url = src.url
+        , tgt.kod_isced = src.kod_isced
+        , tgt.nazwa_pol = src.nazwa_pol
+        , tgt.guid = src.guid
+        , tgt.pw_nazwa_supl = src.pw_nazwa_supl
+        , tgt.pw_nazwa_supl_ang = src.pw_nazwa_supl_ang */
 ;
 
 COMMIT;
