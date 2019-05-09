@@ -49,8 +49,10 @@ USING
                         COLLECT(faculties.code)
                         AS V2u_Vchars1K_t
                   )) faculty_codes1k
+                  -- sometimes, when reading ko, the subj_name gets cut, so we
+                  -- prefer the longest among different subj_names below
                 , SET(CAST(
-                        COLLECT(subjects.subj_name)
+                        COLLECT(subjects.subj_name ORDER BY LENGTH(subjects.subj_name) DESC)
                         AS V2u_Vchars1K_t
                   )) subj_names1k
                 , SET(CAST(
@@ -260,7 +262,8 @@ USING
                         AND u.dbg_map_proto_types <= 1
                         AND u.dbg_map_grade_types <= 1
                         AND u.dbg_faculty_codes = 1
-                        AND u.dbg_subj_names = 1
+                        AND (u.dbg_map_subj_names = 1 AND u.map_subj_name IS NOT NULL
+                             OR u.dbg_subj_names = 1 AND u.subj_name IS NOT NULL)
                         AND u.dbg_subj_credit_kinds = 1
                         -- and we have correct tpro_kod value
                         AND COALESCE(u.map_proto_type, V2u_Get.Tpro_Kod(
