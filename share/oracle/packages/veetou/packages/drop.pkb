@@ -173,6 +173,10 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     PROCEDURE Tier1_Dz
     IS
     BEGIN
+        Drop_Table('dz_osoby_grup');
+        --
+        Drop_Table('dz_grupy');
+        --
         Drop_Table('dz_zal_przedm_prgos');
         --
         Drop_Table('dz_zaliczenia_przedmiotow');
@@ -246,6 +250,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('dz_protokoly_idx4');
         Drop_Table('dz_protokoly');
 
+        Drop_Type('Dz_Osoba_Grupy_t', 'Dz_Osoby_Grup_t');
+        Drop_Type('Dz_Grupa_t', 'Dz_Grupy_t');
         Drop_Type('Dz_Protokol_t', 'Dz_Protokoly_t');
         Drop_Type('Dz_Termin_Protokolu_t', 'Dz_Terminy_Protokolow_t');
         Drop_Type('Dz_Ocena_t', 'Dz_Oceny_t');
@@ -289,6 +295,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Dz_Wartosc_Oceny_B_t');
         Drop_Type('Dz_Termin_Protokolu_B_t');
         Drop_Type('Dz_Protokol_B_t');
+        Drop_Type('Dz_Grupa_B_t');
+        Drop_Type('Dz_Osoba_Grupy_B_t');
     END;
 
     PROCEDURE Tier1_Ko

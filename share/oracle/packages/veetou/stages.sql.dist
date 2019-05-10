@@ -232,6 +232,46 @@ COMMIT;
 
 
 --
+-- dz_grupy
+--
+DELETE FROM v2u_dz_grupy;
+COMMIT;
+@@merges/dz/dz_grupy.sql;
+
+DELETE FROM v2u_ko_matched_grupy_j;
+COMMIT;
+@@merges/ko/ko_matched_grupy_j.sql;
+
+DELETE FROM v2u_ko_missing_grupy_j;
+COMMIT;
+@@merges/ko/ko_missing_grupy_j.sql;
+
+DELETE FROM v2u_uu_grupy;
+COMMIT;
+@@merges/uu/uu_grupy.sql;
+
+
+--
+-- dz_osoby_grup
+--
+DELETE FROM v2u_dz_osoby_grup;
+COMMIT;
+@@merges/dz/dz_osoby_grup.sql;
+
+DELETE FROM v2u_ko_matched_osgrp_j;
+COMMIT;
+@@merges/ko/ko_matched_osgrp_j.sql;
+
+DELETE FROM v2u_ko_missing_osgrp_j;
+COMMIT;
+@@merges/ko/ko_missing_osgrp_j.sql;
+
+DELETE FROM v2u_uu_osoby_grup;
+COMMIT;
+@@merges/uu/uu_osoby_grup.sql;
+
+
+--
 -- dz_zajecia_prz_obcych
 --
 DELETE FROM v2u_dz_zajecia_prz_obcych;

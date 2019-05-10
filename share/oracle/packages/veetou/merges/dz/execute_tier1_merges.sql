@@ -19,5 +19,7 @@
 @@dz_wartosci_ocen.sql;
 @@dz_terminy_protokolow.sql;
 @@dz_protokoly.sql;
+@@dz_grupy.sql;
+@@dz_osoby_grup.sql;
 
 -- vim: set ft=sql ts=4 sw=4 et:

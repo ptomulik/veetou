@@ -19,6 +19,8 @@
 @@dz_wartosc_oceny_b.tps;
 @@dz_termin_protokolu_b.tps;
 @@dz_protokol_b.tps;
+@@dz_grupa_b.tps;
+@@dz_osoba_grupy_b.tps;
 
 @@dz_student.tps;
 @@dz_atrybut_przedmiotu.tps;
@@ -41,5 +43,7 @@
 @@dz_wartosc_oceny.tps;
 @@dz_termin_protokolu.tps;
 @@dz_protokol.tps;
+@@dz_grupa.tps;
+@@dz_osoba_grupy.tps;
 
 -- vim: set ft=sql ts=4 sw=4 et:
