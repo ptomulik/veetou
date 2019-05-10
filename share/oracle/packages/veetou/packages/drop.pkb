@@ -225,6 +225,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Table('dz_studenci');
         --
         Drop_Trigg('dz_zajecia_cykli_tr0');
+        Drop_Trigg('dz_zajecia_cykli_tr1');
+        Drop_Seqnc('dz_zajecia_cykli_sq1');
         Drop_Index('dz_zajecia_cykli_idx1');
         Drop_Table('dz_zajecia_cykli');
         --
