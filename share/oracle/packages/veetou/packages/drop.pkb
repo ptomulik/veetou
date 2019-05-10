@@ -149,14 +149,14 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     END;
 
 
-    PROCEDURE Drop_Sequence(sequence_name IN VARCHAR2)
+    PROCEDURE Drop_Seqnc(sequence_name IN VARCHAR2)
     IS
     BEGIN
         Drop_If_Exists('SEQUENCE', 'v2u_' || sequence_name);
     END;
 
 
-    PROCEDURE Drop_Trigger(sequence_name IN VARCHAR2)
+    PROCEDURE Drop_Trigg(sequence_name IN VARCHAR2)
     IS
     BEGIN
         Drop_If_Exists('TRIGGER', 'v2u_' || sequence_name);
@@ -173,55 +173,71 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     PROCEDURE Tier1_Dz
     IS
     BEGIN
+        Drop_Trigg('dz_osoby_grup_tr0');
         Drop_Table('dz_osoby_grup');
         --
+        Drop_Trigg('dz_grupy_tr0');
         Drop_Table('dz_grupy');
         --
+        Drop_Trigg('dz_zal_przedm_prgos_tr0');
         Drop_Table('dz_zal_przedm_prgos');
         --
+        Drop_Trigg('dz_zaliczenia_przedm_tr0');
         Drop_Table('dz_zaliczenia_przedmiotow');
         --
+        Drop_Trigg('dz_etapy_tr0');
         Drop_Table('dz_etapy');
         --
+        Drop_Trigg('dz_decyzje_tr0');
         Drop_Table('dz_decyzje');
         --
+        Drop_Trigg('dz_etapy_programow_tr0');
         Drop_Index('dz_etapy_programow_idx1');
         Drop_Index('dz_etapy_programow_idx2');
         Drop_Index('dz_etapy_programow_idx3');
         Drop_Table('dz_etapy_programow');
         --
+        Drop_Trigg('dz_etapy_kierunkow_tr0');
         Drop_Index('dz_etapy_kierunkow_idx1');
         Drop_Index('dz_etapy_kierunkow_idx2');
         Drop_Table('dz_etapy_kierunkow');
         --
+        Drop_Trigg('dz_etapy_osob_tr0');
         Drop_Index('dz_etapy_osob_idx1');
         Drop_Index('dz_etapy_osob_idx2');
         Drop_Table('dz_etapy_osob');
         --
+        Drop_Trigg('dz_programy_osob_tr0');
         Drop_Index('dz_programy_osob_idx1');
         Drop_Index('dz_programy_osob_idx2');
         Drop_Index('dz_programy_osob_idx3');
         Drop_Index('dz_programy_osob_idx4');
         Drop_Table('dz_programy_osob');
         --
+        Drop_Trigg('dz_programy_tr0');
         Drop_Index('dz_programy_idx1');
         Drop_Index('dz_programy_idx2');
         Drop_Index('dz_programy_idx3');
         Drop_Table('dz_programy');
         --
+        Drop_Trigg('dz_studenci_tr0');
         Drop_Index('dz_studenci_idx1');
         Drop_Table('dz_studenci');
         --
+        Drop_Trigg('dz_zajecia_cykli_tr0');
         Drop_Index('dz_zajecia_cykli_idx1');
         Drop_Table('dz_zajecia_cykli');
         --
+        Drop_Trigg('dz_zajecia_prz_obcych_tr0');
         Drop_Index('dz_zajecia_prz_obcych_idx1');
         Drop_Table('dz_zajecia_prz_obcych');
         --
+        Drop_Trigg('dz_przedmioty_cykli_tr0');
         Drop_Index('dz_przedmioty_cykli_idx1');
         Drop_Index('dz_przedmioty_cykli_idx2');
         Drop_Table('dz_przedmioty_cykli');
         --
+        Drop_Trigg('dz_punkty_przedmiotow_tr0');
         Drop_Index('dz_punkty_przedmiotow_idx1');
         Drop_Index('dz_punkty_przedmiotow_idx2');
         Drop_Index('dz_punkty_przedmiotow_idx3');
@@ -230,25 +246,35 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('dz_punkty_przedmiotow_idx6');
         Drop_Table('dz_punkty_przedmiotow');
         --
+        Drop_Trigg('dz_atrybuty_przedm_tr0');
+        Drop_Trigg('dz_atrybuty_przedm_tr1');
+        Drop_Seqnc('dz_atrybuty_przedm_sq1');
         Drop_Index('dz_atrybuty_przedm_idx1');
         Drop_Index('dz_atrybuty_przedm_idx2');
         Drop_Table('dz_atrybuty_przedmiotow');
         --
+        Drop_Trigg('dz_przedmioty_tr0');
         Drop_Table('dz_przedmioty');
         --
+        Drop_Trigg('dz_przedmioty_obce_tr0');
         Drop_Table('dz_przedmioty_obce');
         --
+        Drop_Trigg('dz_oceny_tr0');
         Drop_Table('dz_oceny');
         --
+        Drop_Trigg('dz_wartosci_ocen_tr0');
         Drop_Table('dz_wartosci_ocen');
         --
+        Drop_Trigg('dz_terminy_protokolow_tr0');
         Drop_Table('dz_terminy_protokolow');
         --
+        Drop_Trigg('dz_protokoly_tr0');
         Drop_Index('dz_protokoly_idx1');
         Drop_Index('dz_protokoly_idx2');
         Drop_Index('dz_protokoly_idx3');
         Drop_Index('dz_protokoly_idx4');
         Drop_Table('dz_protokoly');
+        --
 
         Drop_Type('Dz_Osoba_Grupy_t', 'Dz_Osoby_Grup_t');
         Drop_Type('Dz_Grupa_t', 'Dz_Grupy_t');
@@ -345,32 +371,32 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('specialty_map_idx1');
         Drop_Index('specialty_map_idx2');
         Drop_Index('specialty_map_idx3');
-        Drop_Trigger('specialty_map_tr1');
-        Drop_Sequence('specialty_map_sq1');
+        Drop_Trigg('specialty_map_tr1');
+        Drop_Seqnc('specialty_map_sq1');
         Drop_Table('specialty_map');
 
         Drop_Index('subject_map_idx1');
         Drop_Index('subject_map_idx2');
         Drop_Index('subject_map_idx3');
-        Drop_Trigger('subject_map_tr1');
-        Drop_Sequence('subject_map_sq1');
+        Drop_Trigg('subject_map_tr1');
+        Drop_Seqnc('subject_map_sq1');
         Drop_Table('subject_map');
 
         Drop_Index('classes_map_idx1');
         Drop_Index('classes_map_idx2');
-        Drop_Trigger('classes_map_tr1');
-        Drop_Sequence('classes_map_sq1');
+        Drop_Trigg('classes_map_tr1');
+        Drop_Seqnc('classes_map_sq1');
         Drop_Table('classes_map');
 
-        Drop_Trigger('semesters_tr1');
+        Drop_Trigg('semesters_tr1');
         Drop_Table('semesters');
 
-        Drop_Sequence('faculties_sq1');
-        Drop_Trigger('faculties_tr1');
+        Drop_Seqnc('faculties_sq1');
+        Drop_Trigg('faculties_tr1');
         Drop_Table('faculties');
 
-        Drop_Sequence('universities_sq1');
-        Drop_Trigger('universities_tr1');
+        Drop_Seqnc('universities_sq1');
+        Drop_Trigg('universities_tr1');
         Drop_Table('universities');
 
         Drop_Package('Match');
@@ -472,8 +498,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Table('ko_student_specialties_j');
         Drop_Table('ko_student_semesters_j');
         --
-        Drop_Trigger('ko_students_tr1');
-        Drop_Sequence('ko_students_sq1');
+        Drop_Trigg('ko_students_tr1');
+        Drop_Seqnc('ko_students_sq1');
         Drop_Index('ko_students_idx1');
         Drop_Table('ko_students');
         --
@@ -499,8 +525,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         --
         Drop_Table('ko_subject_trs_j');
         --
-        Drop_Trigger('ko_subjects_tr1');
-        Drop_Sequence('ko_subjects_sq1');
+        Drop_Trigg('ko_subjects_tr1');
+        Drop_Seqnc('ko_subjects_sq1');
         Drop_Index('ko_subjects_idx1');
         Drop_Table('ko_subjects');
         --
@@ -511,13 +537,13 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Table('ko_semester_sheets_j');
         Drop_Table('ko_specialty_semesters_j');
         --
-        Drop_Trigger('ko_semesters_tr1');
-        Drop_Sequence('ko_semesters_sq1');
+        Drop_Trigg('ko_semesters_tr1');
+        Drop_Seqnc('ko_semesters_sq1');
         Drop_Index('ko_semesters_idx1');
         Drop_Table('ko_semesters');
         --
-        Drop_Trigger('ko_specialties_tr1');
-        Drop_Sequence('ko_specialties_sq1');
+        Drop_Trigg('ko_specialties_tr1');
+        Drop_Seqnc('ko_specialties_sq1');
         Drop_Table('ko_specialties');
 
         --
