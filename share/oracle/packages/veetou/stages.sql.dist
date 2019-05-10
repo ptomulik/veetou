@@ -7,10 +7,14 @@
 EXIT;
 
 
+-- Preliminary steps, that may be necessary.
+@@merges/ko/execute_tier2_merges1.sql;
+
 --
 -- dz_studenci
 --
-TRUNCATE TABLE v2u_dz_studenci DROP STORAGE;
+DELETE FROM v2u_dz_studenci;
+COMMIT;
 @@merges/dz/dz_studenci.sql;
 
 
@@ -18,19 +22,24 @@ TRUNCATE TABLE v2u_dz_studenci DROP STORAGE;
 --
 -- dz_przedmioty
 --
-TRUNCATE TABLE v2u_dz_przedmioty DROP STORAGE;
+DELETE FROM v2u_dz_przedmioty;
+COMMIT;
 @@merges/dz/dz_przedmioty.sql;
 
-TRUNCATE TABLE v2u_ko_missing_przedm_j DROP STORAGE;
+DELETE FROM v2u_ko_matched_przedm_j;
+COMMIT;
 @@merges/ko/ko_matched_przedm_j.sql;
 
-TRUNCATE TABLE v2u_ko_missing_przedm_j DROP STORAGE;
+DELETE FROM v2u_ko_missing_przedm_j;
+COMMIT;
 @@merges/ko/ko_missing_przedm_j.sql;
 
-TRUNCATE TABLE v2u_uu_przedmioty DROP STORAGE;
-@@merges/uu/uu_przedmioty_j.sql;
+DELETE FROM v2u_uu_przedmioty;
+COMMIT;
+@@merges/uu/uu_przedmioty.sql;
 
-/* MERGE INTO dz_przedmioty tgt
+/* -- MERGE INTO dz_przedmioty tgt
+MERGE INTO v2u_dz_przedmioty tgt
 USING
     ( */
         SELECT
@@ -71,8 +80,8 @@ USING
         WHERE change_type IN ('I', 'U') AND safe_to_change = 1
 /*    ) src
 ON  (
-            src.kod = tgt.kod
-        AND src.change_type = 'I'
+            src.change_type = 'U'
+        AND src.kod = tgt.kod
     )
 WHEN NOT MATCHED THEN
     INSERT
@@ -182,135 +191,155 @@ COMMIT;
 --
 -- dz_atrybuty_przedmiotow
 --
-TRUNCATE TABLE v2u_dz_atrybuty_przedmiotow DROP STORAGE;
+DELETE FROM v2u_dz_atrybuty_przedmiotow;
+COMMIT;
 @@merges/dz/dz_atrybuty_przedmiotow.sql;
 
-TRUNCATE TABLE v2u_uu_atrybuty_przedmiotow DROP STORAGE;
+DELETE FROM v2u_uu_atrybuty_przedmiotow;
+COMMIT;
 @@merges/uu/uu_atrybuty_przedmiotow.sql;
 
 
 --
 -- dz_przedmioty_obce
 --
-TRUNCATE TABLE v2u_dz_przedmioty_obce DROP STORAGE;
+DELETE FROM v2u_dz_przedmioty_obce;
+COMMIT;
 @@merges/dz/dz_przedmioty_obce.sql;
 
 --
 -- dz_przedmioty_cykli
 --
-TRUNCATE TABLE v2u_dz_przedmioty_cykli DROP STORAGE;
+DELETE FROM v2u_dz_przedmioty_cykli;
+COMMIT;
 @@merges/dz/dz_przedmioty_cykli.sql;
 
 
 --
 -- dz_punkty_przedmiotow
 --
-TRUNCATE TABLE v2u_dz_punkty_przedmiotow DROP STORAGE;
+DELETE FROM v2u_dz_punkty_przedmiotow;
+COMMIT;
 @@merges/dz/dz_punkty_przedmiotow.sql;
 
 
 --
 -- dz_zajecia_cykli
 --
-TRUNCATE TABLE v2u_dz_zajecia_cykli DROP STORAGE;
+DELETE FROM v2u_dz_zajecia_cykli;
+COMMIT;
 @@merges/dz/dz_zajecia_cykli.sql;
 
 
 --
 -- dz_zajecia_prz_obcych
 --
-TRUNCATE TABLE v2u_dz_zajecia_prz_obcych DROP STORAGE;
+DELETE FROM v2u_dz_zajecia_prz_obcych;
+COMMIT;
 @@merges/dz/dz_zajecia_prz_obcych.sql;
 
 
 --
 -- dz_programy
 --
-TRUNCATE TABLE v2u_dz_programy DROP STORAGE;
+DELETE FROM v2u_dz_programy;
+COMMIT;
 @@merges/dz/dz_programy.sql;
 
 
 --
 -- dz_programy_osob
 --
-TRUNCATE TABLE v2u_dz_programy_osob DROP STORAGE;
+DELETE FROM v2u_dz_programy_osob;
+COMMIT;
 @@merges/dz/dz_programy_osob.sql;
 
 
 --
 -- dz_decyzje
 --
-TRUNCATE TABLE v2u_dz_decyzje DROP STORAGE;
+DELETE FROM v2u_dz_decyzje;
+COMMIT;
 @@merges/dz/dz_decyzje.sql;
 
 
 --
 -- dz_etapy
 --
-TRUNCATE TABLE v2u_dz_etapy DROP STORAGE;
+DELETE FROM v2u_dz_etapy;
+COMMIT;
 @@merges/dz/dz_etapy.sql;
 
 
 --
 -- dz_etapy_programow
 --
-TRUNCATE TABLE v2u_dz_etapy_programow DROP STORAGE;
+DELETE FROM v2u_dz_etapy_programow;
+COMMIT;
 @@merges/dz/dz_etapy_programow.sql;
 
 
 --
 -- dz_etapy_kierunkow
 --
-TRUNCATE TABLE v2u_dz_etapy_kierunkow DROP STORAGE;
+DELETE FROM v2u_dz_etapy_kierunkow;
+COMMIT;
 @@merges/dz/dz_etapy_kierunkow.sql;
 
 
 --
 -- dz_etapy_osob
 --
-TRUNCATE TABLE v2u_dz_etapy_osob DROP STORAGE;
+DELETE FROM v2u_dz_etapy_osob;
+COMMIT;
 @@merges/dz/dz_etapy_osob.sql;
 
 
 --
 -- dz_zaliczenia_przedmiotow
 --
-TRUNCATE TABLE v2u_dz_zaliczenia_przedmiotow DROP STORAGE;
+DELETE FROM v2u_dz_zaliczenia_przedmiotow;
+COMMIT;
 @@merges/dz/dz_zaliczenia_przedmiotow.sql;
 
 
 --
 -- dz_zal_przedm_prgos
 --
-TRUNCATE TABLE v2u_dz_zal_przedm_prgos DROP STORAGE;
+DELETE FROM v2u_dz_zal_przedm_prgos;
+COMMIT;
 @@merges/dz/dz_zal_przedm_prgos.sql;
 
 
 --
 -- dz_oceny
 --
-TRUNCATE TABLE v2u_dz_oceny DROP STORAGE;
+DELETE FROM v2u_dz_oceny;
+COMMIT;
 @@merges/dz/dz_oceny.sql;
 
 
 --
 -- dz_wartosci_ocen
 --
-TRUNCATE TABLE v2u_dz_wartosci_ocen DROP STORAGE;
+DELETE FROM v2u_dz_wartosci_ocen;
+COMMIT;
 @@merges/dz/dz_wartosci_ocen.sql;
 
 
 --
 -- dz_terminy_protokolow
 --
-TRUNCATE TABLE v2u_dz_terminy_protokolow DROP STORAGE;
+DELETE FROM v2u_dz_terminy_protokolow;
+COMMIT;
 @@merges/dz/dz_terminy_protokolow.sql;
 
 
 --
 -- dz_protokoly
 --
-TRUNCATE TABLE v2u_dz_protokoly DROP STORAGE;
+DELETE FROM v2u_dz_protokoly;
+COMMIT;
 @@merges/dz/dz_protokoly.sql;
 
 
