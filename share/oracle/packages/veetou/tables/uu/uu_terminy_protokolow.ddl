@@ -8,4 +8,5 @@ OBJECT IDENTIFIER IS PRIMARY KEY;
 /
 CREATE INDEX v2u_uu_terminy_protokolow_idx1
     ON v2u_uu_terminy_protokolow(prot_id);
+/
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -23,5 +23,5 @@ CREATE OR REPLACE TYPE V2u_Ko_Student_Semester_J_t
 /
 CREATE OR REPLACE TYPE V2u_Ko_Student_Semesters_J_t
     AS TABLE OF V2u_Ko_Student_Semester_J_t;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

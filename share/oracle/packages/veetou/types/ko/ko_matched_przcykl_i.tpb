@@ -46,5 +46,5 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Przcykl_I_t AS
         SELF.cdyd_kod := cdyd_kod;
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

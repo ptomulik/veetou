@@ -21,5 +21,5 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Distinct_t AS
         RETURN V2U_Cmp.RawN(job_uuid, TREAT(other AS V2u_Ko_Distinct_t).job_uuid);
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -49,5 +49,5 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Ocena_V_t
             , semester IN V2u_Ko_Semester_t
             ) RETURN SELF AS RESULT
     );
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

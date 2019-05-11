@@ -31,5 +31,5 @@ CREATE OR REPLACE TYPE V2u_Ko_Student_t
     , MEMBER FUNCTION dup(new_sheet_ids IN V2u_Ids_t := NULL)
             RETURN V2u_Ko_Student_t
     );
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

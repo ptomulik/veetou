@@ -44,4 +44,5 @@ CREATE INDEX v2u_ko_classes_map_j_idx6
 /
 CREATE INDEX v2u_ko_classes_map_j_idx7
        ON v2u_ko_classes_map_j(job_uuid, subject_id, specialty_id, semester_id, classes_type, selected)
+/
 -- vim: set ft=sql ts=4 sw=4 et:

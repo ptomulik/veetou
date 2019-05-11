@@ -21,5 +21,4 @@ CREATE OR REPLACE TRIGGER v2u_dz_zaliczenia_przedm_tr0
         SELECT SYSDATE INTO :new.mod_data FROM dual;
     END;
 /
-
 -- vim: set ft=sql ts=4 sw=4 et:

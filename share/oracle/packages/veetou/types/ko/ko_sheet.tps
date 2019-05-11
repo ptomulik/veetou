@@ -25,5 +25,5 @@ CREATE OR REPLACE TYPE V2u_Ko_Sheet_t FORCE AUTHID CURRENT_USER AS OBJECT
 /
 CREATE OR REPLACE TYPE V2u_Ko_Sheets_t
     AS TABLE OF V2u_Ko_Sheet_t;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

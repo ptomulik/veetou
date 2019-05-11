@@ -51,5 +51,5 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Specialty_Map_J_t AS
         SELF.reason := reason;
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

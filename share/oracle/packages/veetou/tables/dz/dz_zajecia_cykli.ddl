@@ -18,16 +18,16 @@ OBJECT IDENTIFIER IS PRIMARY KEY;
 CREATE INDEX v2u_dz_zajecia_cykli_idx1
     ON v2u_dz_zajecia_cykli(prz_kod, cdyd_kod, tzaj_kod);
 /
-CREATE SEQUENCE v2u_dz_zajecia_cykli_sq1
-    START WITH -1
-    INCREMENT BY -1;
-/
 CREATE OR REPLACE TRIGGER v2u_dz_zajecia_cykli_tr0
     BEFORE UPDATE ON v2u_dz_zajecia_cykli
     FOR EACH ROW
     BEGIN
         SELECT SYSDATE INTO :new.mod_data FROM dual;
     END;
+/
+CREATE SEQUENCE v2u_dz_zajecia_cykli_sq1
+    START WITH -1
+    INCREMENT BY -1;
 /
 CREATE OR REPLACE TRIGGER v2u_dz_zajecia_cykli_tr1
     BEFORE INSERT ON v2u_dz_zajecia_cykli

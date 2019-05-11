@@ -5,7 +5,7 @@ OF V2u_Ko_Tbody_t
     , CONSTRAINTS v2u_ko_tbodies_f0 FOREIGN KEY (job_uuid) REFERENCES v2u_ko_jobs(job_uuid)
     )
 OBJECT IDENTIFIER IS PRIMARY KEY;
-
+/
 COMMENT ON TABLE v2u_ko_tbodies IS 'Ciała tabel znajdujących sie Kartach Osiągnięć';
 COMMENT ON COLUMN v2u_ko_tbodies.job_uuid IS 'Unikalny identyfikator uruchomienia VEETOU z którego pochodzi rekord';
 COMMENT ON COLUMN v2u_ko_tbodies.id IS 'Lokalny identyfikator ciała tabeli';

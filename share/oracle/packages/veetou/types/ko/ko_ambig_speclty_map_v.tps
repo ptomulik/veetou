@@ -46,5 +46,5 @@ CREATE OR REPLACE TYPE V2u_Ko_Ambig_Speclty_Map_V_t
             , matching_scores IN V2u_Integers_t
             ) RETURN SELF AS RESULT
     );
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

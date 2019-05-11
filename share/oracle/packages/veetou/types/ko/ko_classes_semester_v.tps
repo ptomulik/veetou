@@ -22,5 +22,5 @@ CREATE OR REPLACE TYPE V2u_Ko_Classes_Semester_V_t
             )
     )
 NOT FINAL;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

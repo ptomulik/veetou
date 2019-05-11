@@ -34,5 +34,5 @@ CREATE OR REPLACE TYPE V2u_Ko_Specialty_t
     , OVERRIDING MEMBER FUNCTION cmp_val(other IN V2u_Distinct_t)
             RETURN INTEGER
     );
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

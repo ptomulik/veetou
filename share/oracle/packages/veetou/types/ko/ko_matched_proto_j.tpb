@@ -62,5 +62,5 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Proto_J_t AS
         SELF.prot_id := prot_id;
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

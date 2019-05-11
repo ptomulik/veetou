@@ -11,4 +11,5 @@ CREATE INDEX v2u_uu_przedmioty_cykli_idx1
 /
 CREATE INDEX v2u_uu_przedmioty_cykli_idx2
     ON v2u_uu_przedmioty_cykli(cdyd_kod);
+/
 -- vim: set ft=sql ts=4 sw=4 et:

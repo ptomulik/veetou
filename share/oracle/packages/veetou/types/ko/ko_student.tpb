@@ -73,5 +73,5 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Student_t AS
         );
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

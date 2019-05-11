@@ -19,27 +19,33 @@ USING
             CROSS JOIN TABLE(u.sheet_ids) sheet_ids
         )
         SELECT
-              v.job_uuid job_uuid
-            , v.student_id student_id
-            , j1.specialty_id specialty_id
-            , j2.semester_id semester_id
-            , sheets.ects_attained ects_attained
+              v.job_uuid
+            , v.student_id
+            , spc_sh_j.specialty_id
+            , sem_sh_j.semester_id
+            , sheets.ects_attained
         FROM v v
-        INNER JOIN v2u_ko_specialty_sheets_j j1
+        INNER JOIN v2u_ko_specialty_sheets_j spc_sh_j
             ON  (
-                        j1.sheet_id = v.sheet_id
-                    AND j1.job_uuid = v.job_uuid
+                        spc_sh_j.sheet_id = v.sheet_id
+                    AND spc_sh_j.job_uuid = v.job_uuid
                 )
-        INNER JOIN v2u_ko_semester_sheets_j j2
+        INNER JOIN v2u_ko_semester_sheets_j sem_sh_j
             ON  (
-                        j2.sheet_id = v.sheet_id
-                    AND j1.job_uuid = v.job_uuid
+                        sem_sh_j.sheet_id = v.sheet_id
+                    AND sem_sh_j.job_uuid = v.job_uuid
                 )
         INNER JOIN v2u_ko_sheets sheets
             ON  (
                         sheets.id = v.sheet_id
                     AND sheets.job_uuid = v.job_uuid
                 )
+        GROUP BY
+              v.job_uuid
+            , v.student_id
+            , spc_sh_j.specialty_id
+            , sem_sh_j.semester_id
+            , sheets.ects_attained
     ) src
 ON  (
             tgt.student_id = src.student_id

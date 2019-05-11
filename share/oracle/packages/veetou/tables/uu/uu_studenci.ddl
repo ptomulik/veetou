@@ -8,5 +8,5 @@ OBJECT IDENTIFIER IS PRIMARY KEY;
 CREATE INDEX v2u_uu_studenci_idx1 ON v2u_uu_studenci(indeks);
 /
 CREATE INDEX v2u_uu_studenci_idx2 ON v2u_uu_studenci(id);
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

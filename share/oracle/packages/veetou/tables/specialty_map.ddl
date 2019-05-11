@@ -2,7 +2,7 @@ CREATE TABLE v2u_specialty_map
 OF V2u_Specialty_Map_t
     ( CONSTRAINT v2u_specialty_map_pk PRIMARY KEY(id) )
 OBJECT IDENTIFIER IS PRIMARY KEY;
-
+/
 COMMENT ON TABLE v2u_specialty_map IS 'Odwzorowanie programów studiów (VEE->USOS)';
 COMMENT ON COLUMN v2u_specialty_map.university IS 'Nazwa uczelni (VEE)';
 COMMENT ON COLUMN v2u_specialty_map.faculty IS 'Nazwa wydziału (VEE)';
@@ -44,5 +44,5 @@ CREATE INDEX v2u_specialty_map_idx2
 /
 CREATE INDEX v2u_specialty_map_idx3
      ON v2u_specialty_map(map_program_code);
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

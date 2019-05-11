@@ -42,5 +42,5 @@ NOT FINAL;
 /
 CREATE OR REPLACE TYPE V2u_Ko_Grades_J_t
     AS TABLE OF V2u_Ko_Grade_J_t;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

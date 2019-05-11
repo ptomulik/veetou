@@ -17,5 +17,5 @@ CREATE OR REPLACE TYPE V2u_Ko_Specialty_Semester_I_t
             )
     )
 NOT INSTANTIABLE NOT FINAL;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -42,5 +42,5 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Przedm_I_t AS
         SELF.prz_kod := prz_kod;
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

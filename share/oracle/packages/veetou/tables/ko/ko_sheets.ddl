@@ -5,7 +5,7 @@ OF V2u_Ko_Sheet_t
     , CONSTRAINT v2u_ko_sheets_f0 FOREIGN KEY (job_uuid) REFERENCES v2u_ko_jobs(job_uuid)
     )
 OBJECT IDENTIFIER IS PRIMARY KEY;
-
+/
 COMMENT ON TABLE v2u_ko_sheets IS 'Arkusze Kart Osiągnięć wczytane w ramach uruchomienia VEETOU';
 COMMENT ON COLUMN v2u_ko_sheets.job_uuid IS 'Unikalny identyfikator uruchomienia VEETOU z którego pochodzi rekord';
 COMMENT ON COLUMN v2u_ko_sheets.id IS 'Lokalny identyfikator arkusza';

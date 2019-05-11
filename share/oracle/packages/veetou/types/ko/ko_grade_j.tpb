@@ -63,5 +63,5 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Grade_J_t AS
         SELF.toc_kod := toc_kod;
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

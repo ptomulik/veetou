@@ -30,5 +30,5 @@ OBJECT IDENTIFIER IS PRIMARY KEY
 /
 CREATE INDEX v2u_ko_matched_etpos_j_idx1
     ON v2u_ko_matched_etpos_j(student_id, specialty_id, semester_id, job_uuid);
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

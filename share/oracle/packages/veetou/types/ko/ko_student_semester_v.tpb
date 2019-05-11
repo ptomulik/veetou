@@ -48,5 +48,5 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Student_Semester_V_t AS
         SELF.ects_attained := ects_attained;
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

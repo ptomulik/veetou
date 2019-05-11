@@ -12,24 +12,32 @@ OF V2u_Uu_Classes_Grade_t
                 )
     )
 OBJECT IDENTIFIER IS PRIMARY KEY;
-
+/
 CREATE INDEX v2u_uu_classes_grades_idx1
     ON v2u_uu_classes_grades(os_id);
+/
 CREATE INDEX v2u_uu_classes_grades_idx2
     ON v2u_uu_classes_grades(st_id);
+/
 CREATE INDEX v2u_uu_classes_grades_idx3
     ON v2u_uu_classes_grades(etpos_id);
+/
 CREATE INDEX v2u_uu_classes_grades_idx4
     ON v2u_uu_classes_grades(prgos_id);
+/
 --
 CREATE INDEX v2u_uu_classes_grades_idx5
     ON v2u_uu_classes_grades(prg_kod);
+/
 CREATE INDEX v2u_uu_classes_grades_idx6
     ON v2u_uu_classes_grades(prz_kod);
+/
 CREATE INDEX v2u_uu_classes_grades_idx8
     ON v2u_uu_classes_grades(prz_kod, cdyd_kod);
+/
 CREATE INDEX v2u_uu_classes_grades_idx9
     ON v2u_uu_classes_grades(prz_kod, cdyd_kod, tzaj_kod);
+/
 
 CREATE INDEX v2u_uu_classes_grades_idx10
     ON v2u_uu_classes_grades(
@@ -39,5 +47,5 @@ CREATE INDEX v2u_uu_classes_grades_idx10
         , v2u_specialty_id
         , v2u_semester_id
     );
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

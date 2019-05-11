@@ -56,5 +56,5 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Proto_V_t
 /
 CREATE OR REPLACE TYPE V2u_Ko_Matched_Protos_V_t
     AS TABLE OF V2u_Ko_Matched_Proto_V_t;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -13,4 +13,5 @@ CREATE INDEX v2u_uu_programy_osob_idx2 ON v2u_uu_programy_osob(os_id);
 CREATE INDEX v2u_uu_programy_osob_idx3 ON v2u_uu_programy_osob(st_id, os_id);
 /
 CREATE INDEX v2u_uu_programy_osob_idx4 ON v2u_uu_programy_osob(st_id, os_id, prg_kod);
+/
 -- vim: set ft=sql ts=4 sw=4 et:

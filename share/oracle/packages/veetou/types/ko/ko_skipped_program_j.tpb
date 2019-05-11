@@ -50,5 +50,5 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Skipped_Program_J_t AS
         SELF.where_opis_like := where_opis_like;
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

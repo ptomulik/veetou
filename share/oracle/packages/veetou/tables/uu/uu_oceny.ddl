@@ -7,4 +7,5 @@ OBJECT IDENTIFIER IS PRIMARY KEY;
 /
 CREATE INDEX v2u_uu_oceny_idx1
     ON v2u_uu_oceny(os_id, prot_id, term_prot_nr);
+/
 -- vim: set ft=sql ts=4 sw=4 et:

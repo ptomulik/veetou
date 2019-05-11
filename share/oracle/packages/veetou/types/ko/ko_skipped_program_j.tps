@@ -34,5 +34,5 @@ NOT FINAL;
 /
 CREATE OR REPLACE TYPE V2u_Ko_Skipped_Programs_J_t
     AS TABLE OF V2u_Ko_Skipped_Program_J_t;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

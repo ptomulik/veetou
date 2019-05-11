@@ -28,5 +28,5 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Report_t AS
         RETURN UTL_RAW.CONCAT(UTL_RAW.CAST_FROM_NUMBER(id), job_uuid);
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

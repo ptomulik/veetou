@@ -48,5 +48,5 @@ CREATE INDEX v2u_ko_grades_j_idx2
 /
 CREATE INDEX v2u_ko_grades_j_idx3
     ON v2u_ko_grades_j(classes_type, subject_id, specialty_id, semester_id, job_uuid);
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

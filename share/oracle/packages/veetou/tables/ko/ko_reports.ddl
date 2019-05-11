@@ -5,7 +5,7 @@ OF V2u_Ko_Report_t
     , CONSTRAINT v2u_ko_reports_f0 FOREIGN KEY (job_uuid) REFERENCES v2u_ko_jobs(job_uuid)
     )
 OBJECT IDENTIFIER IS PRIMARY KEY;
-
+/
 COMMENT ON TABLE v2u_ko_reports IS 'Dokumenty typu Karta Osiągnięć przetworzone w ramach uruchomienia VEETOU';
 COMMENT ON COLUMN v2u_ko_reports.job_uuid IS 'Unikalny identyfikator uruchomienia VEETOU z którego pochodzi rekord';
 COMMENT ON COLUMN v2u_ko_reports.id IS 'Lokalny identyfikator dokumentu';

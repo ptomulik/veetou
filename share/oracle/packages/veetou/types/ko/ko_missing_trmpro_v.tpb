@@ -45,5 +45,5 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Trmpro_V_t AS
         SELF.istniejace_daty_zwrotow := missing_trmpro_j.istniejace_daty_zwrotow;
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

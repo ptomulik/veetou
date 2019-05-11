@@ -26,5 +26,5 @@ OF V2u_Ko_Matched_Pktprz_J_t
     )
 OBJECT IDENTIFIER IS PRIMARY KEY
 ;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

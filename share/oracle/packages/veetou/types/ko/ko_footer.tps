@@ -23,5 +23,5 @@ CREATE OR REPLACE TYPE V2u_Ko_Footer_t FORCE AUTHID CURRENT_USER AS OBJECT
 /
 CREATE OR REPLACE TYPE V2u_Ko_Footers_t
     AS TABLE OF V2u_Ko_Footer_t;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

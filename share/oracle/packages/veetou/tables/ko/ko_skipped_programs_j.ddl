@@ -17,5 +17,5 @@ OBJECT IDENTIFIER IS PRIMARY KEY;
 /
 CREATE INDEX v2u_ko_skipped_programs_j_idx1
     ON v2u_ko_skipped_programs_j(job_uuid, semester_id, specialty_id);
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

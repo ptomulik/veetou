@@ -43,5 +43,5 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Classes_Semester_I_t AS
         SELF.classes_hours := classes_hours;
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -34,4 +34,16 @@ CREATE OR REPLACE TRIGGER v2u_dz_punkty_przedmiotow_tr0
         SELECT SYSDATE INTO :new.mod_data FROM dual;
     END;
 /
+CREATE SEQUENCE v2u_dz_punkty_przedmiotow_sq1
+    START WITH -1
+    INCREMENT BY -1;
+/
+CREATE OR REPLACE TRIGGER v2u_dz_punkty_przedmiotow_tr1
+    BEFORE INSERT ON v2u_dz_punkty_przedmiotow
+    FOR EACH ROW
+    WHEN (new.id IS NULL)
+    BEGIN
+        SELECT v2u_dz_punkty_przedmiotow_sq1.NEXTVAL INTO :new.id FROM dual;
+    END;
+/
 -- vim: set ft=sql ts=4 sw=4 et:

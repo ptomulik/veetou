@@ -240,6 +240,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Table('dz_przedmioty_cykli');
         --
         Drop_Trigg('dz_punkty_przedmiotow_tr0');
+        Drop_Trigg('dz_punkty_przedmiotow_tr1');
+        Drop_Seqnc('dz_punkty_przedmiotow_sq1');
         Drop_Index('dz_punkty_przedmiotow_idx1');
         Drop_Index('dz_punkty_przedmiotow_idx2');
         Drop_Index('dz_punkty_przedmiotow_idx3');
@@ -580,6 +582,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('uu_zajecia_cykli_idx1');
         Drop_Table('uu_zajecia_cykli');
         --
+        Drop_Index('uu_punkty_przedmiotow_idx1');
+        Drop_Index('uu_punkty_przedmiotow_idx2');
+        Drop_Index('uu_punkty_przedmiotow_idx3');
         Drop_Table('uu_punkty_przedmiotow');
         --
         Drop_Index('uu_przedmioty_cykli_idx1');

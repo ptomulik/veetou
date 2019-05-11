@@ -14,5 +14,5 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Przedm_J_t
 /
 CREATE OR REPLACE TYPE V2u_Ko_Missing_Przedms_J_t
     AS TABLE OF V2u_Ko_Missing_Przedm_J_t;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

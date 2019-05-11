@@ -35,5 +35,5 @@ CREATE INDEX v2u_ko_matched_protos_j_idx1
 /
 CREATE INDEX v2u_ko_matched_protos_j_idx2
     ON v2u_ko_matched_protos_j(classes_type, subject_id, specialty_id, semester_id, job_uuid);
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

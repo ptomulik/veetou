@@ -25,5 +25,5 @@ OBJECT IDENTIFIER IS PRIMARY KEY
 NESTED TABLE istniejace_cdyd_kody STORE AS v2u_ko_mprzcykl_j_cdyds_nt
     ((CONSTRAINT v2u_ko_mprzcykl_j_cdyds_nt_pk PRIMARY KEY (NESTED_TABLE_ID, COLUMN_VALUE)))
 ;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

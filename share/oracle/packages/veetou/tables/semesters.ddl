@@ -6,7 +6,7 @@ OF V2u_Semester_t
     , CONSTRAINT v2u_semesters_code_chk1 CHECK
         (REGEXP_INSTR(UPPER(code), '^(19|20)[0-9]{2}[LZ]$')=1)
     );
-
+/
 COMMENT ON TABLE v2u_semesters IS 'Semestry';
 COMMENT ON COLUMN v2u_semesters.id IS 'Identyfikator semestru (0->0000Z, 1->0000L, 4037->2018Z)';
 COMMENT ON COLUMN v2u_semesters.code IS 'Kod semestru, np. 2018Z';

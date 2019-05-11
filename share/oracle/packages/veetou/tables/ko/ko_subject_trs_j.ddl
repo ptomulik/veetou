@@ -9,5 +9,5 @@ CREATE TABLE v2u_ko_subject_trs_j
         , CONSTRAINT v2u_ko_subj_entity_trs_f1 FOREIGN KEY (tr_id, job_uuid) REFERENCES v2u_ko_trs(id, job_uuid)
         , CONSTRAINT v2u_ko_subj_entity_trs_f2 FOREIGN KEY (subject_id, job_uuid) REFERENCES v2u_ko_subjects(id, job_uuid)
     );
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -414,6 +414,313 @@ DELETE FROM v2u_dz_punkty_przedmiotow;
 COMMIT;
 @@merges/dz/dz_punkty_przedmiotow.sql;
 
+DELETE FROM v2u_ko_matched_pktprz_j;
+COMMIT;
+@@merges/ko/ko_matched_pktprz_j.sql;
+
+DELETE FROM v2u_ko_missing_pktprz_j;
+COMMIT;
+@@merges/ko/ko_missing_pktprz_j.sql;
+
+DELETE FROM v2u_uu_punkty_przedmiotow;
+COMMIT;
+@@merges/uu/uu_punkty_przedmiotow.sql;
+
+-- For the FIRST iteration:
+-- This would generate single entry per subject where feasible. The entry
+-- will cover all programs and a range of semester [cdyd_min, inf].
+/*
+-- MERGE INTO dz_punkty_przedmiotow tgt
+MERGE INTO v2u_dz_punkty_przedmiotow tgt
+USING
+    (
+*/
+        WITH uu AS
+        (
+            SELECT
+                  prz_kod
+                , SET(CAST(COLLECT(prg_kod ORDER BY prg_kod) AS V2u_Vchars1K_t)) prg_kody1k
+                , SET(CAST(COLLECT(tpkt_kod ORDER BY tpkt_kod) AS V2u_Vchars1K_t)) tpkt_kody1k
+                , MIN(ilosc) KEEP (DENSE_RANK FIRST ORDER BY ilosc) ilosc
+                , SET(CAST(COLLECT(utw_id ORDER BY utw_id) AS V2u_Vchars1K_t)) utw_ids1k
+                , SET(CAST(COLLECT(utw_data ORDER BY utw_data) AS V2u_Dates_t)) utw_daty
+                , SET(CAST(COLLECT(mod_id ORDER BY mod_id) AS V2u_Vchars1K_t)) mod_ids1k
+                , SET(CAST(COLLECT(mod_data ORDER BY mod_data) AS V2u_Dates_t)) mod_daty
+                , NULL id
+                , MIN(cdyd_pocz) KEEP (DENSE_RANK FIRST ORDER BY cdyd_pocz) cdyd_pocz
+                , MAX(cdyd_kon) KEEP (DENSE_RANK LAST ORDER BY cdyd_kon) cdyd_kon
+                , 'I' change_type
+                , 1 safe_to_change
+            FROM v2u_uu_punkty_przedmiotow
+            WHERE
+                    change_type = 'I'
+                AND safe_to_change = 1
+            GROUP BY
+                    prz_kod
+            HAVING
+                    COUNT(DISTINCT ilosc) = 1
+        )
+        SELECT
+              uu.prz_kod
+            , NULL prg_kod
+            , (SELECT VALUE(t) FROM TABLE(uu.tpkt_kody1k) t WHERE ROWNUM <= 1) tpkt_kod
+            , uu.ilosc
+            , (SELECT VALUE(t) FROM TABLE(uu.utw_ids1k) t WHERE ROWNUM <= 1) utw_id
+            , (SELECT VALUE(t) FROM TABLE(uu.utw_daty) t WHERE ROWNUM <= 1) utw_data
+            , (SELECT VALUE(t) FROM TABLE(uu.mod_ids1k) t WHERE ROWNUM <= 1) mod_id
+            , (SELECT VALUE(t) FROM TABLE(uu.mod_daty) t WHERE ROWNUM <= 1) mod_data
+            , uu.id
+            , uu.cdyd_pocz
+            , NULL cdyd_kon
+            , uu.change_type
+            , uu.safe_to_change
+        FROM uu
+        WHERE NOT EXISTS (
+                SELECT NULL
+                FROM v2u_dz_punkty_przedmiotow dz
+                WHERE
+                        dz.prz_kod = uu.prz_kod
+                    AND COALESCE(dz.cdyd_kon, '9999Z') >= uu.cdyd_pocz
+            )
+            AND (SELECT COUNT(1) FROM TABLE(uu.tpkt_kody1k)) = 1
+            AND (SELECT COUNT(1) FROM TABLE(uu.utw_ids1k)) = 1
+/*
+    ) src
+ON  (
+            src.change_type = 'U'
+        AND tgt.id = src.id
+    )
+WHEN NOT MATCHED THEN
+    INSERT
+        ( prz_kod
+        , prg_kod
+        , tpkt_kod
+        , ilosc
+        , utw_id
+--        , utw_data
+--        , mod_id
+--        , mod_data
+--       , id
+        , cdyd_pocz
+        , cdyd_kon
+        )
+VALUES
+        ( src.prz_kod
+        , src.prg_kod
+        , src.tpkt_kod
+        , src.ilosc
+        , src.utw_id
+--        , src.utw_data
+--        , src.mod_id
+--        , src.mod_data
+--        , src.id
+        , src.cdyd_pocz
+        , src.cdyd_kon
+        )
+WHEN MATCHED THEN
+    UPDATE SET
+          tgt.prz_kod = src.prz_kod
+        , tgt.prg_kod = src.prg_kod
+        , tgt.tpkt_kod = src.tpkt_kod
+        , tgt.ilosc = src.ilosc
+--        , tgt.utw_id = src.utw_id
+--        , tgt.utw_data = src.utw_data
+        , tgt.mod_id = src.mod_id
+--        , tgt.mod_data = src.mod_data
+--        , tgt.id = src.id
+        , tgt.cdyd_pocz = src.cdyd_pocz
+        , tgt.cdyd_kon = src.cdyd_kon
+*/
+;
+
+-- For the SECOND iteration:
+-- This would generate single entry per subject/quantity where feasible.
+-- The entry will cover all programs and a range of semester [cdyd_min, cdyd_max]
+-- for a given subject/quantity pair.
+/*
+-- MERGE INTO dz_punkty_przedmiotow tgt
+MERGE INTO v2u_dz_punkty_przedmiotow tgt
+USING
+    (
+*/
+        WITH uu AS
+        (
+            SELECT
+                  prz_kod
+                , SET(CAST(COLLECT(prg_kod ORDER BY prg_kod) AS V2u_Vchars1K_t)) prg_kody1k
+                , SET(CAST(COLLECT(tpkt_kod ORDER BY tpkt_kod) AS V2u_Vchars1K_t)) tpkt_kody1k
+                , ilosc
+                , SET(CAST(COLLECT(utw_id ORDER BY utw_id) AS V2u_Vchars1K_t)) utw_ids1k
+                , SET(CAST(COLLECT(utw_data ORDER BY utw_data) AS V2u_Dates_t)) utw_daty
+                , SET(CAST(COLLECT(mod_id ORDER BY mod_id) AS V2u_Vchars1K_t)) mod_ids1k
+                , SET(CAST(COLLECT(mod_data ORDER BY mod_data) AS V2u_Dates_t)) mod_daty
+                , NULL id
+                , MIN(cdyd_pocz) KEEP (DENSE_RANK FIRST ORDER BY cdyd_pocz) cdyd_pocz
+                , MAX(cdyd_kon) KEEP (DENSE_RANK LAST ORDER BY cdyd_kon) cdyd_kon
+                , 'I' change_type
+                , 1 safe_to_change
+            FROM v2u_uu_punkty_przedmiotow pp1
+            WHERE
+                    change_type = 'I'
+                AND safe_to_change = 1
+            GROUP BY
+                    prz_kod
+                  , ilosc
+            HAVING
+                    COUNT(DISTINCT prg_kod) = (
+                        SELECT COUNT(DISTINCT prg_kod)
+                        FROM  v2u_uu_punkty_przedmiotow pp2
+                        WHERE pp2.prz_kod = pp1.prz_kod
+                    )
+        )
+        SELECT
+              uu.prz_kod
+            , NULL prg_kod
+            , (SELECT VALUE(t) FROM TABLE(uu.tpkt_kody1k) t WHERE ROWNUM <= 1) tpkt_kod
+            , uu.ilosc
+            , (SELECT VALUE(t) FROM TABLE(uu.utw_ids1k) t WHERE ROWNUM <= 1) utw_id
+            , (SELECT VALUE(t) FROM TABLE(uu.utw_daty) t WHERE ROWNUM <= 1) utw_data
+            , (SELECT VALUE(t) FROM TABLE(uu.mod_ids1k) t WHERE ROWNUM <= 1) mod_id
+            , (SELECT VALUE(t) FROM TABLE(uu.mod_daty) t WHERE ROWNUM <= 1) mod_data
+            , uu.id
+            , uu.cdyd_pocz
+            , uu.cdyd_kon
+            , uu.change_type
+            , uu.safe_to_change
+        FROM uu
+        WHERE NOT EXISTS (
+                SELECT NULL
+                FROM v2u_dz_punkty_przedmiotow dz
+                WHERE
+                        uu.prz_kod = dz.prz_kod
+                    AND NOT (
+                            COALESCE(uu.cdyd_kon, '9999Z') < dz.cdyd_pocz
+                        OR  uu.cdyd_pocz > COALESCE(dz.cdyd_kon, '9999Z')
+                    )
+            )
+            AND (SELECT COUNT(1) FROM TABLE(uu.tpkt_kody1k)) = 1
+            AND (SELECT COUNT(1) FROM TABLE(uu.utw_ids1k)) = 1
+/*
+    ) src
+ON  (
+            src.change_type = 'U'
+        AND tgt.id = src.id
+    )
+WHEN NOT MATCHED THEN
+    INSERT
+        ( prz_kod
+        , prg_kod
+        , tpkt_kod
+        , ilosc
+        , utw_id
+--        , utw_data
+--        , mod_id
+--        , mod_data
+--       , id
+        , cdyd_pocz
+        , cdyd_kon
+        )
+VALUES
+        ( src.prz_kod
+        , src.prg_kod
+        , src.tpkt_kod
+        , src.ilosc
+        , src.utw_id
+--        , src.utw_data
+--        , src.mod_id
+--        , src.mod_data
+--        , src.id
+        , src.cdyd_pocz
+        , src.cdyd_kon
+        )
+WHEN MATCHED THEN
+    UPDATE SET
+          tgt.prz_kod = src.prz_kod
+        , tgt.prg_kod = src.prg_kod
+        , tgt.tpkt_kod = src.tpkt_kod
+        , tgt.ilosc = src.ilosc
+--        , tgt.utw_id = src.utw_id
+--        , tgt.utw_data = src.utw_data
+        , tgt.mod_id = src.mod_id
+--        , tgt.mod_data = src.mod_data
+--        , tgt.id = src.id
+        , tgt.cdyd_pocz = src.cdyd_pocz
+        , tgt.cdyd_kon = src.cdyd_kon
+*/
+;
+
+
+/*
+-- MERGE INTO dz_punkty_przedmiotow tgt
+MERGE INTO v2u_dz_punkty_przedmiotow tgt
+USING
+    (
+*/
+        SELECT
+              prz_kod
+            , prg_kod
+            , tpkt_kod
+            , ilosc
+            , utw_id
+            , utw_data
+            , mod_id
+            , mod_data
+            , id
+            , cdyd_pocz
+            , cdyd_kon
+            , change_type
+            , safe_to_change
+        FROM v2u_uu_punkty_przedmiotow
+        WHERE change_type IN ('I', 'U') AND safe_to_change = 1
+/*
+    ) src
+ON  (
+            src.change_type = 'U'
+        AND tgt.id = src.id
+    )
+WHEN NOT MATCHED THEN
+    INSERT
+        ( prz_kod
+        , prg_kod
+        , tpkt_kod
+        , ilosc
+        , utw_id
+--        , utw_data
+--        , mod_id
+--        , mod_data
+--       , id
+        , cdyd_pocz
+        , cdyd_kon
+        )
+VALUES
+        ( src.prz_kod
+        , src.prg_kod
+        , src.tpkt_kod
+        , src.ilosc
+        , src.utw_id
+--        , src.utw_data
+--        , src.mod_id
+--        , src.mod_data
+--        , src.id
+        , src.cdyd_pocz
+        , src.cdyd_kon
+        )
+WHEN MATCHED THEN
+    UPDATE SET
+          tgt.prz_kod = src.prz_kod
+        , tgt.prg_kod = src.prg_kod
+        , tgt.tpkt_kod = src.tpkt_kod
+        , tgt.ilosc = src.ilosc
+--        , tgt.utw_id = src.utw_id
+--        , tgt.utw_data = src.utw_data
+        , tgt.mod_id = src.mod_id
+--        , tgt.mod_data = src.mod_data
+--        , tgt.id = src.id
+        , tgt.cdyd_pocz = src.cdyd_pocz
+        , tgt.cdyd_kon = src.cdyd_kon
+*/
+;
+
 
 --
 -- dz_zajecia_cykli

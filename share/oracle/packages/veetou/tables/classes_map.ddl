@@ -2,7 +2,7 @@ CREATE TABLE v2u_classes_map
 OF V2u_Classes_Map_t
     ( CONSTRAINT v2u_classes_map_pk PRIMARY KEY(id) )
 OBJECT IDENTIFIER IS PRIMARY KEY;
-
+/
 COMMENT ON TABLE v2u_classes_map IS 'Odwzorowanie typow zajec (VEE->USOS)';
 COMMENT ON COLUMN v2u_classes_map.id IS 'Klucz główny tabeli';
 COMMENT ON COLUMN v2u_classes_map.classes_type IS 'Źródłowy kod typu zajęć (VEE)';
@@ -44,8 +44,8 @@ END;
 
 CREATE INDEX v2u_classes_map_idx1
      ON v2u_classes_map(classes_type);
-
+/
 CREATE INDEX v2u_classes_map_idx2
      ON v2u_classes_map(map_classes_type);
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

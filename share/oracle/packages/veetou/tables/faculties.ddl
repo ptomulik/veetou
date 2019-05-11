@@ -9,7 +9,7 @@ OF V2u_Faculty_t
         (REGEXP_INSTR(abbriev, '^([a-zA-Z][a-zA-Z0-9_]{0,7})$')=1)
     )
 OBJECT IDENTIFIER IS PRIMARY KEY;
-
+/
 COMMENT ON TABLE v2u_faculties IS 'Wydziały';
 COMMENT ON COLUMN v2u_faculties.id IS 'Klucz główny tabeli';
 COMMENT ON COLUMN v2u_faculties.abbriev IS 'Skrótowa nazwa wydziału';
@@ -17,7 +17,7 @@ COMMENT ON COLUMN v2u_faculties.name IS 'Nazwa wydziału';
 COMMENT ON COLUMN v2u_faculties.code IS 'Kod wydziału jako jedn. org.';
 
 CREATE SEQUENCE v2u_faculties_sq1 START WITH 1 INCREMENT BY 1;
-
+/
 CREATE OR REPLACE TRIGGER v2u_faculties_tr1
     BEFORE INSERT ON v2u_faculties
     FOR EACH ROW

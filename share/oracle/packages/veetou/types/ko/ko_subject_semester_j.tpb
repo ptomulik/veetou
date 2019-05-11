@@ -38,5 +38,5 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Semester_J_t AS
         SELF.subj_grades := subj_grades;
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

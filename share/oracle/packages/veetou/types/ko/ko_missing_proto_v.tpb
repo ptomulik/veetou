@@ -43,5 +43,5 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Proto_V_t AS
         SELF.istniejace_tpro_kody := missing_proto_j.istniejace_tpro_kody;
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

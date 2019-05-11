@@ -17,11 +17,14 @@ USING
                 , pkt_prz.cdyd_pocz
                 , pkt_prz.cdyd_kon
                 , CASE
-                    WHEN pkt_prz.ilosc = subjects.subj_ects
+                    WHEN pkt_prz.ilosc = COALESCE(subject_map.map_subj_ects, subjects.subj_ects)
                     THEN NULL
                     ELSE TO_CHAR(pkt_prz.ilosc, 'FM9999')
                          || ' <> ' ||
-                         TO_CHAR(subjects.subj_ects, 'FM9999')
+                         TO_CHAR(COALESCE( subject_map.map_subj_ects
+                                         , subjects.subj_ects)
+                                , 'FM9999'
+                                )
                   END ilosc_missmatch
                 , (
                         V2U_Get.Semester(code => pkt_prz.cdyd_kon).id

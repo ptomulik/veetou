@@ -23,5 +23,5 @@ OF V2u_Ko_Classes_Semester_J_t
             REFERENCES v2u_ko_subject_semesters_j(job_uuid, semester_id, specialty_id, subject_id)
     )
 OBJECT IDENTIFIER IS PRIMARY KEY;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

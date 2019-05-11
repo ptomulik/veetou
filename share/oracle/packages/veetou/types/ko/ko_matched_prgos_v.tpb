@@ -84,5 +84,5 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Prgos_V_t AS
         SELF.kod_isced := program_osoby.kod_isced;
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

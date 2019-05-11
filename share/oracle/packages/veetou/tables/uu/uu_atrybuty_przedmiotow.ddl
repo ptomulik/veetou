@@ -12,5 +12,4 @@ CREATE INDEX v2u_uu_atrybuty_przedm_idx1
 CREATE INDEX v2u_uu_atrybuty_przedm_idx2
     ON v2u_uu_atrybuty_przedmiotow(prz_kod, tatr_kod);
 /
-
 -- vim: set ft=sql ts=4 sw=4 et:

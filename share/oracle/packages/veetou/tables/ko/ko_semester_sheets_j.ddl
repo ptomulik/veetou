@@ -17,5 +17,5 @@ CREATE TABLE v2u_ko_semester_sheets_j
             FOREIGN KEY (semester_id, job_uuid)
             REFERENCES v2u_ko_semesters(id, job_uuid)
     );
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

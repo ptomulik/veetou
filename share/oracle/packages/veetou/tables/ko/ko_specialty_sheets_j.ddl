@@ -17,5 +17,5 @@ CREATE TABLE v2u_ko_specialty_sheets_j
             FOREIGN KEY (specialty_id, job_uuid)
             REFERENCES v2u_ko_specialties(id, job_uuid)
     );
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

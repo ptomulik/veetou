@@ -18,5 +18,5 @@ CREATE OR REPLACE TRIGGER v2u_ko_subjects_tr1
     END;
 /
 CREATE INDEX v2u_ko_subjects_idx1 ON v2u_ko_subjects(subj_code);
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

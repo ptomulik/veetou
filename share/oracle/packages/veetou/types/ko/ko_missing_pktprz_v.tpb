@@ -46,5 +46,5 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Pktprz_V_t AS
         SELF.istniejace_cdyd_kody := istniejace_cdyd_kody;
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

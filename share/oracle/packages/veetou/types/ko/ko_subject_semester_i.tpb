@@ -35,5 +35,5 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_Semester_I_t AS
         SELF.subject_id := subject_id;
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

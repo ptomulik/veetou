@@ -62,5 +62,5 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Pktprz_I_t AS
         SELF.ilosc_missmatch := ilosc_missmatch;
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

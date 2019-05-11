@@ -33,5 +33,5 @@ CREATE OR REPLACE TRIGGER v2u_dz_atrybuty_przedm_tr1
     BEGIN
         SELECT TO_CHAR(v2u_dz_atrybuty_przedm_sq1.NEXTVAL) INTO :new.id FROM dual;
     END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

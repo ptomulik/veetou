@@ -128,5 +128,5 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Subject_t AS
         END CASE;
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

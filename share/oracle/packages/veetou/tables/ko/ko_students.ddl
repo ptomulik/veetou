@@ -18,8 +18,7 @@ CREATE OR REPLACE TRIGGER v2u_ko_students_tr1
         SELECT v2u_ko_students_sq1.NEXTVAL INTO :new.id FROM dual;
     END;
 /
-
 CREATE INDEX v2u_ko_students_idx1
      ON v2u_ko_students(student_index);
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

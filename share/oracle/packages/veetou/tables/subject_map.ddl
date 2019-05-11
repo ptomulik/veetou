@@ -2,7 +2,7 @@ CREATE TABLE v2u_subject_map
 OF V2u_Subject_Map_t
     ( CONSTRAINT v2u_subject_map_pk PRIMARY KEY(id) )
 OBJECT IDENTIFIER IS PRIMARY KEY;
-
+/
 COMMENT ON TABLE v2u_subject_map IS 'Odwzorowanie kodów przedmiotów (wydział -> USOS)';
 COMMENT ON COLUMN v2u_subject_map.id IS 'Indeks główny tabeli (generowany automatycznie)';
 COMMENT ON COLUMN v2u_subject_map.subj_code IS 'Wydziałowy kod przedmiotu';
@@ -50,11 +50,11 @@ END;
 
 CREATE INDEX v2u_subject_map_idx1
      ON v2u_subject_map(subj_code);
-
+/
 CREATE INDEX v2u_subject_map_idx2
      ON v2u_subject_map(map_subj_code);
-
+/
 CREATE INDEX v2u_subject_map_idx3
      ON v2u_subject_map(id, map_subj_code);
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:
