@@ -427,8 +427,10 @@ COMMIT;
 @@merges/uu/uu_punkty_przedmiotow.sql;
 
 -- For the FIRST iteration:
--- This would generate single entry per subject where feasible. The entry
--- will cover all programs and a range of semester [cdyd_min, inf].
+--
+-- This generates one entry per subject, where feasible. The entry covers all
+-- study programs for an unbounded range of semester from min. to infinity.
+
 /*
 -- MERGE INTO dz_punkty_przedmiotow tgt
 MERGE INTO v2u_dz_punkty_przedmiotow tgt
@@ -534,9 +536,12 @@ WHEN MATCHED THEN
 ;
 
 -- For the SECOND iteration:
--- This would generate single entry per subject/quantity where feasible.
--- The entry will cover all programs and a range of semester [cdyd_min, cdyd_max]
--- for a given subject/quantity pair.
+--
+-- This generates single entry per subject where feasible. The entry will cover
+-- all programs for a range of semester from cdyd_min to cdyd_max, where only
+-- one value of "ilosc" exists (no collisions with other entries in this range
+-- will be generated).
+
 /*
 -- MERGE INTO dz_punkty_przedmiotow tgt
 MERGE INTO v2u_dz_punkty_przedmiotow tgt
@@ -566,12 +571,6 @@ USING
             GROUP BY
                     prz_kod
                   , ilosc
-            HAVING
-                    COUNT(DISTINCT prg_kod) = (
-                        SELECT COUNT(DISTINCT prg_kod)
-                        FROM  v2u_uu_punkty_przedmiotow pp2
-                        WHERE pp2.prz_kod = pp1.prz_kod
-                    )
         )
         SELECT
               uu.prz_kod
@@ -589,6 +588,7 @@ USING
             , uu.safe_to_change
         FROM uu
         WHERE NOT EXISTS (
+                -- exclude entries that would generate collisions
                 SELECT NULL
                 FROM v2u_dz_punkty_przedmiotow dz
                 WHERE
@@ -596,6 +596,20 @@ USING
                     AND NOT (
                             COALESCE(uu.cdyd_kon, '9999Z') < dz.cdyd_pocz
                         OR  uu.cdyd_pocz > COALESCE(dz.cdyd_kon, '9999Z')
+                    )
+
+                UNION ALL
+
+                SELECT NULL
+                FROM v2u_uu_punkty_przedmiotow vv
+                WHERE
+                        vv.change_type = 'I'
+                    AND vv.safe_to_change = 1
+                    AND vv.prz_kod = uu.prz_kod
+                    AND vv.ilosc <> uu.ilosc
+                    AND NOT (
+                            COALESCE(uu.cdyd_kon, '9999Z') < vv.cdyd_pocz
+                        OR  uu.cdyd_pocz > COALESCE(vv.cdyd_kon, '9999Z')
                     )
             )
             AND (SELECT COUNT(1) FROM TABLE(uu.tpkt_kody1k)) = 1
@@ -649,6 +663,12 @@ WHEN MATCHED THEN
 */
 ;
 
+
+-- For the THIRD iteration:
+--
+-- This generates all remaining entries (that were not covered by FIRST and
+-- SECOND iterations). A separate entry is generated for distinct prz_kod,
+-- prg_kod, and cdyd_pocz = cdyd_kon.
 
 /*
 -- MERGE INTO dz_punkty_przedmiotow tgt
@@ -927,6 +947,17 @@ DELETE FROM v2u_dz_programy_osob;
 COMMIT;
 @@merges/dz/dz_programy_osob.sql;
 
+DELETE FROM v2u_ko_matched_prgos_j;
+COMMIT;
+@@merges/ko/ko_matched_prgos_j.sql;
+
+DELETE FROM v2u_ko_missing_prgos_j;
+COMMIT;
+@@merges/ko/ko_missing_prgos_j.sql;
+
+DELETE FROM v2u_uu_programy_osob;
+COMMIT;
+@@merges/uu/uu_programy_osob.sql;
 
 --
 -- dz_decyzje
