@@ -10,6 +10,7 @@
 @@ko_matched_protos_j.sql;
 @@ko_matched_trmpro_j.sql;
 @@ko_matched_oceny_j.sql;
+@@ko_matched_zalprz_j.sql;
 
 @@ko_missing_zajcykl_j.sql;
 @@ko_missing_przcykl_j.sql;
@@ -18,6 +19,7 @@
 @@ko_missing_protos_j.sql;
 @@ko_missing_trmpro_j.sql;
 @@ko_missing_oceny_j.sql;
+@@ko_missing_zalprz_j.sql;
 
 @@ko_skipped_programs_j.sql;
 

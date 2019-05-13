@@ -45,6 +45,9 @@
 @@ko_matched_oceny_j.ddl;
 @@ko_missing_oceny_j.ddl;
 
+@@ko_matched_zalprz_j.ddl;
+@@ko_missing_zalprz_j.ddl;
+
 @@ko_skipped_programs_j.ddl;
 
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -8,7 +8,14 @@ EXIT;
 
 
 -- Preliminary steps, that may be necessary.
+@@tiers/create_tier1.sql;
+
+@@tiers/create_tier2.sql;
+
+@@tiers/create_tier3.sql;
+
 @@merges/ko/execute_tier2_merges1.sql;
+
 
 --
 -- dz_studenci
@@ -1006,6 +1013,17 @@ DELETE FROM v2u_dz_zaliczenia_przedmiotow;
 COMMIT;
 @@merges/dz/dz_zaliczenia_przedmiotow.sql;
 
+DELETE FROM v2u_ko_matched_zalprz_j;
+COMMIT;
+@@merges/ko/ko_matched_zalprz_j.sql;
+
+DELETE FROM v2u_ko_missing_zalprz_j;
+COMMIT;
+@@merges/ko/ko_missing_zalprz_j.sql;
+
+DELETE FROM v2u_uu_zaliczenia_przedmiotow;
+COMMIT;
+@@merges/uu/uu_zaliczenia_przedmiotow.sql;
 
 --
 -- dz_zal_przedm_prgos

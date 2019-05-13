@@ -24,6 +24,7 @@
 @@ko_specialty_map_j.tps;
 @@ko_subject_map_j.tps;
 @@ko_classes_map_j.tps;
+
 @@ko_matched_prgos_j.tps;
 @@ko_matched_etpos_j.tps;
 @@ko_matched_przedm_j.tps;
@@ -33,6 +34,8 @@
 @@ko_matched_trmpro_j.tps;
 @@ko_matched_pktprz_j.tps;
 @@ko_matched_ocena_j.tps;
+@@ko_matched_zalprz_j.tps;
+
 @@ko_missing_prgos_j.tps;
 @@ko_missing_etpos_j.tps;
 @@ko_missing_przedm_j.tps;
@@ -42,6 +45,7 @@
 @@ko_missing_trmpro_j.tps;
 @@ko_missing_pktprz_j.tps;
 @@ko_missing_ocena_j.tps;
+@@ko_missing_zalprz_j.tps;
 
 @@ko_skipped_program_j.tps;
 

@@ -1,56 +1,122 @@
---CREATE OR REPLACE TYPE BODY V2u_Dz_Etap_Osoby_t AS
---    CONSTRUCTOR FUNCTION V2u_Dz_Etap_Osoby_t(
---          SELF IN OUT NOCOPY V2u_Dz_Etap_Osoby_t
---        , id NUMBER
---        , data_zakon DATE
---        , utw_id VARCHAR2
---        , utw_data DATE
---        , mod_id VARCHAR2
---        , mod_data DATE
---        , status_zaliczenia VARCHAR2
---        , etp_kod VARCHAR2
---        , prg_kod VARCHAR2
---        , prgos_id NUMBER
---        , cdyd_kod VARCHAR2
---        , status_zal_komentarz VARCHAR2
---        , liczba_war NUMBER
---        , wym_cdyd_kod VARCHAR2
---        , czy_platny_na_2_kier VARCHAR2
---        , ects_uzyskane NUMBER
---        , czy_przedluzenie VARCHAR2
---        , urlop_kod VARCHAR2
---        , ects_efekty_uczenia NUMBER
---        , ects_przepisane NUMBER
---        , kolejnosc NUMBER
---        , czy_erasmus VARCHAR2
---        , jedn_dyplomujaca VARCHAR2
---        ) RETURN SELF AS RESULT
---    IS
---    BEGIN
---        SELF.id := id;
---        SELF.data_zakon := data_zakon;
---        SELF.utw_id := utw_id;
---        SELF.utw_data := utw_data;
---        SELF.mod_id := mod_id;
---        SELF.mod_data := mod_data;
---        SELF.status_zaliczenia := status_zaliczenia;
---        SELF.etp_kod := etp_kod;
---        SELF.prg_kod := prg_kod;
---        SELF.prgos_id := prgos_id;
---        SELF.cdyd_kod := cdyd_kod;
---        SELF.status_zal_komentarz := status_zal_komentarz;
---        SELF.liczba_war := liczba_war;
---        SELF.wym_cdyd_kod := wym_cdyd_kod;
---        SELF.czy_platny_na_2_kier := czy_platny_na_2_kier;
---        SELF.ects_uzyskane := ects_uzyskane;
---        SELF.czy_przedluzenie := czy_przedluzenie;
---        SELF.urlop_kod := urlop_kod;
---        SELF.ects_efekty_uczenia := ects_efekty_uczenia;
---        SELF.ects_przepisane := ects_przepisane;
---        SELF.kolejnosc := kolejnosc;
---        SELF.czy_erasmus := czy_erasmus;
---        SELF.jedn_dyplomujaca := jedn_dyplomujaca;
---    END;
---END;
+CREATE OR REPLACE TYPE BODY V2u_Dz_Zalicz_Przedmiotu_t AS
+    CONSTRUCTOR FUNCTION V2u_Dz_Zalicz_Przedmiotu_t(
+              SELF IN OUT NOCOPY V2u_Dz_Zalicz_Przedmiotu_t
+            , status_rej IN VARCHAR2
+            , opis_statusu_rej IN VARCHAR2
+            , status_zal IN VARCHAR2
+            , opis_statusu_zal IN VARCHAR2
+            , suma_ocen IN NUMBER
+            , liczba_ocen IN NUMBER
+            , os_id IN NUMBER
+            , cdyd_kod IN VARCHAR2
+            , prz_kod IN VARCHAR2
+            , utw_data IN DATE
+            , utw_id IN VARCHAR2
+            , mod_id IN VARCHAR2
+            , mod_data IN DATE
+            , nr_wyb IN NUMBER
+            -- KEY
+            , job_uuid IN RAW
+            , pk_zalicz_przedmiotu IN VARCHAR2
+            -- DBG
+            , dbg_matched IN NUMBER
+            , dbg_missing IN NUMBER
+            , dbg_unique_match IN NUMBER
+            , dbg_values_ok IN NUMBER
+            -- CTL
+            , change_type IN VARCHAR2
+            , safe_to_change IN NUMBER
+        ) RETURN SELF AS RESULT
+    IS
+    BEGIN
+        SELF.init(
+              status_rej => status_rej
+            , opis_statusu_rej => opis_statusu_rej
+            , status_zal => status_zal
+            , opis_statusu_zal => opis_statusu_zal
+            , suma_ocen => suma_ocen
+            , liczba_ocen => liczba_ocen
+            , os_id => os_id
+            , cdyd_kod => cdyd_kod
+            , prz_kod => prz_kod
+            , utw_data => utw_data
+            , utw_id => utw_id
+            , mod_id => mod_id
+            , mod_data => mod_data
+            , nr_wyb => nr_wyb
+            -- KEY
+            , job_uuid => job_uuid
+            , pk_zalicz_przedmiotu => pk_zalicz_przedmiotu
+            -- DBG
+            , dbg_matched => dbg_matched
+            , dbg_missing => dbg_missing
+            , dbg_unique_match => dbg_unique_match
+            , dbg_values_ok => dbg_values_ok
+            -- CTL
+            , change_type => change_type
+            , safe_to_change => safe_to_change
+        );
+        RETURN;
+    END;
+
+    MEMBER PROCEDURE init(
+              SELF IN OUT NOCOPY V2u_Dz_Zalicz_Przedmiotu_t
+            , status_rej IN VARCHAR2
+            , opis_statusu_rej IN VARCHAR2
+            , status_zal IN VARCHAR2
+            , opis_statusu_zal IN VARCHAR2
+            , suma_ocen IN NUMBER
+            , liczba_ocen IN NUMBER
+            , os_id IN NUMBER
+            , cdyd_kod IN VARCHAR2
+            , prz_kod IN VARCHAR2
+            , utw_data IN DATE
+            , utw_id IN VARCHAR2
+            , mod_id IN VARCHAR2
+            , mod_data IN DATE
+            , nr_wyb IN NUMBER
+            -- KEY
+            , job_uuid IN RAW
+            , pk_zalicz_przedmiotu IN VARCHAR2
+            -- DBG
+            , dbg_matched IN NUMBER
+            , dbg_missing IN NUMBER
+            , dbg_unique_match IN NUMBER
+            , dbg_values_ok IN NUMBER
+            -- CTL
+            , change_type IN VARCHAR2
+            , safe_to_change IN NUMBER
+        )
+    IS
+    BEGIN
+        SELF.init(
+              status_rej => status_rej
+            , opis_statusu_rej => opis_statusu_rej
+            , status_zal => status_zal
+            , opis_statusu_zal => opis_statusu_zal
+            , suma_ocen => suma_ocen
+            , liczba_ocen => liczba_ocen
+            , os_id => os_id
+            , cdyd_kod => cdyd_kod
+            , prz_kod => prz_kod
+            , utw_data => utw_data
+            , utw_id => utw_id
+            , mod_id => mod_id
+            , mod_data => mod_data
+            , nr_wyb => nr_wyb
+        );
+        -- KEY
+        SELF.job_uuid := job_uuid;
+        SELF.pk_zalicz_przedmiotu := pk_zalicz_przedmiotu;
+        -- DBG
+        SELF.dbg_matched := dbg_matched;
+        SELF.dbg_missing := dbg_missing;
+        SELF.dbg_unique_match := dbg_unique_match;
+        SELF.dbg_values_ok := dbg_values_ok;
+        -- CTL
+        SELF.change_type := change_type;
+        SELF.safe_to_change := safe_to_change;
+    END;
+END;
 
 -- vim: set ft=sql ts=4 sw=4 et:
