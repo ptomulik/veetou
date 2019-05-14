@@ -1,6 +1,6 @@
-CREATE OR REPLACE TYPE BODY V2u_Dz_Zalicz_Przedmiotu_t AS
-    CONSTRUCTOR FUNCTION V2u_Dz_Zalicz_Przedmiotu_t(
-              SELF IN OUT NOCOPY V2u_Dz_Zalicz_Przedmiotu_t
+CREATE OR REPLACE TYPE BODY V2u_Uu_Zalicz_Przedmiotu_t AS
+    CONSTRUCTOR FUNCTION V2u_Uu_Zalicz_Przedmiotu_t(
+              SELF IN OUT NOCOPY V2u_Uu_Zalicz_Przedmiotu_t
             , status_rej IN VARCHAR2
             , opis_statusu_rej IN VARCHAR2
             , status_zal IN VARCHAR2
@@ -21,6 +21,17 @@ CREATE OR REPLACE TYPE BODY V2u_Dz_Zalicz_Przedmiotu_t AS
             -- DBG
             , dbg_matched IN NUMBER
             , dbg_missing IN NUMBER
+            , dbg_os_ids IN NUMBER
+            , dbg_cdyd_kody IN NUMBER
+            , dbg_prz_kody IN NUMBER
+            , dbg_map_subj_codes IN NUMBER
+            , dbg_przedmioty_cykli IN NUMBER
+            , dbg_semester_codes IN NUMBER
+            , dbg_statusy_rej IN NUMBER
+            , dbg_statusy_zal IN NUMBER
+            , dbg_student_indexes IN NUMBER
+            , dbg_subj_codes IN NUMBER
+            , dbg_subject_mapped IN NUMBER
             , dbg_unique_match IN NUMBER
             , dbg_values_ok IN NUMBER
             -- CTL
@@ -50,6 +61,17 @@ CREATE OR REPLACE TYPE BODY V2u_Dz_Zalicz_Przedmiotu_t AS
             -- DBG
             , dbg_matched => dbg_matched
             , dbg_missing => dbg_missing
+            , dbg_os_ids => dbg_os_ids
+            , dbg_cdyd_kody => dbg_cdyd_kody
+            , dbg_prz_kody => dbg_prz_kody
+            , dbg_map_subj_codes => dbg_map_subj_codes
+            , dbg_przedmioty_cykli => dbg_przedmioty_cykli
+            , dbg_semester_codes => dbg_semester_codes
+            , dbg_statusy_rej => dbg_statusy_rej
+            , dbg_statusy_zal => dbg_statusy_zal
+            , dbg_student_indexes => dbg_student_indexes
+            , dbg_subj_codes => dbg_subj_codes
+            , dbg_subject_mapped => dbg_subject_mapped
             , dbg_unique_match => dbg_unique_match
             , dbg_values_ok => dbg_values_ok
             -- CTL
@@ -60,7 +82,7 @@ CREATE OR REPLACE TYPE BODY V2u_Dz_Zalicz_Przedmiotu_t AS
     END;
 
     MEMBER PROCEDURE init(
-              SELF IN OUT NOCOPY V2u_Dz_Zalicz_Przedmiotu_t
+              SELF IN OUT NOCOPY V2u_Uu_Zalicz_Przedmiotu_t
             , status_rej IN VARCHAR2
             , opis_statusu_rej IN VARCHAR2
             , status_zal IN VARCHAR2
@@ -81,6 +103,17 @@ CREATE OR REPLACE TYPE BODY V2u_Dz_Zalicz_Przedmiotu_t AS
             -- DBG
             , dbg_matched IN NUMBER
             , dbg_missing IN NUMBER
+            , dbg_os_ids IN NUMBER
+            , dbg_cdyd_kody IN NUMBER
+            , dbg_prz_kody IN NUMBER
+            , dbg_map_subj_codes IN NUMBER
+            , dbg_przedmioty_cykli IN NUMBER
+            , dbg_semester_codes IN NUMBER
+            , dbg_statusy_rej IN NUMBER
+            , dbg_statusy_zal IN NUMBER
+            , dbg_student_indexes IN NUMBER
+            , dbg_subj_codes IN NUMBER
+            , dbg_subject_mapped IN NUMBER
             , dbg_unique_match IN NUMBER
             , dbg_values_ok IN NUMBER
             -- CTL
@@ -111,6 +144,17 @@ CREATE OR REPLACE TYPE BODY V2u_Dz_Zalicz_Przedmiotu_t AS
         -- DBG
         SELF.dbg_matched := dbg_matched;
         SELF.dbg_missing := dbg_missing;
+        SELF.dbg_os_ids := dbg_os_ids;
+        SELF.dbg_cdyd_kody := dbg_cdyd_kody;
+        SELF.dbg_prz_kody := dbg_prz_kody;
+        SELF.dbg_map_subj_codes := dbg_map_subj_codes;
+        SELF.dbg_przedmioty_cykli := dbg_przedmioty_cykli;
+        SELF.dbg_semester_codes := dbg_semester_codes;
+        SELF.dbg_statusy_rej := dbg_statusy_rej;
+        SELF.dbg_statusy_zal := dbg_statusy_zal;
+        SELF.dbg_student_indexes := dbg_student_indexes;
+        SELF.dbg_subj_codes := dbg_subj_codes;
+        SELF.dbg_subject_mapped := dbg_subject_mapped;
         SELF.dbg_unique_match := dbg_unique_match;
         SELF.dbg_values_ok := dbg_values_ok;
         -- CTL
