@@ -20,4 +20,5 @@ CREATE OR REPLACE TYPE V2u_University_Codes_t
 /
 CREATE OR REPLACE TYPE V2u_Universities_t
     AS TABLE OF V2u_University_t;
+/
 -- vim: set ft=sql ts=4 sw=4 et:

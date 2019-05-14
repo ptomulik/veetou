@@ -187,5 +187,5 @@ CREATE OR REPLACE TYPE V2u_Uu_Classes_Grade_t
 /
 CREATE OR REPLACE TYPE V2u_Uu_Classes_Grades_t
     AS TABLE OF V2u_Uu_Classes_Grade_t;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

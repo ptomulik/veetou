@@ -146,5 +146,5 @@ CREATE OR REPLACE PACKAGE BODY V2U_Match AS
         RETURN String_Like(expr, name);
     END;
 END V2U_Match;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

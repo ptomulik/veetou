@@ -30,5 +30,5 @@ CREATE OR REPLACE TYPE BODY V2u_University_t AS
         RETURN V2U_Cmp.StrNI(name, other.name);
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -16,5 +16,5 @@ CREATE OR REPLACE TYPE V2u_Dz_Osoba_Grupy_t
 /
 CREATE OR REPLACE TYPE V2u_Dz_Osoby_Grup_t
     AS TABLE OF V2u_Dz_Osoba_Grupy_t;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

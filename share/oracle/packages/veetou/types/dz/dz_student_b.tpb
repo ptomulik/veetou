@@ -57,4 +57,5 @@ CREATE OR REPLACE TYPE BODY V2u_Dz_Student_B_t AS
         SELF.indeks_glowny := indeks_glowny;
     END;
 END;
+/
 -- vim: set ft=sql ts=4 sw=4 et:

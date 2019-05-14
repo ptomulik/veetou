@@ -6,5 +6,5 @@ CREATE OR REPLACE PACKAGE V2U_Drop AUTHID CURRENT_USER AS
     PROCEDURE Tier2;
     PROCEDURE Tier3;
 END V2U_Drop;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

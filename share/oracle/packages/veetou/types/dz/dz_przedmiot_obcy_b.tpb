@@ -185,4 +185,5 @@ CREATE OR REPLACE TYPE BODY V2u_Dz_Przedmiot_Obcy_B_t AS
         SELF.pw_czy_egzamin := pw_czy_egzamin;
     END;
 END;
+/
 -- vim: set ft=sql ts=4 sw=4 et:

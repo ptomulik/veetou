@@ -18,5 +18,5 @@ CREATE OR REPLACE PACKAGE V2U_Fit AUTHID CURRENT_USER AS
               , semester IN V2u_Ko_Semester_t
               ) RETURN INTEGER;
 END V2U_Fit;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

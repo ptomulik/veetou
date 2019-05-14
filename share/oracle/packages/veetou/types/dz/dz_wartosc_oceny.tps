@@ -20,5 +20,4 @@ CREATE OR REPLACE TYPE V2u_Dz_Wartosc_Oceny_t
 CREATE OR REPLACE TYPE V2u_Dz_Wartosci_Ocen_t
     AS TABLE OF V2u_Dz_Wartosc_Oceny_t;
 /
-
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -6,5 +6,5 @@ CREATE OR REPLACE PACKAGE V2U_Match AUTHID CURRENT_USER AS
     FUNCTION Number_Range(expr IN VARCHAR2, value IN NUMBER) RETURN INTEGER;
     FUNCTION Person_Name(expr IN VARCHAR2, value IN VARCHAR2) RETURN INTEGER;
 END V2U_Match;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

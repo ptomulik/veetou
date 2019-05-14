@@ -136,5 +136,5 @@ CREATE OR REPLACE PACKAGE BODY V2U_Cmp AS
     END;
 
 END V2U_Cmp;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -89,5 +89,5 @@ CREATE OR REPLACE TYPE BODY V2u_Dz_Decyzja_B_t AS
         SELF.elmo_id_blobbox := elmo_id_blobbox;
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

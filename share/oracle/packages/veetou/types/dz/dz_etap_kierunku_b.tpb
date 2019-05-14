@@ -41,5 +41,5 @@ CREATE OR REPLACE TYPE BODY V2u_Dz_Etap_Kierunku_B_t AS
         SELF.mod_data := mod_data;
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

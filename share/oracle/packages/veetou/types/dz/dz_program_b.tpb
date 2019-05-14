@@ -209,5 +209,5 @@ CREATE OR REPLACE TYPE BODY V2u_Dz_Program_B_t AS
             SELF.pw_ects_obieralne := pw_ects_obieralne;
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

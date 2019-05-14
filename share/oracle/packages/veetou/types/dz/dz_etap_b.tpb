@@ -45,5 +45,5 @@ CREATE OR REPLACE TYPE BODY V2u_Dz_Etap_B_t AS
         SELF.description := description;
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

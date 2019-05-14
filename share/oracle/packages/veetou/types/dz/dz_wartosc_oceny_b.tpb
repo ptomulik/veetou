@@ -65,5 +65,5 @@ CREATE OR REPLACE TYPE BODY V2u_Dz_Wartosc_Oceny_B_t AS
         SELF.czy_dwoja_reg := czy_dwoja_reg;
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

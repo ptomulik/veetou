@@ -51,5 +51,5 @@ CREATE OR REPLACE TYPE BODY V2u_Dz_Zal_Przedm_Prgos_t AS
         RETURN;
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -126,4 +126,5 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Atrybut_Przedmiotu_t AS
         SELF.safe_to_change := safe_to_change;
     END;
 END;
+/
 -- vim: set ft=sql ts=4 sw=4 et:

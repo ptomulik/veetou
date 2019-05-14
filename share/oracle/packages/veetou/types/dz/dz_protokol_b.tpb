@@ -69,5 +69,5 @@ CREATE OR REPLACE TYPE BODY V2u_Dz_Protokol_B_t AS
         SELF.opis_ang := opis_ang;
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -39,5 +39,5 @@ CREATE OR REPLACE TYPE V2u_Distinct_t FORCE AUTHID CURRENT_USER AS OBJECT
             RETURN INTEGER
     )
 NOT FINAL;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

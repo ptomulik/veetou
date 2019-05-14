@@ -18,5 +18,4 @@ CREATE OR REPLACE TYPE V2u_Dz_Termin_Protokolu_t
 CREATE OR REPLACE TYPE V2u_Dz_Terminy_Protokolow_t
     AS TABLE OF V2u_Dz_Termin_Protokolu_t;
 /
-
 -- vim: set ft=sql ts=4 sw=4 et:

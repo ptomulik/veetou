@@ -61,4 +61,5 @@ CREATE OR REPLACE TYPE BODY V2u_Dz_Punkty_Przedmiotu_B_t AS
         SELF.cdyd_kon := cdyd_kon;
     END;
 END;
+/
 -- vim: set ft=sql ts=4 sw=4 et:

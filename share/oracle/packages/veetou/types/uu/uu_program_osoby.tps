@@ -164,5 +164,5 @@ CREATE OR REPLACE TYPE V2u_Uu_Program_Osoby_t
             )
     )
 ;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

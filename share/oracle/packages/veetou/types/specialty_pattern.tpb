@@ -136,5 +136,5 @@ CREATE OR REPLACE TYPE BODY V2u_Specialty_Pattern_t AS
         RETURN V2U_Match.String_Like(expr_studies_specialty, studies_specialty);
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

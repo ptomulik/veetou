@@ -220,5 +220,5 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Pattern_t AS
         RETURN V2U_Match.Person_Name(expr_subj_tutor, subj_tutor);
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

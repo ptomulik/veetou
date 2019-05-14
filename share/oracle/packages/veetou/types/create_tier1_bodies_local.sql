@@ -2,7 +2,6 @@
 @@university.tpb;
 @@faculty.tpb;
 @@semester.tpb;
-
 --
 @@specialty_map_b.tpb;
 @@specialty_map.tpb;
@@ -21,5 +20,5 @@
 @@specialty_map_pattern.tpb;
 @@subject_map_pattern.tpb;
 @@classes_map_pattern.tpb;
-
+--
 -- vim: set ft=sql ts=4 sw=4 et:

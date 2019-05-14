@@ -25,5 +25,5 @@ CREATE OR REPLACE PACKAGE BODY V2U_Util AS
         END LOOP;
     END;
 END V2U_Util;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

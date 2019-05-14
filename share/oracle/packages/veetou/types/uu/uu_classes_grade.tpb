@@ -247,6 +247,5 @@ create or replace TYPE BODY V2u_Uu_Classes_Grade_t AS
         SELF.dbg_tzaj_kod := dbg_tzaj_kod;
     END;
 END;
-
--- vim: set ft=sql ts=4 sw=4 et:
+/
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -90,5 +90,5 @@ CREATE OR REPLACE TYPE V2u_Classes_Map_B_t
         RETURN INTEGER
     )
 NOT INSTANTIABLE NOT FINAL;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -61,4 +61,5 @@ CREATE OR REPLACE TYPE BODY V2u_Dz_Atrybut_Przedmiotu_B_t AS
         SELF.id := id;
     END;
 END;
+/
 -- vim: set ft=sql ts=4 sw=4 et:

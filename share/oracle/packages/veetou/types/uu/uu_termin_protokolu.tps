@@ -74,5 +74,4 @@ CREATE OR REPLACE TYPE V2u_Uu_Termin_Protokolu_t
             ) RETURN SELF AS RESULT
     );
 /
-
 -- vim: set ft=sql ts=4 sw=4 et:

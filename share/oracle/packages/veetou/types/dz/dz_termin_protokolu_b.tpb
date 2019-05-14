@@ -57,5 +57,5 @@ CREATE OR REPLACE TYPE BODY V2u_Dz_Termin_Protokolu_B_t AS
         SELF.egzamin_komisyjny := egzamin_komisyjny;
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

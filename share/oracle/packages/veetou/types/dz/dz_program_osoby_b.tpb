@@ -201,5 +201,5 @@ CREATE OR REPLACE TYPE BODY V2u_Dz_Program_Osoby_B_t AS
         SELF.kod_isced := kod_isced;
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

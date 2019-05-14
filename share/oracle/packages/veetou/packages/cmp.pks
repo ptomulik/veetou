@@ -20,5 +20,5 @@ CREATE OR REPLACE PACKAGE V2U_Cmp AUTHID CURRENT_USER AS
     FUNCTION RawN(r1 IN RAW, r2 IN RAW)
         RETURN INTEGER;
 END V2U_Cmp;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

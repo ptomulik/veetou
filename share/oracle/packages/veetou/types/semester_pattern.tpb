@@ -136,5 +136,5 @@ CREATE OR REPLACE TYPE BODY V2u_Semester_Pattern_t AS
         RETURN V2U_Match.Number_Range(expr_ects_total, ects_total);
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

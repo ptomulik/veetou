@@ -275,5 +275,5 @@ CREATE OR REPLACE PACKAGE BODY V2U_Get AS
         RETURN V2u_Semester_t.sem_sub(lowest.semester_code, (lowest.semester_number-1));
     END;
 END V2U_Get;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

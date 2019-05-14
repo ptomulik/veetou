@@ -178,5 +178,5 @@ CREATE OR REPLACE TYPE BODY V2u_Classes_Map_B_t AS
         RETURN V2u_Cmp.NumN(expr_ects_total, other.expr_ects_total);
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

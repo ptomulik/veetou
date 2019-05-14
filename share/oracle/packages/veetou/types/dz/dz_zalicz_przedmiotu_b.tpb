@@ -73,5 +73,5 @@ CREATE OR REPLACE TYPE BODY V2u_Dz_Zalicz_Przedmiotu_B_t AS
         SELF.nr_wyb := nr_wyb;
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -171,5 +171,5 @@ CREATE OR REPLACE TYPE V2u_Uu_Subject_Grade_V_t
             )
     )
 ;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

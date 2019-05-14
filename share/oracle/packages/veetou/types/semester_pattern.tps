@@ -39,5 +39,5 @@ CREATE OR REPLACE TYPE V2u_Semester_Pattern_t
     , MEMBER FUNCTION match_ects_total(ects_total IN INTEGER) RETURN INTEGER
     )
 NOT FINAL;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

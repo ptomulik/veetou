@@ -50,5 +50,5 @@ CREATE OR REPLACE TYPE BODY V2u_Distinct_t AS
         RETURN 0;
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

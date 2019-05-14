@@ -106,5 +106,5 @@ CREATE OR REPLACE PACKAGE BODY V2U_Fit AS
         END IF;
     END;
 END V2U_Fit;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

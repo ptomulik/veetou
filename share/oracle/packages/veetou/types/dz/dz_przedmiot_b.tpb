@@ -141,4 +141,5 @@ CREATE OR REPLACE TYPE BODY V2u_Dz_Przedmiot_B_t AS
         SELF.pw_nazwa_supl_ang := pw_nazwa_supl_ang;
     END;
 END;
+/
 -- vim: set ft=sql ts=4 sw=4 et:

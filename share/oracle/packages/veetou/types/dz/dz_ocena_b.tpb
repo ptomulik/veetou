@@ -73,5 +73,5 @@ CREATE OR REPLACE TYPE BODY V2u_Dz_Ocena_B_t AS
         SELF.pos_komi_id := pos_komi_id;
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

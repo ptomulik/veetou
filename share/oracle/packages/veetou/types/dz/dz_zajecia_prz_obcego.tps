@@ -16,5 +16,5 @@ CREATE OR REPLACE TYPE V2u_Dz_Zajecia_Prz_Obcego_t
 /
 CREATE OR REPLACE TYPE V2u_Dz_Zajecia_Prz_Obcych_t
     AS TABLE OF V2u_Dz_Zajecia_Prz_Obcego_t;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

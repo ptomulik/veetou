@@ -81,5 +81,5 @@ CREATE OR REPLACE TYPE BODY V2u_Semester_t AS
         RETURN to_code(to_id(semester_code) - offset);
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

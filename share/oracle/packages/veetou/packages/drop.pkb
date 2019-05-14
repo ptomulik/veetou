@@ -815,5 +815,5 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     END;
 
 END V2U_Drop;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -105,4 +105,5 @@ CREATE OR REPLACE TYPE BODY V2u_Dz_Grupa_B_t AS
             SELF.kryteria_oceniania_ang := kryteria_oceniania_ang;
     END;
 END;
+/
 -- vim: set ft=sql ts=4 sw=4 et:

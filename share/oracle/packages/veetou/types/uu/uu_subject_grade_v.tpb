@@ -286,5 +286,5 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Subject_Grade_V_t AS
         SELF.dbg_prz_kod := dbg_prz_kod;
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

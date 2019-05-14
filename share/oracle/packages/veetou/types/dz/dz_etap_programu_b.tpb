@@ -61,5 +61,5 @@ CREATE OR REPLACE TYPE BODY V2u_Dz_Etap_Programu_B_t AS
         SELF.czy_wyswietlac := czy_wyswietlac;
     END;
 END;
-
+/
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -48,5 +48,4 @@ CREATE OR REPLACE TYPE V2u_Dz_Wartosc_Oceny_B_t
     )
 NOT INSTANTIABLE NOT FINAL;
 /
-
 -- vim: set ft=sql ts=4 sw=4 et:
