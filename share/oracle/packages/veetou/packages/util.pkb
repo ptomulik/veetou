@@ -12,6 +12,12 @@ CREATE OR REPLACE PACKAGE BODY V2U_Util AS
                         (
                             SELECT table_name FROM user_nested_tables
                         )
+                    UNION ALL
+                    SELECT table_name FROM user_object_tables
+                        WHERE table_name NOT IN
+                        (
+                            SELECT table_name FROM user_nested_tables
+                        )
                  )
         LOOP
             EXECUTE IMMEDIATE 'GRANT SELECT ON ' || i.table_name || ' TO ' || to_user;
