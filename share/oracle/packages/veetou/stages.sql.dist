@@ -46,6 +46,166 @@ COMMIT;
 @@merges/uu/uu_przedmioty.sql;
 
 /*
+UPDATE
+v2u_dz_przedmioty tgt
+-- dz_przedmioty tgt
+SET (
+              nazwa
+            , jed_org_kod
+--            , utw_id
+--            , utw_data
+            , mod_id
+--            , mod_data
+            , tpro_kod
+            , czy_wielokrotne
+            , name
+            , skrocony_opis
+            , short_description
+            , jed_org_kod_biorca
+            , jzk_kod
+            , kod_sok
+            , opis
+            , description
+            , literatura
+            , bibliography
+            , efekty_uczenia
+            , efekty_uczenia_ang
+            , kryteria_oceniania
+            , kryteria_oceniania_ang
+            , praktyki_zawodowe
+            , praktyki_zawodowe_ang
+            , url
+            , kod_isced
+            , nazwa_pol
+            , guid
+            , pw_nazwa_supl
+            , pw_nazwa_supl_ang
+) = (
+*/
+        SELECT
+              nazwa
+            , jed_org_kod
+--            , utw_id
+--            , utw_data
+            , mod_id
+--            , mod_data
+            , tpro_kod
+            , czy_wielokrotne
+            , name
+            , skrocony_opis
+            , short_description
+            , jed_org_kod_biorca
+            , jzk_kod
+            , kod_sok
+            , opis
+            , description
+            , literatura
+            , bibliography
+            , efekty_uczenia
+            , efekty_uczenia_ang
+            , kryteria_oceniania
+            , kryteria_oceniania_ang
+            , praktyki_zawodowe
+            , praktyki_zawodowe_ang
+            , url
+            , kod_isced
+            , nazwa_pol
+            , guid
+            , pw_nazwa_supl
+            , pw_nazwa_supl_ang
+        FROM v2u_uu_przedmioty src
+        WHERE
+                src.change_type = 'U'
+            AND src.safe_to_change = 1
+/*
+            AND src.kod = tgt.kod
+)
+WHERE EXISTS (
+    SELECT 1 FROM v2u_uu_przedmioty src
+        WHERE
+                src.change_type = 'U'
+            AND src.safe_to_change = 1
+            AND src.kod = tgt.kod
+)
+*/
+;
+
+/*
+INSERT INTO
+    v2u_dz_przedmioty tgt
+-- dz_przedmioty tgt
+        ( kod
+        , nazwa
+        , jed_org_kod
+        , utw_id
+--        , utw_data
+--        , mod_id
+--        , mod_data
+        , tpro_kod
+        , czy_wielokrotne
+        , name
+        , skrocony_opis
+        , short_description
+        , jed_org_kod_biorca
+        , jzk_kod
+        , kod_sok
+        , opis
+        , description
+        , literatura
+        , bibliography
+        , efekty_uczenia
+        , efekty_uczenia_ang
+        , kryteria_oceniania
+        , kryteria_oceniania_ang
+        , praktyki_zawodowe
+        , praktyki_zawodowe_ang
+        , url
+        , kod_isced
+        , nazwa_pol
+        , guid
+        , pw_nazwa_supl
+        , pw_nazwa_supl_ang
+        )
+*/
+SELECT
+          src.kod
+        , src.nazwa
+        , src.jed_org_kod
+        , src.utw_id
+--        , src.utw_data
+--        , src.mod_id
+--        , src.mod_data
+        , src.tpro_kod
+        , src.czy_wielokrotne
+        , src.name
+        , src.skrocony_opis
+        , src.short_description
+        , src.jed_org_kod_biorca
+        , src.jzk_kod
+        , src.kod_sok
+        , src.opis
+        , src.description
+        , src.literatura
+        , src.bibliography
+        , src.efekty_uczenia
+        , src.efekty_uczenia_ang
+        , src.kryteria_oceniania
+        , src.kryteria_oceniania_ang
+        , src.praktyki_zawodowe
+        , src.praktyki_zawodowe_ang
+        , src.url
+        , src.kod_isced
+        , src.nazwa_pol
+        , src.guid
+        , src.pw_nazwa_supl
+        , src.pw_nazwa_supl_ang
+FROM v2u_uu_przedmioty src
+WHERE
+        src.change_type = 'I'
+    AND src.safe_to_change = 1
+;
+
+/*
 -- MERGE INTO dz_przedmioty tgt
 MERGE INTO v2u_dz_przedmioty tgt
 USING
