@@ -252,6 +252,10 @@ USING
                     WHERE ROWNUM <= 1
                   ) cdyd_kon
                 , ( SELECT SUBSTR(VALUE(t), 1, 20)
+                    FROM TABLE(u_01.map_subj_codes1k) t
+                    WHERE ROWNUM <= 1
+                  ) map_subj_code
+                , ( SELECT SUBSTR(VALUE(t), 1, 20)
                     FROM TABLE(u_01.coalesced_subj_codes1k) t
                     WHERE ROWNUM <= 1
                   ) coalesced_subj_code
@@ -284,6 +288,9 @@ USING
                 , ( SELECT COUNT(*)
                     FROM TABLE(u_01.cdyd_kon1k)
                   ) dbg_cdyd_kon
+                , ( SELECT COUNT(*)
+                    FROM TABLE(u_01.map_subj_codes1k)
+                  ) dbg_map_subj_codes
                 , ( SELECT COUNT(*)
                     FROM TABLE(u_01.coalesced_subj_codes1k)
                   ) dbg_coalesced_subj_codes
@@ -323,7 +330,7 @@ USING
                   u.*
                 , u.pktprz_id v$id
                 , DECODE( u.pktprz_id, NULL
-                        , u.coalesced_subj_code
+                        , u.map_subj_code
                         , u.prz_kod
                   ) v$prz_kod
                 , DECODE( u.pktprz_id, NULL
@@ -381,8 +388,8 @@ USING
                             )
                             OR
                             (
-                                    u.coalesced_subj_code IS NOT NULL
-                                AND u.dbg_coalesced_subj_codes = 1
+                                    u.map_subj_code IS NOT NULL
+                                AND u.dbg_map_subj_codes = 1
                                 AND (
                                             u.map_program_code IS NULL
                                         AND u.dbg_map_program_codes = 0
@@ -494,6 +501,7 @@ USING
             , w.dbg_prg_kody
             , w.dbg_cdyd_pocz
             , w.dbg_cdyd_kon
+            , w.dbg_map_subj_codes
             , w.dbg_coalesced_subj_codes
             , w.dbg_coalesced_subj_ectses
             , w.dbg_map_program_codes
@@ -540,6 +548,7 @@ WHEN NOT MATCHED THEN
         , dbg_prg_kody
         , dbg_cdyd_pocz
         , dbg_cdyd_kon
+        , dbg_map_subj_codes
         , dbg_coalesced_subj_codes
         , dbg_coalesced_subj_ectses
         , dbg_map_program_codes
@@ -577,6 +586,7 @@ WHEN NOT MATCHED THEN
         , src.dbg_prg_kody
         , src.dbg_cdyd_pocz
         , src.dbg_cdyd_kon
+        , src.dbg_map_subj_codes
         , src.dbg_coalesced_subj_codes
         , src.dbg_coalesced_subj_ectses
         , src.dbg_map_program_codes
@@ -615,6 +625,7 @@ WHEN MATCHED THEN
         , tgt.dbg_prg_kody = src.dbg_prg_kody
         , tgt.dbg_cdyd_pocz = src.dbg_cdyd_pocz
         , tgt.dbg_cdyd_kon = src.dbg_cdyd_kon
+        , tgt.dbg_map_subj_codes = src.dbg_map_subj_codes
         , tgt.dbg_coalesced_subj_codes = src.dbg_coalesced_subj_codes
         , tgt.dbg_coalesced_subj_ectses = src.dbg_coalesced_subj_ectses
         , tgt.dbg_map_program_codes = src.dbg_map_program_codes

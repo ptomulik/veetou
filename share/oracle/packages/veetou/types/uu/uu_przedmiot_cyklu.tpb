@@ -22,10 +22,10 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Przedmiot_Cyklu_t AS
             , guid IN VARCHAR2
             -- KEY
             , job_uuid IN RAW
-            , pk_subject IN VARCHAR2
-            , pk_semester IN VARCHAR2
+            , pk_przedmiot_cyklu IN VARCHAR2
             -- DBG
             , dbg_subj_codes IN NUMBER
+            , dbg_semester_codes IN NUMBER
             , dbg_map_subj_codes IN NUMBER
             , dbg_map_proto_types IN NUMBER
             , dbg_subj_credit_kinds IN NUMBER
@@ -64,10 +64,10 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Przedmiot_Cyklu_t AS
             , guid => guid
             -- KEY
             , job_uuid => job_uuid
-            , pk_subject => pk_subject
-            , pk_semester => pk_semester
+            , pk_przedmiot_cyklu => pk_przedmiot_cyklu
             -- DBG
             , dbg_subj_codes => dbg_subj_codes
+            , dbg_semester_codes => dbg_semester_codes
             , dbg_map_subj_codes => dbg_map_subj_codes
             , dbg_map_proto_types => dbg_map_proto_types
             , dbg_subj_credit_kinds => dbg_subj_credit_kinds
@@ -107,10 +107,10 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Przedmiot_Cyklu_t AS
             , status_sylabusu IN VARCHAR2
             , guid IN VARCHAR2
             , job_uuid IN RAW
-            , pk_subject IN VARCHAR2
-            , pk_semester IN VARCHAR2
+            , pk_przedmiot_cyklu IN VARCHAR2
             -- DBG
             , dbg_subj_codes IN NUMBER
+            , dbg_semester_codes IN NUMBER
             , dbg_map_subj_codes IN NUMBER
             , dbg_map_proto_types IN NUMBER
             , dbg_subj_credit_kinds IN NUMBER
@@ -150,10 +150,10 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Przedmiot_Cyklu_t AS
             );
         -- KEY
         SELF.job_uuid := job_uuid;
-        SELF.pk_subject := pk_subject;
-        SELF.pk_semester := pk_semester;
+        SELF.pk_przedmiot_cyklu := pk_przedmiot_cyklu;
         -- DBG
         SELF.dbg_subj_codes := dbg_subj_codes;
+        SELF.dbg_semester_codes := dbg_semester_codes;
         SELF.dbg_map_subj_codes := dbg_map_subj_codes;
         SELF.dbg_map_proto_types := dbg_map_proto_types;
         SELF.dbg_subj_credit_kinds := dbg_subj_credit_kinds;

@@ -8,6 +8,7 @@ CREATE OR REPLACE TYPE V2u_Uu_Punkty_Przedmiotu_t
     , dbg_prg_kody NUMBER(5)
     , dbg_cdyd_pocz NUMBER(5)
     , dbg_cdyd_kon NUMBER(5)
+    , dbg_map_subj_codes NUMBER(5)
     , dbg_coalesced_subj_codes NUMBER(5)
     , dbg_coalesced_subj_ectses NUMBER(5)
     , dbg_map_program_codes NUMBER(5)
@@ -46,6 +47,7 @@ CREATE OR REPLACE TYPE V2u_Uu_Punkty_Przedmiotu_t
             , dbg_prg_kody IN NUMBER
             , dbg_cdyd_pocz IN NUMBER
             , dbg_cdyd_kon IN NUMBER
+            , dbg_map_subj_codes IN NUMBER
             , dbg_coalesced_subj_codes IN NUMBER
             , dbg_coalesced_subj_ectses IN NUMBER
             , dbg_map_program_codes IN NUMBER
@@ -85,6 +87,7 @@ CREATE OR REPLACE TYPE V2u_Uu_Punkty_Przedmiotu_t
             , dbg_prg_kody IN NUMBER
             , dbg_cdyd_pocz IN NUMBER
             , dbg_cdyd_kon IN NUMBER
+            , dbg_map_subj_codes IN NUMBER
             , dbg_coalesced_subj_codes IN NUMBER
             , dbg_coalesced_subj_ectses IN NUMBER
             , dbg_map_program_codes IN NUMBER

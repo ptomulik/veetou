@@ -1,55 +1,36 @@
 MERGE INTO v2u_uu_przedmioty_cykli tgt
 USING
     (
-        WITH u_0 AS
+        WITH u_00 AS
         (
-            -- determine what to use as a single output row;
-            --  (*) if possible, use corresponding map_subj_code as primary key,
-            --  (*) otherwise (incomplete or ambiguous subject map), use the
-            --      subj_code as primary key.
             SELECT
                   ss_j.job_uuid
-                , COALESCE(
-                      subject_map.map_subj_code
-                    , subjects.subj_code
-                ) coalesced_subj_code
+                , subject_map.map_subj_code
+                , subject_map.map_proto_type
+                , subjects.subj_code
+                , subjects.subj_credit_kind
                 , semesters.semester_code
-                , SET(CAST(
-                        COLLECT(subjects.subj_code)
-                        AS V2u_Vchars1K_t
-                  )) subj_codes1k
-                , SET(CAST(
-                        COLLECT(subject_map.map_subj_code)
-                        AS V2u_Vchars1K_t
-                  )) map_subj_codes1k
-                , SET(CAST(
-                        COLLECT(subject_map.map_proto_type)
-                        AS V2u_Vchars1K_t
-                  )) map_proto_types1k
-                , SET(CAST(
-                        COLLECT(subjects.subj_credit_kind)
-                        AS V2u_Vchars1K_t
-                  )) subj_credit_kinds1k
-                , SET(CAST(
-                        COLLECT(grades.subj_grade)
-                        AS V2u_Vchars1K_t
-                  )) subj_grades1k
-                , SET(CAST(
-                        COLLECT(ma_przcykl_j.prz_kod
-                                ORDER BY ma_przcykl_j.subject_map_id)
-                        AS V2u_Vchars1K_t
-                  )) prz_kody1k
-                , SET(CAST(
-                        COLLECT(ma_przcykl_j.cdyd_kod
-                                ORDER BY ma_przcykl_j.subject_map_id)
-                        AS V2u_Vchars1K_t
-                  )) cdyd_kody1k
-
-                  -- "+ 0" trick is used to workaround oracle bug
-                , COUNT(ma_przcykl_j.prz_kod) dbg_matched
-                , COUNT(mi_przcykl_j.subject_id + 0) dbg_missing
-                , COUNT(sm_j.map_id + 0) dbg_mapped
-
+                , grades.subj_grade
+                , ma_przcykl_j.prz_kod
+                , ma_przcykl_j.cdyd_kod
+                , ma_przcykl_j.subject_map_id ma_map_id
+                , ma_przcykl_j.subject_id ma_id
+                , mi_przcykl_j.subject_id mi_id
+                , sm_j.map_id sm_j_map_id
+                , CASE
+                    WHEN ma_przcykl_j.prz_kod IS NOT NULL
+                    THEN '{prz_kod: "' ||
+                            ma_przcykl_j.prz_kod
+                        || '", cdyd_kod: "' ||
+                            ma_przcykl_j.cdyd_kod
+                        || '"}'
+                    ELSE '{subject: "' ||
+                            COALESCE( subject_map.map_subj_code
+                                    , subjects.subj_code)
+                        || '", semester: "' ||
+                            semesters.semester_code
+                        || '"}'
+                    END pk_przedmiot_cyklu
             FROM v2u_ko_subject_semesters_j ss_j
             INNER JOIN v2u_ko_subjects subjects
                 ON  (
@@ -95,17 +76,68 @@ USING
                         AND grades.classes_type = '-'
                         AND grades.job_uuid = ss_j.job_uuid
                     )
+        ),
+        u_0 AS
+        (
+            -- determine what to use as a single output row;
+            --  (*) if possible, use corresponding map_subj_code as primary key,
+            --  (*) otherwise (incomplete or ambiguous subject map), use the
+            --      subj_code as primary key.
+            SELECT
+                  u_00.job_uuid
+                , u_00.pk_przedmiot_cyklu
+                , SET(CAST(
+                        COLLECT(u_00.semester_code)
+                        AS V2u_Vchars1K_t
+                  )) semester_codes1k
+                , SET(CAST(
+                        COLLECT(u_00.subj_code)
+                        AS V2u_Vchars1K_t
+                  )) subj_codes1k
+                , SET(CAST(
+                        COLLECT(u_00.map_subj_code)
+                        AS V2u_Vchars1K_t
+                  )) map_subj_codes1k
+                , SET(CAST(
+                        COLLECT(u_00.map_proto_type)
+                        AS V2u_Vchars1K_t
+                  )) map_proto_types1k
+                , SET(CAST(
+                        COLLECT(u_00.subj_credit_kind)
+                        AS V2u_Vchars1K_t
+                  )) subj_credit_kinds1k
+                , SET(CAST(
+                        COLLECT(u_00.subj_grade)
+                        AS V2u_Vchars1K_t
+                  )) subj_grades1k
+                , SET(CAST(
+                        COLLECT(u_00.prz_kod ORDER BY u_00.ma_map_id)
+                        AS V2u_Vchars1K_t
+                  )) prz_kody1k
+                , SET(CAST(
+                        COLLECT(u_00.cdyd_kod ORDER BY u_00.ma_map_id)
+                        AS V2u_Vchars1K_t
+                  )) cdyd_kody1k
+
+                  -- "+ 0" trick is used to workaround oracle bug
+                , COUNT(u_00.ma_id + 0) dbg_matched
+                , COUNT(u_00.mi_id + 0) dbg_missing
+                , COUNT(u_00.sm_j_map_id + 0) dbg_mapped
+
+            FROM u_00 u_00
             GROUP BY
-                  ss_j.job_uuid
-                , COALESCE(subject_map.map_subj_code, subjects.subj_code)
-                , semesters.semester_code
+                  u_00.job_uuid
+                , u_00.pk_przedmiot_cyklu
         ),
         u AS
         ( -- make necessary adjustments to the raw values selected in u_0
             SELECT
                   u_0.job_uuid
-                , u_0.coalesced_subj_code
-                , u_0.semester_code
+                , u_0.pk_przedmiot_cyklu
+                , ( SELECT SUBSTR(VALUE(t), 1, 32)
+                    FROM TABLE(u_0.semester_codes1k) t
+                    WHERE ROWNUM <= 1
+                  ) semester_code
                 , ( SELECT SUBSTR(VALUE(t), 1, 16)
                     FROM TABLE(u_0.subj_credit_kinds1k) t
                     WHERE ROWNUM <= 1
@@ -132,6 +164,9 @@ USING
                   ) cdyd_kod
 
                 -- columns used for debugging
+                , ( SELECT COUNT(*)
+                    FROM TABLE(u_0.semester_codes1k)
+                  ) dbg_semester_codes
                 , ( SELECT COUNT(*)
                     FROM TABLE(u_0.subj_codes1k)
                   ) dbg_subj_codes
@@ -241,6 +276,7 @@ USING
                             v.map_subj_code IS NOT NULL
                         AND v.dbg_map_subj_codes = 1
                         AND v.dbg_subj_codes > 0
+                        AND v.dbg_semester_codes = 1
                         -- maps for all instances existed but there were no
                         -- corresponding subject in target system
                         AND v.dbg_matched = 0
@@ -259,6 +295,7 @@ USING
                             v.map_subj_code IS NOT NULL
                         AND v.dbg_map_subj_codes = 1
                         AND v.dbg_subj_codes > 0
+                        AND v.dbg_semester_codes = 1
                         -- and we uniquelly matched a row in target table
                         AND v.dbg_unique_match = 1
                         -- and values passed basic tests
@@ -277,8 +314,7 @@ USING
         )
         SELECT
               w.job_uuid
-            , w.coalesced_subj_code pk_subject
-            , w.semester_code pk_semester
+            , w.pk_przedmiot_cyklu
 
             , DECODE(w.change_type, 'I', w.v$prz_kod, w.u$prz_kod) prz_kod
             , DECODE(w.change_type, 'I', w.v$cdyd_kod, w.u$cdyd_kod) cdyd_kod
@@ -307,6 +343,7 @@ USING
               ) safe_to_change
 
             , w.dbg_subj_codes
+            , w.dbg_semester_codes
             , w.dbg_map_subj_codes
             , w.dbg_map_proto_types
             , w.dbg_subj_credit_kinds
@@ -320,8 +357,7 @@ USING
         FROM w w
     ) src
 ON  (
-            tgt.pk_subject = src.pk_subject
-        AND tgt.pk_semester = src.pk_semester
+            tgt.pk_przedmiot_cyklu = src.pk_przedmiot_cyklu
         AND tgt.job_uuid = src.job_uuid
     )
 WHEN NOT MATCHED THEN
@@ -347,12 +383,17 @@ WHEN NOT MATCHED THEN
         , guid
         -- KEY
         , job_uuid
-        , pk_subject
-        , pk_semester
+        , pk_przedmiot_cyklu
         -- DBG
         , dbg_subj_codes
+        , dbg_semester_codes
         , dbg_map_subj_codes
+        , dbg_map_proto_types
         , dbg_subj_credit_kinds
+        , dbg_prz_kody
+        , dbg_cdyd_kody
+        , dbg_values_ok
+        , dbg_unique_match
         , dbg_matched
         , dbg_missing
         , dbg_mapped
@@ -382,12 +423,17 @@ WHEN NOT MATCHED THEN
         , src.guid
         -- KEY
         , src.job_uuid
-        , src.pk_subject
-        , src.pk_semester
+        , src.pk_przedmiot_cyklu
         -- DBG
         , src.dbg_subj_codes
+        , src.dbg_semester_codes
         , src.dbg_map_subj_codes
+        , src.dbg_map_proto_types
         , src.dbg_subj_credit_kinds
+        , src.dbg_prz_kody
+        , src.dbg_cdyd_kody
+        , src.dbg_values_ok
+        , src.dbg_unique_match
         , src.dbg_matched
         , src.dbg_missing
         , src.dbg_mapped
@@ -418,12 +464,17 @@ WHEN MATCHED THEN
         , tgt.guid = src.guid
         -- KEY
 --        , tgt.job_uuid = src.job_uuid
---        , tgt.pk_subject = src.pk_subject
---        , tgt.pk_semester = src.pk_semester
+--        , tgt.pk_przedmiot_cyklu = src.pk_przedmiot_cyklu
         -- DBG
         , tgt.dbg_subj_codes = src.dbg_subj_codes
+        , tgt.dbg_semester_codes = src.dbg_semester_codes
         , tgt.dbg_map_subj_codes = src.dbg_map_subj_codes
+        , tgt.dbg_map_proto_types = src.dbg_map_proto_types
         , tgt.dbg_subj_credit_kinds = src.dbg_subj_credit_kinds
+        , tgt.dbg_prz_kody = src.dbg_prz_kody
+        , tgt.dbg_cdyd_kody = src.dbg_cdyd_kody
+        , tgt.dbg_values_ok = src.dbg_values_ok
+        , tgt.dbg_unique_match = src.dbg_unique_match
         , tgt.dbg_matched = src.dbg_matched
         , tgt.dbg_missing = src.dbg_missing
         , tgt.dbg_mapped = src.dbg_mapped

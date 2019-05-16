@@ -4,44 +4,29 @@
 MERGE INTO v2u_uu_atrybuty_przedmiotow tgt
 USING
     (
-        WITH u_0 AS
+        WITH u_00 AS
         (
             -- determine what to use as a single output row;
-            --  (*) if possible, use corresponding map_subj_code as primary key,
+            --  (*) if possible, use map_subj_code as primary key,
             --  (*) otherwise (incomplete or ambiguous subject map), use the
             --      subj_code as primary key.
             SELECT
-                  -- primary key
                   ss_j.job_uuid
-                , COALESCE(
-                      subject_map.map_subj_code
-                    , subjects.subj_code
-                  ) coalesced_subj_code
-                , 'KOD_WYDZ' pk_attribute
-
-                -- other "indexes"
-
-                , SET(CAST(
-                        COLLECT(subject_map.map_subj_code)
-                        AS V2u_Vchars1K_t
-                  )) map_subj_codes1k
-                , SET(CAST(
-                        COLLECT(subjects.subj_code)
-                        AS V2u_Vchars1K_t
-                  )) subj_codes1k
-                , SET(CAST(
-                        COLLECT(rev_subject_map.subj_code)
-                        AS V2u_Vchars1K_t
-                  )) rev_subj_codes1k
-                , SET(CAST(
-                        COLLECT(atrybuty_przedmiotow.id)
-                        AS V2u_Vchars1K_t
-                  )) ids1k
-
-                -- debugging
-
-                  -- "+ 0" trick is used to workaround oracle bug
-                , COUNT(sm_j.map_id + 0) dbg_mapped -- includes NULL map_subj_codes
+                , CASE
+                    WHEN atrybuty_przedmiotow.id IS NOT NULL
+                    THEN '{id: "'|| atrybuty_przedmiotow.id ||'"}'
+                    ELSE '{subject: "' ||
+                          COALESCE(
+                              subject_map.map_subj_code
+                            , subjects.subj_code
+                          )
+                        || '", attribute: "KOD_WYDZ"}'
+                  END pk_atrybut_przedmiotu
+                , subject_map.map_subj_code
+                , subjects.subj_code
+                , rev_subject_map.subj_code rev_subj_code
+                , atrybuty_przedmiotow.id
+                , sm_j.map_id subject_map_id
 
             FROM v2u_ko_subject_semesters_j ss_j
             INNER JOIN v2u_ko_subjects subjects
@@ -70,12 +55,39 @@ USING
                             atrybuty_przedmiotow.prz_kod = subject_map.map_subj_code
                         AND atrybuty_przedmiotow.tatr_kod = 'KOD_WYDZ'
                     )
+        ),
+        u_0 AS
+        (
+            SELECT
+                  u_00.job_uuid
+                , u_00.pk_atrybut_przedmiotu
+
+                , SET(CAST(
+                        COLLECT(u_00.map_subj_code)
+                        AS V2u_Vchars1K_t
+                  )) map_subj_codes1k
+                , SET(CAST(
+                        COLLECT(u_00.subj_code)
+                        AS V2u_Vchars1K_t
+                  )) subj_codes1k
+                , SET(CAST(
+                        COLLECT(u_00.rev_subj_code)
+                        AS V2u_Vchars1K_t
+                  )) rev_subj_codes1k
+                , SET(CAST(
+                        COLLECT(u_00.id)
+                        AS V2u_Vchars1K_t
+                  )) ids1k
+
+                -- debugging
+
+                  -- "+ 0" trick is used to workaround oracle bug
+                , COUNT(u_00.subject_map_id + 0) dbg_mapped -- includes NULL map_subj_codes
+
+            FROM u_00 u_00
             GROUP BY
-                  ss_j.job_uuid
-                , COALESCE(
-                      subject_map.map_subj_code
-                    , subjects.subj_code
-                  )
+                  u_00.job_uuid
+                , u_00.pk_atrybut_przedmiotu
         ),
         u AS
         ( -- make necessary adjustments to the raw values selected in u_0
@@ -83,8 +95,7 @@ USING
                  -- passed through
 
                   u_0.job_uuid
-                , u_0.coalesced_subj_code
-                , u_0.pk_attribute
+                , u_0.pk_atrybut_przedmiotu
                 , u_0.dbg_mapped
 
                 -- adjusted
@@ -130,8 +141,7 @@ USING
         ( -- determine our (v$*) values of certain fields
             SELECT
                   u.*
-                , u.coalesced_subj_code pk_subject
-                , u.pk_attribute v$tatr_kod
+                , 'KOD_WYDZ' v$tatr_kod
                 , u.map_subj_code v$prz_kod
                 , V2u_Get.Utw_Id(u.job_uuid) v$utw_id
                 , V2u_Get.Mod_Id(u.job_uuid) v$mod_id
@@ -239,8 +249,7 @@ USING
         FROM w w
     ) src
 ON  (
-            tgt.pk_subject = src.pk_subject
-        AND tgt.pk_attribute = src.pk_attribute
+            tgt.pk_atrybut_przedmiotu = src.pk_atrybut_przedmiotu
         AND tgt.job_uuid = src.job_uuid
     )
 WHEN NOT MATCHED THEN
@@ -257,8 +266,7 @@ WHEN NOT MATCHED THEN
         , wartosc_ang
         , id
         , job_uuid
-        , pk_subject
-        , pk_attribute
+        , pk_atrybut_przedmiotu
         -- DBG
         , dbg_mapped
         , dbg_map_subj_codes
@@ -285,8 +293,7 @@ WHEN NOT MATCHED THEN
         , src.wartosc_ang
         , src.id
         , src.job_uuid
-        , src.pk_subject
-        , src.pk_attribute
+        , src.pk_atrybut_przedmiotu
         -- DBG
         , src.dbg_mapped
         , src.dbg_map_subj_codes
@@ -314,8 +321,7 @@ WHEN MATCHED THEN
         , tgt.wartosc_ang = src.wartosc_ang
         , tgt.id = src.id
 --        , tgt.job_uuid = src.job_uuid
---        , tgt.pk_subject = src.pk_subject
---        , tgt.pk_attribute = src.pk_attribute
+--        , tgt.pk_atrybut_przedmiotu = src.pk_atrybut_przedmiotu
         -- DBG
         , tgt.dbg_mapped = src.dbg_mapped
         , tgt.dbg_map_subj_codes = src.dbg_map_subj_codes

@@ -1,10 +1,10 @@
 CREATE OR REPLACE TYPE V2u_Uu_Przedmiot_Cyklu_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Dz_Przedmiot_Cyklu_B_t
     ( job_uuid RAW(16)
-    , pk_subject VARCHAR2(32 CHAR)
-    , pk_semester VARCHAR2(20 CHAR)
+    , pk_przedmiot_cyklu VARCHAR2(128 CHAR)
     -- DBG
     , dbg_subj_codes NUMBER(5)
+    , dbg_semester_codes NUMBER(5)
     , dbg_map_subj_codes NUMBER(5)
     , dbg_map_proto_types NUMBER(5)
     , dbg_subj_credit_kinds NUMBER(5)
@@ -43,10 +43,10 @@ CREATE OR REPLACE TYPE V2u_Uu_Przedmiot_Cyklu_t
             , guid IN VARCHAR2
             -- KEY
             , job_uuid IN RAW
-            , pk_subject IN VARCHAR2
-            , pk_semester IN VARCHAR2
+            , pk_przedmiot_cyklu IN VARCHAR2
             -- DBG
             , dbg_subj_codes IN NUMBER
+            , dbg_semester_codes IN NUMBER
             , dbg_map_subj_codes IN NUMBER
             , dbg_map_proto_types IN NUMBER
             , dbg_subj_credit_kinds IN NUMBER
@@ -85,10 +85,10 @@ CREATE OR REPLACE TYPE V2u_Uu_Przedmiot_Cyklu_t
             , guid IN VARCHAR2
             -- KEY
             , job_uuid IN RAW
-            , pk_subject IN VARCHAR2
-            , pk_semester IN VARCHAR2
+            , pk_przedmiot_cyklu IN VARCHAR2
             -- DBG
             , dbg_subj_codes IN NUMBER
+            , dbg_semester_codes IN NUMBER
             , dbg_map_subj_codes IN NUMBER
             , dbg_map_proto_types IN NUMBER
             , dbg_subj_credit_kinds IN NUMBER

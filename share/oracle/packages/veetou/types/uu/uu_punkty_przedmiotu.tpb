@@ -21,6 +21,7 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Punkty_Przedmiotu_t AS
             , dbg_prg_kody IN NUMBER
             , dbg_cdyd_pocz IN NUMBER
             , dbg_cdyd_kon IN NUMBER
+            , dbg_map_subj_codes IN NUMBER
             , dbg_coalesced_subj_codes IN NUMBER
             , dbg_coalesced_subj_ectses IN NUMBER
             , dbg_map_program_codes IN NUMBER
@@ -60,6 +61,7 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Punkty_Przedmiotu_t AS
             , dbg_prg_kody => dbg_prg_kody
             , dbg_cdyd_pocz => dbg_cdyd_pocz
             , dbg_cdyd_kon => dbg_cdyd_kon
+            , dbg_map_subj_codes => dbg_map_subj_codes
             , dbg_coalesced_subj_codes => dbg_coalesced_subj_codes
             , dbg_coalesced_subj_ectses => dbg_coalesced_subj_ectses
             , dbg_map_program_codes => dbg_map_program_codes
@@ -101,6 +103,7 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Punkty_Przedmiotu_t AS
             , dbg_prg_kody IN NUMBER
             , dbg_cdyd_pocz IN NUMBER
             , dbg_cdyd_kon IN NUMBER
+            , dbg_map_subj_codes IN NUMBER
             , dbg_coalesced_subj_codes IN NUMBER
             , dbg_coalesced_subj_ectses IN NUMBER
             , dbg_map_program_codes IN NUMBER
@@ -141,6 +144,7 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Punkty_Przedmiotu_t AS
         SELF.dbg_prg_kody := dbg_prg_kody;
         SELF.dbg_cdyd_pocz := dbg_cdyd_pocz;
         SELF.dbg_cdyd_kon := dbg_cdyd_kon;
+        SELF.dbg_map_subj_codes := dbg_map_subj_codes;
         SELF.dbg_coalesced_subj_codes := dbg_coalesced_subj_codes;
         SELF.dbg_coalesced_subj_ectses := dbg_coalesced_subj_ectses;
         SELF.dbg_map_program_codes := dbg_map_program_codes;

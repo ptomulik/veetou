@@ -2,7 +2,7 @@ CREATE TABLE v2u_uu_atrybuty_przedmiotow
 OF V2u_Uu_Atrybut_Przedmiotu_t
     (
           CONSTRAINT v2u_uu_atrybuty_przedm_pk
-            PRIMARY KEY (pk_attribute, pk_subject, job_uuid)
+            PRIMARY KEY (pk_atrybut_przedmiotu, job_uuid)
     )
 OBJECT IDENTIFIER IS PRIMARY KEY;
 /

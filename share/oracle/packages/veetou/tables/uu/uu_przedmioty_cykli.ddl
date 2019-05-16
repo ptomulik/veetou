@@ -2,7 +2,7 @@ CREATE TABLE v2u_uu_przedmioty_cykli
 OF V2u_Uu_Przedmiot_Cyklu_t
     (
           CONSTRAINT v2u_uu_przedmioty_cykli_pk
-            PRIMARY KEY (pk_subject, pk_semester, job_uuid)
+            PRIMARY KEY (pk_przedmiot_cyklu, job_uuid)
     )
 OBJECT IDENTIFIER IS PRIMARY KEY;
 /

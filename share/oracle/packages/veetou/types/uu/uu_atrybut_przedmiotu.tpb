@@ -14,8 +14,7 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Atrybut_Przedmiotu_t AS
             , id IN VARCHAR2
             -- KEY
             , job_uuid IN RAW
-            , pk_subject IN VARCHAR2
-            , pk_attribute IN VARCHAR2
+            , pk_atrybut_przedmiotu IN VARCHAR2
             -- DBG
             , dbg_mapped IN NUMBER
             , dbg_map_subj_codes IN NUMBER
@@ -45,8 +44,7 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Atrybut_Przedmiotu_t AS
             , id => id
             -- KEY
             , job_uuid => job_uuid
-            , pk_subject => pk_subject
-            , pk_attribute => pk_attribute
+            , pk_atrybut_przedmiotu => pk_atrybut_przedmiotu
             -- DBG
             , dbg_mapped => dbg_mapped
             , dbg_map_subj_codes => dbg_map_subj_codes
@@ -78,8 +76,7 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Atrybut_Przedmiotu_t AS
             , id IN VARCHAR2
             -- KEY
             , job_uuid IN RAW
-            , pk_subject IN VARCHAR2
-            , pk_attribute IN VARCHAR2
+            , pk_atrybut_przedmiotu IN VARCHAR2
             -- DBG
             , dbg_mapped IN NUMBER
             , dbg_map_subj_codes IN NUMBER
@@ -110,8 +107,7 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Atrybut_Przedmiotu_t AS
         );
         -- KEY
         SELF.job_uuid := job_uuid;
-        SELF.pk_subject := pk_subject;
-        SELF.pk_attribute := pk_attribute;
+        SELF.pk_atrybut_przedmiotu := pk_atrybut_przedmiotu;
         -- DBG
         SELF.dbg_mapped := dbg_mapped;
         SELF.dbg_map_subj_codes := dbg_map_subj_codes;
