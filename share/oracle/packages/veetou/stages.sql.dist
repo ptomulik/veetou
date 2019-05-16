@@ -371,6 +371,88 @@ COMMIT;
 @@merges/uu/uu_atrybuty_przedmiotow.sql;
 
 /*
+UPDATE
+v2u_dz_atrybuty_przedmiotow tgt
+-- dz_atrybuty_przedmiotow tgt
+SET (
+              tatr_kod
+            , prz_kod
+            , wart_lst_id
+            , prz_kod_rel
+--            , utw_id
+--            , utw_data
+            , mod_id
+--            , mod_data
+            , wartosc
+            , wartosc_ang
+) = (
+*/
+        SELECT
+              tatr_kod
+            , prz_kod
+            , wart_lst_id
+            , prz_kod_rel
+--            , utw_id
+--            , utw_data
+            , mod_id
+--            , mod_data
+            , wartosc
+            , wartosc_ang
+        FROM v2u_uu_atrybuty_przedmiotow src
+        WHERE   src.change_type = 'U'
+            AND src.safe_to_change = 1
+/*
+            AND src.id = tgt.id
+)
+WHERE EXISTS (
+    SELECT 1
+    FROM v2u_uu_atrybuty_przedmiotow src
+    WHERE   src.change_type = 'U'
+        AND src.safe_to_change = 1
+        AND src.id = tgt.id
+)
+*/
+;
+
+/*
+INSERT INTO
+    v2u_dz_atrybuty_przedmiotow tgt
+-- dz_atrybuty_przedmiotow tgt
+        (
+          tatr_kod
+        , prz_kod
+        , wart_lst_id
+        , prz_kod_rel
+        , utw_id
+--        , utw_data
+--        , mod_id
+--        , mod_data
+        , wartosc
+        , wartosc_ang
+        , id
+        )
+*/
+SELECT
+          src.tatr_kod
+        , src.prz_kod
+        , src.wart_lst_id
+        , src.prz_kod_rel
+        , src.utw_id
+--        , src.utw_data
+--        , src.mod_id
+--        , src.mod_data
+        , src.wartosc
+        , src.wartosc_ang
+        , id
+FROM v2u_uu_atrybuty_przedmiotow src
+WHERE
+        src.change_type = 'I'
+    AND src.safe_to_change = 1
+;
+
+
+
+/*
 -- MERGE INTO dz_atrybuty_przedmiotow tgt
 MERGE INTO v2u_dz_atrybuty_przedmiotow tgt
 USING
@@ -467,6 +549,119 @@ COMMIT;
 DELETE FROM v2u_uu_przedmioty_cykli;
 COMMIT;
 @@merges/uu/uu_przedmioty_cykli.sql;
+
+/*
+UPDATE
+v2u_dz_przedmioty_cykli tgt
+--dz_przedmioty_cykli tgt
+SET (
+--        , utw_id
+--        , utw_data
+          mod_id
+--        , mod_data
+        , tpro_kod
+        , uczestnicy
+        , url
+        , uwagi
+        , notes
+        , literatura
+        , literatura_ang
+        , opis
+        , opis_ang
+        , skrocony_opis
+        , skrocony_opis_ang
+        , status_sylabusu
+        , guid
+) = (
+*/
+        SELECT
+--        , utw_id
+--        , utw_data
+          mod_id
+--        , mod_data
+        , tpro_kod
+        , uczestnicy
+        , url
+        , uwagi
+        , notes
+        , literatura
+        , literatura_ang
+        , opis
+        , opis_ang
+        , skrocony_opis
+        , skrocony_opis_ang
+        , status_sylabusu
+        , guid
+        FROM v2u_uu_przedmioty_cykli src
+        WHERE   src.change_type = 'U'
+            AND src.safe_to_change = 1
+/*
+            AND src.prz_kod = tgt.prz_kod
+            AND src.cdyd_kod = tgt.cdyd_kod
+)
+WHERE EXISTS (
+    SELECT 1
+    FROM v2u_uu_przedmioty_cykli src
+    WHERE   src.change_type = 'U'
+        AND src.safe_to_change = 1
+        AND src.prz_kod = tgt.prz_kod
+        AND src.cdyd_kod = tgt.cdyd_kod
+)
+*/
+;
+
+/*
+INSERT INTO
+    v2u_dz_przedmioty_cykli tgt
+--dz_przedmioty_cykli tgt
+        ( prz_kod
+        , cdyd_kod
+        , utw_id
+--        , utw_data
+--        , mod_id
+--        , mod_data
+        , tpro_kod
+        , uczestnicy
+        , url
+        , uwagi
+        , notes
+        , literatura
+        , literatura_ang
+        , opis
+        , opis_ang
+        , skrocony_opis
+        , skrocony_opis_ang
+        , status_sylabusu
+        , guid
+        )
+*/
+SELECT
+          prz_kod
+        , cdyd_kod
+        , utw_id
+--        , utw_data
+--        , mod_id
+--        , mod_data
+        , tpro_kod
+        , uczestnicy
+        , url
+        , uwagi
+        , notes
+        , literatura
+        , literatura_ang
+        , opis
+        , opis_ang
+        , skrocony_opis
+        , skrocony_opis_ang
+        , status_sylabusu
+        , guid
+FROM v2u_uu_przedmioty_cykli src
+WHERE
+        src.change_type = 'I'
+    AND src.safe_to_change = 1
+;
+
+
 
 /*
 -- MERGE INTO dz_przedmioty_cykli tgt
