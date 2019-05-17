@@ -153,7 +153,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Pattern_t AS
         RETURN INTEGER
     IS
     BEGIN
-        RETURN V2U_Match.String_Like(expr_subj_name, subj_name);
+        RETURN V2U_Match.String_Like(UPPER(expr_subj_name), UPPER(subj_name));
     END;
 
 

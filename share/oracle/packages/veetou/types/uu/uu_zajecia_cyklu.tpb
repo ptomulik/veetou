@@ -27,15 +27,14 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Zajecia_Cyklu_t AS
             , czy_pokazywac_termin IN VARCHAR2
             -- KEY
             , job_uuid IN RAW
-            , pk_subject IN VARCHAR2
-            , pk_semester IN VARCHAR2
-            , pk_classes IN VARCHAR2
+            , pk_zajecia_cyklu IN VARCHAR2
             -- DBG
             , dbg_subj_codes IN NUMBER
             , dbg_map_subj_codes IN NUMBER
             , dbg_map_classes_types IN NUMBER
             , dbg_map_proto_types IN NUMBER
             , dbg_subj_credit_kinds IN NUMBER
+            , dbg_semester_codes IN NUMBER
             , dbg_prz_kody IN NUMBER
             , dbg_cdyd_kody IN NUMBER
             , dbg_tzaj_kody IN NUMBER
@@ -81,15 +80,14 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Zajecia_Cyklu_t AS
             , czy_pokazywac_termin => czy_pokazywac_termin
             -- KEY
             , job_uuid => job_uuid
-            , pk_subject => pk_subject
-            , pk_semester => pk_semester
-            , pk_classes => pk_classes
+            , pk_zajecia_cyklu => pk_zajecia_cyklu
             -- DBG
             , dbg_subj_codes => dbg_subj_codes
             , dbg_map_subj_codes => dbg_map_subj_codes
             , dbg_map_classes_types => dbg_map_classes_types
             , dbg_map_proto_types => dbg_map_proto_types
             , dbg_subj_credit_kinds => dbg_subj_credit_kinds
+            , dbg_semester_codes => dbg_semester_codes
             , dbg_prz_kody => dbg_prz_kody
             , dbg_cdyd_kody => dbg_cdyd_kody
             , dbg_tzaj_kody => dbg_tzaj_kody
@@ -137,15 +135,14 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Zajecia_Cyklu_t AS
             , czy_pokazywac_termin IN VARCHAR2
             -- KEY
             , job_uuid IN RAW
-            , pk_subject IN VARCHAR2
-            , pk_semester IN VARCHAR2
-            , pk_classes IN VARCHAR2
+            , pk_zajecia_cyklu IN VARCHAR2
             -- DBG
             , dbg_subj_codes IN NUMBER
             , dbg_map_subj_codes IN NUMBER
             , dbg_map_classes_types IN NUMBER
             , dbg_map_proto_types IN NUMBER
             , dbg_subj_credit_kinds IN NUMBER
+            , dbg_semester_codes IN NUMBER
             , dbg_prz_kody IN NUMBER
             , dbg_cdyd_kody IN NUMBER
             , dbg_tzaj_kody IN NUMBER
@@ -192,15 +189,14 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Zajecia_Cyklu_t AS
             );
         -- KEY
         SELF.job_uuid := job_uuid;
-        SELF.pk_subject := pk_subject;
-        SELF.pk_semester := pk_semester;
-        SELF.pk_classes := pk_classes;
+        SELF.pk_zajecia_cyklu := pk_zajecia_cyklu;
         -- DBG
         SELF.dbg_subj_codes := dbg_subj_codes;
         SELF.dbg_map_subj_codes := dbg_map_subj_codes;
         SELF.dbg_map_classes_types := dbg_map_classes_types;
         SELF.dbg_map_proto_types := dbg_map_proto_types;
         SELF.dbg_subj_credit_kinds := dbg_subj_credit_kinds;
+        SELF.dbg_semester_codes := dbg_semester_codes;
         SELF.dbg_prz_kody := dbg_prz_kody;
         SELF.dbg_cdyd_kody := dbg_cdyd_kody;
         SELF.dbg_tzaj_kody := dbg_tzaj_kody;

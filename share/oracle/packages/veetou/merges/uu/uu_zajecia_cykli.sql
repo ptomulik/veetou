@@ -1,82 +1,41 @@
 MERGE INTO v2u_uu_zajecia_cykli tgt
 USING
     (
-        WITH u_0 AS
+        WITH u_00 AS
         (
             -- determine what to use as a single output row;
-            --  (*) if possible, use corresponding map_subj_code as primary key,
-            --  (*) otherwise (incomplete or ambiguous subject map), use the
-            --      subj_code as primary key.
-            --  (*) similarly for map_classes_type vs. classes_type
             SELECT
                   cs_j.job_uuid
-                , COALESCE(
-                      subject_map.map_subj_code
-                    , subjects.subj_code
-                ) coalesced_subj_code
-                , COALESCE(
-                      classes_map.map_classes_type
-                    , cs_j.classes_type
-                ) coalesced_classes_type
+                , cs_j.classes_type
+                , cs_j.classes_hours
+                , subjects.subj_code
+                , subjects.subj_credit_kind
+                , subject_map.map_subj_code
+                , classes_map.map_classes_type
+                , classes_map.map_classes_hours
+                , classes_map.map_proto_type
                 , semesters.semester_code
-                , SET(CAST(
-                        COLLECT(subjects.subj_code)
-                        AS V2u_Vchars1K_t
-                  )) subj_codes1k
-                , SET(CAST(
-                        COLLECT(subject_map.map_subj_code)
-                        AS V2u_Vchars1K_t
-                  )) map_subj_codes1k
-                , SET(CAST(
-                        COLLECT(cs_j.classes_type)
-                        AS V2u_Vchars1K_t
-                  )) classes_types1k
-                , SET(CAST(
-                        COLLECT(classes_map.map_classes_type)
-                        AS V2u_Vchars1K_t
-                  )) map_classes_types1k
-                , SET(CAST(
-                        COLLECT(cs_j.classes_hours)
-                        AS V2u_Ints8_t
-                  )) classes_hours_tab
-                , SET(CAST(
-                        COLLECT(classes_map.map_classes_hours)
-                        AS V2u_Ints8_t
-                  )) map_classes_hours_tab
-                , SET(CAST(
-                        COLLECT(classes_map.map_proto_type)
-                        AS V2u_Vchars1K_t
-                  )) map_proto_types1k
-                , SET(CAST(
-                        COLLECT(subjects.subj_credit_kind)
-                        AS V2u_Vchars1K_t
-                  )) subj_credit_kinds1k
-                , SET(CAST(
-                        COLLECT(grades.subj_grade)
-                        AS V2u_Vchars1K_t
-                  )) subj_grades1k
-                , SET(CAST(
-                        COLLECT(ma_zajcykl_j.prz_kod ORDER BY ma_zajcykl_j.subject_map_id)
-                        AS V2u_Vchars1K_t
-                  )) prz_kody1k
-                , SET(CAST(
-                        COLLECT(ma_zajcykl_j.cdyd_kod ORDER BY ma_zajcykl_j.subject_map_id)
-                        AS V2u_Vchars1K_t
-                  )) cdyd_kody1k
-                , SET(CAST(
-                        COLLECT(ma_zajcykl_j.tzaj_kod ORDER BY ma_zajcykl_j.subject_map_id)
-                        AS V2u_Vchars1K_t
-                  )) tzaj_kody1k
-                , SET(CAST(
-                        COLLECT(ma_zajcykl_j.zaj_cyk_id ORDER BY ma_zajcykl_j.subject_map_id)
-                        AS V2u_Dz_Ids_t
-                  )) ids
+                , grades.subj_grade
+                , ma_zajcykl_j.prz_kod
+                , ma_zajcykl_j.cdyd_kod
+                , ma_zajcykl_j.tzaj_kod
+                , ma_zajcykl_j.zaj_cyk_id
 
-                  -- "+ 0" trick is used to workaround oracle bug
-                , COUNT(ma_zajcykl_j.zaj_cyk_id + 0) dbg_matched
-                , COUNT(mi_zajcykl_j.subject_id + 0) dbg_missing
-                , COUNT(sm_j.map_id + 0) dbg_subject_mapped
-                , COUNT(cm_j.map_id + 0) dbg_classes_mapped
+                , ma_zajcykl_j.subject_id ma_id
+                , mi_zajcykl_j.subject_id mi_id
+                , sm_j.map_id subject_map_id
+                , cm_j.map_id classes_map_id
+                , CASE
+                    WHEN ma_zajcykl_j.zaj_cyk_id IS NOT NULL
+                    THEN '{id: ' || TO_CHAR(ma_zajcykl_j.zaj_cyk_id) || '}'
+                    ELSE '{subject: "' ||
+                        COALESCE(subject_map.map_subj_code, subjects.subj_code)
+                        || '", classes: "' ||
+                        COALESCE(classes_map.map_classes_type, cs_j.classes_type)
+                        || '", semester: "' ||
+                        semesters.semester_code
+                        || '"}'
+                  END pk_zajecia_cyklu
 
             FROM v2u_ko_classes_semesters_j cs_j
             INNER JOIN v2u_ko_subjects subjects
@@ -138,19 +97,92 @@ USING
                         AND grades.classes_type = cs_j.classes_type
                         AND grades.job_uuid = cs_j.job_uuid
                     )
+        ),
+        u_0 AS
+        (
+            -- determine what to use as a single output row;
+            SELECT
+                  u_00.job_uuid
+                , u_00.pk_zajecia_cyklu
+
+                , SET(CAST(
+                        COLLECT(u_00.semester_code)
+                        AS V2u_Vchars1K_T
+                  )) semester_codes1k
+                , SET(CAST(
+                        COLLECT(u_00.subj_code)
+                        AS V2u_Vchars1K_t
+                  )) subj_codes1k
+                , SET(CAST(
+                        COLLECT(u_00.map_subj_code)
+                        AS V2u_Vchars1K_t
+                  )) map_subj_codes1k
+                , SET(CAST(
+                        COLLECT(u_00.classes_type)
+                        AS V2u_Vchars1K_t
+                  )) classes_types1k
+                , SET(CAST(
+                        COLLECT(u_00.map_classes_type)
+                        AS V2u_Vchars1K_t
+                  )) map_classes_types1k
+                , SET(CAST(
+                        COLLECT(u_00.classes_hours)
+                        AS V2u_Ints8_t
+                  )) classes_hours_tab
+                , SET(CAST(
+                        COLLECT(u_00.map_classes_hours)
+                        AS V2u_Ints8_t
+                  )) map_classes_hours_tab
+                , SET(CAST(
+                        COLLECT(u_00.map_proto_type)
+                        AS V2u_Vchars1K_t
+                  )) map_proto_types1k
+                , SET(CAST(
+                        COLLECT(u_00.subj_credit_kind)
+                        AS V2u_Vchars1K_t
+                  )) subj_credit_kinds1k
+                , SET(CAST(
+                        COLLECT(u_00.subj_grade)
+                        AS V2u_Vchars1K_t
+                  )) subj_grades1k
+                , SET(CAST(
+                        COLLECT(u_00.prz_kod ORDER BY u_00.subject_map_id)
+                        AS V2u_Vchars1K_t
+                  )) prz_kody1k
+                , SET(CAST(
+                        COLLECT(u_00.cdyd_kod ORDER BY u_00.subject_map_id)
+                        AS V2u_Vchars1K_t
+                  )) cdyd_kody1k
+                , SET(CAST(
+                        COLLECT(u_00.tzaj_kod ORDER BY u_00.subject_map_id)
+                        AS V2u_Vchars1K_t
+                  )) tzaj_kody1k
+                , SET(CAST(
+                        COLLECT(u_00.zaj_cyk_id ORDER BY u_00.subject_map_id)
+                        AS V2u_Dz_Ids_t
+                  )) ids
+
+                  -- "+ 0" trick is used to workaround oracle bug
+                , COUNT(u_00.ma_id + 0) dbg_matched
+                , COUNT(u_00.mi_id + 0) dbg_missing
+                , COUNT(u_00.subject_map_id + 0) dbg_subject_mapped
+                , COUNT(u_00.classes_map_id + 0) dbg_classes_mapped
+
+            FROM u_00 u_00
             GROUP BY
-                  cs_j.job_uuid
-                , COALESCE(subject_map.map_subj_code, subjects.subj_code)
-                , COALESCE(classes_map.map_classes_type, cs_j.classes_type)
-                , semesters.semester_code
+                  u_00.job_uuid
+                , u_00.pk_zajecia_cyklu
         ),
         u AS
         ( -- make necessary adjustments to the raw values selected in u_0
             SELECT
                   u_0.job_uuid
-                , u_0.coalesced_subj_code
-                , u_0.coalesced_classes_type
-                , u_0.semester_code
+                , u_0.pk_zajecia_cyklu
+
+                , ( SELECT SUBSTR(VALUE(t), 1, 32)
+                    FROM TABLE(u_0.semester_codes1k) t
+                    WHERE ROWNUM <= 1
+                  ) semester_code
                 , ( SELECT SUBSTR(VALUE(t), 1, 16)
                     FROM TABLE(u_0.subj_credit_kinds1k) t
                     WHERE ROWNUM <= 1
@@ -197,6 +229,9 @@ USING
                   ) id
 
                 -- columns used for debugging
+                , ( SELECT COUNT(*)
+                    FROM TABLE(u_0.semester_codes1k)
+                  ) dbg_semester_codes
                 , ( SELECT COUNT(*)
                     FROM TABLE(u_0.subj_codes1k)
                   ) dbg_subj_codes
@@ -277,6 +312,8 @@ USING
                         AND u.dbg_map_proto_types <= 1
                         AND u.dbg_subj_credit_kinds = 1
                         AND u.dbg_classes_hours = 1
+                        AND u.dbg_semester_codes = 1
+                        AND u.semester_code IS NOT NULL
                         -- and we have correct tpro_kod value
                         AND COALESCE(u.map_classes_hours, u.classes_hours)
                             BETWEEN 0 AND 1200
@@ -381,9 +418,7 @@ USING
         )
         SELECT
               w.job_uuid
-            , w.coalesced_subj_code pk_subject
-            , w.semester_code pk_semester
-            , w.coalesced_classes_type pk_classes
+            , w.pk_zajecia_cyklu
 
             , w.id
             , DECODE(w.change_type, '-', w.u$prz_kod, w.v$prz_kod) prz_kod
@@ -422,6 +457,7 @@ USING
             , w.dbg_map_classes_types
             , w.dbg_map_proto_types
             , w.dbg_subj_credit_kinds
+            , w.dbg_semester_codes
             , w.dbg_prz_kody
             , w.dbg_cdyd_kody
             , w.dbg_tzaj_kody
@@ -437,9 +473,7 @@ USING
         FROM w w
     ) src
 ON  (
-            tgt.pk_subject = src.pk_subject
-        AND tgt.pk_semester = src.pk_semester
-        AND tgt.pk_classes = src.pk_classes
+            tgt.pk_zajecia_cyklu = src.pk_zajecia_cyklu
         AND tgt.job_uuid = src.job_uuid
     )
 WHEN NOT MATCHED THEN
@@ -470,15 +504,14 @@ WHEN NOT MATCHED THEN
         , czy_pokazywac_termin
         -- KEY
         , job_uuid
-        , pk_subject
-        , pk_semester
-        , pk_classes
+        , pk_zajecia_cyklu
         -- DBG
         , dbg_subj_codes
         , dbg_map_subj_codes
         , dbg_map_classes_types
         , dbg_map_proto_types
         , dbg_subj_credit_kinds
+        , dbg_semester_codes
         , dbg_prz_kody
         , dbg_cdyd_kody
         , dbg_tzaj_kody
@@ -522,15 +555,14 @@ WHEN NOT MATCHED THEN
         , src.czy_pokazywac_termin
         -- KEY
         , src.job_uuid
-        , src.pk_subject
-        , src.pk_semester
-        , src.pk_classes
+        , src.pk_zajecia_cyklu
         -- DBG
         , src.dbg_subj_codes
         , src.dbg_map_subj_codes
         , src.dbg_map_classes_types
         , src.dbg_map_proto_types
         , src.dbg_subj_credit_kinds
+        , src.dbg_semester_codes
         , src.dbg_prz_kody
         , src.dbg_cdyd_kody
         , src.dbg_tzaj_kody
@@ -584,6 +616,7 @@ WHEN MATCHED THEN
         , tgt.dbg_map_classes_types = src.dbg_map_classes_types
         , tgt.dbg_map_proto_types = src.dbg_map_proto_types
         , tgt.dbg_subj_credit_kinds = src.dbg_subj_credit_kinds
+        , tgt.dbg_semester_codes = src.dbg_semester_codes
         , tgt.dbg_prz_kody = src.dbg_prz_kody
         , tgt.dbg_cdyd_kody = src.dbg_cdyd_kody
         , tgt.dbg_tzaj_kody = src.dbg_tzaj_kody

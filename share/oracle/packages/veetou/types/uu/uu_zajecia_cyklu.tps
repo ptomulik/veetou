@@ -1,15 +1,14 @@
 CREATE OR REPLACE TYPE V2u_Uu_Zajecia_Cyklu_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Dz_Zajecia_Cyklu_B_t
     ( job_uuid RAW(16)
-    , pk_subject VARCHAR2(32 CHAR)
-    , pk_semester VARCHAR2(20 CHAR)
-    , pk_classes VARCHAR2(20 CHAR)
+    , pk_zajecia_cyklu VARCHAR2(128 CHAR)
     -- DBG
     , dbg_subj_codes NUMBER(5)
     , dbg_map_subj_codes NUMBER(5)
     , dbg_map_classes_types NUMBER(5)
     , dbg_map_proto_types NUMBER(5)
     , dbg_subj_credit_kinds NUMBER(5)
+    , dbg_semester_codes NUMBER(5)
     , dbg_prz_kody NUMBER(5)
     , dbg_cdyd_kody NUMBER(5)
     , dbg_tzaj_kody NUMBER(5)
@@ -54,15 +53,14 @@ CREATE OR REPLACE TYPE V2u_Uu_Zajecia_Cyklu_t
             , czy_pokazywac_termin IN VARCHAR2
             -- KEY
             , job_uuid IN RAW
-            , pk_subject IN VARCHAR2
-            , pk_semester IN VARCHAR2
-            , pk_classes IN VARCHAR2
+            , pk_zajecia_cyklu IN VARCHAR2
             -- DBG
             , dbg_subj_codes IN NUMBER
             , dbg_map_subj_codes IN NUMBER
             , dbg_map_classes_types IN NUMBER
             , dbg_map_proto_types IN NUMBER
             , dbg_subj_credit_kinds IN NUMBER
+            , dbg_semester_codes IN NUMBER
             , dbg_prz_kody IN NUMBER
             , dbg_cdyd_kody IN NUMBER
             , dbg_tzaj_kody IN NUMBER
@@ -108,15 +106,14 @@ CREATE OR REPLACE TYPE V2u_Uu_Zajecia_Cyklu_t
             , czy_pokazywac_termin IN VARCHAR2
             -- KEY
             , job_uuid IN RAW
-            , pk_subject IN VARCHAR2
-            , pk_semester IN VARCHAR2
-            , pk_classes IN VARCHAR2
+            , pk_zajecia_cyklu IN VARCHAR2
             -- DBG
             , dbg_subj_codes IN NUMBER
             , dbg_map_subj_codes IN NUMBER
             , dbg_map_classes_types IN NUMBER
             , dbg_map_proto_types IN NUMBER
             , dbg_subj_credit_kinds IN NUMBER
+            , dbg_semester_codes IN NUMBER
             , dbg_prz_kody IN NUMBER
             , dbg_cdyd_kody IN NUMBER
             , dbg_tzaj_kody IN NUMBER
