@@ -49,7 +49,6 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Program_Osoby_t AS
             , kod_isced IN VARCHAR2
             -- KEY
             , job_uuid IN RAW
-            , pk_student IN VARCHAR2
             , pk_program_osoby IN VARCHAR2
             -- DBG
             , dbg_unique_match IN NUMBER
@@ -120,7 +119,6 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Program_Osoby_t AS
             , kod_isced => kod_isced
             -- KEY
             , job_uuid => job_uuid
-            , pk_student => pk_student
             , pk_program_osoby => pk_program_osoby
             -- DBG
             , dbg_unique_match => dbg_unique_match
@@ -193,7 +191,6 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Program_Osoby_t AS
             , kod_isced IN VARCHAR2
             -- KEY
             , job_uuid IN RAW
-            , pk_student IN VARCHAR2
             , pk_program_osoby IN VARCHAR2
             -- DBG
             , dbg_unique_match IN NUMBER
@@ -265,7 +262,6 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Program_Osoby_t AS
             );
         -- KEY
         SELF.job_uuid := job_uuid;
-        SELF.pk_student := pk_student;
         SELF.pk_program_osoby := pk_program_osoby;
         -- DBG
         SELF.dbg_unique_match := dbg_unique_match;

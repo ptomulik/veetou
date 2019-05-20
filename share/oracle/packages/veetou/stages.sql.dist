@@ -62,6 +62,13 @@ COMMIT;
 @@merges/dz/dz_studenci.sql;
 
 
+--
+-- dz_wartosci_ocen
+--
+DELETE FROM v2u_dz_wartosci_ocen;
+COMMIT;
+@@merges/dz/dz_wartosci_ocen.sql;
+
 
 --
 -- dz_przedmioty
@@ -1023,6 +1030,42 @@ COMMIT;
 
 
 --
+-- dz_protokoly
+--
+DELETE FROM v2u_dz_protokoly;
+COMMIT;
+@@merges/dz/dz_protokoly.sql;
+
+DELETE FROM v2u_ko_matched_protos_j;
+COMMIT;
+@@merges/ko/ko_matched_protos_j.sql;
+
+DELETE FROM v2u_ko_missing_protos_j;
+COMMIT;
+@@merges/ko/ko_missing_protos_j.sql;
+
+DELETE FROM v2u_uu_protokoly;
+COMMIT;
+@@merges/uu/uu_protokoly.sql;
+
+
+--
+-- dz_terminy_protokolow
+--
+DELETE FROM v2u_dz_terminy_protokolow;
+COMMIT;
+@@merges/dz/dz_terminy_protokolow.sql;
+
+
+--
+-- dz_oceny
+--
+DELETE FROM v2u_dz_oceny;
+COMMIT;
+@@merges/dz/dz_oceny.sql;
+
+
+--
 -- dz_zajecia_prz_obcych
 --
 DELETE FROM v2u_dz_zajecia_prz_obcych;
@@ -1206,39 +1249,6 @@ WHEN MATCHED THEN
 DELETE FROM v2u_dz_zal_przedm_prgos;
 COMMIT;
 @@merges/dz/dz_zal_przedm_prgos.sql;
-
-
---
--- dz_oceny
---
-DELETE FROM v2u_dz_oceny;
-COMMIT;
-@@merges/dz/dz_oceny.sql;
-
-
---
--- dz_wartosci_ocen
---
-DELETE FROM v2u_dz_wartosci_ocen;
-COMMIT;
-@@merges/dz/dz_wartosci_ocen.sql;
-
-
---
--- dz_terminy_protokolow
---
-DELETE FROM v2u_dz_terminy_protokolow;
-COMMIT;
-@@merges/dz/dz_terminy_protokolow.sql;
-
-
---
--- dz_protokoly
---
-DELETE FROM v2u_dz_protokoly;
-COMMIT;
-@@merges/dz/dz_protokoly.sql;
-
 
 
 -- vim: set ft=sql ts=4 sw=4 et:

@@ -53,7 +53,7 @@ USING
                         CASE
                         WHEN programy_osob.status IN ('DYP', 'SKR')
                         THEN programy_osob.plan_data_ukon
-                        ELSE GREATEST(CURRENT_DATE, programy_osob.plan_data_ukon, programy_osob.mod_data)
+                        ELSE GREATEST(CURRENT_DATE, programy_osob.plan_data_ukon)
                         END
                     )
                 )
