@@ -1,7 +1,7 @@
 CREATE OR REPLACE TYPE V2u_Uu_Program_Osoby_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Dz_Program_Osoby_B_t
     ( job_uuid RAW(16)
-    , pk_program_osoby VARCHAR2(256 CHAR)
+    , pk_program_osoby VARCHAR2(200 CHAR)
     -- DBG
     , dbg_unique_match NUMBER(1)
     , dbg_values_ok NUMBER(1)

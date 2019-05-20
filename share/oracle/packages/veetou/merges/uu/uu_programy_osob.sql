@@ -9,8 +9,17 @@ USING
                 , ss_j.specialty_id
                 , ss_j.semester_id
                 , students.student_index
+                , specialty_map.map_program_code
+                , specialty_map.map_org_unit
                 , V2U_Get.Faculty(specialties.faculty).code faculty_code
                 , semesters.semester_code
+                , ma_prgos_j.prgos_id
+                , ma_prgos_j.prg_kod
+                , studenci.id st_id
+                , studenci.os_id os_id
+                , sk_progs_j.prg_kod skipped_prg_kod
+                , sm_j.map_id specialty_map_id
+
                 , CASE
                     WHEN ma_prgos_j.prgos_id IS NOT NULL
                     THEN '{id: ' || ma_prgos_j.prgos_id || '}'
@@ -26,26 +35,14 @@ USING
                         V2U_Get.Studies_Mode(specialties.studies_modetier)
                         || '", studies_field: "' ||
                         V2U_Get.Acronym(specialties.studies_field)
-                        || '", studies_specialty: "'
+                        || '", studies_specialty: "' ||
                         V2U_Get.Acronym(specialties.studies_specialty)
-                        '"}'
+                        || '"}'
                     END pk_program_osoby
---                , SUBSTR(
---                    specialties.university
---                    || ':' ||
---                    specialties.faculty
---                    || ':' ||
---                    V2U_Get.Studies_Tier(specialties.studies_modetier)
---                    || ':' ||
---                    V2U_Get.Studies_Mode(specialties.studies_modetier)
---                    || ':' ||
---                    V2U_Get.Acronym(specialties.studies_field)
---                    || ':' ||
---                    V2U_Get.Acronym(specialties.studies_specialty)
---                  , 1, 128
---                  ) specialty_string
+
                 , ma_prgos_j.student_id ma_id
                 , mi_prgos_j.student_id mi_id
+
             FROM v2u_ko_student_semesters_j ss_j
             INNER JOIN v2u_ko_students students
                 ON  (
@@ -76,6 +73,26 @@ USING
                         AND mi_prgos_j.semester_id = ss_j.semester_id
                         AND mi_prgos_j.job_uuid = ss_j.job_uuid
                     )
+            LEFT JOIN v2u_ko_skipped_programs_j sk_progs_j
+                ON  (
+                            sk_progs_j.specialty_id =  ss_j.specialty_id
+                        AND sk_progs_j.semester_id = ss_j.semester_id
+                        AND sk_progs_j.job_uuid = ss_j.job_uuid
+                    )
+            LEFT JOIN v2u_ko_specialty_map_j sm_j
+                ON  (
+                            sm_j.specialty_id = ss_j.specialty_id
+                        AND sm_j.semester_id = ss_j.semester_id
+                        AND sm_j.job_uuid = ss_j.job_uuid
+                    )
+            LEFT JOIN v2u_specialty_map specialty_map
+                ON  (
+                            specialty_map.id = sm_j.map_id
+                    )
+            LEFT JOIN v2u_dz_studenci studenci
+                ON  (
+                            studenci.indeks = students.student_index
+                    )
         ),
         u_0 AS
         ( -- decide what to use as a single row
@@ -84,29 +101,16 @@ USING
                 -- key
 
                   u_00.job_uuid
-                , u_00.student_index
---                , COALESCE(
---                      TO_CHAR(ma_prgos_j.prgos_id)
---                    , CASE
---                        WHEN specialty_map.map_program_code IS NULL
---                        THEN NULL
---                        ELSE specialty_map.map_program_code
---                             || '|' ||
---                             u_00.semester_code
---                        END
---                    , u_00.specialty_string
---                      || '|' ||
---                      u_00.semester_code
---                  ) coalesced_program_osoby
+                , u_00.pk_program_osoby
 
                 -- values
 
                 , SET(CAST(
-                    COLLECT(specialty_map.map_program_code)
+                    COLLECT(u_00.map_program_code)
                     AS V2u_Vchars1K_t
                   )) map_program_codes1k
                 , SET(CAST(
-                    COLLECT(specialty_map.map_org_unit)
+                    COLLECT(u_00.map_org_unit)
                     AS V2u_Vchars1K_t
                   )) map_org_units1k
                 , SET(CAST(
@@ -114,23 +118,23 @@ USING
                     AS V2u_Vchars1K_t
                   )) faculty_codes1k
                 , SET(CAST(
-                    COLLECT(ma_prgos_j.prgos_id)
+                    COLLECT(u_00.prgos_id)
                     AS V2u_Dz_Ids_t
                   )) ids
                 , SET(CAST(
-                    COLLECT(ma_prgos_j.prg_kod)
+                    COLLECT(u_00.prg_kod)
                     AS V2u_Vchars1K_t
                   )) prg_kody1k
                 , SET(CAST(
-                    COLLECT(studenci.id ORDER BY studenci.id)
+                    COLLECT(u_00.st_id ORDER BY u_00.st_id)
                     AS V2u_Dz_Ids_t
                   )) st_ids
                 , SET(CAST(
-                    COLLECT(studenci.os_id ORDER BY studenci.id)
+                    COLLECT(u_00.os_id ORDER BY u_00.st_id)
                     AS V2u_Dz_Ids_t
                   )) os_ids
                 , SET(CAST(
-                    COLLECT(sk_progs_j.prg_kod)
+                    COLLECT(u_00.skipped_prg_kod)
                     AS V2u_Vchars1K_t
                   )) skipped_prg_kody1k
 
@@ -139,54 +143,20 @@ USING
                   -- "+ 0" trick is used to workaround oracle bug
                 , COUNT(u_00.ma_id + 0) dbg_matched
                 , COUNT(u_00.mi_id + 0) dbg_missing
-                , COUNT(sm_j.map_id + 0) dbg_mapped
+                , COUNT(u_00.specialty_map_id + 0) dbg_mapped
 
             FROM u_00 u_00
-            LEFT JOIN v2u_ko_skipped_programs_j sk_progs_j
-                ON  (
-                            sk_progs_j.specialty_id =  u_00.specialty_id
-                        AND sk_progs_j.semester_id = u_00.semester_id
-                        AND sk_progs_j.job_uuid = u_00.job_uuid
-                    )
-            LEFT JOIN v2u_ko_specialty_map_j sm_j
-                ON  (
-                            sm_j.specialty_id = u_00.specialty_id
-                        AND sm_j.semester_id = u_00.semester_id
-                        AND sm_j.job_uuid = u_00.job_uuid
-                    )
-            LEFT JOIN v2u_specialty_map specialty_map
-                ON  (
-                            specialty_map.id = sm_j.map_id
-                    )
-            LEFT JOIN v2u_dz_studenci studenci
-                ON  (
-                            studenci.indeks = u_00.student_index
-                    )
+
             GROUP BY
                   u_00.job_uuid
                 , u_00.pk_program_osoby
---                , u_00.student_index
---                , COALESCE(
---                      TO_CHAR(ma_prgos_j.prgos_id)
---                    , CASE
---                        WHEN specialty_map.map_program_code IS NULL
---                        THEN NULL
---                        ELSE specialty_map.map_program_code
---                             || '|' ||
---                             u_00.semester_code
---                        END
---                    , u_00.specialty_string
---                      || '|' ||
---                      u_00.semester_code
---                  )
         ),
         u AS
         ( -- make necessary adjustments
             SELECT
                   -- pass through fields
                   u_0.job_uuid
-                , u_0.student_index
-                , u_0.coalesced_program_osoby
+                , u_0.pk_program_osoby
 
                 -- values
 
@@ -400,7 +370,7 @@ USING
         SELECT
             -- KEY
               w.job_uuid
-            , w.coalesced_program_osoby pk_program_osoby
+            , w.pk_program_osoby
 
             -- VAL
 
