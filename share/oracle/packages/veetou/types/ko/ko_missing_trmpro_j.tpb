@@ -6,7 +6,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Trmpro_J_t AS
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
             , classes_type IN VARCHAR2
-            , subj_grade_date IN DATE
+            , subj_grade_dates IN V2u_20Dates_t
+            , proto_return_date IN DATE
             , subject_map_id IN NUMBER
             , map_subj_code IN VARCHAR2
             , classes_map_id IN NUMBER
@@ -26,7 +27,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Trmpro_J_t AS
             , specialty_id => specialty_id
             , subject_id => subject_id
             , classes_type => classes_type
-            , subj_grade_date => subj_grade_date
+            , subj_grade_dates => subj_grade_dates
+            , proto_return_date => proto_return_date
             , subject_map_id => subject_map_id
             , map_subj_code => map_subj_code
             , classes_map_id => classes_map_id
@@ -49,7 +51,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Trmpro_J_t AS
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
             , classes_type IN VARCHAR2
-            , subj_grade_date IN DATE
+            , subj_grade_dates IN V2u_20Dates_t
+            , proto_return_date IN DATE
             , subject_map_id IN NUMBER
             , map_subj_code IN VARCHAR2
             , classes_map_id IN NUMBER
@@ -70,10 +73,11 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Trmpro_J_t AS
             , subject_id => subject_id
             );
         SELF.classes_type := classes_type;
+        SELF.subj_grade_dates := subj_grade_dates;
         SELF.subject_map_id := subject_map_id;
         SELF.map_subj_code := map_subj_code;
         SELF.classes_map_id := classes_map_id;
-        SELF.subj_grade_date := subj_grade_date;
+        SELF.proto_return_date := proto_return_date;
         SELF.map_classes_type := map_classes_type;
         SELF.coalesced_proto_type := coalesced_proto_type;
         SELF.nr := nr;

@@ -13,7 +13,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Trmpro_J_t AS
             , tpro_kod IN VARCHAR2
             , prot_id IN NUMBER
             , nr IN NUMBER
-            , subj_grade_date IN DATE
+            , subj_grade_dates IN V2u_20Dates_t
+            , proto_return_date IN DATE
             , data_zwrotu IN DATE
             ) RETURN SELF AS RESULT
     IS
@@ -31,7 +32,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Trmpro_J_t AS
             , tpro_kod => tpro_kod
             , prot_id => prot_id
             , nr => nr
-            , subj_grade_date => subj_grade_date
+            , subj_grade_dates => subj_grade_dates
+            , proto_return_date => proto_return_date
             , data_zwrotu => data_zwrotu
             );
         RETURN;
@@ -51,7 +53,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Trmpro_J_t AS
             , tpro_kod IN VARCHAR2
             , prot_id IN NUMBER
             , nr IN NUMBER
-            , subj_grade_date IN DATE
+            , subj_grade_dates IN V2u_20Dates_t
+            , proto_return_date IN DATE
             , data_zwrotu IN DATE
             )
     IS
@@ -70,7 +73,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Trmpro_J_t AS
         SELF.tpro_kod := tpro_kod;
         SELF.prot_id := prot_id;
         SELF.nr := nr;
-        SELF.subj_grade_date := subj_grade_date;
+        SELF.subj_grade_dates := subj_grade_dates;
+        SELF.proto_return_date := proto_return_date;
         SELF.data_zwrotu := data_zwrotu;
     END;
 END;

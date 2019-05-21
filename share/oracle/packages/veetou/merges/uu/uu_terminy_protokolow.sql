@@ -25,7 +25,8 @@ USING
                         || COALESCE( classes_map.map_classes_type
                                    , g_j.classes_type ) ||
                       '", date: "'
-                        || g_j.subj_grade_date ||
+                        || COALESCE( g_j.subj_grade_date
+                                   , semesters2.end_date )||
                       '"}'
                   END pk_termin_protokolu
 
@@ -36,7 +37,8 @@ USING
                                   g_j.job_uuid
                                 , ma_trmpro_j.prot_id
                             ORDER BY
-                                  g_j.subj_grade_date
+                                  COALESCE( g_j.subj_grade_date
+                                          , semesters2.end_date )
                         )
                     WHEN mi_trmpro_j.prot_id IS NOT NULL
                     THEN DENSE_RANK() OVER (
@@ -44,7 +46,8 @@ USING
                                   g_j.job_uuid
                                 , mi_trmpro_j.prot_id
                             ORDER BY
-                                  g_j.subj_grade_date
+                                  COALESCE( g_j.subj_grade_date
+                                          , semesters2.end_date)
                         )
                     ELSE DENSE_RANK() OVER (
                             PARTITION BY
@@ -56,9 +59,10 @@ USING
                                 , COALESCE( classes_map.map_classes_type
                                           , g_j.classes_type )
                             ORDER BY
-                                  g_j.subj_grade_date
+                                  COALESCE( g_j.subj_grade_date
+                                          , semesters2.end_date)
                         )
-                  END subj_grade_date_rank
+                  END proto_return_date_rank
 
                 , subject_map.map_subj_code
                 , subject_map.map_proto_type
@@ -69,6 +73,7 @@ USING
                 , g_j.classes_type
                 , g_j.subj_grade
                 , g_j.subj_grade_date
+                , COALESCE(g_j.subj_grade_date, semesters2.end_date) proto_return_date
                 , ma_trmpro_j.prot_id
                 , ma_trmpro_j.nr
                 , mi_trmpro_j.prot_id mi_prot_id
@@ -94,13 +99,17 @@ USING
                             semesters.id = g_j.semester_id
                         AND semesters.job_uuid = g_j.job_uuid
                     )
+            INNER JOIN v2u_semesters semesters2
+                ON  (
+                            semesters2.code = semesters.semester_code
+                    )
             LEFT JOIN v2u_ko_matched_trmpro_j ma_trmpro_j
                 ON  (
                             ma_trmpro_j.subject_id = g_j.subject_id
                         AND ma_trmpro_j.specialty_id = g_j.specialty_id
                         AND ma_trmpro_j.semester_id = g_j.semester_id
                         AND ma_trmpro_j.classes_type = g_j.classes_type
-                        AND ma_trmpro_j.subj_grade_date = g_j.subj_grade_date
+                        AND ma_trmpro_j.proto_return_date = COALESCE(g_j.subj_grade_date, semesters2.end_date)
                         AND ma_trmpro_j.job_uuid = g_j.job_uuid
                     )
             LEFT JOIN v2u_ko_missing_trmpro_j mi_trmpro_j
@@ -109,7 +118,7 @@ USING
                         AND mi_trmpro_j.specialty_id = g_j.specialty_id
                         AND mi_trmpro_j.semester_id = g_j.semester_id
                         AND mi_trmpro_j.classes_type = g_j.classes_type
-                        AND mi_trmpro_j.subj_grade_date = g_j.subj_grade_date
+                        AND mi_trmpro_j.proto_return_date = COALESCE(g_j.subj_grade_date, semesters2.end_date)
                         AND mi_trmpro_j.job_uuid = g_j.job_uuid
                     )
             LEFT JOIN v2u_ko_subject_map_j sm_j
@@ -142,7 +151,7 @@ USING
                             terminy_protokolow.prot_id = ma_trmpro_j.prot_id
                         AND terminy_protokolow.nr = ma_trmpro_j.nr
                     )
-            WHERE g_j.subj_grade IS NOT NULL
+            /* WHERE g_j.subj_grade IS NOT NULL */
         ),
         u_0 AS
         (
@@ -152,9 +161,9 @@ USING
                 , u_00.pk_termin_protokolu
 
                 , SET(CAST(
-                        COLLECT(u_00.subj_grade_date_rank)
+                        COLLECT(u_00.proto_return_date_rank)
                         AS V2u_Integers_t
-                  )) subj_grade_date_ranks
+                  )) proto_return_date_ranks
 
                 , SET(CAST(
                         COLLECT(u_00.map_subj_code)
@@ -213,6 +222,10 @@ USING
                         AS V2u_Dates_t
                   )) subj_grade_dates
                 , SET(CAST(
+                        COLLECT(u_00.proto_return_date ORDER BY u_00.proto_return_date)
+                        AS V2u_Dates_t
+                  )) proto_return_dates
+                , SET(CAST(
                         COLLECT(u_00.mi_prot_id)
                         AS V2u_Dz_Ids_t
                   )) mi_prot_ids
@@ -244,9 +257,9 @@ USING
 
                 -- select first element from each collection
                 , ( SELECT VALUE(t)
-                    FROM TABLE(u_0.subj_grade_date_ranks) t
+                    FROM TABLE(u_0.proto_return_date_ranks) t
                     WHERE ROWNUM <= 1
-                  ) subj_grade_date_rank
+                  ) proto_return_date_rank
 
                 , ( SELECT SUBSTR(VALUE(t), 1, 20)
                     FROM TABLE(u_0.map_subj_codes1k) t
@@ -313,14 +326,14 @@ USING
                 , u_0.subj_grade_dates
 
                 , ( SELECT VALUE(t)
-                    FROM TABLE(u_0.subj_grade_dates) t
+                    FROM TABLE(u_0.proto_return_dates) t
                     WHERE ROWNUM <= 1
-                  ) subj_grade_date
+                  ) proto_return_date
 
                 -- columns used for debugging
                 , ( SELECT COUNT(*)
-                    FROM TABLE(u_0.subj_grade_date_ranks)
-                  ) dbg_subj_grade_date_ranks
+                    FROM TABLE(u_0.proto_return_date_ranks)
+                  ) dbg_proto_return_date_ranks
                 , ( SELECT COUNT(*)
                     FROM TABLE(u_0.subj_codes1k)
                   ) dbg_subj_codes
@@ -364,6 +377,9 @@ USING
                     FROM TABLE(u_0.subj_grade_dates)
                   ) dbg_subj_grade_dates
                 , ( SELECT COUNT(*)
+                    FROM TABLE(u_0.proto_return_dates)
+                  ) dbg_proto_return_dates
+                , ( SELECT COUNT(*)
                     FROM TABLE(u_0.mi_prot_ids)
                   ) dbg_mi_prot_ids
                 , ( SELECT COUNT(*)
@@ -387,11 +403,11 @@ USING
                   ) v$prot_id
                 , DECODE( u.nr, NULL
                     , COALESCE(u.max_istniejacy_nr, 0)
-                      + u.subj_grade_date_rank
+                      + u.proto_return_date_rank
                     , u.nr
                   ) v$nr
                 , DECODE( u.nr, NULL
-                        , 'Zd'
+                        , 'P' /* P' - w przygotowaniu, 'Zd' - zamkniety */
                         , u.status
                   ) v$status
                 , V2u_Get.Utw_Id(u.job_uuid) v$utw_id
@@ -401,12 +417,12 @@ USING
                           || '", zajecia: "' ||
                           COALESCE(u.map_classes_type, u.classes_type)
                           || '", data: "' ||
-                          TO_CHAR(u.subj_grade_date, 'YYYY-MM-DD')
+                          TO_CHAR(u.proto_return_date, 'YYYY-MM-DD')
                           || '"}'
                         , u.opis
                   ) v$opis
                 , DECODE( u.nr, NULL
-                        , u.subj_grade_date
+                        , u.proto_return_date
                         , u.data_zwrotu
                   ) v$data_zwrotu
                 , V2u_Get.Mod_Id(u.job_uuid) v$mod_id
@@ -455,8 +471,8 @@ USING
                         AND (
                                         u.dbg_daty_zwrotu = 0
                                     AND u.data_zwrotu IS NULL
-                                    AND u.dbg_subj_grade_dates = 1
-                                    AND u.subj_grade_date IS NOT NULL
+                                    AND u.dbg_proto_return_dates = 1
+                                    AND u.proto_return_date IS NOT NULL
                                 OR
                                         u.dbg_daty_zwrotu = 1
                                     AND u.data_zwrotu
@@ -523,8 +539,8 @@ USING
                                         v.classes_type <> '-'
                                     AND v.dbg_classes_mapped = v.dbg_missing
                             )
-                        AND v.dbg_subj_grade_date_ranks = 1
-                        AND v.subj_grade_date_rank > 0
+                        AND v.dbg_proto_return_date_ranks = 1
+                        AND v.proto_return_date_rank > 0
                         AND v.dbg_mi_prot_ids = 1
                         AND v.mi_prot_id IS NOT NULL
                         -- values passed basic tests
@@ -591,7 +607,7 @@ USING
             , w.dbg_subj_grade_dates
             , w.dbg_mi_prot_ids
             , w.dbg_max_istniejace_nry
-            , w.dbg_subj_grade_date_ranks
+            , w.dbg_proto_return_date_ranks
             , w.dbg_matched
             , w.dbg_missing
             , w.dbg_subject_mapped
@@ -642,7 +658,7 @@ WHEN NOT MATCHED THEN
         , dbg_subj_grade_dates
         , dbg_mi_prot_ids
         , dbg_max_istniejace_nry
-        , dbg_subj_grade_date_ranks
+        , dbg_proto_return_date_ranks
         , dbg_matched
         , dbg_missing
         , dbg_subject_mapped
@@ -684,7 +700,7 @@ WHEN NOT MATCHED THEN
         , src.dbg_subj_grade_dates
         , src.dbg_mi_prot_ids
         , src.dbg_max_istniejace_nry
-        , src.dbg_subj_grade_date_ranks
+        , src.dbg_proto_return_date_ranks
         , src.dbg_matched
         , src.dbg_missing
         , src.dbg_subject_mapped
@@ -727,7 +743,7 @@ WHEN MATCHED THEN
         , tgt.dbg_subj_grade_dates = src.dbg_subj_grade_dates
         , tgt.dbg_mi_prot_ids = src.dbg_mi_prot_ids
         , tgt.dbg_max_istniejace_nry = src.dbg_max_istniejace_nry
-        , tgt.dbg_subj_grade_date_ranks = src.dbg_subj_grade_date_ranks
+        , tgt.dbg_proto_return_date_ranks = src.dbg_proto_return_date_ranks
         , tgt.dbg_matched = src.dbg_matched
         , tgt.dbg_missing = src.dbg_missing
         , tgt.dbg_subject_mapped = src.dbg_subject_mapped

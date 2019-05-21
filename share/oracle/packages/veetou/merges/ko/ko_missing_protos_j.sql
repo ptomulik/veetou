@@ -23,8 +23,7 @@ USING
                         AND ma_j.job_uuid = g_j.job_uuid
                     )
             WHERE
-                    g_j.subj_grade IS NOT NULL
-                AND ma_j.job_uuid IS NULL
+                  ma_j.job_uuid IS NULL
             GROUP BY
                   g_j.job_uuid
                 , g_j.semester_id

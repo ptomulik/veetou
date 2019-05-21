@@ -32,7 +32,7 @@ USING
                         AND g_j.classes_type = cm_j.classes_type
                         AND g_j.job_uuid = sm_j.job_uuid
                     )
-            WHERE sm_j.selected = 1 AND g_j.subj_grade IS NOT NULL
+            WHERE sm_j.selected = 1
             GROUP BY
                   sm_j.job_uuid
                 , sm_j.semester_id
@@ -65,7 +65,7 @@ USING
                         AND g_j.classes_type = '-'
                         AND g_j.job_uuid = sm_j.job_uuid
                     )
-            WHERE sm_j.selected = 1 AND g_j.subj_grade IS NOT NULL
+            WHERE sm_j.selected = 1
             GROUP BY
                   sm_j.job_uuid
                 , sm_j.semester_id

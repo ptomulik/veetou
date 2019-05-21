@@ -8,7 +8,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Trmpro_J_t
     , tpro_kod VARCHAR2(20 CHAR)
     , prot_id NUMBER(10)
     , nr NUMBER(10)
-    , subj_grade_date DATE
+    , subj_grade_dates V2u_20Dates_t
+    , proto_return_date DATE
     , data_zwrotu DATE
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Trmpro_J_t(
@@ -25,7 +26,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Trmpro_J_t
             , tpro_kod IN VARCHAR2
             , prot_id IN NUMBER
             , nr IN NUMBER
-            , subj_grade_date IN DATE
+            , subj_grade_dates IN V2u_20Dates_t
+            , proto_return_date DATE
             , data_zwrotu IN DATE
             ) RETURN SELF AS RESULT
 
@@ -43,7 +45,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Trmpro_J_t
             , tpro_kod IN VARCHAR2
             , prot_id IN NUMBER
             , nr IN NUMBER
-            , subj_grade_date IN DATE
+            , subj_grade_dates IN V2u_20Dates_t
+            , proto_return_date DATE
             , data_zwrotu IN DATE
             )
     )

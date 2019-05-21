@@ -32,7 +32,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Trmpro_V_t AS
             , semester => semester
             );
         SELF.classes_type := missing_trmpro_j.classes_type;
-        SELF.subj_grade_date := missing_trmpro_j.subj_grade_date;
+        SELF.proto_return_date := missing_trmpro_j.proto_return_date;
         SELF.subject_map_id := missing_trmpro_j.subject_map_id;
         SELF.map_subj_code := missing_trmpro_j.map_subj_code;
         SELF.classes_map_id := missing_trmpro_j.classes_map_id;

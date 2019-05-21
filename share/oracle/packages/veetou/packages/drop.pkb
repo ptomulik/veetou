@@ -277,6 +277,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('dz_protokoly_idx2');
         Drop_Index('dz_protokoly_idx3');
         Drop_Index('dz_protokoly_idx4');
+        Drop_Trigg('dz_protokoly_tr1');
+        Drop_Trigg('dz_protokoly_sq1');
         Drop_Table('dz_protokoly');
         --
 

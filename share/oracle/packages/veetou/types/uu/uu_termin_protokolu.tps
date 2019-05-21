@@ -17,9 +17,10 @@ CREATE OR REPLACE TYPE V2u_Uu_Termin_Protokolu_t
     , dbg_egzaminy_komisyjne NUMBER(5)
     , dbg_subj_grades NUMBER(5)
     , dbg_subj_grade_dates NUMBER(5)
+    , dbg_proto_return_dates NUMBER(5)
     , dbg_mi_prot_ids NUMBER(5)
     , dbg_max_istniejace_nry NUMBER(5)
-    , dbg_subj_grade_date_ranks NUMBER(5)
+    , dbg_proto_return_date_ranks NUMBER(5)
     , dbg_matched NUMBER(5)
     , dbg_missing NUMBER(5)
     , dbg_subject_mapped NUMBER(5)
@@ -59,9 +60,10 @@ CREATE OR REPLACE TYPE V2u_Uu_Termin_Protokolu_t
             , dbg_egzaminy_komisyjne IN NUMBER
             , dbg_subj_grades IN NUMBER
             , dbg_subj_grade_dates IN NUMBER
+            , dbg_proto_return_dates IN NUMBER
             , dbg_mi_prot_ids IN NUMBER
             , dbg_max_istniejace_nry IN NUMBER
-            , dbg_subj_grade_date_ranks IN NUMBER
+            , dbg_proto_return_date_ranks IN NUMBER
             , dbg_matched IN NUMBER
             , dbg_missing IN NUMBER
             , dbg_subject_mapped IN NUMBER

@@ -142,7 +142,6 @@ USING
                         AND ma_zajcykl_j.classes_type = g_j.classes_type
                         AND ma_zajcykl_j.job_uuid = g_j.job_uuid
                     )
-            WHERE g_j.subj_grade IS NOT NULL
             GROUP BY
                   g_j.job_uuid
                 , COALESCE(subject_map.map_subj_code, subjects.subj_code)
@@ -332,7 +331,6 @@ USING
                                     AND u.zaj_cyk_id IS NOT NULL
                                     AND u.dbg_zaj_cyk_ids = 1
                             )
-                        AND u.dbg_subj_grades > 0
 
                         -- and we have correct tpro_kod value
                         AND u.coalesced_proto_type IN ('E', 'Z', 'O', 'S')
