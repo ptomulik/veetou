@@ -23,20 +23,22 @@ USING
                 , CASE
                     WHEN ma_prgos_j.prgos_id IS NOT NULL
                     THEN '{id: ' || ma_prgos_j.prgos_id || '}'
-                    ELSE '{student_index: "' ||
+                    ELSE '{student: "' ||
                         students.student_index
-                        || '", university: "' ||
+                        || '", studies: "' ||
                         specialties.university
-                        || '", faculty: "' ||
+                        || '|' ||
                         specialties.faculty
-                        || '", studies_tier: "' ||
+                        || '|' ||
                         V2U_Get.Studies_Tier(specialties.studies_modetier)
-                        || '", studies_mode: "' ||
+                        || '|' ||
                         V2U_Get.Studies_Mode(specialties.studies_modetier)
-                        || '", studies_field: "' ||
+                        || '|' ||
                         V2U_Get.Acronym(specialties.studies_field)
-                        || '", studies_specialty: "' ||
+                        || '|' ||
                         V2U_Get.Acronym(specialties.studies_specialty)
+                        || '", semester: "' ||
+                        semesters.semester_code
                         || '"}'
                     END pk_program_osoby
 
