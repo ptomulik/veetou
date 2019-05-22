@@ -2,7 +2,7 @@ CREATE TABLE v2u_uu_zaliczenia_przedmiotow
 OF V2u_Uu_Zalicz_Przedmiotu_t
     (
           CONSTRAINT v2u_uu_zalicz_przedmiotow_pk
-            PRIMARY KEY (pk_zalicz_przedmiotu)
+            PRIMARY KEY (pk_zalicz_przedmiotu, job_uuid)
     )
 OBJECT IDENTIFIER IS PRIMARY KEY
 ;

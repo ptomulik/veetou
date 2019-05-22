@@ -435,6 +435,8 @@ WHERE EXISTS (
 */
 ;
 
+COMMIT;
+
 /*
 INSERT INTO
     v2u_dz_przedmioty_cykli tgt
@@ -486,6 +488,7 @@ WHERE
     AND src.safe_to_change = 1
 ;
 
+COMMIT;
 
 --
 -- dz_punkty_przedmiotow
@@ -510,26 +513,6 @@ COMMIT;
 --
 -- This generates one entry per subject, where feasible. The entry covers all
 -- study programs for an unbounded range of semester from min. to infinity.
-
---DROP TABLE v2u_tt_punkty_przedmiotow1 PURGE;
---
---CREATE TABLE v2u_tt_punkty_przedmiotow1
---    (
---          prz_kod VARCHAR2(20 CHAR)
---        , prg_kod VARCHAR2(20 CHAR)
---        , tpkt_kod VARCHAR2(20 CHAR)
---        , ilosc NUMBER(10)
---        , utw_id VARCHAR2(30 CHAR)
---        , utw_data DATE
---        , mod_id VARCHAR2(30 CHAR)
---        , mod_data DATE
---        , id NUMBER(10)
---        , cdyd_pocz VARCHAR2(20 CHAR)
---        , cdyd_kon VARCHAR2(20 CHAR)
---        , change_type CHAR(1)
---        , safe_to_change NUMBER(1)
---    )
---;
 
 DROP VIEW v2u_uu_punkty_przedmiotow1_v;
 
@@ -591,6 +574,7 @@ AS
         )
 WITH READ ONLY
 ;
+/
 
 /*
 INSERT INTO
@@ -624,6 +608,7 @@ SELECT
 FROM v2u_uu_punkty_przedmiotow1_v src
 ;
 
+COMMIT;
 
 -- For the SECOND iteration:
 --
@@ -709,6 +694,7 @@ AS
         )
 WITH READ ONLY
 ;
+/
 
 /*
 INSERT INTO
@@ -742,6 +728,7 @@ SELECT
 FROM v2u_uu_punkty_przedmiotow2_v src
 ;
 
+COMMIT;
 
 -- For the THIRD iteration:
 --
@@ -795,6 +782,8 @@ WHERE EXISTS (
 */
 ;
 
+COMMIT;
+
 /*
 INSERT INTO
     v2u_dz_punkty_przedmiotow tgt
@@ -834,6 +823,7 @@ WHERE   src.change_type = 'I'
     )
 ;
 
+COMMIT;
 
 --
 -- dz_zajecia_cykli
@@ -927,6 +917,7 @@ WHERE EXISTS (
 */
 ;
 
+COMMIT;
 
 /*
 INSERT INTO
@@ -988,6 +979,7 @@ WHERE   src.change_type = 'I'
     AND src.safe_to_change = 1
 ;
 
+COMMIT;
 
 --
 -- dz_grupy
@@ -1097,6 +1089,7 @@ WHERE EXISTS (
 */
 ;
 
+COMMIT;
 
 /*
 INSERT INTO
@@ -1137,6 +1130,7 @@ WHERE   src.change_type = 'I'
     AND src.safe_to_change = 1
 ;
 
+COMMIT;
 
 --
 -- dz_terminy_protokolow
@@ -1165,7 +1159,7 @@ UPDATE
 SET (
 --      prot_id
 --    , nr
-    , status
+      status
 --    , utw_id
 --    , utw_data
     , opis
@@ -1178,7 +1172,7 @@ SET (
 SELECT
 --      prot_id
 --    , nr
-    , status
+      status
 --    , utw_id
 ---    , utw_data
     , opis
@@ -1204,6 +1198,7 @@ WHERE EXISTS (
 */
 ;
 
+COMMIT;
 
 /*
 INSERT INTO
@@ -1238,6 +1233,7 @@ WHERE   src.change_type = 'I'
     AND src.safe_to_change = 1
 ;
 
+COMMIT;
 
 --
 -- dz_oceny
@@ -1343,87 +1339,106 @@ COMMIT;
 
 
 /*
--- MERGE INTO dz_zaliczenia_przedmiotow tgt
-MERGE INTO v2u_dz_zaliczenia_przedmiotow tgt
-USING
-    (
+UPDATE
+    v2u_dz_zaliczenia_przedmiotow tgt
+-- dz_zaliczenia_przedmiotow tgt
+SET ( status_rej
+    , opis_statusu_rej
+    , status_zal
+    , opis_statusu_zal
+    , suma_ocen
+    , liczba_ocen
+--    , os_id
+--    , cdyd_kod
+--    , prz_kod
+--    , utw_data
+--    , utw_id
+    , mod_id
+--    , mod_data
+    , nr_wyb
+    ) = (
 */
-        SELECT
-              status_rej
-            , opis_statusu_rej
-            , status_zal
-            , opis_statusu_zal
-            , suma_ocen
-            , liczba_ocen
-            , os_id
-            , cdyd_kod
-            , prz_kod
-            , utw_data
-            , utw_id
-            , mod_id
-            , mod_data
-            , nr_wyb
-        FROM v2u_uu_zaliczenia_przedmiotow
-        WHERE change_type IN ('I', 'U') AND safe_to_change = 1
+SELECT
+      src.status_rej
+    , src.opis_statusu_rej
+    , src.status_zal
+    , src.opis_statusu_zal
+    , src.suma_ocen
+    , src.liczba_ocen
+--    , src.os_id
+--    , src.cdyd_kod
+--    , src.prz_kod
+--    , src.utw_data
+--    , src.utw_id
+    , src.mod_id
+--    , src.mod_data
+    , src.nr_wyb
+FROM v2u_uu_zaliczenia_przedmiotow src
+WHERE       src.change_type = 'U'
+        AND src.safe_to_change = 1
 /*
-    ) src
-ON  (
-            src.change_type = 'U'
         AND src.os_id = tgt.os_id
         AND src.cdyd_kod = tgt.cdyd_kod
         AND src.prz_kod = tgt.prz_kod
-    )
-WHEN NOT MATCHED THEN
-    INSERT
-        ( status_rej
-        , opis_statusu_rej
-        , status_zal
-        , opis_statusu_zal
-        , suma_ocen
-        , liczba_ocen
-        , os_id
-        , cdyd_kod
-        , prz_kod
---        , utw_data
-        , utw_id
---        , mod_id
---        , mod_data
-        , nr_wyb
-        )
-VALUES
-        ( src.status_rej
-        , src.opis_statusu_rej
-        , src.status_zal
-        , src.opis_statusu_zal
-        , src.suma_ocen
-        , src.liczba_ocen
-        , src.os_id
-        , src.cdyd_kod
-        , src.prz_kod
---        , src.utw_data
-        , src.utw_id
---        , src.mod_id
---        , src.mod_data
-        , src.nr_wyb
-        )
-WHEN MATCHED THEN
-    UPDATE SET
-          tgt.status_rej = src.status_rej
-        , tgt.opis_statusu_rej = src.opis_statusu_rej
-        , tgt.status_zal = src.status_zal
-        , tgt.opis_statusu_zal = src.opis_statusu_zal
-        , tgt.suma_ocen = src.suma_ocen
-        , tgt.liczba_ocen = src.liczba_ocen
---        , tgt.os_id = src.os_id
---        , tgt.cdyd_kod = src.cdyd_kod
---        , tgt.prz_kod = src.prz_kod
---        , tgt.utw_data = src.utw_data
---        , tgt.utw_id = src.utw_id
-        , tgt.mod_id = src.mod_id
---        , tgt.mod_data = src.mod_data
-        , tgt.nr_wyb = src.nr_wyb
+)
+WHERE EXISTS (
+    SELECT 1
+    FROM v2u_uu_zaliczenia_przedmiotow src
+    WHERE   src.change_type = 'U'
+        AND src.safe_to_change = 1
+        AND src.os_id = tgt.os_id
+        AND src.cdyd_kod = tgt.cdyd_kod
+        AND src.prz_kod = tgt.prz_kod
+)
 */
 ;
+
+COMMIT;
+
+/*
+INSERT INTO
+    v2u_dz_zaliczenia_przedmiotow tgt
+-- dz_zaliczenia_przedmiotow tgt
+    (
+      status_rej
+    , opis_statusu_rej
+    , status_zal
+    , opis_statusu_zal
+    , suma_ocen
+    , liczba_ocen
+    , os_id
+    , cdyd_kod
+    , prz_kod
+--    , utw_data
+    , utw_id
+--    , mod_id
+--    , mod_data
+    , nr_wyb
+    )
+*/
+SELECT
+      src.status_rej
+    , src.opis_statusu_rej
+    , src.status_zal
+    , src.opis_statusu_zal
+    , src.suma_ocen
+    , src.liczba_ocen
+    , src.os_id
+    , src.cdyd_kod
+    , src.prz_kod
+--    , src.utw_data
+    , src.utw_id
+--    , src.mod_id
+--    , src.mod_data
+    , src.nr_wyb
+--
+FROM v2u_uu_zaliczenia_przedmiotow src
+WHERE   src.change_type = 'I'
+    AND src.safe_to_change = 1
+;
+
+COMMIT;
+
 
 --
 -- dz_zal_przedm_prgos
@@ -1431,6 +1446,149 @@ WHEN MATCHED THEN
 DELETE FROM v2u_dz_zal_przedm_prgos;
 COMMIT;
 @@merges/dz/dz_zal_przedm_prgos.sql;
+
+DELETE FROM v2u_ko_matched_zpprgos_j;
+COMMIT;
+@@merges/ko/ko_matched_zpprgos_j.sql;
+
+DELETE FROM v2u_ko_missing_zpprgos_j;
+COMMIT;
+@@merges/ko/ko_missing_zpprgos_j.sql;
+
+DELETE FROM v2u_uu_zal_przedm_prgos;
+COMMIT;
+@@merges/uu/uu_zal_przedm_prgos.sql;
+
+/*
+UPDATE
+    v2u_dz_zal_przedm_prgos tgt
+-- dz_zal_przedm_prgos tgt
+SET (
+--      os_id
+--    , prz_kod
+--    , cdyd_kod
+--    , prgos_id
+      stan
+--    , utw_id
+--    , utw_data
+    , etpos_id
+    , mod_id
+--    , mod_data
+    , do_sredniej
+    , do_sredniej_zmiana_os_id
+    , do_sredniej_zmiana_data
+    , podp_data
+    , podp_os_id
+    , czy_platny_ects_ustawa
+    , kto_placi
+    , podp_etpos_data
+    , podp_etpos_os_id
+    , katprz_id
+    , pw_ponadprogramowy
+    ) = (
+*/
+SELECT
+--      os_id
+--    , prz_kod
+--    , cdyd_kod
+--    , prgos_id
+      stan
+--    , utw_id
+--    , utw_data
+    , etpos_id
+    , mod_id
+--    , mod_data
+    , do_sredniej
+    , do_sredniej_zmiana_os_id
+    , do_sredniej_zmiana_data
+    , podp_data
+    , podp_os_id
+    , czy_platny_ects_ustawa
+    , kto_placi
+    , podp_etpos_data
+    , podp_etpos_os_id
+    , katprz_id
+    , pw_ponadprogramowy
+FROM v2u_uu_zal_przedm_prgos src
+WHERE       src.change_type = 'U'
+        AND src.safe_to_change = 1
+/*
+        AND src.os_id = tgt.os_id
+        AND src.cdyd_kod = tgt.cdyd_kod
+        AND src.prz_kod = tgt.prz_kod
+        AND src.prgos_id = tgt.prgos_id
+)
+WHERE EXISTS (
+    SELECT 1
+    FROM v2u_uu_zal_przedm_prgos src
+    WHERE   src.change_type = 'U'
+        AND src.safe_to_change = 1
+        AND src.os_id = tgt.os_id
+        AND src.cdyd_kod = tgt.cdyd_kod
+        AND src.prz_kod = tgt.prz_kod
+        AND src.prgos_id = tgt.prgos_id
+)
+*/
+;
+
+COMMIT;
+
+/*
+INSERT INTO
+    v2u_dz_zal_przedm_prgos tgt
+-- dz_zal_przedm_prgos tgt
+    ( os_id
+    , prz_kod
+    , cdyd_kod
+    , prgos_id
+    , stan
+    , utw_id
+--    , utw_data
+    , etpos_id
+--    , mod_id
+--    , mod_data
+    , do_sredniej
+    , do_sredniej_zmiana_os_id
+    , do_sredniej_zmiana_data
+    , podp_data
+    , podp_os_id
+    , czy_platny_ects_ustawa
+    , kto_placi
+    , podp_etpos_data
+    , podp_etpos_os_id
+    , katprz_id
+    , pw_ponadprogramowy
+    )
+*/
+SELECT
+      src.os_id
+    , src.prz_kod
+    , src.cdyd_kod
+    , src.prgos_id
+    , src.stan
+    , src.utw_id
+--    , src.utw_data
+    , src.etpos_id
+--    , src.mod_id
+--    , src.mod_data
+    , src.do_sredniej
+    , src.do_sredniej_zmiana_os_id
+    , src.do_sredniej_zmiana_data
+    , src.podp_data
+    , src.podp_os_id
+    , src.czy_platny_ects_ustawa
+    , src.kto_placi
+    , src.podp_etpos_data
+    , src.podp_etpos_os_id
+    , src.katprz_id
+    , src.pw_ponadprogramowy
+--
+FROM v2u_uu_zal_przedm_prgos src
+WHERE   src.change_type = 'I'
+    AND src.safe_to_change = 1
+;
+
+COMMIT;
 
 
 -- vim: set ft=sql ts=4 sw=4 et:

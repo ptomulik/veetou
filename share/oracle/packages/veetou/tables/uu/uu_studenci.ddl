@@ -1,7 +1,7 @@
 CREATE TABLE v2u_uu_studenci
 OF V2u_Uu_Student_t
     (
-          CONSTRAINT v2u_uu_studenci_pk PRIMARY KEY (job_uuid, pk_student)
+          CONSTRAINT v2u_uu_studenci_pk PRIMARY KEY (pk_student, job_uuid)
     )
 OBJECT IDENTIFIER IS PRIMARY KEY;
 /

@@ -7,6 +7,7 @@
 @@uu_programy_osob.ddl;
 @@uu_etapy_osob.ddl;
 @@uu_zaliczenia_przedmiotow.ddl;
+@@uu_zal_przedm_prgos.ddl;
 @@uu_protokoly.ddl;
 @@uu_terminy_protokolow.ddl;
 @@uu_oceny.ddl;

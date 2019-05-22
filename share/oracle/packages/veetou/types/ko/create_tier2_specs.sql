@@ -35,6 +35,7 @@
 @@ko_matched_pktprz_j.tps;
 @@ko_matched_ocena_j.tps;
 @@ko_matched_zalprz_j.tps;
+@@ko_matched_zpprgos_j.tps;
 
 @@ko_missing_prgos_j.tps;
 @@ko_missing_etpos_j.tps;
@@ -46,6 +47,7 @@
 @@ko_missing_pktprz_j.tps;
 @@ko_missing_ocena_j.tps;
 @@ko_missing_zalprz_j.tps;
+@@ko_missing_zpprgos_j.tps;
 
 @@ko_skipped_program_j.tps;
 

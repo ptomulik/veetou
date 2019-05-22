@@ -7,6 +7,7 @@
 @@uu_program_osoby.tpb;
 @@uu_etap_osoby.tpb;
 @@uu_zalicz_przedmiotu.tpb;
+@@uu_zal_przedm_prgos.tpb;
 @@uu_protokol.tpb;
 @@uu_termin_protokolu.tpb;
 @@uu_ocena.tpb;

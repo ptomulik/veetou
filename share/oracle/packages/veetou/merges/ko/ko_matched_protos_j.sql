@@ -134,7 +134,7 @@ USING
             ON  (
                         protokoly.prz_kod = w.map_subj_code
                     AND protokoly.cdyd_kod = w.semester_code
-                    AND protokoly.tpro_kod = w.coalesced_proto_type
+--                    AND protokoly.tpro_kod = w.coalesced_proto_type
                     AND (
                                 protokoly.zaj_cyk_id = w.zaj_cyk_id
                             OR  (w.classes_type = '-' AND protokoly.zaj_cyk_id IS NULL)

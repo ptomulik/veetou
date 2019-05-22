@@ -412,13 +412,7 @@ USING
                   ) v$status
                 , V2u_Get.Utw_Id(u.job_uuid) v$utw_id
                 , DECODE( u.nr, NULL
-                        , 'V2U import {przedmiot: "' ||
-                          COALESCE(u.map_subj_code, u.subj_code)
-                          || '", zajecia: "' ||
-                          COALESCE(u.map_classes_type, u.classes_type)
-                          || '", data: "' ||
-                          TO_CHAR(u.proto_return_date, 'YYYY-MM-DD')
-                          || '"}'
+                        , 'Termin ' || TO_CHAR(u.proto_return_date_rank)
                         , u.opis
                   ) v$opis
                 , DECODE( u.nr, NULL

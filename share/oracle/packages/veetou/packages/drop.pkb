@@ -446,6 +446,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('ko_skipped_programs_j_idx1');
         Drop_Table('ko_skipped_programs_j');
         --
+        Drop_Table('ko_missing_zpprgos_j');
+        --
         Drop_Table('ko_missing_zalprz_j');
         --
         Drop_Table('ko_missing_oceny_j');
@@ -496,6 +498,11 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('ko_matched_oceny_j_idx3');
         Drop_Index('ko_matched_oceny_j_idx4');
         Drop_Table('ko_matched_oceny_j');
+        --
+        Drop_Index('ko_matched_zpprgos_j_idx1');
+        Drop_Index('ko_matched_zpprgos_j_idx2');
+        Drop_Index('ko_matched_zpprgos_j_idx3');
+        Drop_Table('ko_matched_zpprgos_j');
         --
         Drop_Index('ko_matched_zalprz_j_idx1');
         Drop_Index('ko_matched_zalprz_j_idx2');
@@ -570,6 +577,11 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('uu_classes_grades_idx9');
         Drop_Table('uu_classes_grades');
         --
+        Drop_Index('uu_zal_przedm_prgos_idx1');
+        Drop_Index('uu_zal_przedm_prgos_idx2');
+        Drop_Index('uu_zal_przedm_prgos_idx3');
+        Drop_Table('uu_zal_przedm_prgos');
+        --
         Drop_Index('uu_zalicz_przedmiotow_idx1');
         Drop_Table('uu_zaliczenia_przedmiotow');
         --
@@ -625,6 +637,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Collect_Types();
 
         Drop_Type('Ko_Skipped_Program_J_t', 'Ko_Skipped_Programs_J_t');
+        Drop_Type('Ko_Missing_Zpprgos_J_t', 'Ko_Missing_Zpprgoses_J_t');
         Drop_Type('Ko_Missing_Zalprz_J_t', 'Ko_Missing_Zalprzes_J_t');
         Drop_Type('Ko_Missing_Ocena_J_t', 'Ko_Missing_Oceny_J_t');
         Drop_Type('Ko_Missing_Prgos_J_t', 'Ko_Missing_Prgoses_J_t');
@@ -636,6 +649,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Missing_Proto_J_t', 'Ko_Missing_Protos_J_t');
         Drop_Type('Ko_Missing_Przcykl_J_t', 'Ko_Missing_Przcykles_J_t');
         Drop_Type('Ko_Missing_Przedm_J_t', 'Ko_Missing_Przedms_J_t');
+        Drop_Type('Ko_Matched_Zpprgos_J_t', 'Ko_Matched_Zpprgoses_J_t');
         Drop_Type('Ko_Matched_Zalprz_J_t', 'Ko_Matched_Zalprzes_J_t');
         Drop_Type('Ko_Matched_Ocena_J_t', 'Ko_Matched_Oceny_J_t');
         Drop_Type('Ko_Matched_Prgos_J_t', 'Ko_Matched_Prgoses_J_t');
@@ -678,6 +692,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Uu_Student_t', 'Uu_Studenci_t');
         Drop_Type('Uu_Atrybut_Przedmiotu_t', 'Uu_Atrybuty_Przedmiotow_t');
         Drop_Type('Uu_Zalicz_Przedmiotu_t', 'Uu_Zalicz_Przedmiotow_t');
+        Drop_Type('Uu_Zal_Przedm_Prgos_t', 'Uu_Zal_Przedm_Prgoses_t');
         Drop_Type('Uu_Przedmiot_t', 'Uu_Przedmioty_t');
         Drop_Type('Uu_Przedmiot_Cyklu_t', 'Uu_Przedmioty_Cykli_t');
         Drop_Type('Uu_Punkty_Przedmiotu_t', 'Uu_Punkty_Przedmiotow_t');

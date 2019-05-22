@@ -10,5 +10,6 @@
 @@ud_terminy_protokolow_v.sql;
 @@ud_oceny_v.sql;
 @@ud_zaliczenia_przedmiotow.sql;
+@@ud_zal_przedm_prgos.sql;
 
 -- vim: set ft=sql ts=4 sw=4 et:
