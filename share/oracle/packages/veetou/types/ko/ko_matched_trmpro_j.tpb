@@ -6,6 +6,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Trmpro_J_t AS
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
             , classes_type IN CHAR
+            , subj_grade_date VARCHAR2
             , subject_map_id IN NUMBER
             , classes_map_id IN NUMBER
             , prz_kod IN VARCHAR2
@@ -13,8 +14,6 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Trmpro_J_t AS
             , tpro_kod IN VARCHAR2
             , prot_id IN NUMBER
             , nr IN NUMBER
-            , subj_grade_dates IN V2u_20Dates_t
-            , proto_return_date IN DATE
             , data_zwrotu IN DATE
             ) RETURN SELF AS RESULT
     IS
@@ -25,6 +24,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Trmpro_J_t AS
             , specialty_id => specialty_id
             , subject_id => subject_id
             , classes_type => classes_type
+            , subj_grade_date => subj_grade_date
             , subject_map_id => subject_map_id
             , classes_map_id => classes_map_id
             , prz_kod => prz_kod
@@ -32,8 +32,6 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Trmpro_J_t AS
             , tpro_kod => tpro_kod
             , prot_id => prot_id
             , nr => nr
-            , subj_grade_dates => subj_grade_dates
-            , proto_return_date => proto_return_date
             , data_zwrotu => data_zwrotu
             );
         RETURN;
@@ -46,6 +44,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Trmpro_J_t AS
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
             , classes_type IN CHAR
+            , subj_grade_date VARCHAR2
             , subject_map_id IN NUMBER
             , classes_map_id IN NUMBER
             , prz_kod IN VARCHAR2
@@ -53,8 +52,6 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Trmpro_J_t AS
             , tpro_kod IN VARCHAR2
             , prot_id IN NUMBER
             , nr IN NUMBER
-            , subj_grade_dates IN V2u_20Dates_t
-            , proto_return_date IN DATE
             , data_zwrotu IN DATE
             )
     IS
@@ -66,6 +63,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Trmpro_J_t AS
             , subject_id => subject_id
             );
         SELF.classes_type := classes_type;
+        SELF.subj_grade_date := subj_grade_date;
         SELF.subject_map_id := subject_map_id;
         SELF.classes_map_id := classes_map_id;
         SELF.prz_kod := prz_kod;
@@ -73,8 +71,6 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Trmpro_J_t AS
         SELF.tpro_kod := tpro_kod;
         SELF.prot_id := prot_id;
         SELF.nr := nr;
-        SELF.subj_grade_dates := subj_grade_dates;
-        SELF.proto_return_date := proto_return_date;
         SELF.data_zwrotu := data_zwrotu;
     END;
 END;

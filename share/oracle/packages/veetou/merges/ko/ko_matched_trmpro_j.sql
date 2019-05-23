@@ -7,19 +7,24 @@ USING
             , ma_protos_j.specialty_id
             , ma_protos_j.subject_id
             , ma_protos_j.classes_type
+            , COALESCE(TO_CHAR(g_j.subj_grade_date, 'YYYY-MM-DD'), '-') subj_grade_date
             , ma_protos_j.subject_map_id
             , ma_protos_j.classes_map_id
             , ma_protos_j.prz_kod
             , ma_protos_j.cdyd_kod
             , ma_protos_j.tpro_kod
             , ma_protos_j.prot_id
-            , CAST(SET(CAST(
-                COLLECT(g_j.subj_grade_date ORDER BY g_j.subj_grade_date)
-                AS V2u_Dates_t
-            )) AS V2u_20Dates_t) subj_grade_dates
-            , COALESCE(g_j.subj_grade_date, semesters.end_date) proto_return_date
-            , trmpro.nr nr
-            , trmpro.data_zwrotu
+
+            , MIN(trmpro.nr) KEEP (
+                DENSE_RANK FIRST
+                ORDER BY
+                ABS(g_j.subj_grade_date - trmpro.data_zwrotu), trmpro.nr DESC
+              ) nr
+            , MIN(trmpro.data_zwrotu) KEEP (
+                DENSE_RANK FIRST
+                ORDER BY
+                ABS(g_j.subj_grade_date - trmpro.data_zwrotu), trmpro.nr DESC
+              ) data_zwrotu
 
         FROM v2u_ko_matched_protos_j ma_protos_j
         INNER JOIN v2u_ko_grades_j g_j
@@ -34,23 +39,38 @@ USING
             ON  (
                         semesters.code = ma_protos_j.cdyd_kod
                 )
+        LEFT JOIN v2u_semesters grade_semesters
+            ON  (
+                        TRUNC(g_j.subj_grade_date, 'DD')
+                            BETWEEN TRUNC(grade_semesters.start_date, 'DD')
+                                AND TRUNC(grade_semesters.end_date, 'DD')
+                )
         INNER JOIN v2u_dz_terminy_protokolow trmpro
             ON  (
                         trmpro.prot_id = ma_protos_j.prot_id
                     AND (
-                                TO_CHAR(trmpro.data_zwrotu, 'YYYY-MM-DD')
-                              = TO_CHAR(COALESCE(g_j.subj_grade_date, semesters.end_date), 'YYYY-MM-DD')
-                            OR (
-                                        -- fallback date ...
-                                        TO_CHAR(trmpro.data_zwrotu, 'YYYY-MM-DD')
-                                      = TO_CHAR(semesters.end_date, 'YYYY-MM-DD')
-                                    AND NOT EXISTS (
-                                        SELECT NULL
-                                        FROM v2u_dz_terminy_protokolow t
-                                        WHERE   t.prot_id = ma_protos_j.prot_id
-                                            AND TO_CHAR(t.data_zwrotu, 'YYYY-MM-DD')
-                                              = TO_CHAR(g_j.subj_grade_date, 'YYYY-MM-DD')
-                                    )
+                                g_j.subj_grade_date IS NOT NULL
+                            AND (
+                                          TRUNC(g_j.subj_grade_date, 'DD')
+                                        = TRUNC(trmpro.data_zwrotu, 'DD')
+                                    -- fallback date...
+                                    OR NOT EXISTS(
+                                            SELECT NULL
+                                            FROM v2u_dz_terminy_protokolow t
+                                            WHERE t.prot_id = ma_protos_j.prot_id
+                                                AND TRUNC(t.data_zwrotu, 'DD')
+                                                  = TRUNC(g_j.subj_grade_date, 'DD')
+                                        )
+                                        AND TRUNC(trmpro.data_zwrotu, 'DD')
+                                            BETWEEN TRUNC(grade_semesters.start_date, 'DD')
+                                                AND TRUNC(grade_semesters.end_date, 'DD')
+                                        AND trmpro.utw_id LIKE 'V2U:%'
+                                )
+                            OR   g_j.subj_grade_date IS NULL
+                            AND (
+                                        TRUNC(trmpro.data_zwrotu, 'DD')
+                                        BETWEEN TRUNC(semesters.start_date, 'DD')
+                                            AND TRUNC(semesters.end_date, 'DD')
                                 )
                         )
                 )
@@ -60,16 +80,13 @@ USING
             , ma_protos_j.specialty_id
             , ma_protos_j.subject_id
             , ma_protos_j.classes_type
+            , COALESCE(TO_CHAR(g_j.subj_grade_date, 'YYYY-MM-DD'), '-')
             , ma_protos_j.subject_map_id
             , ma_protos_j.classes_map_id
             , ma_protos_j.prz_kod
             , ma_protos_j.cdyd_kod
             , ma_protos_j.tpro_kod
             , ma_protos_j.prot_id
-            --, g_j.subj_grade_date
-            , COALESCE(g_j.subj_grade_date, semesters.end_date)
-            , trmpro.nr
-            , trmpro.data_zwrotu
     ) src
 ON  (
             tgt.job_uuid = src.job_uuid
@@ -77,7 +94,7 @@ ON  (
         AND tgt.specialty_id = src.specialty_id
         AND tgt.semester_id = src.semester_id
         AND tgt.classes_type = src.classes_type
-        AND tgt.proto_return_date = src.proto_return_date
+        AND tgt.subj_grade_date = src.subj_grade_date
     )
 WHEN NOT MATCHED THEN
     INSERT
@@ -86,6 +103,7 @@ WHEN NOT MATCHED THEN
         , specialty_id
         , subject_id
         , classes_type
+        , subj_grade_date
         , subject_map_id
         , classes_map_id
         , prz_kod
@@ -93,8 +111,6 @@ WHEN NOT MATCHED THEN
         , tpro_kod
         , prot_id
         , nr
-        , subj_grade_dates
-        , proto_return_date
         , data_zwrotu
         )
     VALUES
@@ -103,6 +119,7 @@ WHEN NOT MATCHED THEN
         , src.specialty_id
         , src.subject_id
         , src.classes_type
+        , src.subj_grade_date
         , src.subject_map_id
         , src.classes_map_id
         , src.prz_kod
@@ -110,8 +127,6 @@ WHEN NOT MATCHED THEN
         , src.tpro_kod
         , src.prot_id
         , src.nr
-        , src.subj_grade_dates
-        , src.proto_return_date
         , src.data_zwrotu
         )
 WHEN MATCHED THEN
@@ -123,7 +138,6 @@ WHEN MATCHED THEN
         , tgt.tpro_kod = src.tpro_kod
         , tgt.prot_id = src.prot_id
         , tgt.nr = src.nr
-        , tgt.subj_grade_dates = src.subj_grade_dates
         , tgt.data_zwrotu = src.data_zwrotu
 ;
 

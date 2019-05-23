@@ -32,7 +32,7 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Termin_Protokolu_t AS
             , dbg_proto_return_dates IN NUMBER
             , dbg_mi_prot_ids IN NUMBER
             , dbg_max_istniejace_nry IN NUMBER
-            , dbg_proto_return_date_ranks IN NUMBER
+            , dbg_new_nrs IN NUMBER
             , dbg_matched IN NUMBER
             , dbg_missing IN NUMBER
             , dbg_subject_mapped IN NUMBER
@@ -78,7 +78,7 @@ CREATE OR REPLACE TYPE BODY V2u_Uu_Termin_Protokolu_t AS
         SELF.dbg_proto_return_dates := dbg_proto_return_dates;
         SELF.dbg_mi_prot_ids := dbg_mi_prot_ids;
         SELF.dbg_max_istniejace_nry := dbg_max_istniejace_nry;
-        SELF.dbg_proto_return_date_ranks := dbg_proto_return_date_ranks;
+        SELF.dbg_new_nrs := dbg_new_nrs;
         SELF.dbg_matched := dbg_matched;
         SELF.dbg_missing := dbg_missing;
         SELF.dbg_subject_mapped := dbg_subject_mapped;

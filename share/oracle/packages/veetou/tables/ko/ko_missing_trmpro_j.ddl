@@ -3,7 +3,7 @@ OF V2u_Ko_Missing_Trmpro_J_t
     (
         -- PK
           CONSTRAINT v2u_ko_missing_trmpro_j_pk
-            PRIMARY KEY ( proto_return_date
+            PRIMARY KEY ( subj_grade_date
                         , classes_type
                         , subject_id
                         , specialty_id

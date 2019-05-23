@@ -9,7 +9,7 @@ USING
                 , g_j.specialty_id
                 , g_j.subject_id
                 , g_j.classes_type
-                , COALESCE(g_j.subj_grade_date, semesters2.end_date) proto_return_date
+                , g_j.subj_grade_date
                 , SET(CAST(
                         COLLECT(ma_prot_j.prot_id)
                         AS V2u_Dz_Ids_t
@@ -22,10 +22,6 @@ USING
                         COLLECT(g_j.subj_grade ORDER BY g_j.subj_grade)
                         AS V2u_Vchars1K_t
                   )) subj_grades1k
-                , SET(CAST(
-                        COLLECT(g_j.subj_grade_date ORDER BY g_j.subj_grade_date)
-                        AS V2u_Dates_t
-                  )) subj_grade_dates_udt
                 , MAX(terminy_protokolow.nr) KEEP (
                     DENSE_RANK LAST ORDER BY terminy_protokolow.nr
                   ) max_istniejacy_nr
@@ -50,7 +46,7 @@ USING
                         AND ma_trmpro_j.specialty_id = g_j.specialty_id
                         AND ma_trmpro_j.semester_id = g_j.semester_id
                         AND ma_trmpro_j.classes_type = g_j.classes_type
-                        AND ma_trmpro_j.proto_return_date = COALESCE(g_j.subj_grade_date, semesters2.end_date)
+                        AND ma_trmpro_j.subj_grade_date = COALESCE(TO_CHAR(g_j.subj_grade_date, 'YYYY-MM-DD'), '-')
                         AND ma_trmpro_j.job_uuid = g_j.job_uuid
                     )
             LEFT JOIN v2u_ko_matched_protos_j ma_prot_j
@@ -81,7 +77,7 @@ USING
                 , g_j.specialty_id
                 , g_j.subject_id
                 , g_j.classes_type
-                , COALESCE(g_j.subj_grade_date, semesters2.end_date)
+                , g_j.subj_grade_date
         ),
         v AS
         (
@@ -91,11 +87,6 @@ USING
                     SELECT SUBSTR(VALUE(t), 1, 10)
                     FROM TABLE(u.subj_grades1k) t
                   ) AS V2u_Subj_Grades_t) subj_grades
-                , CAST(MULTISET(
-                    SELECT VALUE(t)
-                    FROM TABLE(u.subj_grade_dates_udt) t
-                    WHERE ROWNUM <= 20
-                  ) AS V2u_20Dates_t) subj_grade_dates
                 , ( SELECT VALUE(t)
                     FROM TABLE(u.prot_ids) t
                     WHERE ROWNUM <= 1
@@ -166,7 +157,22 @@ USING
                     )
         )
         SELECT
-              w.*
+
+              w.job_uuid
+            , w.semester_id
+            , w.specialty_id
+            , w.subject_id
+            , w.classes_type
+            , COALESCE(TO_CHAR(w.subj_grade_date, 'YYYY-MM-DD'), '-') subj_grade_date
+            , w.subject_map_id
+            , w.map_subj_code
+            , w.classes_map_id
+            , w.map_classes_type
+            , w.coalesced_proto_type
+            , w.prot_id
+            , w.max_istniejacy_nr
+            , w.istniejace_daty_zwrotow
+
             , trmpro.nr
             , CASE
                 WHEN w.prot_id IS NULL
@@ -182,32 +188,49 @@ USING
                      || '", protocol: "' ||
                      w.coalesced_proto_type
                      || '", date: "' ||
-                     w.proto_return_date
+                     w.subj_grade_date
                      || '"} not in dz_terminy_protokolow'
                 ELSE 'error (v2u_ko_matched_trmpro_j out of sync?)'
               END reason
+
         FROM w w
         LEFT JOIN v2u_semesters semesters
             ON  (
                         semesters.code = w.semester_code
                 )
+        LEFT JOIN v2u_semesters grade_semesters
+            ON  (
+                        w.subj_grade_date <> '-'
+                    AND TRUNC(w.subj_grade_date, 'DD')
+                        BETWEEN TRUNC(grade_semesters.start_date, 'DD')
+                        AND TRUNC(grade_semesters.end_date, 'DD')
+                )
         LEFT JOIN v2u_dz_terminy_protokolow trmpro
             ON  (
                         trmpro.prot_id = w.prot_id
                     AND (
-                                TO_CHAR(trmpro.data_zwrotu, 'YYYY-MM-DD')
-                              = TO_CHAR(w.proto_return_date, 'YYYY-MM-DD')
-                            OR (
-                                        -- fallback date ...
-                                        TO_CHAR(trmpro.data_zwrotu, 'YYYY-MM-DD')
-                                      = TO_CHAR(semesters.end_date, 'YYYY-MM-DD')
-                                    AND NOT EXISTS (
-                                        SELECT NULL
-                                        FROM v2u_dz_terminy_protokolow t
-                                        WHERE   t.prot_id = w.prot_id
-                                            AND TO_CHAR(t.data_zwrotu, 'YYYY-MM-DD')
-                                              = TO_CHAR(w.proto_return_date, 'YYYY-MM-DD')
-                                    )
+                                w.subj_grade_date <> '-'
+                            AND (
+                                          TRUNC(w.subj_grade_date, 'DD')
+                                        = TRUNC(trmpro.data_zwrotu, 'DD')
+                                    -- fallback date...
+                                    OR NOT EXISTS(
+                                            SELECT NULL
+                                            FROM v2u_dz_terminy_protokolow t
+                                            WHERE t.prot_id = w.prot_id
+                                                AND TRUNC(t.data_zwrotu, 'DD')
+                                                  = TRUNC(w.subj_grade_date, 'DD')
+                                        )
+                                        AND TRUNC(trmpro.data_zwrotu, 'DD')
+                                            BETWEEN TRUNC(grade_semesters.start_date, 'DD')
+                                                AND TRUNC(grade_semesters.end_date, 'DD')
+                                        AND trmpro.utw_id LIKE 'V2U:%'
+                                )
+                            OR   w.subj_grade_date = '-'
+                            AND (
+                                        TRUNC(trmpro.data_zwrotu, 'DD')
+                                        BETWEEN TRUNC(semesters.start_date, 'DD')
+                                            AND TRUNC(semesters.end_date, 'DD')
                                 )
                         )
                 )
@@ -218,7 +241,7 @@ ON  (
         AND tgt.specialty_id = src.specialty_id
         AND tgt.semester_id = src.semester_id
         AND tgt.classes_type = src.classes_type
-        AND tgt.proto_return_date = src.proto_return_date
+        AND tgt.subj_grade_date = src.subj_grade_date
     )
 WHEN NOT MATCHED THEN
     INSERT
@@ -227,8 +250,7 @@ WHEN NOT MATCHED THEN
         , specialty_id
         , subject_id
         , classes_type
-        , proto_return_date
-        , subj_grade_dates
+        , subj_grade_date
         , subject_map_id
         , map_subj_code
         , classes_map_id
@@ -246,8 +268,7 @@ WHEN NOT MATCHED THEN
         , src.specialty_id
         , src.subject_id
         , src.classes_type
-        , src.proto_return_date
-        , src.subj_grade_dates
+        , src.subj_grade_date
         , src.subject_map_id
         , src.map_subj_code
         , src.classes_map_id
@@ -264,7 +285,6 @@ WHEN MATCHED THEN
           tgt.subject_map_id = src.subject_map_id
         , tgt.map_subj_code = src.map_subj_code
         , tgt.classes_map_id = src.classes_map_id
-        , tgt.subj_grade_dates = src.subj_grade_dates
         , tgt.map_classes_type = src.map_classes_type
         , tgt.coalesced_proto_type = src.coalesced_proto_type
         , tgt.prot_id = src.prot_id

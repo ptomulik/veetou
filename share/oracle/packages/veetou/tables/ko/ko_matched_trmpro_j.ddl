@@ -3,7 +3,13 @@ OF V2u_Ko_Matched_Trmpro_J_t
     (
         -- PK
           CONSTRAINT v2u_ko_matched_trmpro_j_pk
-            PRIMARY KEY (nr, prot_id, subject_id, specialty_id, semester_id, job_uuid)
+            PRIMARY KEY ( subj_grade_date
+                        , classes_type
+                        , subject_id
+                        , specialty_id
+                        , semester_id
+                        , job_uuid
+                        )
         -- FK
         , CONSTRAINT v2u_ko_matched_trmpro_j_f0
             FOREIGN KEY (job_uuid)
@@ -58,8 +64,8 @@ CREATE INDEX v2u_ko_matched_trmpro_j_idx3
 /
 CREATE INDEX v2u_ko_matched_trmpro_j_idx4
     ON v2u_ko_matched_trmpro_j(
-              proto_return_date
-            , classes_type
+              nr
+            , prot_id
             , subject_id
             , specialty_id
             , semester_id

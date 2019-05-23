@@ -2,13 +2,12 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Trmpro_V_t
     FORCE AUTHID CURRENT_USER AS OBJECT
     ( job_uuid RAW(16)
     , classes_type CHAR(1)
+    , subj_grade_date VARCHAR2(10 CHAR)
     , subject_id NUMBER(38)
     , specialty_id NUMBER(38)
     , semester_id NUMBER(38)
     , subject_map_id NUMBER(38)
     , classes_map_id NUMBER(38)
-    , subj_grade_dates V2u_20Dates_t
-    , proto_return_date DATE
     -- KO
     , subj_code VARCHAR2(32 CHAR)
     , subj_name VARCHAR2(256 CHAR)

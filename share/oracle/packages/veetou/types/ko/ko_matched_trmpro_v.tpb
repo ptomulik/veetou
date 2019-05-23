@@ -11,13 +11,12 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Trmpro_V_t AS
     BEGIN
         SELF.job_uuid := matched_trmpro_j.job_uuid;
         SELF.classes_type := matched_trmpro_j.classes_type;
+        SELF.subj_grade_date := matched_trmpro_j.subj_grade_date;
         SELF.subject_id := matched_trmpro_j.subject_id;
         SELF.specialty_id := matched_trmpro_j.specialty_id;
         SELF.semester_id := matched_trmpro_j.semester_id;
         SELF.subject_map_id := matched_trmpro_j.subject_map_id;
         SELF.classes_map_id := matched_trmpro_j.classes_map_id;
-        SELF.subj_grade_dates := matched_trmpro_j.subj_grade_dates;
-        SELF.proto_return_date := matched_trmpro_j.proto_return_date;
         -- KO
         SELF.subj_code := subject.subj_code;
         SELF.subj_name := subject.subj_name;

@@ -1,7 +1,7 @@
 CREATE OR REPLACE TYPE V2u_Ko_Missing_Trmpro_V_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Subject_Semester_V_t
     ( classes_type CHAR(1)
-    , proto_return_date DATE
+    , subj_grade_date VARCHAR2(10 CHAR)
     , subject_map_id NUMBER(38)
     , map_subj_code VARCHAR2(20 CHAR)
     , classes_map_id NUMBER(38)
