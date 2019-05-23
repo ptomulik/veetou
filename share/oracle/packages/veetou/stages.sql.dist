@@ -53,6 +53,12 @@ DELETE FROM v2u_ko_classes_map_j;
 COMMIT;
 @@merges/ko/ko_classes_map_j.sql;
 
+--
+-- dz_osoby
+--
+DELETE FROM v2u_dz_osoby;
+COMMIT;
+@@merges/dz/dz_osoby.sql;
 
 --
 -- dz_studenci

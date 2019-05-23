@@ -1,3 +1,4 @@
+@@dz_osoby.ddl;
 @@dz_studenci.ddl;
 @@dz_przedmioty.ddl;
 @@dz_przedmioty_obce.ddl;

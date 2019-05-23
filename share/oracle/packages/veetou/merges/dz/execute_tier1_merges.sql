@@ -1,3 +1,4 @@
+@@dz_osoby.sql;
 @@dz_studenci.sql;
 @@dz_atrybuty_przedmiotow.sql;
 @@dz_przedmioty.sql;

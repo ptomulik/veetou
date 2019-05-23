@@ -220,6 +220,13 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('dz_programy_idx3');
         Drop_Table('dz_programy');
         --
+        Drop_Trigg('dz_osoby_tr1');
+        Drop_Seqnc('dz_osoby_sq1');
+        Drop_Trigg('dz_osoby_tr0');
+        Drop_Index('dz_osoby_idx1');
+        Drop_Index('dz_osoby_idx2');
+        Drop_Table('dz_osoby');
+        --
         Drop_Trigg('dz_studenci_tr0');
         Drop_Index('dz_studenci_idx1');
         Drop_Table('dz_studenci');
@@ -297,6 +304,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Dz_Etap_Kierunku_t', 'Dz_Etapy_Kierunkow_t');
         Drop_Type('Dz_Etap_Osoby_t', 'Dz_Etapy_Osob_t');
         Drop_Type('Dz_Student_t', 'Dz_Studenci_t');
+        Drop_Type('Dz_Osoba_t', 'Dz_Osoby_t');
         Drop_Type('Dz_Program_t', 'Dz_Programy_t');
         Drop_Type('Dz_Atrybut_Przedmiotu_t', 'Dz_Atrybuty_Przedmiotow_t');
         Drop_Type('Dz_Przedmiot_t', 'Dz_Przedmioty_t');
@@ -314,6 +322,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Dz_Etap_Kierunku_B_t');
         Drop_Type('Dz_Etap_Osoby_B_t');
         Drop_Type('Dz_Student_B_t');
+        Drop_Type('Dz_Osoba_B_t');
         Drop_Type('Dz_Atrybut_Przedmiotu_B_t');
         Drop_Type('Dz_Zal_Przedm_Prgos_B_t');
         Drop_Type('Dz_Zalicz_Przedmiotu_B_t');

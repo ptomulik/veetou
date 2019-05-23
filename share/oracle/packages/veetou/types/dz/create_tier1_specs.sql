@@ -1,3 +1,4 @@
+@@dz_osoba_b.tps;
 @@dz_student_b.tps;
 @@dz_przedmiot_b.tps;
 @@dz_przedmiot_obcy_b.tps;
@@ -22,6 +23,7 @@
 @@dz_grupa_b.tps;
 @@dz_osoba_grupy_b.tps;
 
+@@dz_osoba.tps;
 @@dz_student.tps;
 @@dz_atrybut_przedmiotu.tps;
 @@dz_przedmiot.tps;
