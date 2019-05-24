@@ -1,17 +1,12 @@
-CREATE OR REPLACE TYPE BODY V2u_Ko_Grade_J_t AS
-    CONSTRUCTOR FUNCTION V2u_Ko_Grade_J_t(
-              SELF IN OUT NOCOPY V2u_Ko_Grade_J_t
+CREATE OR REPLACE TYPE BODY V2u_Ko_Credit_I_t AS
+    CONSTRUCTOR FUNCTION V2u_Ko_Credit_I_t(
+              SELF IN OUT NOCOPY V2u_Ko_Credit_I_t
             , job_uuid IN RAW
             , semester_id IN NUMBER
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
             , classes_type IN CHAR
             , student_id IN NUMBER
-            , subj_grade IN VARCHAR2
-            , subj_grade_date IN DATE
-            , tr_id IN NUMBER
-            , opis IN VARCHAR2
-            , toc_kod IN VARCHAR2
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -22,29 +17,19 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Grade_J_t AS
             , subject_id => subject_id
             , classes_type => classes_type
             , student_id => student_id
-            , subj_grade => subj_grade
-            , subj_grade_date => subj_grade_date
-            , tr_id => tr_id
-            , opis => opis
-            , toc_kod => toc_kod
             );
         RETURN;
     END;
 
 
     MEMBER PROCEDURE init(
-              SELF IN OUT NOCOPY V2u_Ko_Grade_J_t
+              SELF IN OUT NOCOPY V2u_Ko_Credit_I_t
             , job_uuid IN RAW
             , semester_id IN NUMBER
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
             , classes_type IN CHAR
             , student_id IN NUMBER
-            , subj_grade IN VARCHAR2
-            , subj_grade_date IN DATE
-            , tr_id IN NUMBER
-            , opis IN VARCHAR2
-            , toc_kod IN VARCHAR2
             )
     IS
     BEGIN
@@ -53,14 +38,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Grade_J_t AS
             , semester_id => semester_id
             , specialty_id => specialty_id
             , subject_id => subject_id
-            , classes_type => classes_type
-            , student_id => student_id
             );
-        SELF.subj_grade := subj_grade;
-        SELF.subj_grade_date := subj_grade_date;
-        SELF.tr_id := tr_id;
-        SELF.opis := opis;
-        SELF.toc_kod := toc_kod;
+        SELF.classes_type := classes_type;
+        SELF.student_id := student_id;
     END;
 END;
 /

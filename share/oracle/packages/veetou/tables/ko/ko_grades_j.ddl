@@ -3,8 +3,8 @@ OF V2u_Ko_Grade_J_t
     (
         -- PK
           CONSTRAINT v2u_ko_grades_j_pk
-            PRIMARY KEY ( classes_type
-                        , student_id
+            PRIMARY KEY ( student_id
+                        , classes_type
                         , subject_id
                         , specialty_id
                         , semester_id

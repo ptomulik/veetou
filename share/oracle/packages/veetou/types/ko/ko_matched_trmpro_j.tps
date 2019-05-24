@@ -1,7 +1,6 @@
 CREATE OR REPLACE TYPE V2u_Ko_Matched_Trmpro_J_t
-    FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Subject_Semester_I_t
-    ( classes_type CHAR(1)
-    , subj_grade_date VARCHAR2(10 CHAR)
+    FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Credit_I_t
+    ( subj_grade_date VARCHAR2(10 CHAR)
     , subject_map_id NUMBER(38)
     , classes_map_id NUMBER(38)
     , prz_kod VARCHAR2(20 CHAR)
@@ -18,6 +17,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Trmpro_J_t
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
             , classes_type IN CHAR
+            , student_id IN NUMBER
             , subj_grade_date IN VARCHAR2
             , subject_map_id IN NUMBER
             , classes_map_id IN NUMBER
@@ -36,6 +36,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Trmpro_J_t
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
             , classes_type IN CHAR
+            , student_id IN NUMBER
             , subj_grade_date IN VARCHAR2
             , subject_map_id IN NUMBER
             , classes_map_id IN NUMBER

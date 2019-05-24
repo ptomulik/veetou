@@ -1,12 +1,14 @@
 CREATE OR REPLACE TYPE V2u_Ko_Matched_Proto_J_t
-    FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Subject_Semester_I_t
-    ( classes_type CHAR(1)
-    , subject_map_id NUMBER(38)
+    FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Credit_I_t
+    ( subject_map_id NUMBER(38)
     , classes_map_id NUMBER(38)
+    , proto_type VARCHAR2(20 CHAR)
+    , prot_id NUMBER(10)
+    , zaj_cyk_id NUMBER(10)
     , prz_kod VARCHAR2(20 CHAR)
     , cdyd_kod VARCHAR2(20 CHAR)
     , tpro_kod VARCHAR2(20 CHAR)
-    , prot_id NUMBER(10)
+    , tpro_kod_missmatch VARCHAR(128 CHAR)
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Proto_J_t(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Proto_J_t
@@ -15,12 +17,16 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Proto_J_t
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
             , classes_type IN CHAR
+            , student_id IN NUMBER
             , subject_map_id IN NUMBER
             , classes_map_id IN NUMBER
+            , proto_type IN VARCHAR2
+            , prot_id IN NUMBER
+            , zaj_cyk_id IN NUMBER
             , prz_kod IN VARCHAR2
             , cdyd_kod IN VARCHAR2
             , tpro_kod IN VARCHAR2
-            , prot_id IN NUMBER
+            , tpro_kod_missmatch IN VARCHAR2
             ) RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
@@ -30,12 +36,16 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Proto_J_t
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
             , classes_type IN CHAR
+            , student_id IN NUMBER
             , subject_map_id IN NUMBER
             , classes_map_id IN NUMBER
+            , proto_type IN VARCHAR2
+            , prot_id IN NUMBER
+            , zaj_cyk_id IN NUMBER
             , prz_kod IN VARCHAR2
             , cdyd_kod IN VARCHAR2
             , tpro_kod IN VARCHAR2
-            , prot_id IN NUMBER
+            , tpro_kod_missmatch IN VARCHAR2
             )
     )
 NOT FINAL;

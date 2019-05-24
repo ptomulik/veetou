@@ -2,6 +2,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Proto_V_t AS
     CONSTRUCTOR FUNCTION V2u_Ko_Matched_Proto_V_t(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Proto_V_t
             , matched_proto_j IN V2u_Ko_Matched_Proto_J_t
+            , student IN V2u_Ko_Student_t
             , subject IN V2u_Ko_Subject_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
@@ -10,13 +11,20 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Proto_V_t AS
     IS
     BEGIN
         SELF.job_uuid := matched_proto_j.job_uuid;
+        SELF.student_id := matched_proto_j.student_id;
         SELF.classes_type := matched_proto_j.classes_type;
         SELF.subject_id := matched_proto_j.subject_id;
         SELF.specialty_id := matched_proto_j.specialty_id;
         SELF.semester_id := matched_proto_j.semester_id;
         SELF.subject_map_id := matched_proto_j.subject_map_id;
         SELF.classes_map_id := matched_proto_j.classes_map_id;
+        SELF.proto_type := matched_proto_j.proto_type;
+        SELF.tpro_kod_missmatch := matched_proto_j.tpro_kod_missmatch;
         -- KO
+        SELF.student_index := student.student_index;
+        SELF.student_name := student.student_name;
+        SELF.first_name := student.first_name;
+        SELF.last_name := student.last_name;
         SELF.subj_code := subject.subj_code;
         SELF.subj_name := subject.subj_name;
         SELF.subj_hours_w := subject.subj_hours_w;
@@ -55,4 +63,4 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Proto_V_t AS
     END;
 END;
 /
--- vim: set ft=sql ts=4 sw=4 et:
+-- vim:= set ft=sql ts=4 sw=4 et:

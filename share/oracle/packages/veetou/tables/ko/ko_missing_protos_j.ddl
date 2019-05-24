@@ -3,7 +3,13 @@ OF V2u_Ko_Missing_Proto_J_t
     (
         -- PK
           CONSTRAINT v2u_ko_missing_protos_j_pk
-            PRIMARY KEY (classes_type, subject_id, specialty_id, semester_id, job_uuid)
+            PRIMARY KEY ( student_id
+                        , classes_type
+                        , subject_id
+                        , specialty_id
+                        , semester_id
+                        , job_uuid
+                        )
         -- FK
         , CONSTRAINT v2u_ko_missing_protos_j_f0
             FOREIGN KEY (job_uuid)

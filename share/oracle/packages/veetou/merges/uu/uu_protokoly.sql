@@ -16,8 +16,8 @@ USING
                         , g_j.classes_type
                   ) coalesced_classes_type
                 , COALESCE(
-                          ma_prot_j.tpro_kod
-                        , mi_prot_j.coalesced_proto_type
+                          ma_prot_j.proto_type
+                        , mi_prot_j.proto_type
                   ) coalesced_proto_type
                 , SET(CAST(
                         COLLECT(subject_map.map_subj_code)
@@ -147,7 +147,7 @@ USING
                 , COALESCE(subject_map.map_subj_code, subjects.subj_code)
                 , semesters.semester_code
                 , COALESCE(classes_map.map_classes_type, g_j.classes_type)
-                , COALESCE(ma_prot_j.tpro_kod, mi_prot_j.coalesced_proto_type)
+                , COALESCE(ma_prot_j.proto_type, mi_prot_j.proto_type)
         ),
         u AS
         ( -- make necessary adjustments to the raw values selected i u_0

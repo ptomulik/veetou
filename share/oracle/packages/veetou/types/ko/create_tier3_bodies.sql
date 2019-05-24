@@ -1,5 +1,6 @@
 -- base types
 @@ko_subject_semester_u.tpb;
+@@ko_credit_u.tpb;
 
 -- types for views
 @@ko_specialty_semester_v.tpb;

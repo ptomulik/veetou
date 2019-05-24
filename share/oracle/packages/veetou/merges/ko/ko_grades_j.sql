@@ -68,17 +68,6 @@ USING
                     AND semester_sheets.job_uuid = u.job_uuid
                 )
 ----        XXX: Grouping should not be necessary, duplicates should not occur
---        GROUP BY
---              u.job_uuid
---            , student_sheets.student_id
---            , subject_trs.subject_id
---            , specialty_sheets.specialty_id
---            , semester_sheets.semester_id
---            , u.subj_grade
---            , u.subj_grade_date
---            , u.id
---            , u.opis
---            , u.toc_kod
     ) src
 ON  (
             tgt.student_id = src.student_id
@@ -94,8 +83,8 @@ WHEN NOT MATCHED THEN
         , semester_id
         , specialty_id
         , subject_id
-        , student_id
         , classes_type
+        , student_id
         , subj_grade
         , subj_grade_date
         , tr_id
@@ -107,8 +96,8 @@ WHEN NOT MATCHED THEN
         , src.semester_id
         , src.specialty_id
         , src.subject_id
-        , src.student_id
         , src.classes_type
+        , src.student_id
         , src.subj_grade
         , src.subj_grade_date
         , src.tr_id

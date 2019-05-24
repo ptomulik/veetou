@@ -709,6 +709,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Matched_Przcykl_I_t');
         Drop_Type('Ko_Matched_Przedm_I_t');
         Drop_Type('Ko_Missing_Przedm_I_t');
+        Drop_Type('Ko_Credit_I_t');
         Drop_Type('Ko_Classes_Semester_I_t');
         Drop_Type('Ko_Student_Semester_I_t');
         Drop_Type('Ko_Subject_Semester_I_t');
@@ -863,6 +864,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Student_Semester_V_t', 'Ko_Student_Semesters_V_t');
         Drop_Type('Ko_Grade_V_t', 'Ko_Grades_V_t');
 
+        Drop_Type('Ko_Credit_U_t');
         Drop_Type('Ko_Subject_Semester_U_t');
     END;
 

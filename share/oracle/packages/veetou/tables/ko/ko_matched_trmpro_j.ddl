@@ -3,7 +3,7 @@ OF V2u_Ko_Matched_Trmpro_J_t
     (
         -- PK
           CONSTRAINT v2u_ko_matched_trmpro_j_pk
-            PRIMARY KEY ( subj_grade_date
+            PRIMARY KEY ( student_id
                         , classes_type
                         , subject_id
                         , specialty_id

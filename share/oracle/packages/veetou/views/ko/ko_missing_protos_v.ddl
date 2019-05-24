@@ -1,6 +1,12 @@
 CREATE OR REPLACE VIEW v2u_ko_missing_protos_v
 OF V2u_Ko_Missing_Proto_V_t
-WITH OBJECT IDENTIFIER (job_uuid, subject_id, specialty_id, semester_id, classes_type)
+WITH OBJECT IDENTIFIER  ( job_uuid
+                        , subject_id
+                        , specialty_id
+                        , semester_id
+                        , classes_type
+                        , student_id
+                        )
 AS
     SELECT
           V2u_Ko_Missing_Proto_V_t(
@@ -8,6 +14,7 @@ AS
             , subject => VALUE(subjects)
             , specialty => VALUE(specialties)
             , semester => VALUE(semesters)
+            , student => VALUE(students)
         )
     FROM v2u_ko_missing_protos_j mi_protos_j
     INNER JOIN v2u_ko_subjects subjects
@@ -24,6 +31,11 @@ AS
         ON  (
                     semesters.id = mi_protos_j.semester_id
                 AND semesters.job_uuid = mi_protos_j.job_uuid
+            )
+    INNER JOIN v2u_ko_students students
+        ON  (
+                    students.id = mi_protos_j.student_id
+               AND students.job_uuid = mi_protos_j.job_uuid
             )
 WITH READ ONLY
 ;

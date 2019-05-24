@@ -6,6 +6,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Trmpro_J_t AS
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
             , classes_type IN CHAR
+            , student_id IN NUMBER
             , subj_grade_date VARCHAR2
             , subject_map_id IN NUMBER
             , classes_map_id IN NUMBER
@@ -24,6 +25,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Trmpro_J_t AS
             , specialty_id => specialty_id
             , subject_id => subject_id
             , classes_type => classes_type
+            , student_id => student_id
             , subj_grade_date => subj_grade_date
             , subject_map_id => subject_map_id
             , classes_map_id => classes_map_id
@@ -44,6 +46,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Trmpro_J_t AS
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
             , classes_type IN CHAR
+            , student_id IN NUMBER
             , subj_grade_date VARCHAR2
             , subject_map_id IN NUMBER
             , classes_map_id IN NUMBER
@@ -61,8 +64,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Trmpro_J_t AS
             , semester_id => semester_id
             , specialty_id => specialty_id
             , subject_id => subject_id
+            , classes_type => classes_type
+            , student_id => student_id
             );
-        SELF.classes_type := classes_type;
         SELF.subj_grade_date := subj_grade_date;
         SELF.subject_map_id := subject_map_id;
         SELF.classes_map_id := classes_map_id;
