@@ -53,12 +53,14 @@ DELETE FROM v2u_ko_classes_map_j;
 COMMIT;
 @@merges/ko/ko_classes_map_j.sql;
 
+
 --
 -- dz_osoby
 --
 DELETE FROM v2u_dz_osoby;
 COMMIT;
 @@merges/dz/dz_osoby.sql;
+
 
 --
 -- dz_studenci
@@ -67,6 +69,28 @@ DELETE FROM v2u_dz_studenci;
 COMMIT;
 @@merges/dz/dz_studenci.sql;
 
+
+--
+-- dz_pracownicy
+--
+DELETE FROM v2u_dz_pracownicy;
+COMMIT;
+@@merges/dz/dz_pracownicy.sql;
+
+
+--
+-- dz_prowadzacy_grup
+--
+DELETE FROM v2u_dz_prowadzacy_grup;
+COMMIT;
+@@merges/dz/dz_prowadzacy_grup.sql;
+
+--
+-- dz_prow_prz_cykli
+--
+DELETE FROM v2u_dz_prow_prz_cykli;
+COMMIT;
+@@merges/dz/dz_prow_prz_cykli.sql;
 
 --
 -- dz_wartosci_ocen

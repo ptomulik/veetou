@@ -173,6 +173,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     PROCEDURE Tier1_Dz
     IS
     BEGIN
+        Drop_Trigg('dz_prowadzacy_grup_tr0');
+        Drop_Table('dz_prowadzacy_grup');
+        --
         Drop_Trigg('dz_osoby_grup_tr0');
         Drop_Table('dz_osoby_grup');
         --
@@ -231,6 +234,13 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('dz_studenci_idx1');
         Drop_Table('dz_studenci');
         --
+        Drop_Trigg('dz_pracownicy_tr1');
+        Drop_Seqnc('dz_pracownicy_sq1');
+        Drop_Trigg('dz_pracownicy_tr0');
+        Drop_Index('dz_pracownicy_idx1');
+        Drop_Index('dz_pracownicy_idx2');
+        Drop_Table('dz_pracownicy');
+        --
         Drop_Trigg('dz_zajecia_cykli_tr0');
         Drop_Trigg('dz_zajecia_cykli_tr1');
         Drop_Seqnc('dz_zajecia_cykli_sq1');
@@ -240,6 +250,15 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Trigg('dz_zajecia_prz_obcych_tr0');
         Drop_Index('dz_zajecia_prz_obcych_idx1');
         Drop_Table('dz_zajecia_prz_obcych');
+        --
+        Drop_Trigg('dz_prow_prz_cykli_tr1');
+        Drop_Seqnc('dz_prow_prz_cykli_sq1');
+        Drop_Trigg('dz_prow_prz_cykli_tr0');
+        Drop_Index('dz_prow_prz_cykli_idx1');
+        Drop_Index('dz_prow_prz_cykli_idx2');
+        Drop_Index('dz_prow_prz_cykli_idx3');
+        Drop_Index('dz_prow_prz_cykli_idx4');
+        Drop_Table('dz_prowadzacy_prz_cykli');
         --
         Drop_Trigg('dz_przedmioty_cykli_tr0');
         Drop_Index('dz_przedmioty_cykli_idx1');
@@ -289,6 +308,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Table('dz_protokoly');
         --
 
+        Drop_Type('Dz_Prowadzacy_Grupe_t', 'Dz_Prowadzacy_Grup_t');
         Drop_Type('Dz_Osoba_Grupy_t', 'Dz_Osoby_Grup_t');
         Drop_Type('Dz_Grupa_t', 'Dz_Grupy_t');
         Drop_Type('Dz_Protokol_t', 'Dz_Protokoly_t');
@@ -303,6 +323,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Dz_Etap_Programu_t', 'Dz_Etapy_Programow_t');
         Drop_Type('Dz_Etap_Kierunku_t', 'Dz_Etapy_Kierunkow_t');
         Drop_Type('Dz_Etap_Osoby_t', 'Dz_Etapy_Osob_t');
+        Drop_Type('Dz_Pracownik_t', 'Dz_Pracownicy_t');
         Drop_Type('Dz_Student_t', 'Dz_Studenci_t');
         Drop_Type('Dz_Osoba_t', 'Dz_Osoby_t');
         Drop_Type('Dz_Program_t', 'Dz_Programy_t');
@@ -311,6 +332,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Dz_Przedmiot_Obcy_t', 'Dz_Przedmioty_Obce_t');
         Drop_Type('Dz_Punkty_Przedmiotu_t', 'Dz_Punkty_Przedmiotow_t');
         Drop_Type('Dz_Przedmiot_Cyklu_t', 'Dz_Przedmioty_Cykli_t');
+        Drop_Type('Dz_Prow_Prz_Cyklu_t', 'Dz_Prow_Prz_Cykli_t');
         Drop_Type('Dz_Zajecia_Cyklu_t', 'Dz_Zajecia_Cykli_t');
         Drop_Type('Dz_Zajecia_Prz_Obcego_t', 'Dz_Zajecia_Prz_Obcych_t');
 
@@ -321,6 +343,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Dz_Etap_Programu_B_t');
         Drop_Type('Dz_Etap_Kierunku_B_t');
         Drop_Type('Dz_Etap_Osoby_B_t');
+        Drop_Type('Dz_Pracownik_B_t');
         Drop_Type('Dz_Student_B_t');
         Drop_Type('Dz_Osoba_B_t');
         Drop_Type('Dz_Atrybut_Przedmiotu_B_t');
@@ -328,6 +351,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Dz_Zalicz_Przedmiotu_B_t');
         Drop_Type('Dz_Przedmiot_B_t');
         Drop_Type('Dz_Przedmiot_Obcy_B_t');
+        Drop_Type('Dz_Prow_Prz_Cyklu_B_t');
+        Drop_Type('Dz_Przedmiot_Cyklu_B_t');
         Drop_Type('Dz_Przedmiot_Cyklu_B_t');
         Drop_Type('Dz_Punkty_Przedmiotu_B_t');
         Drop_Type('Dz_Zajecia_Cyklu_B_t');
@@ -338,6 +363,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Dz_Protokol_B_t');
         Drop_Type('Dz_Grupa_B_t');
         Drop_Type('Dz_Osoba_Grupy_B_t');
+        Drop_Type('Dz_Prowadzacy_Grupe_B_t');
     END;
 
     PROCEDURE Tier1_Ko

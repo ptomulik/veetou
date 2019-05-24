@@ -1,9 +1,11 @@
 @@dz_osoby.sql;
 @@dz_studenci.sql;
+@@dz_pracownicy.sql;
 @@dz_atrybuty_przedmiotow.sql;
 @@dz_przedmioty.sql;
 @@dz_przedmioty_obce.sql;
 @@dz_przedmioty_cykli.sql;
+@@dz_prow_prz_cykli.sql;
 @@dz_punkty_przedmiotow.sql;
 @@dz_zajecia_cykli.sql;
 @@dz_zajecia_prz_obcych.sql;
@@ -22,5 +24,6 @@
 @@dz_protokoly.sql;
 @@dz_grupy.sql;
 @@dz_osoby_grup.sql;
+@@dz_prowadzacy_grup.sql;
 
 -- vim: set ft=sql ts=4 sw=4 et:

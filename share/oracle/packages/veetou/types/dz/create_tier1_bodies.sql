@@ -1,9 +1,11 @@
 @@dz_osoba_b.tpb;
 @@dz_student_b.tpb;
+@@dz_pracownik_b.tpb;
 @@dz_przedmiot_b.tpb;
 @@dz_przedmiot_obcy_b.tpb;
 @@dz_atrybut_przedmiotu_b.tpb;
 @@dz_przedmiot_cyklu_b.tpb;
+@@dz_prow_prz_cyklu_b.tpb;
 @@dz_punkty_przedmiotu_b.tpb;
 @@dz_zajecia_cyklu_b.tpb;
 @@dz_zajecia_prz_obcego_b.tpb;
@@ -22,13 +24,16 @@
 @@dz_protokol_b.tpb;
 @@dz_grupa_b.tpb;
 @@dz_osoba_grupy_b.tpb;
+@@dz_prowadzacy_grupe_b.tpb;
 
 @@dz_osoba.tpb;
 @@dz_student.tpb;
+@@dz_pracownik.tpb;
 @@dz_atrybut_przedmiotu.tpb;
 @@dz_przedmiot.tpb;
 @@dz_przedmiot_obcy.tpb;
 @@dz_przedmiot_cyklu.tpb;
+@@dz_prow_prz_cyklu.tpb;
 @@dz_punkty_przedmiotu.tpb;
 @@dz_zajecia_cyklu.tpb;
 @@dz_zajecia_prz_obcego.tpb;
@@ -47,5 +52,6 @@
 @@dz_protokol.tpb;
 @@dz_grupa.tpb;
 @@dz_osoba_grupy.tpb;
+@@dz_prowadzacy_grupe.tpb;
 
 -- vim: set ft=sql ts=4 sw=4 et:
