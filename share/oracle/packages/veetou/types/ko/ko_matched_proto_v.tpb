@@ -10,41 +10,13 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Proto_V_t AS
             ) RETURN SELF AS RESULT
     IS
     BEGIN
-        SELF.job_uuid := matched_proto_j.job_uuid;
-        SELF.student_id := matched_proto_j.student_id;
-        SELF.classes_type := matched_proto_j.classes_type;
-        SELF.subject_id := matched_proto_j.subject_id;
-        SELF.specialty_id := matched_proto_j.specialty_id;
-        SELF.semester_id := matched_proto_j.semester_id;
-        SELF.subject_map_id := matched_proto_j.subject_map_id;
-        SELF.classes_map_id := matched_proto_j.classes_map_id;
-        SELF.proto_type := matched_proto_j.proto_type;
-        SELF.tpro_kod_missmatch := matched_proto_j.tpro_kod_missmatch;
-        -- KO
-        SELF.student_index := student.student_index;
-        SELF.student_name := student.student_name;
-        SELF.first_name := student.first_name;
-        SELF.last_name := student.last_name;
-        SELF.subj_code := subject.subj_code;
-        SELF.subj_name := subject.subj_name;
-        SELF.subj_hours_w := subject.subj_hours_w;
-        SELF.subj_hours_c := subject.subj_hours_c;
-        SELF.subj_hours_l := subject.subj_hours_l;
-        SELF.subj_hours_p := subject.subj_hours_p;
-        SELF.subj_hours_s := subject.subj_hours_s;
-        SELF.subj_credit_kind := subject.subj_credit_kind;
-        SELF.subj_ects := subject.subj_ects;
-        SELF.subj_tutor := subject.subj_tutor;
-        SELF.university := specialty.university;
-        SELF.faculty := specialty.faculty;
-        SELF.studies_modetier := specialty.studies_modetier;
-        SELF.studies_field := specialty.studies_field;
-        SELF.studies_specialty := specialty.studies_specialty;
-        SELF.semester_code := semester.semester_code;
-        SELF.semester_number := semester.semester_number;
-        SELF.ects_mandatory := semester.ects_mandatory;
-        SELF.ects_other := semester.ects_other;
-        SELF.ects_total := semester.ects_total;
+        SELF.init(
+              subject => subject
+            , specialty => specialty
+            , semester => semester
+            , classes_type => matched_proto_j.classes_type
+            , student => student
+        );
         -- DZ
         SELF.zaj_cyk_id := protokol.zaj_cyk_id;
         SELF.opis := protokol.opis;
@@ -63,4 +35,4 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Proto_V_t AS
     END;
 END;
 /
--- vim:= set ft=sql ts=4 sw=4 et:
+-- vim: set ft=sql ts=4 sw=4 et:

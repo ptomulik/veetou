@@ -9,14 +9,14 @@ USING
                       REGEXP_REPLACE(UPPER(trs.subj_grade), '([2-5]),0', '\1')
                     , 'ZW'
                     , 'ZWL'
-                  ) opis
+                  ) map_subj_grade
                 , CASE
                     WHEN REGEXP_INSTR(trs.subj_grade, '[2-5]([,.](0|5))?$') = 1
                     THEN 'STD'
                     WHEN UPPER(trs.subj_grade) IN ('NZAL', 'ZAL', 'ZW')
                     THEN 'ZAL'
                     ELSE '?'
-                  END toc_kod
+                  END map_subj_grade_type
             FROM v2u_ko_trs trs
         )
         SELECT
@@ -29,8 +29,8 @@ USING
             , u.subj_grade subj_grade
             , u.subj_grade_date subj_grade_date
             , u.id tr_id
-            , u.opis
-            , u.toc_kod
+            , u.map_subj_grade
+            , u.map_subj_grade_type
 
         FROM u u
         INNER JOIN v2u_ko_subject_trs_j subject_trs
@@ -87,9 +87,9 @@ WHEN NOT MATCHED THEN
         , student_id
         , subj_grade
         , subj_grade_date
+        , map_subj_grade
+        , map_subj_grade_type
         , tr_id
-        , opis
-        , toc_kod
         )
     VALUES
         ( src.job_uuid
@@ -100,17 +100,17 @@ WHEN NOT MATCHED THEN
         , src.student_id
         , src.subj_grade
         , src.subj_grade_date
+        , src.map_subj_grade
+        , src.map_subj_grade_type
         , src.tr_id
-        , src.opis
-        , src.toc_kod
         )
 WHEN MATCHED THEN
     UPDATE SET
           tgt.subj_grade = src.subj_grade
         , tgt.subj_grade_date = src.subj_grade_date
+        , tgt.map_subj_grade = src.map_subj_grade
+        , tgt.map_subj_grade_type = src.map_subj_grade_type
         , tgt.tr_id = src.tr_id
-        , tgt.opis = src.opis
-        , tgt.toc_kod = src.toc_kod
 ;
 
 COMMIT;

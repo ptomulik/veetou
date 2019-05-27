@@ -8,6 +8,7 @@ AS
             , subject => VALUE(subjects)
             , specialty => VALUE(specialties)
             , semester => VALUE(semesters)
+            , student => VALUE(students)
             , termin_protokolu => VALUE(terminy_protokolow)
         )
     FROM v2u_ko_matched_trmpro_j ma_trmpro_j
@@ -25,6 +26,11 @@ AS
         ON  (
                     semesters.id = ma_trmpro_j.semester_id
                 AND semesters.job_uuid = ma_trmpro_j.job_uuid
+            )
+    INNER JOIN v2u_ko_students students
+        ON  (
+                    students.id = ma_trmpro_j.student_id
+                AND students.job_uuid = ma_trmpro_j.job_uuid
             )
     INNER JOIN v2u_dz_terminy_protokolow terminy_protokolow
         ON  (

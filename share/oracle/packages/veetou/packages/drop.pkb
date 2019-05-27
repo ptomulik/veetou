@@ -709,6 +709,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Matched_Przcykl_I_t');
         Drop_Type('Ko_Matched_Przedm_I_t');
         Drop_Type('Ko_Missing_Przedm_I_t');
+        Drop_Type('Ko_Grade_I_t');
         Drop_Type('Ko_Credit_I_t');
         Drop_Type('Ko_Classes_Semester_I_t');
         Drop_Type('Ko_Student_Semester_I_t');

@@ -10,14 +10,17 @@ USING
             , g_j.classes_type
             , g_j.subj_grade
             , g_j.subj_grade_date
-            , COALESCE(ma_etpos_j.os_id, studenci.os_id) os_id
-            , ma_trmpro_j.prot_id
+            , g_j.map_subj_grade
+            , g_j.map_subj_grade_type
+            , studenci.os_id
+            , ma_protos_j.prot_id
             , oceny.term_prot_nr
+            , wartosci_ocen.opis
             , CASE
-                WHEN g_j.opis <> wartosci_ocen.opis
-                THEN '"' || g_j.opis || '" <> "' || wartosci_ocen.opis || '"'
-                WHEN g_j.toc_kod <> oceny.toc_kod
-                THEN '[' || g_j.toc_kod || '] <> [' || oceny.toc_kod || ']'
+                WHEN g_j.map_subj_grade <> wartosci_ocen.opis
+                THEN '"' || g_j.map_subj_grade || '" <> "' || wartosci_ocen.opis || '"'
+                WHEN g_j.map_subj_grade_type <> oceny.toc_kod
+                THEN '[' || g_j.map_subj_grade_type || '] <> [' || oceny.toc_kod || ']'
                 ELSE NULL
               END ocena_missmatch
 
@@ -31,31 +34,23 @@ USING
             ON  (
                         studenci.indeks = students.student_index
                 )
-        LEFT JOIN v2u_ko_matched_etpos_j ma_etpos_j
+        INNER JOIN v2u_ko_matched_protos_j ma_protos_j
             ON  (
-                        ma_etpos_j.student_id = g_j.student_id
-                    AND ma_etpos_j.specialty_id = g_j.specialty_id
-                    AND ma_etpos_j.semester_id = g_j.semester_id
-                    AND ma_etpos_j.job_uuid = g_j.job_uuid
-                )
-        INNER JOIN v2u_ko_matched_trmpro_j ma_trmpro_j
-            ON  (
-                        ma_trmpro_j.subject_id = g_j.subject_id
-                    AND ma_trmpro_j.specialty_id = g_j.specialty_id
-                    AND ma_trmpro_j.semester_id = g_j.semester_id
-                    AND ma_trmpro_j.classes_type = g_j.classes_type
-                    AND ma_trmpro_j.subj_grade_date = g_j.subj_grade_date
-                    AND ma_trmpro_j.job_uuid = g_j.job_uuid
+                        ma_protos_j.subject_id = g_j.subject_id
+                    AND ma_protos_j.specialty_id = g_j.specialty_id
+                    AND ma_protos_j.semester_id = g_j.semester_id
+                    AND ma_protos_j.classes_type = g_j.classes_type
+                    AND ma_protos_j.job_uuid = g_j.job_uuid
                 )
         INNER JOIN v2u_semesters semesters
             ON  (
-                        semesters.code = ma_trmpro_j.cdyd_kod
+                        semesters.code = ma_protos_j.cdyd_kod
                 )
         INNER JOIN v2u_dz_oceny oceny
             ON  (
-                        oceny.os_id = COALESCE(ma_etpos_j.os_id, studenci.os_id)
-                    AND oceny.prot_id = ma_trmpro_j.prot_id
-                    AND oceny.term_prot_nr = ma_trmpro_j.nr
+                        oceny.os_id = studenci.os_id
+                    AND oceny.prot_id = ma_protos_j.prot_id
+                    --AND oceny.term_prot_nr = ma_protos_j.nr
                 )
         INNER JOIN v2u_dz_wartosci_ocen wartosci_ocen
             ON  (
@@ -83,9 +78,12 @@ WHEN NOT MATCHED THEN
         , classes_type
         , subj_grade
         , subj_grade_date
+        , map_subj_grade
+        , map_subj_grade_type
         , os_id
         , prot_id
         , term_prot_nr
+        , opis
         , ocena_missmatch
         )
     VALUES
@@ -97,17 +95,23 @@ WHEN NOT MATCHED THEN
         , src.classes_type
         , src.subj_grade
         , src.subj_grade_date
+        , src.map_subj_grade
+        , src.map_subj_grade_type
         , src.os_id
         , src.prot_id
         , src.term_prot_nr
+        , src.opis
         , src.ocena_missmatch
         )
 WHEN MATCHED THEN
     UPDATE SET
           tgt.subj_grade = src.subj_grade
+        , tgt.map_subj_grade = src.map_subj_grade
+        , tgt.map_subj_grade_type = src.map_subj_grade_type
         , tgt.os_id = src.os_id
         , tgt.prot_id = src.prot_id
         , tgt.term_prot_nr = src.term_prot_nr
+        , tgt.opis = src.opis
         , tgt.ocena_missmatch = src.ocena_missmatch
 ;
 

@@ -1,12 +1,9 @@
 CREATE OR REPLACE TYPE V2u_Ko_Matched_Ocena_J_t
-    FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Subject_Semester_I_t
-    ( student_id NUMBER(38)
-    , classes_type CHAR(1)
-    , subj_grade VARCHAR2(10 CHAR)
-    , subj_grade_date DATE
-    , os_id NUMBER(10)
+    FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Grade_I_t
+    ( os_id NUMBER(10)
     , prot_id NUMBER(10)
     , term_prot_nr NUMBER(10)
+    , opis VARCHAR(100 CHAR)
     , ocena_missmatch VARCHAR2(32 CHAR)
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Ocena_J_t(
@@ -19,9 +16,12 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Ocena_J_t
             , classes_type IN CHAR
             , subj_grade IN VARCHAR2
             , subj_grade_date IN DATE
+            , map_subj_grade IN VARCHAR2
+            , map_subj_grade_type IN VARCHAR2
             , os_id IN NUMBER
             , prot_id IN NUMBER
             , term_prot_nr IN NUMBER
+            , opis IN VARCHAR2
             , ocena_missmatch IN VARCHAR2
             ) RETURN SELF AS RESULT
 
@@ -35,9 +35,12 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Ocena_J_t
             , classes_type IN CHAR
             , subj_grade IN VARCHAR2
             , subj_grade_date IN DATE
+            , map_subj_grade IN VARCHAR2
+            , map_subj_grade_type IN VARCHAR2
             , os_id IN NUMBER
             , prot_id IN NUMBER
             , term_prot_nr IN NUMBER
+            , opis IN VARCHAR2
             , ocena_missmatch IN VARCHAR2
             )
     )

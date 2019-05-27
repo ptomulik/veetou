@@ -51,7 +51,7 @@ USING
                     )
             INNER JOIN v2u_subject_map subject_map
                 ON  (
-                        subject_map.id = sm_j.map_id
+                            subject_map.id = sm_j.map_id
                         AND subject_map.map_subj_code IS NOT NULL
                     )
             LEFT JOIN v2u_ko_classes_map_j cm_j

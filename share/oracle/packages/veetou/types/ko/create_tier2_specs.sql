@@ -11,6 +11,7 @@
 @@ko_subject_semester_i.tps;
 @@ko_classes_semester_i.tps;
 @@ko_credit_i.tps;
+@@ko_grade_i.tps;
 @@ko_matched_przedm_i.tps;
 @@ko_matched_przcykl_i.tps;
 @@ko_matched_pktprz_i.tps;
