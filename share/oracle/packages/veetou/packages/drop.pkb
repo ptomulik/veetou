@@ -258,7 +258,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('dz_prow_prz_cykli_idx2');
         Drop_Index('dz_prow_prz_cykli_idx3');
         Drop_Index('dz_prow_prz_cykli_idx4');
-        Drop_Table('dz_prowadzacy_prz_cykli');
+        Drop_Table('dz_prow_prz_cykli');
         --
         Drop_Trigg('dz_przedmioty_cykli_tr0');
         Drop_Index('dz_przedmioty_cykli_idx1');
@@ -865,6 +865,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Student_Semester_V_t', 'Ko_Student_Semesters_V_t');
         Drop_Type('Ko_Grade_V_t', 'Ko_Grades_V_t');
 
+        Drop_Type('Ko_Grade_U_t');
         Drop_Type('Ko_Credit_U_t');
         Drop_Type('Ko_Subject_Semester_U_t');
     END;

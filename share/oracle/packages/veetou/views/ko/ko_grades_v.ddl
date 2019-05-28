@@ -5,10 +5,10 @@ AS
     SELECT
         V2u_Ko_Grade_V_t(
               grade_j => VALUE(g_j)
-            , student => VALUE(students)
             , subject => VALUE(subjects)
             , specialty => VALUE(specialties)
             , semester => VALUE(semesters)
+            , student => VALUE(students)
         )
     FROM v2u_ko_grades_j g_j
     INNER JOIN v2u_ko_students students

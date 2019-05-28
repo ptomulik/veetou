@@ -1272,6 +1272,18 @@ DELETE FROM v2u_dz_oceny;
 COMMIT;
 @@merges/dz/dz_oceny.sql;
 
+DELETE FROM v2u_ko_matched_oceny_j;
+COMMIT;
+@@merges/ko/ko_matched_oceny_j.sql;
+
+DELETE FROM v2u_ko_missing_oceny_j;
+COMMIT;
+@@merges/ko/ko_missing_oceny_j.sql;
+
+DELETE FROM v2u_uu_oceny;
+COMMIT;
+@@merges/uu/uu_oceny.sql;
+
 
 --
 -- dz_zajecia_prz_obcych

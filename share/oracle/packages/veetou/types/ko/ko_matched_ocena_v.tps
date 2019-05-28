@@ -1,52 +1,54 @@
 CREATE OR REPLACE TYPE V2u_Ko_Matched_Ocena_V_t
-    FORCE AUTHID CURRENT_USER AS OBJECT
-    ( job_uuid RAW(16)
-    , student_id NUMBER(38)
-    , subject_id NUMBER(38)
-    , specialty_id NUMBER(38)
-    , semester_id NUMBER(38)
-    , classes_type VARCHAR2(32 CHAR)
-    , student_index VARCHAR2(32 CHAR)
-    , student_name VARCHAR2(128 CHAR)
-    , first_name VARCHAR2(48 CHAR)
-    , last_name VARCHAR2(48 CHAR)
-    , subj_code VARCHAR2(32 CHAR)
-    , subj_name VARCHAR2(256 CHAR)
-    , subj_hours_w NUMBER(8)
-    , subj_hours_c NUMBER(8)
-    , subj_hours_l NUMBER(8)
-    , subj_hours_p NUMBER(8)
-    , subj_hours_s NUMBER(8)
-    , subj_credit_kind VARCHAR2(16 CHAR)
-    , subj_ects NUMBER(4)
-    , subj_tutor VARCHAR2(256 CHAR)
-    , subj_grade VARCHAR2(10 CHAR)
-    , subj_grade_date DATE
-    , university VARCHAR2(8 CHAR)
-    , faculty VARCHAR2(8 CHAR)
-    , studies_modetier VARCHAR2(100 CHAR)
-    , studies_field VARCHAR2(100 CHAR)
-    , studies_specialty VARCHAR2(100 CHAR)
-    , semester_code VARCHAR2(5 CHAR)
-    , semester_number NUMBER(2)
-    , ects_mandatory NUMBER(4)
-    , ects_other NUMBER(4)
-    , ects_total NUMBER(4)
---    , tr_id NUMBER(38)
---    , opis VARCHAR2(100 CHAR)
---    , toc_kod VARCHAR2(20 CHAR)
-    , os_id NUMBER(10)
+    FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Grade_U_t
+    ( os_id NUMBER(10)
     , prot_id NUMBER(10)
     , term_prot_nr NUMBER(10)
+    , matching_score NUMBER(38)
+    , highest_score NUMBER(38)
+    , selected NUMBER(1)
+    , ocena_opis VARCHAR(100 CHAR)
     , ocena_missmatch VARCHAR2(32 CHAR)
+    -- DZ_PROTOKOL
+    , zaj_cyk_id NUMBER(10)
+    , protokol_opis VARCHAR2(100 CHAR)
+    , tpro_kod VARCHAR2(20 CHAR)
+    , prz_kod VARCHAR2(20 CHAR)
+    , cdyd_kod VARCHAR2(20 CHAR)
+    , czy_do_sredniej VARCHAR2(1 CHAR)
+    , edycja VARCHAR2(1 CHAR)
+    , protokol_opis_ang VARCHAR2(100 CHAR)
+    -- DZ_TERMIN_PROTOKOLU
+    , term_prot_status VARCHAR2(2 CHAR)
+    , term_prot_opis VARCHAR2(100 CHAR)
+    , data_zwrotu DATE
+    , egzamin_komisyjny VARCHAR(1 CHAR)
+    -- DZ_OCENA
+    , komentarz_pub VARCHAR2(2000 CHAR)
+    , komentarz_pryw VARCHAR2(2000 CHAR)
+    , toc_kod VARCHAR2(20 CHAR)
+    , wart_oc_kolejnosc NUMBER(10)
+    , zmiana_os_id NUMBER(10)
+    , zmiana_data DATE
+    , pos_komi_id NUMBER(10)
+    -- DZ_WARTOSC_OCENY
+    , wart_oc_opis VARCHAR2(100 CHAR)
+    , czy_zal VARCHAR2(1 CHAR)
+    , wartosc NUMBER(4,2)
+    , wart_oc_description VARCHAR2(100 CHAR)
+    , opis_oceny VARCHAR2(100 CHAR)
+    , czy_dwoja_reg VARCHAR2(1 CHAR)
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Ocena_V_t(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Ocena_V_t
             , matched_ocena_j IN V2u_Ko_Matched_Ocena_J_t
-            , student IN V2u_Ko_Student_t
             , subject IN V2u_Ko_Subject_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
+            , student IN V2u_Ko_Student_t
+            , protokol IN V2u_Dz_Protokol_t
+            , termin_protokolu IN V2u_Dz_Termin_Protokolu_t
+            , ocena IN V2u_Dz_Ocena_t
+            , wartosc_oceny IN V2u_Dz_Wartosc_Oceny_t
             ) RETURN SELF AS RESULT
     );
 /

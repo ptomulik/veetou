@@ -3,7 +3,9 @@ OF V2u_Ko_Matched_Ocena_J_t
     (
         -- PK
           CONSTRAINT v2u_ko_matched_oceny_j_pk
-            PRIMARY KEY ( subj_grade_date
+            PRIMARY KEY ( os_id
+                        , prot_id
+                        , term_prot_nr
                         , classes_type
                         , student_id
                         , subject_id

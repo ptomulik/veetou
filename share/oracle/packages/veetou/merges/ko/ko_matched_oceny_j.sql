@@ -15,6 +15,9 @@ USING
             , studenci.os_id
             , ma_protos_j.prot_id
             , oceny.term_prot_nr
+            , NULL matching_score
+            , NULL highest_score
+            , NULL selected
             , wartosci_ocen.opis
             , CASE
                 WHEN g_j.map_subj_grade <> wartosci_ocen.opis
@@ -36,7 +39,8 @@ USING
                 )
         INNER JOIN v2u_ko_matched_protos_j ma_protos_j
             ON  (
-                        ma_protos_j.subject_id = g_j.subject_id
+                        ma_protos_j.student_id = g_j.student_id
+                    AND ma_protos_j.subject_id = g_j.subject_id
                     AND ma_protos_j.specialty_id = g_j.specialty_id
                     AND ma_protos_j.semester_id = g_j.semester_id
                     AND ma_protos_j.classes_type = g_j.classes_type
@@ -50,23 +54,24 @@ USING
             ON  (
                         oceny.os_id = studenci.os_id
                     AND oceny.prot_id = ma_protos_j.prot_id
-                    --AND oceny.term_prot_nr = ma_protos_j.nr
                 )
         INNER JOIN v2u_dz_wartosci_ocen wartosci_ocen
             ON  (
                         wartosci_ocen.toc_kod = oceny.toc_kod
                     AND wartosci_ocen.kolejnosc = oceny.wart_oc_kolejnosc
                 )
-        WHERE g_j.subj_grade_date IS NOT NULL
+        /* WHERE g_j.subj_grade_date IS NOT NULL */
     ) src
 ON  (
-            tgt.job_uuid = src.job_uuid
-        AND tgt.subject_id = src.subject_id
-        AND tgt.specialty_id = src.specialty_id
-        AND tgt.semester_id = src.semester_id
+            tgt.student_id = src.student_id
         AND tgt.classes_type = src.classes_type
-        AND tgt.subj_grade_date = src.subj_grade_date
-        AND tgt.student_id = src.student_id
+        AND tgt.subject_id = src.subject_id
+        AND tgt.semester_id = src.semester_id
+        AND tgt.specialty_id = src.specialty_id
+        AND tgt.os_id = src.os_id
+        AND tgt.prot_id = src.prot_id
+        and tgt.term_prot_nr = src.term_prot_nr
+        AND tgt.job_uuid = src.job_uuid
     )
 WHEN NOT MATCHED THEN
     INSERT
@@ -83,6 +88,9 @@ WHEN NOT MATCHED THEN
         , os_id
         , prot_id
         , term_prot_nr
+        , matching_score
+        , highest_score
+        , selected
         , opis
         , ocena_missmatch
         )
@@ -100,6 +108,9 @@ WHEN NOT MATCHED THEN
         , src.os_id
         , src.prot_id
         , src.term_prot_nr
+        , src.matching_score
+        , src.highest_score
+        , src.selected
         , src.opis
         , src.ocena_missmatch
         )
@@ -108,9 +119,9 @@ WHEN MATCHED THEN
           tgt.subj_grade = src.subj_grade
         , tgt.map_subj_grade = src.map_subj_grade
         , tgt.map_subj_grade_type = src.map_subj_grade_type
-        , tgt.os_id = src.os_id
-        , tgt.prot_id = src.prot_id
-        , tgt.term_prot_nr = src.term_prot_nr
+        , tgt.matching_score = src.matching_score
+        , tgt.highest_score = src.highest_score
+        , tgt.selected = src.selected
         , tgt.opis = src.opis
         , tgt.ocena_missmatch = src.ocena_missmatch
 ;
