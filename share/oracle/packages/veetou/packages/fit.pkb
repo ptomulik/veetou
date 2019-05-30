@@ -105,6 +105,26 @@ CREATE OR REPLACE PACKAGE BODY V2U_Fit AS
             RETURN 0;
         END IF;
     END;
+
+    FUNCTION Attributes(
+              grade_i IN V2u_Ko_Grade_I_t
+            , wartosc_oceny IN V2u_Dz_Wartosc_Oceny_B_t
+            , termin_protokolu IN V2u_Dz_Termin_Protokolu_B_t
+            , data_zwrotu_rank IN NUMBER
+            ) RETURN INTEGER
+    IS
+        total INTEGER;
+    BEGIN
+        total := 0;
+        IF grade_i.map_subj_grade_type = wartosc_oceny.toc_kod AND
+           grade_i.map_subj_grade = wartosc_oceny.opis THEN
+            total := total + 10 + data_zwrotu_rank;
+            IF TRUNC(grade_i.subj_grade_date, 'DD') = TRUNC(termin_protokolu.data_zwrotu, 'DD') THEN
+                total := total + 1;
+            END IF;
+        END IF;
+        RETURN total;
+    END;
 END V2U_Fit;
 /
 -- vim: set ft=sql ts=4 sw=4 et:

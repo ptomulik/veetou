@@ -23,11 +23,12 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Ocena_V_t AS
         SELF.os_id := matched_ocena_j.os_id;
         SELF.prot_id := matched_ocena_j.prot_id;
         SELF.term_prot_nr := matched_ocena_j.term_prot_nr;
+        SELF.ocena_opis := matched_ocena_j.opis;
+        SELF.ocena_missmatch := matched_ocena_j.ocena_missmatch;
         SELF.matching_score := matched_ocena_j.matching_score;
         SELF.highest_score := matched_ocena_j.highest_score;
         SELF.selected := matched_ocena_j.selected;
-        SELF.ocena_opis := matched_ocena_j.opis;
-        SELF.ocena_missmatch := matched_ocena_j.ocena_missmatch;
+        SELF.reason := matched_ocena_j.reason;
         -- DZ_PROTOKOL
         SELF.zaj_cyk_id := protokol.zaj_cyk_id;
         SELF.protokol_opis := protokol.opis;
