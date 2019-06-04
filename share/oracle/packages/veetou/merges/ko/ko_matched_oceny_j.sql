@@ -152,13 +152,13 @@ USING
     ) src
 ON  (
             tgt.student_id = src.student_id
-        AND tgt.classes_type = src.classes_type
         AND tgt.subject_id = src.subject_id
         AND tgt.semester_id = src.semester_id
         AND tgt.specialty_id = src.specialty_id
+        AND tgt.classes_type = src.classes_type
         AND tgt.os_id = src.os_id
         AND tgt.prot_id = src.prot_id
-        and tgt.term_prot_nr = src.term_prot_nr
+        AND tgt.term_prot_nr = src.term_prot_nr
         AND tgt.job_uuid = src.job_uuid
     )
 WHEN NOT MATCHED THEN
