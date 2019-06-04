@@ -42,7 +42,7 @@
 @@ko_missing_trmpro_v.tps;
 
 @@ko_matched_ocena_v.tps;
---@@ko_missing_ocena_v.tps;
+@@ko_missing_ocena_v.tps;
 
 @@ko_skipped_program_v.tps;
 

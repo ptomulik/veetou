@@ -38,7 +38,7 @@
 @@ko_missing_trmpro_v.ddl;
 
 @@ko_matched_oceny_v.ddl;
---@@ko_missing_oceny_v.ddl;
+@@ko_missing_oceny_v.ddl;
 
 @@ko_skipped_programs_v.ddl;
 

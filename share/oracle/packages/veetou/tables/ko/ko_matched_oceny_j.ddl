@@ -79,4 +79,15 @@ CREATE INDEX v2u_ko_matched_oceny_j_idx4
             , job_uuid
             );
 /
+CREATE INDEX v2u_ko_matched_oceny_j_idx5
+    ON v2u_ko_matched_oceny_j(
+              classes_type
+            , subject_id
+            , student_id
+            , specialty_id
+            , semester_id
+            , selected
+            , job_uuid
+            );
+/
 -- vim: set ft=sql ts=4 sw=4 et:

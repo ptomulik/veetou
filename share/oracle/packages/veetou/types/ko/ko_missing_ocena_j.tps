@@ -2,12 +2,11 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Ocena_J_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Grade_I_t
     ( os_id NUMBER(10)
     , prot_id NUMBER(10)
-    , term_prot_nr NUMBER(10)
-    , reason VARCHAR2(300 CHAR)
+    , reason VARCHAR2(2048 CHAR)
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Missing_Ocena_J_t(
               SELF IN OUT NOCOPY V2u_Ko_Missing_Ocena_J_t
-            , job_uuid RAW
+            , job_uuid IN RAW
             , semester_id IN NUMBER
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
@@ -19,13 +18,12 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Ocena_J_t
             , map_subj_grade_type IN VARCHAR2
             , os_id IN NUMBER
             , prot_id IN NUMBER
-            , term_prot_nr IN NUMBER
             , reason IN VARCHAR2
             ) RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
               SELF IN OUT NOCOPY V2u_Ko_Missing_Ocena_J_t
-            , job_uuid RAW
+            , job_uuid IN RAW
             , semester_id IN NUMBER
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
@@ -37,7 +35,6 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Ocena_J_t
             , map_subj_grade_type IN VARCHAR2
             , os_id IN NUMBER
             , prot_id IN NUMBER
-            , term_prot_nr IN NUMBER
             , reason IN VARCHAR2
             )
     )
