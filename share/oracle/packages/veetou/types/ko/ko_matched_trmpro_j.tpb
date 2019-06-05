@@ -7,15 +7,11 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Trmpro_J_t AS
             , subject_id IN NUMBER
             , classes_type IN CHAR
             , student_id IN NUMBER
-            , subj_grade_date VARCHAR2
-            , subject_map_id IN NUMBER
-            , classes_map_id IN NUMBER
-            , prz_kod IN VARCHAR2
-            , cdyd_kod IN VARCHAR2
-            , tpro_kod IN VARCHAR2
+            , subj_grade_date IN DATE
             , prot_id IN NUMBER
             , nr IN NUMBER
             , data_zwrotu IN DATE
+            , reason IN VARCHAR2
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -27,14 +23,10 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Trmpro_J_t AS
             , classes_type => classes_type
             , student_id => student_id
             , subj_grade_date => subj_grade_date
-            , subject_map_id => subject_map_id
-            , classes_map_id => classes_map_id
-            , prz_kod => prz_kod
-            , cdyd_kod => cdyd_kod
-            , tpro_kod => tpro_kod
             , prot_id => prot_id
             , nr => nr
             , data_zwrotu => data_zwrotu
+            , reason => reason
             );
         RETURN;
     END;
@@ -47,15 +39,11 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Trmpro_J_t AS
             , subject_id IN NUMBER
             , classes_type IN CHAR
             , student_id IN NUMBER
-            , subj_grade_date VARCHAR2
-            , subject_map_id IN NUMBER
-            , classes_map_id IN NUMBER
-            , prz_kod IN VARCHAR2
-            , cdyd_kod IN VARCHAR2
-            , tpro_kod IN VARCHAR2
+            , subj_grade_date IN DATE
             , prot_id IN NUMBER
             , nr IN NUMBER
             , data_zwrotu IN DATE
+            , reason IN VARCHAR2
             )
     IS
     BEGIN
@@ -68,14 +56,10 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Trmpro_J_t AS
             , student_id => student_id
             );
         SELF.subj_grade_date := subj_grade_date;
-        SELF.subject_map_id := subject_map_id;
-        SELF.classes_map_id := classes_map_id;
-        SELF.prz_kod := prz_kod;
-        SELF.cdyd_kod := cdyd_kod;
-        SELF.tpro_kod := tpro_kod;
         SELF.prot_id := prot_id;
         SELF.nr := nr;
         SELF.data_zwrotu := data_zwrotu;
+        SELF.reason := reason;
     END;
 END;
 /

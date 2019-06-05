@@ -90,4 +90,12 @@ CREATE INDEX v2u_ko_matched_oceny_j_idx5
             , job_uuid
             );
 /
+CREATE INDEX v2u_ko_matched_oceny_j_idx6
+    ON v2u_ko_matched_oceny_j(
+              prot_id
+            , term_prot_nr
+            , subj_grade_date
+            , selected
+            );
+/
 -- vim: set ft=sql ts=4 sw=4 et:

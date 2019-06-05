@@ -1,6 +1,16 @@
 CREATE OR REPLACE TYPE V2u_Ko_Matched_Trmpro_V_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Credit_U_t
-    ( prot_id NUMBER(10)
+    ( -- PROTOKOL
+      zaj_cyk_id NUMBER(10)
+    , prot_opis VARCHAR2(100 CHAR)
+    , tpro_kod VARCHAR2(20 CHAR)
+    , prot_id NUMBER(10)
+    , prz_kod VARCHAR2(20 CHAR)
+    , cdyd_kod VARCHAR2(20 CHAR)
+    , czy_do_sredniej VARCHAR2(1 CHAR)
+    , edycja VARCHAR2(1 CHAR)
+    , prot_opis_ang VARCHAR2(100 CHAR)
+    -- TERMIN_PROTOKOLU
     , nr NUMBER(10)
     , status VARCHAR2(2 CHAR)
     , utw_id VARCHAR2(30 CHAR)
@@ -18,6 +28,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Trmpro_V_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
             , student IN V2u_Ko_Student_t
+            , protokol IN V2u_Dz_Protokol_t
             , termin_protokolu IN V2u_Dz_Termin_Protokolu_t
             ) RETURN SELF AS RESULT
 

@@ -6,6 +6,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Trmpro_V_t AS
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
             , student IN V2u_Ko_Student_t
+            , protokol IN V2u_Dz_Protokol_t
             , termin_protokolu IN V2u_Dz_Termin_Protokolu_t
             ) RETURN SELF AS RESULT
     IS
@@ -17,7 +18,17 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Trmpro_V_t AS
             , classes_type => matched_trmpro_j.classes_type
             , student => student
         );
+        -- PROTOKOL
+        SELF.zaj_cyk_id := protokol.zaj_cyk_id;
+        SELF.prot_opis := protokol.opis;
+        SELF.tpro_kod := protokol.tpro_kod;
         SELF.prot_id := termin_protokolu.prot_id;
+        SELF.prz_kod := protokol.prz_kod;
+        SELF.cdyd_kod := protokol.cdyd_kod;
+        SELF.czy_do_sredniej := protokol.czy_do_sredniej;
+        SELF.edycja := protokol.edycja;
+        SELF.prot_opis_ang := protokol.opis_ang;
+        -- TERMIN_PROTOKOLU
         SELF.nr := termin_protokolu.nr;
         SELF.status := termin_protokolu.status;
         SELF.utw_id := termin_protokolu.utw_id;

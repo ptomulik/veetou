@@ -1,14 +1,10 @@
 CREATE OR REPLACE TYPE V2u_Ko_Matched_Trmpro_J_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Credit_I_t
-    ( subj_grade_date VARCHAR2(10 CHAR)
-    , subject_map_id NUMBER(38)
-    , classes_map_id NUMBER(38)
-    , prz_kod VARCHAR2(20 CHAR)
-    , cdyd_kod VARCHAR2(20 CHAR)
-    , tpro_kod VARCHAR2(20 CHAR)
+    ( subj_grade_date DATE
     , prot_id NUMBER(10)
     , nr NUMBER(10)
     , data_zwrotu DATE
+    , reason VARCHAR2(300 CHAR)
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Trmpro_J_t(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Trmpro_J_t
@@ -18,15 +14,11 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Trmpro_J_t
             , subject_id IN NUMBER
             , classes_type IN CHAR
             , student_id IN NUMBER
-            , subj_grade_date IN VARCHAR2
-            , subject_map_id IN NUMBER
-            , classes_map_id IN NUMBER
-            , prz_kod IN VARCHAR2
-            , cdyd_kod IN VARCHAR2
-            , tpro_kod IN VARCHAR2
+            , subj_grade_date IN DATE
             , prot_id IN NUMBER
             , nr IN NUMBER
             , data_zwrotu IN DATE
+            , reason IN VARCHAR2
             ) RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
@@ -37,15 +29,11 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Trmpro_J_t
             , subject_id IN NUMBER
             , classes_type IN CHAR
             , student_id IN NUMBER
-            , subj_grade_date IN VARCHAR2
-            , subject_map_id IN NUMBER
-            , classes_map_id IN NUMBER
-            , prz_kod IN VARCHAR2
-            , cdyd_kod IN VARCHAR2
-            , tpro_kod IN VARCHAR2
+            , subj_grade_date IN DATE
             , prot_id IN NUMBER
             , nr IN NUMBER
             , data_zwrotu IN DATE
+            , reason IN VARCHAR2
             )
     )
 NOT FINAL;

@@ -22,7 +22,6 @@ USING
                   , wartosc_oceny => VALUE(wartosci_ocen)
                   , termin_protokolu => VALUE(terminy_protokolow)
                   , data_zwrotu_rank => DENSE_RANK() OVER (
-                        --PARTITION BY terminy_protokolow.prot_id
                         PARTITION BY
                                   g_j.student_id
                                 , g_j.subject_id
@@ -35,13 +34,25 @@ USING
                         )
                   ) matching_score
                 , wartosci_ocen.opis
-                , CASE
-                    WHEN g_j.map_subj_grade <> wartosci_ocen.opis
-                    THEN '"' || g_j.map_subj_grade || '" <> "' || wartosci_ocen.opis || '"'
-                    WHEN g_j.map_subj_grade_type <> oceny.toc_kod
-                    THEN '[' || g_j.map_subj_grade_type || '] <> [' || oceny.toc_kod || ']'
-                    ELSE NULL
-                  END ocena_missmatch
+                , ( CASE
+                    WHEN g_j.map_subj_grade = wartosci_ocen.opis
+                    THEN ''
+                    ELSE '"' || g_j.map_subj_grade || '" <> "' || wartosci_ocen.opis || '"'
+                         || (
+                             CASE
+                             WHEN g_j.map_subj_grade_type = oceny.toc_kod
+                             THEN ''
+                             ELSE ' & '
+                             END
+                            )
+                    END
+                  ||
+                    CASE
+                    WHEN g_j.map_subj_grade_type = oceny.toc_kod
+                    THEN ''
+                    ELSE '[' || g_j.map_subj_grade_type || '] <> [' || oceny.toc_kod || ']'
+                    END
+                  ) ocena_missmatch
 
             FROM v2u_ko_grades_j g_j
             INNER JOIN v2u_ko_students students
@@ -81,7 +92,6 @@ USING
                             wartosci_ocen.toc_kod = oceny.toc_kod
                         AND wartosci_ocen.kolejnosc = oceny.wart_oc_kolejnosc
                     )
-            /* WHERE g_j.subj_grade_date IS NOT NULL */
         ),
         u AS
         (

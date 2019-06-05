@@ -24,14 +24,8 @@ OF V2u_Ko_Matched_Trmpro_J_t
             FOREIGN KEY (semester_id, job_uuid)
             REFERENCES v2u_ko_semesters(id, job_uuid)
         , CONSTRAINT v2u_ko_matched_trmpro_j_f4
-            FOREIGN KEY (subject_map_id)
-            REFERENCES v2u_subject_map(id)
-        , CONSTRAINT v2u_ko_matched_trmpro_j_f5
             FOREIGN KEY (subject_id, specialty_id, semester_id, job_uuid)
             REFERENCES v2u_ko_subject_semesters_j(subject_id, specialty_id, semester_id, job_uuid)
-        , CONSTRAINT v2u_ko_matched_trmpro_j_f6
-            FOREIGN KEY (subject_id, specialty_id, semester_id, subject_map_id, job_uuid)
-            REFERENCES v2u_ko_subject_map_j(subject_id, specialty_id, semester_id, map_id, job_uuid)
     )
 OBJECT IDENTIFIER IS PRIMARY KEY
 ;

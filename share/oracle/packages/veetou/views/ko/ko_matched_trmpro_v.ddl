@@ -9,6 +9,7 @@ AS
             , specialty => VALUE(specialties)
             , semester => VALUE(semesters)
             , student => VALUE(students)
+            , protokol => VALUE(protokoly)
             , termin_protokolu => VALUE(terminy_protokolow)
         )
     FROM v2u_ko_matched_trmpro_j ma_trmpro_j
@@ -36,6 +37,10 @@ AS
         ON  (
                     terminy_protokolow.prot_id = ma_trmpro_j.prot_id
                 AND terminy_protokolow.nr = ma_trmpro_j.nr
+            )
+    LEFT JOIN v2u_dz_protokoly protokoly
+        ON  (
+                protokoly.id = ma_trmpro_j.prot_id
             )
 WITH READ ONLY;
 
