@@ -85,17 +85,16 @@ USING
                 ON  (
                             ma_oceny_j.student_id = g_j.student_id
                         AND ma_oceny_j.classes_type = g_j.classes_type
-                        AND ma_oceny_j.subj_grade_date = g_j.subj_grade_date
                         AND ma_oceny_j.subject_id = g_j.subject_id
                         AND ma_oceny_j.specialty_id = g_j.specialty_id
                         AND ma_oceny_j.semester_id = g_j.semester_id
                         AND ma_oceny_j.job_uuid = g_j.job_uuid
+                        AND ma_oceny_j.selected = 1
                     )
             LEFT JOIN v2u_ko_missing_oceny_j mi_oceny_j
                 ON  (
                             mi_oceny_j.student_id = g_j.student_id
                         AND mi_oceny_j.classes_type = g_j.classes_type
-                        AND mi_oceny_j.subj_grade_date = g_j.subj_grade_date
                         AND mi_oceny_j.subject_id = g_j.subject_id
                         AND mi_oceny_j.specialty_id = g_j.specialty_id
                         AND mi_oceny_j.semester_id = g_j.semester_id
