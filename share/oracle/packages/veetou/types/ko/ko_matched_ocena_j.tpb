@@ -14,12 +14,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Ocena_J_t AS
             , os_id IN NUMBER
             , prot_id IN NUMBER
             , term_prot_nr IN NUMBER
-            , opis IN VARCHAR2
-            , ocena_missmatch IN VARCHAR2
             , matching_score IN NUMBER
-            , highest_score IN NUMBER
-            , selected IN NUMBER
-            , reason IN VARCHAR2
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -37,12 +32,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Ocena_J_t AS
             , os_id => os_id
             , prot_id => prot_id
             , term_prot_nr => term_prot_nr
-            , opis => opis
-            , ocena_missmatch => ocena_missmatch
             , matching_score => matching_score
-            , highest_score => highest_score
-            , selected => selected
-            , reason => reason
             );
         RETURN;
     END;
@@ -63,12 +53,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Ocena_J_t AS
             , os_id IN NUMBER
             , prot_id IN NUMBER
             , term_prot_nr IN NUMBER
-            , opis IN VARCHAR2
-            , ocena_missmatch IN VARCHAR2
             , matching_score IN NUMBER
-            , highest_score IN NUMBER
-            , selected IN NUMBER
-            , reason IN VARCHAR2
             )
     IS
     BEGIN
@@ -87,12 +72,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Ocena_J_t AS
         SELF.os_id := os_id;
         SELF.prot_id := prot_id;
         SELF.term_prot_nr := term_prot_nr;
-        SELF.opis := opis;
-        SELF.ocena_missmatch := ocena_missmatch;
         SELF.matching_score := matching_score;
-        SELF.highest_score := highest_score;
-        SELF.selected := selected;
-        SELF.reason := reason;
     END;
 END;
 /

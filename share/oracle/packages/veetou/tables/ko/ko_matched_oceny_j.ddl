@@ -3,10 +3,7 @@ OF V2u_Ko_Matched_Ocena_J_t
     (
         -- PK
           CONSTRAINT v2u_ko_matched_oceny_j_pk
-            PRIMARY KEY ( os_id
-                        , prot_id
-                        , term_prot_nr
-                        , classes_type
+            PRIMARY KEY ( classes_type
                         , student_id
                         , subject_id
                         , specialty_id
@@ -67,35 +64,6 @@ CREATE INDEX v2u_ko_matched_oceny_j_idx3
             , specialty_id
             , semester_id
             , job_uuid
-            );
-/
-CREATE INDEX v2u_ko_matched_oceny_j_idx4
-    ON v2u_ko_matched_oceny_j(
-              classes_type
-            , subject_id
-            , student_id
-            , specialty_id
-            , semester_id
-            , job_uuid
-            );
-/
-CREATE INDEX v2u_ko_matched_oceny_j_idx5
-    ON v2u_ko_matched_oceny_j(
-              classes_type
-            , subject_id
-            , student_id
-            , specialty_id
-            , semester_id
-            , selected
-            , job_uuid
-            );
-/
-CREATE INDEX v2u_ko_matched_oceny_j_idx6
-    ON v2u_ko_matched_oceny_j(
-              prot_id
-            , term_prot_nr
-            , subj_grade_date
-            , selected
             );
 /
 -- vim: set ft=sql ts=4 sw=4 et:

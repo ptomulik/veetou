@@ -3,12 +3,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Ocena_J_t
     ( os_id NUMBER(10)
     , prot_id NUMBER(10)
     , term_prot_nr NUMBER(10)
-    , opis VARCHAR(100 CHAR)
-    , ocena_missmatch VARCHAR2(32 CHAR)
     , matching_score NUMBER(38)
-    , highest_score NUMBER(38)
-    , selected NUMBER(1)
-    , reason VARCHAR2(128 CHAR)
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Ocena_J_t(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Ocena_J_t
@@ -25,12 +20,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Ocena_J_t
             , os_id IN NUMBER
             , prot_id IN NUMBER
             , term_prot_nr IN NUMBER
-            , opis IN VARCHAR2
-            , ocena_missmatch IN VARCHAR2
             , matching_score IN NUMBER
-            , highest_score IN NUMBER
-            , selected IN NUMBER
-            , reason IN VARCHAR2
             ) RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
@@ -48,12 +38,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Ocena_J_t
             , os_id IN NUMBER
             , prot_id IN NUMBER
             , term_prot_nr IN NUMBER
-            , opis IN VARCHAR2
-            , ocena_missmatch IN VARCHAR2
             , matching_score IN NUMBER
-            , highest_score IN NUMBER
-            , selected IN NUMBER
-            , reason IN VARCHAR2
             )
     )
 NOT FINAL;

@@ -531,9 +531,6 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('ko_matched_oceny_j_idx1');
         Drop_Index('ko_matched_oceny_j_idx2');
         Drop_Index('ko_matched_oceny_j_idx3');
-        Drop_Index('ko_matched_oceny_j_idx4');
-        Drop_Index('ko_matched_oceny_j_idx5');
-        Drop_Index('ko_matched_oceny_j_idx6');
         Drop_Table('ko_matched_oceny_j');
         --
         Drop_Index('ko_matched_zpprgos_j_idx1');

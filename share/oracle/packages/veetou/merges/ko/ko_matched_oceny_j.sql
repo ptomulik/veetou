@@ -33,26 +33,26 @@ USING
                                 , terminy_protokolow.nr
                         )
                   ) matching_score
-                , wartosci_ocen.opis
-                , ( CASE
-                    WHEN g_j.map_subj_grade = wartosci_ocen.opis
-                    THEN ''
-                    ELSE '"' || g_j.map_subj_grade || '" <> "' || wartosci_ocen.opis || '"'
-                         || (
-                             CASE
-                             WHEN g_j.map_subj_grade_type = oceny.toc_kod
-                             THEN ''
-                             ELSE ' & '
-                             END
-                            )
-                    END
-                  ||
-                    CASE
-                    WHEN g_j.map_subj_grade_type = oceny.toc_kod
-                    THEN ''
-                    ELSE '[' || g_j.map_subj_grade_type || '] <> [' || oceny.toc_kod || ']'
-                    END
-                  ) ocena_missmatch
+--                , wartosci_ocen.opis
+--                , ( CASE
+--                    WHEN g_j.map_subj_grade = wartosci_ocen.opis
+--                    THEN ''
+--                    ELSE '"' || g_j.map_subj_grade || '" <> "' || wartosci_ocen.opis || '"'
+--                         || (
+--                             CASE
+--                             WHEN g_j.map_subj_grade_type = oceny.toc_kod
+--                             THEN ''
+--                             ELSE ' & '
+--                             END
+--                            )
+--                    END
+--                  ||
+--                    CASE
+--                    WHEN g_j.map_subj_grade_type = oceny.toc_kod
+--                    THEN ''
+--                    ELSE '[' || g_j.map_subj_grade_type || '] <> [' || oceny.toc_kod || ']'
+--                    END
+--                  ) ocena_missmatch
 
             FROM v2u_ko_grades_j g_j
             INNER JOIN v2u_ko_students students
@@ -92,6 +92,8 @@ USING
                             wartosci_ocen.toc_kod = oceny.toc_kod
                         AND wartosci_ocen.kolejnosc = oceny.wart_oc_kolejnosc
                     )
+            WHERE   wartosci_ocen.opis = g_j.map_subj_grade
+                AND wartosci_ocen.toc_kod = g_j.map_subj_grade_type
         ),
         u AS
         (
@@ -136,29 +138,31 @@ USING
         )
         SELECT
               w.*
-            , CASE
-                WHEN w.is_candidate IS NOT NULL AND w.candidates_count = 1
-                THEN 1
-                ELSE 0
-              END selected
-            , CASE
-                WHEN w.matching_score = 0
-                THEN 'matching_score = 0'
-                WHEN w.matching_score <> w.highest_score
-                THEN 'matching_score (' ||
-                        TO_CHAR(w.matching_score)
-                    || ') <> highest_score (' ||
-                        TO_CHAR(w.highest_score)
-                    || ')'
-                WHEN w.candidates_count <> 1
-                THEN 'candidates_count (' ||
-                        TO_CHAR(w.candidates_count)
-                    || ') <> 1'
-                WHEN w.is_candidate IS NULL
-                THEN 'is_candidate IS NULL'
-                ELSE 'is_candidate = 1 AND candidates_count = 1'
-            END reason
+--            , CASE
+--                WHEN w.is_candidate IS NOT NULL AND w.candidates_count = 1
+--                THEN 1
+--                ELSE 0
+--              END selected
+--            , CASE
+--                WHEN w.matching_score = 0
+--                THEN 'matching_score = 0'
+--                WHEN w.matching_score <> w.highest_score
+--                THEN 'matching_score (' ||
+--                        TO_CHAR(w.matching_score)
+--                    || ') <> highest_score (' ||
+--                        TO_CHAR(w.highest_score)
+--                    || ')'
+--                WHEN w.candidates_count <> 1
+--                THEN 'candidates_count (' ||
+--                        TO_CHAR(w.candidates_count)
+--                    || ') <> 1'
+--                WHEN w.is_candidate IS NULL
+--                THEN 'is_candidate IS NULL'
+--                ELSE 'is_candidate = 1 AND candidates_count = 1'
+--            END reason
         FROM w w
+        WHERE   w.is_candidate IS NOT NULL
+            AND w.candidates_count = 1
     ) src
 ON  (
             tgt.student_id = src.student_id
@@ -166,9 +170,6 @@ ON  (
         AND tgt.semester_id = src.semester_id
         AND tgt.specialty_id = src.specialty_id
         AND tgt.classes_type = src.classes_type
-        AND tgt.os_id = src.os_id
-        AND tgt.prot_id = src.prot_id
-        AND tgt.term_prot_nr = src.term_prot_nr
         AND tgt.job_uuid = src.job_uuid
     )
 WHEN NOT MATCHED THEN
@@ -186,12 +187,7 @@ WHEN NOT MATCHED THEN
         , os_id
         , prot_id
         , term_prot_nr
-        , opis
-        , ocena_missmatch
         , matching_score
-        , highest_score
-        , selected
-        , reason
         )
     VALUES
         ( src.job_uuid
@@ -207,24 +203,17 @@ WHEN NOT MATCHED THEN
         , src.os_id
         , src.prot_id
         , src.term_prot_nr
-        , src.opis
-        , src.ocena_missmatch
         , src.matching_score
-        , src.highest_score
-        , src.selected
-        , src.reason
         )
 WHEN MATCHED THEN
     UPDATE SET
           tgt.subj_grade = src.subj_grade
         , tgt.map_subj_grade = src.map_subj_grade
         , tgt.map_subj_grade_type = src.map_subj_grade_type
-        , tgt.opis = src.opis
-        , tgt.ocena_missmatch = src.ocena_missmatch
+        , tgt.os_id = src.os_id
+        , tgt.prot_id = src.prot_id
+        , tgt.term_prot_nr = src.term_prot_nr
         , tgt.matching_score = src.matching_score
-        , tgt.highest_score = src.highest_score
-        , tgt.selected = src.selected
-        , tgt.reason = src.reason
 ;
 
 COMMIT;
