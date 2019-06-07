@@ -33,26 +33,6 @@ USING
                                 , terminy_protokolow.nr
                         )
                   ) matching_score
---                , wartosci_ocen.opis
---                , ( CASE
---                    WHEN g_j.map_subj_grade = wartosci_ocen.opis
---                    THEN ''
---                    ELSE '"' || g_j.map_subj_grade || '" <> "' || wartosci_ocen.opis || '"'
---                         || (
---                             CASE
---                             WHEN g_j.map_subj_grade_type = oceny.toc_kod
---                             THEN ''
---                             ELSE ' & '
---                             END
---                            )
---                    END
---                  ||
---                    CASE
---                    WHEN g_j.map_subj_grade_type = oceny.toc_kod
---                    THEN ''
---                    ELSE '[' || g_j.map_subj_grade_type || '] <> [' || oceny.toc_kod || ']'
---                    END
---                  ) ocena_missmatch
 
             FROM v2u_ko_grades_j g_j
             INNER JOIN v2u_ko_students students
@@ -138,28 +118,6 @@ USING
         )
         SELECT
               w.*
---            , CASE
---                WHEN w.is_candidate IS NOT NULL AND w.candidates_count = 1
---                THEN 1
---                ELSE 0
---              END selected
---            , CASE
---                WHEN w.matching_score = 0
---                THEN 'matching_score = 0'
---                WHEN w.matching_score <> w.highest_score
---                THEN 'matching_score (' ||
---                        TO_CHAR(w.matching_score)
---                    || ') <> highest_score (' ||
---                        TO_CHAR(w.highest_score)
---                    || ')'
---                WHEN w.candidates_count <> 1
---                THEN 'candidates_count (' ||
---                        TO_CHAR(w.candidates_count)
---                    || ') <> 1'
---                WHEN w.is_candidate IS NULL
---                THEN 'is_candidate IS NULL'
---                ELSE 'is_candidate = 1 AND candidates_count = 1'
---            END reason
         FROM w w
         WHERE   w.is_candidate IS NOT NULL
             AND w.candidates_count = 1

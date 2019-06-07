@@ -2,6 +2,8 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Ocena_V_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Grade_U_t
     ( os_id NUMBER(10)
     , prot_id NUMBER(10)
+    , matching_scores V2u_20Ints_t
+    , highest_score NUMBER(38)
     , reason VARCHAR2(128 CHAR)
     -- DZ_PROTOKOL
     , zaj_cyk_id NUMBER(10)

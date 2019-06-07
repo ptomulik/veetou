@@ -42,11 +42,12 @@ USING
                     THEN ma_oceny_j.prot_id
                     ELSE mi_oceny_j.prot_id
                   END prot_id
-                , CASE
-                    WHEN ma_oceny_j.job_uuid IS NOT NULL
-                    THEN ma_oceny_j.term_prot_nr
-                    ELSE mi_oceny_j.term_prot_nr
-                  END term_prot_nr
+--                , CASE
+--                    WHEN ma_oceny_j.job_uuid IS NOT NULL
+--                    THEN ma_oceny_j.term_prot_nr
+--                    ELSE mi_oceny_j.term_prot_nr
+--                  END term_prot_nr
+                , ma_oceny_j.term_prot_nr
                 -- for the verification of pk_ocena (when dbg_unique_match=0)
                 , students.student_index
                 , subject_map.map_subj_code
@@ -56,8 +57,8 @@ USING
                 , g_j.classes_type
                 , g_j.subj_grade_date
                 -- values to be set
-                , g_j.toc_kod
-                , g_j.opis
+                , wartosci_ocen.toc_kod
+                , wartosci_ocen.opis
                 , wartosci_ocen.kolejnosc wart_oc_kolejnosc
                 -- for debugging
                 , mi_oceny_j.student_id mi_student_id
@@ -89,7 +90,6 @@ USING
                         AND ma_oceny_j.specialty_id = g_j.specialty_id
                         AND ma_oceny_j.semester_id = g_j.semester_id
                         AND ma_oceny_j.job_uuid = g_j.job_uuid
-                        AND ma_oceny_j.selected = 1
                     )
             LEFT JOIN v2u_ko_missing_oceny_j mi_oceny_j
                 ON  (
@@ -133,10 +133,10 @@ USING
                     )
             LEFT JOIN v2u_dz_wartosci_ocen wartosci_ocen
                 ON  (
-                            wartosci_ocen.toc_kod = g_j.toc_kod
-                        AND wartosci_ocen.opis = g_j.opis
+                            wartosci_ocen.toc_kod = g_j.map_subj_grade_type
+                        AND wartosci_ocen.opis = g_j.map_subj_grade
                     )
-            WHERE g_j.subj_grade_date IS NOT NULL
+--            WHERE g_j.subj_grade_date IS NOT NULL
         ),
         u_0 AS
         (

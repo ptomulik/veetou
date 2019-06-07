@@ -19,6 +19,8 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Ocena_V_t AS
             );
         SELF.os_id := missing_ocena_j.os_id;
         SELF.prot_id := missing_ocena_j.prot_id;
+        SELF.matching_scores := missing_ocena_j.matching_scores;
+        SELF.highest_score := missing_ocena_j.highest_score;
         SELF.reason := missing_ocena_j.reason;
         -- DZ_PROTOKOL
         SELF.zaj_cyk_id := protokol.zaj_cyk_id;

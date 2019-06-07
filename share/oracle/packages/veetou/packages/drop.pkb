@@ -762,6 +762,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Dz_5Ids_t');
         Drop_Type('Dz_20Ids_t');
         Drop_Type('Ints8_t');
+        Drop_Type('5Ints_t');
+        Drop_Type('20Ints_t');
         Drop_Type('Integers_t');
         Drop_Type('Chars1_t');
         Drop_Type('5Chars1_t');
