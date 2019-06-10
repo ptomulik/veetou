@@ -22,7 +22,6 @@ USING
                     AND ma_oceny_j.specialty_id = g_j.specialty_id
                     AND ma_oceny_j.classes_type = g_j.classes_type
                     AND ma_oceny_j.job_uuid = g_j.job_uuid
-                    AND ma_oceny_j.selected = 1
                 )
         INNER JOIN v2u_dz_terminy_protokolow terminy_protokolow
             ON  (
@@ -70,7 +69,6 @@ USING
                     AND ma_oceny_j.specialty_id = g_j.specialty_id
                     AND ma_oceny_j.classes_type = g_j.classes_type
                     AND ma_oceny_j.job_uuid = g_j.job_uuid
-                    AND ma_oceny_j.selected = 1
                 )
         WHERE   ma_oceny_j.term_prot_nr IS NULL
             AND (
@@ -79,7 +77,6 @@ USING
                     WHERE   ma_others_j.prot_id = terminy_protokolow.prot_id
                         AND ma_others_j.term_prot_nr = terminy_protokolow.nr
                         AND TRUNC(ma_others_j.subj_grade_date, 'DD') = TRUNC(g_j.subj_grade_date, 'DD')
-                        AND ma_others_j.selected = 1
                 ) = 1
 --
 --

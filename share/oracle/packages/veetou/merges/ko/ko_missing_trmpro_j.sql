@@ -236,12 +236,12 @@ USING
                 )
     ) src
 ON  (
-            tgt.job_uuid = src.job_uuid
+            tgt.student_id = src.student_id
         AND tgt.subject_id = src.subject_id
         AND tgt.specialty_id = src.specialty_id
         AND tgt.semester_id = src.semester_id
         AND tgt.classes_type = src.classes_type
-        AND tgt.subj_grade_date = src.subj_grade_date
+        AND tgt.job_uuid = src.job_uuid
     )
 WHEN NOT MATCHED THEN
     INSERT
@@ -250,6 +250,7 @@ WHEN NOT MATCHED THEN
         , specialty_id
         , subject_id
         , classes_type
+        , student_id
         , subj_grade_date
         , subject_map_id
         , map_subj_code
@@ -268,6 +269,7 @@ WHEN NOT MATCHED THEN
         , src.specialty_id
         , src.subject_id
         , src.classes_type
+        , src.student_id
         , src.subj_grade_date
         , src.subject_map_id
         , src.map_subj_code
@@ -282,7 +284,8 @@ WHEN NOT MATCHED THEN
         )
 WHEN MATCHED THEN
     UPDATE SET
-          tgt.subject_map_id = src.subject_map_id
+          tgt.subj_grade_date = src.subj_grade_date
+        , tgt.subject_map_id = src.subject_map_id
         , tgt.map_subj_code = src.map_subj_code
         , tgt.classes_map_id = src.classes_map_id
         , tgt.map_classes_type = src.map_classes_type

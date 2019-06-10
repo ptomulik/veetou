@@ -1174,10 +1174,6 @@ DELETE FROM v2u_ko_matched_oceny_j;
 COMMIT;
 @@merges/ko/ko_matched_oceny_j.sql;
 
-DELETE FROM v2u_ko_missing_oceny_j;
-COMMIT;
-@@merges/ko/ko_missing_oceny_j.sql;
-
 
 --
 -- dz_terminy_protokolow
@@ -1286,9 +1282,116 @@ COMMIT;
 --
 -- dz_oceny again...
 --
+DELETE FROM v2u_ko_matched_oceny_j;
+COMMIT;
+@@merges/ko/ko_matched_oceny_j.sql;
+
+DELETE FROM v2u_ko_missing_oceny_j;
+COMMIT;
+@@merges/ko/ko_missing_oceny_j.sql;
+
 DELETE FROM v2u_uu_oceny;
 COMMIT;
 @@merges/uu/uu_oceny.sql;
+
+/*
+UPDATE
+    v2u_dz_oceny tgt
+-- dz_oceny tgt
+SET ( os_id
+    , komentarz_pub
+    , komentarz_pryw
+    , toc_kod
+    , wart_oc_kolejnosc
+--    , utw_id
+--    , utw_data
+    , mod_id
+--    , mod_data
+    , prot_id
+    , term_prot_nr
+    , zmiana_os_id
+    , zmiana_data
+    , pos_komi_id
+    ) = (
+*/
+SELECT
+      src.os_id
+    , src.komentarz_pub
+    , src.komentarz_pryw
+    , src.toc_kod
+    , src.wart_oc_kolejnosc
+--    , src.utw_id
+--    , src.utw_data
+    , src.mod_id
+--    , src.mod_data
+    , src.prot_id
+    , src.term_prot_nr
+    , src.zmiana_os_id
+    , src.zmiana_data
+    , src.pos_komi_id
+FROM v2u_uu_oceny src
+WHERE       src.change_type = 'U'
+        AND src.safe_to_change = 1
+/*
+        AND src.os_id = tgt.os_id
+        AND src.prot_id = tgt.prot_id
+        AND src.term_prot_nr = tgt.term_prot_nr
+)
+WHERE EXISTS (
+    SELECT 1
+    FROM v2u_uu_oceny src
+    WHERE   src.change_type = 'U'
+        AND src.safe_to_change = 1
+        AND src.prot_id = tgt.prot_id
+        AND src.nr = tgt.nr
+)
+*/
+;
+
+COMMIT;
+
+/*
+INSERT INTO
+    v2u_dz_oceny tgt
+-- dz_oceny tgt
+    ( os_id
+    , komentarz_pub
+    , komentarz_pryw
+    , toc_kod
+    , wart_oc_kolejnosc
+    , utw_id
+--    , utw_data
+--    , mod_id
+--    , mod_data
+    , prot_id
+    , term_prot_nr
+    , zmiana_os_id
+    , zmiana_data
+    , pos_komi_id
+    )
+*/
+SELECT
+      src.os_id
+    , src.komentarz_pub
+    , src.komentarz_pryw
+    , src.toc_kod
+    , src.wart_oc_kolejnosc
+    , src.utw_id
+--    , src.utw_data
+--    , src.mod_id
+--    , src.mod_data
+    , src.prot_id
+    , src.term_prot_nr
+    , src.zmiana_os_id
+    , src.zmiana_data
+    , src.pos_komi_id
+FROM v2u_uu_oceny src
+WHERE   src.change_type = 'I'
+    AND src.safe_to_change = 1
+;
+
+COMMIT;
+
 
 
 --

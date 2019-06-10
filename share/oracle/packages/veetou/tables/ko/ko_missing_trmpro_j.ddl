@@ -3,12 +3,13 @@ OF V2u_Ko_Missing_Trmpro_J_t
     (
         -- PK
           CONSTRAINT v2u_ko_missing_trmpro_j_pk
-            PRIMARY KEY ( subj_grade_date
-                        , classes_type
+            PRIMARY KEY ( student_id
                         , subject_id
                         , specialty_id
                         , semester_id
-                        , job_uuid)
+                        , classes_type
+                        , job_uuid
+                        )
         -- FK
         , CONSTRAINT v2u_ko_missing_trmpro_j_f0
             FOREIGN KEY (job_uuid)
