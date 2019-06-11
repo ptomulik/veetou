@@ -5,7 +5,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Trmpro_J_t AS
             , semester_id IN NUMBER
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
-            , classes_type IN VARCHAR2
+            , classes_type IN CHAR
             , student_id IN NUMBER
             , subj_grade_date IN DATE
             , subject_map_id IN NUMBER
@@ -50,7 +50,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Trmpro_J_t AS
             , semester_id IN NUMBER
             , specialty_id IN NUMBER
             , subject_id IN NUMBER
-            , classes_type IN VARCHAR2
+            , classes_type IN CHAR
             , student_id IN NUMBER
             , subj_grade_date IN DATE
             , subject_map_id IN NUMBER

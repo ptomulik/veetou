@@ -499,6 +499,10 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         --
         Drop_Table('ko_missing_pktprz_j');
         --
+        Drop_Index('ko_missing_trmpro_j_idx1');
+        Drop_Index('ko_missing_trmpro_j_idx2');
+        Drop_Index('ko_missing_trmpro_j_idx3');
+        Drop_Index('ko_missing_trmpro_j_idx4');
         Drop_Table('ko_missing_trmpro_j');
         --
         Drop_Table('ko_missing_protos_j');

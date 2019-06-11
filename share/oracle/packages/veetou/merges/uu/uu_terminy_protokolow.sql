@@ -76,7 +76,7 @@ USING
                 , terminy_protokolow.opis
                 , terminy_protokolow.data_zwrotu
                 , terminy_protokolow.egzamin_komisyjny
-                , ma_trmpro_j.prz_kod
+                , ma_trmpro_j.subject_id ma_subject_id
                 , mi_trmpro_j.subject_id mi_subject_id
                 , sm_j.map_id subject_map_id
                 , cm_j.map_id classes_map_id
@@ -102,8 +102,6 @@ USING
                         AND ma_trmpro_j.specialty_id = g_j.specialty_id
                         AND ma_trmpro_j.semester_id = g_j.semester_id
                         AND ma_trmpro_j.classes_type = g_j.classes_type
-                        AND ma_trmpro_j.subj_grade_date =
-                            COALESCE(TO_CHAR(g_j.subj_grade_date, 'YYYY-MM-DD'), '-')
                         AND ma_trmpro_j.job_uuid = g_j.job_uuid
                     )
             LEFT JOIN v2u_ko_missing_trmpro_j mi_trmpro_j
@@ -112,8 +110,6 @@ USING
                         AND mi_trmpro_j.specialty_id = g_j.specialty_id
                         AND mi_trmpro_j.semester_id = g_j.semester_id
                         AND mi_trmpro_j.classes_type = g_j.classes_type
-                        AND mi_trmpro_j.subj_grade_date =
-                            COALESCE(TO_CHAR(g_j.subj_grade_date, 'YYYY-MM-DD'), '-')
                         AND mi_trmpro_j.job_uuid = g_j.job_uuid
                     )
             LEFT JOIN v2u_ko_subject_map_j sm_j
@@ -234,7 +230,7 @@ USING
                  *
                  * BUG: The values of dbg_matched and dbg_subject_mapped get
                  * mixed randomly in this query. */
-                , COUNT(u_00.prz_kod) dbg_matched
+                , COUNT(u_00.ma_subject_id + 0) dbg_matched
                 , COUNT(u_00.mi_subject_id + 0) dbg_missing
                 , COUNT(u_00.subject_map_id + 0) dbg_subject_mapped
                 , COUNT(u_00.classes_map_id + 0) dbg_classes_mapped

@@ -4,10 +4,10 @@ OF V2u_Ko_Matched_Proto_J_t
         -- PK
           CONSTRAINT v2u_ko_matched_protos_j_pk
             PRIMARY KEY ( student_id
-                        , classes_type
                         , subject_id
                         , specialty_id
                         , semester_id
+                        , classes_type
                         , job_uuid)
         -- FK
         , CONSTRAINT v2u_ko_matched_protos_j_f0
