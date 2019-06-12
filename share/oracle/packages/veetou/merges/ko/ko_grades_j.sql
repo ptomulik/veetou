@@ -15,7 +15,7 @@ USING
                     THEN 'STD'
                     WHEN UPPER(trs.subj_grade) IN ('NZAL', 'ZAL', 'ZW')
                     THEN 'ZAL'
-                    ELSE '?'
+                    ELSE DECODE(trs.subj_grade, NULL, NULL, '?')
                   END map_subj_grade_type
             FROM v2u_ko_trs trs
         )
@@ -26,8 +26,8 @@ USING
             , subject_trs.subject_id
             , student_sheets.student_id
             , '-' classes_type
-            , u.subj_grade subj_grade
-            , u.subj_grade_date subj_grade_date
+            , u.subj_grade
+            , u.subj_grade_date
             , u.id tr_id
             , u.map_subj_grade
             , u.map_subj_grade_type

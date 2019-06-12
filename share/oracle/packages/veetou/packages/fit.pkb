@@ -116,8 +116,13 @@ CREATE OR REPLACE PACKAGE BODY V2U_Fit AS
         total INTEGER;
     BEGIN
         total := 0;
-        IF grade_i.map_subj_grade_type = wartosc_oceny.toc_kod AND
-           grade_i.map_subj_grade = wartosc_oceny.opis THEN
+        IF          grade_i.map_subj_grade = wartosc_oceny.opis
+                AND grade_i.map_subj_grade_type = wartosc_oceny.toc_kod
+            OR      grade_i.map_subj_grade IS NULL
+                AND (   grade_i.map_subj_grade_type = wartosc_oceny.toc_kod
+                     OR grade_i.map_subj_grade_type IS NULL
+                    )
+        THEN
             total := total + 10;
             IF TRUNC(grade_i.subj_grade_date, 'DD') = TRUNC(termin_protokolu.data_zwrotu, 'DD') THEN
                 total := total + 50;

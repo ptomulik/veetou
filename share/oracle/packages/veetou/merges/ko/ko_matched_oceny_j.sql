@@ -20,6 +20,7 @@ USING
                 , V2u_Fit.Attributes(
                     grade_i => VALUE(g_j)
                   , wartosc_oceny => VALUE(wartosci_ocen)
+                  , subject_map => VALUE(subject_map)
                   , termin_protokolu => VALUE(terminy_protokolow)
                   , data_zwrotu_rank => DENSE_RANK() OVER (
                         PARTITION BY
@@ -53,6 +54,10 @@ USING
                         AND ma_protos_j.classes_type = g_j.classes_type
                         AND ma_protos_j.job_uuid = g_j.job_uuid
                     )
+            INNER JOIN subject_map
+                ON  (
+                            subject_map.id = ma_protos_j.subject_map_id
+                    )
             INNER JOIN v2u_semesters semesters
                 ON  (
                             semesters.code = ma_protos_j.cdyd_kod
@@ -72,8 +77,16 @@ USING
                             wartosci_ocen.toc_kod = oceny.toc_kod
                         AND wartosci_ocen.kolejnosc = oceny.wart_oc_kolejnosc
                     )
-            WHERE   wartosci_ocen.opis = g_j.map_subj_grade
-                AND wartosci_ocen.toc_kod = g_j.map_subj_grade_type
+            WHERE
+                            wartosci_ocen.opis = g_j.map_subj_grade
+                        AND wartosci_ocen.toc_kod = g_j.map_subj_grade_type
+                    OR
+                            g_j.map_subj_grade IS NULL
+                        AND DECODE( g_j.map_subj_grade_type
+                                  , wartosci_ocen.toc_kod, 1
+                                  , NULL, 1
+                                  , 0
+                                  ) = 1
         ),
         u AS
         (

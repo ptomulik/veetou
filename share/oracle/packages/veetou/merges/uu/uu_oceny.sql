@@ -133,8 +133,23 @@ USING
                     )
             LEFT JOIN v2u_dz_wartosci_ocen wartosci_ocen
                 ON  (
-                            wartosci_ocen.toc_kod = g_j.map_subj_grade_type
-                        AND wartosci_ocen.opis = g_j.map_subj_grade
+                            wartosci_ocen.toc_kod = oceny.toc_kod
+                        AND wartosci_ocen.kolejnosc = oceny.wart_oc_kolejnosc
+--                        AND (
+--                                    wartosci_ocen.opis = g_j.map_subj_grade
+--                                AND wartosci_ocen.toc_kod = COALESCE( subject_map.map_grade_type
+--                                                                    , g_j.map_subj_grade_type
+--                                                                    )
+--                            OR
+--                                    g_j.map_subj_grade IS NULL
+--                                AND DECODE(COALESCE( subject_map.map_grade_type
+--                                                   , g_j.map_subj_grade_type
+--                                                   )
+--                                          , wartosci_ocen.toc_kod, 1
+--                                          , NULL, 1
+--                                          , 0
+--                                          ) = 1
+--                            )
                     )
 --            WHERE g_j.subj_grade_date IS NOT NULL
         ),

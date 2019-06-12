@@ -27,6 +27,7 @@ USING
                           V2u_Fit.Attributes(
                             grade_i => VALUE(g_j)
                           , wartosc_oceny => VALUE(wo)
+                          , subject_map => VALUE(subject_map)
                           , termin_protokolu => VALUE(tp)
                           , data_zwrotu_rank => DENSE_RANK() OVER (
                                 PARTITION BY
@@ -53,8 +54,16 @@ USING
                             )
                     WHERE   o.os_id = studenci.os_id
                         AND o.prot_id = ma_protos_j.prot_id
-                        AND wo.toc_kod = g_j.map_subj_grade_type
-                        AND wo.opis = g_j.map_subj_grade
+                        AND (
+                                        wo.opis = g_j.map_subj_grade
+                                    AND wo.toc_kod = g_j.map_subj_grade_type
+                                OR      g_j.map_subj_grade IS NULL
+                                    AND DECODE(g_j.map_subj_grade_type
+                                              , wo.toc_kod, 1
+                                              , NULL, 1
+                                              , 0
+                                              ) = 1
+                            )
                     ) AS V2u_Integers_t ) AS V2u_20Ints_t
                   ) matching_scores
 
