@@ -49,6 +49,25 @@ USING
             LEFT JOIN v2u_subject_map rev_subject_map
                 ON  (
                             rev_subject_map.map_subj_code = subject_map.map_subj_code
+                        AND DECODE(rev_subject_map.expr_subj_name, 'REJECT', 1, 0) = 0
+                        AND DECODE(rev_subject_map.expr_subj_hours_w, -1, 1, 0) = 0
+                        AND DECODE(rev_subject_map.expr_subj_hours_c, -1, 1, 0) = 0
+                        AND DECODE(rev_subject_map.expr_subj_hours_l, -1, 1, 0) = 0
+                        AND DECODE(rev_subject_map.expr_subj_hours_p, -1, 1, 0) = 0
+                        AND DECODE(rev_subject_map.expr_subj_hours_s, -1, 1, 0) = 0
+                        AND DECODE(rev_subject_map.expr_subj_credit_kind, 'REJECT', 1, 0) = 0
+                        AND DECODE(rev_subject_map.expr_subj_ects, -1, 1, 0) = 0
+                        AND DECODE(rev_subject_map.expr_subj_tutor, 'REJECT', 1, 0) = 0
+                        AND DECODE(rev_subject_map.expr_university, 'REJECT', 1, 0) = 0
+                        AND DECODE(rev_subject_map.expr_faculty, 'REJECT', 1, 0) = 0
+                        AND DECODE(rev_subject_map.expr_studies_modetier, 'REJECT', 1, 0) = 0
+                        AND DECODE(rev_subject_map.expr_studies_field, 'REJECT', 1, 0) = 0
+                        AND DECODE(rev_subject_map.expr_studies_specialty, 'REJECT', 1, 0) = 0
+                        AND DECODE(rev_subject_map.expr_semester_code, 'REJECT', 1, 0) = 0
+                        AND DECODE(rev_subject_map.expr_semester_number, -1, 1, 0) = 0
+                        AND DECODE(rev_subject_map.expr_ects_mandatory, -1, 1, 0) = 0
+                        AND DECODE(rev_subject_map.expr_ects_other, -1, 1, 0) = 0
+                        AND DECODE(rev_subject_map.expr_ects_total, -1, 1, 0) = 0
                     )
             LEFT JOIN v2u_dz_atrybuty_przedmiotow atrybuty_przedmiotow
                 ON  (
