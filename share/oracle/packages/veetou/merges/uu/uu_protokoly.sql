@@ -247,7 +247,7 @@ USING
                     FROM TABLE(u_0.opis_ang1k)
                   ) dbg_opisy_ang
                 , ( SELECT COUNT(*)
-                    FROM TABLE(u_0.prot_ids)
+                    FROM TABLE(u_0.zaj_cyk_ids)
                   ) dbg_zaj_cyk_ids
                 , ( SELECT COUNT(*)
                     FROM TABLE(u_0.subj_grades1k)

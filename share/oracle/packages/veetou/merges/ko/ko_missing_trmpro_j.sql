@@ -12,15 +12,15 @@ USING
                 , g_j.student_id
                 , g_j.subj_grade_date
                 , g_j.subj_grade
-                , ma_prot_j.prot_id
+                , ma_protos_j.prot_id
                 , ( SELECT MAX(tp.nr)
                     FROM v2u_dz_terminy_protokolow tp
-                    WHERE tp.prot_id = ma_prot_j.prot_id
+                    WHERE tp.prot_id = ma_protos_j.prot_id
                   ) max_istniejacy_nr
                 , CAST(CAST(MULTISET(
                         SELECT tp.data_zwrotu
                         FROM v2u_dz_terminy_protokolow tp
-                        WHERE tp.prot_id = ma_prot_j.prot_id
+                        WHERE tp.prot_id = ma_protos_j.prot_id
                   ) AS V2u_Dates_t) AS V2u_20Dates_t) istniejace_daty_zwrotow
                 , sm_j.map_id subject_map_id
                 , subject_map.map_subj_code
@@ -52,56 +52,56 @@ USING
 
                 , CAST(MULTISET(
                     SELECT
-                        tp.nr
-                    FROM v2u_ko_matched_oceny_j ma_oceny_j
-                    INNER JOIN v2u_dz_terminy_protokolow tp
+                        l$tp.nr
+                    FROM v2u_ko_matched_oceny_j l$ma_oceny_j
+                    INNER JOIN v2u_dz_terminy_protokolow l$tp
                         ON  (
-                                    tp.prot_id = ma_oceny_j.prot_id
-                                AND tp.nr = ma_oceny_j.term_prot_nr
+                                    l$tp.prot_id = l$ma_oceny_j.prot_id
+                                AND l$tp.nr = l$ma_oceny_j.term_prot_nr
                             )
-                    WHERE   ma_oceny_j.student_id = g_j.student_id
-                        AND ma_oceny_j.subject_id = g_j.subject_id
-                        AND ma_oceny_j.semester_id = g_j.semester_id
-                        AND ma_oceny_j.specialty_id = g_j.specialty_id
-                        AND ma_oceny_j.classes_type = g_j.classes_type
-                        AND ma_oceny_j.job_uuid = g_j.job_uuid
+                    WHERE   l$ma_oceny_j.student_id = g_j.student_id
+                        AND l$ma_oceny_j.subject_id = g_j.subject_id
+                        AND l$ma_oceny_j.semester_id = g_j.semester_id
+                        AND l$ma_oceny_j.specialty_id = g_j.specialty_id
+                        AND l$ma_oceny_j.classes_type = g_j.classes_type
+                        AND l$ma_oceny_j.job_uuid = g_j.job_uuid
 
                     UNION ALL
 
                     --
-                    -- Find tp that already have matched other grades_j
+                    -- Find l$tp that already have matched other grades_j
                     -- with same subj_grade_date as ours.
                     --
                     SELECT
-                        tp.nr
-                    FROM v2u_ko_matched_protos_j ma_protos_j
-                    INNER JOIN v2u_dz_terminy_protokolow tp
+                        l$tp.nr
+                    FROM v2u_ko_matched_protos_j l$ma_protos_j
+                    INNER JOIN v2u_dz_terminy_protokolow l$tp
                         ON  (
-                                    tp.prot_id = ma_protos_j.prot_id
+                                    l$tp.prot_id = l$ma_protos_j.prot_id
                             )
-                    LEFT JOIN v2u_ko_matched_oceny_j ma_oceny_j
+                    LEFT JOIN v2u_ko_matched_oceny_j l$ma_oceny_j
                         ON  (
-                                    ma_oceny_j.student_id = ma_protos_j.student_id
-                                AND ma_oceny_j.subject_id = ma_protos_j.subject_id
-                                AND ma_oceny_j.semester_id = ma_protos_j.semester_id
-                                AND ma_oceny_j.specialty_id = ma_protos_j.specialty_id
-                                AND ma_oceny_j.classes_type = ma_protos_j.classes_type
-                                AND ma_oceny_j.job_uuid = ma_protos_j.job_uuid
+                                    l$ma_oceny_j.student_id = l$ma_protos_j.student_id
+                                AND l$ma_oceny_j.subject_id = l$ma_protos_j.subject_id
+                                AND l$ma_oceny_j.semester_id = l$ma_protos_j.semester_id
+                                AND l$ma_oceny_j.specialty_id = l$ma_protos_j.specialty_id
+                                AND l$ma_oceny_j.classes_type = l$ma_protos_j.classes_type
+                                AND l$ma_oceny_j.job_uuid = l$ma_protos_j.job_uuid
                             )
-                    WHERE   ma_protos_j.student_id = g_j.student_id
-                        AND ma_protos_j.subject_id = g_j.subject_id
-                        AND ma_protos_j.semester_id = g_j.semester_id
-                        AND ma_protos_j.specialty_id = g_j.specialty_id
-                        AND ma_protos_j.classes_type = g_j.classes_type
-                        AND ma_protos_j.job_uuid = g_j.job_uuid
+                    WHERE   l$ma_protos_j.student_id = g_j.student_id
+                        AND l$ma_protos_j.subject_id = g_j.subject_id
+                        AND l$ma_protos_j.semester_id = g_j.semester_id
+                        AND l$ma_protos_j.specialty_id = g_j.specialty_id
+                        AND l$ma_protos_j.classes_type = g_j.classes_type
+                        AND l$ma_protos_j.job_uuid = g_j.job_uuid
                         --
-                        AND ma_oceny_j.term_prot_nr IS NULL
+                        AND l$ma_oceny_j.term_prot_nr IS NULL
                         AND (
-                                SELECT COUNT(DISTINCT ma_others_j.term_prot_nr + 0)
-                                FROM v2u_ko_matched_oceny_j ma_others_j
-                                WHERE   ma_others_j.prot_id = tp.prot_id
-                                    AND ma_others_j.term_prot_nr = tp.nr
-                                    AND TRUNC(ma_others_j.subj_grade_date, 'DD') = TRUNC(g_j.subj_grade_date, 'DD')
+                                SELECT COUNT(DISTINCT l$ma_others_j.term_prot_nr + 0)
+                                FROM v2u_ko_matched_oceny_j l$ma_others_j
+                                WHERE   l$ma_others_j.prot_id = l$tp.prot_id
+                                    AND l$ma_others_j.term_prot_nr = l$tp.nr
+                                    AND TRUNC(l$ma_others_j.subj_grade_date, 'DD') = TRUNC(g_j.subj_grade_date, 'DD')
                             ) = 1
                   ) AS V2u_Dz_Ids_t) nry
 
@@ -159,14 +159,14 @@ USING
                         AND ma_trmpro_j.classes_type = g_j.classes_type
                         AND ma_trmpro_j.job_uuid = g_j.job_uuid
                     )
-            LEFT JOIN v2u_ko_matched_protos_j ma_prot_j
+            LEFT JOIN v2u_ko_matched_protos_j ma_protos_j
                 ON  (
-                            ma_prot_j.student_id = g_j.student_id
-                        AND ma_prot_j.subject_id = g_j.subject_id
-                        AND ma_prot_j.specialty_id = g_j.specialty_id
-                        AND ma_prot_j.semester_id = g_j.semester_id
-                        AND ma_prot_j.classes_type = g_j.classes_type
-                        AND ma_prot_j.job_uuid = g_j.job_uuid
+                            ma_protos_j.student_id = g_j.student_id
+                        AND ma_protos_j.subject_id = g_j.subject_id
+                        AND ma_protos_j.specialty_id = g_j.specialty_id
+                        AND ma_protos_j.semester_id = g_j.semester_id
+                        AND ma_protos_j.classes_type = g_j.classes_type
+                        AND ma_protos_j.job_uuid = g_j.job_uuid
                     )
             WHERE
                   ma_trmpro_j.job_uuid IS NULL
