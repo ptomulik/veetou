@@ -485,6 +485,9 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         --
         Drop_Table('ko_missing_zalprz_j');
         --
+        Drop_Index('ko_missing_oceny_j_idx1');
+        Drop_Index('ko_missing_oceny_j_idx2');
+        Drop_Index('ko_missing_oceny_j_idx3');
         Drop_Table('ko_missing_oceny_j');
         --
         Drop_Table('ko_missing_prgos_j');

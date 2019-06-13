@@ -21,6 +21,7 @@ USING
                 , classes_map.map_classes_type
                 , studenci.os_id
                 , ma_protos_j.prot_id
+                , ma_trmpro_j.nr term_prot_nr
 
                 , CAST(CAST(MULTISET(
                     SELECT
@@ -130,6 +131,15 @@ USING
                         AND ma_protos_j.classes_type = g_j.classes_type
                         AND ma_protos_j.job_uuid = g_j.job_uuid
                     )
+            LEFT JOIN v2u_ko_matched_trmpro_j ma_trmpro_j
+                ON  (
+                            ma_trmpro_j.student_id = g_j.student_id
+                        AND ma_trmpro_j.subject_id = g_j.subject_id
+                        AND ma_trmpro_j.specialty_id = g_j.specialty_id
+                        AND ma_trmpro_j.semester_id = g_j.semester_id
+                        AND ma_trmpro_j.classes_type = g_j.classes_type
+                        AND ma_trmpro_j.job_uuid = g_j.job_uuid
+                    )
             WHERE ma_oceny_j.student_id IS NULL
         ),
         v AS
@@ -203,6 +213,7 @@ WHEN NOT MATCHED THEN
         , map_subj_grade_type
         , os_id
         , prot_id
+        , term_prot_nr
         , matching_scores
         , highest_score
         , reason
@@ -220,6 +231,7 @@ WHEN NOT MATCHED THEN
         , src.map_subj_grade_type
         , src.os_id
         , src.prot_id
+        , src.term_prot_nr
         , src.matching_scores
         , src.highest_score
         , src.reason
@@ -232,6 +244,7 @@ WHEN MATCHED THEN
         , tgt.map_subj_grade_type = src.map_subj_grade_type
         , tgt.os_id = src.os_id
         , tgt.prot_id = src.prot_id
+        , tgt.term_prot_nr = src.term_prot_nr
         , tgt.matching_scores = src.matching_scores
         , tgt.highest_score = src.highest_score
         , tgt.reason = src.reason

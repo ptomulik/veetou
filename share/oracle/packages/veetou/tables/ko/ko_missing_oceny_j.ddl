@@ -30,4 +30,30 @@ OF V2u_Ko_Missing_Ocena_J_t
 OBJECT IDENTIFIER IS PRIMARY KEY
 ;
 /
+CREATE INDEX v2u_ko_missing_oceny_j_idx1
+    ON v2u_ko_missing_oceny_j(
+              subject_id
+            , specialty_id
+            , semester_id
+            , job_uuid
+            );
+/
+CREATE INDEX v2u_ko_missing_oceny_j_idx2
+    ON v2u_ko_missing_oceny_j(
+              student_id
+            , subject_id
+            , specialty_id
+            , semester_id
+            , job_uuid
+            );
+/
+CREATE INDEX v2u_ko_missing_oceny_j_idx3
+    ON v2u_ko_missing_oceny_j(
+              classes_type
+            , subject_id
+            , specialty_id
+            , semester_id
+            , job_uuid
+            );
+/
 -- vim: set ft=sql ts=4 sw=4 et:

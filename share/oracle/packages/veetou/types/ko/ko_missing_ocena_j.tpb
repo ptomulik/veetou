@@ -13,6 +13,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Ocena_J_t AS
             , map_subj_grade_type IN VARCHAR2
             , os_id IN NUMBER
             , prot_id IN NUMBER
+            , term_prot_nr IN NUMBER
             , matching_scores IN V2u_20Ints_t
             , highest_score IN NUMBER
             , reason IN VARCHAR2
@@ -32,6 +33,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Ocena_J_t AS
             , map_subj_grade_type => map_subj_grade_type
             , os_id => os_id
             , prot_id => prot_id
+            , term_prot_nr => term_prot_nr
             , matching_scores => matching_scores
             , highest_score => highest_score
             , reason => reason
@@ -54,6 +56,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Ocena_J_t AS
             , map_subj_grade_type IN VARCHAR2
             , os_id IN NUMBER
             , prot_id IN NUMBER
+            , term_prot_nr IN NUMBER
             , matching_scores IN V2u_20Ints_t
             , highest_score IN NUMBER
             , reason IN VARCHAR2
@@ -74,6 +77,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Ocena_J_t AS
             );
         SELF.os_id := os_id;
         SELF.prot_id := prot_id;
+        SELF.term_prot_nr := term_prot_nr;
         SELF.matching_scores := matching_scores;
         SELF.highest_score := highest_score;
         SELF.reason := reason;
