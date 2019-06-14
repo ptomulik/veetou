@@ -28,14 +28,8 @@ USING
                             specialty_map.university = specialties.university
                         AND specialty_map.faculty = specialties.faculty
                         AND specialty_map.studies_modetier = specialties.studies_modetier
-                        AND specialty_map.studies_field = specialties.studies_field
-                        AND (
-                                specialty_map.studies_specialty = specialties.studies_specialty
-                                OR  (
-                                            specialties.studies_specialty IS NULL
-                                        AND specialty_map.studies_specialty IS NULL
-                                    )
-                            )
+                        AND DECODE(specialty_map.studies_field, specialties.studies_field, 1, 0) = 1
+                        AND DECODE(specialty_map.studies_specialty, specialties.studies_specialty, 1, 0) = 1
                     )
         ),
         u AS

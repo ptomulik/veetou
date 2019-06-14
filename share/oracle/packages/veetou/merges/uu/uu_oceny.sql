@@ -42,12 +42,11 @@ USING
                     THEN ma_oceny_j.prot_id
                     ELSE mi_oceny_j.prot_id
                   END prot_id
---                , CASE
---                    WHEN ma_oceny_j.job_uuid IS NOT NULL
---                    THEN ma_oceny_j.term_prot_nr
---                    ELSE mi_oceny_j.term_prot_nr
---                  END term_prot_nr
-                , ma_oceny_j.term_prot_nr
+                , CASE
+                    WHEN ma_oceny_j.job_uuid IS NOT NULL
+                    THEN ma_oceny_j.term_prot_nr
+                    ELSE mi_oceny_j.term_prot_nr
+                  END term_prot_nr
                 -- for the verification of pk_ocena (when dbg_unique_match=0)
                 , students.student_index
                 , subject_map.map_subj_code
@@ -133,23 +132,24 @@ USING
                     )
             LEFT JOIN v2u_dz_wartosci_ocen wartosci_ocen
                 ON  (
-                            wartosci_ocen.toc_kod = oceny.toc_kod
+                            ma_oceny_j.job_uuid IS NOT NULL
+                        AND wartosci_ocen.toc_kod = oceny.toc_kod
                         AND wartosci_ocen.kolejnosc = oceny.wart_oc_kolejnosc
---                        AND (
---                                    wartosci_ocen.opis = g_j.map_subj_grade
---                                AND wartosci_ocen.toc_kod = COALESCE( subject_map.map_grade_type
---                                                                    , g_j.map_subj_grade_type
---                                                                    )
---                            OR
---                                    g_j.map_subj_grade IS NULL
---                                AND DECODE(COALESCE( subject_map.map_grade_type
---                                                   , g_j.map_subj_grade_type
---                                                   )
---                                          , wartosci_ocen.toc_kod, 1
---                                          , NULL, 1
---                                          , 0
---                                          ) = 1
---                            )
+
+                        OR
+
+                            ma_oceny_j.job_uuid IS NULL
+                        AND (
+                                    wartosci_ocen.opis = g_j.map_subj_grade
+                                AND wartosci_ocen.toc_kod = g_j.map_subj_grade_type
+                            OR
+                                    g_j.map_subj_grade IS NULL
+                                AND DECODE( g_j.map_subj_grade_type
+                                          , wartosci_ocen.toc_kod, 1
+                                          , NULL, 1
+                                          , 0
+                                          ) = 1
+                            )
                     )
 --            WHERE g_j.subj_grade_date IS NOT NULL
         ),

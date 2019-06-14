@@ -20,7 +20,6 @@ USING
                 , V2u_Fit.Attributes(
                     grade_i => VALUE(g_j)
                   , wartosc_oceny => VALUE(wartosci_ocen)
-                  , subject_map => VALUE(subject_map)
                   , termin_protokolu => VALUE(terminy_protokolow)
                   , data_zwrotu_rank => DENSE_RANK() OVER (
                         PARTITION BY
@@ -54,7 +53,7 @@ USING
                         AND ma_protos_j.classes_type = g_j.classes_type
                         AND ma_protos_j.job_uuid = g_j.job_uuid
                     )
-            INNER JOIN subject_map
+            INNER JOIN v2u_subject_map subject_map
                 ON  (
                             subject_map.id = ma_protos_j.subject_map_id
                     )

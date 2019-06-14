@@ -28,7 +28,6 @@ USING
                           V2u_Fit.Attributes(
                             grade_i => VALUE(g_j)
                           , wartosc_oceny => VALUE(wo)
-                          , subject_map => VALUE(subject_map)
                           , termin_protokolu => VALUE(tp)
                           , data_zwrotu_rank => DENSE_RANK() OVER (
                                 PARTITION BY

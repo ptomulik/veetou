@@ -98,7 +98,8 @@ USING
                     )
             LEFT JOIN v2u_ko_matched_trmpro_j ma_trmpro_j
                 ON  (
-                            ma_trmpro_j.subject_id = g_j.subject_id
+                            ma_trmpro_j.student_id = g_j.student_id
+                        AND ma_trmpro_j.subject_id = g_j.subject_id
                         AND ma_trmpro_j.specialty_id = g_j.specialty_id
                         AND ma_trmpro_j.semester_id = g_j.semester_id
                         AND ma_trmpro_j.classes_type = g_j.classes_type
@@ -106,7 +107,8 @@ USING
                     )
             LEFT JOIN v2u_ko_missing_trmpro_j mi_trmpro_j
                 ON  (
-                            mi_trmpro_j.subject_id = g_j.subject_id
+                            mi_trmpro_j.student_id = g_j.student_id
+                        AND mi_trmpro_j.subject_id = g_j.subject_id
                         AND mi_trmpro_j.specialty_id = g_j.specialty_id
                         AND mi_trmpro_j.semester_id = g_j.semester_id
                         AND mi_trmpro_j.classes_type = g_j.classes_type
