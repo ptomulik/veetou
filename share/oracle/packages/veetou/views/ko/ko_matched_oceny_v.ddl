@@ -1,10 +1,10 @@
 CREATE OR REPLACE VIEW v2u_ko_matched_oceny_v
 OF V2u_Ko_Matched_Ocena_V_t
-WITH OBJECT IDENTIFIER  ( classes_type
-                        , student_id
+WITH OBJECT IDENTIFIER  ( student_id
                         , subject_id
                         , specialty_id
                         , semester_id
+                        , classes_type
                         , job_uuid
                         )
 AS

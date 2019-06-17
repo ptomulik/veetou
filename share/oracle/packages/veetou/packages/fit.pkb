@@ -1,5 +1,60 @@
 CREATE OR REPLACE PACKAGE BODY V2U_Fit AS
     FUNCTION Attributes(
+              protocol_map IN V2u_Protocol_Map_B_t
+            , subject IN V2u_Ko_Subject_t
+            , specialty IN V2u_Ko_Specialty_t
+            , semester IN V2u_Ko_Semester_t
+            , student IN V2u_Ko_Student_t
+            , grade_i IN V2u_Ko_Grade_I_t
+            ) RETURN INTEGER DETERMINISTIC
+    IS
+        pattern V2u_Protocol_Map_Pattern_t;
+    BEGIN
+        IF protocol_Map IS NOT NULL AND
+           grade_i IS NOT NULL AND
+           student IS NOT NULL AND
+           subject IS NOT NULL AND
+           specialty IS NOT NULL AND
+           semester IS NOT NULL
+        THEN
+            pattern := V2u_Protocol_Map_Pattern_t(protocol_map);
+            return pattern.match_attributes(
+                  subj_code => subject.subj_code
+                , subj_name => subject.subj_name
+                , subj_hours_w => subject.subj_hours_w
+                , subj_hours_c => subject.subj_hours_c
+                , subj_hours_l => subject.subj_hours_l
+                , subj_hours_p => subject.subj_hours_p
+                , subj_hours_s => subject.subj_hours_s
+                , subj_credit_kind => subject.subj_credit_kind
+                , subj_ects => subject.subj_ects
+                , subj_tutor => subject.subj_tutor
+                , university => specialty.university
+                , faculty => specialty.faculty
+                , studies_modetier => specialty.studies_modetier
+                , studies_field => specialty.studies_field
+                , studies_specialty => specialty.studies_specialty
+                , semester_code => semester.semester_code
+                , semester_number => semester.semester_number
+                , ects_mandatory => semester.ects_mandatory
+                , ects_other => semester.ects_other
+                , ects_total => semester.ects_total
+                , student_index => student.student_index
+                , student_name => student.student_name
+                , first_name => student.first_name
+                , last_name => student.last_name
+                , classes_type => grade_i.classes_type
+                , subj_grade => grade_i.subj_grade
+                , subj_grade_date => grade_i.subj_grade_date
+                , map_subj_grade => grade_i.map_subj_grade
+                , map_subj_grade_type => grade_i.map_subj_grade_type
+                );
+        ELSE
+            RETURN 0;
+        END IF;
+    END;
+
+    FUNCTION Attributes(
               classes_map IN V2u_Classes_Map_B_t
             , subject IN V2u_Ko_Subject_t
             , specialty IN V2u_Ko_Specialty_t

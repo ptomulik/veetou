@@ -1,6 +1,7 @@
 CREATE OR REPLACE TYPE BODY V2u_Subject_Pattern_t AS
     CONSTRUCTOR FUNCTION V2u_Subject_Pattern_t(
               SELF IN OUT NOCOPY V2u_Subject_Pattern_t
+            , expr_subj_code IN VARCHAR2
             , expr_subj_name IN VARCHAR2
             , expr_subj_hours_w IN VARCHAR2
             , expr_subj_hours_c IN VARCHAR2
@@ -14,7 +15,8 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Pattern_t AS
     IS
     BEGIN
         SELF.init(
-              expr_subj_name => expr_subj_name
+              expr_subj_code => expr_subj_code
+            , expr_subj_name => expr_subj_name
             , expr_subj_hours_w => expr_subj_hours_w
             , expr_subj_hours_c => expr_subj_hours_c
             , expr_subj_hours_l => expr_subj_hours_l
@@ -30,6 +32,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Pattern_t AS
 
     MEMBER PROCEDURE init(
               SELF IN OUT NOCOPY V2u_Subject_Pattern_t
+            , expr_subj_code IN VARCHAR2
             , expr_subj_name IN VARCHAR2
             , expr_subj_hours_w IN VARCHAR2
             , expr_subj_hours_c IN VARCHAR2
@@ -42,6 +45,7 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Pattern_t AS
             )
     IS
     BEGIN
+        SELF.expr_subj_code := expr_subj_code;
         SELF.expr_subj_name := expr_subj_name;
         SELF.expr_subj_hours_w := expr_subj_hours_w;
         SELF.expr_subj_hours_c := expr_subj_hours_c;
@@ -55,7 +59,8 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Pattern_t AS
 
 
     MEMBER FUNCTION match_attributes(
-              subj_name IN VARCHAR2
+              subj_code IN VARCHAR2
+            , subj_name IN VARCHAR2
             , subj_hours_w IN NUMBER
             , subj_hours_c IN NUMBER
             , subj_hours_l IN NUMBER
@@ -73,6 +78,14 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Pattern_t AS
         --   0 - not matched,
         -- > 0 - matched (match_score)
         total := 1;
+        IF expr_subj_code IS NOT NULL THEN
+            local := match_subj_code(subj_code);
+            IF local < 1 THEN
+                RETURN local;
+            ELSE
+                total := total + 1;
+            END IF;
+        END IF;
         IF expr_subj_name IS NOT NULL THEN
             local := match_subj_name(subj_name);
             IF local < 1 THEN
@@ -148,6 +161,12 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Pattern_t AS
         RETURN total;
     END;
 
+    MEMBER FUNCTION match_subj_code(subj_code IN VARCHAR2)
+        RETURN INTEGER
+    IS
+    BEGIN
+        RETURN V2U_Match.String_Like(UPPER(expr_subj_code), UPPER(subj_code));
+    END;
 
     MEMBER FUNCTION match_subj_name(subj_name IN VARCHAR2)
         RETURN INTEGER

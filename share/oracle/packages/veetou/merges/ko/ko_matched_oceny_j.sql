@@ -34,6 +34,28 @@ USING
                         )
                   ) matching_score
 
+                , wartosci_ocen.kolejnosc wart_oc_kolejnosc
+                , wartosci_ocen.toc_kod wart_oc_toc_kod
+                , wartosci_ocen.opis wart_oc_opis
+                , CASE
+                    WHEN g_j.map_subj_grade_type = wartosci_ocen.toc_kod
+                    THEN NULL
+                    ELSE '[' ||
+                            g_j.map_subj_grade_type
+                        || '] <> [' ||
+                            wartosci_ocen.toc_kod
+                        || ']'
+                  END wart_oc_toc_kod_missmatch
+                , CASE
+                    WHEN g_j.map_subj_grade = wartosci_ocen.opis
+                    THEN NULL
+                    ELSE '"' ||
+                            g_j.map_subj_grade
+                        || '" <> "' ||
+                            wartosci_ocen.opis
+                        || '"'
+                  END wart_oc_opis_missmatch
+
             FROM v2u_ko_grades_j g_j
             INNER JOIN v2u_ko_students students
                 ON  (
@@ -91,6 +113,19 @@ USING
         (
             SELECT
                   t.*
+                , CASE
+                    WHEN    t.wart_oc_toc_kod_missmatch IS NULL
+                        AND t.wart_oc_opis_missmatch IS NULL
+                    THEN NULL
+                    WHEN    t.wart_oc_toc_kod_missmatch IS NOT NULL
+                        AND t.wart_oc_opis_missmatch IS NOT NULL
+                    THEN t.wart_oc_toc_kod_missmatch
+                            || ' & ' ||
+                         t.wart_oc_opis_missmatch
+                    WHEN t.wart_oc_toc_kod_missmatch IS NOT NULL
+                    THEN t.wart_oc_toc_kod_missmatch
+                    ELSE t.wart_oc_opis_missmatch
+                  END wart_oc_missmatch
                 , MAX(t.matching_score) OVER (
                         PARTITION BY
                               t.student_id
@@ -158,6 +193,10 @@ WHEN NOT MATCHED THEN
         , prot_id
         , term_prot_nr
         , matching_score
+        , wart_oc_kolejnosc
+        , wart_oc_toc_kod
+        , wart_oc_opis
+        , wart_oc_missmatch
         )
     VALUES
         ( src.job_uuid
@@ -174,6 +213,10 @@ WHEN NOT MATCHED THEN
         , src.prot_id
         , src.term_prot_nr
         , src.matching_score
+        , src.wart_oc_kolejnosc
+        , src.wart_oc_toc_kod
+        , src.wart_oc_opis
+        , src.wart_oc_missmatch
         )
 WHEN MATCHED THEN
     UPDATE SET
@@ -184,6 +227,10 @@ WHEN MATCHED THEN
         , tgt.prot_id = src.prot_id
         , tgt.term_prot_nr = src.term_prot_nr
         , tgt.matching_score = src.matching_score
+        , tgt.wart_oc_kolejnosc = src.wart_oc_kolejnosc
+        , tgt.wart_oc_toc_kod = src.wart_oc_toc_kod
+        , tgt.wart_oc_opis = src.wart_oc_opis
+        , tgt.wart_oc_missmatch = src.wart_oc_missmatch
 ;
 
 COMMIT;

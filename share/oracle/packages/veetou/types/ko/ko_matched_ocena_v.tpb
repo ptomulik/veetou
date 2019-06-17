@@ -24,6 +24,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Ocena_V_t AS
         SELF.prot_id := matched_ocena_j.prot_id;
         SELF.term_prot_nr := matched_ocena_j.term_prot_nr;
         SELF.matching_score := matched_ocena_j.matching_score;
+        SELF.wart_oc_missmatch := matched_ocena_j.wart_oc_missmatch;
         -- DZ_PROTOKOL
         SELF.zaj_cyk_id := protokol.zaj_cyk_id;
         SELF.protokol_opis := protokol.opis;

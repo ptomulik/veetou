@@ -15,6 +15,10 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Ocena_J_t AS
             , prot_id IN NUMBER
             , term_prot_nr IN NUMBER
             , matching_score IN NUMBER
+            , wart_oc_kolejnosc IN NUMBER
+            , wart_oc_toc_kod IN VARCHAR2
+            , wart_oc_opis IN VARCHAR2
+            , wart_oc_missmatch IN VARCHAR2
             ) RETURN SELF AS RESULT
     IS
     BEGIN
@@ -33,6 +37,10 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Ocena_J_t AS
             , prot_id => prot_id
             , term_prot_nr => term_prot_nr
             , matching_score => matching_score
+            , wart_oc_kolejnosc => wart_oc_kolejnosc
+            , wart_oc_toc_kod => wart_oc_toc_kod
+            , wart_oc_opis => wart_oc_opis
+            , wart_oc_missmatch => wart_oc_missmatch
             );
         RETURN;
     END;
@@ -54,6 +62,10 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Ocena_J_t AS
             , prot_id IN NUMBER
             , term_prot_nr IN NUMBER
             , matching_score IN NUMBER
+            , wart_oc_kolejnosc IN NUMBER
+            , wart_oc_toc_kod IN VARCHAR2
+            , wart_oc_opis IN VARCHAR2
+            , wart_oc_missmatch IN VARCHAR2
             )
     IS
     BEGIN
@@ -73,6 +85,10 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Ocena_J_t AS
         SELF.prot_id := prot_id;
         SELF.term_prot_nr := term_prot_nr;
         SELF.matching_score := matching_score;
+        SELF.wart_oc_kolejnosc := wart_oc_kolejnosc;
+        SELF.wart_oc_toc_kod := wart_oc_toc_kod;
+        SELF.wart_oc_opis := wart_oc_opis;
+        SELF.wart_oc_missmatch := wart_oc_missmatch;
     END;
 END;
 /

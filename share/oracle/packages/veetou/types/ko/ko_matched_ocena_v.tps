@@ -4,6 +4,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Ocena_V_t
     , prot_id NUMBER(10)
     , term_prot_nr NUMBER(10)
     , matching_score NUMBER(38)
+    , wart_oc_missmatch VARCHAR2(128 CHAR)
     -- DZ_PROTOKOL
     , zaj_cyk_id NUMBER(10)
     , protokol_opis VARCHAR2(100 CHAR)

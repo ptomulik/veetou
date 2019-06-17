@@ -4,6 +4,10 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Ocena_J_t
     , prot_id NUMBER(10)
     , term_prot_nr NUMBER(10)
     , matching_score NUMBER(38)
+    , wart_oc_kolejnosc NUMBER(10)
+    , wart_oc_toc_kod VARCHAR2(20 CHAR)
+    , wart_oc_opis VARCHAR2(100 CHAR)
+    , wart_oc_missmatch VARCHAR2(128 CHAR)
 
     , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Ocena_J_t(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Ocena_J_t
@@ -21,6 +25,10 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Ocena_J_t
             , prot_id IN NUMBER
             , term_prot_nr IN NUMBER
             , matching_score IN NUMBER
+            , wart_oc_kolejnosc IN NUMBER
+            , wart_oc_toc_kod IN VARCHAR2
+            , wart_oc_opis IN VARCHAR2
+            , wart_oc_missmatch IN VARCHAR2
             ) RETURN SELF AS RESULT
 
     , MEMBER PROCEDURE init(
@@ -39,6 +47,10 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Ocena_J_t
             , prot_id IN NUMBER
             , term_prot_nr IN NUMBER
             , matching_score IN NUMBER
+            , wart_oc_kolejnosc IN NUMBER
+            , wart_oc_toc_kod IN VARCHAR2
+            , wart_oc_opis IN VARCHAR2
+            , wart_oc_missmatch IN VARCHAR2
             )
     )
 NOT FINAL;

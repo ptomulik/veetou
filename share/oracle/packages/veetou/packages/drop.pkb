@@ -409,6 +409,11 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
     PROCEDURE Tier1_Basis
     IS
     BEGIN
+        Drop_Index('protocol_map_idx1');
+        Drop_Trigg('protocol_map_tr1');
+        Drop_Seqnc('protocol_map_sq1');
+        Drop_Table('protocol_map');
+
         Drop_Index('specialty_map_idx1');
         Drop_Index('specialty_map_idx2');
         Drop_Index('specialty_map_idx3');
@@ -443,19 +448,24 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Package('Match');
         Drop_Package('Cmp');
 
+        Drop_Type('Protocol_Map_Pattern_t');
         Drop_Type('Classes_Map_Pattern_t');
         Drop_Type('Subject_Map_Pattern_t');
         Drop_Type('Specialty_Map_Pattern_t');
         Drop_Type('Semester_Map_Pattern_t');
 
+        Drop_Type('Grade_Pattern_t');
+        Drop_Type('Student_Pattern_t');
         Drop_Type('Classes_Pattern_t');
         Drop_Type('Subject_Pattern_t');
         Drop_Type('Specialty_Pattern_t');
         Drop_Type('Semester_Pattern_t');
 
+        Drop_Type('Protocol_Map_t', 'Protocol_Maps_t');
         Drop_Type('Classes_Map_t', 'Classes_Maps_t');
         Drop_Type('Subject_Map_t', 'Subject_Maps_t');
         Drop_Type('Specialty_Map_t', 'Specialty_Maps_t');
+        Drop_Type('Protocol_Map_B_t');
         Drop_Type('Classes_Map_B_t');
         Drop_Type('Subject_Map_B_t');
         Drop_Type('Specialty_Map_B_t');

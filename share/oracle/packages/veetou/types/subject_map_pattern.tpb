@@ -77,7 +77,8 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_Pattern_t AS
             , map_org_unit => subject_map.map_org_unit
             , map_org_unit_recipient => subject_map.map_org_unit_recipient
             , subject_pattern => V2u_Subject_Pattern_t(
-                      expr_subj_name => subject_map.expr_subj_name
+                      expr_subj_code => NULL
+                    , expr_subj_name => subject_map.expr_subj_name
                     , expr_subj_hours_w => subject_map.expr_subj_hours_w
                     , expr_subj_hours_c => subject_map.expr_subj_hours_c
                     , expr_subj_hours_l => subject_map.expr_subj_hours_l
@@ -131,7 +132,8 @@ CREATE OR REPLACE TYPE BODY V2u_Subject_Map_Pattern_t AS
     BEGIN
         total := 1;
         local := subject_pattern.match_attributes(
-                      subj_name => subj_name
+                      subj_code => NULL
+                    , subj_name => subj_name
                     , subj_hours_w => subj_hours_w
                     , subj_hours_c => subj_hours_c
                     , subj_hours_l => subj_hours_l

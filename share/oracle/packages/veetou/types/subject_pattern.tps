@@ -1,6 +1,7 @@
 CREATE OR REPLACE TYPE V2u_Subject_Pattern_t
     FORCE AUTHID CURRENT_USER AS OBJECT
-    ( expr_subj_name VARCHAR2(256 CHAR)
+    ( expr_subj_code VARCHAR2(256 CHAR)
+    , expr_subj_name VARCHAR2(256 CHAR)
     , expr_subj_hours_w VARCHAR2(256 CHAR)
     , expr_subj_hours_c VARCHAR2(256 CHAR)
     , expr_subj_hours_l VARCHAR2(256 CHAR)
@@ -12,6 +13,7 @@ CREATE OR REPLACE TYPE V2u_Subject_Pattern_t
 
     , CONSTRUCTOR FUNCTION V2u_Subject_Pattern_t(
               SELF IN OUT NOCOPY V2u_Subject_Pattern_t
+            , expr_subj_code IN VARCHAR2
             , expr_subj_name IN VARCHAR2
             , expr_subj_hours_w IN VARCHAR2
             , expr_subj_hours_c IN VARCHAR2
@@ -26,6 +28,7 @@ CREATE OR REPLACE TYPE V2u_Subject_Pattern_t
 
     , MEMBER PROCEDURE init(
               SELF IN OUT NOCOPY V2u_Subject_Pattern_t
+            , expr_subj_code IN VARCHAR2
             , expr_subj_name IN VARCHAR2
             , expr_subj_hours_w IN VARCHAR2
             , expr_subj_hours_c IN VARCHAR2
@@ -38,7 +41,8 @@ CREATE OR REPLACE TYPE V2u_Subject_Pattern_t
             )
 
     , MEMBER FUNCTION match_attributes(
-              subj_name IN VARCHAR2
+              subj_code IN VARCHAR2
+            , subj_name IN VARCHAR2
             , subj_hours_w IN NUMBER
             , subj_hours_c IN NUMBER
             , subj_hours_l IN NUMBER
@@ -50,6 +54,7 @@ CREATE OR REPLACE TYPE V2u_Subject_Pattern_t
             )
         RETURN INTEGER
 
+    , MEMBER FUNCTION match_subj_code(subj_code IN VARCHAR2) RETURN INTEGER
     , MEMBER FUNCTION match_subj_name(subj_name IN VARCHAR2) RETURN INTEGER
     , MEMBER FUNCTION match_subj_hours_w(subj_hours_w IN VARCHAR2) RETURN INTEGER
     , MEMBER FUNCTION match_subj_hours_c(subj_hours_c IN INTEGER) RETURN INTEGER

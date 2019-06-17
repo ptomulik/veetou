@@ -12,13 +12,19 @@
 @@classes_map_b.tps;
 @@classes_map.tps;
 --
+@@protocol_map_b.tps;
+@@protocol_map.tps;
+--
 @@semester_pattern.tps;
 @@specialty_pattern.tps;
 @@subject_pattern.tps;
+@@student_pattern.tps;
 @@classes_pattern.tps;
+@@grade_pattern.tps;
 --
 @@specialty_map_pattern.tps;
 @@subject_map_pattern.tps;
 @@classes_map_pattern.tps;
+@@protocol_map_pattern.tps;
 --
 -- vim: set ft=sql ts=4 sw=4 et:

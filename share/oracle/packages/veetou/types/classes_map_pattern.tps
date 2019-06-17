@@ -1,7 +1,6 @@
 CREATE OR REPLACE TYPE V2u_Classes_Map_Pattern_t
     FORCE AUTHID CURRENT_USER AS OBJECT
-    ( expr_subj_code VARCHAR(256 CHAR)
-    , classes_type VARCHAR2(1 CHAR)
+    ( classes_type VARCHAR2(1 CHAR)
     , map_classes_type VARCHAR2(20 CHAR)
     , classes_pattern V2u_Classes_Pattern_t
     , subject_pattern V2u_Subject_Pattern_t
@@ -62,8 +61,6 @@ CREATE OR REPLACE TYPE V2u_Classes_Map_Pattern_t
             , ects_total IN NUMBER
             )
         RETURN INTEGER
-
-    , MEMBER FUNCTION match_subj_code(subj_code IN VARCHAR2) RETURN INTEGER
     )
 NOT FINAL;
 /

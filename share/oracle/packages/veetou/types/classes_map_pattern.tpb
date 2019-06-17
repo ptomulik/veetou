@@ -47,7 +47,6 @@ CREATE OR REPLACE TYPE BODY V2u_Classes_Map_Pattern_t AS
     BEGIN
         SELF.classes_type := classes_type;
         SELF.map_classes_type := map_classes_type;
-        SELF.expr_subj_code := expr_subj_code;
         SELF.classes_pattern := classes_pattern;
         SELF.subject_pattern := subject_pattern;
         SELF.specialty_pattern := specialty_pattern;
@@ -65,10 +64,11 @@ CREATE OR REPLACE TYPE BODY V2u_Classes_Map_Pattern_t AS
               classes_type => classes_map.classes_type
             , map_classes_type => classes_map.map_classes_type
             , classes_pattern => V2u_Classes_Pattern_t(
-                      expr_subj_code => classes_map.expr_subj_code
+                      expr_classes_type => NULL
                     )
             , subject_pattern => V2u_Subject_Pattern_t(
-                      expr_subj_name => classes_map.expr_subj_name
+                      expr_subj_code => classes_map.expr_subj_code
+                    , expr_subj_name => classes_map.expr_subj_name
                     , expr_subj_hours_w => classes_map.expr_subj_hours_w
                     , expr_subj_hours_c => classes_map.expr_subj_hours_c
                     , expr_subj_hours_l => classes_map.expr_subj_hours_l
@@ -123,17 +123,18 @@ CREATE OR REPLACE TYPE BODY V2u_Classes_Map_Pattern_t AS
         local INTEGER;
     BEGIN
         total := 1;
-        local := classes_pattern.match_attributes(
-                       subj_code => subj_code
-                     );
-        IF local < 1 THEN
-            RETURN local;
-        ELSE
-            total := total + (local - 1);
-        END IF;
+--        local := classes_pattern.match_attributes(
+--                       classes_type => classes_type
+--                     );
+--        IF local < 1 THEN
+--            RETURN local;
+--        ELSE
+--            total := total + (local - 1);
+--        END IF;
 
         local := subject_pattern.match_attributes(
-                      subj_name => subj_name
+                      subj_code => subj_code
+                    , subj_name => subj_name
                     , subj_hours_w => subj_hours_w
                     , subj_hours_c => subj_hours_c
                     , subj_hours_l => subj_hours_l
@@ -180,13 +181,6 @@ CREATE OR REPLACE TYPE BODY V2u_Classes_Map_Pattern_t AS
             total := total + 1;
         END IF;
         RETURN total;
-    END;
-
-    MEMBER FUNCTION match_subj_code(subj_code IN VARCHAR2)
-        RETURN INTEGER
-    IS
-    BEGIN
-        RETURN V2U_Match.String_Like(expr_subj_code, subj_code);
     END;
 END;
 /

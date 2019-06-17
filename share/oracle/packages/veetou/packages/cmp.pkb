@@ -111,6 +111,18 @@ CREATE OR REPLACE PACKAGE BODY V2U_Cmp AS
         RETURN ord;
     END;
 
+    FUNCTION DDN(date1 IN DATE, date2 IN DATE)
+        RETURN INTEGER
+    IS
+        ord NUMBER;
+    BEGIN
+        ord := NullCmp(date1 IS NULL, date2 IS NULL);
+        IF ord IS NULL THEN
+            ord := SIGN(TRUNC(date1, 'DD') - TRUNC(date2, 'DD'));
+        END IF;
+        RETURN ord;
+    END;
+
     FUNCTION TstampN(ts1 IN TIMESTAMP, ts2 IN TIMESTAMP)
         RETURN INTEGER
     IS
