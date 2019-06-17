@@ -3,7 +3,8 @@ CREATE OR REPLACE TYPE BODY V2u_Protocol_Map_Pattern_t AS
               SELF IN OUT NOCOPY V2u_Protocol_Map_Pattern_t
             , semester_code IN VARCHAR2
             , map_protocol_semester IN VARCHAR2
-            , map_protocol_date IN VARCHAR2
+            , map_protocol_date IN DATE
+            , map_protocol_date_match IN VARCHAR2
             , subject_pattern IN V2u_Subject_Pattern_t
             , specialty_pattern IN V2u_Specialty_Pattern_t
             , semester_pattern IN V2u_Semester_Pattern_t
@@ -16,6 +17,7 @@ CREATE OR REPLACE TYPE BODY V2u_Protocol_Map_Pattern_t AS
               semester_code => semester_code
             , map_protocol_semester => map_protocol_semester
             , map_protocol_date => map_protocol_date
+            , map_protocol_date_match => map_protocol_date_match
             , subject_pattern => subject_pattern
             , specialty_pattern => specialty_pattern
             , semester_pattern => semester_pattern
@@ -40,7 +42,8 @@ CREATE OR REPLACE TYPE BODY V2u_Protocol_Map_Pattern_t AS
               SELF IN OUT NOCOPY V2u_Protocol_Map_Pattern_t
             , semester_code IN VARCHAR2
             , map_protocol_semester IN VARCHAR2
-            , map_protocol_date IN VARCHAR2
+            , map_protocol_date IN DATE
+            , map_protocol_date_match IN VARCHAR2
             , subject_pattern IN V2u_Subject_Pattern_t
             , specialty_pattern IN V2u_Specialty_Pattern_t
             , semester_pattern IN V2u_Semester_Pattern_t
@@ -52,6 +55,7 @@ CREATE OR REPLACE TYPE BODY V2u_Protocol_Map_Pattern_t AS
         SELF.semester_code := semester_code;
         SELF.map_protocol_semester := map_protocol_semester;
         SELF.map_protocol_date := map_protocol_date;
+        SELF.map_protocol_date_match := map_protocol_date_match;
         SELF.subject_pattern := subject_pattern;
         SELF.specialty_pattern := specialty_pattern;
         SELF.semester_pattern := semester_pattern;
@@ -69,6 +73,7 @@ CREATE OR REPLACE TYPE BODY V2u_Protocol_Map_Pattern_t AS
               semester_code => protocol_map.semester_code
             , map_protocol_semester => protocol_map.map_protocol_semester
             , map_protocol_date => protocol_map.map_protocol_date
+            , map_protocol_date_match => protocol_map.map_protocol_date_match
             , subject_pattern => V2u_Subject_Pattern_t(
                       expr_subj_code => protocol_map.expr_subj_code
                     , expr_subj_name => protocol_map.expr_subj_name

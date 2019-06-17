@@ -5,6 +5,7 @@ CREATE OR REPLACE TYPE BODY V2u_Protocol_Map_B_t AS
             , semester_code IN VARCHAR2
             , map_protocol_semester IN VARCHAR2
             , map_protocol_date IN DATE
+            , map_protocol_date_match IN VARCHAR2
             , expr_subj_code IN VARCHAR2
             , expr_classes_type IN VARCHAR2
             , expr_subj_name IN VARCHAR2
@@ -42,6 +43,7 @@ CREATE OR REPLACE TYPE BODY V2u_Protocol_Map_B_t AS
             , semester_code => semester_code
             , map_protocol_semester => map_protocol_semester
             , map_protocol_date => map_protocol_date
+            , map_protocol_date_match => map_protocol_date_match
             , expr_subj_code => expr_subj_code
             , expr_classes_type => expr_classes_type
             , expr_subj_name => expr_subj_name
@@ -81,6 +83,7 @@ CREATE OR REPLACE TYPE BODY V2u_Protocol_Map_B_t AS
             , semester_code IN VARCHAR2
             , map_protocol_semester IN VARCHAR2
             , map_protocol_date IN DATE
+            , map_protocol_date_match IN VARCHAR2
             , expr_subj_code IN VARCHAR2
             , expr_classes_type IN VARCHAR2
             , expr_subj_name IN VARCHAR2
@@ -118,6 +121,7 @@ CREATE OR REPLACE TYPE BODY V2u_Protocol_Map_B_t AS
         SELF.semester_code := semester_code;
         SELF.map_protocol_semester := map_protocol_semester;
         SELF.map_protocol_date := map_protocol_date;
+        SELF.map_protocol_date_match := map_protocol_date_match;
         SELF.expr_subj_code := expr_subj_code;
         SELF.expr_classes_type := expr_classes_type;
         SELF.expr_subj_name := expr_subj_name;
@@ -165,7 +169,9 @@ CREATE OR REPLACE TYPE BODY V2u_Protocol_Map_B_t AS
         IF ord <> 0 THEN RETURN ord; END IF;
         ord := V2U_Cmp.StrNI(map_protocol_semester, other.map_protocol_semester);
         IF ord <> 0 THEN RETURN ord; END IF;
-        ord := V2U_Cmp.DDN(map_protocol_date, other.map_protocol_date);
+        ord := V2U_Cmp.DateN(map_protocol_date, other.map_protocol_date);
+        IF ord <> 0 THEN RETURN ord; END IF;
+        ord := V2U_Cmp.StrNI(map_protocol_date_match, other.map_protocol_date_match);
         IF ord <> 0 THEN RETURN ord; END IF;
         --
         ord := V2u_Cmp.StrNI(expr_subj_code, other.expr_subj_code);

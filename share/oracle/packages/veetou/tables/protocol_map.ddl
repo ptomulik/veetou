@@ -1,6 +1,8 @@
 CREATE TABLE v2u_protocol_map
 OF V2u_Protocol_Map_t
-    ( CONSTRAINT v2u_protocol_map_pk PRIMARY KEY(id) )
+    ( CONSTRAINT v2u_protocol_map_pk PRIMARY KEY(id)
+    , map_protocol_date_match DEFAULT 'D'
+    )
 OBJECT IDENTIFIER IS PRIMARY KEY;
 /
 --COMMENT ON TABLE v2u_protocol_map IS 'Odwzorowanie kodów przedmiotów (wydział -> USOS)';

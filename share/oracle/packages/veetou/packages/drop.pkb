@@ -573,6 +573,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('ko_students_idx1');
         Drop_Table('ko_students');
         --
+        Drop_Table('ko_protocol_map_j');
+        --
         Drop_Index('ko_classes_map_j_idx1');
         Drop_Index('ko_classes_map_j_idx2');
         Drop_Index('ko_classes_map_j_idx3');
@@ -711,6 +713,8 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Type('Ko_Matched_Proto_J_t', 'Ko_Matched_Protos_J_t');
         Drop_Type('Ko_Matched_Przcykl_J_t', 'Ko_Matched_Przcykles_J_t');
         Drop_Type('Ko_Matched_Przedm_J_t', 'Ko_Matched_Przedms_J_t');
+
+        Drop_Type('Ko_Protocol_Map_J_t', 'Ko_Protocol_Maps_J_t');
         Drop_Type('Ko_Classes_Map_J_t', 'Ko_Classes_Maps_J_t');
         Drop_Type('Ko_Subject_Map_J_t', 'Ko_Subject_Maps_J_t');
         Drop_Type('Ko_Specialty_Map_J_t', 'Ko_Specialty_Maps_J_t');

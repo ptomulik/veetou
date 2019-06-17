@@ -26,6 +26,7 @@
 @@ko_specialty_map_j.tpb;
 @@ko_subject_map_j.tpb;
 @@ko_classes_map_j.tpb;
+@@ko_protocol_map_j.tpb;
 
 @@ko_matched_prgos_j.tpb;
 @@ko_matched_etpos_j.tpb;

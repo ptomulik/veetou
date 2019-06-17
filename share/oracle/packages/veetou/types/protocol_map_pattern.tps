@@ -2,7 +2,8 @@ CREATE OR REPLACE TYPE V2u_Protocol_Map_Pattern_t
     FORCE AUTHID CURRENT_USER AS OBJECT
     ( semester_code VARCHAR2(5 CHAR)
     , map_protocol_semester VARCHAR2(20 CHAR)
-    , map_protocol_date VARCHAR2(3 CHAR)
+    , map_protocol_date DATE
+    , map_protocol_date_match CHAR(1)
     , subject_pattern V2u_Subject_Pattern_t
     , specialty_pattern V2u_Specialty_Pattern_t
     , semester_pattern V2u_Semester_Pattern_t
@@ -14,7 +15,8 @@ CREATE OR REPLACE TYPE V2u_Protocol_Map_Pattern_t
               SELF IN OUT NOCOPY V2u_Protocol_Map_Pattern_t
             , semester_code IN VARCHAR2
             , map_protocol_semester IN VARCHAR2
-            , map_protocol_date IN VARCHAR2
+            , map_protocol_date IN DATE
+            , map_protocol_date_match IN VARCHAR2
             , subject_pattern IN V2u_Subject_Pattern_t
             , specialty_pattern IN V2u_Specialty_Pattern_t
             , semester_pattern IN V2u_Semester_Pattern_t
@@ -31,7 +33,8 @@ CREATE OR REPLACE TYPE V2u_Protocol_Map_Pattern_t
               SELF IN OUT NOCOPY V2u_Protocol_Map_Pattern_t
             , semester_code IN VARCHAR2
             , map_protocol_semester IN VARCHAR2
-            , map_protocol_date IN VARCHAR2
+            , map_protocol_date IN DATE
+            , map_protocol_date_match IN VARCHAR2
             , subject_pattern IN V2u_Subject_Pattern_t
             , specialty_pattern IN V2u_Specialty_Pattern_t
             , semester_pattern IN V2u_Semester_Pattern_t
