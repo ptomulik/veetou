@@ -4,6 +4,7 @@ CREATE OR REPLACE TYPE V2u_Protocol_Map_B_t
     , map_protocol_semester VARCHAR2(20 CHAR)
     , map_protocol_date DATE
     , map_protocol_date_match CHAR(1)
+    , map_term_prot_nr NUMBER(10)
     , expr_subj_code VARCHAR2(256 CHAR)
     , expr_subj_name VARCHAR2(256 CHAR)
     , expr_subj_hours_w VARCHAR2(256 CHAR)
@@ -41,6 +42,7 @@ CREATE OR REPLACE TYPE V2u_Protocol_Map_B_t
             , map_protocol_semester IN VARCHAR2
             , map_protocol_date IN DATE
             , map_protocol_date_match IN VARCHAR2
+            , map_term_prot_nr IN NUMBER
             , expr_subj_code IN VARCHAR2
             , expr_classes_type IN VARCHAR2
             , expr_subj_name IN VARCHAR2
@@ -79,6 +81,7 @@ CREATE OR REPLACE TYPE V2u_Protocol_Map_B_t
             , map_protocol_semester IN VARCHAR2
             , map_protocol_date IN DATE
             , map_protocol_date_match IN VARCHAR2
+            , map_term_prot_nr IN NUMBER
             , expr_subj_code IN VARCHAR2
             , expr_classes_type IN VARCHAR2
             , expr_subj_name IN VARCHAR2

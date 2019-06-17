@@ -5,6 +5,7 @@ CREATE OR REPLACE TYPE BODY V2u_Protocol_Map_Pattern_t AS
             , map_protocol_semester IN VARCHAR2
             , map_protocol_date IN DATE
             , map_protocol_date_match IN VARCHAR2
+            , map_term_prot_nr IN NUMBER
             , subject_pattern IN V2u_Subject_Pattern_t
             , specialty_pattern IN V2u_Specialty_Pattern_t
             , semester_pattern IN V2u_Semester_Pattern_t
@@ -18,6 +19,7 @@ CREATE OR REPLACE TYPE BODY V2u_Protocol_Map_Pattern_t AS
             , map_protocol_semester => map_protocol_semester
             , map_protocol_date => map_protocol_date
             , map_protocol_date_match => map_protocol_date_match
+            , map_term_prot_nr => map_term_prot_nr
             , subject_pattern => subject_pattern
             , specialty_pattern => specialty_pattern
             , semester_pattern => semester_pattern
@@ -44,6 +46,7 @@ CREATE OR REPLACE TYPE BODY V2u_Protocol_Map_Pattern_t AS
             , map_protocol_semester IN VARCHAR2
             , map_protocol_date IN DATE
             , map_protocol_date_match IN VARCHAR2
+            , map_term_prot_nr IN NUMBER
             , subject_pattern IN V2u_Subject_Pattern_t
             , specialty_pattern IN V2u_Specialty_Pattern_t
             , semester_pattern IN V2u_Semester_Pattern_t
@@ -56,6 +59,7 @@ CREATE OR REPLACE TYPE BODY V2u_Protocol_Map_Pattern_t AS
         SELF.map_protocol_semester := map_protocol_semester;
         SELF.map_protocol_date := map_protocol_date;
         SELF.map_protocol_date_match := map_protocol_date_match;
+        SELF.map_term_prot_nr := map_term_prot_nr;
         SELF.subject_pattern := subject_pattern;
         SELF.specialty_pattern := specialty_pattern;
         SELF.semester_pattern := semester_pattern;
@@ -74,6 +78,7 @@ CREATE OR REPLACE TYPE BODY V2u_Protocol_Map_Pattern_t AS
             , map_protocol_semester => protocol_map.map_protocol_semester
             , map_protocol_date => protocol_map.map_protocol_date
             , map_protocol_date_match => protocol_map.map_protocol_date_match
+            , map_term_prot_nr => protocol_map.map_term_prot_nr
             , subject_pattern => V2u_Subject_Pattern_t(
                       expr_subj_code => protocol_map.expr_subj_code
                     , expr_subj_name => protocol_map.expr_subj_name
@@ -229,6 +234,10 @@ CREATE OR REPLACE TYPE BODY V2u_Protocol_Map_Pattern_t AS
         END IF;
         -- bonus for map_protocol_date being NOT NULL
         IF map_protocol_date IS NOT NULL THEN
+            total := total + 1;
+        END IF;
+        -- bonus for map_term_prot_nr being NOT NULL
+        IF map_term_prot_nr IS NOT NULL THEN
             total := total + 1;
         END IF;
         RETURN total;

@@ -4,6 +4,7 @@ CREATE OR REPLACE TYPE V2u_Protocol_Map_Pattern_t
     , map_protocol_semester VARCHAR2(20 CHAR)
     , map_protocol_date DATE
     , map_protocol_date_match CHAR(1)
+    , map_term_prot_nr NUMBER(10)
     , subject_pattern V2u_Subject_Pattern_t
     , specialty_pattern V2u_Specialty_Pattern_t
     , semester_pattern V2u_Semester_Pattern_t
@@ -17,6 +18,7 @@ CREATE OR REPLACE TYPE V2u_Protocol_Map_Pattern_t
             , map_protocol_semester IN VARCHAR2
             , map_protocol_date IN DATE
             , map_protocol_date_match IN VARCHAR2
+            , map_term_prot_nr IN NUMBER
             , subject_pattern IN V2u_Subject_Pattern_t
             , specialty_pattern IN V2u_Specialty_Pattern_t
             , semester_pattern IN V2u_Semester_Pattern_t
@@ -35,6 +37,7 @@ CREATE OR REPLACE TYPE V2u_Protocol_Map_Pattern_t
             , map_protocol_semester IN VARCHAR2
             , map_protocol_date IN DATE
             , map_protocol_date_match IN VARCHAR2
+            , map_term_prot_nr IN NUMBER
             , subject_pattern IN V2u_Subject_Pattern_t
             , specialty_pattern IN V2u_Specialty_Pattern_t
             , semester_pattern IN V2u_Semester_Pattern_t
