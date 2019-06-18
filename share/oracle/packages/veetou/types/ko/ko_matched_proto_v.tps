@@ -1,5 +1,5 @@
 CREATE OR REPLACE TYPE V2u_Ko_Matched_Proto_V_t
-    FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Credit_U_t
+    FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Grade_U_t
     ( zaj_cyk_id NUMBER(10)
     , opis VARCHAR2(100 CHAR)
     , utw_id VARCHAR2(30 CHAR)
@@ -17,6 +17,7 @@ CREATE OR REPLACE TYPE V2u_Ko_Matched_Proto_V_t
     , CONSTRUCTOR FUNCTION V2u_Ko_Matched_Proto_V_t(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Proto_V_t
             , matched_proto_j IN V2u_Ko_Matched_Proto_J_t
+            , grade_i IN V2u_Ko_Grade_I_t
             , student IN V2u_Ko_Student_t
             , subject IN V2u_Ko_Subject_t
             , specialty IN V2u_Ko_Specialty_t

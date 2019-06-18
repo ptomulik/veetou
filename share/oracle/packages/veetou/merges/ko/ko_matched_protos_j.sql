@@ -12,8 +12,10 @@ USING
                 , g_j.student_id
                 , sm_j.map_id subject_map_id
                 , cm_j.map_id classes_map_id
+                , pm_j.map_id protocol_map_id
                 , COALESCE(
-                      subject_map.map_proto_type
+                      pm.map_proto_type
+                    , sm.map_proto_type
                     , V2U_Get.Tpro_Kod(
                           subj_credit_kind => subjects.subj_credit_kind
                         , subj_grades => DECODE(
@@ -49,10 +51,10 @@ USING
                         AND sm_j.job_uuid = g_j.job_uuid
                         AND sm_j.selected = 1
                     )
-            INNER JOIN v2u_subject_map subject_map
+            INNER JOIN v2u_subject_map sm
                 ON  (
-                            subject_map.id = sm_j.map_id
-                        AND subject_map.map_subj_code IS NOT NULL
+                            sm.id = sm_j.map_id
+                        AND sm.map_subj_code IS NOT NULL
                     )
             LEFT JOIN v2u_ko_classes_map_j cm_j
                 ON  (
@@ -63,31 +65,55 @@ USING
                         AND cm_j.job_uuid = g_j.job_uuid
                         AND cm_j.selected = 1
                     )
-            LEFT JOIN v2u_classes_map classes_map
+            LEFT JOIN v2u_classes_map cm
                 ON  (
-                            classes_map.id = cm_j.map_id
+                            cm.id = cm_j.map_id
+                    )
+            LEFT JOIN v2u_ko_protocol_map_j pm_j
+                ON  (
+                            pm_j.student_id = g_j.student_id
+                        AND pm_j.subject_id = g_j.subject_id
+                        AND pm_j.semester_id = g_j.semester_id
+                        AND pm_j.specialty_id = g_j.specialty_id
+                        AND pm_j.classes_type = g_j.classes_type
+                        AND pm_j.job_uuid = g_j.job_uuid
+                        AND pm_j.selected = 1
+                    )
+            LEFT JOIN v2u_protocol_map pm
+                ON  (
+                        pm.id = pm_j.map_id
                     )
             LEFT JOIN v2u_dz_zajecia_cykli zajecia_cykli
                 ON  (
-                            zajecia_cykli.prz_kod = subject_map.map_subj_code
-                        AND zajecia_cykli.cdyd_kod = semesters.semester_code
-                        AND zajecia_cykli.tzaj_kod = classes_map.map_classes_type
+                            zajecia_cykli.prz_kod = COALESCE(pm.map_subj_code, sm.map_subj_code)
+                        AND zajecia_cykli.cdyd_kod = COALESCE(pm.map_semester_code, semesters.semester_code)
+                        AND zajecia_cykli.tzaj_kod = COALESCE(pm.map_classes_type, cm.map_classes_type)
                     )
             INNER JOIN v2u_dz_protokoly protokoly
                 ON  (
-                            protokoly.prz_kod = subject_map.map_subj_code
-                        AND protokoly.cdyd_kod = semesters.semester_code
+                            protokoly.prz_kod = COALESCE(pm.map_subj_code, sm.map_subj_code)
+                        AND protokoly.cdyd_kod = COALESCE(pm.map_semester_code, semesters.semester_code)
                         AND (
-                                        g_j.classes_type = '-'
+                                        COALESCE(pm.map_classes_type, g_j.classes_type) = '-'
                                     AND protokoly.zaj_cyk_id IS NULL
                                 OR
-                                        g_j.classes_type <> '-'
+                                        COALESCE(pm.map_classes_type, g_j.classes_type) <> '-'
                                     AND protokoly.zaj_cyk_id = zajecia_cykli.id
-                        )
+                            )
                     )
             WHERE
-                        ( g_j.classes_type = '-' AND cm_j.map_id IS NULL )
-                    OR  ( g_j.classes_type <> '-' AND cm_j.map_id IS NOT NULL)
+                        (
+                                COALESCE(pm.map_classes_type, '-') = '-'
+                            AND g_j.classes_type = '-'
+                            AND cm_j.map_id IS NULL
+                        )
+                    OR
+                        (
+                                COALESCE(pm.map_classes_type, '-') <> '-'
+                            OR
+                                    g_j.classes_type <> '-'
+                                AND cm_j.map_id IS NOT NULL
+                        )
         )
         SELECT
               u.*
@@ -116,6 +142,7 @@ WHEN NOT MATCHED THEN
         , student_id
         , subject_map_id
         , classes_map_id
+        , protocol_map_id
         , proto_type
         , prot_id
         , zaj_cyk_id
@@ -133,6 +160,7 @@ WHEN NOT MATCHED THEN
         , src.student_id
         , src.subject_map_id
         , src.classes_map_id
+        , src.protocol_map_id
         , src.proto_type
         , src.prot_id
         , src.zaj_cyk_id
@@ -145,6 +173,7 @@ WHEN MATCHED THEN
     UPDATE SET
           tgt.subject_map_id = src.subject_map_id
         , tgt.classes_map_id = src.classes_map_id
+        , tgt.protocol_map_id = src.protocol_map_id
         , tgt.proto_type = src.proto_type
         , tgt.prot_id = src.prot_id
         , tgt.zaj_cyk_id = src.zaj_cyk_id

@@ -2,6 +2,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Proto_V_t AS
     CONSTRUCTOR FUNCTION V2u_Ko_Matched_Proto_V_t(
               SELF IN OUT NOCOPY V2u_Ko_Matched_Proto_V_t
             , matched_proto_j IN V2u_Ko_Matched_Proto_J_t
+            , grade_i IN V2u_Ko_Grade_I_t
             , student IN V2u_Ko_Student_t
             , subject IN V2u_Ko_Subject_t
             , specialty IN V2u_Ko_Specialty_t
@@ -11,10 +12,10 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Proto_V_t AS
     IS
     BEGIN
         SELF.init(
-              subject => subject
+              grade_i => grade_i
+            , subject => subject
             , specialty => specialty
             , semester => semester
-            , classes_type => matched_proto_j.classes_type
             , student => student
         );
         -- DZ

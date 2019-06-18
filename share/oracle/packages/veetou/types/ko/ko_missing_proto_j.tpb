@@ -8,8 +8,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Proto_J_t AS
             , classes_type IN VARCHAR2
             , student_id IN NUMBER
             , subject_map_id IN NUMBER
-            , map_subj_code IN VARCHAR2
             , classes_map_id IN NUMBER
+            , protocol_map_id IN NUMBER
+            , map_subj_code IN VARCHAR2
             , map_classes_type IN VARCHAR2
             , proto_type IN VARCHAR2
             , zaj_cyk_id IN NUMBER
@@ -26,8 +27,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Proto_J_t AS
             , classes_type => classes_type
             , student_id => student_id
             , subject_map_id => subject_map_id
-            , map_subj_code => map_subj_code
             , classes_map_id => classes_map_id
+            , protocol_map_id => protocol_map_id
+            , map_subj_code => map_subj_code
             , map_classes_type => map_classes_type
             , proto_type => proto_type
             , zaj_cyk_id => zaj_cyk_id
@@ -47,8 +49,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Proto_J_t AS
             , classes_type IN VARCHAR2
             , student_id IN NUMBER
             , subject_map_id IN NUMBER
-            , map_subj_code IN VARCHAR2
             , classes_map_id IN NUMBER
+            , protocol_map_id IN NUMBER
+            , map_subj_code IN VARCHAR2
             , map_classes_type IN VARCHAR2
             , proto_type IN VARCHAR2
             , zaj_cyk_id IN NUMBER
@@ -66,8 +69,9 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Proto_J_t AS
             , student_id => student_id
             );
         SELF.subject_map_id := subject_map_id;
-        SELF.map_subj_code := map_subj_code;
         SELF.classes_map_id := classes_map_id;
+        SELF.protocol_map_id := protocol_map_id;
+        SELF.map_subj_code := map_subj_code;
         SELF.map_classes_type := map_classes_type;
         SELF.proto_type := proto_type;
         SELF.zaj_cyk_id := zaj_cyk_id;

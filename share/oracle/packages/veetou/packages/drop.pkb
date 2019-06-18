@@ -574,6 +574,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Index('ko_students_idx1');
         Drop_Table('ko_students');
         --
+        Drop_Index('ko_protocol_map_j_idx1');
         Drop_Table('ko_protocol_map_j');
         --
         Drop_Index('ko_classes_map_j_idx1');

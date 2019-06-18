@@ -1,10 +1,13 @@
 CREATE OR REPLACE TYPE V2u_Protocol_Map_B_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Distinct_t
     ( semester_code VARCHAR2(5 CHAR)
-    , map_protocol_semester VARCHAR2(20 CHAR)
-    , map_protocol_date DATE
-    , map_protocol_date_match CHAR(1)
+    , map_subj_code VARCHAR2(20 CHAR)
+    , map_classes_type VARCHAR2(20 CHAR)
+    , map_semester_code VARCHAR2(20 CHAR)
+    , map_proto_type VARCHAR2(20 CHAR)
     , map_term_prot_nr NUMBER(10)
+    , map_return_date DATE
+    , map_return_date_prec CHAR(2)
     , expr_subj_code VARCHAR2(256 CHAR)
     , expr_subj_name VARCHAR2(256 CHAR)
     , expr_subj_hours_w VARCHAR2(256 CHAR)
@@ -39,10 +42,13 @@ CREATE OR REPLACE TYPE V2u_Protocol_Map_B_t
               SELF IN OUT NOCOPY V2u_Protocol_Map_B_t
             , id IN NUMBER := NULL
             , semester_code IN VARCHAR2
-            , map_protocol_semester IN VARCHAR2
-            , map_protocol_date IN DATE
-            , map_protocol_date_match IN VARCHAR2
+            , map_subj_code IN VARCHAR2
+            , map_classes_type IN VARCHAR2
+            , map_semester_code IN VARCHAR2
+            , map_proto_type IN VARCHAR2
             , map_term_prot_nr IN NUMBER
+            , map_return_date IN DATE
+            , map_return_date_prec IN VARCHAR2
             , expr_subj_code IN VARCHAR2
             , expr_classes_type IN VARCHAR2
             , expr_subj_name IN VARCHAR2
@@ -78,10 +84,13 @@ CREATE OR REPLACE TYPE V2u_Protocol_Map_B_t
               SELF IN OUT NOCOPY V2u_Protocol_Map_B_t
             , id IN NUMBER := NULL
             , semester_code IN VARCHAR2
-            , map_protocol_semester IN VARCHAR2
-            , map_protocol_date IN DATE
-            , map_protocol_date_match IN VARCHAR2
+            , map_subj_code IN VARCHAR2
+            , map_classes_type IN VARCHAR2
+            , map_semester_code IN VARCHAR2
+            , map_proto_type IN VARCHAR2
             , map_term_prot_nr IN NUMBER
+            , map_return_date IN DATE
+            , map_return_date_prec IN VARCHAR2
             , expr_subj_code IN VARCHAR2
             , expr_classes_type IN VARCHAR2
             , expr_subj_name IN VARCHAR2

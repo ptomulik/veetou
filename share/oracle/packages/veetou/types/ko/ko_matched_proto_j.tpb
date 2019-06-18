@@ -9,6 +9,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Proto_J_t AS
             , student_id IN NUMBER
             , subject_map_id IN NUMBER
             , classes_map_id IN NUMBER
+            , protocol_map_id IN NUMBER
             , proto_type IN VARCHAR2
             , prot_id IN NUMBER
             , zaj_cyk_id IN NUMBER
@@ -28,6 +29,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Proto_J_t AS
             , student_id => student_id
             , subject_map_id => subject_map_id
             , classes_map_id => classes_map_id
+            , protocol_map_id => protocol_map_id
             , proto_type => proto_type
             , prot_id => prot_id
             , zaj_cyk_id => zaj_cyk_id
@@ -49,6 +51,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Proto_J_t AS
             , student_id IN NUMBER
             , subject_map_id IN NUMBER
             , classes_map_id IN NUMBER
+            , protocol_map_id IN NUMBER
             , proto_type IN VARCHAR2
             , prot_id IN NUMBER
             , zaj_cyk_id IN NUMBER
@@ -69,6 +72,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Matched_Proto_J_t AS
             );
         SELF.subject_map_id := subject_map_id;
         SELF.classes_map_id := classes_map_id;
+        SELF.protocol_map_id := protocol_map_id;
         SELF.proto_type := proto_type;
         SELF.prot_id := prot_id;
         SELF.zaj_cyk_id := zaj_cyk_id;

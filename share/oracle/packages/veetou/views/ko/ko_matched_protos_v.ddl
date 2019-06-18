@@ -10,6 +10,7 @@ AS
     SELECT
           V2u_Ko_Matched_Proto_V_t(
               matched_proto_j => VALUE(ma_protos_j)
+            , grade_i => VALUE(g_j)
             , student => VALUE(students)
             , subject => VALUE(subjects)
             , specialty => VALUE(specialties)
@@ -17,6 +18,15 @@ AS
             , protokol => VALUE(protokoly)
         )
     FROM v2u_ko_matched_protos_j ma_protos_j
+    INNER JOIN v2u_ko_grades_j g_j
+        ON  (
+                    g_j.student_id = ma_protos_j.student_id
+                AND g_j.subject_id = ma_protos_j.subject_id
+                AND g_j.specialty_id = ma_protos_j.specialty_id
+                AND g_j.semester_id = ma_protos_j.semester_id
+                AND g_j.classes_type = ma_protos_j.classes_type
+                AND g_j.job_uuid = ma_protos_j.job_uuid
+            )
     INNER JOIN v2u_ko_students students
         ON  (
                     students.id = ma_protos_j.student_id

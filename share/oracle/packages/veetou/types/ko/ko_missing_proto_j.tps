@@ -1,8 +1,9 @@
 CREATE OR REPLACE TYPE V2u_Ko_Missing_Proto_J_t
     FORCE AUTHID CURRENT_USER UNDER V2u_Ko_Credit_I_t
     ( subject_map_id NUMBER(38)
-    , map_subj_code VARCHAR2(20 CHAR)
     , classes_map_id NUMBER(38)
+    , protocol_map_id NUMBER(38)
+    , map_subj_code VARCHAR2(20 CHAR)
     , map_classes_type VARCHAR2(20 CHAR)
     , proto_type VARCHAR2(20 CHAR)
     , zaj_cyk_id NUMBER(10)
@@ -18,8 +19,9 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Proto_J_t
             , classes_type IN VARCHAR2
             , student_id IN NUMBER
             , subject_map_id IN NUMBER
-            , map_subj_code IN VARCHAR2
             , classes_map_id IN NUMBER
+            , protocol_map_id IN NUMBER
+            , map_subj_code IN VARCHAR2
             , map_classes_type IN VARCHAR2
             , proto_type IN VARCHAR2
             , zaj_cyk_id IN NUMBER
@@ -36,8 +38,9 @@ CREATE OR REPLACE TYPE V2u_Ko_Missing_Proto_J_t
             , classes_type IN VARCHAR2
             , student_id IN NUMBER
             , subject_map_id IN NUMBER
-            , map_subj_code IN VARCHAR2
             , classes_map_id IN NUMBER
+            , protocol_map_id IN NUMBER
+            , map_subj_code IN VARCHAR2
             , map_classes_type IN VARCHAR2
             , proto_type IN VARCHAR2
             , zaj_cyk_id IN NUMBER

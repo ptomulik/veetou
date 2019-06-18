@@ -2,6 +2,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Proto_V_t AS
     CONSTRUCTOR FUNCTION V2u_Ko_Missing_Proto_V_t(
               SELF IN OUT NOCOPY V2u_Ko_Missing_Proto_V_t
             , missing_proto_j IN V2u_Ko_Missing_Proto_J_t
+            , grade_i IN V2u_Ko_Grade_I_t
             , subject IN V2u_Ko_Subject_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
@@ -11,6 +12,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Proto_V_t AS
     BEGIN
         SELF.init(
               missing_proto_j => missing_proto_j
+            , grade_i => grade_i
             , subject => subject
             , specialty => specialty
             , semester => semester
@@ -22,6 +24,7 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Proto_V_t AS
     MEMBER PROCEDURE init(
               SELF IN OUT NOCOPY V2u_Ko_Missing_Proto_V_t
             , missing_proto_j IN V2u_Ko_Missing_Proto_J_t
+            , grade_i IN V2u_Ko_Grade_I_t
             , subject IN V2u_Ko_Subject_t
             , specialty IN V2u_Ko_Specialty_t
             , semester IN V2u_Ko_Semester_t
@@ -30,15 +33,16 @@ CREATE OR REPLACE TYPE BODY V2u_Ko_Missing_Proto_V_t AS
     IS
     BEGIN
         SELF.init(
-              subject => subject
+              grade_i => grade_i
+            , subject => subject
             , specialty => specialty
             , semester => semester
-            , classes_type => missing_proto_j.classes_type
             , student => student
             );
         SELF.subject_map_id := missing_proto_j.subject_map_id;
-        SELF.map_subj_code := missing_proto_j.map_subj_code;
         SELF.classes_map_id := missing_proto_j.classes_map_id;
+        SELF.protocol_map_id := missing_proto_j.protocol_map_id;
+        SELF.map_subj_code := missing_proto_j.map_subj_code;
         SELF.map_classes_type := missing_proto_j.map_classes_type;
         SELF.proto_type := missing_proto_j.proto_type;
         SELF.zaj_cyk_id := missing_proto_j.zaj_cyk_id;

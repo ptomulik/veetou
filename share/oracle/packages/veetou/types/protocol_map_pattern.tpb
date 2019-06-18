@@ -2,10 +2,13 @@ CREATE OR REPLACE TYPE BODY V2u_Protocol_Map_Pattern_t AS
     CONSTRUCTOR FUNCTION V2u_Protocol_Map_Pattern_t(
               SELF IN OUT NOCOPY V2u_Protocol_Map_Pattern_t
             , semester_code IN VARCHAR2
-            , map_protocol_semester IN VARCHAR2
-            , map_protocol_date IN DATE
-            , map_protocol_date_match IN VARCHAR2
+            , map_subj_code IN VARCHAR2
+            , map_classes_type IN VARCHAR2
+            , map_semester_code IN VARCHAR2
+            , map_proto_type IN VARCHAR2
             , map_term_prot_nr IN NUMBER
+            , map_return_date IN DATE
+            , map_return_date_prec IN VARCHAR2
             , subject_pattern IN V2u_Subject_Pattern_t
             , specialty_pattern IN V2u_Specialty_Pattern_t
             , semester_pattern IN V2u_Semester_Pattern_t
@@ -16,10 +19,13 @@ CREATE OR REPLACE TYPE BODY V2u_Protocol_Map_Pattern_t AS
     BEGIN
         SELF.init(
               semester_code => semester_code
-            , map_protocol_semester => map_protocol_semester
-            , map_protocol_date => map_protocol_date
-            , map_protocol_date_match => map_protocol_date_match
+            , map_subj_code => map_subj_code
+            , map_classes_type => map_classes_type
+            , map_semester_code => map_semester_code
+            , map_proto_type => map_proto_type
             , map_term_prot_nr => map_term_prot_nr
+            , map_return_date => map_return_date
+            , map_return_date_prec => map_return_date_prec
             , subject_pattern => subject_pattern
             , specialty_pattern => specialty_pattern
             , semester_pattern => semester_pattern
@@ -43,10 +49,13 @@ CREATE OR REPLACE TYPE BODY V2u_Protocol_Map_Pattern_t AS
     MEMBER PROCEDURE init(
               SELF IN OUT NOCOPY V2u_Protocol_Map_Pattern_t
             , semester_code IN VARCHAR2
-            , map_protocol_semester IN VARCHAR2
-            , map_protocol_date IN DATE
-            , map_protocol_date_match IN VARCHAR2
+            , map_subj_code IN VARCHAR2
+            , map_classes_type IN VARCHAR2
+            , map_semester_code IN VARCHAR2
+            , map_proto_type IN VARCHAR2
             , map_term_prot_nr IN NUMBER
+            , map_return_date IN DATE
+            , map_return_date_prec IN VARCHAR2
             , subject_pattern IN V2u_Subject_Pattern_t
             , specialty_pattern IN V2u_Specialty_Pattern_t
             , semester_pattern IN V2u_Semester_Pattern_t
@@ -56,10 +65,13 @@ CREATE OR REPLACE TYPE BODY V2u_Protocol_Map_Pattern_t AS
     IS
     BEGIN
         SELF.semester_code := semester_code;
-        SELF.map_protocol_semester := map_protocol_semester;
-        SELF.map_protocol_date := map_protocol_date;
-        SELF.map_protocol_date_match := map_protocol_date_match;
+        SELF.map_subj_code := map_subj_code;
+        SELF.map_classes_type := map_classes_type;
+        SELF.map_semester_code := map_semester_code;
+        SELF.map_proto_type := map_proto_type;
         SELF.map_term_prot_nr := map_term_prot_nr;
+        SELF.map_return_date := map_return_date;
+        SELF.map_return_date_prec := map_return_date_prec;
         SELF.subject_pattern := subject_pattern;
         SELF.specialty_pattern := specialty_pattern;
         SELF.semester_pattern := semester_pattern;
@@ -75,10 +87,13 @@ CREATE OR REPLACE TYPE BODY V2u_Protocol_Map_Pattern_t AS
     BEGIN
         SELF.init(
               semester_code => protocol_map.semester_code
-            , map_protocol_semester => protocol_map.map_protocol_semester
-            , map_protocol_date => protocol_map.map_protocol_date
-            , map_protocol_date_match => protocol_map.map_protocol_date_match
+            , map_subj_code => protocol_map.map_subj_code
+            , map_classes_type => protocol_map.map_classes_type
+            , map_semester_code => protocol_map.map_semester_code
+            , map_proto_type => protocol_map.map_proto_type
             , map_term_prot_nr => protocol_map.map_term_prot_nr
+            , map_return_date => protocol_map.map_return_date
+            , map_return_date_prec => protocol_map.map_return_date_prec
             , subject_pattern => V2u_Subject_Pattern_t(
                       expr_subj_code => protocol_map.expr_subj_code
                     , expr_subj_name => protocol_map.expr_subj_name
@@ -228,16 +243,24 @@ CREATE OR REPLACE TYPE BODY V2u_Protocol_Map_Pattern_t AS
         END IF;
 
 
-        -- bonus for map_protocol_semester being NOT NULL
-        IF map_protocol_semester IS NOT NULL THEN
+        -- bonus for map_subj_code being NOT NULL
+        IF map_subj_code IS NOT NULL THEN
             total := total + 1;
         END IF;
-        -- bonus for map_protocol_date being NOT NULL
-        IF map_protocol_date IS NOT NULL THEN
+        -- bonus for map_classes_type being NOT NULL
+        IF map_classes_type IS NOT NULL THEN
+            total := total + 1;
+        END IF;
+        -- bonus for map_semester_code being NOT NULL
+        IF map_semester_code IS NOT NULL THEN
             total := total + 1;
         END IF;
         -- bonus for map_term_prot_nr being NOT NULL
         IF map_term_prot_nr IS NOT NULL THEN
+            total := total + 1;
+        END IF;
+        -- bonus for map_return_date being NOT NULL
+        IF map_return_date IS NOT NULL THEN
             total := total + 1;
         END IF;
         RETURN total;

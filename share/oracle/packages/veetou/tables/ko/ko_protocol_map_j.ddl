@@ -30,19 +30,25 @@ OF V2u_Ko_Protocol_Map_J_t
     )
 OBJECT IDENTIFIER IS PRIMARY KEY;
 /
---CREATE INDEX v2u_ko_protocol_map_j_idx1
---       ON v2u_ko_protocol_map_j(selected)
---/
+CREATE INDEX v2u_ko_protocol_map_j_idx1
+       ON v2u_ko_protocol_map_j( job_uuid
+                               , semester_id
+                               , specialty_id
+                               , subject_id
+                               , classes_type
+                               , student_id
+                               , selected );
+/
 --CREATE INDEX v2u_ko_protocol_map_j_idx2
---       ON v2u_ko_protocol_map_j(reason)
+--       ON v2u_ko_protocol_map_j(reason);
 --/
 --CREATE INDEX v2u_ko_protocol_map_j_idx3
---       ON v2u_ko_protocol_map_j(selected, reason)
+--       ON v2u_ko_protocol_map_j(selected, reason);
 --/
 --CREATE INDEX v2u_ko_protocol_map_j_idx4
---       ON v2u_ko_protocol_map_j(job_uuid, subject_id, specialty_id, semester_id)
+--       ON v2u_ko_protocol_map_j(job_uuid, subject_id, specialty_id, semester_id);
 --/
 --CREATE INDEX v2u_ko_protocol_map_j_idx5
---       ON v2u_ko_protocol_map_j(job_uuid, subject_id, specialty_id, semester_id, selected)
+--       ON v2u_ko_protocol_map_j(job_uuid, subject_id, specialty_id, semester_id, selected);
 --/
 -- vim: set ft=sql ts=4 sw=4 et:

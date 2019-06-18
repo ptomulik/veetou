@@ -1,7 +1,37 @@
 CREATE TABLE v2u_protocol_map
 OF V2u_Protocol_Map_t
-    ( CONSTRAINT v2u_protocol_map_pk PRIMARY KEY(id)
-    , map_protocol_date_match DEFAULT 'D'
+    ( CONSTRAINT v2u_protocol_map_pk
+        PRIMARY KEY(id)
+    , CONSTRAINT v2u_protocol_map_c1           -- how map_return_date is cmp'd:
+        CHECK(map_return_date_prec IN   ( '--' -- do not truncate dates
+                                        , 'YY' -- truncate dates to year
+                                        , 'MM' -- truncate dates to months
+                                        , 'DD' -- truncate dates to days
+                                        , 'HH' -- truncate dates to hours
+                                        , 'MI' -- truncate dates to minutes
+                                        , 'XX' -- exact match with NULL = NULL.
+                                        )
+        )
+    , CONSTRAINT v2u_protocol_map_c2
+        CHECK(map_classes_type      IN  ( 'WYK'
+                                        , 'CWI'
+                                        , 'LAB'
+                                        , 'PRO'
+                                        , 'SED'
+                                        , 'LEK'
+                                        , 'FIZ'
+                                        , 'DOM'
+                                        , 'PRA'
+                                        , 'EGZ'
+                                        , 'SEM'
+                                        , 'KON'
+                                        , 'ZKO'
+                                        , 'PPR'
+                                        , 'ZIN'
+                                        , '-'
+                                        )
+        )
+    , map_return_date_prec DEFAULT '--'
     )
 OBJECT IDENTIFIER IS PRIMARY KEY;
 /
