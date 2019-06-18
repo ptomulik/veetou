@@ -1172,7 +1172,7 @@ COMMIT;
 
 DELETE FROM v2u_ko_matched_oceny_j;
 COMMIT;
-@@merges/ko/ko_matched_oceny_j.sql;
+@@merges/ko/ko_matched_oceny_j/by_value.sql;
 
 
 --
