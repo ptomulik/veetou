@@ -295,6 +295,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Trigg('dz_wartosci_ocen_tr0');
         Drop_Table('dz_wartosci_ocen');
         --
+        Drop_Index('dz_terminy_protokolow_idx1');
         Drop_Trigg('dz_terminy_protokolow_tr0');
         Drop_Table('dz_terminy_protokolow');
         --
@@ -654,11 +655,14 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_Table('uu_studenci');
         --
         Drop_Index('uu_zajecia_cykli_idx1');
+        Drop_Seqnc('uu_zajecia_cykli_sq1');
         Drop_Table('uu_zajecia_cykli');
         --
         Drop_Index('uu_punkty_przedmiotow_idx1');
         Drop_Index('uu_punkty_przedmiotow_idx2');
         Drop_Index('uu_punkty_przedmiotow_idx3');
+        Drop_View('uu_punkty_przedmiotow1_v');
+        Drop_View('uu_punkty_przedmiotow2_v');
         Drop_Table('uu_punkty_przedmiotow');
         --
         Drop_Index('uu_przedmioty_cykli_idx1');
@@ -813,6 +817,7 @@ CREATE OR REPLACE PACKAGE BODY V2U_Drop AS
         Drop_View('ud_terminy_protokolow_v');
         Drop_View('ud_oceny_v');
         Drop_View('ud_zalicz_przedmiotow_v');
+        Drop_View('ud_zal_przedm_prgos_v');
 
         Drop_View('uu_subject_grades_v');
 
